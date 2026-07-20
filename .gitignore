@@ -1,0 +1,10 @@
+# Dependencies (Shopify theme-check tooling used for auditing)
+node_modules/
+package.json
+package-lock.json
+
+# Local scratch / audit artifacts
+_extract/
+tcrun.mjs
+*.log
+.DS_Store
