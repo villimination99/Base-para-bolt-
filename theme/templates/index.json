@@ -32,11 +32,21 @@
     "vip": {
       "type": "vip-banner",
       "blocks": {
-        "k1": { "type": "perk", "settings": { "text": "Descuentos secretos" } },
-        "k2": { "type": "perk", "settings": { "text": "Drops anticipados" } },
-        "k3": { "type": "perk", "settings": { "text": "Contenido exclusivo" } }
+        "t1": { "type": "tool", "settings": { "emoji": "🗿", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
+        "t2": { "type": "tool", "settings": { "emoji": "🏋️", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
+        "t3": { "type": "tool", "settings": { "emoji": "🍽", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
+        "t4": { "type": "tool", "settings": { "emoji": "📅", "title": "Planes Dietarios", "text": "4 planes · menús todo el año" } },
+        "t5": { "type": "tool", "settings": { "emoji": "🧘", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
+        "t6": { "type": "tool", "settings": { "emoji": "🎧", "title": "Frecuencias", "text": "Solfeggio, binaurales y duales" } },
+        "t7": { "type": "tool", "settings": { "emoji": "🏆", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
+        "t8": { "type": "tool", "settings": { "emoji": "📊", "title": "Progreso y Sueño", "text": "Tu salud entera en gráficos" } },
+        "s1": { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
+        "s2": { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
+        "s3": { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },
+        "s4": { "type": "stat", "settings": { "number": "55", "label": "Alimentos" } },
+        "s5": { "type": "stat", "settings": { "number": "6", "label": "Niveles" } }
       },
-      "block_order": ["k1", "k2", "k3"],
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "s1", "s2", "s3", "s4", "s5"],
       "settings": {}
     },
     "videos": {

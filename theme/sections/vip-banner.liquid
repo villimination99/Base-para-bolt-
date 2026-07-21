@@ -14,15 +14,42 @@
             <span class="vip-badge">{%- render 'icon', name: 'bolt' -%}{{ section.settings.badge }}</span>
           {%- endif -%}
           <h2 class="vip-title">{{ section.settings.title }}</h2>
+          {%- if section.settings.subtitle != blank -%}<p class="vip-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
           {%- if section.settings.text != blank -%}<p class="vip-text">{{ section.settings.text }}</p>{%- endif -%}
-          <div class="vip-perks">
-            {%- for block in section.blocks -%}
-              <span class="vip-perk" {{ block.shopify_attributes }}>{%- render 'icon', name: 'check' -%}{{ block.settings.text }}</span>
-            {%- endfor -%}
+
+          {%- assign tool_blocks = section.blocks | where: 'type', 'tool' -%}
+          {%- if tool_blocks.size > 0 -%}
+            <div class="vip-tools">
+              {%- for block in tool_blocks -%}
+                <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+                  <span class="vip-tool-emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+                  <span class="vip-tool-name">{{ block.settings.title }}</span>
+                  {%- if block.settings.text != blank -%}<span class="vip-tool-desc">{{ block.settings.text }}</span>{%- endif -%}
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+          {%- if stat_blocks.size > 0 -%}
+            <div class="vip-stats">
+              {%- for block in stat_blocks -%}
+                <div class="vip-stat" {{ block.shopify_attributes }}>
+                  <strong>{{ block.settings.number }}</strong>
+                  <span>{{ block.settings.label }}</span>
+                </div>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="vip-ctas">
+            <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
+              {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
+            </a>
+            {%- if section.settings.note != blank -%}
+              <span class="vip-note">{{ section.settings.note }}</span>
+            {%- endif -%}
           </div>
-          <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
-            {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
-          </a>
         </div>
       </div>
     </div>
@@ -31,27 +58,48 @@
 
 {% schema %}
 {
-  "name": "Banner VIP",
+  "name": "Banner VIP / Hub",
   "settings": [
-    { "type": "text", "id": "badge", "label": "Insignia", "default": "ACCESO EXCLUSIVO" },
-    { "type": "text", "id": "title", "label": "Título", "default": "HAZTE VI.P" },
-    { "type": "textarea", "id": "text", "label": "Texto", "default": "Únete al círculo interno: descuentos secretos, drops anticipados y contenido que nadie más ve." },
-    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "QUIERO SER VI.P" },
+    { "type": "text", "id": "badge", "label": "Insignia", "default": "FITNESS HUB · GRATIS" },
+    { "type": "text", "id": "title", "label": "Título", "default": "TU GIMNASIO DIGITAL VI.P" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Transforma tu cuerpo y mente — todo en un solo lugar" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente con cámara, respiración guiada y frecuencias reparadoras. Sin apps y sin pagar." },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "ENTRAR AL HUB VI.P" },
     { "type": "url", "id": "button_url", "label": "Enlace del botón", "info": "Por defecto: /pages/vi-p" },
+    { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "Gratis · Sin apps · ES / EN / FR" },
     { "type": "image_picker", "id": "image", "label": "Imagen de fondo (opcional)" }
   ],
   "blocks": [
     {
-      "type": "perk",
-      "name": "Beneficio",
-      "settings": [ { "type": "text", "id": "text", "label": "Texto", "default": "Descuentos exclusivos" } ]
+      "type": "tool",
+      "name": "Herramienta del Hub",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🏋️" },
+        { "type": "text", "id": "title", "label": "Nombre", "default": "Entrenamiento" },
+        { "type": "text", "id": "text", "label": "Descripción corta", "default": "Registra kg y series" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Cifra",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número", "default": "27" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Ejercicios" }
+      ]
     }
   ],
   "presets": [
-    { "name": "Banner VIP", "blocks": [
-      { "type": "perk", "settings": { "text": "Descuentos secretos" } },
-      { "type": "perk", "settings": { "text": "Drops anticipados" } },
-      { "type": "perk", "settings": { "text": "Contenido exclusivo" } }
+    { "name": "Banner VIP / Hub", "blocks": [
+      { "type": "tool", "settings": { "emoji": "🗿", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
+      { "type": "tool", "settings": { "emoji": "🏋️", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
+      { "type": "tool", "settings": { "emoji": "🍽", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
+      { "type": "tool", "settings": { "emoji": "🧘", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
+      { "type": "tool", "settings": { "emoji": "🎧", "title": "Frecuencias", "text": "Solfeggio y binaurales" } },
+      { "type": "tool", "settings": { "emoji": "🏆", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
+      { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
+      { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
+      { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },
+      { "type": "stat", "settings": { "number": "6", "label": "Niveles" } }
     ] }
   ]
 }

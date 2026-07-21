@@ -2450,3 +2450,36 @@ a:not(.btn):hover{text-shadow:0 0 8px rgba(0,212,255,.45)}
 .add-to-cart-btn{width:42px;height:42px;border-radius:.65rem;display:grid;place-items:center;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.35);color:var(--neon-cyan);cursor:pointer;transition:.2s}
 .add-to-cart-btn:hover{background:rgba(0,212,255,.22);box-shadow:0 0 16px rgba(0,212,255,.4)}
 .card-carousel .product-card{height:100%}
+
+/* =====================================================================
+   VILLUMINATION 3D — v7 (VIP banner = escaparate real del Fitness Hub)
+   Identidad del Hub: rosa #FF2A6D → cian #05D9E8
+   ===================================================================== */
+.vip-banner-border{background:conic-gradient(from 0deg,#05D9E8,#7b2fff,#FF2A6D,#05D9E8)}
+.vip-badge{border-color:#05D9E8;color:#05D9E8;text-shadow:0 0 10px rgba(5,217,232,.5)}
+.vip-title{background:linear-gradient(135deg,#FF2A6D,#7b2fff 45%,#05D9E8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,42,109,.35))}
+.vip-subtitle{margin:0;font-family:var(--font-heading);font-weight:700;font-size:clamp(.95rem,2.6vw,1.2rem);color:#8fe9ff;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 0 12px rgba(5,217,232,.35)}
+.vip-text{color:#cdeaf2;max-width:40rem}
+
+/* Rejilla de herramientas del Hub */
+.vip-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.7rem;width:100%;max-width:56rem;margin:.6rem auto 0}
+.vip-tool{display:flex;flex-direction:column;align-items:center;gap:.3rem;padding:.95rem .7rem;border-radius:.9rem;background:rgba(10,10,26,.55);border:1px solid rgba(5,217,232,.18);transition:transform .2s ease,border-color .2s ease,box-shadow .25s ease;text-align:center}
+.vip-tool:hover{transform:translateY(-4px);border-color:rgba(5,217,232,.55);box-shadow:0 10px 26px rgba(0,0,0,.45),0 0 20px rgba(5,217,232,.18)}
+.vip-tool-emoji{font-size:1.6rem;line-height:1;filter:drop-shadow(0 0 8px rgba(5,217,232,.35))}
+.vip-tool-name{font-family:var(--font-heading);font-weight:700;font-size:.82rem;color:#eafcff;line-height:1.25}
+.vip-tool-desc{font-size:.72rem;color:#8fd8ea;line-height:1.4}
+
+/* Cifras del Hub */
+.vip-stats{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-top:.4rem}
+.vip-stat{min-width:92px;padding:.7rem 1.05rem;border-radius:.8rem;background:rgba(10,10,26,.6);border:1px solid rgba(255,42,109,.22);text-align:center}
+.vip-stat strong{display:block;font-family:var(--font-heading);font-weight:900;font-size:1.45rem;line-height:1;color:#05D9E8;text-shadow:0 0 12px rgba(5,217,232,.5)}
+.vip-stat:nth-child(even) strong{color:#FF2A6D;text-shadow:0 0 12px rgba(255,42,109,.5)}
+.vip-stat span{font-size:.68rem;color:#9fdfe8;text-transform:uppercase;letter-spacing:.1em}
+
+/* CTA del Hub */
+.vip-ctas{display:flex;flex-direction:column;align-items:center;gap:.55rem;margin-top:.5rem}
+.btn-vip{background:linear-gradient(135deg,#FF2A6D,#05D9E8);color:#fff;border:none;box-shadow:0 8px 30px rgba(255,42,109,.35),0 4px 18px rgba(5,217,232,.25);font-weight:900}
+.btn-vip:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 12px 40px rgba(255,42,109,.5),0 6px 24px rgba(5,217,232,.35)}
+.vip-note{font-size:.76rem;color:#7fd8ea;letter-spacing:.08em;text-transform:uppercase}
+.a11y-mode .vip-subtitle,.a11y-mode .vip-tool-name,.a11y-mode .vip-tool-desc{color:#eef6ff!important;text-shadow:none!important}
+@media(max-width:560px){.vip-tools{grid-template-columns:repeat(2,1fr)}.vip-stat{min-width:78px;padding:.55rem .75rem}}
