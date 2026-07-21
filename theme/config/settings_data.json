@@ -1,0 +1,42 @@
+{
+  "current": {
+    "brand_tagline": "Transforma tu cuerpo. Domina tu mente.",
+    "color_bg": "#060612",
+    "color_surface": "#0b0b1e",
+    "color_text": "#e6e6f0",
+    "color_cyan": "#00d4ff",
+    "color_pink": "#ff2ecb",
+    "color_green": "#00e87b",
+    "color_orange": "#ff7700",
+    "color_purple": "#7b2fff",
+    "font_heading": "assistant_n4",
+    "font_body": "assistant_n4",
+    "font_body_scale": 110,
+    "accessibility_mode": false,
+    "use_display_font": true,
+    "logo_height": 44,
+    "splash_enabled": true,
+    "splash_3d": true,
+    "splash_once_per_session": true,
+    "splash_title": "VILLUMINATION99",
+    "splash_tagline": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
+    "seasonal_effect": "none",
+    "seasonal_density": 50,
+    "enable_parallax": true,
+    "enable_scroll_reveal": true,
+    "enable_card_tilt": true,
+    "product_enable_3d": true,
+    "product_zoom": true,
+    "product_sticky_form": true,
+    "social_youtube": "https://www.youtube.com/@villumination99",
+    "social_instagram": "https://www.instagram.com/villumination99",
+    "social_tiktok": "",
+    "social_x": "",
+    "cart_type": "drawer",
+    "cart_show_note": true
+  },
+  "presets": {
+    "Villumination 3D": {
+    }
+  }
+}

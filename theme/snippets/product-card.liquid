@@ -1,0 +1,48 @@
+{%- comment -%}
+  Product card. Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+<div class="product-card shine-effect{% if settings.enable_card_tilt %} js-tilt{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+  <a href="{{ product.url }}" class="product-card-image" aria-label="{{ product.title | escape }}">
+    {%- if product.featured_media -%}
+      <img src="{{ product.featured_media | image_url: width: 600 }}"
+           alt="{{ product.featured_media.alt | default: product.title | escape }}"
+           width="600" height="{{ 600 | divided_by: product.featured_media.aspect_ratio | round }}"
+           loading="lazy">
+      {%- if product.media[1] != blank -%}
+        <img class="product-card-image-alt" src="{{ product.media[1] | image_url: width: 600 }}" alt="" width="600" height="600" loading="lazy">
+      {%- endif -%}
+    {%- else -%}
+      <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+    {%- endif -%}
+    {%- assign card_models = product.media | where: 'media_type', 'model' | size -%}
+    {%- if card_models > 0 -%}
+      <span class="product-card-badge product-card-badge-3d">{%- render 'icon', name: 'cube' -%} 3D</span>
+    {%- endif -%}
+    {%- unless product.available -%}
+      <span class="product-card-badge product-card-badge-sold">{{ 'products.product.sold_out' | t }}</span>
+    {%- endunless -%}
+    <div class="product-card-overlay"></div>
+  </a>
+  <div class="product-card-body">
+    <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    <div class="product-card-footer">
+      <div class="product-price">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="product-price-compare">{{ product.compare_at_price | money }}</span>
+        {%- endif -%}
+        <span class="product-price-amount">{{ product.price | money }}</span>
+      </div>
+      {%- if product.available -%}
+        <product-form>
+          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-quick-add>
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="add-to-cart-btn" aria-label="{{ 'products.product.add_to_cart' | t }}">
+              {%- render 'icon', name: 'cart' -%}
+            </button>
+          </form>
+        </product-form>
+      {%- endif -%}
+    </div>
+  </div>
+  <div class="product-card-glow"></div>
+</div>

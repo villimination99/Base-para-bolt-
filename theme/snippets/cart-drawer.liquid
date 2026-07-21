@@ -1,0 +1,15 @@
+{%- comment -%} Slide-out cart drawer. Contents refreshed by base.js via the Cart AJAX API. {%- endcomment -%}
+<div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+  <div class="cart-drawer-overlay" data-cart-drawer-close></div>
+  <div class="cart-drawer-panel" role="dialog" aria-modal="true" aria-label="{{ 'general.cart.title' | t }}">
+    <div class="cart-drawer-head">
+      <h2 class="cart-drawer-title">{{ 'general.cart.title' | t }}</h2>
+      <button class="cart-drawer-close" data-cart-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    </div>
+    <div class="cart-drawer-body" data-cart-drawer-body>
+      {%- render 'cart-drawer-items' -%}
+    </div>
+  </div>
+</div>

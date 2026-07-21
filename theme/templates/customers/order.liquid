@@ -1,0 +1,16 @@
+<section class="section-padding customer-page">
+  <div class="container">
+    <h1 class="section-title">{{ 'customer.order.title' | t: name: order.name }}</h1>
+    <p>{{ order.created_at | date: '%d %b %Y' }}</p>
+    <table class="account-table">
+      <thead><tr><th>{{ 'customer.order.product' | t }}</th><th>{{ 'customer.order.quantity' | t }}</th><th>{{ 'customer.order.total' | t }}</th></tr></thead>
+      <tbody>
+        {%- for line_item in order.line_items -%}
+          <tr><td>{{ line_item.title }}</td><td>{{ line_item.quantity }}</td><td>{{ line_item.final_line_price | money }}</td></tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+    <div class="order-total">{{ 'customer.order.total' | t }}: <strong>{{ order.total_price | money }}</strong></div>
+    <a href="{{ routes.account_url }}" class="customer-link">&larr; {{ 'customer.account.return' | t }}</a>
+  </div>
+</section>

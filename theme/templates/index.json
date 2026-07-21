@@ -1,0 +1,36 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "videos": {
+      "type": "video-grid",
+      "blocks": {
+        "v1": { "type": "video", "settings": { "video_id": "B6f4OevcqJg" } },
+        "v2": { "type": "video", "settings": { "video_id": "f7AvjOoxSPY" } },
+        "v3": { "type": "video", "settings": { "video_id": "PD0ode222Ps" } },
+        "v4": { "type": "video", "settings": { "video_id": "1Rj5Q52xhx8" } }
+      },
+      "block_order": ["v1", "v2", "v3", "v4"],
+      "settings": {
+        "button_url": "https://www.youtube.com/@villumination99/shorts"
+      }
+    },
+    "plans": {
+      "type": "subscription-plans",
+      "blocks": {
+        "p1": { "type": "plan", "settings": { "name": "Básico", "tagline": "Volumen Limpio", "price": "$9.99", "accent": "#00e87b" } },
+        "p2": { "type": "plan", "settings": { "name": "Pro", "tagline": "Definición + Volumen", "price": "$19.99", "accent": "#00d4ff", "featured": true } },
+        "p3": { "type": "plan", "settings": { "name": "Elite", "tagline": "Full Coaching", "price": "$39.99", "accent": "#ff7700" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {}
+    }
+  },
+  "order": ["hero", "products", "videos", "plans"]
+}

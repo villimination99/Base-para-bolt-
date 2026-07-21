@@ -1,0 +1,112 @@
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-head">
+          {%- if settings.logo != blank -%}
+            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}" width="120" height="40" style="height:36px;width:auto;">
+          {%- else -%}
+            {%- render 'logo-mark' -%}
+            <span class="footer-brand-name"><span class="nav-brand-grad">{{ shop.name | upcase | split: '99' | first }}</span><span class="nav-brand-99">99</span></span>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.about != blank -%}
+          <p class="footer-brand-desc">{{ section.settings.about }}</p>
+        {%- endif -%}
+        <div class="footer-social">
+          {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{%- render 'icon', name: 'tiktok' -%}</a>{%- endif -%}
+          {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" target="_blank" rel="noopener" aria-label="X">{%- render 'icon', name: 'x' -%}</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <ul role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- elsif block.type == 'text' -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <div class="footer-text rte">{{ block.settings.text }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="footer-newsletter">
+        <h3>{{ section.settings.newsletter_title }}</h3>
+        {%- form 'customer', class: 'footer-newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+          <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
+          {%- if form.posted_successfully? -%}<p class="form-success">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'general.footer.rights' | t }}</p>
+      <button class="scroll-top-btn" data-scroll-top aria-label="{{ 'accessibility.back_to_top' | t }}">
+        {%- render 'icon', name: 'chevron-up' -%}
+      </button>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "Descripción de la marca",
+      "default": "Tienda fitness para atletas que no se conforman con lo ordinario."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar boletín",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título del boletín",
+      "default": "Únete a la comunidad"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de menú",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Tienda" },
+        { "type": "link_list", "id": "menu", "label": "Menú" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Título", "default": "Contacto" },
+        { "type": "richtext", "id": "text", "label": "Texto" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "menu", "settings": { "title": "Tienda" } },
+      { "type": "text", "settings": { "title": "Contenido" } }
+    ]
+  }
+}
+{% endschema %}

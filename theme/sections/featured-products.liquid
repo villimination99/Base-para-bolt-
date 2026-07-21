@@ -1,0 +1,47 @@
+<section class="section-padding" id="products">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-cyan">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    {%- assign coll = section.settings.collection -%}
+    <div class="product-grid">
+      {%- if coll != blank and coll.products_count > 0 -%}
+        {%- for product in coll.products limit: section.settings.limit -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="product-card product-card--placeholder">
+            <div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div>
+            <div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_view_all and coll != blank -%}
+      <div class="section-cta">
+        <a href="{{ coll.url }}" class="btn btn-outline btn-lg">{{ section.settings.view_all_label }}{%- render 'icon', name: 'arrow-right' -%}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productos destacados",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Nuestra Tienda" },
+    { "type": "text", "id": "title", "label": "Título", "default": "PRODUCTOS ELITE" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman." },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "limit", "min": 2, "max": 12, "step": 1, "label": "Número de productos", "default": 8 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar botón 'ver todo'", "default": true },
+    { "type": "text", "id": "view_all_label", "label": "Texto del botón", "default": "Ver toda la tienda" }
+  ],
+  "presets": [{ "name": "Productos destacados" }]
+}
+{% endschema %}

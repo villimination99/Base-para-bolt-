@@ -1,0 +1,308 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Villumination 3D",
+    "theme_version": "1.0.0",
+    "theme_author": "Villumination99",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
+  },
+  {
+    "name": "Logo y marca",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_height",
+        "min": 24,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "label": "Alto del logo",
+        "default": 44
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon (32x32 px)"
+      },
+      {
+        "type": "text",
+        "id": "brand_tagline",
+        "label": "Eslogan de marca",
+        "default": "Transforma tu cuerpo. Domina tu mente."
+      }
+    ]
+  },
+  {
+    "name": "Colores",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fondo (tema oscuro)"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Fondo principal",
+        "default": "#060612"
+      },
+      {
+        "type": "color",
+        "id": "color_surface",
+        "label": "Superficie / tarjetas",
+        "default": "#0b0b1e"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Texto",
+        "default": "#e6e6f0"
+      },
+      {
+        "type": "header",
+        "content": "Colores neón"
+      },
+      {
+        "type": "color",
+        "id": "color_cyan",
+        "label": "Neón cian (principal)",
+        "default": "#00d4ff"
+      },
+      {
+        "type": "color",
+        "id": "color_pink",
+        "label": "Neón rosa",
+        "default": "#ff2ecb"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Neón verde",
+        "default": "#00e87b"
+      },
+      {
+        "type": "color",
+        "id": "color_orange",
+        "label": "Neón naranja",
+        "default": "#ff7700"
+      },
+      {
+        "type": "color",
+        "id": "color_purple",
+        "label": "Púrpura",
+        "default": "#7b2fff"
+      }
+    ]
+  },
+  {
+    "name": "Tipografía",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Fuente de títulos",
+        "default": "assistant_n4",
+        "info": "Orbitron se carga aparte para la marca; esta es la de respaldo."
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Fuente de texto",
+        "default": "assistant_n4",
+        "info": "Se recomienda una fuente muy legible para el cuerpo del texto."
+      },
+      {
+        "type": "range",
+        "id": "font_body_scale",
+        "min": 100,
+        "max": 140,
+        "step": 5,
+        "unit": "%",
+        "label": "Tamaño base del texto",
+        "default": 110,
+        "info": "Súbelo para mejorar la legibilidad (accesibilidad)."
+      },
+      {
+        "type": "checkbox",
+        "id": "accessibility_mode",
+        "label": "Modo alta legibilidad",
+        "default": false,
+        "info": "Usa fuentes limpias, texto más grande y mayor contraste. Ideal para personas con problemas de visión."
+      },
+      {
+        "type": "checkbox",
+        "id": "use_display_font",
+        "label": "Usar fuente display Orbitron en títulos",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Intro splash 3D",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "splash_enabled",
+        "label": "Mostrar intro splash",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "splash_3d",
+        "label": "Intro 3D interactivo",
+        "default": true,
+        "info": "Partículas magnéticas que reaccionan al puntero (WebGL, carga diferida). Si se desactiva, se usa la versión ligera con CSS."
+      },
+      {
+        "type": "checkbox",
+        "id": "splash_once_per_session",
+        "label": "Mostrar solo una vez por sesión",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "splash_title",
+        "label": "Título",
+        "default": "VILLUMINATION99"
+      },
+      {
+        "type": "text",
+        "id": "splash_tagline",
+        "label": "Subtítulo",
+        "default": "TRANSFORMA TU CUERPO. DOMINA TU MENTE."
+      }
+    ]
+  },
+  {
+    "name": "Efectos visuales",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Efectos estacionales flotantes"
+      },
+      {
+        "type": "select",
+        "id": "seasonal_effect",
+        "label": "Efecto en toda la tienda",
+        "options": [
+          { "value": "none", "label": "Ninguno" },
+          { "value": "snow", "label": "Nieve" },
+          { "value": "confetti", "label": "Confeti" },
+          { "value": "hearts", "label": "Corazones" },
+          { "value": "sparks", "label": "Chispas neón" }
+        ],
+        "default": "none",
+        "info": "Ligero (canvas, carga diferida). Se desactiva solo si el visitante prefiere menos movimiento."
+      },
+      {
+        "type": "range",
+        "id": "seasonal_density",
+        "min": 10,
+        "max": 120,
+        "step": 10,
+        "unit": "",
+        "label": "Densidad de partículas",
+        "default": 50
+      },
+      {
+        "type": "header",
+        "content": "Movimiento"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_parallax",
+        "label": "Efecto parallax al hacer scroll",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_scroll_reveal",
+        "label": "Animar secciones al aparecer",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_card_tilt",
+        "label": "Inclinación 3D de tarjetas al pasar el ratón",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Producto y 3D/AR",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "product_enable_3d",
+        "label": "Activar visor 3D + Realidad Aumentada",
+        "default": true,
+        "info": "Usa los modelos 3D nativos de Shopify (model-viewer). Sube modelos .glb/.usdz al producto en el admin."
+      },
+      {
+        "type": "checkbox",
+        "id": "product_zoom",
+        "label": "Zoom en imágenes de producto",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "product_sticky_form",
+        "label": "Formulario de compra fijo (sticky) en escritorio",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Redes sociales",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "YouTube",
+        "default": "https://www.youtube.com/@villumination99"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "default": "https://www.instagram.com/villumination99"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      },
+      {
+        "type": "text",
+        "id": "social_x",
+        "label": "X (Twitter)"
+      }
+    ]
+  },
+  {
+    "name": "Carrito",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Tipo de carrito",
+        "options": [
+          { "value": "drawer", "label": "Cajón lateral" },
+          { "value": "page", "label": "Página" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_show_note",
+        "label": "Permitir notas del pedido",
+        "default": true
+      }
+    ]
+  }
+]

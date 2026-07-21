@@ -1,0 +1,24 @@
+<section class="section-padding">
+  <div class="container">
+    <h1 class="section-title">{{ 'collections.general.title' | t }}</h1>
+    <div class="collection-list-grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="collection-tile{% if settings.enable_card_tilt %} js-tilt{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <div class="collection-tile-media">
+            {%- if collection.featured_image -%}
+              <img src="{{ collection.featured_image | image_url: width: 700 }}" alt="{{ collection.title | escape }}" width="700" height="500" loading="lazy">
+            {%- else -%}
+              <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+            {%- endif -%}
+            <div class="collection-tile-overlay"></div>
+          </div>
+          <h2 class="collection-tile-title">{{ collection.title }}</h2>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Lista de colecciones", "settings": [] }
+{% endschema %}

@@ -1,0 +1,73 @@
+{%- liquid
+  assign overlay = section.settings.overlay_opacity | divided_by: 100.0
+-%}
+<section class="hero {% if section.settings.parallax and settings.enable_parallax %}has-parallax{% endif %}" id="hero"
+  style="min-height:{{ section.settings.height }}vh;">
+  <div class="hero-bg" data-parallax-speed="0.3">
+    {%- if section.settings.image != blank -%}
+      <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="" width="2400" height="{{ 2400 | divided_by: section.settings.image.aspect_ratio | round }}" fetchpriority="high">
+      <div class="hero-bg-overlay" style="opacity:{{ overlay }};"></div>
+    {%- else -%}
+      <div class="hero-glow hero-glow-1"></div>
+      <div class="hero-glow hero-glow-2"></div>
+    {%- endif -%}
+  </div>
+
+  <div class="hero-content" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="hero-eyebrow">{%- render 'icon', name: 'bolt' -%}<span>{{ section.settings.eyebrow }}</span></div>
+    {%- endif -%}
+
+    <h1 class="hero-title">
+      {%- if section.settings.heading_top != blank -%}<span class="hero-title-top">{{ section.settings.heading_top }}</span>{%- endif -%}
+      {%- if section.settings.rotating_words != blank -%}
+        <span class="hero-title-main" data-typed='{{ section.settings.rotating_words | split: "," | json }}'>{{ section.settings.rotating_words | split: ',' | first | strip }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading_bottom != blank -%}<span class="hero-title-sub">{{ section.settings.heading_bottom }}</span>{%- endif -%}
+    </h1>
+
+    {%- if section.settings.text != blank -%}
+      <p class="hero-text">{{ section.settings.text }}</p>
+    {%- endif -%}
+
+    <div class="hero-actions">
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+          {%- render 'icon', name: 'bolt' -%}{{ section.settings.button_label }}
+        </a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank -%}
+        <a href="{{ section.settings.button2_url }}" class="btn btn-outline btn-lg"{% if section.settings.button2_url contains 'http' %} target="_blank" rel="noopener"{% endif %}>
+          {%- render 'icon', name: 'play' -%}{{ section.settings.button2_label }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if section.settings.show_scroll_hint -%}
+    <div class="hero-scroll-hint" aria-hidden="true">{%- render 'icon', name: 'chevron-down' -%}</div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo (opcional)" },
+    { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Oscurecer imagen", "default": 55 },
+    { "type": "range", "id": "height", "min": 60, "max": 100, "step": 5, "unit": "vh", "label": "Altura", "default": 100 },
+    { "type": "checkbox", "id": "parallax", "label": "Parallax en el fondo", "default": true },
+    { "type": "checkbox", "id": "show_scroll_hint", "label": "Mostrar indicador de scroll", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "Tienda Fitness #1" },
+    { "type": "text", "id": "heading_top", "label": "Título (línea 1)", "default": "TU PRÓXIMO NIVEL" },
+    { "type": "text", "id": "rotating_words", "label": "Palabras rotativas (separadas por coma)", "default": "FUERZA, ENERGÍA, DISCIPLINA, PODER" },
+    { "type": "text", "id": "heading_bottom", "label": "Título (línea 3)", "default": "SIN LÍMITES" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Transforma tu cuerpo. Domina tu mente. Sin excusas." },
+    { "type": "text", "id": "button_label", "label": "Botón 1 — texto", "default": "Explorar Tienda" },
+    { "type": "url", "id": "button_url", "label": "Botón 1 — enlace" },
+    { "type": "text", "id": "button2_label", "label": "Botón 2 — texto", "default": "Ver Canal" },
+    { "type": "url", "id": "button2_url", "label": "Botón 2 — enlace" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,41 @@
+{%- comment -%}
+  3D interactive splash intro.
+  - If settings.splash_3d is on, effects.js mounts a lightweight WebGL magnetic-particle
+    field into #splash-canvas (loaded only on first paint, respects reduced-motion).
+  - Otherwise the CSS particle version below is used as a graceful fallback.
+{%- endcomment -%}
+<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ settings.splash_title | default: shop.name }}">
+  <div class="splash-bg"></div>
+  <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
+  <div class="splash-particles" aria-hidden="true">
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+  </div>
+  <div class="splash-content">
+    <div class="splash-logo-container">
+      <div class="splash-halo splash-halo-1"></div>
+      <div class="splash-halo splash-halo-2"></div>
+      <div class="splash-ring">
+        <svg viewBox="0 0 200 200" fill="none">
+          <defs><linearGradient id="splash-rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="{{ settings.color_cyan }}"/><stop offset="33%" stop-color="{{ settings.color_purple }}"/><stop offset="66%" stop-color="{{ settings.color_pink }}"/><stop offset="100%" stop-color="{{ settings.color_cyan }}"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="1.5" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="splash-logo">
+        {%- if settings.logo != blank -%}
+          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name | escape }}" width="120" height="120" style="max-width:60%;height:auto;">
+        {%- else -%}
+          <span class="splash-mono">VI</span>
+          <span class="splash-mono-sub">llumination</span>
+        {%- endif -%}
+      </div>
+    </div>
+    <h1 class="splash-title">{{ settings.splash_title | default: shop.name }}</h1>
+    <p class="splash-tagline">{{ settings.splash_tagline | default: settings.brand_tagline }}</p>
+    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+    <button id="splash-enter" class="splash-enter-btn" type="button">
+      <span>{{ 'general.enter' | t }}</span>
+      {%- render 'icon', name: 'arrow-right' -%}
+    </button>
+  </div>
+</div>

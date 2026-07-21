@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="{% if settings.accessibility_mode %}a11y-mode{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {%- comment -%} Brand display font (Orbitron) — kept for the neon identity {%- endcomment -%}
+  {%- if settings.use_display_font -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"></noscript>
+  {%- endif -%}
+
+  {%- assign body_font = settings.font_body -%}
+  {%- assign heading_font = settings.font_heading -%}
+  {%- style -%}
+    {{ body_font | font_face: font_display: 'swap' }}
+    {{ heading_font | font_face: font_display: 'swap' }}
+    {%- if settings.font_body_scale != 100 -%}
+      html { font-size: {{ settings.font_body_scale | times: 0.16 }}px; }
+    {%- endif -%}
+
+    :root {
+      --neon-cyan: {{ settings.color_cyan }};
+      --neon-blue: #0077ff;
+      --neon-pink: {{ settings.color_pink }};
+      --neon-green: {{ settings.color_green }};
+      --neon-orange: {{ settings.color_orange }};
+      --neon-yellow: #ffd000;
+      --neon-purple: {{ settings.color_purple }};
+      --color-bg: {{ settings.color_bg }};
+      --color-surface: {{ settings.color_surface }};
+      --color-text: {{ settings.color_text }};
+      --dark-950: {{ settings.color_bg }};
+      --dark-900: {{ settings.color_surface }};
+      --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+      --font-body-weight: {{ body_font.weight }};
+      --font-heading: {% if settings.use_display_font %}'Orbitron', {% endif %}{{ heading_font.family }}, {{ heading_font.fallback_families }};
+    }
+    body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
+  {%- endstyle -%}
+
+  {{ 'villumination.css' | asset_url | stylesheet_tag }}
+
+  <script>
+    window.theme = {
+      routes: {
+        cart: "{{ routes.cart_url }}",
+        cartAdd: "{{ routes.cart_add_url }}",
+        cartChange: "{{ routes.cart_change_url }}",
+        cartUpdate: "{{ routes.cart_update_url }}",
+        search: "{{ routes.search_url }}",
+        predictiveSearch: "{{ routes.predictive_search_url }}"
+      },
+      settings: {
+        cartType: "{{ settings.cart_type }}",
+        seasonalEffect: "{{ settings.seasonal_effect }}",
+        seasonalDensity: {{ settings.seasonal_density | default: 50 }},
+        parallax: {{ settings.enable_parallax | default: false }},
+        scrollReveal: {{ settings.enable_scroll_reveal | default: false }},
+        cardTilt: {{ settings.enable_card_tilt | default: false }},
+        splash3d: {{ settings.splash_3d | default: false }},
+        splashOnce: {{ settings.splash_once_per_session | default: true }},
+        moneyFormat: {{ shop.money_format | json }}
+      },
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        subtotal: {{ 'cart.general.subtotal' | t | json }},
+        checkout: {{ 'cart.general.checkout' | t | json }},
+        viewCart: {{ 'cart.general.view_cart' | t | json }},
+        cartEmpty: {{ 'cart.general.empty' | t | json }},
+        shop: {{ 'general.shop' | t | json }}
+      }
+    };
+  </script>
+
+  {{ content_for_header }}
+</head>
+
+<body class="grid-bg template-{{ template.name | handle }}">
+
+  <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {%- if settings.splash_enabled -%}
+    {%- render 'splash-intro' -%}
+  {%- endif -%}
+
+  {% section 'header' %}
+
+  <main id="MainContent" role="main" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  {%- render 'cart-drawer' -%}
+
+  <script src="{{ 'base.js' | asset_url }}" defer></script>
+  <script src="{{ 'effects.js' | asset_url }}" defer></script>
+</body>
+</html>

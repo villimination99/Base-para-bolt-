@@ -1,0 +1,11 @@
+{% layout 'gift_card' %}
+<section class="section-padding giftcard-page">
+  <div class="container container--xnarrow" style="text-align:center;">
+    <h1 class="section-title">{{ 'gift_cards.issued.subtext' | t }}</h1>
+    <div class="giftcard-balance neon-text-cyan">{{ gift_card.balance | money }}</div>
+    <div class="giftcard-code">
+      <span>{{ gift_card.code | format_code }}</span>
+    </div>
+    <a href="{{ shop.url }}" class="btn btn-primary btn-lg">{{ 'gift_cards.issued.shop_link' | t }}</a>
+  </div>
+</section>

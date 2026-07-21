@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  {%- assign gc_balance = gift_card.balance | money -%}
+  <title>{{ 'gift_cards.issued.title' | t: value: gc_balance, shop: shop.name }}</title>
+  {%- style -%}
+    :root { --neon-cyan: {{ settings.color_cyan }}; --color-bg: {{ settings.color_bg }}; }
+  {%- endstyle -%}
+  {{ 'villumination.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="grid-bg template-giftcard">
+  <main role="main">{{ content_for_layout }}</main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<section class="section-padding article-main">
+  <div class="container container--narrow">
+    <article>
+      <header class="article-header" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <span class="article-card-date">{{ article.published_at | date: '%d %b, %Y' }}</span>
+        <h1 class="section-title">{{ article.title }}</h1>
+        {%- if article.author != blank -%}<p class="article-author">{{ 'blogs.article.by' | t }} {{ article.author }}</p>{%- endif -%}
+      </header>
+      {%- if article.image -%}
+        <div class="article-hero-media">
+          <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" width="1400" height="800" loading="eager">
+        </div>
+      {%- endif -%}
+      <div class="rte article-content">{{ article.content }}</div>
+    </article>
+
+    {%- if blog.comments_enabled? -%}
+      <div class="article-comments">
+        {%- if article.comments_count > 0 -%}
+          <h2>{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+          {%- for comment in article.comments -%}
+            <div class="comment">
+              <p class="comment-body">{{ comment.content }}</p>
+              <span class="comment-author">— {{ comment.author }}</span>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Artículo", "settings": [] }
+{% endschema %}

@@ -1,0 +1,91 @@
+{%- liquid
+  assign yt = settings.social_youtube
+  assign ig = settings.social_instagram
+-%}
+<nav class="navbar" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
+  <div class="navbar-inner">
+    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name }}">
+      {%- if settings.logo != blank -%}
+        {%- assign logo_h = settings.logo_height | default: 44 -%}
+        <img src="{{ settings.logo | image_url: width: 240 }}"
+             alt="{{ shop.name | escape }}"
+             width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+             style="height:{{ logo_h }}px;width:auto;object-fit:contain;">
+      {%- else -%}
+        {%- render 'logo-mark' -%}
+        <span class="nav-brand">
+          <span class="nav-brand-grad">{{ shop.name | upcase | split: '99' | first }}</span><span class="nav-brand-99">99</span>
+        </span>
+      {%- endif -%}
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}</a>
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="nav-link{% if template.name == 'index' %} active{% endif %}">{{ 'general.home' | t }}</a>
+        <a href="{{ routes.all_products_collection_url }}" class="nav-link{% if template.name == 'collection' or template.name == 'product' %} active{% endif %}">{{ 'general.shop' | t }}</a>
+      {%- endfor -%}
+    </div>
+
+    <div class="nav-actions">
+      <a href="{{ routes.search_url }}" class="nav-icon-btn" title="{{ 'general.search.title' | t }}" aria-label="{{ 'general.search.title' | t }}">
+        {%- render 'icon', name: 'search' -%}
+      </a>
+
+      <div class="nav-social">
+        {%- if yt != blank -%}<a href="{{ yt }}" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+        {%- if ig != blank -%}<a href="{{ ig }}" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+      </div>
+
+      <a href="{{ routes.cart_url }}" class="cart-btn" id="cart-btn-open" aria-label="{{ 'general.cart.title' | t }} ({{ cart.item_count }})"
+         {% if settings.cart_type == 'drawer' %}data-cart-drawer-open{% endif %}>
+        {%- render 'icon', name: 'cart' -%}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="{{ 'accessibility.menu' | t }}" aria-expanded="false" aria-controls="mobile-menu">
+        {%- render 'icon', name: 'menu' -%}
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-overlay" data-mobile-close></div>
+  <div class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.menu' | t }}">
+    <button class="mobile-menu-close" aria-label="{{ 'accessibility.close' | t }}" data-mobile-close>
+      {%- render 'icon', name: 'close' -%}
+    </button>
+    {%- for link in section.settings.menu.links -%}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {%- else -%}
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+      <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
+    {%- endfor -%}
+    <div class="mobile-menu-social">
+      {%- if yt != blank -%}<a href="{{ yt }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+      {%- if ig != blank -%}<a href="{{ ig }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de navegación",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Encabezado fijo al hacer scroll",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

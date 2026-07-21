@@ -1,0 +1,60 @@
+<section class="section-padding" id="videos">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow" style="color:{{ section.settings.accent }};">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="video-grid">
+      {%- for block in section.blocks -%}
+        <div class="video-card" style="--accent:{{ section.settings.accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          {%- if block.settings.video_id != blank -%}
+            <button class="video-card-thumb" data-video-embed="{{ block.settings.video_id }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
+              <img src="https://i.ytimg.com/vi/{{ block.settings.video_id }}/hqdefault.jpg" alt="{{ block.settings.title | escape }}" width="480" height="360" loading="lazy">
+              <span class="video-card-play">{%- render 'icon', name: 'play' -%}</span>
+            </button>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="section-cta">
+        <a href="{{ section.settings.button_url }}" target="_blank" rel="noopener" class="btn btn-youtube btn-lg">
+          {%- render 'icon', name: 'youtube' -%}{{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rejilla de videos",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "YouTube" },
+    { "type": "text", "id": "title", "label": "Título", "default": "CONTENIDO EXCLUSIVO" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Entrena conmigo, aprende y transfórmate con cada video." },
+    { "type": "color", "id": "accent", "label": "Color de acento", "default": "#ef4444" },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Ver más Shorts" },
+    { "type": "url", "id": "button_url", "label": "Enlace del botón" }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video de YouTube",
+      "settings": [
+        { "type": "text", "id": "video_id", "label": "ID del video de YouTube", "info": "El código después de watch?v= o /shorts/" },
+        { "type": "text", "id": "title", "label": "Título (accesibilidad)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rejilla de videos",
+      "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }]
+    }
+  ]
+}
+{% endschema %}
