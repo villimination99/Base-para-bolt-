@@ -23,13 +23,19 @@
     var once = settings.splashOnce;
     if (once && sessionStorage.getItem('v99_intro_seen')) { splash.style.display = 'none'; return; }
     document.body.style.overflow = 'hidden';
+    var done = false;
     function dismiss() {
+      if (done) return; done = true;
       splash.classList.add('dismissed');
       document.body.style.overflow = '';
       if (once) sessionStorage.setItem('v99_intro_seen', '1');
       setTimeout(function () { splash.style.display = 'none'; }, 900);
     }
     if (enter) enter.addEventListener('click', dismiss);
+    // Fail-safes so the intro can never trap the page:
+    splash.addEventListener('click', function (e) { if (e.target === splash || e.target.classList.contains('splash-bg')) dismiss(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
+    setTimeout(dismiss, 12000);
   })();
 
   /* ---------- Navbar scroll ---------- */

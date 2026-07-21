@@ -34,7 +34,8 @@
     "password_page": {
       "password_label": "Password",
       "admin_link_html": "Are you the store owner?"
-    }
+    },
+    "view_all": "View all"
   },
   "accessibility": {
     "skip_to_content": "Skip to content",

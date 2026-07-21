@@ -1,8 +1,13 @@
 {%- liquid
   assign yt = settings.social_youtube
   assign ig = settings.social_instagram
+  assign trigger = section.settings.collections_trigger | downcase | strip
+  assign dd_alpha = section.settings.menu_opacity | default: 85 | divided_by: 100.0
 -%}
-<nav class="navbar" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
+{%- style -%}
+  #navbar { --dd-alpha: {{ dd_alpha }}; }
+{%- endstyle -%}
+<nav class="navbar{% if section.settings.transparent_top %} transparent-top{% endif %}" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
   <div class="navbar-inner">
     <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name }}">
       {%- if settings.logo != blank -%}
@@ -21,7 +26,32 @@
 
     <div class="nav-links" id="nav-links">
       {%- for link in section.settings.menu.links -%}
-        {%- if link.links.size > 0 -%}
+        {%- assign link_key = link.title | downcase | strip -%}
+        {%- assign is_coll_menu = false -%}
+        {%- if trigger != blank and link_key == trigger -%}{%- assign is_coll_menu = true -%}{%- endif -%}
+
+        {%- if is_coll_menu -%}
+          <div class="nav-item nav-item--mega">
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <div class="nav-dropdown nav-mega">
+              <div class="nav-mega-grid">
+                {%- for collection in collections limit: section.settings.collections_count -%}
+                  <a href="{{ collection.url }}" class="nav-mega-card">
+                    <span class="nav-mega-media">
+                      {%- if collection.featured_image -%}
+                        <img src="{{ collection.featured_image | image_url: width: 160 }}" alt="{{ collection.title | escape }}" width="56" height="56" loading="lazy">
+                      {%- else -%}{%- render 'icon', name: 'cube' -%}{%- endif -%}
+                    </span>
+                    <span class="nav-mega-title">{{ collection.title }}</span>
+                  </a>
+                {%- else -%}
+                  <a href="{{ routes.all_products_collection_url }}" class="nav-mega-card"><span class="nav-mega-title">{{ 'general.shop' | t }}</span></a>
+                {%- endfor -%}
+              </div>
+              <a href="{{ routes.all_products_collection_url }}" class="nav-mega-all">{{ 'general.view_all' | t }}{%- render 'icon', name: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        {%- elsif link.links.size > 0 -%}
           <div class="nav-item">
             <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
             <div class="nav-dropdown">
@@ -69,8 +99,13 @@
       {%- render 'icon', name: 'close' -%}
     </button>
     {%- for link in section.settings.menu.links -%}
+      {%- assign m_key = link.title | downcase | strip -%}
       <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
-      {%- if link.links.size > 0 -%}
+      {%- if trigger != blank and m_key == trigger -%}
+        <div class="mobile-submenu">
+          {%- for collection in collections limit: section.settings.collections_count -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- endfor -%}
+        </div>
+      {%- elsif link.links.size > 0 -%}
         <div class="mobile-submenu">
           {%- for child in link.links -%}<a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>{%- endfor -%}
         </div>
@@ -101,6 +136,42 @@
       "id": "sticky",
       "label": "Encabezado fijo al hacer scroll",
       "default": true
+    },
+    { "type": "header", "content": "Estilo del menú" },
+    {
+      "type": "checkbox",
+      "id": "transparent_top",
+      "label": "Encabezado transparente arriba",
+      "default": true,
+      "info": "Transparente sobre el hero; se vuelve sólido al bajar."
+    },
+    {
+      "type": "range",
+      "id": "menu_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del fondo de los menús",
+      "default": 70,
+      "info": "0% = totalmente transparente (efecto cristal). 100% = sólido."
+    },
+    { "type": "header", "content": "Mega menú de colecciones" },
+    {
+      "type": "text",
+      "id": "collections_trigger",
+      "label": "Ítem que abre las colecciones",
+      "default": "Colecciones",
+      "info": "Escribe el nombre EXACTO del ítem del menú (ej: Colecciones o Catálogo). Al pasar el cursor mostrará tus colecciones automáticamente."
+    },
+    {
+      "type": "range",
+      "id": "collections_count",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "label": "Colecciones a mostrar",
+      "default": 6
     }
   ]
 }

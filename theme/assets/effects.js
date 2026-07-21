@@ -14,16 +14,28 @@
   var PINK = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim(), '#ff2ecb');
   var GREEN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-green').trim(), '#00e87b');
 
-  /* ============ 1. Scroll reveal ============ */
+  /* ============ 1. Scroll reveal (fail-safe: content can NEVER stay hidden) ============ */
   (function () {
-    if (!settings.scrollReveal) return;
     var els = $all('[data-reveal]');
     if (!els.length) return;
-    if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-visible'); }); return; }
+    function showAll() { els.forEach(function (el) { el.classList.add('is-visible'); el.classList.remove('reveal-init'); }); }
+    // If reveal is off, reduced motion, or no observer support → just show everything.
+    if (!settings.scrollReveal || reduce || !('IntersectionObserver' in window)) { showAll(); return; }
+    var vh = window.innerHeight || 800;
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    els.forEach(function (el) { el.classList.add('reveal-init'); io.observe(el); });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+    els.forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      // Never hide anything already on screen or taller than the viewport (that is
+      // what turned long pages black — the ratio threshold could never be met).
+      if (rect.top < vh || rect.height > vh * 0.85) { el.classList.add('is-visible'); return; }
+      el.classList.add('reveal-init');
+      io.observe(el);
+    });
+    // Absolute safety net — reveal any stragglers a moment after load.
+    setTimeout(showAll, 2500);
+    window.addEventListener('load', function () { setTimeout(showAll, 300); });
   })();
 
   /* ============ 2. Parallax ============ */

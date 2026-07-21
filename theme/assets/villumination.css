@@ -2248,3 +2248,30 @@ main:focus{outline:none}
 .nav-link{color:#bfe9f4}
 .nav-dropdown a{color:#bfe9f4}
 .a11y-mode .hero-title-top,.a11y-mode .plan-features li,.a11y-mode .nav-link{color:#eef6ff!important;text-shadow:none!important}
+
+/* =====================================================================
+   VILLUMINATION 3D — v3 (transparency, collections mega menu, fixes)
+   ===================================================================== */
+
+/* Transparent header on top of hero; solid on scroll (base.js toggles .scrolled) */
+.navbar.transparent-top:not(.scrolled){background:transparent!important;border-color:transparent!important;box-shadow:none!important;backdrop-filter:none!important}
+.navbar.transparent-top:not(.scrolled) .nav-link{text-shadow:0 1px 12px rgba(0,0,0,.55)}
+
+/* Glassy dropdowns driven by the merchant's opacity setting (--dd-alpha) */
+.nav-dropdown{background:rgba(8,8,22,var(--dd-alpha,.9));-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2)}
+
+/* Collections mega menu */
+.nav-item--mega{position:static}
+.nav-mega{left:50%;transform:translateX(-50%) translateY(8px);min-width:min(680px,92vw);padding:1rem}
+.nav-item--mega:hover .nav-mega,.nav-item--mega:focus-within .nav-mega{transform:translateX(-50%) translateY(2px)}
+.nav-mega-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:.5rem}
+.nav-mega-card{display:flex!important;align-items:center;gap:.7rem;padding:.55rem .7rem;border-radius:.65rem;color:#cbe9f2!important}
+.nav-mega-card:hover{background:rgba(0,212,255,.1)}
+.nav-mega-media{width:44px;height:44px;border-radius:.5rem;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.05);display:grid;place-items:center;color:var(--neon-cyan)}
+.nav-mega-media img{width:100%;height:100%;object-fit:cover}
+.nav-mega-title{font-weight:600;font-size:.92rem;line-height:1.2}
+.nav-mega-all{display:inline-flex!important;align-items:center;gap:.4rem;margin-top:.6rem;padding:.5rem .7rem;color:var(--neon-cyan)!important;font-weight:700;font-family:var(--font-heading);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+@media(max-width:900px){.nav-mega{min-width:0;width:92vw}}
+
+/* Safety: main content can never be an invisible/black block */
+#MainContent{min-height:50vh}

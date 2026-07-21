@@ -34,7 +34,8 @@
     "password_page": {
       "password_label": "Contraseña",
       "admin_link_html": "¿Eres el dueño de la tienda?"
-    }
+    },
+    "view_all": "Ver todo"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",
