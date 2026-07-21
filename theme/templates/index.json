@@ -29,15 +29,14 @@
       "block_order": ["b1", "b2", "b3"],
       "settings": {}
     },
-    "stats": {
-      "type": "stats-band",
+    "vip": {
+      "type": "vip-banner",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "number": 94, "prefix": "+", "suffix": "%", "label": "Más conversiones", "accent": "#00d4ff" } },
-        "s2": { "type": "stat", "settings": { "number": 40, "prefix": "-", "suffix": "%", "label": "Devoluciones", "accent": "#ff2ecb" } },
-        "s3": { "type": "stat", "settings": { "number": 5000, "prefix": "+", "suffix": "", "label": "Atletas transformados", "accent": "#00e87b" } },
-        "s4": { "type": "stat", "settings": { "number": 24, "suffix": "/7", "label": "Soporte", "accent": "#ff7700" } }
+        "k1": { "type": "perk", "settings": { "text": "Descuentos secretos" } },
+        "k2": { "type": "perk", "settings": { "text": "Drops anticipados" } },
+        "k3": { "type": "perk", "settings": { "text": "Contenido exclusivo" } }
       },
-      "block_order": ["s1", "s2", "s3", "s4"],
+      "block_order": ["k1", "k2", "k3"],
       "settings": {}
     },
     "videos": {
@@ -88,5 +87,5 @@
       "settings": {}
     }
   },
-  "order": ["hero", "marquee", "products", "benefits", "stats", "videos", "plans", "testimonials", "faq", "newsletter"]
+  "order": ["hero", "marquee", "products", "benefits", "vip", "videos", "plans", "testimonials", "faq", "newsletter"]
 }

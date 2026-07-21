@@ -2398,3 +2398,55 @@ a:not(.btn):hover{text-shadow:0 0 8px rgba(0,212,255,.45)}
 .stat-num{font-family:var(--font-heading);font-weight:900;font-size:clamp(2rem,6vw,3.2rem);line-height:1;color:var(--stat-accent,var(--neon-cyan));text-shadow:0 0 18px color-mix(in srgb,var(--stat-accent,var(--neon-cyan)) 50%,transparent)}
 .stat-suffix{font-size:.6em;vertical-align:top}
 .stat-label-txt{display:block;margin-top:.5rem;color:#9fdfe8;font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:.8rem}
+
+/* =====================================================================
+   VILLUMINATION 3D — v6 (VIP banner, FAQ cards, longer splash, product polish)
+   ===================================================================== */
+
+/* ---------- VIP banner ---------- */
+.vip-banner{position:relative;border-radius:1.5rem;padding:2px;overflow:hidden}
+.vip-banner-border{position:absolute;inset:-60%;background:conic-gradient(from 0deg,var(--neon-cyan),var(--neon-purple,#7b2fff),var(--neon-pink),var(--neon-orange),var(--neon-cyan));animation:vipSpin 6s linear infinite;filter:blur(6px)}
+@keyframes vipSpin{to{transform:rotate(360deg)}}
+.vip-banner-inner{position:relative;border-radius:calc(1.5rem - 2px);background:radial-gradient(120% 140% at 20% 0%,#101033 0%,#07071a 55%,#050510 100%);padding:clamp(2rem,6vw,4rem);overflow:hidden;text-align:center;z-index:1}
+.vip-banner-glow{position:absolute;border-radius:50%;filter:blur(50px);pointer-events:none}
+.vip-banner-glow-1{width:22rem;height:22rem;top:-8rem;left:-6rem;background:rgba(0,212,255,.14)}
+.vip-banner-glow-2{width:26rem;height:26rem;bottom:-10rem;right:-8rem;background:rgba(255,46,203,.13)}
+.vip-banner-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
+.vip-banner-shade{position:absolute;inset:0;background:radial-gradient(100% 100% at 50% 50%,rgba(5,5,16,.55),rgba(5,5,16,.9))}
+.vip-banner-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.vip-badge{display:inline-flex;align-items:center;gap:.45rem;padding:.45rem 1.1rem;border-radius:999px;border:1px solid var(--neon-yellow,#ffd000);color:var(--neon-yellow,#ffd000);font-family:var(--font-heading);font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 0 10px rgba(255,208,0,.5);animation:neonPulse 2.4s ease-in-out infinite}
+.vip-title{font-family:var(--font-heading);font-weight:900;font-size:clamp(2.2rem,7vw,4rem);margin:0;background:linear-gradient(100deg,var(--neon-yellow,#ffd000),var(--neon-orange) 40%,var(--neon-pink));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,150,0,.4))}
+.vip-text{max-width:34rem;margin:0;color:#ffe9c9;font-size:1.12rem}
+.vip-perks{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.vip-perk{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border-radius:.6rem;background:rgba(255,208,0,.07);border:1px solid rgba(255,208,0,.25);color:#ffdf8a;font-weight:600;font-size:.9rem}
+.vip-perk .icon{color:var(--neon-green)}
+.btn-vip{background:linear-gradient(135deg,var(--neon-orange),var(--neon-pink));color:#150800;border:none;box-shadow:0 8px 30px rgba(255,110,0,.4);font-weight:900}
+.btn-vip:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 10px 40px rgba(255,110,0,.6)}
+.a11y-mode .vip-title{background:none;-webkit-text-fill-color:currentColor;color:#fff!important;filter:none}
+@media(prefers-reduced-motion:reduce){.vip-banner-border{animation:none}}
+
+/* ---------- FAQ carousel cards ---------- */
+.faq-card{height:100%;background:linear-gradient(160deg,rgba(0,212,255,.05),var(--color-surface) 60%);border:1px solid rgba(0,212,255,.2);border-radius:1.1rem;padding:1.75rem;position:relative;overflow:hidden;transition:.25s}
+.faq-card:hover{border-color:rgba(0,212,255,.5);box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 24px rgba(0,212,255,.15);transform:translateY(-4px)}
+.faq-card-num{position:absolute;top:.6rem;right:1rem;font-family:var(--font-heading);font-weight:900;font-size:2.6rem;color:rgba(0,212,255,.12);line-height:1}
+.faq-card-q{font-family:var(--font-heading);font-weight:700;font-size:1.05rem;color:var(--neon-cyan);text-shadow:0 0 8px rgba(0,212,255,.35);margin:0 0 .7rem;padding-right:2.5rem}
+.faq-card-a{color:#cdeaf2;font-size:.95rem;line-height:1.65}
+
+/* ---------- Splash v3: longer + smoother ---------- */
+.splash-loader-bar{animation-duration:2.6s;animation-delay:1.2s}
+.splash-enter-btn{animation-delay:4s}
+.splash-emblem::after{content:"";position:absolute;inset:-14%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 70%,rgba(0,212,255,.35) 82%,transparent 95%);animation:vi-spin 5s linear infinite;pointer-events:none}
+.splash-tagline{animation:taglineAppear .6s ease-out 1.6s both}
+@media(prefers-reduced-motion:reduce){.splash-emblem::after{animation:none;display:none}}
+
+/* ---------- Product presentation polish ---------- */
+.product-card{border:1px solid rgba(0,212,255,.12);border-radius:1.1rem;overflow:hidden;background:linear-gradient(170deg,rgba(0,212,255,.04),var(--color-surface) 55%)}
+.product-card:hover{border-color:rgba(0,212,255,.45);box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 28px rgba(0,212,255,.16)}
+.product-card-image{aspect-ratio:1/1;display:block;position:relative;overflow:hidden;background:#0a0a1f}
+.product-card-image>img{width:100%;height:100%;object-fit:cover;transition:transform .45s ease}
+.product-card:hover .product-card-image>img{transform:scale(1.06)}
+.product-card-body{padding:1.1rem 1.2rem 1.25rem}
+.product-price-amount{font-family:var(--font-heading);font-weight:800;color:var(--neon-green);text-shadow:0 0 10px rgba(0,232,123,.4)}
+.add-to-cart-btn{width:42px;height:42px;border-radius:.65rem;display:grid;place-items:center;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.35);color:var(--neon-cyan);cursor:pointer;transition:.2s}
+.add-to-cart-btn:hover{background:rgba(0,212,255,.22);box-shadow:0 0 16px rgba(0,212,255,.4)}
+.card-carousel .product-card{height:100%}

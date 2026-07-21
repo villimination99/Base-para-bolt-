@@ -7,7 +7,8 @@
             <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}" width="120" height="40" style="height:36px;width:auto;">
           {%- else -%}
             {%- render 'logo-mark' -%}
-            <span class="footer-brand-name"><span class="nav-brand-grad">{{ shop.name | upcase | split: '99' | first }}</span><span class="nav-brand-99">99</span></span>
+            {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
+            <span class="footer-brand-name"><span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}</span>
           {%- endif -%}
         </div>
         {%- if section.settings.about != blank -%}

@@ -18,8 +18,9 @@
              style="height:{{ logo_h }}px;width:auto;object-fit:contain;">
       {%- else -%}
         {%- render 'logo-mark' -%}
+        {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
         <span class="nav-brand">
-          <span class="nav-brand-grad">{{ shop.name | upcase | split: '99' | first }}</span><span class="nav-brand-99">99</span>
+          <span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}
         </span>
       {%- endif -%}
     </a>

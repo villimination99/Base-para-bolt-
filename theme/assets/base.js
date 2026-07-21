@@ -35,7 +35,7 @@
     // Fail-safes so the intro can never trap the page:
     splash.addEventListener('click', function (e) { if (e.target === splash || e.target.classList.contains('splash-bg')) dismiss(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
-    setTimeout(dismiss, 12000);
+    setTimeout(dismiss, 16000);
   })();
 
   /* ---------- Navbar scroll ---------- */

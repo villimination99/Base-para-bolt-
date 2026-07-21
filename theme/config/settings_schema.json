@@ -35,6 +35,19 @@
         "id": "brand_tagline",
         "label": "Eslogan de marca",
         "default": "Transforma tu cuerpo. Domina tu mente."
+      },
+      {
+        "type": "text",
+        "id": "brand_display_name",
+        "label": "Nombre de marca (barra superior y pie)",
+        "default": "VILLUMINATION",
+        "info": "Si se deja vacío se usa el nombre de la tienda."
+      },
+      {
+        "type": "text",
+        "id": "brand_display_suffix",
+        "label": "Sufijo de marca (opcional, ej: 99)",
+        "info": "Se muestra en color naranja neón junto al nombre. Déjalo vacío para ocultarlo."
       }
     ]
   },

@@ -7,20 +7,34 @@
     </div>
 
     {%- assign coll = section.settings.collection -%}
-    <div class="product-grid">
+    {%- capture product_cards -%}
       {%- if coll != blank and coll.products_count > 0 -%}
         {%- for product in coll.products limit: section.settings.limit -%}
+          {%- if section.settings.layout == 'carousel' -%}<div class="carousel-slide">{%- endif -%}
           {%- render 'product-card', product: product -%}
+          {%- if section.settings.layout == 'carousel' -%}</div>{%- endif -%}
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..4) -%}
+          {%- if section.settings.layout == 'carousel' -%}<div class="carousel-slide">{%- endif -%}
           <div class="product-card product-card--placeholder">
             <div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div>
             <div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div>
           </div>
+          {%- if section.settings.layout == 'carousel' -%}</div>{%- endif -%}
         {%- endfor -%}
       {%- endif -%}
-    </div>
+    {%- endcapture -%}
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+        <div class="carousel-track" data-carousel-track style="--card-w:270px;">{{ product_cards }}</div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+      </div>
+    {%- else -%}
+      <div class="product-grid">{{ product_cards }}</div>
+    {%- endif -%}
 
     {%- if section.settings.show_view_all and coll != blank -%}
       <div class="section-cta">
@@ -39,6 +53,9 @@
     { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman." },
     { "type": "collection", "id": "collection", "label": "Colección" },
     { "type": "range", "id": "limit", "min": 2, "max": 12, "step": 1, "label": "Número de productos", "default": 8 },
+    { "type": "select", "id": "layout", "label": "Presentación", "options": [
+      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 0 },
     { "type": "checkbox", "id": "show_view_all", "label": "Mostrar botón 'ver todo'", "default": true },
     { "type": "text", "id": "view_all_label", "label": "Texto del botón", "default": "Ver toda la tienda" }
   ],

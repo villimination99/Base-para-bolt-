@@ -19,7 +19,7 @@
     "splash_3d": true,
     "splash_once_per_session": true,
     "splash_home_only": true,
-    "splash_title": "VILLUMINATION99",
+    "splash_title": "VILLUMINATION",
     "splash_tagline": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
     "seasonal_effect": "none",
     "seasonal_density": 50,
@@ -34,7 +34,9 @@
     "social_tiktok": "",
     "social_x": "",
     "cart_type": "drawer",
-    "cart_show_note": true
+    "cart_show_note": true,
+    "brand_display_name": "VILLUMINATION",
+    "brand_display_suffix": ""
   },
   "presets": {
     "Villumination 3D": {}
