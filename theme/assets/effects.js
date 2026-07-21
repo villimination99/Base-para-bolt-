@@ -174,6 +174,19 @@
                    c: ['0,212,255', '255,46,203', '0,232,123'][i % 3], tw: rnd(0, 6.28) });
     }
 
+    // Estrellas fugaces neón (una cada pocos segundos) + pulso de escaneo horizontal
+    var streaks = [];
+    var nextStreak = 1800;
+    var scanY = -1, nextScan = 5200;
+    function spawnStreak() {
+      var fromLeft = Math.random() < 0.5;
+      streaks.push({
+        x: fromLeft ? -0.05 : 1.05, y: rnd(0.05, 0.55),
+        vx: (fromLeft ? 1 : -1) * rnd(0.010, 0.017), vy: rnd(0.003, 0.007),
+        life: 1, c: ['0,212,255', '255,46,203', '255,208,0'][(Math.random() * 3) | 0]
+      });
+    }
+
     function drawFrame(t) {
       ctx.clearRect(0, 0, W, H);
       if (mode !== 'particles') {
@@ -188,6 +201,21 @@
           ctx.fillStyle = g;
           ctx.fillRect(0, 0, W, H);
         }
+        // Pulso de escaneo: línea tenue que barre la pantalla de arriba a abajo
+        nextScan -= 33;
+        if (nextScan <= 0 && scanY < 0) { scanY = 0; nextScan = rnd(9000, 14000); }
+        if (scanY >= 0) {
+          scanY += 0.006;
+          if (scanY > 1) { scanY = -1; }
+          else {
+            var sg = ctx.createLinearGradient(0, scanY * H - 40, 0, scanY * H + 40);
+            sg.addColorStop(0, 'rgba(0,212,255,0)');
+            sg.addColorStop(0.5, 'rgba(0,212,255,0.035)');
+            sg.addColorStop(1, 'rgba(0,212,255,0)');
+            ctx.fillStyle = sg;
+            ctx.fillRect(0, scanY * H - 40, W, 80);
+          }
+        }
       }
       if (mode !== 'aurora') {
         for (var p = 0; p < parts.length; p++) {
@@ -197,6 +225,21 @@
           var al = q.a * (0.6 + 0.4 * Math.sin(q.tw));
           ctx.fillStyle = 'rgba(' + q.c + ',' + al.toFixed(3) + ')';
           ctx.beginPath(); ctx.arc(q.x * W, q.y * H, q.r, 0, 6.2832); ctx.fill();
+        }
+        // Estrellas fugaces
+        nextStreak -= 33;
+        if (nextStreak <= 0) { spawnStreak(); nextStreak = rnd(3200, 6800); }
+        for (var s = streaks.length - 1; s >= 0; s--) {
+          var st = streaks[s];
+          st.x += st.vx; st.y += st.vy; st.life -= 0.016;
+          if (st.life <= 0 || st.x < -0.1 || st.x > 1.1) { streaks.splice(s, 1); continue; }
+          var tx = st.x * W, ty = st.y * H;
+          var tailX = tx - st.vx * W * 9, tailY = ty - st.vy * H * 9;
+          var lg = ctx.createLinearGradient(tailX, tailY, tx, ty);
+          lg.addColorStop(0, 'rgba(' + st.c + ',0)');
+          lg.addColorStop(1, 'rgba(' + st.c + ',' + (0.55 * st.life).toFixed(3) + ')');
+          ctx.strokeStyle = lg; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(tailX, tailY); ctx.lineTo(tx, ty); ctx.stroke();
         }
       }
     }

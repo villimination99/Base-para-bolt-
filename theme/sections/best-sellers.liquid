@@ -23,10 +23,12 @@
       <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
         {%- for product in src.products limit: section.settings.limit -%}
           <div class="carousel-slide bestseller-slide">
-            {%- if section.settings.show_rank and forloop.index <= 3 -%}
-              <span class="bestseller-rank bestseller-rank--{{ forloop.index }}" aria-hidden="true">#{{ forloop.index }}</span>
-            {%- endif -%}
-            {%- render 'product-card', product: product -%}
+            <div class="bestseller-wrap">
+              {%- if section.settings.show_rank and forloop.index <= 3 -%}
+                <span class="bestseller-rank bestseller-rank--{{ forloop.index }}" aria-hidden="true">#{{ forloop.index }}</span>
+              {%- endif -%}
+              {%- render 'product-card', product: product -%}
+            </div>
           </div>
         {%- else -%}
           {%- for i in (1..4) -%}
