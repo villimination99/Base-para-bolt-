@@ -29,6 +29,17 @@
       "block_order": ["b1", "b2", "b3"],
       "settings": {}
     },
+    "stats": {
+      "type": "stats-band",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "number": 94, "prefix": "+", "suffix": "%", "label": "Más conversiones", "accent": "#00d4ff" } },
+        "s2": { "type": "stat", "settings": { "number": 40, "prefix": "-", "suffix": "%", "label": "Devoluciones", "accent": "#ff2ecb" } },
+        "s3": { "type": "stat", "settings": { "number": 5000, "prefix": "+", "suffix": "", "label": "Atletas transformados", "accent": "#00e87b" } },
+        "s4": { "type": "stat", "settings": { "number": 24, "suffix": "/7", "label": "Soporte", "accent": "#ff7700" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {}
+    },
     "videos": {
       "type": "video-grid",
       "blocks": {
@@ -77,5 +88,5 @@
       "settings": {}
     }
   },
-  "order": ["hero", "marquee", "products", "benefits", "videos", "plans", "testimonials", "faq", "newsletter"]
+  "order": ["hero", "marquee", "products", "benefits", "stats", "videos", "plans", "testimonials", "faq", "newsletter"]
 }

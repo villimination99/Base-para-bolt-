@@ -1,0 +1,53 @@
+<section class="section-padding stats-band">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+    <div class="stats-grid">
+      {%- for block in section.blocks -%}
+        <div class="stat-item" style="--stat-accent:{{ block.settings.accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <span class="stat-num">
+            {%- if block.settings.prefix != blank -%}<span class="stat-suffix">{{ block.settings.prefix }}</span>{%- endif -%}
+            <span data-countup="{{ block.settings.number }}">0</span>
+            {%- if block.settings.suffix != blank -%}<span class="stat-suffix">{{ block.settings.suffix }}</span>{%- endif -%}
+          </span>
+          <span class="stat-label-txt">{{ block.settings.label }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Estadísticas animadas",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "title", "label": "Título" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Estadística",
+      "settings": [
+        { "type": "number", "id": "number", "label": "Número", "default": 94 },
+        { "type": "text", "id": "prefix", "label": "Prefijo (ej: +)" },
+        { "type": "text", "id": "suffix", "label": "Sufijo (ej: %)", "default": "%" },
+        { "type": "text", "id": "label", "label": "Descripción", "default": "Más conversiones" },
+        { "type": "color", "id": "accent", "label": "Color", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Estadísticas animadas", "blocks": [
+      { "type": "stat", "settings": { "number": 94, "prefix": "+", "suffix": "%", "label": "Más conversiones", "accent": "#00d4ff" } },
+      { "type": "stat", "settings": { "number": 40, "prefix": "-", "suffix": "%", "label": "Devoluciones", "accent": "#ff2ecb" } },
+      { "type": "stat", "settings": { "number": 5000, "prefix": "+", "suffix": "", "label": "Atletas transformados", "accent": "#00e87b" } },
+      { "type": "stat", "settings": { "number": 24, "suffix": "/7", "label": "Soporte", "accent": "#ff7700" } }
+    ] }
+  ]
+}
+{% endschema %}

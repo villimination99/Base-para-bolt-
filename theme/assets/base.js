@@ -335,6 +335,31 @@
     }, true);
   });
 
+  /* ---------- Animated counters (stats band) ---------- */
+  (function () {
+    var els = $all('[data-countup]');
+    if (!els.length) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function animate(el) {
+      var target = parseFloat(el.getAttribute('data-countup')) || 0;
+      if (reduced) { el.textContent = target.toLocaleString(); return; }
+      var start = null, dur = 1600;
+      function frame(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased).toLocaleString();
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+    if (!('IntersectionObserver' in window)) { els.forEach(animate); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+
   /* ---------- Countdown ---------- */
   $all('[data-countdown]').forEach(function (root) {
     var target = new Date((root.getAttribute('data-countdown') || '').replace(/-/g, '/')).getTime();

@@ -4,7 +4,10 @@
 <section class="hero {% if section.settings.parallax and settings.enable_parallax %}has-parallax{% endif %}" id="hero"
   style="min-height:{{ section.settings.height }}vh;">
   <div class="hero-bg" data-parallax-speed="0.3">
-    {%- if section.settings.image != blank -%}
+    {%- if section.settings.video != null -%}
+      {{ section.settings.video | video_tag: image_size: '1600x', autoplay: true, loop: true, muted: true, controls: false, preload: 'metadata', class: 'hero-bg-video' }}
+      <div class="hero-bg-overlay" style="opacity:{{ overlay }};"></div>
+    {%- elsif section.settings.image != blank -%}
       <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="" width="2400" height="{{ 2400 | divided_by: section.settings.image.aspect_ratio | round }}" fetchpriority="high">
       <div class="hero-bg-overlay" style="opacity:{{ overlay }};"></div>
     {%- else -%}
@@ -53,6 +56,7 @@
 {
   "name": "Hero",
   "settings": [
+    { "type": "video", "id": "video", "label": "Video de fondo (opcional)", "info": "Video corto en bucle, sin sonido. Tiene prioridad sobre la imagen. Súbelo aquí mismo o en Configuración → Archivos." },
     { "type": "image_picker", "id": "image", "label": "Imagen de fondo (opcional)" },
     { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Oscurecer imagen", "default": 55 },
     { "type": "range", "id": "height", "min": 60, "max": 100, "step": 5, "unit": "vh", "label": "Altura", "default": 100 },

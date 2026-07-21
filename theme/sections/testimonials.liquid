@@ -4,23 +4,36 @@
       {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-pink">{{ section.settings.eyebrow }}</span>{%- endif -%}
       <h2 class="section-title">{{ section.settings.title }}</h2>
     </div>
-    <div class="testi-grid">
+
+    {%- capture testi_cards -%}
       {%- for block in section.blocks -%}
-        <div class="testi-card" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-          <div class="testi-stars" aria-label="{{ block.settings.stars }} / 5">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
-          <p class="testi-quote">“{{ block.settings.quote }}”</p>
-          <div class="testi-author">
-            {%- if block.settings.avatar != blank -%}
-              <img class="testi-avatar" src="{{ block.settings.avatar | image_url: width: 96 }}" alt="{{ block.settings.name | escape }}" width="44" height="44" loading="lazy">
-            {%- endif -%}
-            <div>
-              <div class="testi-name">{{ block.settings.name }}</div>
-              {%- if block.settings.role != blank -%}<div class="testi-role">{{ block.settings.role }}</div>{%- endif -%}
+        <div class="{% if section.settings.layout == 'carousel' %}carousel-slide{% endif %}" {{ block.shopify_attributes }}>
+          <div class="testi-card" {% if section.settings.layout != 'carousel' and settings.enable_scroll_reveal %}data-reveal{% endif %}>
+            <div class="testi-stars" aria-label="{{ block.settings.stars }} / 5">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
+            <p class="testi-quote">“{{ block.settings.quote }}”</p>
+            <div class="testi-author">
+              {%- if block.settings.avatar != blank -%}
+                <img class="testi-avatar" src="{{ block.settings.avatar | image_url: width: 96 }}" alt="{{ block.settings.name | escape }}" width="44" height="44" loading="lazy">
+              {%- endif -%}
+              <div>
+                <div class="testi-name">{{ block.settings.name }}</div>
+                {%- if block.settings.role != blank -%}<div class="testi-role">{{ block.settings.role }}</div>{%- endif -%}
+              </div>
             </div>
           </div>
         </div>
       {%- endfor -%}
-    </div>
+    {%- endcapture -%}
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+        <div class="carousel-track" data-carousel-track style="--card-w:340px;">{{ testi_cards }}</div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+      </div>
+    {%- else -%}
+      <div class="testi-grid">{{ testi_cards }}</div>
+    {%- endif -%}
   </div>
 </section>
 
@@ -29,7 +42,10 @@
   "name": "Testimonios",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Comunidad" },
-    { "type": "text", "id": "title", "label": "Título", "default": "LO QUE DICEN LOS ATLETAS" }
+    { "type": "text", "id": "title", "label": "Título", "default": "LO QUE DICEN LOS ATLETAS" },
+    { "type": "select", "id": "layout", "label": "Presentación", "options": [
+      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 5 }
   ],
   "blocks": [
     {
@@ -44,6 +60,6 @@
       ]
     }
   ],
-  "presets": [ { "name": "Testimonios", "blocks": [ { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" } ] } ]
+  "presets": [ { "name": "Testimonios", "blocks": [ { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" } ] } ]
 }
 {% endschema %}

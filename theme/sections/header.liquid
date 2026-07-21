@@ -5,7 +5,7 @@
   assign dd_alpha = section.settings.menu_opacity | default: 85 | divided_by: 100.0
 -%}
 {%- style -%}
-  #navbar { --dd-alpha: {{ dd_alpha }}; }
+  #navbar, #mobile-menu { --dd-alpha: {{ dd_alpha }}; }
 {%- endstyle -%}
 <nav class="navbar{% if section.settings.transparent_top %} transparent-top{% endif %}" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
   <div class="navbar-inner">
