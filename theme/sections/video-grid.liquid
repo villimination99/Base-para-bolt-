@@ -6,17 +6,24 @@
       {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
     </div>
 
-    <div class="video-grid">
-      {%- for block in section.blocks -%}
-        <div class="video-card" style="--accent:{{ section.settings.accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-          {%- if block.settings.video_id != blank -%}
-            <button class="video-card-thumb" data-video-embed="{{ block.settings.video_id }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
-              <img src="https://i.ytimg.com/vi/{{ block.settings.video_id }}/hqdefault.jpg" alt="{{ block.settings.title | escape }}" width="480" height="360" loading="lazy">
-              <span class="video-card-play">{%- render 'icon', name: 'play' -%}</span>
-            </button>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+    <div class="carousel video-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+      <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+      <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
+        {%- for block in section.blocks -%}
+          <div class="video-slide" style="--accent:{{ section.settings.accent }};" {{ block.shopify_attributes }}>
+            <div class="video-card">
+              {%- if block.settings.video_id != blank -%}
+                <button class="video-card-thumb" type="button" data-video-embed="{{ block.settings.video_id }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
+                  <img src="https://i.ytimg.com/vi/{{ block.settings.video_id }}/hqdefault.jpg" alt="{{ block.settings.title | escape }}" width="320" height="180" loading="lazy">
+                  <span class="video-card-play">{%- render 'icon', name: 'play' -%}</span>
+                </button>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.title != blank -%}<p class="video-caption">{{ block.settings.title }}</p>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+      <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
     </div>
 
     {%- if section.settings.button_label != blank -%}
@@ -31,12 +38,14 @@
 
 {% schema %}
 {
-  "name": "Rejilla de videos",
+  "name": "Carrusel de videos",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "YouTube" },
     { "type": "text", "id": "title", "label": "Título", "default": "CONTENIDO EXCLUSIVO" },
     { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Entrena conmigo, aprende y transfórmate con cada video." },
-    { "type": "color", "id": "accent", "label": "Color de acento", "default": "#ef4444" },
+    { "type": "color", "id": "accent", "label": "Color de acento", "default": "#ff2ecb" },
+    { "type": "range", "id": "card_width", "min": 150, "max": 300, "step": 10, "unit": "px", "label": "Ancho de cada video", "default": 210 },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 8, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 4 },
     { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Ver más Shorts" },
     { "type": "url", "id": "button_url", "label": "Enlace del botón" }
   ],
@@ -46,14 +55,14 @@
       "name": "Video de YouTube",
       "settings": [
         { "type": "text", "id": "video_id", "label": "ID del video de YouTube", "info": "El código después de watch?v= o /shorts/" },
-        { "type": "text", "id": "title", "label": "Título (accesibilidad)" }
+        { "type": "text", "id": "title", "label": "Título / pie" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Rejilla de videos",
-      "blocks": [{ "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }]
+      "name": "Carrusel de videos",
+      "blocks": [ { "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" }, { "type": "video" } ]
     }
   ]
 }

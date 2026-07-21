@@ -61,7 +61,7 @@
         "type": "color",
         "id": "color_text",
         "label": "Texto",
-        "default": "#e6e6f0"
+        "default": "#d8f6ff"
       },
       {
         "type": "header",
@@ -197,11 +197,26 @@
         "id": "seasonal_effect",
         "label": "Efecto en toda la tienda",
         "options": [
-          { "value": "none", "label": "Ninguno" },
-          { "value": "snow", "label": "Nieve" },
-          { "value": "confetti", "label": "Confeti" },
-          { "value": "hearts", "label": "Corazones" },
-          { "value": "sparks", "label": "Chispas neón" }
+          {
+            "value": "none",
+            "label": "Ninguno"
+          },
+          {
+            "value": "snow",
+            "label": "Nieve"
+          },
+          {
+            "value": "confetti",
+            "label": "Confeti"
+          },
+          {
+            "value": "hearts",
+            "label": "Corazones"
+          },
+          {
+            "value": "sparks",
+            "label": "Chispas neón"
+          }
         ],
         "default": "none",
         "info": "Ligero (canvas, carga diferida). Se desactiva solo si el visitante prefiere menos movimiento."
@@ -299,8 +314,14 @@
         "id": "cart_type",
         "label": "Tipo de carrito",
         "options": [
-          { "value": "drawer", "label": "Cajón lateral" },
-          { "value": "page", "label": "Página" }
+          {
+            "value": "drawer",
+            "label": "Cajón lateral"
+          },
+          {
+            "value": "page",
+            "label": "Página"
+          }
         ],
         "default": "drawer"
       },

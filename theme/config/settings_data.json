@@ -3,7 +3,7 @@
     "brand_tagline": "Transforma tu cuerpo. Domina tu mente.",
     "color_bg": "#060612",
     "color_surface": "#0b0b1e",
-    "color_text": "#e6e6f0",
+    "color_text": "#d8f6ff",
     "color_cyan": "#00d4ff",
     "color_pink": "#ff2ecb",
     "color_green": "#00e87b",
@@ -37,7 +37,6 @@
     "cart_show_note": true
   },
   "presets": {
-    "Villumination 3D": {
-    }
+    "Villumination 3D": {}
   }
 }

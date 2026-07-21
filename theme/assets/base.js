@@ -262,6 +262,52 @@
     });
   });
 
+  /* ---------- Carousels (videos, etc.) ---------- */
+  (function () {
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    $all('[data-carousel]').forEach(function (root) {
+      var track = $('[data-carousel-track]', root);
+      if (!track) return;
+      var prev = $('[data-carousel-prev]', root);
+      var next = $('[data-carousel-next]', root);
+      function step() { return Math.max(track.clientWidth * 0.8, 200); }
+      function updateArrows() {
+        var atStart = track.scrollLeft <= 4;
+        var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+        var noOverflow = track.scrollWidth <= track.clientWidth + 4;
+        [prev, next].forEach(function (b) { if (b) b.style.display = noOverflow ? 'none' : ''; });
+        if (prev) prev.classList.toggle('is-disabled', atStart);
+        if (next) next.classList.toggle('is-disabled', atEnd);
+      }
+      if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
+      if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });
+      track.addEventListener('scroll', function () { window.requestAnimationFrame(updateArrows); }, { passive: true });
+      window.addEventListener('resize', updateArrows);
+      updateArrows();
+
+      var speed = parseFloat(root.getAttribute('data-autoplay')) || 0;
+      if (speed > 0 && !reduced) {
+        var timer = null;
+        function tick() {
+          if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: step(), behavior: 'smooth' });
+          }
+        }
+        function start() { if (!timer) timer = setInterval(tick, speed * 1000); }
+        function stop() { if (timer) { clearInterval(timer); timer = null; } }
+        start();
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+        root.addEventListener('touchstart', stop, { passive: true });
+        document.addEventListener('visibilitychange', function () { if (document.hidden) { stop(); } else { start(); } });
+      }
+    });
+  })();
+
   /* ---------- Flipbook / PDF catalog (lazy) ---------- */
   $all('[data-flipbook-load]').forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -287,6 +333,29 @@
         $all('details.faq-item', list).forEach(function (d) { if (d !== t) d.open = false; });
       }
     }, true);
+  });
+
+  /* ---------- Countdown ---------- */
+  $all('[data-countdown]').forEach(function (root) {
+    var target = new Date((root.getAttribute('data-countdown') || '').replace(/-/g, '/')).getTime();
+    if (isNaN(target)) return;
+    var d = $('[data-cd-days]', root), h = $('[data-cd-hours]', root), m = $('[data-cd-mins]', root), s = $('[data-cd-secs]', root);
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tick() {
+      var diff = target - Date.now();
+      if (diff <= 0) {
+        root.innerHTML = '<p class="countdown-expired">' + (root.getAttribute('data-expired') || '') + '</p>';
+        clearInterval(iv);
+        return;
+      }
+      var sec = Math.floor(diff / 1000);
+      if (d) d.textContent = pad(Math.floor(sec / 86400));
+      if (h) h.textContent = pad(Math.floor((sec % 86400) / 3600));
+      if (m) m.textContent = pad(Math.floor((sec % 3600) / 60));
+      if (s) s.textContent = pad(sec % 60);
+    }
+    tick();
+    var iv = setInterval(tick, 1000);
   });
 
   /* ---------- Hero rotating words ---------- */

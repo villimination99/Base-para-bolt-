@@ -35,7 +35,9 @@
       "password_label": "Contraseña",
       "admin_link_html": "¿Eres el dueño de la tienda?"
     },
-    "view_all": "Ver todo"
+    "view_all": "Ver todo",
+    "previous": "Anterior",
+    "next": "Siguiente"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",
