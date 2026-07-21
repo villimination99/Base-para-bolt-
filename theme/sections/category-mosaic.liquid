@@ -1,0 +1,70 @@
+{%- comment -%}
+  Mosaico de colecciones: composición asimétrica con imágenes de fondo.
+  La primera categoría ocupa el doble de espacio. Sin carrusel.
+{%- endcomment -%}
+<section class="section-padding" style="--sec-neon:{{ section.settings.neon_color }};">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title {% if section.settings.neon_style != 'none' %}neon-underline{% endif %}">{{ section.settings.title }}</h2>
+    </div>
+    <div class="catmosaic">
+      {%- for block in section.blocks -%}
+        {%- assign coll = block.settings.collection -%}
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}"
+           class="catmosaic-tile {% if forloop.first %}is-hero{% endif %} {% if section.settings.neon_style == 'subtle' %}neon-soft{% endif %}"
+           style="--accent:{{ block.settings.accent }};" {{ block.shopify_attributes }}
+           {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          {%- assign img = block.settings.image | default: coll.featured_image -%}
+          {%- if img -%}
+            <img src="{{ img | image_url: width: 900 }}" alt="{{ block.settings.title | default: coll.title | escape }}" width="900" height="700" loading="lazy">
+          {%- endif -%}
+          <span class="catmosaic-shade" aria-hidden="true"></span>
+          <span class="catmosaic-body">
+            <span class="catmosaic-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+            <span class="catmosaic-title">{{ block.settings.title | default: coll.title }}</span>
+            {%- if block.settings.text != blank -%}<span class="catmosaic-text">{{ block.settings.text }}</span>{%- endif -%}
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mosaico de colecciones",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Lo más buscado" },
+    { "type": "text", "id": "title", "label": "Título", "default": "COLECCIONES POPULARES" },
+    { "type": "select", "id": "neon_style", "label": "Efecto neón", "options": [
+      { "value": "none", "label": "Sin neón" }, { "value": "subtle", "label": "Sutil" } ], "default": "none" },
+    { "type": "color", "id": "neon_color", "label": "Color del neón", "default": "#7b2fff" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Colección",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" }, { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" }, { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "bolt", "label": "Rayo" } ], "default": "bolt" },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional)" },
+        { "type": "text", "id": "title", "label": "Título (opcional)" },
+        { "type": "text", "id": "text", "label": "Texto corto" },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Mosaico de colecciones", "blocks": [
+      { "type": "category", "settings": { "icon": "shirt", "title": "Ropa", "text": "La colección insignia", "accent": "#00d4ff" } },
+      { "type": "category", "settings": { "icon": "dumbbell", "title": "Equipo", "accent": "#ff2ecb" } },
+      { "type": "category", "settings": { "icon": "supplement", "title": "Suplementos", "accent": "#00e87b" } },
+      { "type": "category", "settings": { "icon": "book", "title": "Conocimiento", "accent": "#ff7700" } }
+    ] }
+  ]
+}
+{% endschema %}

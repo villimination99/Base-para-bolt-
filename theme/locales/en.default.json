@@ -37,7 +37,9 @@
     },
     "view_all": "View all",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "language": "Language",
+    "explore": "Explore"
   },
   "accessibility": {
     "skip_to_content": "Skip to content",

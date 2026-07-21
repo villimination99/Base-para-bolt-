@@ -37,7 +37,9 @@
     },
     "view_all": "Ver todo",
     "previous": "Anterior",
-    "next": "Siguiente"
+    "next": "Siguiente",
+    "language": "Idioma",
+    "explore": "Explorar"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",

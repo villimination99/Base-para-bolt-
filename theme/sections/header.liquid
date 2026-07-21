@@ -36,18 +36,33 @@
             <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
             <div class="nav-dropdown nav-mega">
               <div class="nav-mega-grid">
-                {%- for collection in collections limit: section.settings.collections_count -%}
-                  <a href="{{ collection.url }}" class="nav-mega-card">
-                    <span class="nav-mega-media">
-                      {%- if collection.featured_image -%}
-                        <img src="{{ collection.featured_image | image_url: width: 160 }}" alt="{{ collection.title | escape }}" width="56" height="56" loading="lazy">
-                      {%- else -%}{%- render 'icon', name: 'cube' -%}{%- endif -%}
-                    </span>
-                    <span class="nav-mega-title">{{ collection.title }}</span>
-                  </a>
+                {%- comment -%} Curated entries (blocks) win; otherwise auto-list collections {%- endcomment -%}
+                {%- assign mega_blocks = section.blocks | where: 'type', 'mega_link' -%}
+                {%- if mega_blocks.size > 0 -%}
+                  {%- for block in mega_blocks -%}
+                    {%- assign mc = block.settings.collection -%}
+                    <a href="{{ mc.url | default: routes.all_products_collection_url }}" class="nav-mega-card" {{ block.shopify_attributes }}>
+                      <span class="nav-mega-media nav-mega-media--icon">{%- render 'icon', name: block.settings.icon -%}</span>
+                      <span>
+                        <span class="nav-mega-title">{{ block.settings.title | default: mc.title }}</span>
+                        {%- if block.settings.subtitle != blank -%}<span class="nav-mega-sub">{{ block.settings.subtitle }}</span>{%- endif -%}
+                      </span>
+                    </a>
+                  {%- endfor -%}
                 {%- else -%}
-                  <a href="{{ routes.all_products_collection_url }}" class="nav-mega-card"><span class="nav-mega-title">{{ 'general.shop' | t }}</span></a>
-                {%- endfor -%}
+                  {%- for collection in collections limit: section.settings.collections_count -%}
+                    <a href="{{ collection.url }}" class="nav-mega-card">
+                      <span class="nav-mega-media">
+                        {%- if collection.featured_image -%}
+                          <img src="{{ collection.featured_image | image_url: width: 160 }}" alt="{{ collection.title | escape }}" width="56" height="56" loading="lazy">
+                        {%- else -%}{%- render 'icon', name: 'cube' -%}{%- endif -%}
+                      </span>
+                      <span class="nav-mega-title">{{ collection.title }}</span>
+                    </a>
+                  {%- else -%}
+                    <a href="{{ routes.all_products_collection_url }}" class="nav-mega-card"><span class="nav-mega-title">{{ 'general.shop' | t }}</span></a>
+                  {%- endfor -%}
+                {%- endif -%}
               </div>
               <a href="{{ routes.all_products_collection_url }}" class="nav-mega-all">{{ 'general.view_all' | t }}{%- render 'icon', name: 'arrow-right' -%}</a>
             </div>
@@ -101,15 +116,33 @@
     </button>
     {%- for link in section.settings.menu.links -%}
       {%- assign m_key = link.title | downcase | strip -%}
-      <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
-      {%- if trigger != blank and m_key == trigger -%}
-        <div class="mobile-submenu">
-          {%- for collection in collections limit: section.settings.collections_count -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- endfor -%}
+      {%- assign m_is_coll = false -%}
+      {%- if trigger != blank and m_key == trigger -%}{%- assign m_is_coll = true -%}{%- endif -%}
+
+      {%- if m_is_coll or link.links.size > 0 -%}
+        {%- comment -%} Parent with submenu: tap toggles it open/closed {%- endcomment -%}
+        <div class="mobile-item">
+          <button type="button" class="mobile-parent" data-mobile-toggle aria-expanded="false">
+            <span>{{ link.title }}</span><span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span>
+          </button>
+          <div class="mobile-submenu" hidden>
+            {%- if m_is_coll -%}
+              {%- assign m_mega = section.blocks | where: 'type', 'mega_link' -%}
+              {%- if m_mega.size > 0 -%}
+                {%- for block in m_mega -%}
+                  {%- assign mmc = block.settings.collection -%}
+                  <a href="{{ mmc.url | default: routes.all_products_collection_url }}">{%- render 'icon', name: block.settings.icon -%}{{ block.settings.title | default: mmc.title }}</a>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for collection in collections limit: section.settings.collections_count -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- endfor -%}
+              {%- endif -%}
+            {%- else -%}
+              {%- for child in link.links -%}<a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>{%- endfor -%}
+            {%- endif -%}
+          </div>
         </div>
-      {%- elsif link.links.size > 0 -%}
-        <div class="mobile-submenu">
-          {%- for child in link.links -%}<a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>{%- endfor -%}
-        </div>
+      {%- else -%}
+        <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
       {%- endif -%}
     {%- else -%}
       <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
@@ -173,6 +206,33 @@
       "step": 1,
       "label": "Colecciones a mostrar",
       "default": 6
+    },
+    {
+      "type": "paragraph",
+      "content": "Añade bloques 'Entrada del mega menú' para elegir manualmente qué colecciones aparecen (con icono). Si no añades ninguno, se listan automáticamente."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_link",
+      "name": "Entrada del mega menú",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" },
+          { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" },
+          { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "brain", "label": "Mente" },
+          { "value": "nutrition", "label": "Nutrición" },
+          { "value": "headphones", "label": "Audio" },
+          { "value": "trophy", "label": "Trofeo" },
+          { "value": "bolt", "label": "Rayo" },
+          { "value": "cube", "label": "Cubo 3D" }
+        ], "default": "shirt" },
+        { "type": "text", "id": "title", "label": "Título (opcional, usa el de la colección si va vacío)" },
+        { "type": "text", "id": "subtitle", "label": "Subtítulo corto (opcional)" }
+      ]
     }
   ]
 }

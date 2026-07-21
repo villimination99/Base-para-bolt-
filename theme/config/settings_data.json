@@ -36,7 +36,10 @@
     "cart_type": "drawer",
     "cart_show_note": true,
     "brand_display_name": "VILLUMINATION",
-    "brand_display_suffix": ""
+    "brand_display_suffix": "",
+    "neon_speed": 6,
+    "neon_intensity": 60,
+    "auto_language": true
   },
   "presets": {
     "Villumination 3D": {}

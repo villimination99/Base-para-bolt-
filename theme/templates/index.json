@@ -7,12 +7,37 @@
     "marquee": {
       "type": "marquee",
       "blocks": {
-        "w1": { "type": "word", "settings": { "text": "FUERZA" } },
-        "w2": { "type": "word", "settings": { "text": "DISCIPLINA" } },
-        "w3": { "type": "word", "settings": { "text": "PODER" } },
-        "w4": { "type": "word", "settings": { "text": "SIN LÍMITES" } }
+        "w1": {
+          "type": "word",
+          "settings": {
+            "text": "FUERZA"
+          }
+        },
+        "w2": {
+          "type": "word",
+          "settings": {
+            "text": "DISCIPLINA"
+          }
+        },
+        "w3": {
+          "type": "word",
+          "settings": {
+            "text": "PODER"
+          }
+        },
+        "w4": {
+          "type": "word",
+          "settings": {
+            "text": "SIN LÍMITES"
+          }
+        }
       },
-      "block_order": ["w1", "w2", "w3", "w4"],
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
       "settings": {}
     },
     "products": {
@@ -22,42 +47,198 @@
     "benefits": {
       "type": "multicolumn",
       "blocks": {
-        "b1": { "type": "column", "settings": { "icon": "cube", "stat": "-40%", "title": "Menos devoluciones", "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar.", "accent": "#00d4ff" } },
-        "b2": { "type": "column", "settings": { "icon": "bolt", "stat": "+94%", "title": "Más conversiones", "text": "La experiencia inmersiva multiplica las ventas.", "accent": "#ff2ecb" } },
-        "b3": { "type": "column", "settings": { "icon": "check", "stat": "24/7", "title": "Soporte real", "text": "Estamos contigo en cada paso.", "accent": "#00e87b" } }
+        "b1": {
+          "type": "column",
+          "settings": {
+            "icon": "cube",
+            "stat": "-40%",
+            "title": "Menos devoluciones",
+            "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar.",
+            "accent": "#00d4ff"
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "icon": "bolt",
+            "stat": "+94%",
+            "title": "Más conversiones",
+            "text": "La experiencia inmersiva multiplica las ventas.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "icon": "check",
+            "stat": "24/7",
+            "title": "Soporte real",
+            "text": "Estamos contigo en cada paso.",
+            "accent": "#00e87b"
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3"],
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
       "settings": {}
     },
     "vip": {
       "type": "vip-banner",
       "blocks": {
-        "t1": { "type": "tool", "settings": { "emoji": "🗿", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
-        "t2": { "type": "tool", "settings": { "emoji": "🏋️", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
-        "t3": { "type": "tool", "settings": { "emoji": "🍽", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
-        "t4": { "type": "tool", "settings": { "emoji": "📅", "title": "Planes Dietarios", "text": "4 planes · menús todo el año" } },
-        "t5": { "type": "tool", "settings": { "emoji": "🧘", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
-        "t6": { "type": "tool", "settings": { "emoji": "🎧", "title": "Frecuencias", "text": "Solfeggio, binaurales y duales" } },
-        "t7": { "type": "tool", "settings": { "emoji": "🏆", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
-        "t8": { "type": "tool", "settings": { "emoji": "📊", "title": "Progreso y Sueño", "text": "Tu salud entera en gráficos" } },
-        "s1": { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
-        "s2": { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
-        "s3": { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },
-        "s4": { "type": "stat", "settings": { "number": "55", "label": "Alimentos" } },
-        "s5": { "type": "stat", "settings": { "number": "6", "label": "Niveles" } }
+        "t1": {
+          "type": "tool",
+          "settings": {
+            "title": "Mapa Muscular 3D",
+            "text": "Toca un músculo y ve sus ejercicios",
+            "icon": "body3d"
+          }
+        },
+        "t2": {
+          "type": "tool",
+          "settings": {
+            "title": "Entrenamiento",
+            "text": "27 ejercicios con calorías reales",
+            "icon": "dumbbell"
+          }
+        },
+        "t3": {
+          "type": "tool",
+          "settings": {
+            "title": "Nutrición IA",
+            "text": "Escanea tu plato con la cámara",
+            "icon": "camera"
+          }
+        },
+        "t4": {
+          "type": "tool",
+          "settings": {
+            "title": "Planes Dietarios",
+            "text": "4 planes · menús todo el año",
+            "icon": "calendar"
+          }
+        },
+        "t5": {
+          "type": "tool",
+          "settings": {
+            "title": "Meditación",
+            "text": "Respiración guiada + 21 días",
+            "icon": "meditation"
+          }
+        },
+        "t6": {
+          "type": "tool",
+          "settings": {
+            "title": "Frecuencias",
+            "text": "Solfeggio, binaurales y duales",
+            "icon": "headphones"
+          }
+        },
+        "t7": {
+          "type": "tool",
+          "settings": {
+            "title": "Nivel de Atleta",
+            "text": "De Principiante a Predator",
+            "icon": "trophy"
+          }
+        },
+        "t8": {
+          "type": "tool",
+          "settings": {
+            "title": "Progreso y Sueño",
+            "text": "Tu salud entera en gráficos",
+            "icon": "chart"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "27",
+            "label": "Ejercicios"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "17",
+            "label": "Frecuencias"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "9",
+            "label": "Zonas 3D"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "55",
+            "label": "Alimentos"
+          }
+        },
+        "s5": {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": "Niveles"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "t7", "t8", "s1", "s2", "s3", "s4", "s5"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
       "settings": {}
     },
     "videos": {
       "type": "video-grid",
       "blocks": {
-        "v1": { "type": "video", "settings": { "video_id": "B6f4OevcqJg" } },
-        "v2": { "type": "video", "settings": { "video_id": "f7AvjOoxSPY" } },
-        "v3": { "type": "video", "settings": { "video_id": "PD0ode222Ps" } },
-        "v4": { "type": "video", "settings": { "video_id": "1Rj5Q52xhx8" } }
+        "v1": {
+          "type": "video",
+          "settings": {
+            "video_id": "B6f4OevcqJg"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "video_id": "f7AvjOoxSPY"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "video_id": "PD0ode222Ps"
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "video_id": "1Rj5Q52xhx8"
+          }
+        }
       },
-      "block_order": ["v1", "v2", "v3", "v4"],
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
       "settings": {
         "button_url": "https://www.youtube.com/@villumination99/shorts"
       }
@@ -65,37 +246,336 @@
     "plans": {
       "type": "subscription-plans",
       "blocks": {
-        "p1": { "type": "plan", "settings": { "name": "Básico", "tagline": "Volumen Limpio", "price": "$9.99", "accent": "#00e87b" } },
-        "p2": { "type": "plan", "settings": { "name": "Pro", "tagline": "Definición + Volumen", "price": "$19.99", "accent": "#00d4ff", "featured": true } },
-        "p3": { "type": "plan", "settings": { "name": "Elite", "tagline": "Full Coaching", "price": "$39.99", "accent": "#ff7700" } }
+        "p1": {
+          "type": "plan",
+          "settings": {
+            "name": "Básico",
+            "tagline": "Volumen Limpio",
+            "price": "$9.99",
+            "accent": "#00e87b"
+          }
+        },
+        "p2": {
+          "type": "plan",
+          "settings": {
+            "name": "Pro",
+            "tagline": "Definición + Volumen",
+            "price": "$19.99",
+            "accent": "#00d4ff",
+            "featured": true
+          }
+        },
+        "p3": {
+          "type": "plan",
+          "settings": {
+            "name": "Elite",
+            "tagline": "Full Coaching",
+            "price": "$39.99",
+            "accent": "#ff7700"
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
       "settings": {}
     },
     "testimonials": {
       "type": "testimonials",
       "blocks": {
-        "t1": { "type": "testimonial", "settings": { "quote": "El mejor cambio que hice. Resultados en semanas.", "name": "Alex R.", "role": "Cliente verificado" } },
-        "t2": { "type": "testimonial", "settings": { "quote": "Los planes de dieta son oro puro. Recomendado.", "name": "María G.", "role": "Miembro Pro" } },
-        "t3": { "type": "testimonial", "settings": { "quote": "Calidad brutal y envío rapidísimo.", "name": "Diego M.", "role": "Cliente verificado" } }
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "El mejor cambio que hice. Resultados en semanas.",
+            "name": "Alex R.",
+            "role": "Cliente verificado"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Los planes de dieta son oro puro. Recomendado.",
+            "name": "María G.",
+            "role": "Miembro Pro"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Calidad brutal y envío rapidísimo.",
+            "name": "Diego M.",
+            "role": "Cliente verificado"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3"],
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
       "settings": {}
     },
     "faq": {
       "type": "faq",
       "blocks": {
-        "f1": { "type": "qa", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Entre 3 y 7 días hábiles.</p>" } },
-        "f2": { "type": "qa", "settings": { "question": "¿Puedo cancelar mi suscripción?", "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>" } },
-        "f3": { "type": "qa", "settings": { "question": "¿Los productos tienen garantía?", "answer": "<p>Todos incluyen garantía de satisfacción.</p>" } }
+        "f1": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Entre 3 y 7 días hábiles.</p>"
+          }
+        },
+        "f2": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Puedo cancelar mi suscripción?",
+            "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+          }
+        },
+        "f3": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Los productos tienen garantía?",
+            "answer": "<p>Todos incluyen garantía de satisfacción.</p>"
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
       "settings": {}
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {}
+    },
+    "catgrid": {
+      "type": "category-grid",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "Ropa",
+            "text": "Estilo que entrena contigo.",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "Equipo",
+            "text": "Herramientas de poder.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "Suplementos",
+            "text": "Combustible de élite.",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "Conocimiento",
+            "text": "Entrena tu mente.",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
+    },
+    "caticons": {
+      "type": "category-icons",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "Ropa",
+            "text": "Estilo que entrena contigo.",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "Equipo",
+            "text": "Herramientas de poder.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "Suplementos",
+            "text": "Combustible de élite.",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "Conocimiento",
+            "text": "Entrena tu mente.",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
+    },
+    "catlist": {
+      "type": "category-list",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "Ropa",
+            "text": "Estilo que entrena contigo.",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "Equipo",
+            "text": "Herramientas de poder.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "Suplementos",
+            "text": "Combustible de élite.",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "Conocimiento",
+            "text": "Entrena tu mente.",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
+    },
+    "catmosaic": {
+      "type": "category-mosaic",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "Ropa",
+            "text": "Estilo que entrena contigo.",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "Equipo",
+            "text": "Herramientas de poder.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "Suplementos",
+            "text": "Combustible de élite.",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "Conocimiento",
+            "text": "Entrena tu mente.",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
     }
   },
-  "order": ["hero", "marquee", "products", "benefits", "vip", "videos", "plans", "testimonials", "faq", "newsletter"]
+  "order": [
+    "hero",
+    "marquee",
+    "products",
+    "catgrid",
+    "benefits",
+    "caticons",
+    "vip",
+    "catlist",
+    "videos",
+    "catmosaic",
+    "plans",
+    "testimonials",
+    "faq",
+    "newsletter"
+  ]
 }

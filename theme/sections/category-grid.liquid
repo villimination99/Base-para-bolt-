@@ -1,0 +1,78 @@
+{%- comment -%}
+  Categorías en cuadrícula: tarjetas estáticas (sin carrusel) con imagen,
+  icono SVG, título y descripción. Neón configurable por sección.
+{%- endcomment -%}
+<section class="section-padding" style="--sec-neon:{{ section.settings.neon_color }};">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title {% if section.settings.neon_style == 'subtle' %}neon-underline{% endif %}">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+    <div class="catgrid">
+      {%- for block in section.blocks -%}
+        {%- assign coll = block.settings.collection -%}
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}"
+           class="catgrid-card {% if section.settings.neon_style == 'strong' %}neon-frame{% elsif section.settings.neon_style == 'subtle' %}neon-soft{% endif %}"
+           style="--accent:{{ block.settings.accent }};" {{ block.shopify_attributes }}
+           {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <span class="catgrid-media">
+            {%- assign img = block.settings.image | default: coll.featured_image -%}
+            {%- if img -%}
+              <img src="{{ img | image_url: width: 700 }}" alt="{{ block.settings.title | default: coll.title | escape }}" width="700" height="500" loading="lazy">
+            {%- endif -%}
+            <span class="catgrid-shade" aria-hidden="true"></span>
+            <span class="catgrid-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+          </span>
+          <span class="catgrid-body">
+            <span class="catgrid-title">{{ block.settings.title | default: coll.title }}</span>
+            {%- if block.settings.text != blank -%}<span class="catgrid-text">{{ block.settings.text }}</span>{%- endif -%}
+            <span class="catgrid-cta">{{ 'general.explore' | t }}{%- render 'icon', name: 'arrow-right' -%}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorías: cuadrícula",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Explora" },
+    { "type": "text", "id": "title", "label": "Título", "default": "ELIGE TU CAMINO" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "select", "id": "neon_style", "label": "Efecto neón", "options": [
+      { "value": "none", "label": "Sin neón" },
+      { "value": "subtle", "label": "Sutil (borde suave)" },
+      { "value": "strong", "label": "Intenso (marco animado)" } ], "default": "subtle" },
+    { "type": "color", "id": "neon_color", "label": "Color del neón", "default": "#00d4ff" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" }, { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" }, { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "brain", "label": "Mente" }, { "value": "nutrition", "label": "Nutrición" },
+          { "value": "trophy", "label": "Trofeo" }, { "value": "bolt", "label": "Rayo" } ], "default": "shirt" },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional, usa la de la colección si va vacía)" },
+        { "type": "text", "id": "title", "label": "Título (opcional)" },
+        { "type": "textarea", "id": "text", "label": "Descripción corta" },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Categorías: cuadrícula", "blocks": [
+      { "type": "category", "settings": { "icon": "shirt", "title": "Ropa", "text": "Estilo que entrena contigo.", "accent": "#00d4ff" } },
+      { "type": "category", "settings": { "icon": "dumbbell", "title": "Equipo", "text": "Herramientas de poder.", "accent": "#ff2ecb" } },
+      { "type": "category", "settings": { "icon": "supplement", "title": "Suplementos", "text": "Combustible de élite.", "accent": "#00e87b" } },
+      { "type": "category", "settings": { "icon": "book", "title": "Conocimiento", "text": "Entrena tu mente.", "accent": "#ff7700" } }
+    ] }
+  ]
+}
+{% endschema %}

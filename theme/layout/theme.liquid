@@ -35,6 +35,9 @@
     {%- endif -%}
 
     :root {
+      /* Sistema neón configurable: color por sección (--sec-neon), velocidad e intensidad globales */
+      --neon-speed: {{ settings.neon_speed | default: 6 }}s;
+      --neon-int: {{ settings.neon_intensity | default: 60 | divided_by: 100.0 }};
       --neon-cyan: {{ settings.color_cyan }};
       --neon-blue: #0077ff;
       --neon-pink: {{ settings.color_pink }};
@@ -77,6 +80,8 @@
         cardTilt: {{ settings.enable_card_tilt | default: false }},
         splash3d: {{ settings.splash_3d | default: false }},
         splashOnce: {{ settings.splash_once_per_session | default: true }},
+        autoLang: {{ settings.auto_language | default: false }},
+        locale: {{ request.locale.iso_code | json }},
         moneyFormat: {{ shop.money_format | json }}
       },
       strings: {

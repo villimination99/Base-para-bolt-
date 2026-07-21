@@ -262,6 +262,44 @@
     });
   });
 
+  /* ---------- Mobile submenu toggle (tap to open/close) ---------- */
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-mobile-toggle]');
+    if (!t) return;
+    var sub = t.parentElement.querySelector('.mobile-submenu');
+    if (!sub) return;
+    var open = t.getAttribute('aria-expanded') === 'true';
+    t.setAttribute('aria-expanded', String(!open));
+    if (open) { sub.setAttribute('hidden', ''); } else { sub.removeAttribute('hidden'); }
+    t.classList.toggle('is-open', !open);
+  });
+
+  /* ---------- Language: manual persist + one-time auto-detect ---------- */
+  (function () {
+    var sel = $('[data-lang-select]');
+    var form = document.getElementById('LangSelectorForm');
+    if (sel && form) {
+      sel.addEventListener('change', function () {
+        try { localStorage.setItem('v99_lang_choice', sel.value); } catch (e) {}
+        form.submit();
+      });
+    }
+    // Auto-detect (browser language) only once, never overriding a manual choice.
+    if (!settings.autoLang || !form || !sel) return;
+    try {
+      if (localStorage.getItem('v99_lang_choice') || sessionStorage.getItem('v99_lang_auto')) return;
+      sessionStorage.setItem('v99_lang_auto', '1');
+      var current = (settings.locale || 'es').slice(0, 2).toLowerCase();
+      var wanted = (navigator.language || '').slice(0, 2).toLowerCase();
+      if (!wanted || wanted === current) return;
+      var match = null;
+      Array.prototype.forEach.call(sel.options, function (o) {
+        if (o.value.slice(0, 2).toLowerCase() === wanted) match = o.value;
+      });
+      if (match) { sel.value = match; form.submit(); }
+    } catch (e) {}
+  })();
+
   /* ---------- Carousels (videos, etc.) ---------- */
   (function () {
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

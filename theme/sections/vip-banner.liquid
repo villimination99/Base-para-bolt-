@@ -22,7 +22,7 @@
             <div class="vip-tools">
               {%- for block in tool_blocks -%}
                 <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-                  <span class="vip-tool-emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+                  <span class="vip-tool-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
                   <span class="vip-tool-name">{{ block.settings.title }}</span>
                   {%- if block.settings.text != blank -%}<span class="vip-tool-desc">{{ block.settings.text }}</span>{%- endif -%}
                 </div>
@@ -74,7 +74,20 @@
       "type": "tool",
       "name": "Herramienta del Hub",
       "settings": [
-        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🏋️" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "body3d", "label": "Cuerpo 3D" },
+          { "value": "dumbbell", "label": "Mancuerna" },
+          { "value": "camera", "label": "Cámara (Nutrición IA)" },
+          { "value": "nutrition", "label": "Nutrición" },
+          { "value": "calendar", "label": "Calendario (Planes)" },
+          { "value": "meditation", "label": "Meditación" },
+          { "value": "headphones", "label": "Frecuencias" },
+          { "value": "trophy", "label": "Trofeo (Niveles)" },
+          { "value": "chart", "label": "Gráficos (Progreso)" },
+          { "value": "moon", "label": "Sueño" },
+          { "value": "brain", "label": "Mente" },
+          { "value": "bolt", "label": "Rayo" }
+        ], "default": "dumbbell" },
         { "type": "text", "id": "title", "label": "Nombre", "default": "Entrenamiento" },
         { "type": "text", "id": "text", "label": "Descripción corta", "default": "Registra kg y series" }
       ]
@@ -90,12 +103,12 @@
   ],
   "presets": [
     { "name": "Banner VIP / Hub", "blocks": [
-      { "type": "tool", "settings": { "emoji": "🗿", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
-      { "type": "tool", "settings": { "emoji": "🏋️", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
-      { "type": "tool", "settings": { "emoji": "🍽", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
-      { "type": "tool", "settings": { "emoji": "🧘", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
-      { "type": "tool", "settings": { "emoji": "🎧", "title": "Frecuencias", "text": "Solfeggio y binaurales" } },
-      { "type": "tool", "settings": { "emoji": "🏆", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
+      { "type": "tool", "settings": { "icon": "body3d", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
+      { "type": "tool", "settings": { "icon": "dumbbell", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
+      { "type": "tool", "settings": { "icon": "camera", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
+      { "type": "tool", "settings": { "icon": "meditation", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
+      { "type": "tool", "settings": { "icon": "headphones", "title": "Frecuencias", "text": "Solfeggio y binaurales" } },
+      { "type": "tool", "settings": { "icon": "trophy", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
       { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
       { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
       { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },

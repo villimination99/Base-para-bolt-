@@ -265,6 +265,43 @@
         "id": "enable_card_tilt",
         "label": "Inclinación 3D de tarjetas al pasar el ratón",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sistema neón"
+      },
+      {
+        "type": "range",
+        "id": "neon_speed",
+        "min": 2,
+        "max": 14,
+        "step": 1,
+        "unit": "s",
+        "label": "Velocidad de la animación neón",
+        "default": 6,
+        "info": "Más segundos = cambio de color más lento y elegante."
+      },
+      {
+        "type": "range",
+        "id": "neon_intensity",
+        "min": 20,
+        "max": 100,
+        "step": 10,
+        "unit": "%",
+        "label": "Intensidad del resplandor neón",
+        "default": 60
+      }
+    ]
+  },
+  {
+    "name": "Idioma",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "auto_language",
+        "label": "Detectar idioma del visitante automáticamente",
+        "default": true,
+        "info": "Primera visita: si el navegador del cliente está en otro idioma publicado (Admin → Configuración → Idiomas), se cambia solo. La elección manual del selector del pie siempre gana. Para redirección por país/IP activa también la geolocalización nativa de Shopify Markets."
       }
     ]
   },

@@ -55,6 +55,7 @@
 
     <div class="footer-bottom">
       <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'general.footer.rights' | t }}</p>
+      {%- render 'language-selector' -%}
       <button class="scroll-top-btn" data-scroll-top aria-label="{{ 'accessibility.back_to_top' | t }}">
         {%- render 'icon', name: 'chevron-up' -%}
       </button>
