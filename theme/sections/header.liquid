@@ -21,7 +21,18 @@
 
     <div class="nav-links" id="nav-links">
       {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}</a>
+        {%- if link.links.size > 0 -%}
+          <div class="nav-item">
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <div class="nav-dropdown">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="nav-link{% if link.active %} active{% endif %}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
       {%- else -%}
         <a href="{{ routes.root_url }}" class="nav-link{% if template.name == 'index' %} active{% endif %}">{{ 'general.home' | t }}</a>
         <a href="{{ routes.all_products_collection_url }}" class="nav-link{% if template.name == 'collection' or template.name == 'product' %} active{% endif %}">{{ 'general.shop' | t }}</a>
@@ -58,7 +69,12 @@
       {%- render 'icon', name: 'close' -%}
     </button>
     {%- for link in section.settings.menu.links -%}
-      <a href="{{ link.url }}">{{ link.title }}</a>
+      <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {%- if link.links.size > 0 -%}
+        <div class="mobile-submenu">
+          {%- for child in link.links -%}<a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>{%- endfor -%}
+        </div>
+      {%- endif -%}
     {%- else -%}
       <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
       <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>

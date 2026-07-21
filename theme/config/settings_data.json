@@ -18,6 +18,7 @@
     "splash_enabled": true,
     "splash_3d": true,
     "splash_once_per_session": true,
+    "splash_home_only": true,
     "splash_title": "VILLUMINATION99",
     "splash_tagline": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
     "seasonal_effect": "none",

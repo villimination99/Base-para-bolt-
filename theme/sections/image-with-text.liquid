@@ -1,0 +1,45 @@
+{%- assign anim = section.settings.animation | default: 'up' -%}
+<section class="section-padding">
+  <div class="container">
+    <div class="image-text {% if section.settings.reverse %}reverse{% endif %} {% render 'section-anim', anim: anim %}" {% if settings.enable_scroll_reveal and anim != 'none' %}data-reveal{% endif %}>
+      <div class="image-text-media {% if section.settings.parallax and settings.enable_parallax %}has-parallax{% endif %}">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 1200 }}"
+               alt="{{ section.settings.image.alt | escape }}"
+               width="1200" height="{{ 1200 | divided_by: section.settings.image.aspect_ratio | round }}"
+               loading="lazy"
+               {% if section.settings.parallax and settings.enable_parallax %}data-parallax-speed="0.25"{% endif %}>
+        {%- else -%}
+          <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+        {%- endif -%}
+      </div>
+      <div class="image-text-body">
+        {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow" style="color:{{ section.settings.accent }};">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.text != blank -%}<div class="rte">{{ section.settings.text }}</div>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <p style="margin-top:1.5rem;"><a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">{{ section.settings.button_label }}</a></p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Imagen con texto",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Imagen" },
+    { "type": "checkbox", "id": "reverse", "label": "Invertir lados", "default": false },
+    { "type": "checkbox", "id": "parallax", "label": "Parallax en la imagen", "default": true },
+    { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Nueva colección" },
+    { "type": "text", "id": "title", "label": "Título", "default": "DISEÑADO PARA RENDIR" },
+    { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Describe tu propuesta de valor aquí.</p>" },
+    { "type": "text", "id": "button_label", "label": "Botón", "default": "Ver más" },
+    { "type": "url", "id": "button_url", "label": "Enlace del botón" },
+    { "type": "select", "id": "animation", "label": "Animación", "options": [ { "value": "none", "label": "Ninguna" }, { "value": "up", "label": "Desde abajo" }, { "value": "left", "label": "Desde la izquierda" }, { "value": "right", "label": "Desde la derecha" }, { "value": "zoom", "label": "Zoom" } ], "default": "up" }
+  ],
+  "presets": [{ "name": "Imagen con texto" }]
+}
+{% endschema %}

@@ -4,8 +4,29 @@
       "type": "hero",
       "settings": {}
     },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "w1": { "type": "word", "settings": { "text": "FUERZA" } },
+        "w2": { "type": "word", "settings": { "text": "DISCIPLINA" } },
+        "w3": { "type": "word", "settings": { "text": "PODER" } },
+        "w4": { "type": "word", "settings": { "text": "SIN LÍMITES" } }
+      },
+      "block_order": ["w1", "w2", "w3", "w4"],
+      "settings": {}
+    },
     "products": {
       "type": "featured-products",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "b1": { "type": "column", "settings": { "icon": "cube", "stat": "-40%", "title": "Menos devoluciones", "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar.", "accent": "#00d4ff" } },
+        "b2": { "type": "column", "settings": { "icon": "bolt", "stat": "+94%", "title": "Más conversiones", "text": "La experiencia inmersiva multiplica las ventas.", "accent": "#ff2ecb" } },
+        "b3": { "type": "column", "settings": { "icon": "check", "stat": "24/7", "title": "Soporte real", "text": "Estamos contigo en cada paso.", "accent": "#00e87b" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
       "settings": {}
     },
     "videos": {
@@ -30,7 +51,31 @@
       },
       "block_order": ["p1", "p2", "p3"],
       "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "quote": "El mejor cambio que hice. Resultados en semanas.", "name": "Alex R.", "role": "Cliente verificado" } },
+        "t2": { "type": "testimonial", "settings": { "quote": "Los planes de dieta son oro puro. Recomendado.", "name": "María G.", "role": "Miembro Pro" } },
+        "t3": { "type": "testimonial", "settings": { "quote": "Calidad brutal y envío rapidísimo.", "name": "Diego M.", "role": "Cliente verificado" } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": { "type": "qa", "settings": { "question": "¿Cuánto tarda el envío?", "answer": "<p>Entre 3 y 7 días hábiles.</p>" } },
+        "f2": { "type": "qa", "settings": { "question": "¿Puedo cancelar mi suscripción?", "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>" } },
+        "f3": { "type": "qa", "settings": { "question": "¿Los productos tienen garantía?", "answer": "<p>Todos incluyen garantía de satisfacción.</p>" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
     }
   },
-  "order": ["hero", "products", "videos", "plans"]
+  "order": ["hero", "marquee", "products", "benefits", "videos", "plans", "testimonials", "faq", "newsletter"]
 }

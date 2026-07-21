@@ -1,0 +1,57 @@
+{%- assign anim = section.settings.animation | default: 'up' -%}
+<section class="section-padding">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="feature-grid">
+      {%- for block in section.blocks -%}
+        <div class="feature-card {% render 'section-anim', anim: anim %}" style="--accent:{{ block.settings.accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal and anim != 'none' %}data-reveal{% endif %}>
+          {%- if block.settings.stat != blank -%}
+            <div class="feature-stat">{{ block.settings.stat }}</div>
+          {%- elsif block.settings.icon != 'none' -%}
+            <div class="feature-icon">{%- render 'icon', name: block.settings.icon -%}</div>
+          {%- endif -%}
+          <h3 class="feature-title">{{ block.settings.title }}</h3>
+          {%- if block.settings.text != blank -%}<p class="feature-text">{{ block.settings.text }}</p>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Columnas / beneficios",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Por qué nosotros" },
+    { "type": "text", "id": "title", "label": "Título", "default": "LA DIFERENCIA VILLUMINATION" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "select", "id": "animation", "label": "Animación", "options": [ { "value": "none", "label": "Ninguna" }, { "value": "up", "label": "Desde abajo" }, { "value": "zoom", "label": "Zoom" } ], "default": "up" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Columna",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [ { "value": "none", "label": "Ninguno" }, { "value": "bolt", "label": "Rayo" }, { "value": "cube", "label": "Cubo 3D" }, { "value": "cart", "label": "Carrito" }, { "value": "check", "label": "Check" }, { "value": "play", "label": "Play" } ], "default": "bolt" },
+        { "type": "text", "id": "stat", "label": "Estadística (opcional, reemplaza el icono)", "info": "Ej: +94%" },
+        { "type": "text", "id": "title", "label": "Título", "default": "Envío rápido" },
+        { "type": "textarea", "id": "text", "label": "Texto", "default": "Describe el beneficio." },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Columnas / beneficios", "blocks": [
+      { "type": "column", "settings": { "icon": "cube", "stat": "-40%", "title": "Menos devoluciones", "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar." } },
+      { "type": "column", "settings": { "icon": "bolt", "stat": "+94%", "title": "Más conversiones", "text": "La experiencia inmersiva multiplica las ventas.", "accent": "#ff2ecb" } },
+      { "type": "column", "settings": { "icon": "check", "stat": "24/7", "title": "Soporte real", "text": "Estamos contigo en cada paso.", "accent": "#00e87b" } }
+    ] }
+  ]
+}
+{% endschema %}

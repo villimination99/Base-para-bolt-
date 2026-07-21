@@ -1,0 +1,49 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-pink">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+    <div class="testi-grid">
+      {%- for block in section.blocks -%}
+        <div class="testi-card" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <div class="testi-stars" aria-label="{{ block.settings.stars }} / 5">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
+          <p class="testi-quote">“{{ block.settings.quote }}”</p>
+          <div class="testi-author">
+            {%- if block.settings.avatar != blank -%}
+              <img class="testi-avatar" src="{{ block.settings.avatar | image_url: width: 96 }}" alt="{{ block.settings.name | escape }}" width="44" height="44" loading="lazy">
+            {%- endif -%}
+            <div>
+              <div class="testi-name">{{ block.settings.name }}</div>
+              {%- if block.settings.role != blank -%}<div class="testi-role">{{ block.settings.role }}</div>{%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonios",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Comunidad" },
+    { "type": "text", "id": "title", "label": "Título", "default": "LO QUE DICEN LOS ATLETAS" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Estrellas", "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Cita", "default": "El mejor cambio que hice. Resultados en semanas." },
+        { "type": "image_picker", "id": "avatar", "label": "Foto" },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Alex R." },
+        { "type": "text", "id": "role", "label": "Rol", "default": "Cliente verificado" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Testimonios", "blocks": [ { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" } ] } ]
+}
+{% endschema %}

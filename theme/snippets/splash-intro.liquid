@@ -1,38 +1,44 @@
 {%- comment -%}
-  3D interactive splash intro.
-  - If settings.splash_3d is on, effects.js mounts a lightweight WebGL magnetic-particle
-    field into #splash-canvas (loaded only on first paint, respects reduced-motion).
-  - Otherwise the CSS particle version below is used as a graceful fallback.
+  3D interactive splash intro. Shown once per session (and, by default, only on
+  the homepage so it never covers a page the visitor navigates to).
+  - data-splash-3d → effects.js mounts the magnetic particle field on #splash-canvas.
+  - Falls back to CSS particles + respects prefers-reduced-motion.
 {%- endcomment -%}
-<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ settings.splash_title | default: shop.name }}">
+<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name }}">
   <div class="splash-bg"></div>
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
   <div class="splash-particles" aria-hidden="true">
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
   </div>
+
   <div class="splash-content">
-    <div class="splash-logo-container">
-      <div class="splash-halo splash-halo-1"></div>
-      <div class="splash-halo splash-halo-2"></div>
-      <div class="splash-ring">
+    <div class="splash-emblem">
+      <span class="splash-halo splash-halo-1" aria-hidden="true"></span>
+      <span class="splash-halo splash-halo-2" aria-hidden="true"></span>
+      <span class="splash-ring" aria-hidden="true">
         <svg viewBox="0 0 200 200" fill="none">
           <defs><linearGradient id="splash-rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="{{ settings.color_cyan }}"/><stop offset="33%" stop-color="{{ settings.color_purple }}"/><stop offset="66%" stop-color="{{ settings.color_pink }}"/><stop offset="100%" stop-color="{{ settings.color_cyan }}"/></linearGradient></defs>
-          <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="1.5" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.7"/>
+          <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="2" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.75"/>
         </svg>
-      </div>
-      <div class="splash-logo">
+      </span>
+      <span class="splash-core">
         {%- if settings.logo != blank -%}
-          <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name | escape }}" width="120" height="120" style="max-width:60%;height:auto;">
+          <img src="{{ settings.logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}" width="120" height="120">
         {%- else -%}
           <span class="splash-mono">VI</span>
-          <span class="splash-mono-sub">llumination</span>
         {%- endif -%}
-      </div>
+      </span>
     </div>
-    <h1 class="splash-title">{{ settings.splash_title | default: shop.name }}</h1>
-    <p class="splash-tagline">{{ settings.splash_tagline | default: settings.brand_tagline }}</p>
-    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+
+    {%- if settings.splash_title != blank -%}
+      <h1 class="splash-title">{{ settings.splash_title }}</h1>
+    {%- endif -%}
+    {%- if settings.splash_tagline != blank -%}
+      <p class="splash-tagline">{{ settings.splash_tagline }}</p>
+    {%- endif -%}
+
+    <div class="splash-loader" aria-hidden="true"><div class="splash-loader-bar"></div></div>
     <button id="splash-enter" class="splash-enter-btn" type="button">
       <span>{{ 'general.enter' | t }}</span>
       {%- render 'icon', name: 'arrow-right' -%}

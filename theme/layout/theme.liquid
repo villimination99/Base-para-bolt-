@@ -96,17 +96,27 @@
 
   <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
-  {%- if settings.splash_enabled -%}
+  {%- liquid
+    assign show_splash = false
+    if settings.splash_enabled
+      if settings.splash_home_only == false
+        assign show_splash = true
+      elsif request.page_type == 'index'
+        assign show_splash = true
+      endif
+    endif
+  -%}
+  {%- if show_splash -%}
     {%- render 'splash-intro' -%}
   {%- endif -%}
 
-  {% section 'header' %}
+  {% sections 'header-group' %}
 
   <main id="MainContent" role="main" tabindex="-1">
     {{ content_for_layout }}
   </main>
 
-  {% section 'footer' %}
+  {% sections 'footer-group' %}
 
   {%- render 'cart-drawer' -%}
 

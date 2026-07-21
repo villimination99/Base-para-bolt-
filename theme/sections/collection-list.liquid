@@ -1,0 +1,50 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+    <div class="collection-list-grid">
+      {%- for block in section.blocks -%}
+        {%- assign coll = block.settings.collection -%}
+        {%- if coll != blank -%}
+          <a href="{{ coll.url }}" class="collection-tile{% if settings.enable_card_tilt %} js-tilt{% endif %}" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+            <div class="collection-tile-media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 700 }}" alt="{{ coll.title | escape }}" width="700" height="500" loading="lazy">
+              {%- elsif coll.featured_image -%}
+                <img src="{{ coll.featured_image | image_url: width: 700 }}" alt="{{ coll.title | escape }}" width="700" height="500" loading="lazy">
+              {%- else -%}
+                <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+              {%- endif -%}
+              <div class="collection-tile-overlay"></div>
+            </div>
+            <h3 class="collection-tile-title">{{ block.settings.title | default: coll.title }}</h3>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Categorías" },
+    { "type": "text", "id": "title", "label": "Título", "default": "EXPLORA POR CATEGORÍA" }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Colección",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "image_picker", "id": "image", "label": "Imagen personalizada (opcional)" },
+        { "type": "text", "id": "title", "label": "Título personalizado (opcional)" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Lista de colecciones", "blocks": [ { "type": "collection" }, { "type": "collection" }, { "type": "collection" } ] } ]
+}
+{% endschema %}

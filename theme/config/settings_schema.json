@@ -165,6 +165,13 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "splash_home_only",
+        "label": "Mostrar solo en la página de inicio",
+        "default": true,
+        "info": "Recomendado. Evita que la intro tape las páginas al navegar por el menú."
+      },
+      {
         "type": "text",
         "id": "splash_title",
         "label": "Título",

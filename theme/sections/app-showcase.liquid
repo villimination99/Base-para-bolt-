@@ -1,0 +1,35 @@
+{%- comment -%}
+  Generic slot for app blocks — 3D/AR viewers, virtual try-on, reviews, etc.
+  Add an app block from the theme editor (Viewly, Fibbl, Arty, try-on apps…).
+{%- endcomment -%}
+<section class="section-padding">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+      </div>
+    {%- endif -%}
+    <div class="app-slot">
+      {%- for block in section.blocks -%}
+        {%- render block -%}
+      {%- else -%}
+        <p class="section-subtitle" style="text-align:center;">Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "App 3D / AR / Try-On",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Experiencia" },
+    { "type": "text", "id": "title", "label": "Título", "default": "PRUÉBALO EN 3D" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Visor 3D, realidad aumentada o probador virtual." }
+  ],
+  "blocks": [ { "type": "@app" } ],
+  "presets": [{ "name": "App 3D / AR / Try-On" }]
+}
+{% endschema %}

@@ -1,0 +1,34 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+    <div class="flipbook" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      <div class="flipbook-frame" data-flipbook="{{ section.settings.pdf_url }}">
+        {%- if section.settings.pdf_url != blank -%}
+          <button class="flipbook-load btn btn-outline" type="button" data-flipbook-load>{%- render 'icon', name: 'play' -%} {{ section.settings.button_label | default: 'Abrir catálogo' }}</button>
+        {%- else -%}
+          <div style="display:grid;place-items:center;height:100%;color:#8fd8ea;">Añade la URL de un PDF o flipbook.</div>
+        {%- endif -%}
+      </div>
+      <p class="flipbook-hint">{{ section.settings.hint }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Catálogo 3D / Flipbook",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Catálogo" },
+    { "type": "text", "id": "title", "label": "Título", "default": "NUESTRO CATÁLOGO" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Hojéalo como un folleto digital." },
+    { "type": "url", "id": "pdf_url", "label": "URL del PDF o del flipbook", "info": "Sube tu PDF en Configuración → Archivos y pega el enlace, o usa el enlace que te da una app de flipbook." },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Abrir catálogo" },
+    { "type": "text", "id": "hint", "label": "Nota", "default": "Carga diferida: el catálogo se abre al pulsar el botón para no afectar la velocidad." }
+  ],
+  "presets": [{ "name": "Catálogo 3D / Flipbook" }]
+}
+{% endschema %}

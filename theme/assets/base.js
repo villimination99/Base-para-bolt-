@@ -256,6 +256,33 @@
     });
   });
 
+  /* ---------- Flipbook / PDF catalog (lazy) ---------- */
+  $all('[data-flipbook-load]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var frame = btn.closest('[data-flipbook]');
+      if (!frame) return;
+      var url = frame.getAttribute('data-flipbook');
+      if (!url) return;
+      var iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.title = 'Catálogo';
+      iframe.loading = 'lazy';
+      iframe.setAttribute('allowfullscreen', '');
+      frame.innerHTML = '';
+      frame.appendChild(iframe);
+    });
+  });
+
+  /* ---------- FAQ (details already native; smooth single-open optional) ---------- */
+  $all('.faq-list').forEach(function (list) {
+    list.addEventListener('toggle', function (e) {
+      var t = e.target;
+      if (t.tagName === 'DETAILS' && t.open) {
+        $all('details.faq-item', list).forEach(function (d) { if (d !== t) d.open = false; });
+      }
+    }, true);
+  });
+
   /* ---------- Hero rotating words ---------- */
   (function () {
     var el = $('[data-typed]');

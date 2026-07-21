@@ -1,0 +1,29 @@
+<section class="marquee-section" style="{% if section.settings.bg != blank %}background:{{ section.settings.bg }};{% endif %}" aria-hidden="true">
+  <div class="marquee-track">
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marquesina neón",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Fondo (opcional)" }
+  ],
+  "blocks": [
+    { "type": "word", "name": "Palabra", "settings": [ { "type": "text", "id": "text", "label": "Texto", "default": "SIN LÍMITES" } ] }
+  ],
+  "presets": [
+    { "name": "Marquesina neón", "blocks": [
+      { "type": "word", "settings": { "text": "FUERZA" } },
+      { "type": "word", "settings": { "text": "DISCIPLINA" } },
+      { "type": "word", "settings": { "text": "PODER" } },
+      { "type": "word", "settings": { "text": "SIN LÍMITES" } }
+    ] }
+  ]
+}
+{% endschema %}

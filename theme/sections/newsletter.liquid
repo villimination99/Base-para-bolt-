@@ -1,0 +1,30 @@
+<section class="section-padding">
+  <div class="container container--narrow" style="text-align:center;" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+    {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+    {%- if section.settings.text != blank -%}<p class="section-subtitle">{{ section.settings.text }}</p>{%- endif -%}
+    <div class="footer-newsletter" style="margin-top:2rem;">
+      {%- form 'customer' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="footer-newsletter-form">
+          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+          <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>
+        </div>
+        {%- if form.posted_successfully? -%}<p class="form-success" style="margin-top:1rem;">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Boletín",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Comunidad" },
+    { "type": "text", "id": "title", "label": "Título", "default": "ÚNETE AL MOVIMIENTO" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Recibe ofertas, rutinas y contenido exclusivo." },
+    { "type": "text", "id": "button_label", "label": "Botón", "default": "Suscribirme" }
+  ],
+  "presets": [{ "name": "Boletín" }]
+}
+{% endschema %}
