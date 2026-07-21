@@ -82,6 +82,7 @@
         splashOnce: {{ settings.splash_once_per_session | default: true }},
         autoLang: {{ settings.auto_language | default: false }},
         locale: {{ request.locale.iso_code | json }},
+        ambient: {{ settings.ambient_bg | default: 'full' | json }},
         moneyFormat: {{ shop.money_format | json }}
       },
       strings: {

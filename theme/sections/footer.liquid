@@ -1,5 +1,14 @@
 <footer class="footer" role="contentinfo">
+  <span class="footer-edge" aria-hidden="true"></span>
   <div class="container">
+    {%- if section.settings.quotes != blank -%}
+      {%- assign quote_list = section.settings.quotes | strip | newline_to_br | split: '<br />' -%}
+      <div class="footer-quotes" data-quotes {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <span class="footer-quotes-icon" aria-hidden="true">{%- render 'icon', name: 'bolt' -%}</span>
+        <p class="footer-quote" data-quote-text aria-live="polite">{{ quote_list.first | strip }}</p>
+        <script type="application/json" data-quote-list>{{ quote_list | json }}</script>
+      </div>
+    {%- endif -%}
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-brand-head">
@@ -72,6 +81,13 @@
       "id": "about",
       "label": "Descripción de la marca",
       "default": "Tienda fitness para atletas que no se conforman con lo ordinario."
+    },
+    {
+      "type": "textarea",
+      "id": "quotes",
+      "label": "Frases motivacionales (una por línea)",
+      "default": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite.",
+      "info": "Rotan automáticamente con un fundido suave. Déjalo vacío para ocultarlas."
     },
     {
       "type": "checkbox",

@@ -267,6 +267,19 @@
         "default": true
       },
       {
+        "type": "select",
+        "id": "ambient_bg",
+        "label": "Fondo animado futurista",
+        "options": [
+          { "value": "none", "label": "Ninguno" },
+          { "value": "aurora", "label": "Auroras neón" },
+          { "value": "particles", "label": "Partículas flotantes" },
+          { "value": "full", "label": "Auroras + partículas" }
+        ],
+        "default": "full",
+        "info": "Animación sutil sobre el fondo negro en toda la tienda. Ligera (~30 fps), se pausa con la pestaña oculta y respeta 'reducir movimiento'."
+      },
+      {
         "type": "header",
         "content": "Sistema neón"
       },

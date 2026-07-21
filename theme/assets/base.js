@@ -421,6 +421,25 @@
     var iv = setInterval(tick, 1000);
   });
 
+  /* ---------- Footer motivational quotes (fade rotation) ---------- */
+  (function () {
+    var wrap = $('[data-quotes]');
+    if (!wrap) return;
+    var textEl = $('[data-quote-text]', wrap);
+    var listEl = $('[data-quote-list]', wrap);
+    if (!textEl || !listEl) return;
+    var quotes = [];
+    try { quotes = JSON.parse(listEl.textContent).map(function (q) { return q.trim(); }).filter(Boolean); } catch (e) { return; }
+    if (quotes.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var i = 0;
+    setInterval(function () {
+      i = (i + 1) % quotes.length;
+      textEl.classList.add('is-fading');
+      setTimeout(function () { textEl.textContent = quotes[i]; textEl.classList.remove('is-fading'); }, 400);
+    }, 5000);
+  })();
+
   /* ---------- Hero rotating words ---------- */
   (function () {
     var el = $('[data-typed]');

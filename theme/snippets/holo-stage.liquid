@@ -1,0 +1,49 @@
+{%- comment -%}
+  Escenario holográfico 3D para un producto.
+  Uso: {% render 'holo-stage', product: product %}
+  - Con modelo 3D real (.glb) → visor nativo interactivo de Shopify.
+  - Sin modelo → imagen "holograma": levita, gira con el puntero (data-tilt-3d),
+    anillo neón giratorio en la base, haz de luz y reflejo.
+{%- endcomment -%}
+{%- liquid
+  assign models = product.media | where: 'media_type', 'model'
+  assign model_count = models | size
+-%}
+<div class="carousel-slide holo-slide" {{ attrs }}>
+  <div class="holo-card">
+    <div class="holo-stage" {% unless model_count > 0 %}data-tilt-3d{% endunless %}>
+      <span class="holo-beam" aria-hidden="true"></span>
+      {%- if model_count > 0 and settings.product_enable_3d -%}
+        <div class="holo-model">{{ models.first | model_viewer_tag: image_size: '800x', reveal: 'auto', toggleable: false }}</div>
+        <span class="product-media-tag">{%- render 'icon', name: 'cube' -%} 3D</span>
+      {%- elsif product.featured_media -%}
+        <div class="holo-obj">
+          <img class="holo-img" src="{{ product.featured_media | image_url: width: 640 }}"
+               alt="{{ product.title | escape }}" width="640" height="{{ 640 | divided_by: product.featured_media.aspect_ratio | round }}" loading="lazy">
+          <img class="holo-reflect" src="{{ product.featured_media | image_url: width: 640 }}" alt="" width="640" height="{{ 640 | divided_by: product.featured_media.aspect_ratio | round }}" loading="lazy" aria-hidden="true">
+        </div>
+      {%- else -%}
+        <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+      {%- endif -%}
+      <span class="holo-ring" aria-hidden="true"></span>
+      <span class="holo-ring holo-ring--2" aria-hidden="true"></span>
+      <span class="holo-scan" aria-hidden="true"></span>
+    </div>
+    <div class="holo-info">
+      <h3 class="holo-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+      <div class="product-price">
+        {%- if product.compare_at_price > product.price -%}<span class="product-price-compare">{{ product.compare_at_price | money }}</span>{%- endif -%}
+        <span class="product-price-amount">{{ product.price | money }}</span>
+      </div>
+      <div class="holo-actions">
+        {%- if product.available -%}
+          <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-quick-add>
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button type="submit" class="btn btn-primary">{%- render 'icon', name: 'cart' -%}{{ 'products.product.add_to_cart' | t }}</button>
+          </form>
+        {%- endif -%}
+        <a href="{{ product.url }}" class="btn btn-outline">{{ 'general.explore' | t }}</a>
+      </div>
+    </div>
+  </div>
+</div>

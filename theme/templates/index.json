@@ -353,58 +353,6 @@
       "type": "newsletter",
       "settings": {}
     },
-    "catgrid": {
-      "type": "category-grid",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "collection": "ropa",
-            "icon": "shirt",
-            "title": "Ropa",
-            "text": "Estilo que entrena contigo.",
-            "accent": "#00d4ff"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "collection": "equipo",
-            "icon": "dumbbell",
-            "title": "Equipo",
-            "text": "Herramientas de poder.",
-            "accent": "#ff2ecb"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "collection": "suplementos",
-            "icon": "supplement",
-            "title": "Suplementos",
-            "text": "Combustible de élite.",
-            "accent": "#00e87b"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "collection": "conocimiento",
-            "icon": "book",
-            "title": "Conocimiento",
-            "text": "Entrena tu mente.",
-            "accent": "#ff7700"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4"
-      ],
-      "settings": {}
-    },
     "caticons": {
       "type": "category-icons",
       "blocks": {
@@ -457,108 +405,12 @@
       ],
       "settings": {}
     },
-    "catlist": {
-      "type": "category-list",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "collection": "ropa",
-            "icon": "shirt",
-            "title": "Ropa",
-            "text": "Estilo que entrena contigo.",
-            "accent": "#00d4ff"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "collection": "equipo",
-            "icon": "dumbbell",
-            "title": "Equipo",
-            "text": "Herramientas de poder.",
-            "accent": "#ff2ecb"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "collection": "suplementos",
-            "icon": "supplement",
-            "title": "Suplementos",
-            "text": "Combustible de élite.",
-            "accent": "#00e87b"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "collection": "conocimiento",
-            "icon": "book",
-            "title": "Conocimiento",
-            "text": "Entrena tu mente.",
-            "accent": "#ff7700"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4"
-      ],
+    "bestsellers": {
+      "type": "best-sellers",
       "settings": {}
     },
-    "catmosaic": {
-      "type": "category-mosaic",
-      "blocks": {
-        "c1": {
-          "type": "category",
-          "settings": {
-            "collection": "ropa",
-            "icon": "shirt",
-            "title": "Ropa",
-            "text": "Estilo que entrena contigo.",
-            "accent": "#00d4ff"
-          }
-        },
-        "c2": {
-          "type": "category",
-          "settings": {
-            "collection": "equipo",
-            "icon": "dumbbell",
-            "title": "Equipo",
-            "text": "Herramientas de poder.",
-            "accent": "#ff2ecb"
-          }
-        },
-        "c3": {
-          "type": "category",
-          "settings": {
-            "collection": "suplementos",
-            "icon": "supplement",
-            "title": "Suplementos",
-            "text": "Combustible de élite.",
-            "accent": "#00e87b"
-          }
-        },
-        "c4": {
-          "type": "category",
-          "settings": {
-            "collection": "conocimiento",
-            "icon": "book",
-            "title": "Conocimiento",
-            "text": "Entrena tu mente.",
-            "accent": "#ff7700"
-          }
-        }
-      },
-      "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4"
-      ],
+    "showcase3d": {
+      "type": "product-showcase-3d",
       "settings": {}
     }
   },
@@ -566,13 +418,12 @@
     "hero",
     "marquee",
     "products",
-    "catgrid",
-    "benefits",
     "caticons",
+    "benefits",
     "vip",
-    "catlist",
+    "showcase3d",
     "videos",
-    "catmosaic",
+    "bestsellers",
     "plans",
     "testimonials",
     "faq",

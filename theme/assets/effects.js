@@ -123,6 +123,98 @@
     start();
   })();
 
+  /* ============ 4b. Holo stage: pointer-driven 3D tilt (product showcase) ============ */
+  (function () {
+    var stages = $all('[data-tilt-3d]');
+    if (!stages.length) return;
+    var noHover = window.matchMedia('(hover: none)').matches;
+    stages.forEach(function (stage) {
+      var obj = $('.holo-obj', stage);
+      if (!obj) return;
+      if (reduce || noHover) { obj.classList.add('holo-auto'); return; } // fallback: gentle auto-rotation
+      stage.addEventListener('pointermove', function (e) {
+        var r = stage.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        obj.style.transform = 'rotateY(' + (px * 26).toFixed(2) + 'deg) rotateX(' + (-py * 14).toFixed(2) + 'deg)';
+      });
+      stage.addEventListener('pointerleave', function () { obj.style.transform = ''; obj.classList.add('holo-auto'); });
+      stage.addEventListener('pointerenter', function () { obj.classList.remove('holo-auto'); });
+      obj.classList.add('holo-auto');
+    });
+  })();
+
+  /* ============ 4c. Ambient futuristic background (aurora + drifting particles) ============
+     Fondo negro intacto: pinta detrás del contenido (z-index -1), 30 fps,
+     se pausa con la pestaña oculta y respeta prefers-reduced-motion. */
+  (function () {
+    var mode = settings.ambient || 'full';
+    if (mode === 'none') return;
+    var canvas = document.createElement('canvas');
+    canvas.className = 'fx-ambient-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var DPR = 1; // fondo difuso: resolución nativa baja = más rápido
+    var W, H;
+    function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    resize();
+    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(resize, 250); });
+
+    var ORBS = [
+      { x: 0.18, y: 0.25, r: 0.42, c: '0,212,255',  s: 0.00016, ph: 0 },
+      { x: 0.82, y: 0.65, r: 0.48, c: '255,46,203', s: 0.00013, ph: 2.1 },
+      { x: 0.50, y: 0.90, r: 0.38, c: '123,47,255', s: 0.00019, ph: 4.2 }
+    ];
+    var parts = [];
+    var N = Math.min(38, Math.floor(innerWidth / 34));
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    for (var i = 0; i < N; i++) {
+      parts.push({ x: rnd(0, 1), y: rnd(0, 1), v: rnd(0.00006, 0.00022), r: rnd(0.7, 1.9), a: rnd(0.12, 0.4),
+                   c: ['0,212,255', '255,46,203', '0,232,123'][i % 3], tw: rnd(0, 6.28) });
+    }
+
+    function drawFrame(t) {
+      ctx.clearRect(0, 0, W, H);
+      if (mode !== 'particles') {
+        for (var o = 0; o < ORBS.length; o++) {
+          var b = ORBS[o];
+          var ox = (b.x + Math.sin(t * b.s + b.ph) * 0.08) * W;
+          var oy = (b.y + Math.cos(t * b.s * 1.3 + b.ph) * 0.06) * H;
+          var rad = b.r * Math.max(W, H);
+          var g = ctx.createRadialGradient(ox, oy, 0, ox, oy, rad);
+          g.addColorStop(0, 'rgba(' + b.c + ',0.05)');
+          g.addColorStop(1, 'rgba(' + b.c + ',0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
+      if (mode !== 'aurora') {
+        for (var p = 0; p < parts.length; p++) {
+          var q = parts[p];
+          q.y -= q.v; q.tw += 0.02;
+          if (q.y < -0.02) { q.y = 1.02; q.x = Math.random(); }
+          var al = q.a * (0.6 + 0.4 * Math.sin(q.tw));
+          ctx.fillStyle = 'rgba(' + q.c + ',' + al.toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(q.x * W, q.y * H, q.r, 0, 6.2832); ctx.fill();
+        }
+      }
+    }
+
+    if (reduce) { drawFrame(0); return; } // estático con reduced-motion
+    var last = 0, raf;
+    function loop(t) {
+      raf = requestAnimationFrame(loop);
+      if (t - last < 33) return; // ~30 fps
+      last = t;
+      drawFrame(t);
+    }
+    raf = requestAnimationFrame(loop);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { cancelAnimationFrame(raf); } else { raf = requestAnimationFrame(loop); }
+    });
+  })();
+
   /* ============ 5. Interactive 3D splash (magnetic particle field) ============
      Renders into #splash-canvas. Pointer / touch "pulls" the neon particles
      like magnets. Pure 2D canvas — no WebGL library, ~2KB runtime. */
