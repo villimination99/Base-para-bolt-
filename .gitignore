@@ -8,3 +8,6 @@ _extract/
 tcrun*.mjs
 *.log
 .DS_Store
+
+# Built theme package (generated from theme/)
+villumination-3d-theme.zip
