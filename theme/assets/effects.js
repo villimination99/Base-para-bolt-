@@ -488,11 +488,11 @@
         var z = Math.random() * 0.8 + 0.2; // depth 0.2..1
         parts.push({
           x: Math.random() * W, y: Math.random() * H, z: z,
-          r: z * (mobile ? 1.6 : 2.2) + 0.3,
-          vy: (Math.random() * 0.2 + 0.05) * z,
+          r: z * (mobile ? 2 : 2.8) + 0.4,
+          vy: (Math.random() * 0.22 + 0.05) * z,
           vx: (Math.random() - 0.5) * 0.15 * z,
           c: colors[(Math.random() * colors.length) | 0],
-          a: Math.random() * 0.5 + 0.25
+          a: Math.random() * 0.45 + 0.4
         });
       }
     }
@@ -506,8 +506,8 @@
       for (var i = 0; i < parts.length; i++) {
         var p = parts[i];
         p.y -= p.vy; p.x += p.vx;
-        var px = p.x + mx * p.z * 26;
-        var py = p.y + my * p.z * 26;
+        var px = p.x + mx * p.z * 34;
+        var py = p.y + my * p.z * 34;
         if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
         if (p.x < -4) p.x = W + 4; else if (p.x > W + 4) p.x = -4;
         ctx.globalAlpha = p.a;

@@ -11,7 +11,7 @@
            sizes="(max-width: 600px) 45vw, 260px"
            alt="{{ product.featured_media.alt | default: product.title | escape }}"
            width="500" height="{{ 500 | divided_by: product.featured_media.aspect_ratio | round }}"
-           loading="lazy" decoding="async">
+           loading="lazy" decoding="async" data-decode>
       {%- if product.media[1] != blank -%}
         <img class="product-card-image-alt" src="{{ product.media[1] | image_url: width: 500 }}" alt="" width="500" height="500" loading="lazy" decoding="async" fetchpriority="low" data-decode>
       {%- endif -%}

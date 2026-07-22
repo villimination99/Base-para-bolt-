@@ -412,6 +412,40 @@
     "showcase3d": {
       "type": "product-showcase-3d",
       "settings": {}
+    },
+    "flowingmenu": {
+      "type": "flowing-menu",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "label": "Ropa", "link": "shopify://collections/ropa" } },
+        "r2": { "type": "row", "settings": { "label": "Equipo", "link": "shopify://collections/equipo" } },
+        "r3": { "type": "row", "settings": { "label": "Suplementos", "link": "shopify://collections/suplementos" } },
+        "r4": { "type": "row", "settings": { "label": "Conocimiento", "link": "shopify://collections/conocimiento" } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": {}
+    },
+    "productcarousel3d": {
+      "type": "product-carousel-3d",
+      "settings": {}
+    },
+    "motivation": {
+      "type": "curved-carousel",
+      "blocks": {
+        "m1": { "type": "slide", "settings": { "title": "Sin excusas, solo resultados", "caption": "VILLUMINATION" } },
+        "m2": { "type": "slide", "settings": { "title": "Tu única competencia eres tú de ayer", "caption": "MINDSET" } },
+        "m3": { "type": "slide", "settings": { "title": "La disciplina vence al talento", "caption": "FUERZA" } },
+        "m4": { "type": "slide", "settings": { "title": "El dolor es temporal, la gloria eterna", "caption": "PODER" } },
+        "m5": { "type": "slide", "settings": { "title": "Domina tu mente, domina tu cuerpo", "caption": "ENFOQUE" } },
+        "m6": { "type": "slide", "settings": { "title": "Cada repetición te acerca", "caption": "PROGRESO" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
+      "settings": {
+        "eyebrow": "MOTIVACIÓN",
+        "heading": "Frases que te mueven",
+        "subheading": "Arrastra para girar el anillo",
+        "card_size": "medium",
+        "hint": "Arrastra o desliza"
+      }
     }
   },
   "order": [
@@ -419,13 +453,16 @@
     "marquee",
     "products",
     "caticons",
+    "flowingmenu",
     "benefits",
     "vip",
     "showcase3d",
+    "productcarousel3d",
     "videos",
     "bestsellers",
     "plans",
     "testimonials",
+    "motivation",
     "faq",
     "newsletter"
   ]

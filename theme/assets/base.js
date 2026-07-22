@@ -290,12 +290,18 @@
       if (localStorage.getItem('v99_lang_choice') || sessionStorage.getItem('v99_lang_auto')) return;
       sessionStorage.setItem('v99_lang_auto', '1');
       var current = (settings.locale || 'es').slice(0, 2).toLowerCase();
-      var wanted = (navigator.language || '').slice(0, 2).toLowerCase();
-      if (!wanted || wanted === current) return;
+      // navigator.languages es el más fiable en iOS/Android/Mac/Windows; probamos
+      // las preferencias del visitante en orden hasta encontrar un idioma disponible.
+      var langs = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || ''];
       var match = null;
-      Array.prototype.forEach.call(sel.options, function (o) {
-        if (o.value.slice(0, 2).toLowerCase() === wanted) match = o.value;
-      });
+      for (var li = 0; li < langs.length && !match; li++) {
+        var wanted = (langs[li] || '').slice(0, 2).toLowerCase();
+        if (!wanted) continue;
+        if (wanted === current) return; // ya está en su idioma
+        Array.prototype.forEach.call(sel.options, function (o) {
+          if (!match && o.value.slice(0, 2).toLowerCase() === wanted) match = o.value;
+        });
+      }
       if (match) { sel.value = match; form.submit(); }
     } catch (e) {}
   })();
@@ -469,7 +475,7 @@
         io.unobserve(img);
         try { img.loading = 'eager'; if (img.decode) img.decode().catch(function () {}); } catch (err) {}
       });
-    }, { rootMargin: '200px' });
+    }, { rootMargin: '300px 1100px' }); // margen horizontal amplio: precarga las diapositivas vecinas de los carruseles
     imgs.forEach(function (img) { io.observe(img); });
   })();
 })();
