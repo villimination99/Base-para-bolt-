@@ -363,9 +363,9 @@
       {
         "type": "checkbox",
         "id": "product_img_blend",
-        "label": "Recortar fondo oscuro de la foto (efecto flotar)",
-        "default": true,
-        "info": "Elimina cualquier fondo negro/oscuro de la foto para que solo se vea el producto flotando sobre el fondo de la tienda. Como el tema es casi negro, solo recorta el negro del fondo, sin afectar al producto. Desactívalo únicamente si tus fotos tienen fondo claro."
+        "label": "Recortar fondo oscuro de la foto (solo si NO es transparente)",
+        "default": false,
+        "info": "Actívalo únicamente si alguna foto todavía tiene un fondo negro/oscuro incrustado. Si tus fotos ya son PNG transparentes (lo recomendado), déjalo desactivado: el producto se ve con su color real y la página carga más rápido."
       }
     ]
   },
