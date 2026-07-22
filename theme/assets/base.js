@@ -184,6 +184,11 @@
     var compareEl = $('[data-compare]', section);
     var addBtn = $('[data-add-btn]', section);
     var addText = $('[data-add-text]', section);
+    var savePctEl = $('[data-save-pct]', section);
+    var saveWrap = $('[data-save-wrap]', section);
+    var saveEl = $('[data-save]', section);
+    var stockEl = $('[data-stock]', section);
+    var lowStock = parseInt(section.getAttribute('data-low-stock') || '0', 10);
 
     function selectedOptions() { return $all('[data-option-selector]:checked', section).map(function (i) { return i.value; }); }
     function matchVariant() {
@@ -196,9 +201,27 @@
       if (!v) return;
       if (idInput) idInput.value = v.id;
       if (priceEl) priceEl.textContent = money(v.price);
+      var onSale = v.compare_at_price > v.price;
       if (compareEl) {
-        if (v.compare_at_price > v.price) { compareEl.textContent = money(v.compare_at_price); compareEl.style.display = ''; }
+        if (onSale) { compareEl.textContent = money(v.compare_at_price); compareEl.style.display = ''; }
         else { compareEl.style.display = 'none'; }
+      }
+      if (savePctEl) {
+        if (onSale) { savePctEl.textContent = '-' + Math.round((v.compare_at_price - v.price) * 100 / v.compare_at_price) + '%'; savePctEl.style.display = ''; }
+        else { savePctEl.style.display = 'none'; }
+      }
+      if (saveWrap) {
+        if (onSale) { if (saveEl) saveEl.textContent = money(v.compare_at_price - v.price); saveWrap.style.display = ''; }
+        else { saveWrap.style.display = 'none'; }
+      }
+      if (stockEl) {
+        var q = v.inventory_quantity, managed = v.inventory_management != null && v.inventory_management !== '';
+        if (lowStock > 0 && managed && typeof q === 'number' && q > 0 && q <= lowStock) {
+          var tpl = stockEl.getAttribute('data-stock-tpl') || '';
+          var span = stockEl.querySelector('span');
+          if (span) span.textContent = tpl.replace('[n]', q);
+          stockEl.style.display = '';
+        } else { stockEl.style.display = 'none'; }
       }
       if (addBtn) {
         addBtn.disabled = !v.available;
