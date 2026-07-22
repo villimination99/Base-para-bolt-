@@ -6,6 +6,8 @@
   var T = window.theme || {};
   var settings = T.settings || {};
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Respeta "Ahorro de datos" del visitante: apaga los lienzos decorativos pesados.
+  var saveData = !!(navigator.connection && navigator.connection.saveData);
 
   function $(s, c) { return (c || document).querySelector(s); }
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
@@ -149,7 +151,7 @@
      se pausa con la pestaña oculta y respeta prefers-reduced-motion. */
   (function () {
     var mode = settings.ambient || 'full';
-    if (mode === 'none') return;
+    if (mode === 'none' || saveData) return;
     var canvas = document.createElement('canvas');
     canvas.className = 'fx-ambient-canvas';
     canvas.setAttribute('aria-hidden', 'true');
@@ -435,7 +437,7 @@
   /* ---- Hero cinematic particle field (depth + mouse parallax) --------------- */
   (function () {
     var canvas = $('[data-hero-particles]');
-    if (!canvas || reduce) return;
+    if (!canvas || reduce || saveData) return;
     var host = canvas.closest('.hero') || canvas.parentNode;
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 2);

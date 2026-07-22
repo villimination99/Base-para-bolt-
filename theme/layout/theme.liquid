@@ -137,6 +137,14 @@
   {%- render 'cart-drawer' -%}
 
   <script src="{{ 'base.js' | asset_url }}" defer></script>
-  <script src="{{ 'effects.js' | asset_url }}" defer></script>
+  {%- comment -%} effects.js = mejoras visuales progresivas. Se cargan en tiempo libre (idle) para no competir con el primer render → mejor LCP/TTI. {%- endcomment -%}
+  <script>
+    (function () {
+      var src = "{{ 'effects.js' | asset_url }}";
+      function load() { var s = document.createElement('script'); s.src = src; s.defer = true; document.body.appendChild(s); }
+      if ('requestIdleCallback' in window) { requestIdleCallback(load, { timeout: 2000 }); }
+      else { window.addEventListener('load', function () { setTimeout(load, 200); }); }
+    })();
+  </script>
 </body>
 </html>
