@@ -455,6 +455,16 @@
         "id": "cart_show_note",
         "label": "Permitir notas del pedido",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Barra de envío gratis"
+      },
+      {
+        "type": "number",
+        "id": "cart_free_shipping_threshold",
+        "label": "Umbral de envío gratis",
+        "info": "Importe (en tu moneda, sin símbolo) a partir del cual el envío es gratis. Muestra una barra de progreso en el carrito. 0 o vacío = desactivado. Recuerda configurar el envío gratis real en Configuración → Envíos."
       }
     ]
   }

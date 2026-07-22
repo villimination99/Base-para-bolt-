@@ -501,4 +501,37 @@
     }, { rootMargin: '300px 1100px' }); // margen horizontal amplio: precarga las diapositivas vecinas de los carruseles
     imgs.forEach(function (img) { io.observe(img); });
   })();
+
+  /* ---------- Product image lightbox (zoom) ---------- */
+  (function () {
+    var zoomables = $all('[data-zoomable]');
+    if (!zoomables.length) return;
+    var box = null, boxImg = null;
+    function build() {
+      box = document.createElement('div');
+      box.className = 'img-lightbox';
+      box.setAttribute('role', 'dialog');
+      box.setAttribute('aria-modal', 'true');
+      box.innerHTML = '<button class="img-lightbox-close" aria-label="Cerrar">&times;</button><img alt="">';
+      boxImg = box.querySelector('img');
+      box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('img-lightbox-close')) close(); });
+      document.body.appendChild(box);
+    }
+    function open(src, alt) {
+      if (!box) build();
+      boxImg.src = src; boxImg.alt = alt || '';
+      requestAnimationFrame(function () { box.classList.add('is-open'); });
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function close() {
+      if (!box) return;
+      box.classList.remove('is-open');
+      document.documentElement.style.overflow = '';
+    }
+    zoomables.forEach(function (img) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function () { open(img.getAttribute('data-zoom-src') || img.currentSrc || img.src, img.alt); });
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
 })();

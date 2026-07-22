@@ -39,7 +39,7 @@
                          width="1200" height="{{ 1200 | divided_by: media.aspect_ratio | round }}"
                          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
                          {% if forloop.first %}fetchpriority="high"{% endif %}
-                         {% if settings.product_zoom %}data-zoomable{% endif %}>
+                         {% if settings.product_zoom %}data-zoomable data-zoom-src="{{ media | image_url: width: 2048 }}"{% endif %}>
                 {%- endcase -%}
               </div>
             {%- endfor -%}
