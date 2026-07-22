@@ -2908,3 +2908,35 @@ html,body{overflow-x:clip}
 
 /* Reducir el halo si molesta: queda detrás, nunca forma un cuadrado */
 .pimg-glow .product-card-image::before{opacity:.8}
+
+/* =====================================================================
+   VILLUMINATION 3D — v14
+   Página de producto: mismo recorte flotante · compensación de color
+   ===================================================================== */
+
+/* Refuerzo total de la galería de la página de producto (float) */
+.pcard-float .product-page .product-media-main,
+.pcard-float .product-media,
+.pcard-float .product-media-item,
+.pcard-float .product-media-item > img{
+  background:transparent !important;
+}
+.pcard-float .product-page .product-media-main{border:none !important;box-shadow:none !important}
+.pimg-blend .product-page .product-media-item img{mix-blend-mode:lighten}
+
+/* Compensación de color: realza saturación/contraste para recuperar viveza
+   sin reintroducir el fondo. Un solo 'filter' por elemento (el último gana),
+   así que aquí van juntos el realce + el halo de flotación. */
+.pimg-blend .product-card-image > img{
+  filter:saturate(1.18) contrast(1.05)
+         drop-shadow(0 12px 18px rgba(0,0,0,.4))
+         drop-shadow(0 0 16px color-mix(in srgb, var(--neon-cyan) 20%, transparent));
+}
+.pimg-blend .product-media-item img{
+  filter:saturate(1.18) contrast(1.05)
+         drop-shadow(0 16px 26px rgba(0,0,0,.45))
+         drop-shadow(0 0 22px color-mix(in srgb, var(--neon-cyan) 18%, transparent));
+}
+/* Sin recorte (fotos con transparencia real) tampoco pierden color */
+body:not(.pimg-blend) .product-card-image > img,
+body:not(.pimg-blend) .product-media-item img{filter:none}
