@@ -2862,3 +2862,49 @@ html,body{overflow-x:clip}
 
 /* En modo tarjeta, si el usuario lo elige, el blend sigue disponible para fotos con fondo negro */
 .pcard-card.pimg-blend .product-card-image > img{mix-blend-mode:lighten}
+
+/* =====================================================================
+   VILLUMINATION 3D — v13
+   RECORTE DEFINITIVO del fondo negro incrustado en las fotos.
+   Truco: mix-blend-mode:lighten contra el fondo (casi negro) de la página
+   → solo desaparece el negro puro del fondo; el producto queda intacto y
+   flota sobre el fondo real de la tienda (incluida la animación ambiental).
+   Se cuida el AISLAMIENTO: el blend se aplica en el mismo elemento que se
+   transforma (hover / giro 3D), nunca en un ancestro, para que no se rompa.
+   ===================================================================== */
+
+/* --- Tarjetas y galería (float): recorte por defecto --- */
+.pimg-blend .product-card-image > img,
+.pimg-blend .product-media-item img,
+.pimg-blend .product-card-image-alt{
+  mix-blend-mode:lighten;
+}
+
+/* Hover en FLOAT: transformar SOLO la imagen (que lleva el blend), nunca la
+   tarjeta — así el recorte no se aísla y el fondo no reaparece al pasar el ratón */
+.pcard-float .product-card:hover{transform:none !important;box-shadow:none !important}
+.pcard-float .product-card:hover .product-card-image > img{
+  transform:translateY(-6px) scale(1.05);
+}
+
+/* Escaparate 3D: el giro va en .holo-obj, así que el blend se pone en el
+   MISMO .holo-obj (grupo completo) para que recorte contra el fondo real */
+.pimg-blend .holo-obj{mix-blend-mode:lighten}
+.pimg-blend .holo-reflect{mix-blend-mode:lighten}
+.holo-stage{background:transparent !important;border:none !important;box-shadow:none !important}
+/* halo suave bajo el producto del escaparate, sin caja */
+.pimg-glow .holo-stage::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--neon-cyan) 14%,transparent),transparent 68%);filter:blur(16px);z-index:0;pointer-events:none}
+
+/* Miniatura de producto: también recorta */
+.pimg-blend .product-media-thumb img{mix-blend-mode:lighten}
+
+/* Seguridad: el placeholder (sin foto) NO debe verse como caja negra en float */
+.pcard-float .product-card-placeholder{background:transparent;min-height:0;aspect-ratio:1/1;width:100%}
+
+/* Nada opaco puede quedar detrás del producto en float */
+.pcard-float .product-card,
+.pcard-float .product-card-image,
+.pcard-float .product-media-main{background:transparent !important}
+
+/* Reducir el halo si molesta: queda detrás, nunca forma un cuadrado */
+.pimg-glow .product-card-image::before{opacity:.8}

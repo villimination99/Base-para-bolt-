@@ -40,7 +40,7 @@
     "neon_speed": 6,
     "neon_intensity": 60,
     "auto_language": true,
-    "product_img_blend": false,
+    "product_img_blend": true,
     "product_img_pad": 8,
     "product_card_style": "float",
     "product_img_glow": true,
