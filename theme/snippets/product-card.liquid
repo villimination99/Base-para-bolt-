@@ -4,12 +4,16 @@
 <div class="product-card shine-effect{% if settings.enable_card_tilt %} js-tilt{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
   <a href="{{ product.url }}" class="product-card-image" aria-label="{{ product.title | escape }}">
     {%- if product.featured_media -%}
-      <img src="{{ product.featured_media | image_url: width: 600 }}"
+      <img src="{{ product.featured_media | image_url: width: 500 }}"
+           srcset="{{ product.featured_media | image_url: width: 300 }} 300w,
+                   {{ product.featured_media | image_url: width: 500 }} 500w,
+                   {{ product.featured_media | image_url: width: 700 }} 700w"
+           sizes="(max-width: 600px) 45vw, 260px"
            alt="{{ product.featured_media.alt | default: product.title | escape }}"
-           width="600" height="{{ 600 | divided_by: product.featured_media.aspect_ratio | round }}"
-           loading="lazy">
+           width="500" height="{{ 500 | divided_by: product.featured_media.aspect_ratio | round }}"
+           loading="lazy" decoding="async">
       {%- if product.media[1] != blank -%}
-        <img class="product-card-image-alt" src="{{ product.media[1] | image_url: width: 600 }}" alt="" width="600" height="600" loading="lazy">
+        <img class="product-card-image-alt" src="{{ product.media[1] | image_url: width: 500 }}" alt="" width="500" height="500" loading="lazy" decoding="async">
       {%- endif -%}
     {%- else -%}
       <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>

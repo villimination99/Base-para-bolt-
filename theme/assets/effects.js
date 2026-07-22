@@ -166,8 +166,9 @@
       { x: 0.82, y: 0.65, r: 0.48, c: '255,46,203', s: 0.00013, ph: 2.1 },
       { x: 0.50, y: 0.90, r: 0.38, c: '123,47,255', s: 0.00019, ph: 4.2 }
     ];
+    var smallScreen = innerWidth < 700;
     var parts = [];
-    var N = Math.min(38, Math.floor(innerWidth / 34));
+    var N = Math.min(smallScreen ? 20 : 34, Math.floor(innerWidth / 42));
     function rnd(a, b) { return a + Math.random() * (b - a); }
     for (var i = 0; i < N; i++) {
       parts.push({ x: rnd(0, 1), y: rnd(0, 1), v: rnd(0.00006, 0.00022), r: rnd(0.7, 1.9), a: rnd(0.12, 0.4),
@@ -196,7 +197,7 @@
           var oy = (b.y + Math.cos(t * b.s * 1.3 + b.ph) * 0.06) * H;
           var rad = b.r * Math.max(W, H);
           var g = ctx.createRadialGradient(ox, oy, 0, ox, oy, rad);
-          g.addColorStop(0, 'rgba(' + b.c + ',0.05)');
+          g.addColorStop(0, 'rgba(' + b.c + ',0.075)');
           g.addColorStop(1, 'rgba(' + b.c + ',0)');
           ctx.fillStyle = g;
           ctx.fillRect(0, 0, W, H);
@@ -245,10 +246,10 @@
     }
 
     if (reduce) { drawFrame(0); return; } // estático con reduced-motion
-    var last = 0, raf;
+    var last = 0, raf, minDelta = smallScreen ? 42 : 33; // 24fps móvil / 30fps escritorio
     function loop(t) {
       raf = requestAnimationFrame(loop);
-      if (t - last < 33) return; // ~30 fps
+      if (t - last < minDelta) return;
       last = t;
       drawFrame(t);
     }

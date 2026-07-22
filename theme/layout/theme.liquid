@@ -25,6 +25,10 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"></noscript>
   {%- endif -%}
 
+  {%- comment -%} Acelera miniaturas de video (YouTube) sin bloquear el render {%- endcomment -%}
+  <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.youtube.com">
+
   {%- assign body_font = settings.font_body -%}
   {%- assign heading_font = settings.font_heading -%}
   {%- style -%}
