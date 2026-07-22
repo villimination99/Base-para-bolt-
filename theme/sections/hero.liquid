@@ -16,6 +16,10 @@
     {%- endif -%}
   </div>
 
+  {%- if section.settings.enable_particles -%}
+    <canvas class="hero-particles" data-hero-particles data-density="{{ section.settings.particle_density }}" aria-hidden="true"></canvas>
+  {%- endif -%}
+
   <div class="hero-content" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
     {%- if section.settings.eyebrow != blank -%}
       <div class="hero-eyebrow">{%- render 'icon', name: 'bolt' -%}<span>{{ section.settings.eyebrow }}</span></div>
@@ -61,6 +65,8 @@
     { "type": "range", "id": "overlay_opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "label": "Oscurecer imagen", "default": 55 },
     { "type": "range", "id": "height", "min": 60, "max": 100, "step": 5, "unit": "vh", "label": "Altura", "default": 100 },
     { "type": "checkbox", "id": "parallax", "label": "Parallax en el fondo", "default": true },
+    { "type": "checkbox", "id": "enable_particles", "label": "Campo de partículas 3D", "default": true, "info": "Partículas con profundidad que reaccionan al ratón. Ligero, se pausa fuera de pantalla y respeta 'reducir movimiento'." },
+    { "type": "range", "id": "particle_density", "min": 20, "max": 120, "step": 10, "label": "Densidad de partículas", "default": 70 },
     { "type": "checkbox", "id": "show_scroll_hint", "label": "Mostrar indicador de scroll", "default": true },
     { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "Tienda Fitness #1" },
     { "type": "text", "id": "heading_top", "label": "Título (línea 1)", "default": "TU PRÓXIMO NIVEL" },

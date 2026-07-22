@@ -405,4 +405,94 @@
       render();
     });
   })();
+
+  /* ---- Flowing menu: direction-aware neon reveal ---------------------------- */
+  (function () {
+    var rows = $all('[data-fm-row]');
+    if (!rows.length) return;
+    rows.forEach(function (row) {
+      var mq = $('.fm-marquee', row);
+      if (!mq) return;
+      function edge(e) {
+        var r = row.getBoundingClientRect();
+        return (Math.abs(e.clientY - r.top) < Math.abs(e.clientY - r.bottom)) ? -101 : 101;
+      }
+      row.addEventListener('mouseenter', function (e) {
+        var from = edge(e);
+        mq.style.transition = 'none';
+        mq.style.transform = 'translateY(' + from + '%)';
+        void mq.offsetWidth;
+        mq.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)';
+        mq.style.transform = 'translateY(0)';
+      });
+      row.addEventListener('mouseleave', function (e) {
+        mq.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)';
+        mq.style.transform = 'translateY(' + edge(e) + '%)';
+      });
+    });
+  })();
+
+  /* ---- Hero cinematic particle field (depth + mouse parallax) --------------- */
+  (function () {
+    var canvas = $('[data-hero-particles]');
+    if (!canvas || reduce) return;
+    var host = canvas.closest('.hero') || canvas.parentNode;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, parts = [], raf = null, mx = 0, my = 0, tmx = 0, tmy = 0;
+    var mobile = window.matchMedia('(max-width:749px)').matches;
+    var N = Math.round((parseFloat(canvas.getAttribute('data-density')) || 70) * (mobile ? 0.5 : 1));
+    var colors = ['#00d4ff', '#7b2fff', '#ff2ecb'];
+    function resize() {
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function build() {
+      parts = [];
+      for (var i = 0; i < N; i++) {
+        var z = Math.random() * 0.8 + 0.2; // depth 0.2..1
+        parts.push({
+          x: Math.random() * W, y: Math.random() * H, z: z,
+          r: z * (mobile ? 1.6 : 2.2) + 0.3,
+          vy: (Math.random() * 0.2 + 0.05) * z,
+          vx: (Math.random() - 0.5) * 0.15 * z,
+          c: colors[(Math.random() * colors.length) | 0],
+          a: Math.random() * 0.5 + 0.25
+        });
+      }
+    }
+    var last = 0;
+    function frame(t) {
+      raf = requestAnimationFrame(frame);
+      if (t - last < 33) return; // ~30fps cap
+      last = t;
+      mx += (tmx - mx) * 0.05; my += (tmy - my) * 0.05;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.y -= p.vy; p.x += p.vx;
+        var px = p.x + mx * p.z * 26;
+        var py = p.y + my * p.z * 26;
+        if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
+        if (p.x < -4) p.x = W + 4; else if (p.x > W + 4) p.x = -4;
+        ctx.globalAlpha = p.a;
+        ctx.fillStyle = p.c;
+        ctx.shadowColor = p.c; ctx.shadowBlur = p.r * 3;
+        ctx.beginPath(); ctx.arc(px, py, p.r, 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    }
+    function start() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
+    function stop() { cancelAnimationFrame(raf); raf = null; }
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
+      tmx = (e.clientX - r.left) / r.width - 0.5;
+      tmy = (e.clientY - r.top) / r.height - 0.5;
+    }, { passive: true });
+    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(function () { resize(); build(); }, 200); });
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { x.isIntersecting ? start() : stop(); }); }, { threshold: 0 });
+    resize(); build(); io.observe(canvas);
+  })();
 })();

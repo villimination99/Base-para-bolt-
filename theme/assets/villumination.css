@@ -28,3 +28,22 @@
 .cc-item-caption{font-size:.72rem;color:color-mix(in srgb,var(--cc-neon) 72%,#fff)}
 .cc-hint{margin-top:1.4rem;color:color-mix(in srgb,var(--cc-neon) 60%,#88a);font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.5rem;justify-content:center;width:100%}
 .cc-hint svg{width:14px;height:14px;opacity:.7}
+/* v19 — hero particle field + flowing menu */
+.hero{position:relative}
+.hero .hero-bg{z-index:0}
+.hero-particles{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hero .hero-content{position:relative;z-index:3}
+.hero .hero-scroll-hint{z-index:3}
+.flowing-menu{--fm-neon:var(--neon-cyan)}
+.fm-list{margin-top:2rem;border-top:1px solid color-mix(in srgb,var(--fm-neon) 28%,transparent)}
+.fm-row{position:relative;display:flex;align-items:center;justify-content:center;height:clamp(4.4rem,11vw,8rem);overflow:hidden;border-bottom:1px solid color-mix(in srgb,var(--fm-neon) 28%,transparent);text-decoration:none;isolation:isolate}
+.fm-row-text{font-family:var(--font-heading);font-weight:900;text-transform:uppercase;font-size:clamp(1.5rem,5vw,3.4rem);color:#fff;letter-spacing:.02em;text-align:center;transition:opacity .3s ease,transform .4s ease;padding:0 1rem}
+.fm-row:hover .fm-row-text{opacity:0;transform:scale(.96)}
+.fm-marquee{position:absolute;inset:0;transform:translateY(-101%);background:var(--fm-neon);overflow:hidden;pointer-events:none;z-index:2;display:flex;align-items:center}
+.fm-marquee-inner{display:flex;align-items:center;gap:1.6rem;white-space:nowrap;animation:fm-scroll 22s linear infinite;will-change:transform;padding-left:1.6rem}
+.fm-marquee-text{font-family:var(--font-heading);font-weight:900;text-transform:uppercase;font-size:clamp(1.5rem,5vw,3.4rem);color:#03030c;flex:none}
+.fm-marquee-img{width:clamp(4rem,9vw,7rem);height:66%;border-radius:.6rem;background-size:cover;background-position:center;flex:none;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.fm-marquee-img--empty{display:flex;align-items:center;justify-content:center;background:rgba(3,3,12,.18)}
+.fm-marquee-img--empty svg{width:40%;height:40%;color:#03030c}
+@keyframes fm-scroll{to{transform:translateX(-50%)}}
+@media (pointer:coarse){.fm-marquee-inner{animation-play-state:paused}}
