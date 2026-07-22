@@ -47,3 +47,13 @@
 .fm-marquee-img--empty svg{width:40%;height:40%;color:#03030c}
 @keyframes fm-scroll{to{transform:translateX(-50%)}}
 @media (pointer:coarse){.fm-marquee-inner{animation-play-state:paused}}
+/* v21 — faster 2nd-image swap + touch drag affordance for the 3D showcase */
+.product-card-image-alt{transition:opacity .22s ease!important}
+.holo-stage.is-draggable{cursor:grab;touch-action:pan-y}
+.holo-drag-hint{position:absolute;left:50%;bottom:.5rem;transform:translateX(-50%);display:none;align-items:center;gap:.4rem;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--sec-neon,var(--neon-cyan)) 75%,#fff);background:rgba(4,4,14,.55);border:1px solid color-mix(in srgb,var(--sec-neon,var(--neon-cyan)) 30%,transparent);border-radius:999px;padding:.32rem .7rem;pointer-events:none;z-index:6;white-space:nowrap;animation:hintPulse 2.6s ease-in-out infinite}
+.holo-drag-hint svg{width:14px;height:14px}
+@keyframes hintPulse{0%,100%{opacity:.55;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(-2px)}}
+@media (hover:none){.holo-stage.is-draggable .holo-drag-hint{display:inline-flex}}
+.cc-product .cc-item-media img{object-fit:contain;padding:9%}
+.cc-product-badge{position:absolute;top:.5rem;right:.5rem;background:var(--cc-neon);color:#03030c;font-weight:800;font-size:.7rem;padding:.2rem .5rem;border-radius:.5rem;font-family:var(--font-heading);z-index:2}
+.cc-item-caption s{opacity:.6;margin-right:.25rem}

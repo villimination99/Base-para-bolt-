@@ -456,4 +456,20 @@
       setTimeout(function () { el.textContent = words[i]; el.style.opacity = '1'; }, 250);
     }, 2600);
   })();
+
+  /* Pre-decodifica la 2ª imagen de cada tarjeta al entrar en pantalla, para que
+     el cambio al pasar el cursor sea instantáneo (sin tirón de decodificación). */
+  (function () {
+    var imgs = $all('[data-decode]');
+    if (!imgs.length || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var img = e.target;
+        io.unobserve(img);
+        try { img.loading = 'eager'; if (img.decode) img.decode().catch(function () {}); } catch (err) {}
+      });
+    }, { rootMargin: '200px' });
+    imgs.forEach(function (img) { io.observe(img); });
+  })();
 })();

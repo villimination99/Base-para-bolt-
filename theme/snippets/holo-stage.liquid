@@ -28,6 +28,9 @@
       <span class="holo-ring" aria-hidden="true"></span>
       <span class="holo-ring holo-ring--2" aria-hidden="true"></span>
       <span class="holo-scan" aria-hidden="true"></span>
+      {%- unless model_count > 0 -%}
+        <span class="holo-drag-hint" aria-hidden="true">{%- render 'icon', name: 'body3d' -%} Arrastra para girar</span>
+      {%- endunless -%}
     </div>
     <div class="holo-info">
       <h3 class="holo-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>

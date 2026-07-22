@@ -125,7 +125,7 @@
     start();
   })();
 
-  /* ============ 4b. Holo stage: pointer-driven 3D tilt (product showcase) ============ */
+  /* ============ 4b. Holo stage: 3D tilt (desktop) + drag-to-spin (touch) ============ */
   (function () {
     var stages = $all('[data-tilt-3d]');
     if (!stages.length) return;
@@ -133,16 +133,48 @@
     stages.forEach(function (stage) {
       var obj = $('.holo-obj', stage);
       if (!obj) return;
-      if (reduce || noHover) { obj.classList.add('holo-auto'); return; } // fallback: gentle auto-rotation
-      stage.addEventListener('pointermove', function (e) {
-        var r = stage.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        obj.style.transform = 'rotateY(' + (px * 26).toFixed(2) + 'deg) rotateX(' + (-py * 14).toFixed(2) + 'deg)';
-      });
-      stage.addEventListener('pointerleave', function () { obj.style.transform = ''; obj.classList.add('holo-auto'); });
-      stage.addEventListener('pointerenter', function () { obj.classList.remove('holo-auto'); });
       obj.classList.add('holo-auto');
+      if (reduce) return;
+
+      if (noHover) {
+        // Touch: arrastra el dedo para girar el producto (rango controlado para que no se vea de canto)
+        var dragging = false, lastX = 0, lastY = 0, ry = 0, rx = 0, idle = null;
+        stage.classList.add('is-draggable');
+        stage.style.touchAction = 'pan-y';
+        stage.addEventListener('pointerdown', function (e) {
+          dragging = true; lastX = e.clientX; lastY = e.clientY;
+          obj.classList.remove('holo-auto'); obj.style.transition = 'none';
+          clearTimeout(idle);
+          try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        stage.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          ry += (e.clientX - lastX) * 0.45; rx -= (e.clientY - lastY) * 0.30;
+          ry = Math.max(-42, Math.min(42, ry)); rx = Math.max(-28, Math.min(28, rx));
+          lastX = e.clientX; lastY = e.clientY;
+          obj.style.transform = 'rotateY(' + ry.toFixed(1) + 'deg) rotateX(' + rx.toFixed(1) + 'deg)';
+        });
+        function end() {
+          if (!dragging) return;
+          dragging = false;
+          // Suelta con muelle suave hacia el centro y retoma la levitación
+          obj.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1)';
+          obj.style.transform = 'rotateY(0deg) rotateX(0deg)'; ry = 0; rx = 0;
+          idle = setTimeout(function () { obj.style.transition = ''; obj.style.transform = ''; obj.classList.add('holo-auto'); }, 1000);
+        }
+        stage.addEventListener('pointerup', end);
+        stage.addEventListener('pointercancel', end);
+      } else {
+        // Desktop: el producto sigue el cursor (parallax de inclinación)
+        stage.addEventListener('pointermove', function (e) {
+          var r = stage.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width - 0.5;
+          var py = (e.clientY - r.top) / r.height - 0.5;
+          obj.style.transform = 'rotateY(' + (px * 26).toFixed(2) + 'deg) rotateX(' + (-py * 14).toFixed(2) + 'deg)';
+        });
+        stage.addEventListener('pointerleave', function () { obj.style.transform = ''; obj.classList.add('holo-auto'); });
+        stage.addEventListener('pointerenter', function () { obj.classList.remove('holo-auto'); });
+      }
     });
   })();
 

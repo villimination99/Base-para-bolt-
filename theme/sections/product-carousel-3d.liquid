@@ -1,0 +1,107 @@
+{%- comment -%}
+  Carrusel 3D curvo de PRODUCTOS. Anillo giratorio (coverflow) alimentado por una
+  colección: gira solo, se arrastra/desliza y se pausa fuera de pantalla.
+  Reutiliza el motor cc-* (effects.js). 100% editable desde el editor.
+{%- endcomment -%}
+{%- liquid
+  assign neon = section.settings.neon_color
+  if neon == blank
+    assign neon = 'var(--neon-cyan)'
+  endif
+  assign col = collections[section.settings.collection]
+  assign limit = section.settings.product_limit
+  case section.settings.card_size
+    when 'small'
+      assign radius = 'clamp(160px,34vw,280px)'
+      assign cardw = 'clamp(130px,24vw,200px)'
+      assign cardh = 'clamp(180px,32vw,270px)'
+    when 'large'
+      assign radius = 'clamp(220px,46vw,420px)'
+      assign cardw = 'clamp(180px,32vw,300px)'
+      assign cardh = 'clamp(240px,44vw,380px)'
+    else
+      assign radius = 'clamp(190px,40vw,350px)'
+      assign cardw = 'clamp(160px,28vw,240px)'
+      assign cardh = 'clamp(220px,38vw,320px)'
+  endcase
+  assign plist = col.products | default: collections.all.products
+  assign n = plist | size
+  if n > limit
+    assign n = limit
+  endif
+-%}
+<section class="curved-carousel product-carousel-3d section-padding"
+  style="--cc-neon:{{ neon }};--cc-radius:{{ radius }};--cc-w:{{ cardw }};--cc-h:{{ cardh }};--cc-n:{{ n }}">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank -%}<span class="fancy-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="section-title neon-underline">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.subheading != blank -%}<p class="section-subtitle">{{ section.settings.subheading }}</p>{%- endif -%}
+
+    {%- if n > 0 -%}
+      <div class="cc-stage" data-cc data-cc-auto="{{ section.settings.autorotate }}" data-cc-speed="{{ section.settings.speed | times: 0.02 }}">
+        <div class="cc-ring" data-cc-ring>
+          {%- for product in plist limit: limit -%}
+            <a class="cc-item cc-product" href="{{ product.url }}" style="--cc-i:{{ forloop.index0 }}">
+              <div class="cc-item-media">
+                {%- if product.featured_media -%}
+                  <img src="{{ product.featured_media | image_url: width: 560 }}"
+                       srcset="{{ product.featured_media | image_url: width: 320 }} 320w, {{ product.featured_media | image_url: width: 560 }} 560w"
+                       sizes="280px"
+                       alt="{{ product.title | escape }}"
+                       width="560" height="{{ 560 | divided_by: product.featured_media.aspect_ratio | round }}"
+                       loading="lazy" decoding="async">
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'cc-placeholder' }}
+                {%- endif -%}
+                {%- if product.compare_at_price > product.price -%}<span class="cc-product-badge">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>{%- endif -%}
+              </div>
+              <div class="cc-item-info">
+                <span class="cc-item-title">{{ product.title }}</span>
+                <span class="cc-item-caption">
+                  {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s> {% endif -%}
+                  {{ product.price | money }}
+                </span>
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- if section.settings.hint != blank -%}
+        <p class="cc-hint">{%- render 'icon', name: 'chevron-left' -%} {{ section.settings.hint }} {%- render 'icon', name: 'chevron-right' -%}</p>
+      {%- endif -%}
+    {%- else -%}
+      <p class="cc-hint">Elige una colección con productos en el editor.</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Carrusel 3D de productos",
+  "tag": "section",
+  "class": "section-product-carousel-3d",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "DESTACADOS" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Míralos en 3D" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Arrastra para girar el anillo de productos" },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "product_limit", "min": 4, "max": 12, "step": 1, "label": "Nº de productos", "default": 8 },
+    { "type": "color", "id": "neon_color", "label": "Color neón de la sección" },
+    {
+      "type": "select",
+      "id": "card_size",
+      "label": "Tamaño de las tarjetas",
+      "options": [
+        { "value": "small", "label": "Pequeño" },
+        { "value": "medium", "label": "Mediano" },
+        { "value": "large", "label": "Grande" }
+      ],
+      "default": "medium"
+    },
+    { "type": "checkbox", "id": "autorotate", "label": "Girar automáticamente", "default": true },
+    { "type": "range", "id": "speed", "min": 1, "max": 10, "step": 1, "label": "Velocidad de giro", "default": 3 },
+    { "type": "text", "id": "hint", "label": "Texto de ayuda", "default": "Arrastra o desliza" }
+  ],
+  "presets": [{ "name": "Carrusel 3D de productos" }]
+}
+{% endschema %}
