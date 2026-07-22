@@ -35,10 +35,25 @@
           <div class="nav-item nav-item--mega">
             <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
             <div class="nav-dropdown nav-mega">
-              <div class="nav-mega-grid">
-                {%- comment -%} Curated entries (blocks) win; otherwise auto-list collections {%- endcomment -%}
-                {%- assign mega_blocks = section.blocks | where: 'type', 'mega_link' -%}
-                {%- if mega_blocks.size > 0 -%}
+              {%- assign mega_blocks = section.blocks | where: 'type', 'mega_link' -%}
+              {%- if link.links.size > 0 -%}
+                {%- comment -%} Navegación anidada de Shopify: cada hijo es una columna con sus sub-colecciones (nietos) {%- endcomment -%}
+                <div class="nav-mega-cols">
+                  {%- for child in link.links -%}
+                    <div class="nav-mega-col">
+                      <a href="{{ child.url }}" class="nav-mega-col-title{% if child.active or child.child_active %} active{% endif %}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                      {%- if child.links.size > 0 -%}
+                        <ul class="nav-mega-sublist">
+                          {%- for gc in child.links -%}
+                            <li><a href="{{ gc.url }}"{% if gc.active %} class="active"{% endif %}{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- elsif mega_blocks.size > 0 -%}
+                <div class="nav-mega-grid">
                   {%- for block in mega_blocks -%}
                     {%- assign mc = block.settings.collection -%}
                     <a href="{{ mc.url | default: routes.all_products_collection_url }}" class="nav-mega-card" {{ block.shopify_attributes }}>
@@ -49,7 +64,9 @@
                       </span>
                     </a>
                   {%- endfor -%}
-                {%- else -%}
+                </div>
+              {%- else -%}
+                <div class="nav-mega-grid">
                   {%- for collection in collections limit: section.settings.collections_count -%}
                     <a href="{{ collection.url }}" class="nav-mega-card">
                       <span class="nav-mega-media">
@@ -62,17 +79,26 @@
                   {%- else -%}
                     <a href="{{ routes.all_products_collection_url }}" class="nav-mega-card"><span class="nav-mega-title">{{ 'general.shop' | t }}</span></a>
                   {%- endfor -%}
-                {%- endif -%}
-              </div>
+                </div>
+              {%- endif -%}
               <a href="{{ routes.all_products_collection_url }}" class="nav-mega-all">{{ 'general.view_all' | t }}{%- render 'icon', name: 'arrow-right' -%}</a>
             </div>
           </div>
         {%- elsif link.links.size > 0 -%}
           <div class="nav-item">
             <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
-            <div class="nav-dropdown">
+            <div class="nav-dropdown{% if link.links.first.links.size > 0 %} nav-dropdown--grouped{% endif %}">
               {%- for child in link.links -%}
-                <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                {%- if child.links.size > 0 -%}
+                  <div class="nav-dd-group">
+                    <a href="{{ child.url }}" class="nav-dd-head"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                    {%- for gc in child.links -%}
+                      <a href="{{ gc.url }}" class="nav-dd-sub"{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                {%- endif -%}
               {%- endfor -%}
             </div>
           </div>
@@ -126,7 +152,19 @@
             <span>{{ link.title }}</span><span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span>
           </button>
           <div class="mobile-submenu" hidden>
-            {%- if m_is_coll -%}
+            {%- if link.links.size > 0 -%}
+              {%- comment -%} Navegación anidada: cada hijo con sus sub-colecciones indentadas {%- endcomment -%}
+              {%- for child in link.links -%}
+                {%- if child.links.size > 0 -%}
+                  <a href="{{ child.url }}" class="mobile-subhead"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                  {%- for gc in child.links -%}
+                    <a href="{{ gc.url }}" class="mobile-subsub"{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a>
+                  {%- endfor -%}
+                {%- else -%}
+                  <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- elsif m_is_coll -%}
               {%- assign m_mega = section.blocks | where: 'type', 'mega_link' -%}
               {%- if m_mega.size > 0 -%}
                 {%- for block in m_mega -%}
@@ -136,8 +174,6 @@
               {%- else -%}
                 {%- for collection in collections limit: section.settings.collections_count -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- endfor -%}
               {%- endif -%}
-            {%- else -%}
-              {%- for child in link.links -%}<a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>{%- endfor -%}
             {%- endif -%}
           </div>
         </div>
@@ -196,7 +232,7 @@
       "id": "collections_trigger",
       "label": "Ítem que abre las colecciones",
       "default": "Colecciones",
-      "info": "Escribe el nombre EXACTO del ítem del menú (ej: Colecciones o Catálogo). Al pasar el cursor mostrará tus colecciones automáticamente."
+      "info": "Escribe el nombre EXACTO del ítem del menú (ej: Colecciones o Catálogo). Al pasar el cursor mostrará el mega-menú. SUB-COLECCIONES: en Tienda online → Navegación, añade elementos hijos a ese ítem (ej. Ropa) y a su vez nietos (ej. Hombre, Mujer); el mega-menú los mostrará como columnas automáticamente."
     },
     {
       "type": "range",
