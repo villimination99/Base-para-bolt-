@@ -323,31 +323,49 @@
     "settings": [
       {
         "type": "select",
-        "id": "product_img_fit",
-        "label": "Ajuste de la imagen en tarjetas",
+        "id": "product_card_style",
+        "label": "Estilo de la tarjeta de producto",
         "options": [
-          { "value": "contain", "label": "Contener (recomendado para PNG transparente)" },
+          { "value": "float", "label": "Flotante — sin caja ni fondo (PNG transparente)" },
+          { "value": "card", "label": "Tarjeta — con recuadro y fondo" }
+        ],
+        "default": "float",
+        "info": "Flotante: el producto flota directo sobre el fondo del tema, sin ningún recuadro ni fondo detrás. Ideal para tus PNG transparentes."
+      },
+      {
+        "type": "select",
+        "id": "product_img_fit",
+        "label": "Ajuste de la imagen",
+        "options": [
+          { "value": "contain", "label": "Contener (recomendado)" },
           { "value": "cover", "label": "Cubrir (recortar para llenar)" }
         ],
         "default": "contain",
         "info": "Contener muestra el producto completo, centrado y sin recortes."
       },
       {
-        "type": "checkbox",
-        "id": "product_img_blend",
-        "label": "Fundir fondos negros de las fotos",
-        "default": true,
-        "info": "Hace invisibles los fondos negros de las fotos sobre el tema oscuro (mix-blend lighten). El producto queda flotando sin caja negra."
-      },
-      {
         "type": "range",
         "id": "product_img_pad",
         "min": 0,
-        "max": 14,
+        "max": 16,
         "step": 2,
         "unit": "%",
         "label": "Aire alrededor del producto",
-        "default": 6
+        "default": 8
+      },
+      {
+        "type": "checkbox",
+        "id": "product_img_glow",
+        "label": "Halo neón bajo el producto",
+        "default": true,
+        "info": "Sombra/resplandor sutil para dar profundidad y sensación de flotación."
+      },
+      {
+        "type": "checkbox",
+        "id": "product_img_blend",
+        "label": "Fundir fondo negro (solo fotos con fondo NEGRO incrustado)",
+        "default": false,
+        "info": "Actívalo SOLO si alguna foto trae un fondo negro dentro de la imagen. Con PNG transparente déjalo apagado."
       }
     ]
   },

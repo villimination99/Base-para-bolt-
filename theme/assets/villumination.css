@@ -2800,3 +2800,65 @@ html,body{overflow-x:clip}
 .pimg-blend .product-media-item img{mix-blend-mode:lighten;filter:drop-shadow(0 14px 26px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(0,212,255,.16))}
 .product-media-thumb{background:radial-gradient(80% 70% at 50% 45%, #0a0a1e, #060612)}
 .pimg-blend .product-media-thumb img{mix-blend-mode:lighten}
+
+/* =====================================================================
+   VILLUMINATION 3D — v12
+   Producto FLOTANTE: sin caja, sin borde, sin fondo. El PNG transparente
+   flota directo sobre el fondo del tema. Halo de profundidad opcional.
+   ===================================================================== */
+
+/* ---------- Estilo FLOTANTE (por defecto) ---------- */
+.pcard-float .product-card{
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+.pcard-float .product-card:hover{
+  transform:translateY(-6px);
+  box-shadow:none !important;
+}
+.pcard-float .product-card-image{background:transparent !important;border:none !important}
+.pcard-float .product-card-overlay{display:none} /* nada de degradado oscuro sobre el producto */
+
+/* Página de producto y escaparate: también sin caja */
+.pcard-float .product-media-main{background:transparent !important;border:none !important;box-shadow:none !important}
+.pcard-float .product-media-thumb{background:transparent}
+.pcard-float .holo-stage{background:transparent !important;border:none !important;box-shadow:none !important}
+
+/* ---------- Halo neón de profundidad (sin caja) ----------
+   Un resplandor radial DETRÁS del producto que se desvanece a transparente:
+   da sensación de flotación sin dibujar ningún recuadro. */
+.pimg-glow .product-card-image,
+.pimg-glow .product-media-item,
+.pimg-glow .holo-stage{position:relative}
+.pimg-glow .product-card-image::before,
+.pimg-glow .holo-stage::after{
+  content:"";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:82%;height:82%;border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--neon-cyan) 16%, transparent) 0%, transparent 68%);
+  filter:blur(14px);z-index:0;pointer-events:none;
+}
+.pimg-glow .product-card-image > img{position:relative;z-index:1}
+/* Sombra de contacto + halo bajo el producto (da volumen sin fondo) */
+.pimg-glow .product-card-image > img{
+  filter:drop-shadow(0 14px 20px rgba(0,0,0,.5)) drop-shadow(0 0 18px color-mix(in srgb, var(--neon-cyan) 22%, transparent));
+}
+.pimg-glow .product-media-item img{
+  filter:drop-shadow(0 16px 26px rgba(0,0,0,.55)) drop-shadow(0 0 22px color-mix(in srgb, var(--neon-cyan) 20%, transparent));
+}
+
+/* Suave levitación del producto en el escaparate (flotante, no una caja) */
+.holo-obj{animation:holoFloat 5s ease-in-out infinite}
+@media(prefers-reduced-motion:reduce){.holo-obj{animation:none}}
+
+/* Un poco más de aire entre productos flotantes */
+.pcard-float .product-grid{gap:1.75rem}
+
+/* ---------- Mejora general de presentación de producto ---------- */
+.product-card-title a{transition:color .2s, text-shadow .2s}
+.product-card:hover .product-card-title a{color:var(--neon-cyan);text-shadow:0 0 12px rgba(0,212,255,.5)}
+.product-card-image > img{transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.product-card:hover .product-card-image > img{transform:translateY(-4px) scale(1.05)}
+
+/* En modo tarjeta, si el usuario lo elige, el blend sigue disponible para fotos con fondo negro */
+.pcard-card.pimg-blend .product-card-image > img{mix-blend-mode:lighten}

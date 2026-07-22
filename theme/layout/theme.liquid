@@ -103,7 +103,7 @@
   {{ content_for_header }}
 </head>
 
-<body class="grid-bg template-{{ template.name | handle }}{% if settings.product_img_blend %} pimg-blend{% endif %}">
+<body class="grid-bg template-{{ template.name | handle }} pcard-{{ settings.product_card_style | default: 'float' }}{% if settings.product_img_glow %} pimg-glow{% endif %}{% if settings.product_img_blend %} pimg-blend{% endif %}">
 
   <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 

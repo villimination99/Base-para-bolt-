@@ -12,9 +12,16 @@
         {%- for block in section.blocks -%}
           <div class="video-slide" style="--accent:{{ section.settings.accent }};" {{ block.shopify_attributes }}>
             <div class="video-card">
-              {%- if block.settings.video_id != blank -%}
-                <button class="video-card-thumb" type="button" data-video-embed="{{ block.settings.video_id }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
-                  <img src="https://i.ytimg.com/vi/{{ block.settings.video_id }}/hqdefault.jpg" alt="{{ block.settings.title | escape }}" width="320" height="180" loading="lazy">
+              {%- comment -%} Acepta el ID o una URL completa (youtube.com/watch?v=, youtu.be/, /shorts/) {%- endcomment -%}
+              {%- assign vid = block.settings.video_id | strip -%}
+              {%- if vid contains 'youtu' -%}
+                {%- if vid contains 'v=' -%}{%- assign vid = vid | split: 'v=' | last | split: '&' | first -%}
+                {%- elsif vid contains '/shorts/' -%}{%- assign vid = vid | split: '/shorts/' | last | split: '?' | first | split: '/' | first -%}
+                {%- else -%}{%- assign vid = vid | split: '/' | last | split: '?' | first -%}{%- endif -%}
+              {%- endif -%}
+              {%- if vid != blank -%}
+                <button class="video-card-thumb" type="button" data-video-embed="{{ vid }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
+                  <img src="https://i.ytimg.com/vi/{{ vid }}/hqdefault.jpg" alt="{{ block.settings.title | escape }}" width="320" height="180" loading="lazy">
                   <span class="video-card-play">{%- render 'icon', name: 'play' -%}</span>
                 </button>
               {%- endif -%}
@@ -54,8 +61,8 @@
       "type": "video",
       "name": "Video de YouTube",
       "settings": [
-        { "type": "text", "id": "video_id", "label": "ID del video de YouTube", "info": "El código después de watch?v= o /shorts/" },
-        { "type": "text", "id": "title", "label": "Título / pie" }
+        { "type": "text", "id": "video_id", "label": "Video de YouTube", "info": "Pega la URL COMPLETA del video (ej: https://youtu.be/ABC123 o .../shorts/ABC123) o solo su ID. Cámbialo cuando quieras — añade o elimina bloques de video libremente." },
+        { "type": "text", "id": "title", "label": "Título / pie (opcional)" }
       ]
     }
   ],
