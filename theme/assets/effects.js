@@ -332,4 +332,77 @@
     });
     mo.observe(splash, { attributes: true, attributeFilter: ['class'] });
   })();
+
+  /* ---- Interactive cursor glow (desktop pointer, opt-in) -------------------- */
+  (function () {
+    if (reduce || !settings.cursorGlow) return;
+    if (!window.matchMedia('(pointer:fine)').matches) return;
+    var el = document.createElement('div');
+    el.className = 'cursor-glow';
+    document.body.appendChild(el);
+    var x = window.innerWidth / 2, y = window.innerHeight / 2, tx = x, ty = y, raf = null, on = false;
+    function loop() {
+      x += (tx - x) * 0.18; y += (ty - y) * 0.18;
+      el.style.transform = 'translate3d(' + (x - 210) + 'px,' + (y - 210) + 'px,0)';
+      raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('pointermove', function (e) {
+      tx = e.clientX; ty = e.clientY;
+      if (!on) { on = true; el.classList.add('is-on'); }
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { on = false; el.classList.remove('is-on'); });
+    document.addEventListener('pointerover', function (e) {
+      var hot = e.target && e.target.closest && e.target.closest('a,button,.product-card,.holo-card,[data-tilt-3d],.cc-item');
+      el.classList.toggle('is-hot', !!hot);
+    }, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+      else if (!raf) loop();
+    });
+    loop();
+  })();
+
+  /* ---- Curved infinite 3D carousel (coverflow ring) ------------------------- */
+  (function () {
+    var stages = $all('[data-cc]');
+    if (!stages.length) return;
+    stages.forEach(function (stage) {
+      var ring = $('[data-cc-ring]', stage);
+      if (!ring) return;
+      var auto = stage.getAttribute('data-cc-auto') !== 'false' && !reduce;
+      var vel = parseFloat(stage.getAttribute('data-cc-speed')) || 0.05;
+      var angle = 0, dragging = false, lastX = 0, moved = 0, raf = null, hover = false;
+      function render() { ring.style.transform = 'rotateY(' + angle + 'deg)'; }
+      function loop() {
+        if (auto && !dragging && !hover) angle += vel;
+        render();
+        raf = requestAnimationFrame(loop);
+      }
+      function start() { if (!raf) loop(); }
+      function stop() { cancelAnimationFrame(raf); raf = null; }
+      stage.addEventListener('pointerdown', function (e) {
+        dragging = true; moved = 0; lastX = e.clientX; stage.classList.add('is-grabbing');
+        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      stage.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+        angle += dx * 0.35;
+      });
+      function endDrag() { dragging = false; stage.classList.remove('is-grabbing'); }
+      stage.addEventListener('pointerup', endDrag);
+      stage.addEventListener('pointercancel', endDrag);
+      stage.addEventListener('mouseenter', function () { hover = true; });
+      stage.addEventListener('mouseleave', function () { hover = false; endDrag(); });
+      // Swallow accidental link clicks after a drag
+      stage.addEventListener('click', function (e) {
+        if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+      }, { threshold: 0 });
+      io.observe(stage);
+      render();
+    });
+  })();
 })();

@@ -281,6 +281,17 @@
       },
       {
         "type": "header",
+        "content": "Cursor interactivo (PC)"
+      },
+      {
+        "type": "checkbox",
+        "id": "cursor_glow",
+        "label": "Luz de neón que sigue el cursor",
+        "default": true,
+        "info": "Un halo de luz suave sigue el ratón en ordenadores (puntero fino) y se intensifica sobre botones y productos. Se desactiva solo en móvil/táctil y con 'reducir movimiento'."
+      },
+      {
+        "type": "header",
         "content": "Sistema neón"
       },
       {
