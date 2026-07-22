@@ -319,6 +319,39 @@
     ]
   },
   {
+    "name": "Fotos de producto",
+    "settings": [
+      {
+        "type": "select",
+        "id": "product_img_fit",
+        "label": "Ajuste de la imagen en tarjetas",
+        "options": [
+          { "value": "contain", "label": "Contener (recomendado para PNG transparente)" },
+          { "value": "cover", "label": "Cubrir (recortar para llenar)" }
+        ],
+        "default": "contain",
+        "info": "Contener muestra el producto completo, centrado y sin recortes."
+      },
+      {
+        "type": "checkbox",
+        "id": "product_img_blend",
+        "label": "Fundir fondos negros de las fotos",
+        "default": true,
+        "info": "Hace invisibles los fondos negros de las fotos sobre el tema oscuro (mix-blend lighten). El producto queda flotando sin caja negra."
+      },
+      {
+        "type": "range",
+        "id": "product_img_pad",
+        "min": 0,
+        "max": 14,
+        "step": 2,
+        "unit": "%",
+        "label": "Aire alrededor del producto",
+        "default": 6
+      }
+    ]
+  },
+  {
     "name": "Producto y 3D/AR",
     "settings": [
       {

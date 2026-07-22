@@ -39,7 +39,10 @@
     "brand_display_suffix": "",
     "neon_speed": 6,
     "neon_intensity": 60,
-    "auto_language": true
+    "auto_language": true,
+    "product_img_fit": "contain",
+    "product_img_blend": true,
+    "product_img_pad": 6
   },
   "presets": {
     "Villumination 3D": {}

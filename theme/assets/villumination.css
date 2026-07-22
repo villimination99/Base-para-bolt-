@@ -2682,3 +2682,121 @@ html,body{overflow-x:clip}
 .fp-stage::before{content:"";position:absolute;top:-1px;left:12%;right:12%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--sec-neon,#00d4ff),transparent);box-shadow:0 0 calc(14px * var(--neon-int,.6)) var(--sec-neon,#00d4ff);animation:neonHue var(--neon-speed,6s) ease-in-out infinite}
 @media(prefers-reduced-motion:reduce){.fp-orb--1,.fp-orb--2,.fancy-eyebrow .icon,.fp-stage::before{animation:none}}
 .a11y-mode .fancy-eyebrow{text-shadow:none}
+
+/* =====================================================================
+   VILLUMINATION 3D — v11
+   Fotos de producto sin caja negra (mix-blend) · recuadro neón que abraza
+   el producto · facing premium · escaparate 3D alineado
+   ===================================================================== */
+
+/* ---------- 1. Imagen de producto: transparente, contenida, cuadrada ---------- */
+.product-card-image{
+  background:transparent !important;
+  aspect-ratio:1/1;
+  padding:var(--pimg-pad,6%);
+  box-sizing:border-box;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.product-card-image > img,
+.product-card-image-alt{
+  width:100% !important;height:100% !important;
+  object-fit:var(--pimg-fit,contain) !important;
+  object-position:center !important;
+}
+/* Fundir fondos negros incrustados en la foto (el producto "flota") */
+.pimg-blend .product-card-image > img,
+.pimg-blend .product-card-image-alt,
+.pimg-blend .holo-img,
+.pimg-blend .holo-reflect,
+.pimg-blend .collection-tile-media img,
+.pimg-blend .catgrid-media img,
+.pimg-blend .catmosaic-tile img{
+  mix-blend-mode:lighten;
+}
+/* Sombra/halo neón para dar profundidad y sensación de flotación */
+.pimg-blend .product-card-image > img{
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.55)) drop-shadow(0 0 16px color-mix(in srgb, var(--neon-cyan) 20%, transparent));
+}
+
+/* ---------- 2. Tarjeta de producto: marco premium alineado + facing ---------- */
+.product-card{
+  box-sizing:border-box;
+  display:flex;flex-direction:column;
+  border:1px solid rgba(0,212,255,.16);
+  border-radius:1.1rem;
+  background:radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--neon-cyan) 6%, transparent), var(--color-surface) 60%);
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  transition:transform .25s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.product-card:hover{
+  border-color:rgba(0,212,255,.5);
+  box-shadow:0 18px 42px rgba(0,0,0,.55), 0 0 30px rgba(0,212,255,.18);
+  transform:translateY(-4px);
+}
+.product-card-body{
+  display:flex;flex-direction:column;align-items:center;gap:.55rem;
+  padding:1rem 1.1rem 1.2rem;text-align:center;
+}
+.product-card-title{margin:0;line-height:1.3}
+.product-card-title a{color:#eafcff}
+.product-card-footer{width:100%;display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.25rem}
+.product-card-body .product-price{justify-content:center}
+/* La foto ya no necesita degradado inferior sólido */
+.product-card-overlay{background:linear-gradient(to top, rgba(5,5,16,.35), transparent 40%)}
+
+/* Badge "agotado" legible sobre imagen flotante */
+.product-card-badge-sold{background:rgba(5,5,16,.8);border:1px solid rgba(255,255,255,.15)}
+
+/* ---------- 3. Escaparate 3D: un solo recuadro neón que abraza el producto ---------- */
+/* La tarjeta deja de tener borde/relleno confuso; el "recuadro" pasa a la escena. */
+.holo-card{
+  background:transparent;border:none;padding:0;gap:1.1rem;
+  align-items:center;
+}
+.showcase3d-single .holo-card{gap:2.5rem;align-items:center}
+
+/* El recuadro neón: abraza EXACTAMENTE la imagen del producto */
+.holo-stage{
+  box-sizing:border-box;
+  width:100%;
+  border:1px solid color-mix(in srgb, var(--neon-cyan) 45%, transparent);
+  border-radius:1.15rem;
+  /* Casi negro: los fondos negros incrustados en las fotos se funden aquí
+     aunque el blend quede aislado por el transform del giro 3D. */
+  background:radial-gradient(80% 70% at 50% 45%, #0a0a1e 0%, #060612 55%, #030308 100%);
+  box-shadow:0 0 34px color-mix(in srgb, var(--neon-cyan) 22%, transparent),
+             inset 0 0 46px rgba(0,0,0,.65);
+  padding:8%;
+}
+.holo-obj{width:82%}
+.holo-img{filter:drop-shadow(0 16px 30px rgba(0,0,0,.6)) drop-shadow(0 0 24px color-mix(in srgb, var(--neon-cyan) 22%, transparent))}
+/* Info centrada y jerarquía clara */
+.holo-info{align-items:center;text-align:center;gap:.6rem;width:100%}
+.showcase3d-single .holo-info{align-items:flex-start;text-align:left}
+.holo-title{line-height:1.25}
+.holo-actions{width:100%;justify-content:center}
+.showcase3d-single .holo-actions{justify-content:flex-start}
+.holo-actions .btn{min-width:150px;justify-content:center}
+/* Botón "explorar/subscribirse" nunca se sale: caja limitada */
+.holo-actions form{display:contents}
+
+/* ---------- 4. Colecciones: fundir también fondos negros de portada ---------- */
+.pimg-blend .catlist-media img{mix-blend-mode:lighten}
+
+/* Respeta accesibilidad: el blend no afecta contraste de texto */
+@supports not (mix-blend-mode: lighten){
+  .product-card-image > img{background:transparent}
+}
+
+/* ---------- Página de producto: galería sin caja negra ---------- */
+.product-media-main{
+  background:radial-gradient(80% 70% at 50% 45%, #0a0a1e 0%, #060612 60%, #030308 100%) !important;
+  border:1px solid rgba(0,212,255,.16);
+  box-shadow:0 0 34px rgba(0,212,255,.12), inset 0 0 46px rgba(0,0,0,.6);
+}
+.product-media-item{box-sizing:border-box;padding:var(--pimg-pad,6%)}
+.product-media-item img{object-fit:var(--pimg-fit,contain) !important;object-position:center}
+.pimg-blend .product-media-item img{mix-blend-mode:lighten;filter:drop-shadow(0 14px 26px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(0,212,255,.16))}
+.product-media-thumb{background:radial-gradient(80% 70% at 50% 45%, #0a0a1e, #060612)}
+.pimg-blend .product-media-thumb img{mix-blend-mode:lighten}

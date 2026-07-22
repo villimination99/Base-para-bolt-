@@ -38,6 +38,9 @@
       /* Sistema neón configurable: color por sección (--sec-neon), velocidad e intensidad globales */
       --neon-speed: {{ settings.neon_speed | default: 6 }}s;
       --neon-int: {{ settings.neon_intensity | default: 60 | divided_by: 100.0 }};
+      /* Fotos de producto: ajuste y aire configurables desde el editor */
+      --pimg-fit: {{ settings.product_img_fit | default: 'contain' }};
+      --pimg-pad: {{ settings.product_img_pad | default: 6 }}%;
       --neon-cyan: {{ settings.color_cyan }};
       --neon-blue: #0077ff;
       --neon-pink: {{ settings.color_pink }};
@@ -100,7 +103,7 @@
   {{ content_for_header }}
 </head>
 
-<body class="grid-bg template-{{ template.name | handle }}">
+<body class="grid-bg template-{{ template.name | handle }}{% if settings.product_img_blend %} pimg-blend{% endif %}">
 
   <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 
