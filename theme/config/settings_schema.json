@@ -530,6 +530,23 @@
       },
       {
         "type": "header",
+        "content": "Venta cruzada"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_cross_sell",
+        "label": "Sugerir productos en el carrito",
+        "default": true,
+        "info": "Muestra hasta 2 productos de la misma colección que aún no están en el carrito, con botón para añadirlos en un toque. Sube el valor del pedido."
+      },
+      {
+        "type": "text",
+        "id": "cart_cross_sell_title",
+        "label": "Título de las sugerencias",
+        "default": "Completa tu compra"
+      },
+      {
+        "type": "header",
         "content": "Barra de envío gratis"
       },
       {

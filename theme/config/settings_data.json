@@ -51,6 +51,8 @@
     "card_radius": 18,
     "button_radius": 12,
     "button_uppercase": true,
-    "custom_css": ""
+    "custom_css": "",
+    "cart_cross_sell": true,
+    "cart_cross_sell_title": "Completa tu compra"
   }
 }

@@ -214,3 +214,17 @@ body.template-product .back-to-top{bottom:5.2rem}
 .nl-code-hint{font-weight:600;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;color:#9fb2d0}
 .nl-code.copied{border-color:var(--neon-green)}
 .nl-code.copied .nl-code-hint{color:var(--neon-green);opacity:1}
+/* cart cross-sell */
+.cart-xs{margin:.4rem 0 .2rem;padding:.9rem 0 .2rem;border-top:1px dashed rgba(0,212,255,.2)}
+.cart-xs-head{display:flex;align-items:center;gap:.4rem;margin:0 0 .6rem;font-family:var(--font-heading);font-weight:800;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--neon-cyan)}
+.cart-xs-head svg{width:14px;height:14px}
+.cart-xs-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.5rem}
+.xs-item{display:flex;align-items:center;gap:.65rem;padding:.45rem;border-radius:.6rem;background:rgba(255,255,255,.03);border:1px solid rgba(0,212,255,.12)}
+.xs-media{flex:none;width:44px;height:44px;border-radius:.45rem;overflow:hidden;display:block}
+.xs-media img{width:100%;height:100%;object-fit:contain}
+.xs-info{flex:1;min-width:0;display:flex;flex-direction:column}
+.xs-title{color:#dce9f5;font-size:.82rem;font-weight:600;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xs-title:hover{color:var(--neon-cyan)}
+.xs-price{color:var(--neon-cyan);font-size:.8rem;font-weight:700}
+.xs-add{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid color-mix(in srgb,var(--neon-cyan) 45%,transparent);background:color-mix(in srgb,var(--neon-cyan) 12%,transparent);color:var(--neon-cyan);font-size:1.15rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,transform .15s ease}
+.xs-add:hover{background:color-mix(in srgb,var(--neon-cyan) 26%,transparent);transform:scale(1.08)}

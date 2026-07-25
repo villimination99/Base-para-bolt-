@@ -46,6 +46,46 @@
       </li>
     {%- endfor -%}
   </ul>
+  {%- comment -%} Cross-sell: recomendaciones de la colección del primer artículo {%- endcomment -%}
+  {%- if settings.cart_cross_sell -%}
+    {%- assign xs_col = cart.items.first.product.collections.first -%}
+    {%- if xs_col and xs_col.products_count > 1 -%}
+      {%- assign xs_shown = 0 -%}
+      {%- capture xs_html -%}
+        {%- for xp in xs_col.products -%}
+          {%- if xs_shown < 2 -%}
+            {%- assign in_cart = false -%}
+            {%- for ci in cart.items -%}{%- if ci.product.id == xp.id -%}{%- assign in_cart = true -%}{%- endif -%}{%- endfor -%}
+            {%- if in_cart == false and xp.available -%}
+              <li class="xs-item">
+                <a href="{{ xp.url }}" class="xs-media">
+                  {%- if xp.featured_media -%}
+                    <img src="{{ xp.featured_media | image_url: width: 120 }}" alt="{{ xp.title | escape }}" width="52" height="52" loading="lazy">
+                  {%- endif -%}
+                </a>
+                <div class="xs-info">
+                  <a href="{{ xp.url }}" class="xs-title">{{ xp.title }}</a>
+                  <span class="xs-price">{{ xp.price | money }}</span>
+                </div>
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-quick-add>
+                  <input type="hidden" name="id" value="{{ xp.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="xs-add" aria-label="{{ 'products.product.add_to_cart' | t }}: {{ xp.title | escape }}">+</button>
+                </form>
+              </li>
+              {%- assign xs_shown = xs_shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if xs_shown > 0 -%}
+        <div class="cart-xs">
+          <p class="cart-xs-head">{%- render 'icon', name: 'bolt' -%} {{ settings.cart_cross_sell_title | default: 'Completa tu compra' }}</p>
+          <ul class="cart-xs-list" role="list">{{ xs_html }}</ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
   <div class="cart-drawer-foot">
     <div class="cart-drawer-subtotal">
       <span>{{ 'cart.general.subtotal' | t }}</span>
