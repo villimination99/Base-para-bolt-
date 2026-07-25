@@ -453,6 +453,36 @@
     ]
   },
   {
+    "name": "Etiquetas de producto",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Etiquetas automáticas en las tarjetas de producto. Se muestra solo una por producto, en este orden: descuento → pocas unidades → novedad."
+      },
+      {
+        "type": "range",
+        "id": "badge_new_days",
+        "min": 0,
+        "max": 90,
+        "step": 5,
+        "unit": "d",
+        "label": "Marcar como \"Nuevo\" durante",
+        "default": 30,
+        "info": "Días desde la publicación del producto. 0 = desactivado."
+      },
+      {
+        "type": "range",
+        "id": "badge_low_stock",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "label": "Umbral de \"Últimas unidades\"",
+        "default": 5,
+        "info": "Requiere inventario rastreado en Shopify. 0 = desactivado."
+      }
+    ]
+  },
+  {
     "name": "Producto y 3D/AR",
     "settings": [
       {

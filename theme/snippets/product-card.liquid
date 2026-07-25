@@ -24,6 +24,24 @@
     {%- endif -%}
     {%- unless product.available -%}
       <span class="product-card-badge product-card-badge-sold">{{ 'products.product.sold_out' | t }}</span>
+    {%- else -%}
+      {%- comment -%} Etiquetas automáticas: oferta > pocas unidades > novedad (solo una, la más persuasiva) {%- endcomment -%}
+      {%- assign pv = product.selected_or_first_available_variant -%}
+      {%- if pv.compare_at_price > pv.price -%}
+        {%- assign off_pct = pv.compare_at_price | minus: pv.price | times: 100 | divided_by: pv.compare_at_price -%}
+        <span class="product-card-badge pcb-sale">-{{ off_pct }}%</span>
+      {%- elsif settings.badge_low_stock > 0 and pv.inventory_management != blank and pv.inventory_quantity > 0 and pv.inventory_quantity <= settings.badge_low_stock -%}
+        <span class="product-card-badge pcb-low">{{ 'products.product.few_left' | t }}</span>
+      {%- else -%}
+        {%- assign new_days = settings.badge_new_days | default: 0 -%}
+        {%- if new_days > 0 -%}
+          {%- assign age_s = 'now' | date: '%s' | minus: product.published_at | date: '%s' -%}
+          {%- assign age_days = age_s | divided_by: 86400 -%}
+          {%- if age_days <= new_days -%}
+            <span class="product-card-badge pcb-new">{{ 'products.product.new' | t }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endif -%}
     {%- endunless -%}
     <div class="product-card-overlay"></div>
   </a>

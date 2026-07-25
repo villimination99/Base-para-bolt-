@@ -52,6 +52,8 @@
     "button_radius": 12,
     "button_uppercase": true,
     "custom_css": "",
+    "badge_new_days": 30,
+    "badge_low_stock": 5,
     "cart_cross_sell": true,
     "cart_cross_sell_title": "Completa tu compra"
   }

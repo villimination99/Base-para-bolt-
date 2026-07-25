@@ -52,6 +52,8 @@
     "product": {
       "add_to_cart": "Add to cart",
       "sold_out": "Sold out",
+      "new": "New",
+      "few_left": "Only a few left",
       "unavailable": "Unavailable",
       "quantity": "Quantity",
       "increase": "Increase quantity",
