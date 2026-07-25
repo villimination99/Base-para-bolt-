@@ -3,14 +3,29 @@
     {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
     <h2 class="section-title">{{ section.settings.title }}</h2>
     {%- if section.settings.text != blank -%}<p class="section-subtitle">{{ section.settings.text }}</p>{%- endif -%}
-    <div class="footer-newsletter" style="margin-top:2rem;">
+    {%- if section.settings.incentive != blank -%}
+      <div class="nl-incentive">{%- render 'icon', name: 'bolt' -%} {{ section.settings.incentive }}</div>
+    {%- endif -%}
+    <div class="footer-newsletter" style="margin-top:1.4rem;">
       {%- form 'customer' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
-        <div class="footer-newsletter-form">
-          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
-          <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>
-        </div>
-        {%- if form.posted_successfully? -%}<p class="form-success" style="margin-top:1rem;">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
+        {%- if form.posted_successfully? -%}
+          <div class="nl-success">
+            <p class="form-success">{%- if section.settings.success_text != blank -%}{{ section.settings.success_text }}{%- else -%}{{ 'general.newsletter.success' | t }}{%- endif -%}</p>
+            {%- if section.settings.coupon_code != blank -%}
+              <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code }}">
+                <span class="nl-code-val">{{ section.settings.coupon_code }}</span>
+                <span class="nl-code-hint">Toca para copiar</span>
+              </button>
+            {%- endif -%}
+          </div>
+        {%- else -%}
+          <div class="footer-newsletter-form">
+            <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+            <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>
+          </div>
+          {%- if section.settings.privacy_note != blank -%}<p class="nl-privacy">{{ section.settings.privacy_note }}</p>{%- endif -%}
+        {%- endif -%}
       {%- endform -%}
     </div>
   </div>
@@ -23,7 +38,12 @@
     { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Comunidad" },
     { "type": "text", "id": "title", "label": "Título", "default": "ÚNETE AL MOVIMIENTO" },
     { "type": "textarea", "id": "text", "label": "Texto", "default": "Recibe ofertas, rutinas y contenido exclusivo." },
-    { "type": "text", "id": "button_label", "label": "Botón", "default": "Suscribirme" }
+    { "type": "text", "id": "button_label", "label": "Botón", "default": "Suscribirme" },
+    { "type": "header", "content": "Cupón de bienvenida" },
+    { "type": "text", "id": "incentive", "label": "Incentivo (insignia)", "default": "−10% EN TU PRIMERA COMPRA", "info": "Se muestra como pastilla neón sobre el formulario." },
+    { "type": "text", "id": "coupon_code", "label": "Código del cupón", "default": "BIENVENIDO10", "info": "Se muestra (copiable) tras suscribirse. Crea el código real en Shopify → Descuentos." },
+    { "type": "text", "id": "success_text", "label": "Mensaje de éxito", "default": "¡Bienvenido! Usa tu código:" },
+    { "type": "text", "id": "privacy_note", "label": "Nota de privacidad", "default": "Sin spam. Cancela cuando quieras." }
   ],
   "presets": [{ "name": "Boletín" }]
 }

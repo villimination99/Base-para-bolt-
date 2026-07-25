@@ -194,3 +194,23 @@
 .back-to-top:hover{border-color:var(--neon-cyan);box-shadow:0 0 20px color-mix(in srgb,var(--neon-cyan) 35%,transparent)}
 .back-to-top svg{width:20px;height:20px;transform:rotate(-90deg)}
 body.template-product .back-to-top{bottom:5.2rem}
+/* announcement bar countdown */
+.announcement-inner{display:flex;align-items:center;justify-content:center;gap:1.1rem;flex-wrap:wrap;max-width:1200px;margin:0 auto;padding:0 1rem}
+.announcement-marquee .announcement-inner{flex-wrap:nowrap;justify-content:space-between}
+.announcement-marquee .announcement-track{flex:1;min-width:0}
+.announcement-cd{display:inline-flex;align-items:center;gap:.5rem;font-weight:600;white-space:nowrap}
+.announcement-cd-label{opacity:.9}
+.announcement-cd-time{display:inline-flex;gap:.15rem;align-items:baseline;font-family:var(--font-heading);font-weight:800}
+.announcement-cd-time b{background:rgba(0,0,0,.28);padding:.05rem .32rem;border-radius:.3rem;font-variant-numeric:tabular-nums}
+.announcement-cd-time i{font-style:normal;opacity:.7;font-size:.8em;margin-right:.15rem}
+/* newsletter welcome coupon */
+.nl-incentive{display:inline-flex;align-items:center;gap:.45rem;margin:1rem auto 0;padding:.4rem .95rem;border-radius:999px;background:color-mix(in srgb,var(--neon-cyan) 14%,transparent);border:1px solid color-mix(in srgb,var(--neon-cyan) 45%,transparent);color:var(--neon-cyan);font-weight:800;font-family:var(--font-heading);letter-spacing:.05em;font-size:.85rem}
+.nl-incentive svg{width:15px;height:15px}
+.nl-privacy{margin:.7rem 0 0;font-size:.78rem;color:#8fa3c4}
+.nl-success{display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.nl-code{display:inline-flex;flex-direction:column;align-items:center;gap:.15rem;cursor:pointer;background:color-mix(in srgb,var(--neon-green) 8%,transparent);border:2px dashed color-mix(in srgb,var(--neon-green) 60%,transparent);border-radius:.7rem;padding:.7rem 1.6rem;transition:border-color .2s ease,background .2s ease}
+.nl-code:hover{background:color-mix(in srgb,var(--neon-green) 14%,transparent)}
+.nl-code-val{font-family:var(--font-heading);font-weight:900;font-size:1.25rem;letter-spacing:.15em;color:var(--neon-green);text-shadow:0 0 16px color-mix(in srgb,var(--neon-green) 45%,transparent)}
+.nl-code-hint{font-weight:600;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;opacity:.75;color:#9fb2d0}
+.nl-code.copied{border-color:var(--neon-green)}
+.nl-code.copied .nl-code-hint{color:var(--neon-green);opacity:1}

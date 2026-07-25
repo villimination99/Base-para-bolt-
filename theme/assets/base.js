@@ -552,6 +552,20 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   })();
 
+  /* ---------- Copy coupon code ---------- */
+  $all('[data-copy-code]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var code = btn.getAttribute('data-code') || '';
+      var done = function () {
+        btn.classList.add('copied');
+        var hint = btn.querySelector('.nl-code-hint');
+        if (hint) { var prev = hint.textContent; hint.textContent = '¡Copiado!'; setTimeout(function () { hint.textContent = prev; btn.classList.remove('copied'); }, 1600); }
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(code).then(done).catch(done); }
+      else { var t = document.createElement('textarea'); t.value = code; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(t); done(); }
+    });
+  });
+
   /* ---------- Back to top ---------- */
   (function () {
     var btn = $('[data-back-to-top]');
