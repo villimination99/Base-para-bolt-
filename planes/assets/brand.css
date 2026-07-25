@@ -1,0 +1,492 @@
+/* ============================================================
+   VILLUMINATION 99 — Sistema de diseño para PDFs premium
+   Paleta y tipografía tomadas del tema Shopify (settings_data.json)
+   ============================================================ */
+
+:root{
+  /* Neón oficial de la tienda */
+  --cyan:#00f0ff;
+  --cyan-soft:#00c8ff;
+  --pink:#ff00e5;
+  --pink-soft:#ff3cac;
+  --green:#00ff88;
+  --orange:#ff6600;
+  --yellow:#ffdd00;
+  --purple:#7b2fff;
+  --teal:#00ffcc;
+
+  /* Fondos */
+  --bg:#050510;
+  --bg-2:#0a0a1a;
+  --bg-3:#0f0f2a;
+  --panel:rgba(15,15,42,.55);
+  --panel-2:rgba(10,10,26,.75);
+  --line:rgba(255,255,255,.09);
+
+  /* Texto */
+  --ink:#eef2ff;
+  --ink-2:#c3cbe4;
+  --ink-3:#8b95b5;
+
+  /* Acento por tier — lo sobrescribe .t-basico / .t-pro / .t-elite */
+  --accent:var(--cyan);
+  --accent-2:var(--purple);
+}
+
+.t-basico{ --accent:#00f0ff; --accent-2:#0066ff; }
+.t-pro   { --accent:#ff00e5; --accent-2:#7b2fff; }
+.t-elite { --accent:#00ff88; --accent-2:#ff6600; }
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+@page{ size:A4; margin:0; }
+
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+body{
+  font-family:'Rajdhani',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  font-size:10.2pt;
+  line-height:1.45;
+  font-weight:500;
+}
+
+/* ============================ PÁGINA ============================ */
+.page{
+  position:relative;
+  width:210mm;
+  height:297mm;
+  overflow:hidden;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(0,240,255,.10) 0%, transparent 55%),
+    radial-gradient(90% 60% at 110% 105%, rgba(255,0,229,.08) 0%, transparent 60%),
+    var(--bg);
+  page-break-after:always;
+  break-after:page;
+  display:flex;
+  flex-direction:column;
+  padding:13mm 14mm 11mm;
+}
+.page:last-child{ page-break-after:auto; break-after:auto; }
+
+/* Rejilla técnica de fondo */
+.page::before{
+  content:'';
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(0,180,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,180,255,.045) 1px, transparent 1px);
+  background-size:11mm 11mm;
+  pointer-events:none;
+}
+/* Filo neón izquierdo */
+.page::after{
+  content:'';
+  position:absolute; left:0; top:0; bottom:0; width:2.4mm;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2) 70%,transparent);
+  opacity:.85;
+}
+.page > *{ position:relative; z-index:1; }
+
+/* ============================ LOGO ============================ */
+.logo{ display:flex; align-items:center; gap:2.6mm; }
+.logo-mark{
+  width:8.4mm; height:8.4mm; border-radius:50%;
+  background:#000;
+  border:.5mm solid rgba(0,255,204,.28);
+  display:flex; align-items:center; justify-content:center;
+  flex:0 0 auto;
+  box-shadow:0 0 4mm rgba(0,255,204,.35);
+}
+.logo-mark span{
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:8pt;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--purple) 55%,var(--pink-soft) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.wordmark{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  letter-spacing:.01em; line-height:1; white-space:nowrap;
+}
+.wordmark .v{
+  display:inline-block;
+  background-image:linear-gradient(135deg,var(--teal) 0%,var(--purple) 55%,var(--pink-soft) 100%);
+  background-repeat:no-repeat;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.wordmark .n{ color:var(--orange); }
+
+/* ============================ PORTADA ============================ */
+.cover{ justify-content:space-between; padding:16mm 15mm 13mm; }
+.cover-top{ display:flex; align-items:center; justify-content:space-between; }
+.cover-top .wordmark{ font-size:13pt; }
+.cover-top .logo-mark{ width:11mm; height:11mm; }
+.cover-top .logo-mark span{ font-size:10.5pt; }
+.cover-url{
+  font-size:9pt; font-weight:700; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--ink-3);
+}
+
+.tier-badge{
+  display:inline-flex; align-items:center; gap:2.5mm;
+  padding:2mm 5mm; border-radius:999px;
+  border:.4mm solid var(--accent);
+  background:rgba(0,0,0,.45);
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:8.5pt;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent);
+  box-shadow:0 0 5mm rgba(0,0,0,.6), inset 0 0 4mm color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.tier-badge .dot{
+  width:2mm; height:2mm; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 2.5mm var(--accent);
+}
+
+.cover-body{
+  flex:1 1 auto; display:flex; align-items:center; gap:6mm; min-height:0;
+}
+.cover-mid{ flex:1 1 auto; display:flex; flex-direction:column; align-items:flex-start; gap:6mm; min-width:0; }
+
+.cover h1{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:36pt; line-height:1.02; letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+.cover h1.sm{ font-size:29pt; }
+.cover h1 .glow{
+  background:linear-gradient(115deg,var(--accent) 0%, var(--teal) 40%, var(--accent-2) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 3mm color-mix(in srgb, var(--accent) 45%, transparent));
+}
+.cover h1 small{
+  display:block; font-family:'Rajdhani',sans-serif; font-weight:600;
+  font-size:13pt; letter-spacing:.3em; color:var(--ink-3);
+  margin-bottom:3mm; text-transform:uppercase;
+}
+.cover-sub{
+  font-size:13pt; font-weight:500; color:var(--ink-2); max-width:135mm; line-height:1.4;
+}
+
+.cover-chips{ display:flex; flex-wrap:wrap; gap:2.5mm; }
+.chip{
+  padding:1.8mm 4mm; border-radius:2mm;
+  border:.3mm solid var(--line);
+  background:var(--panel);
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.4pt;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--ink-2);
+}
+.chip.on{ border-color:color-mix(in srgb, var(--accent) 55%, transparent); color:var(--accent); }
+
+.cover-art{
+  flex:0 0 auto; width:70mm; height:84mm;
+  filter:drop-shadow(0 0 8mm color-mix(in srgb, var(--accent) 22%, transparent));
+}
+/* Halo detrás de la mascota */
+.cover-art-wrap{
+  position:relative; flex:0 0 auto; display:flex;
+  align-items:center; justify-content:center;
+}
+.cover-art-wrap::before{
+  content:''; position:absolute; width:74mm; height:74mm; border-radius:50%;
+  background:radial-gradient(circle, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 68%);
+}
+.cover-art-wrap > *{ position:relative; }
+/* Franja de datos al pie de la portada */
+.cover-strip{
+  display:flex; align-items:stretch; gap:0;
+  border:.3mm solid var(--line); border-radius:2.5mm;
+  background:var(--panel-2); overflow:hidden; margin-bottom:6mm;
+}
+.cover-strip .s{
+  flex:1 1 0; padding:3.6mm 3mm; text-align:center;
+  border-right:.3mm solid var(--line);
+}
+.cover-strip .s:last-child{ border-right:0; }
+.cover-strip .s .v{
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:12.5pt; line-height:1;
+  color:var(--accent);
+  filter:drop-shadow(0 0 2mm color-mix(in srgb, var(--accent) 40%, transparent));
+}
+.cover-strip .s .l{
+  font-size:7.2pt; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:1.6mm; font-weight:600;
+}
+
+.cover-foot{
+  border-top:.3mm solid var(--line); padding-top:4mm;
+  display:flex; justify-content:space-between; align-items:flex-end;
+  font-size:8.2pt; color:var(--ink-3);
+}
+.cover-foot strong{ color:var(--ink-2); font-weight:700; }
+
+/* ==================== CABECERA / PIE DE PÁGINA ==================== */
+.pg-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding-bottom:3mm; margin-bottom:6mm;
+  border-bottom:.3mm solid var(--line);
+}
+.pg-head .logo .wordmark{ font-size:8.4pt; }
+.pg-head .kicker{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.4pt;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--accent);
+}
+.pg-head .site{ font-size:8pt; color:var(--ink-3); letter-spacing:.1em; }
+
+.pg-foot{
+  margin-top:auto; padding-top:3.5mm;
+  border-top:.3mm solid var(--line);
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:7.6pt; color:var(--ink-3);
+}
+.pg-foot .pnum{
+  font-family:'Orbitron',sans-serif; font-weight:700; color:var(--accent);
+  letter-spacing:.1em;
+}
+
+main{ flex:1 1 auto; min-height:0; }
+
+/* ============================ TIPOGRAFÍA ============================ */
+h2{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:16pt; line-height:1.12; text-transform:uppercase;
+  letter-spacing:-.005em; margin-bottom:2mm;
+}
+h2 .a{ color:var(--accent); }
+h2 + .rule{
+  width:26mm; height:.9mm; border-radius:999px; margin-bottom:4.5mm;
+  background:linear-gradient(90deg,var(--accent),transparent);
+}
+h3{
+  font-family:'Orbitron',sans-serif; font-weight:700;
+  font-size:10.5pt; text-transform:uppercase; letter-spacing:.04em;
+  color:var(--accent); margin:5mm 0 2.5mm;
+}
+h4{
+  font-family:'Rajdhani',sans-serif; font-weight:700; font-size:10pt;
+  text-transform:uppercase; letter-spacing:.1em; color:var(--ink);
+  margin:4mm 0 2mm;
+}
+p{ margin-bottom:3mm; color:var(--ink-2); }
+p.lead{ font-size:11pt; color:var(--ink); }
+strong{ color:var(--ink); font-weight:700; }
+em{ color:var(--accent); font-style:normal; font-weight:700; }
+.muted{ color:var(--ink-3); }
+.small{ font-size:8.4pt; }
+
+/* ============================ TABLAS ============================ */
+table{
+  width:100%; border-collapse:separate; border-spacing:0;
+  margin:3mm 0 4mm;
+  border:.3mm solid var(--line); border-radius:2.5mm; overflow:hidden;
+  background:var(--panel-2);
+  font-size:8.8pt;
+}
+thead th{
+  background:linear-gradient(90deg, color-mix(in srgb, var(--accent) 18%, transparent), rgba(255,255,255,.02));
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.2pt;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--accent);
+  text-align:left; padding:2.6mm 3mm;
+  border-bottom:.3mm solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+tbody td{
+  padding:2.2mm 3mm; border-bottom:.25mm solid rgba(255,255,255,.055);
+  color:var(--ink-2); vertical-align:top;
+}
+tbody tr:nth-child(even) td{ background:rgba(255,255,255,.022); }
+tbody tr:last-child td{ border-bottom:0; }
+tbody td:first-child{ color:var(--ink); font-weight:700; }
+tfoot td{
+  padding:2.4mm 3mm; font-weight:700; color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 12%, transparent);
+  border-top:.3mm solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+table.compact{ font-size:8.1pt; }
+table.compact tbody td, table.compact thead th{ padding:1.7mm 2.4mm; }
+.num{ text-align:right; font-variant-numeric:tabular-nums; }
+.ctr{ text-align:center; }
+
+/* Etiquetas de intensidad dentro de tablas */
+.tag{
+  display:inline-block; padding:.6mm 2.2mm; border-radius:1.2mm;
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.6pt;
+  letter-spacing:.08em; text-transform:uppercase;
+}
+.tag.hi  { background:rgba(255,102,0,.16);  color:var(--orange); border:.25mm solid rgba(255,102,0,.4); }
+.tag.mid { background:rgba(255,221,0,.14);  color:var(--yellow); border:.25mm solid rgba(255,221,0,.38); }
+.tag.lo  { background:rgba(0,240,255,.14);  color:var(--cyan);   border:.25mm solid rgba(0,240,255,.38); }
+.tag.ok  { background:rgba(0,255,136,.14);  color:var(--green);  border:.25mm solid rgba(0,255,136,.38); }
+.tag.no  { background:rgba(255,0,229,.14);  color:var(--pink);   border:.25mm solid rgba(255,0,229,.38); }
+
+/* ============================ TARJETAS ============================ */
+.grid{ display:grid; gap:3mm; }
+.g2{ grid-template-columns:1fr 1fr; }
+.g3{ grid-template-columns:repeat(3,1fr); }
+.g4{ grid-template-columns:repeat(4,1fr); }
+
+.card{
+  border:.3mm solid var(--line); border-radius:2.5mm;
+  background:var(--panel); padding:3.4mm 4mm;
+}
+.card h4{ margin-top:0; color:var(--accent); }
+.card p:last-child{ margin-bottom:0; }
+
+/* Métrica destacada */
+.metric{
+  border:.3mm solid var(--line); border-radius:2.5mm;
+  background:var(--panel); padding:3mm; text-align:center;
+}
+.metric .v{
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:15pt;
+  color:var(--accent); line-height:1;
+  filter:drop-shadow(0 0 2mm color-mix(in srgb, var(--accent) 40%, transparent));
+}
+.metric .l{
+  font-size:7.4pt; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin-top:1.4mm; font-weight:600;
+}
+
+/* Lista numerada neón */
+ol.neon{ list-style:none; counter-reset:n; display:grid; gap:2.2mm; }
+ol.neon li{
+  counter-increment:n; position:relative; padding:2.4mm 3mm 2.4mm 11mm;
+  border:.3mm solid var(--line); border-radius:2mm; background:var(--panel);
+  font-size:9pt; color:var(--ink-2);
+}
+ol.neon li::before{
+  content:counter(n,decimal-leading-zero);
+  position:absolute; left:3mm; top:2.4mm;
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:9pt;
+  color:var(--accent);
+  filter:drop-shadow(0 0 1.6mm color-mix(in srgb, var(--accent) 50%, transparent));
+}
+ol.neon li b{ color:var(--ink); display:block; font-size:9.2pt; letter-spacing:.02em; }
+
+ul.dots{ list-style:none; display:grid; gap:1.6mm; }
+ul.dots li{ position:relative; padding-left:5mm; font-size:9pt; color:var(--ink-2); }
+ul.dots li::before{
+  content:''; position:absolute; left:1mm; top:1.9mm;
+  width:1.8mm; height:1.8mm; border-radius:50%; background:var(--accent);
+  box-shadow:0 0 1.8mm var(--accent);
+}
+
+ul.check{ list-style:none; display:grid; gap:1.8mm; }
+ul.check li{ position:relative; padding-left:6mm; font-size:9pt; color:var(--ink-2); }
+ul.check li::before{
+  content:''; position:absolute; left:0; top:1.1mm;
+  width:3.4mm; height:3.4mm; border-radius:.8mm;
+  border:.35mm solid color-mix(in srgb, var(--accent) 60%, transparent);
+  background:rgba(0,0,0,.35);
+}
+
+/* ============================ CALLOUTS ============================ */
+.callout{
+  border-radius:2.5mm; padding:3.4mm 4mm 3.4mm 5mm;
+  border:.3mm solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-left:1.2mm solid var(--accent);
+  background:linear-gradient(90deg, color-mix(in srgb, var(--accent) 11%, transparent), rgba(255,255,255,.02));
+  margin:3.5mm 0;
+}
+.callout .t{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:8pt;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:1.4mm;
+}
+.callout p{ margin:0; font-size:9pt; }
+
+.callout.warn{
+  --accent:var(--orange);
+  border-left-color:var(--orange);
+}
+.callout.info{ --accent:var(--cyan); border-left-color:var(--cyan); }
+
+/* Aviso legal / médico */
+.legal{
+  border:.3mm dashed rgba(255,255,255,.18); border-radius:2.5mm;
+  background:rgba(0,0,0,.35); padding:3.4mm 4mm;
+  font-size:7.6pt; line-height:1.4; color:var(--ink-3);
+}
+.legal b{ color:var(--ink-2); letter-spacing:.08em; text-transform:uppercase; font-size:7.4pt; }
+
+/* ============================ ÍNDICE ============================ */
+.toc{ display:grid; gap:2.4mm; }
+.toc a, .toc .row{
+  display:flex; align-items:center; gap:4mm;
+  padding:3mm 4mm; border-radius:2.2mm;
+  border:.3mm solid var(--line); background:var(--panel);
+  text-decoration:none; color:inherit;
+}
+.toc .n{
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:12pt;
+  color:var(--accent); min-width:9mm;
+  filter:drop-shadow(0 0 1.6mm color-mix(in srgb, var(--accent) 45%, transparent));
+}
+.toc .tt{ font-family:'Orbitron',sans-serif; font-weight:700; font-size:9pt; text-transform:uppercase; letter-spacing:.04em; }
+.toc .dd{ font-size:8.6pt; color:var(--ink-3); margin-top:.6mm; }
+.toc .pg{ margin-left:auto; font-family:'Orbitron',sans-serif; font-weight:700; font-size:8.4pt; color:var(--ink-3); }
+
+/* ============================ CAMPOS RELLENABLES ============================ */
+.fill{
+  display:inline-block; min-width:22mm;
+  border-bottom:.3mm solid color-mix(in srgb, var(--accent) 45%, transparent);
+  height:4.4mm;
+}
+.fill.w{ min-width:44mm; }
+.fill.xl{ min-width:100%; }
+td .fill{ width:100%; min-width:0; }
+.box{
+  display:inline-block; width:3.2mm; height:3.2mm; border-radius:.7mm;
+  border:.3mm solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background:rgba(0,0,0,.3); vertical-align:-.3mm; margin-right:1mm;
+}
+.opt{ display:inline-flex; align-items:center; margin-right:3mm; font-size:8.2pt; white-space:nowrap; }
+
+/* Líneas de escritura */
+.lines{ display:grid; gap:4.6mm; margin:2.5mm 0 4mm; }
+.lines .ln{ border-bottom:.3mm solid rgba(255,255,255,.16); height:0; }
+
+/* ============================ CIERRE / CTA ============================ */
+.cta{
+  border-radius:3mm; padding:6mm;
+  border:.4mm solid color-mix(in srgb, var(--accent) 50%, transparent);
+  background:
+    radial-gradient(80% 120% at 0% 0%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    var(--panel-2);
+  text-align:center;
+}
+.cta h3{ margin-top:0; font-size:13pt; color:var(--ink); }
+.cta h3 .a{ color:var(--accent); }
+.cta .url{
+  display:inline-block; margin-top:2mm;
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:12pt;
+  color:var(--accent); letter-spacing:.05em;
+  filter:drop-shadow(0 0 2.5mm color-mix(in srgb, var(--accent) 50%, transparent));
+}
+.social{ display:flex; justify-content:center; gap:6mm; margin-top:4mm; font-size:9pt; color:var(--ink-2); }
+.social b{ color:var(--accent); }
+
+.upsell{
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:3mm; margin:4mm 0;
+}
+.upsell .u{
+  border:.3mm solid var(--line); border-radius:2.5mm; padding:3.4mm;
+  background:var(--panel); text-align:center;
+}
+.upsell .u .n{ font-family:'Orbitron',sans-serif; font-weight:900; font-size:9.5pt; letter-spacing:.1em; }
+.upsell .u .pz{ font-family:'Orbitron',sans-serif; font-weight:700; font-size:11pt; margin:1.5mm 0; }
+.upsell .u .ds{ font-size:8pt; color:var(--ink-3); line-height:1.35; }
+.upsell .u.b{ border-color:rgba(0,240,255,.45); } .upsell .u.b .n,.upsell .u.b .pz{ color:var(--cyan); }
+.upsell .u.p{ border-color:rgba(255,0,229,.45); } .upsell .u.p .n,.upsell .u.p .pz{ color:var(--pink); }
+.upsell .u.e{ border-color:rgba(0,255,136,.45); } .upsell .u.e .n,.upsell .u.e .pz{ color:var(--green); }
+.upsell .u.cur{ background:color-mix(in srgb, var(--accent) 10%, var(--panel)); }
+
+/* ============================ SVG ROBOT ============================ */
+.robot{ display:block; width:100%; height:auto; }
+.robot-inline{ width:44mm; }
+
+/* Utilidades */
+.mt0{ margin-top:0 } .mb0{ margin-bottom:0 }
+.mt2{ margin-top:2mm } .mt4{ margin-top:4mm } .mt6{ margin-top:6mm }
+.mb2{ margin-bottom:2mm } .mb4{ margin-bottom:4mm }
+.row{ display:flex; gap:4mm; align-items:flex-start; }
+.row > .c{ flex:1 1 0; min-width:0; }
+.nowrap{ white-space:nowrap; }
