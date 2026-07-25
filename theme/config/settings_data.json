@@ -45,9 +45,12 @@
     "product_img_pad": 8,
     "product_card_style": "float",
     "product_img_glow": true,
-    "product_img_fit": "contain"
-  },
-  "presets": {
-    "Villumination 3D": {}
+    "product_img_fit": "contain",
+    "page_width": 1280,
+    "section_spacing": 96,
+    "card_radius": 18,
+    "button_radius": 12,
+    "button_uppercase": true,
+    "custom_css": ""
   }
 }

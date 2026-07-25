@@ -60,11 +60,27 @@
       --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
       --font-body-weight: {{ body_font.weight }};
       --font-heading: {% if settings.use_display_font %}'Orbitron', {% endif %}{{ heading_font.family }}, {{ heading_font.fallback_families }};
+      /* Diseño configurable desde el editor */
+      --page-width: {{ settings.page_width | default: 1280 }}px;
+      --section-space: {{ settings.section_spacing | default: 96 }}px;
+      --card-radius: {{ settings.card_radius | default: 18 }}px;
+      --btn-radius: {{ settings.button_radius | default: 12 }}px;
     }
     body { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); }
   {%- endstyle -%}
 
   {{ 'villumination.css' | asset_url | stylesheet_tag }}
+
+  {%- comment -%} Aplica las variables de diseño del editor sobre el CSS del tema {%- endcomment -%}
+  {%- style -%}
+    .container { max-width: var(--page-width); }
+    .section-padding { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+    .product-card, .col-index-tile, .cc-item, .fp-stage, .catgrid-card { border-radius: var(--card-radius); }
+    .btn { border-radius: var(--btn-radius); {% unless settings.button_uppercase %}text-transform: none; letter-spacing: .02em;{% endunless %} }
+    {%- if settings.custom_css != blank -%}
+      {{ settings.custom_css }}
+    {%- endif -%}
+  {%- endstyle -%}
 
   <noscript><style>#splash-intro{display:none!important}[data-reveal]{opacity:1!important}</style></noscript>
 

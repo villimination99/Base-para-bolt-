@@ -8,6 +8,78 @@
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
   },
   {
+    "name": "Diseño y espaciado",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1000,
+        "max": 1600,
+        "step": 20,
+        "unit": "px",
+        "label": "Ancho máximo de la página",
+        "default": 1280
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "min": 32,
+        "max": 160,
+        "step": 8,
+        "unit": "px",
+        "label": "Espacio entre secciones",
+        "default": 96
+      },
+      {
+        "type": "range",
+        "id": "card_radius",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Redondeo de tarjetas",
+        "default": 18
+      }
+    ]
+  },
+  {
+    "name": "Botones",
+    "settings": [
+      {
+        "type": "range",
+        "id": "button_radius",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Redondeo de botones",
+        "default": 12,
+        "info": "0 = esquinas rectas. 32 = cápsula."
+      },
+      {
+        "type": "checkbox",
+        "id": "button_uppercase",
+        "label": "Texto de botones en MAYÚSCULAS",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "CSS personalizado",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Añade tus propias reglas CSS. Se cargan al final, por lo que tienen prioridad sobre el tema. Úsalo para retoques puntuales sin editar el código."
+      },
+      {
+        "type": "textarea",
+        "id": "custom_css",
+        "label": "CSS",
+        "info": "Ejemplo: .product-title { letter-spacing: .04em; }"
+      }
+    ]
+  },
+  {
     "name": "Logo y marca",
     "settings": [
       {
