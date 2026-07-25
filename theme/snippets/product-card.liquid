@@ -46,6 +46,9 @@
     <div class="product-card-overlay"></div>
   </a>
   <div class="product-card-body">
+    {%- if settings.card_show_vendor and product.vendor != blank -%}
+      <span class="product-card-vendor">{{ product.vendor }}</span>
+    {%- endif -%}
     <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
     {%- comment -%} Estrellas reales desde la app de reseñas (metacampos estándar) {%- endcomment -%}
     {%- assign card_mf = product.metafields.reviews.rating -%}

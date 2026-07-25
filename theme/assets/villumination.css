@@ -261,3 +261,4 @@ body:not(.pimg-glow) .product-media-item img,
 body:not(.pimg-glow) .holo-img{filter:none!important}
 body:not(.pimg-glow) .product-card-image::before,
 body:not(.pimg-glow) .holo-stage::after{display:none}
+.product-card-vendor{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#8fa3c4;margin-bottom:.15rem}
