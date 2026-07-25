@@ -136,6 +136,8 @@
 
   {%- render 'cart-drawer' -%}
 
+  <button class="back-to-top" data-back-to-top aria-label="{{ 'accessibility.back_to_top' | t | default: 'Volver arriba' }}">{%- render 'icon', name: 'arrow-right' -%}</button>
+
   <script src="{{ 'base.js' | asset_url }}" defer></script>
   {%- comment -%} effects.js = mejoras visuales progresivas. Se cargan en tiempo libre (idle) para no competir con el primer render → mejor LCP/TTI. {%- endcomment -%}
   <script>

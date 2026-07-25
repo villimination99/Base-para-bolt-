@@ -196,6 +196,21 @@
     {%- endif -%}
   </div>
 
+  {%- if section.settings.show_sticky_bar -%}
+    <div class="product-sticky-bar" data-sticky-atc aria-hidden="true">
+      <div class="psb-info">
+        {%- if product.featured_media -%}
+          <img src="{{ product.featured_media | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
+        {%- endif -%}
+        <div class="psb-text">
+          <span class="psb-title">{{ product.title }}</span>
+          <span class="psb-price" data-price>{{ current_variant.price | money }}</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary psb-add" data-sticky-add>{{ 'products.product.add_to_cart' | t }}</button>
+    </div>
+  {%- endif -%}
+
   <script type="application/json" data-product-json>
     {{ product.variants | json }}
   </script>
@@ -213,6 +228,7 @@
     { "type": "range", "id": "low_stock_threshold", "min": 0, "max": 50, "step": 1, "label": "Umbral de stock bajo", "default": 10, "info": "Muestra '¡Solo quedan X!' cuando el inventario (rastreado) sea igual o menor. 0 = desactivado." },
     { "type": "text", "id": "low_stock_text", "label": "Texto de stock bajo", "default": "¡Solo quedan [n]! Date prisa", "info": "Usa [n] para el número de unidades." },
     { "type": "checkbox", "id": "show_payment_button", "label": "Botón de pago exprés (Shop Pay, Apple/Google Pay)", "default": true },
+    { "type": "checkbox", "id": "show_sticky_bar", "label": "Barra fija 'Añadir' al hacer scroll", "default": true, "info": "Barra flotante con foto, precio y botón que aparece cuando el botón principal sale de pantalla. Sube mucho la conversión en móvil." },
     { "type": "header", "content": "Productos relacionados" },
     { "type": "checkbox", "id": "show_related", "label": "Mostrar 'También te puede gustar'", "default": true },
     { "type": "text", "id": "related_eyebrow", "label": "Etiqueta", "default": "COMPLETA TU ARSENAL" },

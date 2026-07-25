@@ -180,7 +180,7 @@
     if (json) { try { variants = JSON.parse(json.textContent); } catch (e) {} }
 
     var idInput = $('[data-variant-id]', section);
-    var priceEl = $('[data-price]', section);
+    var priceEls = $all('[data-price]', section);
     var compareEl = $('[data-compare]', section);
     var addBtn = $('[data-add-btn]', section);
     var addText = $('[data-add-text]', section);
@@ -200,7 +200,7 @@
       var v = matchVariant();
       if (!v) return;
       if (idInput) idInput.value = v.id;
-      if (priceEl) priceEl.textContent = money(v.price);
+      priceEls.forEach(function (el) { el.textContent = money(v.price); });
       var onSale = v.compare_at_price > v.price;
       if (compareEl) {
         if (onSale) { compareEl.textContent = money(v.compare_at_price); compareEl.style.display = ''; }
@@ -257,6 +257,23 @@
           else { window.location.href = routes.cart; }
         }).catch(function () { if (addBtn) addBtn.classList.remove('is-loading'); });
       });
+    }
+
+    /* Sticky add-to-cart bar: appears once the main purchase area scrolls out of view */
+    var stickyBar = $('[data-sticky-atc]', section);
+    var purchaseAnchor = $('.product-purchase', section);
+    if (stickyBar && purchaseAnchor && 'IntersectionObserver' in window) {
+      var sObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          // show only when the buy button is above the viewport (already scrolled past)
+          var past = !e.isIntersecting && e.boundingClientRect.top < 0;
+          stickyBar.classList.toggle('is-visible', past);
+          stickyBar.setAttribute('aria-hidden', past ? 'false' : 'true');
+        });
+      }, { threshold: 0 });
+      sObs.observe(purchaseAnchor);
+      var sAdd = $('[data-sticky-add]', stickyBar);
+      if (sAdd && addBtn) sAdd.addEventListener('click', function () { addBtn.click(); });
     }
   })();
 
@@ -533,5 +550,22 @@
       img.addEventListener('click', function () { open(img.getAttribute('data-zoom-src') || img.currentSrc || img.src, img.alt); });
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+
+  /* ---------- Back to top ---------- */
+  (function () {
+    var btn = $('[data-back-to-top]');
+    if (!btn) return;
+    var shown = false;
+    function onScroll() {
+      var s = (window.scrollY || document.documentElement.scrollTop) > 600;
+      if (s !== shown) { shown = s; btn.classList.toggle('is-visible', s); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    btn.addEventListener('click', function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+    onScroll();
   })();
 })();
