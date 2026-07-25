@@ -62,6 +62,17 @@
       </div>
     {%- endif -%}
 
+    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+      <div class="footer-payments" role="list" aria-label="{{ section.settings.payment_label }}">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.payment_label != blank -%}
+        <p class="footer-secure">{%- render 'icon', name: 'check' -%}{{ section.settings.payment_label }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
     <div class="footer-bottom">
       <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'general.footer.rights' | t }}</p>
       {%- render 'language-selector' -%}
@@ -81,6 +92,19 @@
       "id": "about",
       "label": "Descripción de la marca",
       "default": "Tienda fitness para atletas que no se conforman con lo ordinario."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar métodos de pago aceptados",
+      "default": true,
+      "info": "Se toman automáticamente de los pagos activos en tu tienda. Genera confianza y reduce el abandono."
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Texto de seguridad",
+      "default": "Pago 100% seguro y cifrado"
     },
     {
       "type": "textarea",

@@ -1,0 +1,27 @@
+{%- comment -%}
+  Productos vistos recientemente. Se guardan en el navegador del visitante (localStorage),
+  así que no requiere servidor ni apps. Si no hay historial, la sección no se muestra.
+{%- endcomment -%}
+<section class="section-padding recently-viewed" data-recently-viewed data-limit="{{ section.settings.limit }}" hidden>
+  <div class="container">
+    <div class="collection-index-head">
+      {%- if section.settings.eyebrow != blank -%}<span class="fancy-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 class="section-title neon-underline">{{ section.settings.heading }}</h2>{%- endif -%}
+    </div>
+    <div class="product-grid rv-grid" data-rv-grid></div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Vistos recientemente",
+  "tag": "section",
+  "class": "section-recently-viewed",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "TU HISTORIAL" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Vistos recientemente" },
+    { "type": "range", "id": "limit", "min": 2, "max": 8, "step": 1, "label": "Máximo de productos", "default": 4 }
+  ],
+  "presets": [{ "name": "Vistos recientemente" }]
+}
+{% endschema %}

@@ -552,6 +552,50 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   })();
 
+  /* ---------- Recently viewed (localStorage, no server/app needed) ---------- */
+  (function () {
+    var KEY = 'v99_recently_viewed';
+    function read() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+    function write(list) { try { localStorage.setItem(KEY, JSON.stringify(list.slice(0, 12))); } catch (e) {} }
+
+    // 1) Record the product currently being viewed
+    var cur = $('[data-rv-current]');
+    if (cur) {
+      try {
+        var p = JSON.parse(cur.textContent);
+        if (p && p.id && p.url) {
+          var list = read().filter(function (x) { return x.id !== p.id; });
+          list.unshift(p);
+          write(list);
+        }
+      } catch (e) {}
+    }
+
+    // 2) Render the history section (excluding the product being viewed)
+    var host = $('[data-recently-viewed]');
+    if (!host) return;
+    var grid = $('[data-rv-grid]', host);
+    if (!grid) return;
+    var limit = parseInt(host.getAttribute('data-limit') || '4', 10);
+    var currentId = null;
+    if (cur) { try { currentId = JSON.parse(cur.textContent).id; } catch (e) {} }
+    var items = read().filter(function (x) { return x && x.id !== currentId && x.url; }).slice(0, limit);
+    if (!items.length) return;
+
+    var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+    grid.innerHTML = items.map(function (p) {
+      return '<div class="product-card rv-card">' +
+        '<a href="' + esc(p.url) + '" class="product-card-image" aria-label="' + esc(p.title) + '">' +
+          (p.image ? '<img src="' + esc(p.image) + '" alt="' + esc(p.title) + '" width="400" height="400" loading="lazy" decoding="async">' : '') +
+        '</a>' +
+        '<div class="product-card-body">' +
+          '<h3 class="product-card-title"><a href="' + esc(p.url) + '">' + esc(p.title) + '</a></h3>' +
+          '<div class="product-card-footer"><div class="product-price"><span class="product-price-amount">' + esc(p.price) + '</span></div></div>' +
+        '</div></div>';
+    }).join('');
+    host.hidden = false;
+  })();
+
   /* ---------- Copy coupon code ---------- */
   $all('[data-copy-code]').forEach(function (btn) {
     btn.addEventListener('click', function () {

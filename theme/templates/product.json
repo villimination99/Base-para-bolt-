@@ -11,7 +11,11 @@
       },
       "block_order": ["t1", "t2", "t3", "c1", "c2"],
       "settings": {}
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {}
     }
   },
-  "order": ["main"]
+  "order": ["main", "recently_viewed"]
 }

@@ -47,6 +47,19 @@
   </a>
   <div class="product-card-body">
     <h3 class="product-card-title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- comment -%} Estrellas reales desde la app de reseñas (metacampos estándar) {%- endcomment -%}
+    {%- assign card_mf = product.metafields.reviews.rating -%}
+    {%- if card_mf != blank and card_mf.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
+      {%- assign card_rating = card_mf.value.rating | times: 1.0 -%}
+      {%- assign card_round = card_rating | round -%}
+      <div class="pcard-rating">
+        <span class="product-stars" aria-hidden="true">
+          {%- for i in (1..5) -%}<span class="star{% if i <= card_round %} is-on{% endif %}">{%- render 'icon', name: 'star' -%}</span>{%- endfor -%}
+        </span>
+        <span class="pcard-rating-count">({{ product.metafields.reviews.rating_count.value }})</span>
+        <span class="visually-hidden">{{ card_rating | round: 1 }} / 5</span>
+      </div>
+    {%- endif -%}
     <div class="product-card-footer">
       <div class="product-price">
         {%- if product.compare_at_price > product.price -%}
