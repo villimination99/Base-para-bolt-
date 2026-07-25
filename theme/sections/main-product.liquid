@@ -231,7 +231,9 @@
           <span class="psb-price" data-price>{{ current_variant.price | money }}</span>
         </div>
       </div>
-      <button type="button" class="btn btn-primary psb-add" data-sticky-add>{{ 'products.product.add_to_cart' | t }}</button>
+      <button type="button" class="btn btn-primary psb-add" data-sticky-add {% unless current_variant.available %}disabled{% endunless %}>
+        {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+      </button>
     </div>
   {%- endif -%}
 

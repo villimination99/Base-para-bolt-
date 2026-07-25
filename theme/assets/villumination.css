@@ -180,8 +180,10 @@
 .img-lightbox-close{position:absolute;top:max(1rem,3vmin);right:max(1rem,3vmin);width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(10,10,26,.7);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
 .img-lightbox-close:hover{border-color:var(--neon-cyan);color:var(--neon-cyan)}
 /* v27 — sticky add-to-cart bar (mobile conversion) + back-to-top */
-.product-sticky-bar{position:fixed;left:0;right:0;bottom:0;z-index:900;display:flex;align-items:center;gap:.8rem;padding:.6rem .9rem;padding-bottom:max(.6rem,env(safe-area-inset-bottom));background:rgba(6,6,18,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid color-mix(in srgb,var(--neon-cyan) 30%,transparent);transform:translateY(115%);transition:transform .35s cubic-bezier(.22,1,.36,1);box-shadow:0 -10px 30px rgba(0,0,0,.55)}
-.product-sticky-bar.is-visible{transform:translateY(0)}
+.product-sticky-bar{position:fixed;left:0;right:0;bottom:0;z-index:900;display:flex;align-items:center;gap:.8rem;padding:.6rem .9rem;padding-bottom:max(.6rem,env(safe-area-inset-bottom));background:rgba(6,6,18,.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid color-mix(in srgb,var(--neon-cyan) 30%,transparent);transform:translateY(115%);transition:transform .35s cubic-bezier(.22,1,.36,1),visibility .35s;visibility:hidden;box-shadow:0 -10px 30px rgba(0,0,0,.55)}
+.product-sticky-bar.is-visible{transform:translateY(0);visibility:visible}
+.psb-add[disabled]{opacity:.5;cursor:not-allowed}
+[hidden]{display:none!important}
 .psb-info{display:flex;align-items:center;gap:.7rem;min-width:0;flex:1}
 .psb-info img{width:48px;height:48px;border-radius:.5rem;object-fit:contain;background:transparent;flex:none}
 .psb-text{display:flex;flex-direction:column;min-width:0}
@@ -251,3 +253,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 /* recently viewed */
 .rv-grid{margin-top:1.4rem}
 .rv-card .product-card-image{aspect-ratio:1/1}
+/* v33 — el ajuste "Halo neón bajo el producto" debe poder DESACTIVARSE.
+   Las reglas v16/v17 aplican el drop-shadow con !important, así que sin este reset
+   el checkbox no tenía efecto. */
+body:not(.pimg-glow) .product-card-image>img,
+body:not(.pimg-glow) .product-media-item img,
+body:not(.pimg-glow) .holo-img{filter:none!important}
+body:not(.pimg-glow) .product-card-image::before,
+body:not(.pimg-glow) .holo-stage::after{display:none}

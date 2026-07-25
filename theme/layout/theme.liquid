@@ -73,8 +73,11 @@
 
   {%- comment -%} Aplica las variables de diseño del editor sobre el CSS del tema {%- endcomment -%}
   {%- style -%}
-    .container { max-width: var(--page-width); }
+    .container:not(.container--narrow):not(.container--xnarrow) { max-width: var(--page-width); }
     .section-padding { padding-top: var(--section-space); padding-bottom: var(--section-space); }
+    @media (max-width: 749px) {
+      .section-padding { padding-top: calc(var(--section-space) * .58); padding-bottom: calc(var(--section-space) * .58); }
+    }
     .product-card, .col-index-tile, .cc-item, .fp-stage, .catgrid-card { border-radius: var(--card-radius); }
     .btn { border-radius: var(--btn-radius); {% unless settings.button_uppercase %}text-transform: none; letter-spacing: .02em;{% endunless %} }
     {%- if settings.custom_css != blank -%}

@@ -227,6 +227,12 @@
         addBtn.disabled = !v.available;
         if (addText) addText.textContent = v.available ? (strings.addToCart || 'Add to cart') : (strings.soldOut || 'Sold out');
       }
+      // La barra fija debe reflejar la disponibilidad, no quedarse "activa" en agotados
+      var sBtn = $('[data-sticky-add]', section);
+      if (sBtn) {
+        sBtn.disabled = !v.available;
+        sBtn.textContent = v.available ? (strings.addToCart || 'Add to cart') : (strings.soldOut || 'Sold out');
+      }
       try {
         var url = new URL(window.location);
         url.searchParams.set('variant', v.id);
@@ -534,20 +540,34 @@
       box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('img-lightbox-close')) close(); });
       document.body.appendChild(box);
     }
+    var lastFocus = null;
     function open(src, alt) {
       if (!box) build();
+      lastFocus = document.activeElement;
       boxImg.src = src; boxImg.alt = alt || '';
-      requestAnimationFrame(function () { box.classList.add('is-open'); });
+      requestAnimationFrame(function () {
+        box.classList.add('is-open');
+        var c = box.querySelector('.img-lightbox-close');
+        if (c) c.focus();
+      });
       document.documentElement.style.overflow = 'hidden';
     }
     function close() {
-      if (!box) return;
+      if (!box || !box.classList.contains('is-open')) return;
       box.classList.remove('is-open');
       document.documentElement.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
     zoomables.forEach(function (img) {
       img.style.cursor = 'zoom-in';
-      img.addEventListener('click', function () { open(img.getAttribute('data-zoom-src') || img.currentSrc || img.src, img.alt); });
+      // Accesible por teclado: cualquiera puede abrir el zoom con Enter/Espacio
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('role', 'button');
+      function fire() { open(img.getAttribute('data-zoom-src') || img.currentSrc || img.src, img.alt); }
+      img.addEventListener('click', fire);
+      img.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); }
+      });
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   })();

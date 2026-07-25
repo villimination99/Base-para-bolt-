@@ -4,7 +4,7 @@
 
     <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
       <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}" autocomplete="off">
-      <button type="submit" class="btn btn-primary">{%- render 'icon', name: 'search' -%}</button>
+      <button type="submit" class="btn btn-primary" aria-label="{{ 'general.search.title' | t }}">{%- render 'icon', name: 'search' -%}</button>
     </form>
 
     {%- if search.performed -%}
