@@ -7,7 +7,9 @@
  "mascota": "r-zodiaco",
  "acento": "cyan",
  "original": true,
- "laminas": true,
+ "laminas": [
+  "zodiaco.svg"
+ ],
  "claves": [
   "zodiaco",
   "astrología",

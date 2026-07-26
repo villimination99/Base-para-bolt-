@@ -27,6 +27,7 @@
 .acento-cyan   { --acento:#00f0ff; --acento-2:#7b2fff; --a-rgb:0,240,255; }
 .acento-magenta{ --acento:#ff00e5; --acento-2:#7b2fff; --a-rgb:255,0,229; }
 .acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
+.acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
@@ -73,6 +74,8 @@ body.cubierta-doc{
 body.cubierta-doc.acento-cyan   { --acento:#00f0ff; --acento-2:#7b2fff; --a-rgb:0,240,255; }
 body.cubierta-doc.acento-magenta{ --acento:#ff00e5; --acento-2:#7b2fff; --a-rgb:255,0,229; }
 body.cubierta-doc.acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
+body.cubierta-doc.acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
+.acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 
 .cubierta{
   display:flex; flex-direction:column; justify-content:space-between;

@@ -1921,7 +1921,7 @@ LIBRO = {
     "mascota": "r-zodiaco",
     "acento": "cyan",
     "original": True,
-    "laminas": True,          # inyecta partials/zodiaco.svg en el documento
+    "laminas": ["zodiaco.svg"],   # sprites que se inyectan en el documento
     "claves": ["zodiaco", "astrología", "doce signos", "decanatos",
                "horas planetarias", "hábitos", "villuminations"],
     "capitulos": [

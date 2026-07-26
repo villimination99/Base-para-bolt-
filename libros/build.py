@@ -172,7 +172,19 @@ def cabecera(libro: dict, clase: str) -> str:
 <link rel="stylesheet" href="{ASSETS.as_uri()}/libro.css">
 <body class="{clase}">
 {PARTIALS.joinpath('simbolos.svg').read_text()}
-{PARTIALS.joinpath('zodiaco.svg').read_text() if libro.get('laminas') else ''}"""
+{laminas_svg(libro)}"""
+
+
+def laminas_svg(libro: dict) -> str:
+    """Inyecta los sprites de láminas que declare el libro.
+
+    Va en línea y no por <link>: los <symbol> de un SVG externo no se pueden
+    referenciar con <use href="#id"> desde el documento, y necesitamos los ids
+    disponibles en el propio árbol.
+    """
+    return "\n".join(
+        PARTIALS.joinpath(nombre).read_text() for nombre in libro.get("laminas", [])
+    )
 
 
 def cubierta(libro: dict) -> str:
