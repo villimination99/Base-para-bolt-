@@ -1,0 +1,262 @@
+/* ============================================================
+   VILLUMINATION 99 — Sistema de diseño para libros
+   Formato A5. A diferencia de los planes (páginas de altura fija),
+   aquí el texto fluye y Chromium pagina solo: son libros de lectura.
+   ============================================================ */
+
+:root{
+  --cyan:#00f0ff;   --magenta:#ff00e5;  --verde:#00ff88;
+  --naranja:#ff6600; --purpura:#7b2fff; --turquesa:#00ffcc; --rosa:#ff3cac;
+
+  /* Interior: papel color hueso. Un libro de cien páginas no se lee en
+     negativo, y Chromium tampoco pinta los márgenes de página, así que el
+     neón vive en la cubierta (que sí va a sangre) y en los acentos. */
+  --fondo:#fcfbf8;
+  --panel:#f4f2ee;
+  --linea:#ddd8cf;
+
+  --tinta:#1b1a18;
+  --tinta-2:#443f39;
+  --tinta-3:#7c766c;
+
+  --acento:#00738f;
+  --acento-2:#5a1fb8;
+  --a-rgb:0,115,143;
+}
+
+.acento-cyan   { --acento:#00738f; --acento-2:#0047b3; --a-rgb:0,115,143; }
+.acento-magenta{ --acento:#a5008f; --acento-2:#5a1fb8; --a-rgb:165,0,143; }
+.acento-verde  { --acento:#00693f; --acento-2:#b04a00; --a-rgb:0,105,63; }
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+@page{ size:A5; margin:20mm 17mm 18mm; }
+
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+body{
+  font-family:'EB Garamond', Georgia, serif;
+  font-size:11.4pt;
+  line-height:1.62;
+  color:var(--tinta);
+  background:var(--fondo);
+  text-align:justify;
+  hyphens:auto;
+  -webkit-hyphens:auto;
+}
+
+html{ background:var(--fondo); }
+
+/* ============================ CUBIERTA ============================ */
+/* Documento aparte, sin márgenes de página: el neón llega hasta el borde. */
+body.cubierta-doc{
+  background:#050510; color:#e9ecf7;
+  width:148mm; height:210mm; margin:0; padding:14mm 13mm 12mm;
+  display:flex; flex-direction:column; justify-content:space-between;
+  text-align:center; overflow:hidden; position:relative;
+}
+body.cubierta-doc::before{
+  content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(110% 70% at 50% 4%, rgba(var(--a-rgb),.16) 0%, transparent 58%),
+    radial-gradient(80% 50% at 50% 104%, rgba(var(--a-rgb),.10) 0%, transparent 60%);
+}
+body.cubierta-doc::after{
+  content:''; position:absolute; left:0; right:0; top:0; height:2.2mm;
+  background:linear-gradient(90deg,var(--acento),var(--acento-2));
+}
+body.cubierta-doc > *{ position:relative; z-index:1; }
+body.cubierta-doc{
+  --fondo:#050510; --tinta:#e9ecf7; --tinta-2:#b9c0d6; --tinta-3:#7e869e;
+  --linea:rgba(255,255,255,.14);
+}
+body.cubierta-doc.acento-cyan   { --acento:#00f0ff; --acento-2:#7b2fff; --a-rgb:0,240,255; }
+body.cubierta-doc.acento-magenta{ --acento:#ff00e5; --acento-2:#7b2fff; --a-rgb:255,0,229; }
+body.cubierta-doc.acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
+
+.cubierta{
+  display:flex; flex-direction:column; justify-content:space-between;
+  height:100%; text-align:center;
+}
+.cubierta .sello{
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:8pt; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--tinta-3);
+}
+.cubierta .simbolo{ width:62mm; height:62mm; margin:0 auto; }
+.cubierta h1{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:23pt; line-height:1.12; letter-spacing:-.01em;
+  text-transform:uppercase;
+  color:var(--acento);
+  filter:drop-shadow(0 0 3.5mm rgba(var(--a-rgb),.4));
+  margin-bottom:5mm;
+}
+.cubierta h1.largo{ font-size:17pt; }
+.cubierta .subtitulo{
+  font-family:'EB Garamond',serif; font-style:italic;
+  font-size:12.5pt; color:var(--tinta-2); line-height:1.4;
+  max-width:105mm; margin:0 auto;
+}
+.cubierta .autor{
+  font-family:'Rajdhani',sans-serif; font-weight:600;
+  font-size:12pt; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--tinta); margin-top:7mm;
+}
+.cubierta .pie{
+  border-top:.3mm solid var(--linea); padding-top:4mm;
+  font-family:'Rajdhani',sans-serif; font-size:8.2pt;
+  letter-spacing:.06em; color:var(--tinta-3); line-height:1.5;
+}
+.cubierta .pie b{ color:var(--tinta-2); font-weight:700; letter-spacing:.16em; }
+
+/* ============================ CRÉDITOS ============================ */
+.creditos{
+  page-break-after:always; break-after:page;
+  font-family:'Rajdhani',sans-serif; font-size:9pt; line-height:1.6;
+  color:var(--tinta-3); text-align:left;
+}
+.creditos h2{
+  font-family:'Orbitron',sans-serif; font-size:10pt; font-weight:700;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--acento);
+  margin-bottom:4mm;
+}
+.creditos p{ margin-bottom:3.5mm; text-align:left; text-indent:0; }
+.creditos strong{ color:var(--tinta-2); }
+
+/* ============================ ÍNDICE ============================ */
+.indice{ page-break-after:always; break-after:page; }
+.indice h2, .cierre h2{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:15pt; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--acento); text-align:center; margin-bottom:3mm;
+}
+.indice .filigrana, .cierre .filigrana{
+  width:36mm; height:5mm; margin:0 auto 8mm; display:block;
+}
+.indice ol{ list-style:none; counter-reset:cap; }
+.indice li{
+  counter-increment:cap;
+  display:flex; align-items:baseline; gap:3mm;
+  padding:1.9mm 0; border-bottom:.25mm dotted var(--linea);
+  font-family:'Rajdhani',sans-serif; font-size:10pt; text-align:left;
+}
+.indice li .n{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:8.4pt;
+  color:var(--acento); min-width:7mm;
+}
+.indice li .t{ flex:1 1 auto; color:var(--tinta); font-weight:600; }
+.indice li .pg{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:8.4pt;
+  color:var(--tinta-3);
+}
+
+/* ============================ CAPÍTULOS ============================ */
+.capitulo{ page-break-before:always; break-before:page; }
+.capitulo header{
+  text-align:center; margin-bottom:9mm;
+  padding-bottom:5mm; border-bottom:.3mm solid var(--linea);
+}
+.capitulo .orden{
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:8.4pt; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--acento); display:block; margin-bottom:3mm;
+}
+.capitulo h2{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:15pt; line-height:1.2; letter-spacing:.01em;
+  text-transform:uppercase; color:var(--tinta);
+}
+.capitulo h2.largo{ font-size:12pt; }
+.capitulo .fechas{
+  font-family:'EB Garamond',serif; font-style:italic;
+  font-size:11pt; color:var(--acento); margin-top:3mm; display:block;
+}
+
+/* Primer párrafo del capítulo: capitular */
+.capitulo > .cuerpo > p:first-of-type::first-letter{
+  font-family:'Orbitron',sans-serif; font-weight:900;
+  font-size:255%; line-height:.86; float:left;
+  margin:1.5mm 2.2mm 0 0; color:var(--acento);
+}
+.capitulo > .cuerpo > p:first-of-type{ text-indent:0; }
+
+/* ============================ TEXTO ============================ */
+p{ margin-bottom:0; text-indent:5.5mm; orphans:2; widows:2; }
+p + p{ margin-top:0; }
+.cuerpo > p:first-child{ text-indent:0; }
+
+/* Notas al pie recuperadas del original */
+.nota-pie{
+  font-size:9.4pt; line-height:1.45; color:var(--tinta-3);
+  text-indent:0; margin:4mm 0; padding-top:2.5mm;
+  border-top:.25mm solid var(--linea);
+}
+
+h3{
+  font-family:'Rajdhani',sans-serif; font-weight:700;
+  font-size:11pt; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--acento); text-align:left;
+  margin:6mm 0 2.5mm; page-break-after:avoid; break-after:avoid;
+}
+
+/* Bloque ritual: conjuraciones e invocaciones */
+.ritual{
+  margin:6mm 0; padding:5mm 6mm;
+  border-left:.9mm solid var(--acento);
+  border-top:.25mm solid var(--linea);
+  border-bottom:.25mm solid var(--linea);
+  background:var(--panel);
+  page-break-inside:avoid;
+  text-align:center;
+  font-family:'Rajdhani',sans-serif; font-weight:600;
+  font-size:9.6pt; line-height:1.5; letter-spacing:.05em;
+  color:var(--acento);
+  page-break-inside:avoid; break-inside:avoid;
+}
+.ritual span{ display:block; }
+.ritual span + span{ margin-top:1.6mm; }
+
+/* Cita textual del maestro */
+blockquote{
+  margin:5mm 4mm; padding-left:4mm;
+  border-left:.5mm solid rgba(var(--a-rgb),.45);
+  font-style:italic; color:var(--tinta-2); font-size:10.8pt;
+}
+
+/* Separador de sección */
+.sep{
+  display:block; width:30mm; height:4.5mm;
+  margin:6mm auto; opacity:.75;
+}
+
+/* ============================ CIERRE ============================ */
+.cierre{ page-break-before:always; break-before:page; text-align:center; }
+.cierre .marca{
+  font-family:'Orbitron',sans-serif; font-weight:900; font-size:13pt;
+  letter-spacing:.02em; margin-bottom:2mm;
+}
+.cierre .marca .v{
+  background-image:linear-gradient(135deg,var(--turquesa) 0%,var(--purpura) 55%,var(--rosa) 100%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; display:inline-block;
+}
+.cierre .marca .n{ color:var(--naranja); }
+.cierre .url{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:11pt;
+  color:var(--acento); letter-spacing:.05em; display:block; margin:4mm 0;
+  filter:drop-shadow(0 0 2.5mm rgba(var(--a-rgb),.45));
+}
+.cierre .redes{
+  font-family:'Rajdhani',sans-serif; font-size:9.5pt; color:var(--tinta-2);
+}
+.cierre .redes b{ color:var(--acento); }
+.cierre .nota{
+  margin-top:9mm; padding-top:5mm; border-top:.3mm solid var(--linea);
+  font-family:'Rajdhani',sans-serif; font-size:7.8pt; line-height:1.5;
+  color:var(--tinta-3); text-align:left;
+}
+
+/* ============================ CIERRE DE MARCA ============================ */
+.cierre .marca .v{ color:var(--tinta); -webkit-text-fill-color:var(--tinta); background:none; }
+.cierre .marca .n{ color:var(--acento-2); }
