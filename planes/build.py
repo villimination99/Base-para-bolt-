@@ -91,7 +91,24 @@ def render(chrome: str, src_html: Path, out_pdf: Path) -> None:
         raise SystemExit(f"Fallo al renderizar {src_html.name}:\n{res.stderr[-2000:]}")
 
 
-def stamp_metadata(pdf: Path, title: str) -> None:
+def titulos_de_paginas(raw: str) -> list[str]:
+    """Saca el rótulo de cada página del HTML, para los marcadores del PDF."""
+    nombres = []
+    for i, pagina in enumerate(re.findall(r'<section class="page.*?</section>', raw, re.S)):
+        if "cover" in pagina[:60]:
+            nombres.append("Portada")
+            continue
+        h2 = re.search(r"<h2[^>]*>(.*?)</h2>", pagina, re.S)
+        if h2:
+            texto = re.sub(r"<[^>]+>", "", h2.group(1))
+            nombres.append(re.sub(r"\s+", " ", texto).strip())
+            continue
+        kicker = re.search(r'<div class="kicker">(.*?)</div>', pagina, re.S)
+        nombres.append(kicker.group(1).strip() if kicker else f"Pagina {i + 1}")
+    return nombres
+
+
+def stamp_metadata(pdf: Path, title: str, marcadores: list[str] | None = None) -> None:
     try:
         from pypdf import PdfReader, PdfWriter
     except ImportError:
@@ -99,6 +116,13 @@ def stamp_metadata(pdf: Path, title: str) -> None:
     writer = PdfWriter(clone_from=str(pdf))
     for page in writer.pages:
         page.compress_content_streams(level=9)
+
+    # Marcadores de navegacion: en un PDF que se vende como e-book son lo que
+    # permite moverse por el documento sin ir pasando paginas a mano.
+    if marcadores:
+        for n, nombre in enumerate(marcadores[: len(writer.pages)]):
+            if nombre:
+                writer.add_outline_item(nombre, n)
     try:
         writer.compress_identical_objects()
     except Exception:
@@ -147,7 +171,7 @@ def run(chrome: str, sources, impresion: bool) -> None:
 
         title_match = re.search(r"<title>(.*?)</title>", raw, re.S)
         title = title_match.group(1).strip() if title_match else src.stem
-        stamp_metadata(out, title)
+        stamp_metadata(out, title, titulos_de_paginas(raw))
 
         declared = len(re.findall(r'class="page[ "]', raw))
         actual = page_count(out)
