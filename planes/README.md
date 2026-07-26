@@ -155,8 +155,41 @@ Clases disponibles: `card`, `callout` (`.info`, `.warn`), `metric`, `tag` (`.hi`
 
 El tier se fija con la clase del `<body>`: `t-basico`, `t-pro` o `t-elite`.
 
-> Al añadir contenido, comprueba que `build.py` sigue diciendo «Paginación correcta»: las
-> páginas tienen altura fija y el contenido sobrante se recortaría.
+> Al añadir contenido, `build.py` avisa si alguna página desborda. La comprobación es
+> importante: las páginas tienen altura fija con `overflow:hidden`, así que el contenido que
+> sobra **no se ve** — o peor, empuja el pie de página y se solapa con él. Comprobar que el
+> pie existe en el PDF no basta; hay que medir en el navegador, y de eso se encarga
+> `tools/verificar.mjs` (requiere Node con Playwright).
+
+## Figuras técnicas
+
+`partials/figuras.svg` contiene ocho diagramas explicativos, todos vectoriales y
+coloreados con el acento del tier:
+
+| Figura | Qué explica | Dónde se usa |
+|--------|-------------|--------------|
+| `fig-musculos` | Mapa muscular anterior y posterior, 16 grupos numerados | Plan de entrenamiento |
+| `fig-sentadilla` | Técnica en tres posiciones + los dos errores caros | Disponible |
+| `fig-hipnograma` | Arquitectura de una noche: 5 ciclos, profundo vs REM | Protocolo de sueño |
+| `fig-perientreno` | Qué comer de −3 h a +3 h y la curva de sensibilidad | Disponible |
+| `fig-porciones` | Palma, puño, pulgar y el plato dividido | Guía básica |
+| `fig-hiit` | Bloques de trabajo/descanso con la curva de pulso | Rutinas HIIT |
+| `fig-respiracion` | 4-7-8 y respiración de caja, a escala real de segundos | Meditación |
+| `fig-ciclado` | La semana de ciclado en barras de g/kg | Ciclado de carbos |
+
+Para insertar una figura:
+
+```html
+<div class="figura med">
+  <div class="fig-t"><b>Fig. 1</b>Título de la figura</div>
+  <svg viewBox="0 0 460 210"><use href="#fig-hiit"/></svg>
+  <div class="fig-p">Pie explicativo.</div>
+</div>
+```
+
+El `viewBox` debe coincidir con el de la figura. `med` la limita a 118 mm de ancho y
+`ancha` a 150 mm; sin modificador ocupa todo el ancho de la caja. Recuerda añadir
+`<!--@figuras-->` junto a `<!--@sprite-->` en la cabecera del documento.
 
 ## Nota sobre el aviso legal
 

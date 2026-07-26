@@ -148,3 +148,7 @@ ul.check li::before{ border-color:var(--accent); background:#fff; }
 .visor{ fill:#fff; }
 .eye{ fill:var(--accent); }
 .eye-line{ stroke:var(--accent); }
+
+/* Figuras técnicas en papel */
+.figura{ background:#fff; border-color:var(--line); }
+.figura .fig-p{ border-top-color:var(--line); }

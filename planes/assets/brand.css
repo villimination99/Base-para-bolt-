@@ -264,7 +264,7 @@ h2 + .rule{
 h3{
   font-family:'Orbitron',sans-serif; font-weight:700;
   font-size:10.5pt; text-transform:uppercase; letter-spacing:.04em;
-  color:var(--accent); margin:5mm 0 2.5mm;
+  color:var(--accent); margin:4.2mm 0 2mm;
 }
 h4{
   font-family:'Rajdhani',sans-serif; font-weight:700; font-size:10pt;
@@ -281,7 +281,7 @@ em{ color:var(--accent); font-style:normal; font-weight:700; }
 /* ============================ TABLAS ============================ */
 table{
   width:100%; border-collapse:separate; border-spacing:0;
-  margin:3mm 0 4mm;
+  margin:2.4mm 0 3.2mm;
   border:.3mm solid var(--line); border-radius:2.5mm; overflow:hidden;
   background:var(--panel-2);
   font-size:8.8pt;
@@ -385,7 +385,7 @@ ul.check li::before{
 
 /* ============================ CALLOUTS ============================ */
 .callout{
-  border-radius:2.5mm; padding:3.4mm 4mm 3.4mm 5mm;
+  border-radius:2.5mm; padding:2.8mm 3.6mm 2.8mm 4.6mm;
   border:.3mm solid rgba(var(--a-rgb),0.42);
   border-left:1.2mm solid var(--accent);
   background:linear-gradient(90deg, rgba(var(--a-rgb),0.11), rgba(255,255,255,.02));
@@ -407,8 +407,8 @@ ul.check li::before{
 /* Aviso legal / médico */
 .legal{
   border:.3mm dashed rgba(255,255,255,.18); border-radius:2.5mm;
-  background:rgba(0,0,0,.35); padding:3.4mm 4mm;
-  font-size:7.6pt; line-height:1.4; color:var(--ink-3);
+  background:rgba(0,0,0,.35); padding:2.8mm 3.4mm;
+  font-size:7pt; line-height:1.32; color:var(--ink-3);
 }
 .legal b{ color:var(--ink-2); letter-spacing:.08em; text-transform:uppercase; font-size:7.4pt; }
 
@@ -451,7 +451,7 @@ td .fill{ width:100%; min-width:0; }
 
 /* ============================ CIERRE / CTA ============================ */
 .cta{
-  border-radius:3mm; padding:6mm;
+  border-radius:3mm; padding:4.6mm 5mm;
   border:.4mm solid rgba(var(--a-rgb),0.5);
   background:
     radial-gradient(80% 120% at 0% 0%, rgba(var(--a-rgb),0.14), transparent 70%),
@@ -470,7 +470,7 @@ td .fill{ width:100%; min-width:0; }
 .social b{ color:var(--accent); }
 
 .upsell{
-  display:grid; grid-template-columns:1fr 1fr 1fr; gap:3mm; margin:4mm 0;
+  display:grid; grid-template-columns:1fr 1fr 1fr; gap:2.6mm; margin:3.2mm 0;
 }
 .upsell .u{
   border:.3mm solid var(--line); border-radius:2.5mm; padding:3.4mm;
@@ -495,3 +495,55 @@ td .fill{ width:100%; min-width:0; }
 .row{ display:flex; gap:4mm; align-items:flex-start; }
 .row > .c{ flex:1 1 0; min-width:0; }
 .nowrap{ white-space:nowrap; }
+
+/* ============================ FIGURAS TÉCNICAS ============================ */
+/* Diagramas explicativos (partials/figuras.svg). Van numerados, con título y
+   pie, como en un manual: el lector debe poder leer la figura sin el texto. */
+.figura{
+  margin:3mm 0 3.6mm;
+  border:.3mm solid var(--line); border-radius:2.5mm;
+  background:var(--panel-2);
+  padding:2.8mm 3.4mm 2.4mm;
+  page-break-inside:avoid; break-inside:avoid;
+}
+.figura > svg{ display:block; width:100%; height:auto; }
+/* Figura a media caja: baja la altura ~35 % sin perder legibilidad. */
+.figura.med > svg{ max-width:118mm; margin:0 auto; }
+.figura.ancha > svg{ max-width:150mm; margin:0 auto; }
+.figura .fig-t{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.4pt;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:2.5mm;
+}
+.figura .fig-t b{
+  color:var(--ink-3); font-weight:700; margin-right:2mm;
+}
+.figura .fig-p{
+  font-size:8pt; line-height:1.4; color:var(--ink-3);
+  margin-top:2.5mm; padding-top:2.5mm;
+  border-top:.25mm solid var(--line);
+}
+.figura .fig-p b{ color:var(--ink-2); }
+
+/* Páginas de formulario: filas más apretadas para que quepan sin recortar */
+.denso table.compact tbody td, .denso table.compact thead th{ padding:1.3mm 2.2mm; }
+.denso .fill{ height:3.8mm; }
+.denso h3{ margin:3.2mm 0 1.6mm; }
+.denso .lines{ gap:3.6mm; margin:2mm 0 3mm; }
+
+/* Páginas con figura grande: se aprieta el interlineado de listas y párrafos
+   para que la ilustración quepa sin sacrificar contenido. */
+.compacto p{ margin-bottom:2.2mm; }
+.compacto p.lead{ font-size:10.4pt; }
+.compacto ol.neon{ gap:1.5mm; }
+.compacto ol.neon li{ padding:1.9mm 2.6mm 1.9mm 10mm; font-size:8.6pt; }
+.compacto ol.neon li b{ font-size:8.8pt; }
+.compacto ol.neon li::before{ top:1.9mm; }
+.compacto ul.dots{ gap:1.2mm; }
+.compacto ul.dots li{ font-size:8.6pt; }
+.compacto ul.check{ gap:1.3mm; }
+.compacto h3{ margin:3.4mm 0 1.8mm; }
+.compacto .callout{ padding:2.4mm 3.2mm 2.4mm 4.2mm; margin:2.4mm 0; }
+.compacto .callout p{ font-size:8.6pt; }
+.compacto .figura{ margin:2.4mm 0 2.6mm; }
+.compacto table.compact tbody td, .compacto table.compact thead th{ padding:1.4mm 2.2mm; }

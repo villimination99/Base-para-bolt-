@@ -25,6 +25,8 @@ DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
 PARTIALS = ROOT / "partials"
 
+NODE = "/opt/node22/bin/node"
+
 CHROME_CANDIDATES = [
     "/opt/pw-browsers/chromium/chrome-linux/chrome",
     "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
@@ -67,6 +69,7 @@ def assemble(html: str, impresion: bool = False) -> str:
     )
     html = html.replace("<!--@head-->", head)
     html = html.replace("<!--@sprite-->", (PARTIALS / "sprite.svg").read_text())
+    html = html.replace("<!--@figuras-->", (PARTIALS / "figuras.svg").read_text())
     return html
 
 
@@ -156,6 +159,21 @@ def run(chrome: str, sources, impresion: bool) -> None:
         print(f"  {out.name:<46} {actual:>2} pag  {size:>6.0f} KB{flag}")
 
     print(f"  {'TOTAL':<46}        {total/1024:>6.1f} MB")
+
+    # Comprobar desbordamientos DE VERDAD: las páginas tienen altura fija y
+    # overflow:hidden, así que el contenido que sobra no se ve — o empuja el
+    # pie y se solapa con él. Que el pie exista en el PDF no lo detecta:
+    # hay que medir en el navegador.
+    verificador = ROOT / "tools" / "verificar.mjs"
+    if verificador.exists() and shutil.which("node") or Path(NODE).exists():
+        res = subprocess.run(
+            [NODE, str(verificador)] + [str(p) for p in sorted(build_dir.glob("*.html"))],
+            capture_output=True, text=True,
+        )
+        salida = (res.stdout or "").strip()
+        if salida and "Sin desbordamientos" not in salida:
+            print("  " + salida.replace("\n", "\n  "))
+
     if problems:
         print("  Desajustes de paginacion:")
         for p in problems:
