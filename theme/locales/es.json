@@ -18,7 +18,9 @@
       "title": "Buscar",
       "placeholder": "Buscar productos...",
       "results_with_count": "{{ count }} resultados para \"{{ terms }}\"",
-      "no_results": "No se encontraron resultados para \"{{ terms }}\"."
+      "no_results": "No se encontraron resultados para \"{{ terms }}\".",
+      "no_results_short": "Sin resultados para",
+      "view_all": "Ver todos los resultados"
     },
     "cart": {
       "title": "Carrito"

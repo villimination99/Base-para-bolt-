@@ -17,6 +17,8 @@
     <meta name="description" content="{{ page_description | escape }}">
   {%- endif -%}
 
+  {%- render 'meta-tags' -%}
+
   {%- comment -%} Brand display font (Orbitron) — kept for the neon identity {%- endcomment -%}
   {%- if settings.use_display_font -%}
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -148,10 +150,14 @@
         checkout: {{ 'cart.general.checkout' | t | json }},
         viewCart: {{ 'cart.general.view_cart' | t | json }},
         cartEmpty: {{ 'cart.general.empty' | t | json }},
-        shop: {{ 'general.shop' | t | json }}
+        shop: {{ 'general.shop' | t | json }},
+        noResults: {{ 'general.search.no_results_short' | t | json }},
+        viewAll: {{ 'general.search.view_all' | t | json }}
       }
     };
   </script>
+
+  {%- render 'structured-data' -%}
 
   {{ content_for_header }}
 </head>

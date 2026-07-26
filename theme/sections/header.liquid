@@ -112,9 +112,9 @@
     </div>
 
     <div class="nav-actions">
-      <a href="{{ routes.search_url }}" class="nav-icon-btn" title="{{ 'general.search.title' | t }}" aria-label="{{ 'general.search.title' | t }}">
+      <button type="button" class="nav-icon-btn" data-search-toggle title="{{ 'general.search.title' | t }}" aria-label="{{ 'general.search.title' | t }}" aria-expanded="false" aria-controls="search-panel">
         {%- render 'icon', name: 'search' -%}
-      </a>
+      </button>
 
       <div class="nav-social">
         {%- if yt != blank -%}<a href="{{ yt }}" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
@@ -131,6 +131,21 @@
         {%- render 'icon', name: 'menu' -%}
       </button>
     </div>
+  </div>
+
+  {%- comment -%} Búsqueda predictiva: resultados en vivo mientras se escribe {%- endcomment -%}
+  <div class="search-panel" id="search-panel" data-search-panel hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-panel-form">
+      <span class="search-panel-icon">{%- render 'icon', name: 'search' -%}</span>
+      <input type="search" name="q" data-search-input autocomplete="off"
+             placeholder="{{ 'general.search.placeholder' | t }}"
+             aria-label="{{ 'general.search.title' | t }}"
+             role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+      <button type="button" class="search-panel-close" data-search-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    </form>
+    <div class="search-results" id="search-results" data-search-results role="listbox" aria-label="{{ 'general.search.title' | t }}"></div>
   </div>
 </nav>
 

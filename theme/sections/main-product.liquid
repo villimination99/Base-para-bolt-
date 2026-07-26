@@ -172,6 +172,16 @@
           </ul>
         {%- endif -%}
 
+        {%- comment -%}
+          Zona de bloques de apps: aquí el comerciante puede insertar widgets de apps
+          (reseñas Judge.me, upsells, tallas…) desde el editor, sin tocar código.
+        {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="product-app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+          {%- endif -%}
+        {%- endfor -%}
+
         {%- if product.description != blank -%}
           <div class="product-description rte">{{ product.description }}</div>
         {%- endif -%}
@@ -276,6 +286,7 @@
     { "type": "checkbox", "id": "show_share", "label": "Mostrar botones de compartir", "default": true }
   ],
   "blocks": [
+    { "type": "@app" },
     {
       "type": "trust",
       "name": "Sello de confianza",

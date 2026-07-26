@@ -1,0 +1,49 @@
+{%- comment -%}
+  Open Graph + Twitter Cards. Controla cómo se ve tu tienda al compartirla en
+  WhatsApp, Instagram, Facebook, X, Discord… y ayuda a los rastreadores a entenderla.
+{%- endcomment -%}
+{%- liquid
+  assign og_title = page_title
+  assign og_desc = page_description | default: shop.description | default: shop.name
+  assign og_type = 'website'
+  assign og_image = null
+
+  case request.page_type
+    when 'product'
+      assign og_type = 'product'
+      assign og_image = product.featured_media.preview_image
+    when 'article'
+      assign og_type = 'article'
+      assign og_image = article.image
+    when 'collection'
+      assign og_image = collection.image
+  endcase
+
+  if og_image == null and settings.logo != blank
+    assign og_image = settings.logo
+  endif
+-%}
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_desc | strip_html | truncate: 200 | escape }}">
+{%- if og_image -%}
+  <meta property="og:image" content="http:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
+  <meta property="og:image:alt" content="{{ og_image.alt | default: og_title | escape }}">
+{%- endif -%}
+{%- if request.page_type == 'product' -%}
+  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | divided_by: 100.0 }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_desc | strip_html | truncate: 200 | escape }}">
+{%- if og_image -%}
+  <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
+{%- endif -%}

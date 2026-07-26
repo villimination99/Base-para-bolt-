@@ -68,6 +68,12 @@
         </nav>
       {%- endif -%}
     {%- endpaginate -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="collection-app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
   </div>
 </section>
 
@@ -79,6 +85,7 @@
     { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción", "default": true },
     { "type": "checkbox", "id": "show_sorting", "label": "Mostrar ordenar por", "default": true },
     { "type": "range", "id": "per_page", "min": 8, "max": 48, "step": 4, "label": "Productos por página", "default": 16 }
-  ]
+  ],
+  "blocks": [{ "type": "@app" }]
 }
 {% endschema %}
