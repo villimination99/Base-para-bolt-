@@ -73,7 +73,56 @@ def bloque_html(b: dict) -> str:
         return '<svg class="sep"><use href="#filigrana"/></svg>'
     if t == "fechas":
         return ""      # se pinta en la cabecera del capítulo
+    if t == "ficha":
+        filas = "".join(
+            f"<tr><th>{esc(k)}</th><td>{esc(v)}</td></tr>" for k, v in b["x"]
+        )
+        titulo = f'<caption>{esc(b["tit"])}</caption>' if b.get("tit") else ""
+        return f'<table class="ficha">{titulo}<tbody>{filas}</tbody></table>'
+    if t == "lista":
+        items = "".join(f"<li>{esc(i)}</li>" for i in b["x"])
+        return f'<ul class="puntos">{items}</ul>'
+    if t == "pasos":
+        items = "".join(f"<li>{esc(i)}</li>" for i in b["x"])
+        return f'<ol class="pasos">{items}</ol>'
+    if t == "nota":
+        tit = f'<div class="nota-t">{esc(b["tit"])}</div>' if b.get("tit") else ""
+        return f'<div class="nota">{tit}<p>{esc(b["x"])}</p></div>'
+    if t == "figura":
+        return figura_html(b)
     return ""
+
+
+# Las láminas viven en partials/zodiaco.svg como <symbol>. Cada una trae su
+# propio viewBox, y hay que repetirlo en el <svg> que la instancia para que
+# conserve la proporción: se lee del propio fichero en vez de duplicarlo a
+# mano en el texto, que es la clase de dato que siempre acaba desincronizado.
+_VIEWBOX: dict[str, str] = {}
+
+
+def viewbox(simbolo: str) -> str:
+    if not _VIEWBOX:
+        for svg in PARTIALS.glob("*.svg"):
+            _VIEWBOX.update(
+                dict(re.findall(r'<symbol id="([^"]+)" viewBox="([^"]+)"',
+                                svg.read_text()))
+            )
+    if simbolo not in _VIEWBOX:
+        raise SystemExit(f"Lámina desconocida: {simbolo}")
+    return _VIEWBOX[simbolo]
+
+
+def figura_html(b: dict) -> str:
+    simbolo = b["x"]
+    clase = " " + b["clase"] if b.get("clase") else ""
+    svg = (f'<svg viewBox="{viewbox(simbolo)}" role="img">'
+           f'<use href="#{simbolo}"/></svg>')
+    if not b.get("tit") and not b.get("pie"):
+        return f'<figure class="figura{clase}">{svg}</figure>'
+    rot = f'<span class="fig-n">{esc(b["tit"])}</span> ' if b.get("tit") else ""
+    pie = esc(b.get("pie", ""))
+    return (f'<figure class="figura{clase}">{svg}'
+            f"<figcaption>{rot}{pie}</figcaption></figure>")
 
 
 def capitulo_html(i: int, cap: dict) -> str:
@@ -81,12 +130,18 @@ def capitulo_html(i: int, cap: dict) -> str:
     titulo = cap["titulo"]
     clase = " largo" if len(titulo) > 34 else ""
     cuerpo = "".join(bloque_html(b) for b in cap["bloques"])
+    sello = ""
+    if cap.get("medallon"):
+        s = cap["medallon"]
+        sello = (f'<svg class="medallon" viewBox="{viewbox(s)}" role="img">'
+                 f'<use href="#{s}"/></svg>')
     return f"""
 <section class="capitulo" id="cap-{i}">
   <header>
     <span class="orden">Capítulo {i}</span>
     <h2{f' class="{clase.strip()}"' if clase else ''}>{esc(titulo)}</h2>
     {f'<span class="fechas">{esc(fechas)}</span>' if fechas else ''}
+    {sello}
   </header>
   <div class="cuerpo">{cuerpo}</div>
 </section>"""
@@ -116,7 +171,8 @@ def cabecera(libro: dict, clase: str) -> str:
 <link rel="stylesheet" href="{ASSETS.as_uri()}/fonts.css">
 <link rel="stylesheet" href="{ASSETS.as_uri()}/libro.css">
 <body class="{clase}">
-{PARTIALS.joinpath('simbolos.svg').read_text()}"""
+{PARTIALS.joinpath('simbolos.svg').read_text()}
+{PARTIALS.joinpath('zodiaco.svg').read_text() if libro.get('laminas') else ''}"""
 
 
 def cubierta(libro: dict) -> str:
@@ -145,15 +201,11 @@ def cubierta(libro: dict) -> str:
 </body>"""
 
 
-def documento(libro: dict, paginas: list[int] | None) -> str:
-    caps = libro["capitulos"]
-    capitulos = "".join(capitulo_html(i, c) for i, c in enumerate(caps, 1))
-
-    return cabecera(libro, f"acento-{libro['acento']}") + f"""
+CREDITOS_RECUPERACION = """
 <section class="creditos">
   <h2>Sobre esta edición</h2>
-  <p>Este volumen reproduce el texto de <strong>{esc(libro['titulo'])}</strong>,
-     de {esc(libro['autor'])}. La obra procede de {esc(libro['fuente'])}.</p>
+  <p>Este volumen reproduce el texto de <strong>{titulo}</strong>,
+     de {autor}. La obra procede de {fuente}.</p>
   <p>Esta edición no altera el contenido: se ha respetado el texto original.
      El trabajo realizado ha sido de <strong>recuperación tipográfica</strong>
      — reconstruir los párrafos que la digitalización había partido, retirar
@@ -167,7 +219,71 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
      filosófico y espiritual, escrito en su época y contexto. Su contenido no
      constituye consejo médico, psicológico ni sanitario, y no sustituye la
      atención de un profesional cualificado.</p>
-</section>
+</section>"""
+
+CIERRE_RECUPERACION = """
+  <div class="nota">
+    <strong>Sobre los derechos.</strong> El texto de esta obra pertenece a sus
+    autores y a la institución que originalmente lo difunde; esta edición se
+    limita a su recuperación tipográfica y no reclama ninguna titularidad
+    sobre el contenido. Si eres titular de derechos sobre esta obra y deseas
+    que se retire o se modifique esta edición, escríbenos y se atenderá de
+    inmediato.
+  </div>"""
+
+CREDITOS_ORIGINAL = """
+<section class="creditos">
+  <h2>Sobre esta obra</h2>
+  <p><strong>{titulo}</strong> es una obra original de {autor},
+     escrita y compuesta íntegramente para <strong>villuminations.com</strong>.
+     {fuente}.</p>
+  <p>El material del que parte pertenece a la <strong>tradición común</strong>:
+     las correspondencias astrológicas clásicas, los regentes planetarios, la
+     división en elementos y modalidades y las tablas de decanatos se
+     transmiten por escrito desde hace más de dos milenios y no son propiedad
+     de nadie. Lo que aquí se ofrece —la redacción, la estructura de nueve
+     claves, las prácticas de cuatro semanas, la lectura corporal y de hábito
+     de cada signo, las fichas, los ejercicios de registro y las
+     ilustraciones— es trabajo propio y está protegido como tal.</p>
+  <p>No se reproduce texto de ningún autor moderno. Donde una idea proviene
+     de una fuente concreta se dice en el propio capítulo.</p>
+  <p><strong>Cómo leer este libro.</strong> La astrología que aquí se practica
+     es un <em>lenguaje simbólico</em>: una manera antigua y muy afinada de
+     nombrar temperamentos, tensiones y ciclos. No es una ciencia predictiva.
+     Nada de lo que sigue anuncia hechos futuros, diagnostica enfermedades ni
+     sustituye la atención de un médico, un psicólogo o un dietista-nutricionista
+     colegiado. Las pautas de alimentación, sueño y movimiento son de sentido
+     común y deben adaptarse a tu caso; si tienes una patología, embarazo o
+     tratamiento en curso, consúltalas antes con tu profesional sanitario.</p>
+  <p><strong>Uso permitido.</strong> Tu compra te da una licencia personal e
+     intransferible para leer e imprimir este archivo. No se autoriza su
+     reventa, redistribución ni publicación total o parcial.</p>
+</section>"""
+
+CIERRE_ORIGINAL = """
+  <div class="nota">
+    <strong>Sobre los derechos.</strong> Obra original.
+    © 2026 Villumination 99 · villuminations.com. Todos los derechos
+    reservados. Licencia de lectura personal: no se autoriza la reventa ni la
+    redistribución del archivo. Si este libro te ha servido, la mejor forma de
+    apoyarlo es recomendarlo por la vía legítima.
+  </div>"""
+
+
+def documento(libro: dict, paginas: list[int] | None) -> str:
+    caps = libro["capitulos"]
+    capitulos = "".join(capitulo_html(i, c) for i, c in enumerate(caps, 1))
+    original = bool(libro.get("original"))
+
+    creditos = (CREDITOS_ORIGINAL if original else CREDITOS_RECUPERACION).format(
+        titulo=esc(libro["titulo"]),
+        autor=esc(libro["autor"]),
+        fuente=esc(libro["fuente"]),
+    )
+    derechos = CIERRE_ORIGINAL if original else CIERRE_RECUPERACION
+
+    return cabecera(libro, f"acento-{libro['acento']}") + f"""
+{creditos}
 
 {indice_html(caps, paginas)}
 {capitulos}
@@ -178,14 +294,7 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
   <div class="marca"><span class="v">VILLUMINATION</span><span class="n">99</span></div>
   <span class="url">villuminations.com</span>
   <div class="redes">YouTube <b>@villumination99</b> &nbsp;·&nbsp; Instagram <b>@villumination99</b></div>
-  <div class="nota">
-    <strong>Sobre los derechos.</strong> El texto de esta obra pertenece a sus
-    autores y a la institución que originalmente lo difunde; esta edición se
-    limita a su recuperación tipográfica y no reclama ninguna titularidad
-    sobre el contenido. Si eres titular de derechos sobre esta obra y deseas
-    que se retire o se modifique esta edición, escríbenos y se atenderá de
-    inmediato.
-  </div>
+{derechos}
 </section>
 </body>"""
 
@@ -222,9 +331,10 @@ def paginas_de_capitulos(pdf: Path, caps: list[dict]) -> list[int]:
     return paginas
 
 
-def marcadores(pdf: Path, caps: list[dict], paginas: list[int], titulo: str) -> None:
+def marcadores(pdf: Path, libro: dict, paginas: list[int]) -> None:
     from pypdf import PdfWriter
 
+    caps, titulo = libro["capitulos"], libro["titulo"]
     w = PdfWriter(clone_from=str(pdf))
     for page in w.pages:
         page.compress_content_streams(level=9)
@@ -232,11 +342,15 @@ def marcadores(pdf: Path, caps: list[dict], paginas: list[int], titulo: str) -> 
     for cap, pg in zip(caps, paginas):
         if pg:
             w.add_outline_item(cap["titulo"], pg - 1, parent=raiz)
+    original = bool(libro.get("original"))
     w.add_metadata({
         "/Title": titulo,
-        "/Author": "VILLUMINATION 99 — villuminations.com",
-        "/Subject": "Edición tipográfica cuidada",
+        "/Author": (f"{libro['autor']} — villuminations.com" if original
+                    else "VILLUMINATION 99 — villuminations.com"),
+        "/Subject": (libro["subtitulo"] if original
+                     else "Edición tipográfica cuidada"),
         "/Creator": "VILLUMINATION 99",
+        "/Keywords": ", ".join(libro.get("claves", [])) or "villuminations.com",
     })
     tmp = pdf.with_suffix(".tmp.pdf")
     with open(tmp, "wb") as fh:
@@ -279,7 +393,7 @@ def construir(libro: dict) -> None:
 
     # La cubierta va sin numerar, como en cualquier libro: el folio 1 es la
     # primera página del interior, que en el PDF es la segunda.
-    marcadores(destino, caps, [f + 1 for f in folios], libro["titulo"])
+    marcadores(destino, libro, [f + 1 for f in folios])
 
     from pypdf import PdfReader
     n = len(PdfReader(str(destino)).pages)

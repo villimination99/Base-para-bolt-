@@ -274,3 +274,90 @@ blockquote{
    solo con color sobre negro, que además queda más nítido. */
 .capitulo h2{ color:var(--acento); }
 .capitulo header{ border-bottom-color:rgba(var(--a-rgb),.35); }
+
+/* ============================ BLOQUES DE LIBRO ORIGINAL ============================ */
+/* Ficha de datos: la tabla de correspondencias que abre cada capítulo. */
+table.ficha{
+  width:100%; border-collapse:collapse; margin:5mm 0;
+  font-family:'Rajdhani',sans-serif; font-size:9.2pt;
+  page-break-inside:avoid; break-inside:avoid;
+}
+table.ficha caption{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.4pt;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--acento);
+  text-align:left; padding-bottom:2.5mm;
+}
+table.ficha th{
+  text-align:left; font-weight:600; color:var(--tinta-3);
+  width:38%; padding:1.7mm 3mm 1.7mm 0;
+  border-bottom:.25mm solid var(--linea);
+  text-transform:uppercase; font-size:7.6pt; letter-spacing:.08em;
+}
+table.ficha td{
+  color:var(--tinta); font-weight:600; padding:1.7mm 0;
+  border-bottom:.25mm solid var(--linea);
+}
+
+ul.puntos{ list-style:none; margin:3.5mm 0; display:grid; gap:2mm; }
+ul.puntos li{
+  position:relative; padding-left:6mm; text-indent:0;
+  font-family:'EB Garamond',serif; font-size:11pt; line-height:1.5;
+  color:var(--tinta-2); text-align:left;
+}
+ul.puntos li::before{
+  content:''; position:absolute; left:1.4mm; top:2.2mm;
+  width:1.8mm; height:1.8mm; border-radius:50%;
+  background:var(--acento);
+}
+
+ol.pasos{ list-style:none; counter-reset:paso; margin:3.5mm 0; display:grid; gap:2.4mm; }
+ol.pasos li{
+  counter-increment:paso; position:relative; padding-left:9mm; text-indent:0;
+  font-family:'EB Garamond',serif; font-size:11pt; line-height:1.5;
+  color:var(--tinta-2); text-align:left;
+}
+ol.pasos li::before{
+  content:counter(paso); position:absolute; left:0; top:.2mm;
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:9pt;
+  color:var(--acento);
+}
+
+.nota{
+  margin:5mm 0; padding:4mm 4.5mm;
+  border-left:.9mm solid var(--acento);
+  background:rgba(var(--a-rgb),.07);
+  page-break-inside:avoid; break-inside:avoid;
+}
+.nota .nota-t{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.6pt;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--acento);
+  margin-bottom:2mm;
+}
+.nota p{ margin:0; text-indent:0; font-size:10.6pt; color:var(--tinta-2); }
+
+/* ============================ LÁMINAS ============================ */
+/* Los dibujos son <symbol> en partials/zodiaco.svg; aquí solo se dimensiona
+   el hueco. break-inside:avoid es obligatorio: una lámina partida en dos
+   páginas no es una lámina, es un accidente. */
+figure.figura{
+  margin:6mm 0 6.5mm; text-align:center;
+  page-break-inside:avoid; break-inside:avoid;
+}
+figure.figura svg{ display:block; width:100%; height:auto; margin:0 auto; }
+figure.figura.estrecha svg{ width:70%; }
+figure.figura.media svg{ width:86%; }
+figure.figura figcaption{
+  font-family:'Rajdhani',sans-serif; font-size:9pt; line-height:1.42;
+  color:var(--tinta-3); text-align:left; text-indent:0;
+  margin-top:2.6mm; padding-top:1.8mm;
+  border-top:.25mm solid var(--linea);
+}
+figure.figura .fig-n{
+  font-family:'Orbitron',sans-serif; font-weight:700; font-size:7.4pt;
+  letter-spacing:.12em; color:var(--acento); text-transform:uppercase;
+}
+
+/* Sello del signo en la cabecera del capítulo */
+.capitulo header .medallon{
+  display:block; width:30mm; height:30mm; margin:4mm auto 0;
+}
