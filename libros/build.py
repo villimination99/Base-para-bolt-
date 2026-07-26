@@ -32,7 +32,7 @@ PARTIALS = ROOT / "partials"
 
 NODE = "/opt/node22/bin/node"
 
-FOLIO = "#7c766c"
+FOLIO = "#8a93ab"   # folio claro: el interior es oscuro
 
 
 def esc(s: str) -> str:
@@ -275,7 +275,7 @@ def construir(libro: dict) -> None:
         folios = nuevos
 
     # 3 · Cubierta + interior en un solo PDF
-    unir(pdf_cub, pdf_int, destino)
+    unir(pdf_cub, pdf_int, destino, acento=libro["acento"])
 
     # La cubierta va sin numerar, como en cualquier libro: el folio 1 es la
     # primera página del interior, que en el PDF es la segunda.
@@ -290,12 +290,45 @@ def construir(libro: dict) -> None:
           f"{len(caps):>2} capítulos{aviso}")
 
 
-def unir(cubierta_pdf: Path, interior_pdf: Path, destino: Path) -> None:
+def fondo(acento: str) -> Path:
+    """Genera (y cachea) la capa de fondo negro con textura de marca.
+
+    Chromium no pinta los márgenes de página, así que el negro no puede venir
+    del CSS del interior: se renderiza como página independiente a sangre y
+    luego se compone DEBAJO de cada página del libro.
+    """
+    destino = BUILD / f"fondo-{acento}.pdf"
+    if destino.exists():
+        return destino
+    html = (PARTIALS / "fondo.html.tpl").read_text()
+    html = html.replace("__ASSETS__", ASSETS.as_uri()).replace("__ACENTO__", acento)
+    ruta = BUILD / f"fondo-{acento}.html"
+    ruta.write_text(html)
+    render(ruta, destino, "", sangre=True)
+    return destino
+
+
+def unir(cubierta_pdf: Path, interior_pdf: Path, destino: Path,
+         acento: str | None = None) -> None:
     from pypdf import PdfWriter
 
+    from pypdf import PdfReader
+
     w = PdfWriter()
-    for origen in (cubierta_pdf, interior_pdf):
-        w.append(str(origen))
+    w.append(str(cubierta_pdf))
+
+    capa = PdfReader(str(fondo(acento))).pages[0] if acento else None
+    for pagina in PdfReader(str(interior_pdf)).pages:
+        if capa is None:
+            w.add_page(pagina)
+            continue
+        # El fondo va primero y el texto encima: la página del interior se
+        # renderiza con fondo transparente para que el negro se vea.
+        base = w.add_blank_page(width=pagina.mediabox.width,
+                                height=pagina.mediabox.height)
+        base.merge_page(capa)
+        base.merge_page(pagina)
+
     with open(destino, "wb") as fh:
         w.write(fh)
 

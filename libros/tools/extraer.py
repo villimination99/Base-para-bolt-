@@ -43,7 +43,6 @@ CORRECCIONES = [
     (r"\bPRACTICA\b", "PRÁCTICA"),
     (r"\bCONJURACION\b", "CONJURACIÓN"),
     (r"\bMAGIA PRACTICA\b", "MAGIA PRÁCTICA"),
-    (r"\bTeurgia\b", "Teúrgia") if False else (r"\bxxxx\b", "xxxx"),
     (r"\bespiritu\b", "espíritu"),
     (r"\bEspiritu\b", "Espíritu"),
     (r"\bmagico\b", "mágico"),
@@ -57,6 +56,10 @@ CORRECCIONES = [
     (r"\bEsoterico\b", "Esotérico"),
     (r"\besoterica\b", "esotérica"),
     (r"\bEsoterica\b", "Esotérica"),
+    # La digitalización de «Las Conjuraciones» mapea mal la N mayúscula y la
+    # devuelve como el dígito 2 («2ombre», «2etzach», «2osotros»). Un dígito
+    # pegado a dos o más minúsculas no existe en español, así que es seguro.
+    (r"\b2(?=[a-záéíóúñ]{2,})", "N"),
     # Comillas y guiones tipográficos
     (r'"([^"]{2,80})"', r"«\1»"),
     (r"(?<=\w)--(?=\w)", "—"),

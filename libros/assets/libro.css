@@ -8,25 +8,25 @@
   --cyan:#00f0ff;   --magenta:#ff00e5;  --verde:#00ff88;
   --naranja:#ff6600; --purpura:#7b2fff; --turquesa:#00ffcc; --rosa:#ff3cac;
 
-  /* Interior: papel color hueso. Un libro de cien páginas no se lee en
-     negativo, y Chromium tampoco pinta los márgenes de página, así que el
-     neón vive en la cubierta (que sí va a sangre) y en los acentos. */
-  --fondo:#fcfbf8;
-  --panel:#f4f2ee;
-  --linea:#ddd8cf;
+  /* Interior oscuro. El fondo se deja TRANSPARENTE a propósito: Chromium no
+     pinta los márgenes de página, así que la capa negra se compone después,
+     por debajo de cada página ya renderizada (ver fondo() en build.py). */
+  --fondo:transparent;
+  --panel:rgba(255,255,255,.045);
+  --linea:rgba(255,255,255,.13);
 
-  --tinta:#1b1a18;
-  --tinta-2:#443f39;
-  --tinta-3:#7c766c;
+  --tinta:#eceff8;
+  --tinta-2:#c2c9dc;
+  --tinta-3:#8a93ab;
 
-  --acento:#00738f;
-  --acento-2:#5a1fb8;
-  --a-rgb:0,115,143;
+  --acento:#00f0ff;
+  --acento-2:#7b2fff;
+  --a-rgb:0,240,255;
 }
 
-.acento-cyan   { --acento:#00738f; --acento-2:#0047b3; --a-rgb:0,115,143; }
-.acento-magenta{ --acento:#a5008f; --acento-2:#5a1fb8; --a-rgb:165,0,143; }
-.acento-verde  { --acento:#00693f; --acento-2:#b04a00; --a-rgb:0,105,63; }
+.acento-cyan   { --acento:#00f0ff; --acento-2:#7b2fff; --a-rgb:0,240,255; }
+.acento-magenta{ --acento:#ff00e5; --acento-2:#7b2fff; --a-rgb:255,0,229; }
+.acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
@@ -45,7 +45,7 @@ body{
   -webkit-hyphens:auto;
 }
 
-html{ background:var(--fondo); }
+html, body{ background:transparent; }
 
 /* ============================ CUBIERTA ============================ */
 /* Documento aparte, sin márgenes de página: el neón llega hasta el borde. */
@@ -206,7 +206,7 @@ h3{
   border-left:.9mm solid var(--acento);
   border-top:.25mm solid var(--linea);
   border-bottom:.25mm solid var(--linea);
-  background:var(--panel);
+  background:rgba(var(--a-rgb),.07);
   page-break-inside:avoid;
   text-align:center;
   font-family:'Rajdhani',sans-serif; font-weight:600;
@@ -258,5 +258,19 @@ blockquote{
 }
 
 /* ============================ CIERRE DE MARCA ============================ */
-.cierre .marca .v{ color:var(--tinta); -webkit-text-fill-color:var(--tinta); background:none; }
-.cierre .marca .n{ color:var(--acento-2); }
+.cierre .marca .v{
+  display:inline-block;
+  background-image:linear-gradient(135deg,var(--turquesa) 0%,var(--purpura) 55%,var(--rosa) 100%);
+  background-repeat:no-repeat;
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.cierre .marca .n{ color:var(--naranja); }
+
+/* Titulares del interior.
+   IMPORTANTE: aquí NO se usa filter:drop-shadow(). Chromium rasteriza como
+   imagen cualquier texto con filtro y lo saca de la capa de texto del PDF;
+   en un e-book eso rompe la búsqueda y la selección. El neón se consigue
+   solo con color sobre negro, que además queda más nítido. */
+.capitulo h2{ color:var(--acento); }
+.capitulo header{ border-bottom-color:rgba(var(--a-rgb),.35); }
