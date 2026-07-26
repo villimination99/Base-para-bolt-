@@ -85,24 +85,53 @@ Cada tier tiene un color de acento propio para que se distingan de un vistazo:
 planes/
 ├── assets/
 │   ├── brand.css      Sistema de diseño de impresión (A4, neón, componentes)
-│   └── fonts.css      Orbitron y Rajdhani embebidas en base64
+│   ├── fonts.css      Orbitron y Rajdhani (instancias estáticas)
+│   ├── fonts/         Los .ttf de marca
+│   └── impresion.css  Reescritura para la edición en papel
 ├── partials/
 │   └── sprite.svg     6 poses del robot mascota
 ├── src/               Los 11 documentos en HTML (aquí se edita el contenido)
-├── dist/              Los 11 PDFs listos para vender
+├── dist/              Edición pantalla (neón)
+│   └── impresion/     Edición papel
+├── tools/             Preparación de fuentes
 └── build.py           Generador
 ```
+
+## Dos ediciones
+
+| Edición | Carpeta | Peso total | Para qué |
+|---------|---------|-----------|----------|
+| Pantalla (neón) | `dist/` | 25,6 MB | Lectura en móvil, tablet y ordenador. Es la que vende. |
+| Impresión (papel) | `dist/impresion/` | 4,8 MB | Fondo blanco, sin resplandores. Ahorra tinta y pesa 6 veces menos. |
+
+Mismo contenido y misma paginación en las dos. Lo ideal es entregar ambas en la descarga:
+quien lee en pantalla se queda con la neón y quien imprime, con la de papel.
 
 ## Cómo regenerar los PDFs
 
 ```bash
 cd planes
-python3 build.py              # todos
-python3 build.py 06-elite     # solo los que coincidan con el filtro
+python3 build.py                  # edición pantalla
+python3 build.py --impresion      # edición papel
+python3 build.py --ambas          # las dos
+python3 build.py --ambas 06-elite # filtrando por nombre
+python3 tools/preparar-fuentes.py # solo si cambian las fuentes de marca
 ```
 
-Requisitos: Python 3 y Chromium. `pypdf` es opcional (añade los metadatos y verifica la
-paginación).
+Requisitos: Python 3 y Chromium. `pypdf` es opcional (añade metadatos, recomprime y verifica
+la paginación). `tools/preparar-fuentes.py` necesita además `fonttools` y `brotli`.
+
+## Sobre el peso de los archivos
+
+La edición de pantalla pesa unos 2,4 MB por documento y no puede bajar mucho más sin
+renunciar al neón: Chromium convierte cada resplandor y cada capa translúcida en un mapa de
+bits con su máscara de transparencia. Es el precio del estilo. La edición de impresión no
+tiene esos efectos y por eso pesa 6 veces menos.
+
+Sí se corrigió un problema real de origen: Orbitron es una **fuente variable**, y Chromium no
+sabe incrustarlas en PDF — convertía cada titular en dibujos Type3, con texto no seleccionable
+ni buscable. `tools/preparar-fuentes.py` genera instancias estáticas y ahora los titulares se
+incrustan como fuente de verdad: más nítidos, seleccionables y buscables.
 
 El generador comprueba que cada `<section class="page">` ocupe exactamente una página del PDF
 y avisa si algo se descuadra.

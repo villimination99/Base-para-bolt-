@@ -5,8 +5,10 @@ VILLUMINATION 99 — Generador de PDFs premium
 Toma los HTML de src/, inyecta el sistema de diseño y las ilustraciones,
 produce HTML autocontenido en build/ y PDFs A4 en dist/.
 
-Uso:  python3 build.py            (todos)
-      python3 build.py basico     (solo los que coincidan con el filtro)
+Uso:  python3 build.py                     (edición pantalla, todos)
+      python3 build.py basico              (solo los que coincidan)
+      python3 build.py --impresion         (edición para papel → dist/impresion/)
+      python3 build.py --ambas             (las dos ediciones)
 """
 
 import base64
@@ -51,13 +53,16 @@ def find_chrome() -> str:
     raise SystemExit("No se encontro Chromium para renderizar los PDF.")
 
 
-def assemble(html: str) -> str:
-    """Inyecta CSS y sprite para que el HTML sea autocontenido."""
+def assemble(html: str, impresion: bool = False) -> str:
+    """Inyecta el sistema de diseno y las ilustraciones en el HTML."""
+    # Las fuentes se enlazan desde assets/ en vez de incrustarse en base64:
+    # Chromium NO incrusta en el PDF las fuentes cargadas desde data: URI y
+    # acaba rasterizando cada titular como imagen. Con url() relativa las
+    # incrusta como fuente real (texto nitido, seleccionable y mucho mas ligero).
     head = (
-        "<style>\n"
-        + (ASSETS / "fonts.css").read_text()
-        + "\n"
+        '<link rel="stylesheet" href="../assets/fonts.css">\n<style>\n'
         + (ASSETS / "brand.css").read_text()
+        + ("\n" + (ASSETS / "impresion.css").read_text() if impresion else "")
         + "\n</style>"
     )
     html = html.replace("<!--@head-->", head)
@@ -88,9 +93,13 @@ def stamp_metadata(pdf: Path, title: str) -> None:
         from pypdf import PdfReader, PdfWriter
     except ImportError:
         return
-    reader = PdfReader(str(pdf))
-    writer = PdfWriter()
-    writer.append_pages_from_reader(reader)
+    writer = PdfWriter(clone_from=str(pdf))
+    for page in writer.pages:
+        page.compress_content_streams(level=9)
+    try:
+        writer.compress_identical_objects()
+    except Exception:
+        pass
     writer.add_metadata(
         {
             "/Title": title,
@@ -115,45 +124,63 @@ def page_count(pdf: Path) -> int:
         return -1
 
 
-def main() -> None:
-    chrome = find_chrome()
-    BUILD.mkdir(exist_ok=True)
-    DIST.mkdir(exist_ok=True)
-    flt = sys.argv[1] if len(sys.argv) > 1 else ""
-
-    sources = sorted(p for p in SRC.glob("*.html") if flt in p.name)
-    if not sources:
-        raise SystemExit(f"Sin documentos que coincidan con '{flt}'.")
+def run(chrome: str, sources, impresion: bool) -> None:
+    """Genera una edicion completa (pantalla o impresion)."""
+    out_dir = DIST / "impresion" if impresion else DIST
+    build_dir = BUILD / "impresion" if impresion else BUILD
+    out_dir.mkdir(parents=True, exist_ok=True)
+    build_dir.mkdir(parents=True, exist_ok=True)
+    print(f"\nEdicion {'IMPRESION (papel blanco)' if impresion else 'PANTALLA (neon)'}")
 
     problems = []
+    total = 0
     for src in sources:
         raw = src.read_text()
-        html = assemble(raw)
-        built = BUILD / src.name
-        built.write_text(html)
+        built = build_dir / src.name
+        built.write_text(assemble(raw, impresion))
 
-        out = DIST / (src.stem + ".pdf")
+        out = out_dir / (src.stem + ".pdf")
         render(chrome, built, out)
 
         title_match = re.search(r"<title>(.*?)</title>", raw, re.S)
         title = title_match.group(1).strip() if title_match else src.stem
         stamp_metadata(out, title)
 
-        # Cada <section class="page"> debe ocupar exactamente una pagina del PDF.
         declared = len(re.findall(r'class="page[ "]', raw))
         actual = page_count(out)
         flag = "" if declared == actual else f"  <-- REVISAR (declaradas {declared})"
         if flag:
             problems.append(f"{src.name}: {actual} paginas, {declared} declaradas")
         size = out.stat().st_size / 1024
+        total += size
         print(f"  {out.name:<46} {actual:>2} pag  {size:>6.0f} KB{flag}")
 
+    print(f"  {'TOTAL':<46}        {total/1024:>6.1f} MB")
     if problems:
-        print("\nDesajustes de paginacion:")
+        print("  Desajustes de paginacion:")
         for p in problems:
-            print("  - " + p)
+            print("   - " + p)
+
+
+def main() -> None:
+    chrome = find_chrome()
+    BUILD.mkdir(exist_ok=True)
+    DIST.mkdir(exist_ok=True)
+
+    args = [a for a in sys.argv[1:]]
+    impresion = "--impresion" in args
+    ambas = "--ambas" in args
+    flt = next((a for a in args if not a.startswith("--")), "")
+
+    sources = sorted(p for p in SRC.glob("*.html") if flt in p.name)
+    if not sources:
+        raise SystemExit(f"Sin documentos que coincidan con '{flt}'.")
+
+    if ambas:
+        run(chrome, sources, impresion=False)
+        run(chrome, sources, impresion=True)
     else:
-        print("\nPaginacion correcta en todos los documentos.")
+        run(chrome, sources, impresion=impresion)
 
 
 if __name__ == "__main__":

@@ -47,10 +47,10 @@
       <circle cx="100" cy="12" r="3.4" fill="var(--accent-2)"/>
     </g>
     <!-- visor + ojos -->
-    <rect x="84" y="42" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
-    <g filter="url(#ngs)"><circle cx="93" cy="49.5" r="3.4" fill="#fff"/><circle cx="107" cy="49.5" r="3.4" fill="#fff"/></g>
-    <circle cx="100" cy="104" r="11" fill="url(#core)" opacity=".85"/>
-    <circle cx="100" cy="104" r="4.4" fill="var(--accent)" filter="url(#ngs)"/>
+    <rect class="visor" x="84" y="42" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
+    <g filter="url(#ngs)"><circle cx="93" cy="49.5" class="eye" r="3.4" fill="#fff"/><circle cx="107" cy="49.5" class="eye" r="3.4" fill="#fff"/></g>
+    <circle cx="100" cy="104" r="11" class="core-halo" fill="url(#core)" opacity=".85"/>
+    <circle class="core-dot" cx="100" cy="104" r="4.4" fill="var(--accent)" filter="url(#ngs)"/>
   </symbol>
 
   <!-- ══════════════ ROBOT COCINANDO ══════════════ -->
@@ -90,10 +90,10 @@
       <circle cx="50" cy="108" r="4.6"/><circle cx="148" cy="106" r="4.6"/>
       <circle cx="82" cy="182" r="4.6"/><circle cx="118" cy="182" r="4.6"/>
     </g>
-    <rect x="84" y="46" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
-    <g filter="url(#ngs)"><circle cx="93" cy="53.5" r="3.4" fill="#fff"/><circle cx="107" cy="53.5" r="3.4" fill="#fff"/></g>
-    <circle cx="100" cy="108" r="10" fill="url(#core)" opacity=".8"/>
-    <circle cx="100" cy="108" r="4" fill="var(--accent)" filter="url(#ngs)"/>
+    <rect class="visor" x="84" y="46" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
+    <g filter="url(#ngs)"><circle cx="93" cy="53.5" class="eye" r="3.4" fill="#fff"/><circle cx="107" cy="53.5" class="eye" r="3.4" fill="#fff"/></g>
+    <circle cx="100" cy="108" r="10" class="core-halo" fill="url(#core)" opacity=".8"/>
+    <circle class="core-dot" cx="100" cy="108" r="4" fill="var(--accent)" filter="url(#ngs)"/>
   </symbol>
 
   <!-- ══════════════ ROBOT MEDITANDO ══════════════ -->
@@ -123,13 +123,13 @@
       <circle cx="74" cy="158" r="4.2"/><circle cx="126" cy="158" r="4.2"/>
       <circle cx="100" cy="34" r="3.4" fill="var(--accent-2)"/>
     </g>
-    <rect x="84" y="62" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
+    <rect class="visor" x="84" y="62" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
     <!-- ojos cerrados: calma -->
-    <g stroke="#fff" stroke-width="2.6" stroke-linecap="round" filter="url(#ngs)">
+    <g class="eye-line" stroke="#fff" stroke-width="2.6" stroke-linecap="round" filter="url(#ngs)">
       <path d="M88 69.5 q5 4 10 0"/><path d="M102 69.5 q5 4 10 0"/>
     </g>
-    <circle cx="100" cy="124" r="13" fill="url(#core)" opacity=".9"/>
-    <circle cx="100" cy="124" r="4.6" fill="var(--accent)" filter="url(#ngs)"/>
+    <circle cx="100" cy="124" r="13" class="core-halo" fill="url(#core)" opacity=".9"/>
+    <circle class="core-dot" cx="100" cy="124" r="4.6" fill="var(--accent)" filter="url(#ngs)"/>
   </symbol>
 
   <!-- ══════════════ ROBOT DURMIENDO ══════════════ -->
@@ -170,11 +170,11 @@
       <circle cx="88" cy="196" r="4.2"/>
       <circle cx="186" cy="149" r="3.2" fill="var(--accent-2)"/>
     </g>
-    <rect x="138" y="160" width="28" height="14" rx="5" fill="rgba(0,0,0,.6)" stroke="var(--accent)" stroke-width="1.5" opacity=".85"/>
-    <g stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8">
+    <rect class="visor" x="138" y="160" width="28" height="14" rx="5" fill="rgba(0,0,0,.6)" stroke="var(--accent)" stroke-width="1.5" opacity=".85"/>
+    <g class="eye-line" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8">
       <path d="M142 167 q4 3 8 0"/><path d="M154 167 q4 3 8 0"/>
     </g>
-    <circle cx="96" cy="169" r="9" fill="url(#core)" opacity=".55"/>
+    <circle cx="96" cy="169" r="9" class="core-halo" fill="url(#core)" opacity=".55"/>
     <circle cx="96" cy="169" r="3.4" fill="var(--accent)" opacity=".8"/>
   </symbol>
 
@@ -212,10 +212,10 @@
       <circle cx="58" cy="154" r="4.6"/><circle cx="142" cy="154" r="4.6"/>
       <circle cx="124" cy="9" r="3.4" fill="var(--accent-2)"/>
     </g>
-    <rect x="85" y="35" width="30" height="14" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
-    <g filter="url(#ngs)"><circle cx="93" cy="42" r="3.2" fill="#fff"/><circle cx="107" cy="42" r="3.2" fill="#fff"/></g>
-    <circle cx="100" cy="92" r="12" fill="url(#core)"/>
-    <circle cx="100" cy="92" r="4.6" fill="#fff" filter="url(#ngs)"/>
+    <rect class="visor" x="85" y="35" width="30" height="14" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
+    <g filter="url(#ngs)"><circle cx="93" cy="42" class="eye" r="3.2" fill="#fff"/><circle cx="107" cy="42" class="eye" r="3.2" fill="#fff"/></g>
+    <circle cx="100" cy="92" r="12" class="core-halo" fill="url(#core)"/>
+    <circle class="core-dot" cx="100" cy="92" r="4.6" fill="var(--accent)" filter="url(#ngs)"/>
   </symbol>
 
   <!-- ══════════════ ROBOT ATLETA ══════════════ -->
@@ -248,9 +248,9 @@
       <circle cx="82" cy="178" r="4.6"/><circle cx="118" cy="178" r="4.6"/>
       <circle cx="100" cy="11" r="3.4" fill="var(--accent-2)"/>
     </g>
-    <rect x="84" y="38" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
-    <g filter="url(#ngs)"><circle cx="93" cy="45.5" r="3.4" fill="#fff"/><circle cx="107" cy="45.5" r="3.4" fill="#fff"/></g>
-    <circle cx="100" cy="102" r="12" fill="url(#core)" opacity=".9"/>
-    <circle cx="100" cy="102" r="4.6" fill="var(--accent)" filter="url(#ngs)"/>
+    <rect class="visor" x="84" y="38" width="32" height="15" rx="5" fill="rgba(0,0,0,.55)" stroke="var(--accent)" stroke-width="1.6" opacity=".9"/>
+    <g filter="url(#ngs)"><circle cx="93" cy="45.5" class="eye" r="3.4" fill="#fff"/><circle cx="107" cy="45.5" class="eye" r="3.4" fill="#fff"/></g>
+    <circle cx="100" cy="102" r="12" class="core-halo" fill="url(#core)" opacity=".9"/>
+    <circle class="core-dot" cx="100" cy="102" r="4.6" fill="var(--accent)" filter="url(#ngs)"/>
   </symbol>
 </svg>

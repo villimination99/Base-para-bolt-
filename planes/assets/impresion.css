@@ -1,0 +1,150 @@
+/* ============================================================
+   VILLUMINATION 99 — Edición para impresión
+   Se carga DESPUÉS de brand.css y reescribe solo lo necesario.
+
+   Objetivo: papel blanco, tinta mínima y contraste alto, conservando
+   la identidad de marca a través de la tipografía y los acentos de color.
+   Al desaparecer los degradados y los resplandores, Chromium deja de
+   rasterizar capas: estos PDFs pesan una fracción de los de pantalla.
+   ============================================================ */
+
+:root{
+  --bg:#ffffff;
+  --bg-2:#ffffff;
+  --bg-3:#f4f5fa;
+
+  --panel:#f7f8fc;
+  --panel-2:#ffffff;
+  --line:#d5d8e6;
+
+  --ink:#14141f;
+  --ink-2:#3d3d52;
+  --ink-3:#6e6e85;
+}
+
+/* Acentos oscurecidos para que mantengan contraste sobre blanco */
+.t-basico{ --accent:#00738f; --accent-2:#0047b3; --a-rgb:0,115,143;  --a2-rgb:0,71,179; }
+.t-pro   { --accent:#a5008f; --accent-2:#5a1fb8; --a-rgb:165,0,143;  --a2-rgb:90,31,184; }
+.t-elite { --accent:#007044; --accent-2:#b04a00; --a-rgb:0,112,68;  --a2-rgb:176,74,0; }
+
+body{ background:#fff; color:var(--ink); }
+
+/* ---- Página: sin rejilla, sin halos, sin resplandores ---- */
+.page{
+  background:#fff;
+}
+.page::before{ display:none; }          /* rejilla técnica */
+.page::after{                            /* filo lateral: sólido y fino */
+  background:var(--accent);
+  width:1.6mm;
+  opacity:1;
+}
+
+/* Ningún efecto que obligue a rasterizar */
+*, *::before, *::after{
+  filter:none !important;
+  box-shadow:none !important;
+  text-shadow:none !important;
+}
+
+/* ---- Logotipo ---- */
+.logo-mark{
+  background:#fff;
+  border:.45mm solid var(--accent);
+}
+.logo-mark span{
+  background:none;
+  -webkit-text-fill-color:var(--ink);
+  color:var(--ink);
+}
+.wordmark .v{
+  background:none; background-image:none;
+  -webkit-text-fill-color:var(--ink);
+  color:var(--ink);
+}
+.wordmark .n{ color:var(--accent-2); }
+
+/* ---- Portada ---- */
+.cover h1 .glow{
+  background:none;
+  -webkit-text-fill-color:var(--accent);
+  color:var(--accent);
+}
+.tier-badge{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.cover-art-wrap::before{ display:none; }   /* halo de la mascota */
+.chip{ background:#fff; border-color:var(--line); color:var(--ink-2); }
+.chip.on{ border-color:var(--accent); color:var(--accent); }
+.cover-strip{ background:#fff; }
+
+/* ---- Tablas ---- */
+table{ background:#fff; border-color:var(--line); }
+thead th{
+  background:var(--bg-3);
+  color:var(--accent);
+  border-bottom:.35mm solid var(--accent);
+}
+tbody td{ border-bottom:.25mm solid #e6e8f0; color:var(--ink-2); }
+tbody tr:nth-child(even) td{ background:#fafbfd; }
+tbody td:first-child{ color:var(--ink); }
+tfoot td{
+  background:var(--bg-3);
+  color:var(--accent);
+  border-top:.35mm solid var(--accent);
+}
+
+/* ---- Etiquetas: sin relleno de color, solo borde y texto ---- */
+.tag{ background:#fff; }
+.tag.hi { color:#b34700; border-color:#b34700; }
+.tag.mid{ color:#8a6b00; border-color:#8a6b00; }
+.tag.lo { color:#00738f; border-color:#00738f; }
+.tag.ok { color:#00703f; border-color:#00703f; }
+.tag.no { color:#a5008f; border-color:#a5008f; }
+
+/* ---- Tarjetas, listas y avisos ---- */
+.card, .metric, ol.neon li, .toc a, .toc .row{
+  background:#fff;
+  border-color:var(--line);
+}
+.metric .v, .cover-strip .s .v, .toc .n, ol.neon li::before,
+.pg-foot .pnum, .cta .url{
+  color:var(--accent);
+}
+.callout{
+  background:var(--bg-3);
+  border-color:var(--line);
+  border-left:1.2mm solid var(--accent);
+}
+.callout.warn{ border-left-color:#b34700; }
+.callout.warn .t{ color:#b34700; }
+.callout.info{ border-left-color:#00738f; }
+.callout.info .t{ color:#00738f; }
+
+ul.dots li::before{ background:var(--accent); }
+ul.check li::before{ border-color:var(--accent); background:#fff; }
+
+/* ---- Campos rellenables: más marcados, para escribir a boli ---- */
+.fill{ border-bottom:.3mm solid #9aa0b8; }
+.box{ border:.3mm solid #6e7492; background:#fff; }
+.lines .ln{ border-bottom:.3mm solid #9aa0b8; }
+
+/* ---- Cierre ---- */
+.cta{ background:var(--bg-3); border-color:var(--accent); }
+.upsell .u{ background:#fff; border-color:var(--line); }
+.upsell .u.cur{ background:var(--bg-3); }
+.upsell .u.b{ border-color:#00738f; } .upsell .u.b .n,.upsell .u.b .pz{ color:#00738f; }
+.upsell .u.p{ border-color:#a5008f; } .upsell .u.p .n,.upsell .u.p .pz{ color:#a5008f; }
+.upsell .u.e{ border-color:#007044; } .upsell .u.e .n,.upsell .u.e .pz{ color:#007044; }
+.social b{ color:var(--accent); }
+.legal{ background:#fff; border-color:#c9cddd; color:var(--ink-3); }
+.legal b{ color:var(--ink-2); }
+
+/* ---- Mascota: trazo limpio, sin difuminado ni núcleo luminoso ---- */
+.core-halo{ display:none; }
+.core-dot{ fill:var(--accent); }
+.visor{ fill:#fff; }
+.eye{ fill:var(--accent); }
+.eye-line{ stroke:var(--accent); }
