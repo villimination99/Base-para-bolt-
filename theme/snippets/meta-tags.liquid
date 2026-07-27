@@ -47,3 +47,31 @@
 {%- if og_image -%}
   <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
 {%- endif -%}
+
+{%- comment -%}
+  hreflang: le dice a Google que estas páginas son la MISMA página en otro idioma.
+  Sin esto, las versiones traducidas compiten entre sí como contenido duplicado.
+{%- endcomment -%}
+{%- if localization.available_languages.size > 1 -%}
+  {%- liquid
+    assign cur_root = request.locale.root_url
+    assign bare_path = request.path
+    unless cur_root == '/'
+      assign bare_path = bare_path | remove_first: cur_root
+    endunless
+  -%}
+  {%- for lang in localization.available_languages -%}
+    {%- liquid
+      assign lang_root = lang.root_url
+      if lang_root == '/'
+        assign alt_path = bare_path
+      else
+        assign alt_path = lang_root | append: bare_path
+      endif
+    -%}
+    <link rel="alternate" hreflang="{{ lang.iso_code }}" href="{{ shop.url }}{{ alt_path }}">
+    {%- if lang.primary -%}
+      <link rel="alternate" hreflang="x-default" href="{{ shop.url }}{{ alt_path }}">
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

@@ -599,6 +599,22 @@
 
     var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
 
+    // suggest.json devuelve el precio como texto; normalizamos separadores de
+    // miles/decimales de cualquier localización antes de formatear.
+    function priceText(v) {
+      if (v == null || v === '') return '';
+      var s = String(v).replace(/[^0-9.,]/g, '');
+      if (/[.,]\d{1,2}$/.test(s)) {
+        var sep = s.slice(-3).match(/[.,]/)[0];
+        var other = sep === ',' ? '.' : ',';
+        s = s.split(other).join('').replace(sep, '.');
+      } else {
+        s = s.replace(/[.,]/g, '');
+      }
+      var n = parseFloat(s);
+      return isNaN(n) ? String(v) : money(Math.round(n * 100));
+    }
+
     function render(items, q) {
       if (!items.length) {
         results.innerHTML = '<p class="search-empty">' + esc((strings.noResults || 'Sin resultados para') + ' "' + q + '"') + '</p>';
@@ -609,7 +625,7 @@
         return '<a class="search-item" role="option" href="' + esc(p.url) + '">' +
           '<span class="search-item-media">' + (img ? '<img src="' + esc(img) + '" alt="" width="48" height="48" loading="lazy">' : '') + '</span>' +
           '<span class="search-item-info"><span class="search-item-title">' + esc(p.title) + '</span>' +
-          '<span class="search-item-price">' + esc(p.price ? money(parseFloat(p.price) * 100) : '') + '</span></span></a>';
+          '<span class="search-item-price">' + esc(priceText(p.price)) + '</span></span></a>';
       }).join('') + '<a class="search-all" href="' + esc(routes.search + '?q=' + encodeURIComponent(q)) + '">' +
         esc(strings.viewAll || 'Ver todos los resultados') + '</a>';
     }

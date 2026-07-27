@@ -1,18 +1,21 @@
-{%- comment -%}
-  robots.txt personalizable. Mantiene todas las reglas por defecto de Shopify
+{% comment %}
+  robots.txt personalizable. Conserva TODAS las reglas por defecto de Shopify
   (que ya protegen /checkout, /cart, /account…) y añade acceso explícito a los
-  rastreadores de IA, para que tu marca pueda ser citada y encontrada en ellos.
-  Quita el bloque "AI crawlers" si prefieres NO aparecer en respuestas de IA.
-{%- endcomment -%}
-{%- for group in robots.default_groups -%}
-  {{ group.user_agent }}
-  {%- for rule in group.rules -%}
-    {{ rule }}
-  {%- endfor -%}
-  {%- if group.sitemap -%}
-    {{ group.sitemap }}
-  {%- endif -%}
+  rastreadores de IA para que tu marca pueda ser citada y encontrada en ellos.
+  Elimina el bloque "AI crawlers" si prefieres NO aparecer en respuestas de IA.
+  IMPORTANTE: robots.txt es un formato por líneas; no cambies el control de
+  espacios ({{- ... }}) o el archivo dejará de ser válido.
+{% endcomment %}
+{% for group in robots.default_groups %}
+  {{- group.user_agent }}
 
+  {%- for rule in group.rules %}
+    {{- rule }}
+  {%- endfor -%}
+
+  {%- if group.sitemap %}
+    {{- group.sitemap }}
+  {%- endif %}
 {% endfor %}
 # AI crawlers — permitir indexación de la marca
 User-agent: GPTBot
@@ -27,13 +30,8 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-User-agent: Claude-Web
-Allow: /
-
 User-agent: PerplexityBot
 Allow: /
 
 User-agent: Google-Extended
 Allow: /
-
-Sitemap: {{ shop.url }}/sitemap.xml
