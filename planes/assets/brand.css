@@ -183,7 +183,7 @@ body{
 .chip.on{ border-color:rgba(var(--a-rgb),0.55); color:var(--accent); }
 
 .cover-art{
-  flex:0 0 auto; width:70mm; height:84mm;
+  flex:0 0 auto; width:77mm; height:92mm;
   filter:drop-shadow(0 0 8mm rgba(var(--a-rgb),0.22));
 }
 /* Halo detrás de la mascota */
@@ -192,7 +192,7 @@ body{
   align-items:center; justify-content:center;
 }
 .cover-art-wrap::before{
-  content:''; position:absolute; width:74mm; height:74mm; border-radius:50%;
+  content:''; position:absolute; width:80mm; height:80mm; border-radius:50%;
   background:radial-gradient(circle, rgba(var(--a-rgb),0.2) 0%, transparent 68%);
 }
 .cover-art-wrap > *{ position:relative; }

@@ -56,11 +56,7 @@ def bloque_html(b: dict) -> str:
     t = b["t"]
     if t == "p":
         texto = esc(b["x"])
-        # Notas al pie que la digitalización dejó incrustadas en el cuerpo:
-        # empiezan por el número de la llamada. Se componen en cuerpo menor.
-        if re.match(r"^\d{1,2}\s+[A-ZÁÉÍÓÚÑ]", b["x"]) and len(b["x"]) > 40:
-            return f'<p class="nota-pie">{texto}</p>' 
-        # Las citas del original vienen entre comillas angulares en párrafo aparte
+        # Cita larga en párrafo aparte, marcada con comillas angulares.
         if texto.startswith("«") and texto.rstrip().endswith("»") and len(texto) > 120:
             return f"<blockquote>{texto}</blockquote>"
         return f"<p>{texto}</p>"
@@ -213,36 +209,6 @@ def cubierta(libro: dict) -> str:
 </body>"""
 
 
-CREDITOS_RECUPERACION = """
-<section class="creditos">
-  <h2>Sobre esta edición</h2>
-  <p>Este volumen reproduce el texto de <strong>{titulo}</strong>,
-     de {autor}. La obra procede de {fuente}.</p>
-  <p>Esta edición no altera el contenido: se ha respetado el texto original.
-     El trabajo realizado ha sido de <strong>recuperación tipográfica</strong>
-     — reconstruir los párrafos que la digitalización había partido, retirar
-     los encabezados repetidos que se mezclaban con el texto, corregir acentos
-     perdidos en el escaneo y componer el conjunto en un formato legible, con
-     índice navegable y numeración de páginas.</p>
-  <p>Los derechos del texto pertenecen a sus autores y a la institución que lo
-     difunde. Esta edición se distribuye respetando esa autoría y sin
-     atribuirse la obra.</p>
-  <p><strong>Nota de lectura.</strong> Se trata de un texto de carácter
-     filosófico y espiritual, escrito en su época y contexto. Su contenido no
-     constituye consejo médico, psicológico ni sanitario, y no sustituye la
-     atención de un profesional cualificado.</p>
-</section>"""
-
-CIERRE_RECUPERACION = """
-  <div class="nota">
-    <strong>Sobre los derechos.</strong> El texto de esta obra pertenece a sus
-    autores y a la institución que originalmente lo difunde; esta edición se
-    limita a su recuperación tipográfica y no reclama ninguna titularidad
-    sobre el contenido. Si eres titular de derechos sobre esta obra y deseas
-    que se retire o se modifique esta edición, escríbenos y se atenderá de
-    inmediato.
-  </div>"""
-
 CREDITOS_ORIGINAL = """
 <section class="creditos">
   <h2>Sobre esta obra</h2>
@@ -287,12 +253,16 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
     capitulos = "".join(capitulo_html(i, c) for i, c in enumerate(caps, 1))
     original = bool(libro.get("original"))
 
-    creditos = (CREDITOS_ORIGINAL if original else CREDITOS_RECUPERACION).format(
+    if not original:
+        raise SystemExit(
+            f"{libro['id']}: el catálogo es de obra original. Un libro sin "
+            '"original": true no tiene plantilla de créditos y no se compone.'
+        )
+    creditos = CREDITOS_ORIGINAL.format(
         titulo=esc(libro["titulo"]),
         autor=esc(libro["autor"]),
         fuente=esc(libro["fuente"]),
     )
-    derechos = CIERRE_ORIGINAL if original else CIERRE_RECUPERACION
 
     return cabecera(libro, f"acento-{libro['acento']}") + f"""
 {creditos}
@@ -306,7 +276,7 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
   <div class="marca"><span class="v">VILLUMINATION</span><span class="n">99</span></div>
   <span class="url">villuminations.com</span>
   <div class="redes">YouTube <b>@villumination99</b> &nbsp;·&nbsp; Instagram <b>@villumination99</b></div>
-{derechos}
+{CIERRE_ORIGINAL}
 </section>
 </body>"""
 
@@ -359,8 +329,7 @@ def marcadores(pdf: Path, libro: dict, paginas: list[int]) -> None:
         "/Title": titulo,
         "/Author": (f"{libro['autor']} — villuminations.com" if original
                     else "VILLUMINATION 99 — villuminations.com"),
-        "/Subject": (libro["subtitulo"] if original
-                     else "Edición tipográfica cuidada"),
+        "/Subject": libro["subtitulo"],
         "/Creator": "VILLUMINATION 99",
         "/Keywords": ", ".join(libro.get("claves", [])) or "villuminations.com",
     })

@@ -142,12 +142,9 @@ ul.check li::before{ border-color:var(--accent); background:#fff; }
 .legal{ background:#fff; border-color:#c9cddd; color:var(--ink-3); }
 .legal b{ color:var(--ink-2); }
 
-/* ---- Mascota: trazo limpio, sin difuminado ni núcleo luminoso ---- */
-.core-halo{ display:none; }
-.core-dot{ fill:var(--accent); }
-.visor{ fill:#fff; }
-.eye{ fill:var(--accent); }
-.eye-line{ stroke:var(--accent); }
+/* ---- Emblema de portada: sin halo, para que el trazo aguante en papel ---- */
+.cover-art{ filter:none !important; }
+.cover-art-wrap::before{ display:none; }
 
 /* Figuras técnicas en papel */
 .figura{ background:#fff; border-color:var(--line); }

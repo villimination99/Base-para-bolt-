@@ -68,7 +68,7 @@ def assemble(html: str, impresion: bool = False) -> str:
         + "\n</style>"
     )
     html = html.replace("<!--@head-->", head)
-    html = html.replace("<!--@sprite-->", (PARTIALS / "sprite.svg").read_text())
+    html = html.replace("<!--@sprite-->", (PARTIALS / "emblemas.svg").read_text())
     html = html.replace("<!--@figuras-->", (PARTIALS / "figuras.svg").read_text())
     return html
 
