@@ -29,18 +29,19 @@
 }
 </script>
 
+{%- comment -%}
+  WebSite. Sin "potentialAction"/SearchAction a propósito: Google retiró el cuadro de
+  búsqueda de enlaces de sitio, así que ya no genera ningún resultado enriquecido, y su
+  plantilla obligaba a escribir llaves { } dentro de una etiqueta Liquid — algo que el
+  importador de temas de Shopify rechaza, descartando el archivo completo.
+{%- endcomment -%}
 {%- if request.page_type == 'index' -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": {{ shop.name | json }},
-  "url": {{ shop.url | json }},
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {{ shop.url | append: routes.search_url | append: '?q={search_term_string}' | json }},
-    "query-input": "required name=search_term_string"
-  }
+  "url": {{ shop.url | json }}
 }
 </script>
 {%- endif -%}
