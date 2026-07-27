@@ -80,6 +80,17 @@ C1 = cap(
         "La tabla completa de los treinta y seis decanatos, con fechas y regente, "
         "que es la parte del sistema que explica por qué tanta gente no se reconoce "
         "en la descripción general de su signo.",
+        "Las cuatro dignidades esenciales signo por signo, con el grado exacto de "
+        "cada exaltación y de cada caída.",
+        "Los sesenta términos egipcios —cinco tramos desiguales por signo— que son "
+        "la tabla más fina y más olvidada del sistema clásico.",
+        "La división en veintiocho mansiones lunares, con su aritmética exacta y "
+        "con una explicación honesta de por qué las listas de nombres no coinciden "
+        "entre tradiciones.",
+        "La precesión de los equinoccios con sus cifras reales, la diferencia "
+        "entre zodiaco tropical y sidéreo y de dónde salen las «eras».",
+        "La doctrina de la secta —cartas de día y de noche— que la astrología "
+        "helenística usaba y la moderna dejó caer.",
         "La melotesia: el reparto tradicional del cuerpo entre los doce signos, "
         "desarrollado signo a signo como doce zonas de mantenimiento.",
         "La geometría de la rueda —oposición, trígono, cuadratura, sextil— y los "
@@ -491,6 +502,292 @@ C8 = cap(
          "sombra que reconoces, eso es información útil. Si encuentras una que no "
          "reconoces, no la fuerces: el sistema es un espejo, y un espejo que no "
          "devuelve nada simplemente no está enfocando ahí."),
+)
+
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE I bis · LAS TABLAS QUE SE DEJARON DE IMPRIMIR
+# ══════════════════════════════════════════════════════════════════════
+
+C9 = cap(
+    "Las dignidades esenciales",
+    p("Aquí empieza la parte del sistema clásico que la divulgación moderna ha "
+      "dejado caer casi por completo, y no por mala fe: porque es árida, se "
+      "aprende con tabla delante y no cabe en un horóscopo de revista. Es también "
+      "la parte que convierte el zodiaco en un sistema con reglas en lugar de una "
+      "colección de descripciones."),
+    p("La idea es sencilla. Un planeta no se comporta igual en los doce signos. "
+      "En unos está en su terreno y opera con facilidad; en otros trabaja "
+      "incómodo, contra su propia naturaleza. La tradición fijó cuatro grados de "
+      "esa comodidad y les puso nombre."),
+    ficha("Las cuatro dignidades", [
+        ("Domicilio", "El planeta está en el signo que rige. En su casa: hace lo "
+                      "que sabe hacer sin resistencia."),
+        ("Exaltación", "Está en el signo donde la tradición dice que se le honra. "
+                       "Rinde más de lo que le corresponde, y en un grado exacto "
+                       "—no en todo el signo—."),
+        ("Exilio", "Está en el signo opuesto al que rige. Trabaja al revés de su "
+                   "naturaleza y le cuesta el doble."),
+        ("Caída", "Está en el signo opuesto al de su exaltación. Ni se le honra "
+                  "ni se le atiende."),
+    ]),
+    fig("dia-dignidades", "Lám. 8",
+        "Las cuatro dignidades signo por signo. Con el grado exacto donde cae "
+        "cada exaltación y cada caída. Los guiones no son huecos por olvido: "
+        "hay signos que no albergan ninguna exaltación."),
+    h("Dos columnas son datos y dos se deducen"),
+    p("Merece la pena ver la mecánica, porque explica por qué la tabla es "
+      "coherente y no un catálogo arbitrario. Los domicilios y las exaltaciones "
+      "son lo que la tradición fija: hay que aprenderlos. El exilio y la caída no "
+      "hace falta aprenderlos, porque salen solos — el exilio de un planeta está "
+      "siempre en el signo opuesto a su domicilio, y su caída en el opuesto a su "
+      "exaltación. Media tabla es deducción."),
+    nota("Un detalle que casi nunca se dice",
+         "Las exaltaciones llevan grado exacto: el Sol en el 19 de Aries, la Luna "
+         "en el 3 de Tauro, Júpiter en el 15 de Cáncer, Mercurio en el 15 de "
+         "Virgo, Saturno en el 21 de Libra, Marte en el 28 de Capricornio y Venus "
+         "en el 27 de Piscis. Siete planetas, siete grados, siete signos. Los "
+         "cinco signos restantes —Géminis, Leo, Escorpio, Sagitario y Acuario— no "
+         "albergan ninguna exaltación, y esa asimetría es original: la tradición "
+         "nunca la rellenó."),
+    h("Para qué sirve esto sin carta natal"),
+    p("Para leer el libro con más precisión, y para una cosa muy concreta. Cuando "
+      "en la segunda parte se dice que Marte en Aries ataca de frente y en "
+      "Escorpio persiste en silencio, esa diferencia no es literaria: Marte "
+      "gobierna los dos signos, pero uno es diurno y otro nocturno. Y cuando se "
+      "dice que Saturno en Libra construye acuerdos, es porque ahí está exaltado — "
+      "el mismo Saturno que en Aries, su caída, no sabe hacer otra cosa que "
+      "frenar."),
+    lista(
+        "Marte está en domicilio en Aries y en Escorpio, en exilio en Tauro y "
+        "Libra, exaltado en el 28 de Capricornio y caído en el 28 de Cáncer.",
+        "Venus está en domicilio en Tauro y Libra, en exilio en Aries y Escorpio, "
+        "exaltada en el 27 de Piscis y caída en el 27 de Virgo.",
+        "Mercurio es el único que tiene domicilio y exaltación en el mismo signo "
+        "—Virgo—, y por eso Virgo es el signo más mercurial de los dos que rige.",
+        "Saturno rige Capricornio y Acuario, y está exaltado en Libra: el rigor "
+        "encuentra su mejor versión en el signo del equilibrio, que es una de las "
+        "afirmaciones más finas de todo el sistema.",
+    ),
+)
+
+C10 = cap(
+    "Los términos: la tabla más olvidada",
+    p("Si el capítulo anterior recuperaba una tabla poco impresa, este recupera "
+      "una que ha desaparecido casi por completo de la divulgación — y es, "
+      "probablemente, la pieza más sofisticada del sistema clásico."),
+    p("La tradición no se detuvo en dividir cada signo en tres decanatos de diez "
+      "grados. Hizo una segunda división, más fina y deliberadamente irregular: "
+      "cinco tramos por signo, de longitud desigual, uno para cada planeta "
+      "excepto los luminares. Se llaman términos, o límites, o confines según la "
+      "traducción; en griego, horoi."),
+    fig("dia-terminos", "Lám. 9",
+        "Los sesenta términos. Cada barra son los treinta grados de un signo "
+        "partidos en cinco tramos desiguales; la longitud dibujada es su número "
+        "de grados, así que la lámina se puede medir con una regla."),
+    h("Lo que hace especial a esta tabla"),
+    lista(
+        "Es irregular a propósito. Los decanatos son tres tramos iguales de diez "
+        "grados; los términos son cinco tramos que van de dos a doce grados. La "
+        "irregularidad no es descuido: es información.",
+        "Solo intervienen cinco planetas. El Sol y la Luna quedan fuera del "
+        "reparto de términos, igual que quedan fuera de la doble regencia. Los "
+        "luminares no se subdividen.",
+        "Cada fila suma exactamente treinta. Es la única tabla de este libro que "
+        "se puede verificar aritméticamente, y por eso las de estas páginas se "
+        "calculan y se comprueban en lugar de copiarse.",
+        "El planeta que abre cada signo tiene sentido: Júpiter abre Aries, Venus "
+        "abre Tauro, Mercurio abre Géminis, Marte abre Cáncer. No es el regente "
+        "del signo, y ese desajuste es la parte que más discutieron los antiguos.",
+    ),
+    nota("Los dos repartos que llegaron hasta nosotros",
+         "Existen dos tablas de términos en la tradición: la egipcia, que es la "
+         "que este libro usa y la más antigua, y la de Ptolomeo, que la corrigió "
+         "para hacerla más regular. Ptolomeo declaró que la egipcia no seguía "
+         "«ningún orden natural» y propuso la suya. La egipcia le sobrevivió y es "
+         "la que siguieron usando los astrólogos árabes y medievales. Se elige "
+         "aquí por eso y porque es la que aparece en más manuscritos."),
+    h("Cómo se usa"),
+    pasos(
+        "Localiza el grado exacto que te interese dentro del signo. Si trabajas "
+        "solo con tu signo solar, tu grado es aproximadamente el número de días "
+        "transcurridos desde que empezó el signo.",
+        "Busca en la lámina en qué tramo cae ese grado.",
+        "El planeta de ese tramo es el matiz más fino que el sistema clásico "
+        "ofrece sobre tu posición. Se lee sobre el decanato, que se lee sobre el "
+        "signo: tres capas, de la más gruesa a la más fina.",
+    ),
+    nota("Un ejemplo, para que no quede en abstracto",
+         "Alguien nacido el 12 de abril está en Aries, tercer decanato regido por "
+         "Venus, y su grado —el 22 o el 23 de Aries— cae en el término de Marte. "
+         "Aries de Venus con término de Marte: el impulso que busca compañía y "
+         "que, en el último tramo, recupera el filo. Ese nivel de detalle no lo da "
+         "ningún otro sistema de doce categorías."),
+)
+
+C11 = cap(
+    "Las veintiocho mansiones de la Luna",
+    p("Un segundo zodiaco, paralelo al de doce y bastante más antiguo en su lógica: "
+      "el que se construye siguiendo a la Luna en vez de al Sol."),
+    p("El razonamiento es de una elegancia notable. La Luna tarda unos "
+      "veintisiete días y un tercio en dar la vuelta completa al cielo respecto a "
+      "las estrellas. Si se quiere un signo por noche, hacen falta veintiocho "
+      "divisiones, no doce. Y de ahí sale el sistema que en árabe se llama manāzil "
+      "—las estaciones o posadas de la Luna—, que en la India tiene su equivalente "
+      "en los nakshatras y que en Europa circuló hasta el Renacimiento en los "
+      "tratados de correspondencias."),
+    h("La aritmética exacta"),
+    ficha("La división en veintiocho", [
+        ("Grados por mansión", "360 ÷ 28 = 12° 51′ 25,7″"),
+        ("Mansiones por signo", "2 y 1/3 · ninguna mansión coincide con un signo"),
+        ("Ciclo de la Luna", "27,32 días sidéreos · de ahí las 28 posadas"),
+        ("Primera mansión", "Empieza en el 0° de Aries, igual que el zodiaco solar"),
+        ("Desajuste con los doce", "Es deliberado: son dos rejillas distintas "
+                                   "sobre el mismo círculo"),
+    ]),
+    p("Ese desajuste es lo interesante. Como 28 no divide a 12, las dos rejillas "
+      "no encajan nunca: cada mansión cae a caballo entre grados de signos "
+      "distintos. Quien trabaje con las dos obtiene una lectura cruzada mucho más "
+      "fina que con una sola — y quien busque que coincidan perderá el tiempo, "
+      "porque no están hechas para coincidir."),
+    nota("Por qué este libro NO da la lista de nombres",
+         "Y conviene explicarlo, porque es lo primero que se echa en falta. Las "
+         "veintiocho mansiones tienen nombre en al menos tres tradiciones "
+         "—nakshatras indios, manāzil árabes y los nombres latinizados de los "
+         "manuscritos europeos— y las tres listas no coinciden: ni en las "
+         "estrellas que anclan cada mansión, ni en dónde empieza la primera, ni en "
+         "la transcripción de los nombres, que en los manuscritos latinos aparecen "
+         "deformados de mil maneras. Dar una lista como si fuera LA lista sería "
+         "inventar una autoridad que no existe. Se da la división, que sí es firme, "
+         "y se dice dónde está el desacuerdo."),
+    h("Lo que sí se puede usar hoy"),
+    p("La estructura, que es lo que de verdad sirve. Veintiocho tramos de casi "
+      "trece grados, recorridos por la Luna a razón de uno por noche, dan un "
+      "calendario de veintiocho jornadas que se repite trece veces al año. Es un "
+      "armazón temporal más fino que el mes y más grueso que el día."),
+    pasos(
+        "Empieza cualquier noche y numera veintiocho jornadas seguidas.",
+        "A cada jornada asígnale una sola cosa que observar. Una, no una lista.",
+        "Al cerrar las veintiocho, relee. Lo que aparece no es un patrón lunar: es "
+        "un patrón tuyo, visible porque lo has medido con una rejilla constante.",
+        "Vuelve a empezar. Trece veces al año, y al final tienes un año de "
+        "observación en tramos comparables entre sí.",
+    ),
+    nota("Y la honestidad de siempre",
+         "No hay evidencia de que la posición de la Luna respecto a las estrellas "
+         "influya en nada de lo que aquí se propone observar. El valor de las "
+         "veintiocho mansiones en este libro es el de cualquier rejilla regular: "
+         "permite comparar. Es exactamente el mismo valor que tiene una hoja de "
+         "cuaderno cuadriculada, y no es poco."),
+)
+
+C12 = cap(
+    "El zodiaco que se movió de sitio",
+    p("Este capítulo aborda la objeción más seria que se le puede hacer a la "
+      "astrología, la única que es puramente factual, y lo hace de frente porque "
+      "esquivarla sería deshonesto y porque la respuesta es más interesante que "
+      "la objeción."),
+    h("El hecho"),
+    p("La Tierra no gira sobre un eje fijo. Su eje describe un cono lentísimo, y "
+      "como consecuencia el punto donde el Sol cruza el ecuador celeste en "
+      "primavera —el punto vernal, el cero del zodiaco— se desplaza hacia atrás "
+      "sobre el círculo. El fenómeno se llama precesión de los equinoccios, lo "
+      "describió Hiparco de Nicea hacia el 130 antes de nuestra era, y sus cifras "
+      "son las siguientes."),
+    ficha("Los números, que no se discuten", [
+        ("Velocidad", "Unos 50,3 segundos de arco al año"),
+        ("Un grado", "Cada 71 años y medio, aproximadamente"),
+        ("Ciclo completo", "Unos 25 800 años"),
+        ("Desde Ptolomeo", "Unos 24 grados acumulados desde el siglo II"),
+        ("Consecuencia", "El signo de Aries ya no coincide con la constelación de "
+                         "Aries"),
+    ]),
+    fig("dia-precesion", "Lám. 10",
+        "Dos rejillas sobre el mismo círculo: fuera, los doce signos donde los "
+        "fijó la tradición; dentro, las constelaciones del mismo nombre, corridas "
+        "veinticuatro grados por la precesión. El hueco entre las dos es el dato "
+        "de este capítulo."),
+    h("Lo que esto significa, dicho sin rodeos"),
+    p("Que cuando alguien dice «soy Aries» no está diciendo que el Sol estuviera "
+      "delante de la constelación de Aries el día de su nacimiento. Estaba delante "
+      "de la de Piscis. El signo y la constelación comparten nombre y ya no "
+      "comparten sitio."),
+    h("Las dos respuestas que existen, y son las dos legítimas"),
+    ficha("Zodiaco tropical y zodiaco sidéreo", [
+        ("Tropical", "Cuenta desde el equinoccio de primavera, que es un hecho "
+                     "estacional. El 0° de Aries es «el día en que empieza la "
+                     "primavera», no «la constelación de Aries». Es el que usa la "
+                     "astrología occidental y el que usa este libro."),
+        ("Sidéreo", "Cuenta desde las estrellas y corrige la deriva. Es el que usa "
+                    "la astrología india, y es astronómicamente más literal. La "
+                    "diferencia entre los dos se llama ayanamsa y hoy vale unos "
+                    "24 grados."),
+    ]),
+    p("Que existan dos zodiacos incompatibles y que ambas tradiciones lleven "
+      "siglos funcionando con el suyo dice algo importante sobre qué clase de "
+      "sistema es este. Si midiera una influencia física de las estrellas, uno de "
+      "los dos tendría que estar equivocado y sería comprobable cuál. Como es un "
+      "sistema simbólico de clasificación, los dos funcionan igual de bien dentro "
+      "de sus propias reglas — y eso, más que una defensa, es una descripción."),
+    nota("La posición de este libro",
+         "Se usa el zodiaco tropical y se dice por qué: porque lo que este libro "
+         "hace con los doce signos es un calendario del temperamento anclado en "
+         "las estaciones, y el ciclo de las estaciones es real, comprobable y no "
+         "se ha movido de sitio. Aries es el impulso que rompe el invierno; eso "
+         "sigue ocurriendo cada marzo con independencia de qué estrellas haya "
+         "detrás. Si alguien te dice que la precesión «refuta» la astrología, ha "
+         "refutado una versión que ningún astrólogo serio sostiene desde "
+         "Ptolomeo — y si te dice que la precesión no importa, tampoco te está "
+         "diciendo la verdad."),
+    h("El bonus, que es lo que vale el capítulo"),
+    p("Los famosos «signos de los tiempos» —la era de Piscis, la era de Acuario— "
+      "salen exactamente de aquí. Como el punto vernal retrocede un signo cada "
+      "2 150 años aproximadamente (25 800 dividido entre 12), la constelación que "
+      "aloja el equinoccio de primavera cambia cada dos milenios. De ahí la era de "
+      "Aries, la de Piscis y la de Acuario. La aritmética es impecable; las fechas "
+      "exactas de los cambios no, porque las constelaciones no tienen fronteras "
+      "iguales y cada autor pone el límite donde le conviene. Cuando leas una "
+      "fecha muy precisa para el comienzo de la era de Acuario, sabes ya que "
+      "alguien ha elegido una frontera y no te lo ha dicho."),
+)
+
+C13 = cap(
+    "La secta: cartas de día y de noche",
+    p("Una última pieza recuperada, breve y de las que más cambian la lectura: la "
+      "doctrina de la secta, que la astrología helenística usaba en todo momento y "
+      "que la moderna abandonó casi por entero."),
+    h("La división"),
+    p("Los siete planetas se reparten en dos bandos. Uno diurno, encabezado por el "
+      "Sol; otro nocturno, encabezado por la Luna. Y la pertenencia importa porque "
+      "un planeta de la secta que coincide con la hora del nacimiento opera con "
+      "más soltura que el mismo planeta a contramano."),
+    ficha("Los dos bandos", [
+        ("Secta diurna", "Sol · Júpiter · Saturno"),
+        ("Secta nocturna", "Luna · Venus · Marte"),
+        ("Mercurio", "Sin secta propia: toma la del momento. Diurno si sale antes "
+                     "del Sol, nocturno si sale después."),
+        ("La regla", "Carta de día si el Sol está sobre el horizonte al nacer; de "
+                     "noche si está debajo."),
+    ]),
+    h("La parte que más rinde"),
+    p("Que Saturno sea diurno y Marte nocturno es, a primera vista, "
+      "contraintuitivo: se esperaría lo contrario del planeta del frío y del "
+      "planeta del calor. La tradición lo explica por compensación, y el argumento "
+      "es bueno: Saturno, que es seco y frío en exceso, se templa con el calor del "
+      "día; Marte, que es caliente y seco en exceso, se templa con la humedad de "
+      "la noche. Cada uno se coloca donde su exceso se corrige."),
+    p("Esa lógica de compensación es la misma que gobierna la sección «La mesa» de "
+      "los doce capítulos de signo, y no es casualidad: viene del mismo sitio. Todo "
+      "el sistema clásico está construido sobre la idea de que lo que sobra se "
+      "equilibra con lo que falta, y no sobre la de que lo semejante se atrae."),
+    nota("Cómo usarla sin calcular nada",
+         "Si sabes si naciste de día o de noche —y casi todo el mundo lo sabe—, ya "
+         "tienes tu secta. Los tres planetas de tu bando son las funciones que te "
+         "salen con menos esfuerzo; los del bando contrario, las que exigen "
+         "trabajo consciente. Cruza eso con los siete regentes del capítulo 3 y "
+         "tienes una lectura de tus facilidades y tus fricciones que no necesita "
+         "ninguna carta y que suele resultar incómodamente reconocible."),
 )
 
 
@@ -1927,6 +2224,8 @@ LIBRO = {
     "capitulos": [
         # I · Fundamentos
         C1, C2, C3, C4, C5, C6, C7, C8,
+        # I bis · Las tablas que se dejaron de imprimir
+        C9, C10, C11, C12, C13,
         # II · Los doce signos
         ARIES, TAURO, GEMINIS, CANCER, LEO, VIRGO,
         LIBRA, ESCORPIO, SAGITARIO, CAPRICORNIO, ACUARIO, PISCIS,

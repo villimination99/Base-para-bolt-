@@ -1355,6 +1355,183 @@ C22 = cap(
 )
 
 
+
+C23 = cap(
+    "La tabla completa de las horas planetarias",
+    p("El capítulo 11 explicó el sistema de horas y dio el reparto de los siete "
+      "días. Aquí va la tabla entera: ciento sesenta y ocho casillas, las "
+      "veinticuatro horas de cada uno de los siete días con su regente. No la he "
+      "encontrado impresa completa en ningún manual moderno, y es la pieza que "
+      "convierte el sistema de una curiosidad en una herramienta utilizable."),
+    fig("am-horas", "Lám. 7",
+        "Las 168 horas planetarias. Cada fila es un día; cada casilla, una hora "
+        "desde el amanecer. La línea vertical separa las doce horas de día de las "
+        "doce de noche. En destacado, las cuatro horas de cada día que pertenecen "
+        "al planeta que le da nombre."),
+    h("Cómo leerla"),
+    pasos(
+        "Localiza tu día en la columna de la izquierda.",
+        "Cuenta las horas desde el amanecer, no desde medianoche. La hora 1 empieza "
+        "cuando sale el Sol; la hora 13, cuando se pone.",
+        "Recuerda que no son horas de sesenta minutos. Divide la duración real del "
+        "día entre doce y la de la noche entre doce: en verano las diurnas son "
+        "largas y las nocturnas cortas, y al contrario en invierno. Solo coinciden "
+        "en los equinoccios.",
+        "Las casillas destacadas son las horas del regente del día. Son cuatro por "
+        "día —la 1, la 8, la 15 y la 22— y son el momento clásico para la "
+        "operación de ese planeta.",
+    ),
+    nota("El dato que la tabla demuestra sola",
+         "Mira la primera casilla de cada fila y luego cuenta veinticuatro. La "
+         "casilla veinticinco —que es la primera del día siguiente— cae siempre en "
+         "el regente del día siguiente. Domingo empieza en el Sol, su hora 24 es "
+         "Mercurio, y la 25 es la Luna: lunes. Esa es toda la explicación del "
+         "orden de la semana, y la tabla la contiene sin necesidad de "
+         "argumentarla. El generador de esta lámina comprueba precisamente eso "
+         "antes de dibujarla: si la hora 25 no cayera donde tiene que caer, se "
+         "negaría a escribir el fichero."),
+    h("Por qué las cuatro horas propias están donde están"),
+    p("Porque siete no divide a veinticuatro. Si el ciclo caldeo tiene siete "
+      "puestos y el día tiene veinticuatro horas, el regente del día vuelve a "
+      "tocar en la hora 1, la 8, la 15 y la 22 —de siete en siete—, y la 24 cae "
+      "siempre dos puestos antes de cerrar la vuelta. Toda la irregularidad "
+      "aparente del sistema viene de ese resto de tres, y una vez visto ya no se "
+      "olvida."),
+    ficha("Las cuatro horas propias de cada día", [
+        ("Hora 1", "Al amanecer. La más usada de las cuatro y la más fácil de "
+                   "situar sin cálculo."),
+        ("Hora 8", "Media mañana o mediodía según la estación."),
+        ("Hora 15", "Ya de noche: la tercera hora tras el atardecer."),
+        ("Hora 22", "Noche cerrada. La que la tradición reserva para el trabajo "
+                    "largo."),
+    ]),
+    nota("Y la honestidad de este capítulo",
+         "Ninguna de estas horas tiene propiedad alguna. Lo que tiene es "
+         "estructura: un reparto fijo, público y verificable que permite decidir "
+         "cuándo se hace qué sin volver a decidirlo cada semana. Ese es el valor, "
+         "y por eso este libro da la tabla completa en vez de insinuar que hay "
+         "algo más."),
+)
+
+C24 = cap(
+    "Las veintidós letras y sus números",
+    p("El sistema occidental hereda de la cábala un alfabeto de veintidós letras "
+      "que son a la vez signos, números y categorías. Es la pieza que permite pasar "
+      "de una palabra a un número y de un número a un trazo sobre el cuadrado "
+      "planetario, y sin ella el capítulo de los kameas queda a medias."),
+    fig("am-alfabeto", "Lám. 8",
+        "Las veintidós letras con su valor numérico y su correspondencia según el "
+        "reparto tres-siete-doce. En amarillo las tres madres, en naranja las "
+        "siete dobles y en gris las doce simples."),
+    h("El reparto tres, siete y doce"),
+    p("El «Sefer Yetsirá» —un texto brevísimo, de fecha discutida y en cualquier "
+      "caso muy anterior al año 1000— divide las veintidós letras en tres grupos, "
+      "y la división es de una economía notable: tres madres para los tres "
+      "elementos que no son la tierra, siete dobles para los siete planetas y doce "
+      "simples para los doce signos. Tres, siete y doce: exactamente las tres "
+      "cifras sobre las que está construido todo lo demás en este libro."),
+    ficha("Los tres grupos", [
+        ("Tres madres", "Álef, Mem y Shin · Aire, Agua y Fuego. La tierra no "
+                        "recibe letra: en este esquema es lo que resulta de las "
+                        "otras tres, no un cuarto elemento."),
+        ("Siete dobles", "Bet, Guímel, Dálet, Kaf, Pe, Resh y Tav · los siete "
+                         "planetas. Se llaman dobles porque en hebreo admiten dos "
+                         "pronunciaciones, una dura y una suave."),
+        ("Doce simples", "Las doce restantes · los doce signos, en el orden de la "
+                         "rueda, de He para Aries a Qof para Piscis."),
+    ]),
+    h("Los números"),
+    p("Cada letra vale un número, y la serie es de una regularidad total: las nueve "
+      "primeras van del uno al nueve, las nueve siguientes de diez en diez hasta "
+      "el noventa, y las cuatro últimas de cien en cien hasta el cuatrocientos. "
+      "Nueve unidades, nueve decenas, cuatro centenas: veintidós letras que cubren "
+      "todo el sistema de numeración."),
+    p("La suma de los veintidós valores es 1 495. Es un dato comprobable con una "
+      "calculadora y sirve como verificación: si copias la tabla a tu diario y no "
+      "te sale esa cifra, has copiado mal alguna fila."),
+    h("Para qué sirve, en concreto"),
+    pasos(
+        "Escribe la palabra o el nombre de tu operación en letras hebreas "
+        "transliteradas, o simplemente asigna a cada letra de tu alfabeto el "
+        "valor de la letra hebrea equivalente. Lo segundo es menos ortodoxo y "
+        "perfectamente utilizable.",
+        "Suma los valores. Obtienes un número.",
+        "Reduce ese número al rango del cuadrado del planeta con el que trabajas: "
+        "si el cuadrado es de 3×3, los números van del 1 al 9; si es de 9×9, del "
+        "1 al 81.",
+        "Traza sobre el cuadrado la línea que une, en orden, los números de cada "
+        "letra. Ese trazo es el sigilo de tu operación.",
+    ),
+    nota("Lo que este procedimiento es y lo que no",
+         "Es una técnica de condensación: convierte una intención larga en un "
+         "trazo corto que se puede mirar de un golpe. Funciona como ancla de "
+         "memoria, y ya se dijo en el capítulo 9. Lo que no es: un procedimiento "
+         "para obtener nombres verdaderos de nada, ni un sistema de "
+         "correspondencias con valor demostrado. La gematría es un juego "
+         "combinatorio muy antiguo y muy fértil, y tratado como juego rinde; "
+         "tratado como prueba, no."),
+)
+
+C25 = cap(
+    "Las escalas de los números",
+    p("Cierro la parte de instrumentos con la tabla más ambiciosa de la tradición "
+      "renacentista: la que ordena TODO por número. Agrippa la publicó en 1533 y "
+      "es, en el fondo, la idea que sostiene el sistema entero — que las mismas "
+      "cifras se repiten en todos los planos, y que reconocer la cifra es "
+      "reconocer el plano."),
+    h("La escala del uno al cuatro"),
+    ficha("Las primeras cuatro", [
+        ("Uno", "Lo indivisible. El punto, el centro del círculo, el operante. En "
+                "la práctica: la intención única de cada sesión."),
+        ("Dos", "La primera división y la primera tensión. La línea, el eje, lo "
+                "diurno y lo nocturno, invocar y despedir."),
+        ("Tres", "Lo que resuelve el dos. El triángulo, las tres madres, los tres "
+                 "grupos del alfabeto. En la práctica: los tres movimientos de "
+                 "cualquier rito —abrir, trabajar, cerrar—."),
+        ("Cuatro", "La forma estable. El cuadrado, los cuatro cuartos, los cuatro "
+                   "elementos, las cuatro armas, las cuatro semanas. Es el número "
+                   "de este libro en casi todo lo práctico."),
+    ]),
+    h("Del cinco al siete"),
+    ficha("Las tres siguientes", [
+        ("Cinco", "El pentagrama: los cuatro elementos más quien los observa. El "
+                  "número del capítulo 6 y del rito diario."),
+        ("Seis", "El hexagrama y el equilibrio de contrarios: dos triángulos "
+                 "entrelazados, seis puntas alrededor de un centro."),
+        ("Siete", "Los planetas, los días, los metales, los cuadrados, el orden "
+                  "caldeo. El número que estructura el tiempo en todo el sistema."),
+    ]),
+    h("Del ocho al doce"),
+    ficha("Las últimas cinco", [
+        ("Ocho", "Las fases de la Luna y el cuadrado de Mercurio. El número del "
+                 "ciclo que se repite."),
+        ("Nueve", "El cuadrado de la Luna y las nueve esferas de la cosmología "
+                  "antigua. Tres veces tres: la forma cerrada."),
+        ("Diez", "Las diez sefirot del árbol y el sistema decimal. El número de la "
+                 "escala completa, de la abstracción al cuerpo."),
+        ("Once", "El número sin sitio. No tiene figura, ni planeta, ni grupo. La "
+                 "tradición lo trata como exceso del diez y defecto del doce, y "
+                 "conviene fijarse en que la tabla tenga un hueco reconocido."),
+        ("Doce", "Los signos, los meses, las horas de cada mitad del día, las "
+                 "veinticuatro divisiones del ciclo. El número del año."),
+    ]),
+    nota("Cómo NO usar esta tabla",
+         "Buscando en ella una explicación de por qué las cosas son como son. La "
+         "escala de los números es una mnemotecnia magnífica y no es una física. "
+         "Que el cuatro aparezca en los elementos, en los cuartos, en las armas y "
+         "en las semanas no demuestra que haya una cuaternidad en la naturaleza: "
+         "demuestra que quien construyó el sistema tenía criterio y lo aplicó de "
+         "forma consistente. Reconocer eso no le quita valor al sistema; le quita "
+         "la superstición, que es lo único que le sobraba."),
+    h("Y para qué sirve de verdad"),
+    p("Para navegar. Cuando en cualquier tratado clásico encuentres una lista de "
+      "siete, ya sabes que estás en el registro planetario y del tiempo; una de "
+      "cuatro, en el de los elementos y la forma; una de doce, en el del año. La "
+      "escala convierte una biblioteca dispersa en un catálogo con signatura, y en "
+      "eso —y solo en eso— es una herramienta de primer orden."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-invocaciones",
@@ -1372,7 +1549,7 @@ LIBRO = {
         # I · Antes de empezar
         C1, C2, C3,
         # II · Los instrumentos
-        C4, C5, C6, C7, C8, C9, C10,
+        C4, C5, C6, C7, C8, C9, C10, C23, C24, C25,
         # III · Las operaciones
         C11, C12, C13, C14, C15, C16, C17,
         # IV · El oficio sostenido

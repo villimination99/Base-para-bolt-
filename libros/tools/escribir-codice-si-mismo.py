@@ -1175,6 +1175,189 @@ C22 = cap(
 )
 
 
+
+C23 = cap(
+    "Las tres disciplinas",
+    p("Epicteto no enseñaba una lista de consejos. Tenía una estructura, la repetía "
+      "constantemente y es lo primero que se pierde cuando se le cita en frases "
+      "sueltas. Son tres campos de entrenamiento, en un orden que no es "
+      "intercambiable."),
+    fig("sm-disciplinas", "Lám. 7",
+        "Los tres campos con su término griego. El orden importa: cada uno se "
+        "apoya en el anterior."),
+    h("Primera · el deseo"),
+    p("El campo de lo que quiero y de lo que rechazo. Es donde se aplica la "
+      "distinción del capítulo 15: aprender a no querer lo que no depende de mí, y "
+      "a no rechazar lo que va a ocurrir de todos modos. Epicteto la pone primera "
+      "por una razón práctica muy clara — mientras el deseo esté puesto en lo que "
+      "no controlas, todo lo demás es imposible, porque vives en estado de "
+      "reclamación permanente."),
+    p("Es también la más difícil de las tres y la que produce el malentendido más "
+      "frecuente: no se trata de dejar de querer cosas. Se trata de dejar de "
+      "condicionar el estado propio a que ocurran."),
+    h("Segunda · la acción"),
+    p("El campo de lo que hago y de cómo me comporto con los demás. Aquí entra "
+      "todo lo que hoy llamaríamos ética práctica: cumplir lo que se dice, tratar "
+      "bien a quien depende de ti, hacer el trabajo que te toca. Y entra con una "
+      "condición que es la que la vuelve robusta: se hace bien con independencia "
+      "del resultado y con independencia de que el otro corresponda."),
+    p("Va segunda porque hasta que el deseo no está ordenado, la conducta con los "
+      "demás es un instrumento de negociación: se trata bien a quien puede darte "
+      "algo. Ordenado el primer campo, la conducta deja de ser transaccional."),
+    h("Tercera · el asentimiento"),
+    p("El campo más fino y el que más se parece a lo que este libro entero "
+      "practica: a qué impresiones le doy la razón. Ante cualquier cosa que pasa "
+      "aparece una impresión —una lectura automática, un «esto es malo», un «me "
+      "están faltando al respeto»— y hay un instante, brevísimo, en el que se le "
+      "concede o no el asentimiento."),
+    p("Ese instante es exactamente la pausa del capítulo 6. Que Epicteto lo situara "
+      "en el tercer lugar, como disciplina avanzada, es una advertencia útil: "
+      "examinar impresiones es un trabajo fino que requiere el deseo ya bastante "
+      "ordenado. Quien empieza por aquí acaba examinando impresiones para tener "
+      "razón, que es el uso contrario."),
+    ficha("Los tres campos en una línea cada uno", [
+        ("Deseo · órexis", "No querer lo que no depende de mí"),
+        ("Acción · hormé", "Hacer bien lo que me toca, pase lo que pase"),
+        ("Asentimiento · sunkatáthesis", "No dar por buena la primera impresión"),
+    ]),
+    nota("La utilidad de saber en qué campo estás",
+         "Cuando una dificultad se resiste, casi siempre es porque se está "
+         "trabajando en el campo equivocado. Si te desespera el comportamiento de "
+         "alguien, no es un problema de asentimiento: es de deseo, porque estás "
+         "queriendo que ese alguien sea distinto. Si te cuesta cumplir lo que "
+         "prometes, no es de deseo: es de acción. Localizar el campo ahorra meses."),
+)
+
+C24 = cap(
+    "El mapa del Manual",
+    p("El «Manual» de Epicteto —Enquiridión, «lo que se lleva en la mano»— son "
+      "cincuenta y tres capítulos brevísimos que su discípulo Arriano extrajo de "
+      "las clases. Cabe en veinte páginas, está en dominio público desde siempre y "
+      "sigue siendo el mejor manual práctico que existe. Lo que sigue es un mapa "
+      "para poder ir directo a lo que necesites, con el contenido de cada tramo "
+      "dicho en mis palabras y no en las suyas."),
+    ficha("Capítulos 1 al 10 · los cimientos", [
+        ("1", "La distinción entre lo que depende de nosotros y lo que no. Es el "
+              "capítulo del que sale todo el resto y el único imprescindible."),
+        ("2", "Qué hacer con el deseo y con el rechazo una vez hecha la "
+              "distinción."),
+        ("3", "El recordatorio incómodo: todo lo que amas es prestado. No es "
+              "pesimismo, es inventario."),
+        ("4", "Anticipar el estorbo antes de empezar algo, para que cuando llegue "
+              "no descoloque."),
+        ("5", "«No nos perturban las cosas, sino nuestras opiniones sobre ellas.» "
+              "La frase más citada del libro y la más maltratada."),
+        ("6–7", "No presumir de lo que no es tuyo. Y la imagen del barco: se baja "
+                "a coger conchas, y se vuelve cuando llaman."),
+        ("8–10", "Querer que las cosas sean como son. Y la pregunta de qué "
+                 "capacidad tienes disponible para cada dificultad."),
+    ]),
+    ficha("Capítulos 11 al 29 · la práctica", [
+        ("11", "Nada se pierde: se devuelve. Cambia el verbo y cambia la "
+                "experiencia."),
+        ("12–13", "El precio de la tranquilidad, y por qué conviene parecer torpe "
+                  "un tiempo mientras se aprende."),
+        ("14–18", "No exigir que los demás sean de otra forma. Y el aviso contra "
+                  "la superstición, que en Epicteto es explícito."),
+        ("17", "Eres actor en una obra cuyo papel no elegiste. Lo que sí eliges "
+               "es interpretarlo bien."),
+        ("20–21", "Nadie te ofende: eres tú quien acepta la ofensa. Y tener la "
+                  "muerte a la vista, no para angustiarse sino para ordenar "
+                  "prioridades."),
+        ("22–25", "Lo que cuesta la disciplina en reputación y en compañía. Es el "
+                  "tramo más honesto del libro y el que menos se cita."),
+        ("26–29", "Aplicar a lo propio el criterio que aplicas a lo ajeno. Y el "
+                  "capítulo 29, el más largo: no empieces nada sin haber mirado el "
+                  "precio entero."),
+    ]),
+    ficha("Capítulos 30 al 53 · el trato y el cierre", [
+        ("30–33", "Los deberes según el papel que ocupas. Y el 33, que es un "
+                  "código de conducta completo: hablar poco, no jurar, evitar el "
+                  "espectáculo, comer con medida."),
+        ("34–36", "Sobre el placer: examinarlo antes y después. Es el tramo que "
+                  "más se parece a lo que hoy llamaríamos trabajo con impulsos."),
+        ("37–41", "No aceptar un papel que te queda grande. Y no dedicar al cuerpo "
+                  "más tiempo del necesario, que en Epicteto es una advertencia "
+                  "contra la vanidad y no contra el cuidado."),
+        ("42–45", "Cuando alguien te trata mal, obra según lo que le parece "
+                  "correcto a él. Y no juzgues por lo que ves: no tienes los "
+                  "datos."),
+        ("46–48", "No hables de filosofía: practícala y que se note en los actos. "
+                  "El aviso más útil para cualquiera que lea libros como este."),
+        ("49–53", "Lo que importa no es interpretar los textos, es aplicarlos. Y "
+                  "el cierre, con las cuatro citas que Epicteto pedía tener "
+                  "siempre a mano."),
+    ]),
+    nota("Cómo usar este mapa",
+         "No leas el Manual de corrido esperando que te transforme: son notas de "
+         "clase y se notan. Úsalo como se usa un manual: cuando tengas un problema "
+         "concreto, busca el tramo. Si te desespera alguien, capítulos 14 y 42. Si "
+         "no consigues empezar algo, el 29. Si te han ofendido, el 20. Si te sobra "
+         "vanidad, el 46. Está en dominio público en cualquier idioma y en "
+         "cualquier formato: no hay excusa para no tenerlo a mano."),
+    nota("Y una advertencia sobre las traducciones",
+         "Hay traducciones antiguas de dominio público, hechas en un castellano "
+         "que hoy cuesta, y traducciones modernas mucho más legibles pero con "
+         "derechos. Ninguna es neutral: el vocabulario estoico —prohaíresis, "
+         "hormé, oikeíosis— no tiene equivalente limpio en castellano y cada "
+         "traductor decide. Si algo te suena raro, casi siempre es una decisión "
+         "del traductor y no de Epicteto."),
+)
+
+C25 = cap(
+    "La vista desde arriba",
+    p("Un último ejercicio, documentado en Marco Aurelio y practicado por los "
+      "estoicos como técnica formal. Es el más rápido de todos los de este libro y "
+      "el que produce el cambio de perspectiva más brusco."),
+    h("El ejercicio"),
+    pasos(
+        "Cierra los ojos y sitúate en la habitación donde estás. Sin adornos: la "
+        "habitación tal cual.",
+        "Sube. Mira el edificio desde encima, con tu habitación dentro y las demás "
+        "alrededor, cada una con alguien haciendo algo.",
+        "Sigue subiendo. El barrio, la ciudad entera, con toda la gente que en "
+        "este momento está discutiendo, durmiendo, naciendo y muriendo a la vez.",
+        "Sigue. El país, el continente, el planeta entero visto desde fuera, con "
+        "su noche y su día simultáneos.",
+        "Ahora añade el tiempo: la misma vista hace mil años, y dentro de mil. Las "
+        "mismas ciudades con otros nombres y otra gente haciendo exactamente lo "
+        "mismo.",
+        "Vuelve. Baja hasta tu habitación y abre los ojos. Dos minutos en total.",
+    ),
+    h("Qué hace"),
+    p("Reduce la escala del propio asunto, y lo hace por una vía que el "
+      "razonamiento no consigue. Decirse «esto no es tan importante» no funciona "
+      "porque es una afirmación y se puede discutir. Ver la escala sí funciona, "
+      "porque no argumenta nada: solo cambia el punto desde el que se mira."),
+    p("Marco Aurelio vuelve a esta operación una y otra vez en sus notas, y "
+      "siempre en el mismo contexto: cuando está molesto con alguien de su corte o "
+      "abrumado por un asunto de gobierno. Que el hombre más poderoso del "
+      "Mediterráneo necesitara recordarse el tamaño real de sus problemas es, "
+      "probablemente, el mejor argumento a favor del ejercicio."),
+    ficha("Cuándo usarlo", [
+        ("Sirve muy bien", "Para la ofensa reciente, la discusión que no se te va "
+                           "de la cabeza y la preocupación por lo que otros "
+                           "piensen de ti."),
+        ("Sirve regular", "Para una decisión práctica que hay que tomar: reducir "
+                          "la escala no ayuda a elegir."),
+        ("No sirve", "Para una pérdida real. Ahí empequeñecer el asunto es faltar "
+                     "al respeto a lo perdido, y el capítulo 18 ya explicó por "
+                     "qué no todo dolor es un error de perspectiva."),
+    ]),
+    nota("El malentendido que hay que evitar",
+         "La vista desde arriba no dice que nada importe. Dice que casi nada "
+         "importa TANTO como parece desde dentro, que es una afirmación distinta y "
+         "mucho más defendible. Si el ejercicio te deja indiferente ante lo que "
+         "deberías atender, lo has hecho de más: el objetivo es recuperar la "
+         "proporción, no perder el interés."),
+    sep(),
+    p("Y con esto se cierra el repertorio. Seis instrumentos, siete láminas, un "
+      "cuaderno y un año. No hay nada más, y quien practique la mitad de lo que "
+      "aquí se propone durante doce meses habrá hecho más trabajo sobre sí mismo "
+      "que la mayoría de la gente en una vida entera."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-si-mismo",
@@ -1193,6 +1376,7 @@ LIBRO = {
         C4, C5, C6, C7,                      # II · Los instrumentos
         C8, C9, C10, C11, C12, C13, C14, C15,  # III · La práctica
         C16, C17, C18, C19,                  # IV · Lo que aparece
+        C23, C24, C25,                       # IV bis · La estructura estoica
         C20, C21, C22,                       # V · Sostenerlo
     ],
 }

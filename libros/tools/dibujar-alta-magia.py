@@ -35,6 +35,20 @@ SIGILOS = {           # los mismos trazos que en el Códice Zodiacal
                 'C137 90 108 82 96 102', None),
 }
 
+# Orden caldeo: del más lento al más rápido en su recorrido aparente. Manda en
+# el reparto de las horas planetarias y de los decanatos.
+CALDEO = ["saturno", "jupiter", "marte", "sol", "venus", "mercurio", "luna"]
+
+PLANETAS = {                 # nombre y metal
+    "saturno":  ("Saturno",  "Plomo"),
+    "jupiter":  ("Júpiter",  "Estaño"),
+    "marte":    ("Marte",    "Hierro"),
+    "sol":      ("Sol",      "Oro"),
+    "venus":    ("Venus",    "Cobre"),
+    "mercurio": ("Mercurio", "Azogue"),
+    "luna":     ("Luna",     "Plata"),
+}
+
 ELEMENTO_MARCA = {
     "fuego":  "M0 16 L12 -6 L24 16 Z",
     "aire":   "M0 16 L12 -6 L24 16 Z M4.5 7 H19.5",
@@ -438,9 +452,162 @@ def lamina_kameas():
     return "".join(p)
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA · LA TABLA COMPLETA DE LAS HORAS PLANETARIAS
+# ══════════════════════════════════════════════════════════════════════
+DIAS = [("Domingo", "sol"), ("Lunes", "luna"), ("Martes", "marte"),
+        ("Miércoles", "mercurio"), ("Jueves", "jupiter"), ("Viernes", "venus"),
+        ("Sábado", "saturno")]
+
+# Iniciales para la rejilla. Se usan letras y no sigilos porque ciento sesenta
+# y ocho sigilos a este tamaño serían una mancha; el sigilo se reserva para la
+# columna del regente del día, que es donde se lee.
+INICIAL = {"saturno": "♄", "jupiter": "♃", "marte": "♂", "sol": "☉",
+           "venus": "♀", "mercurio": "☿", "luna": "☾"}
+LETRA = {"saturno": "SA", "jupiter": "JU", "marte": "MA", "sol": "SO",
+         "venus": "VE", "mercurio": "ME", "luna": "LU"}
+
+
+def horas_del_dia(regente):
+    """Las veinticuatro horas de un día, en orden caldeo descendente desde su
+    propio regente. La hora 1 es siempre la del planeta que da nombre al día."""
+    i = CALDEO.index(regente)
+    return [CALDEO[(i + k) % 7] for k in range(24)]
+
+
+def comprobar_horas():
+    """La prueba de que el reparto explica la semana: la hora 25 —la primera
+    del día siguiente— tiene que caer en el regente del día siguiente. Si esto
+    falla, el capítulo entero del libro es falso y el generador no escribe."""
+    for k, (nombre, regente) in enumerate(DIAS):
+        siguiente = DIAS[(k + 1) % 7]
+        i = CALDEO.index(regente)
+        hora25 = CALDEO[(i + 24) % 7]
+        if hora25 != siguiente[1]:
+            raise SystemExit(
+                f"{nombre}: la hora 25 cae en {hora25} y debería caer en "
+                f"{siguiente[1]} ({siguiente[0]})")
+    return True
+
+
+def lamina_horas():
+    FILA, X0, CELDA = 42, 92, 15.2
+    ALTO = 46 + 7 * FILA + 16
+    p = [f'<symbol id="am-horas" viewBox="0 0 464 {ALTO}">']
+    # cabecera de horas
+    for h in range(24):
+        x = X0 + h * CELDA + CELDA / 2
+        if (h + 1) % 3 == 0 or h == 0:
+            p.append(txt(x, 16, str(h + 1), "num", 7.4, PLATA))
+    p.append(txt(X0 + 12 * CELDA, 32, "HORA DEL DÍA · 1 AL AMANECER · 13 AL ATARDECER",
+                 "rot", 7, ORO))
+    p.append(f'<path d="M{f(X0)} 38 H{f(X0 + 24 * CELDA)}" fill="none" '
+             f'stroke="{ORO}" stroke-width=".9" opacity=".45"/>')
+    for k, (nombre, regente) in enumerate(DIAS):
+        y = 46 + k * FILA
+        p.append(sigilo(regente, 6, y + 6, 26))
+        p.append(txt(38, y + 16, nombre, "et", 11, ORO, "start"))
+        p.append(txt(38, y + 29, PLANETAS[regente][0], "et", 10, PLATA, "start"))
+        for h, planeta in enumerate(horas_del_dia(regente)):
+            x = X0 + h * CELDA
+            noche = h >= 12
+            # La hora que coincide con el regente del día se resalta: son las
+            # cuatro veces al día en que «manda» el planeta del día.
+            propia = planeta == regente
+            p.append(f'<rect x="{f(x)}" y="{f(y + 4)}" width="{f(CELDA - 1)}" '
+                     f'height="30" rx="2" fill="{ORO}" '
+                     f'opacity="{.22 if propia else (.05 if noche else .09)}"/>')
+            p.append(txt(x + CELDA / 2 - .5, y + 15, LETRA[planeta][0], "rot", 8,
+                         ORO if propia else PLATA))
+            p.append(txt(x + CELDA / 2 - .5, y + 27, LETRA[planeta][1], "rot", 8,
+                         ORO if propia else PLATA))
+        # separación entre día y noche
+        p.append(f'<path d="M{f(X0 + 12 * CELDA - .5)} {f(y + 2)} '
+                 f'V{f(y + 36)}" fill="none" stroke="{ORO}" stroke-width="1.2" '
+                 'opacity=".6"/>')
+    p.append(txt(232, ALTO - 4,
+                 "24 ÷ 7 = 3 Y SOBRAN 3 · POR ESO LA SEMANA VA DE TRES EN TRES",
+                 "rot", 7.6, PLATA))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA · LAS VEINTIDÓS LETRAS Y SUS NÚMEROS
+# ══════════════════════════════════════════════════════════════════════
+# Reparto del Sefer Yetsirá: tres madres para los elementos, siete dobles para
+# los planetas y doce simples para los signos. Los valores son los del alfabeto
+# hebreo y su suma es un dato comprobable.
+LETRAS = [
+    ("Álef", 1, "madre", "Aire"),        ("Bet", 2, "doble", "Saturno"),
+    ("Guímel", 3, "doble", "Júpiter"),   ("Dálet", 4, "doble", "Marte"),
+    ("He", 5, "simple", "Aries"),        ("Vav", 6, "simple", "Tauro"),
+    ("Zayin", 7, "simple", "Géminis"),   ("Jet", 8, "simple", "Cáncer"),
+    ("Tet", 9, "simple", "Leo"),         ("Yod", 10, "simple", "Virgo"),
+    ("Kaf", 20, "doble", "Sol"),         ("Lámed", 30, "simple", "Libra"),
+    ("Mem", 40, "madre", "Agua"),        ("Nun", 50, "simple", "Escorpio"),
+    ("Sámej", 60, "simple", "Sagitario"), ("Ayin", 70, "simple", "Capricornio"),
+    ("Pe", 80, "doble", "Venus"),        ("Tsade", 90, "simple", "Acuario"),
+    ("Qof", 100, "simple", "Piscis"),    ("Resh", 200, "doble", "Mercurio"),
+    ("Shin", 300, "madre", "Fuego"),     ("Tav", 400, "doble", "Luna"),
+]
+
+TONO = {"madre": ORO, "doble": "#ff9d5c", "simple": PLATA}
+
+
+def comprobar_letras():
+    if len(LETRAS) != 22:
+        raise SystemExit(f"El alfabeto tiene {len(LETRAS)} letras, no 22")
+    cuenta = {"madre": 0, "doble": 0, "simple": 0}
+    for _, _, clase, _ in LETRAS:
+        cuenta[clase] += 1
+    if cuenta != {"madre": 3, "doble": 7, "simple": 12}:
+        raise SystemExit(f"El reparto 3-7-12 no cuadra: {cuenta}")
+    total = sum(v for _, v, _, _ in LETRAS)
+    if total != 1495:
+        raise SystemExit(f"Los valores suman {total} y deberían sumar 1495")
+    return True
+
+
+def lamina_alfabeto():
+    FILA, COL = 30, 232
+    ALTO = 40 + 11 * FILA + 36
+    p = [f'<symbol id="am-alfabeto" viewBox="0 0 464 {ALTO}">']
+    for c in range(2):
+        x = 8 + c * COL
+        p.append(txt(x + 4, 18, "LETRA", "rot", 7.4, ORO, "start"))
+        p.append(txt(x + 78, 18, "VALOR", "rot", 7.4, ORO, "end"))
+        p.append(txt(x + 90, 18, "LE CORRESPONDE", "rot", 7.4, ORO, "start"))
+        p.append(f'<path d="M{x} 24 H{x + 214}" fill="none" stroke="{ORO}" '
+                 'stroke-width=".8" opacity=".45"/>')
+    for i, (nombre, valor, clase, corresp) in enumerate(LETRAS):
+        c, fila = i // 11, i % 11
+        x = 8 + c * COL
+        y = 40 + fila * FILA
+        col = TONO[clase]
+        p.append(f'<rect x="{x}" y="{f(y - 12)}" width="214" height="26" rx="4" '
+                 f'fill="{col}" opacity=".06"/>')
+        p.append(f'<circle cx="{x + 8}" cy="{f(y + 1)}" r="3" fill="{col}"/>')
+        p.append(txt(x + 18, y + 5, nombre, "et", 11.5, col, "start"))
+        p.append(txt(x + 78, y + 5, str(valor), "num", 10.5, PLATA, "end"))
+        p.append(txt(x + 90, y + 5, corresp, "et", 11, PLATA, "start"))
+    leyenda = [("madre", "3 madres · elementos"), ("doble", "7 dobles · planetas"),
+               ("simple", "12 simples · signos")]
+    for k, (clase, etq) in enumerate(leyenda):
+        x = 20 + k * 150
+        p.append(f'<circle cx="{x}" cy="{ALTO - 26}" r="3.4" fill="{TONO[clase]}"/>')
+        p.append(txt(x + 10, ALTO - 22, etq, "rot", 7.4, TONO[clase], "start"))
+    p.append(txt(232, ALTO - 4, "LOS VEINTIDÓS VALORES SUMAN 1 495", "rot", 7.6, PLATA))
+    p.append("</symbol>")
+    return "".join(p)
+
+
 # ══════════════════════════════════════════════════════════════════════
 def main():
     comprobar()
+    comprobar_horas()
+    comprobar_letras()
     piezas = [
         '<svg xmlns="http://www.w3.org/2000/svg" '
         'style="position:absolute;width:0;height:0;overflow:hidden" '
@@ -465,11 +632,13 @@ def main():
         lamina_circulo(),
         lamina_armas(),
         lamina_kameas(),
+        lamina_horas(),
+        lamina_alfabeto(),
         "</svg>",
     ]
     DESTINO.write_text("\n".join(piezas) + "\n")
-    print(f"  {DESTINO.relative_to(RAIZ)}: 6 láminas · "
-          f"cuadrados del 3 al 9 comprobados · "
+    print(f"  {DESTINO.relative_to(RAIZ)}: 8 láminas · "
+          f"cuadrados, horas y alfabeto comprobados · "
           f"{DESTINO.stat().st_size / 1024:.0f} KB")
 
 

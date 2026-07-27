@@ -554,8 +554,198 @@ def lamina_aspectos():
     return "".join(p)
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  DATOS CLÁSICOS · tablas de tradición común, verificables
+# ══════════════════════════════════════════════════════════════════════
+# Las dignidades esenciales tal como las fija el Tetrabiblos (siglo II).
+# El exilio es siempre el regente del signo opuesto y la caída es el opuesto
+# de la exaltación: las dos columnas se DEDUCEN, y por eso aquí se calculan en
+# vez de teclearse. Una tabla copiada a mano se desincroniza; una deducida, no.
+EXALTACIONES = {                    # signo: (planeta, grado)
+    "aries": ("sol", 19), "tauro": ("luna", 3), "cancer": ("jupiter", 15),
+    "virgo": ("mercurio", 15), "libra": ("saturno", 21),
+    "capricornio": ("marte", 28), "piscis": ("venus", 27),
+}
+
+# Términos egipcios: cinco tramos por signo que suman treinta grados justos.
+# Es la tabla más olvidada del sistema clásico y la que mejor se comprueba:
+# si una fila no suma 30, está mal.
+TERMINOS = {
+    "aries":       [("jupiter", 6), ("venus", 6), ("mercurio", 8), ("marte", 5), ("saturno", 5)],
+    "tauro":       [("venus", 8), ("mercurio", 6), ("jupiter", 8), ("saturno", 5), ("marte", 3)],
+    "geminis":     [("mercurio", 6), ("jupiter", 6), ("venus", 5), ("marte", 7), ("saturno", 6)],
+    "cancer":      [("marte", 7), ("venus", 6), ("mercurio", 6), ("jupiter", 7), ("saturno", 4)],
+    "leo":         [("jupiter", 6), ("venus", 5), ("saturno", 7), ("mercurio", 6), ("marte", 6)],
+    "virgo":       [("mercurio", 7), ("venus", 10), ("jupiter", 4), ("marte", 7), ("saturno", 2)],
+    "libra":       [("saturno", 6), ("mercurio", 8), ("jupiter", 7), ("venus", 7), ("marte", 2)],
+    "escorpio":    [("marte", 7), ("venus", 4), ("mercurio", 8), ("jupiter", 5), ("saturno", 6)],
+    "sagitario":   [("jupiter", 12), ("venus", 5), ("mercurio", 4), ("saturno", 5), ("marte", 4)],
+    "capricornio": [("mercurio", 7), ("jupiter", 7), ("venus", 8), ("saturno", 4), ("marte", 4)],
+    "acuario":     [("mercurio", 7), ("venus", 6), ("jupiter", 7), ("marte", 5), ("saturno", 5)],
+    "piscis":      [("venus", 12), ("jupiter", 4), ("mercurio", 3), ("marte", 9), ("saturno", 2)],
+}
+
+OPUESTO = {s[0]: SIGNOS[(i + 6) % 12][0] for i, s in enumerate(SIGNOS)}
+REGENTE = {s[0]: s[5] for s in SIGNOS}
+
+
+def dignidades(clave):
+    """Domicilio, exaltación, exilio y caída de un signo.
+
+    Solo el domicilio y la exaltación son datos; el exilio y la caída se
+    deducen y se calculan aquí para que no puedan contradecirlos.
+    """
+    dom = REGENTE[clave]
+    exilio = REGENTE[OPUESTO[clave]]
+    exalt = EXALTACIONES.get(clave)
+    caida = next(((p, g) for s, (p, g) in EXALTACIONES.items()
+                  if OPUESTO[s] == clave), None)
+    return dom, exalt, exilio, caida
+
+
+def comprobar_datos():
+    """Los términos tienen que sumar treinta por signo y usar los cinco
+    planetas sin repetir. Si algo no cuadra, el generador no escribe."""
+    for clave, tramos in TERMINOS.items():
+        total = sum(g for _, g in tramos)
+        if total != 30:
+            raise SystemExit(f"Términos de {clave}: suman {total}, no 30")
+        if len({p for p, _ in tramos}) != 5:
+            raise SystemExit(f"Términos de {clave}: hay un planeta repetido")
+    if len(TERMINOS) != 12:
+        raise SystemExit("Faltan signos en la tabla de términos")
+    # Las 28 mansiones reparten el círculo en partes iguales exactas.
+    if abs(28 * (360 / 28) - 360) > 1e-9:
+        raise SystemExit("La división de mansiones no cierra el círculo")
+    return True
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA · LAS DIGNIDADES ESENCIALES
+# ══════════════════════════════════════════════════════════════════════
+def lamina_dignidades():
+    ALTO_F = 30
+    COLS = [(118, "DOMICILIO"), (204, "EXALTA"), (300, "EXILIO"), (386, "CAÍDA")]
+    p = [f'<symbol id="dia-dignidades" viewBox="0 0 464 {34 + 12 * ALTO_F + 12}">']
+    for x, etq in COLS:
+        p.append(txt(x + 26, 20, etq, "rot", 8.2, "var(--acento)"))
+    p.append('<path d="M112 28 H452" fill="none" stroke="var(--acento)" '
+             'stroke-width="1" opacity=".4"/>')
+    for i, (clave, nombre, abrev, elemento, _, _) in enumerate(SIGNOS):
+        y = 34 + i * ALTO_F
+        c = COLOR[elemento]
+        dom, exalt, exilio, caida = dignidades(clave)
+        p.append(glifo(clave, 4, y + 2, 24, c))
+        p.append(txt(34, y + 19, nombre, "et", 11, c, "start"))
+        celdas = [(dom, None), (exalt[0] if exalt else None, exalt[1] if exalt else None),
+                  (exilio, None), (caida[0] if caida else None, caida[1] if caida else None)]
+        for (x, _), (planeta, grado) in zip(COLS, celdas):
+            if not planeta:
+                p.append(txt(x + 26, y + 19, "—", "et", 11, "var(--tinta-3)"))
+                continue
+            p.append(sigilo(planeta, x + 2, y + 3, 22, c))
+            if grado is not None:
+                p.append(txt(x + 30, y + 19, f"{grado}°", "num", 9.5,
+                             "var(--tinta-2)", "start"))
+        if i < 11:
+            p.append(f'<path d="M4 {y + ALTO_F} H452" fill="none" '
+                     'stroke="var(--linea)" stroke-width=".6"/>')
+    p.append("</symbol>")
+    return "".join(p)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA · LOS TÉRMINOS EGIPCIOS
+# ══════════════════════════════════════════════════════════════════════
+def lamina_terminos():
+    """Cada signo, una barra de treinta grados partida en cinco tramos
+    desiguales. La longitud de cada tramo ES su número de grados: la lámina
+    se puede medir con una regla y sale la tabla."""
+    ALTO_F = 32
+    X0, ANCHO = 106, 336
+    p = [f'<symbol id="dia-terminos" viewBox="0 0 464 {40 + 12 * ALTO_F + 14}">']
+    for k in range(7):
+        x = X0 + ANCHO * k / 6
+        p.append(txt(x, 18, f"{k * 5}°", "num", 8.2, "var(--tinta-3)"))
+        p.append(f'<path d="M{f(x)} 24 V{40 + 12 * ALTO_F - 4}" fill="none" '
+                 'stroke="var(--linea)" stroke-width=".5" opacity=".7"/>')
+    for i, (clave, nombre, abrev, elemento, _, _) in enumerate(SIGNOS):
+        y = 34 + i * ALTO_F
+        c = COLOR[elemento]
+        p.append(glifo(clave, 4, y + 3, 22, c))
+        p.append(txt(32, y + 18, nombre, "et", 10.5, c, "start"))
+        grado = 0
+        for planeta, tramos in TERMINOS[clave]:
+            x = X0 + ANCHO * grado / 30
+            w = ANCHO * tramos / 30
+            p.append(f'<rect x="{f(x)}" y="{f(y + 2)}" width="{f(w - 1.5)}" '
+                     f'height="22" rx="3" fill="{c}" opacity=".12"/>')
+            p.append(f'<rect x="{f(x)}" y="{f(y + 2)}" width="{f(w - 1.5)}" '
+                     f'height="22" rx="3" fill="none" stroke="{c}" '
+                     'stroke-width=".7" opacity=".55"/>')
+            p.append(sigilo(planeta, x + w / 2 - 8, y + 5, 16, c))
+            grado += tramos
+    p.append(txt(232, 40 + 12 * ALTO_F + 8,
+                 "CINCO TRAMOS DESIGUALES · TREINTA GRADOS JUSTOS",
+                 "rot", 8.2, "var(--tinta-3)"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA · LA PRECESIÓN
+# ══════════════════════════════════════════════════════════════════════
+def lamina_precesion():
+    """Dos anillos concéntricos desfasados: los signos donde los fijó la
+    tradición y las constelaciones donde están hoy. El hueco es el dato."""
+    cx, cy = 232, 216
+    DESFASE = 24                     # grados acumulados desde el siglo II
+    p = ['<symbol id="dia-precesion" viewBox="0 0 464 414">']
+    for r, w, op in ((176, 1.4, .8), (142, .7, .3), (120, 1.4, .8), (86, .7, .3)):
+        p.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" '
+                 f'stroke="var(--acento)" stroke-width="{w}" opacity="{op}"/>')
+    for i, (clave, nombre, abrev, elemento, _, _) in enumerate(SIGNOS):
+        c = COLOR[elemento]
+        # anillo exterior: el signo tropical, donde lo dejó la tradición
+        med = i * 30 + 15
+        gx, gy = pol(cx, cy, 159, med)
+        p.append(glifo(clave, gx - 13, gy - 13, 26, c))
+        # anillo interior: la constelación, corrida por la precesión
+        gx2, gy2 = pol(cx, cy, 103, med - DESFASE)
+        p.append(glifo(clave, gx2 - 11, gy2 - 11, 22, c, opacidad=".45"))
+        # radios de cada anillo
+        for r0, r1, ang, alfa in ((142, 176, i * 30, ".3"),
+                                  (86, 120, i * 30 - DESFASE, ".18")):
+            x1, y1 = pol(cx, cy, r0, ang)
+            x2, y2 = pol(cx, cy, r1, ang)
+            p.append(f'<path d="M{f(x1)} {f(y1)} L{f(x2)} {f(y2)}" fill="none" '
+                     f'stroke="var(--acento)" stroke-width=".7" opacity="{alfa}"/>')
+    # la flecha del desfase, sobre Aries
+    a1x, a1y = pol(cx, cy, 190, 0)
+    a2x, a2y = pol(cx, cy, 190, -DESFASE)
+    arco = []
+    for k in range(DESFASE + 1):
+        x, y = pol(cx, cy, 190, -k)
+        arco.append(f"{'M' if k == 0 else 'L'}{f(x)} {f(y)}")
+    p.append(f'<path d="{" ".join(arco)}" fill="none" stroke="var(--acento-2)" '
+             'stroke-width="2.4"/>')
+    p.append(f'<circle cx="{f(a1x)}" cy="{f(a1y)}" r="3.4" fill="var(--acento-2)"/>')
+    p.append(f'<circle cx="{f(a2x)}" cy="{f(a2y)}" r="3.4" fill="var(--acento-2)"/>')
+    p.append(txt(cx, 14, f"{DESFASE}° DE DESFASE ACUMULADO", "rot", 9.5, "var(--acento-2)"))
+    p.append(txt(cx, cy - 12, "SIGNOS", "rot", 9, "var(--acento)"))
+    p.append(txt(cx, cy + 4, "fuera", "et", 10.4, "var(--tinta-2)"))
+    p.append(txt(cx, cy + 22, "CONSTELACIONES", "rot", 9, "var(--acento)"))
+    p.append(txt(cx, cy + 38, "dentro", "et", 10.4, "var(--tinta-2)"))
+    p.append(txt(232, 408, "50,3 SEGUNDOS DE ARCO AL AÑO · UNA VUELTA EN 25 800",
+                 "rot", 8.2, "var(--tinta-3)"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
 # ══════════════════════════════════════════════════════════════════════
 def main():
+    comprobar_datos()
     piezas = ['<svg xmlns="http://www.w3.org/2000/svg" '
               'style="position:absolute;width:0;height:0;overflow:hidden" '
               'aria-hidden="true">',
@@ -587,10 +777,13 @@ def main():
     piezas.append(lamina_decanos())
     piezas.append(lamina_lunar())
     piezas.append(lamina_aspectos())
+    piezas.append(lamina_dignidades())
+    piezas.append(lamina_terminos())
+    piezas.append(lamina_precesion())
     piezas.append("</svg>")
 
     DESTINO.write_text("\n".join(piezas) + "\n")
-    print(f"  {DESTINO.relative_to(RAIZ)}: 12 medallones + 7 láminas · "
+    print(f"  {DESTINO.relative_to(RAIZ)}: 12 medallones + 10 láminas · "
           f"{DESTINO.stat().st_size / 1024:.0f} KB")
 
 

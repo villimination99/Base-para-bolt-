@@ -345,6 +345,50 @@ def lamina_emociones():
     return "".join(p)
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINA 7 · LAS TRES DISCIPLINAS
+# ══════════════════════════════════════════════════════════════════════
+# El esquema propio de Epicteto: tres campos de entrenamiento, en su orden.
+DISCIPLINAS = [
+    ("DESEO", "órexis", "Lo que quiero y lo que rechazo",
+     "Aquí se aprende a no querer lo que no depende de mí."),
+    ("ACCIÓN", "hormé", "Lo que hago y con quién",
+     "Aquí se aprende a actuar bien con los demás, gane o pierda."),
+    ("ASENTIMIENTO", "sunkatáthesis", "A qué le doy la razón",
+     "Aquí se aprende a no tragarse la primera impresión."),
+]
+
+
+def lamina_disciplinas():
+    X, W, ALTO_F = 16, 432, 100
+    ALTO = 20 + 3 * ALTO_F + 26
+    p = [f'<symbol id="sm-disciplinas" viewBox="0 0 464 {ALTO}">']
+    for i, (nombre, griego, que, para) in enumerate(DISCIPLINAS):
+        y = 16 + i * ALTO_F
+        p.append(f'<rect x="{X}" y="{y}" width="{W}" height="80" rx="10" '
+                 f'fill="{VIO}" opacity=".06"/>')
+        p.append(f'<rect x="{X}" y="{y}" width="{W}" height="80" rx="10" '
+                 f'fill="none" stroke="{VIO}" stroke-width=".9" opacity=".45"/>')
+        # número romano, que es como las numera la tradición
+        p.append(f'<circle cx="{X + 34}" cy="{y + 40}" r="21" fill="none" '
+                 f'stroke="{VIO}" stroke-width="1.4"/>')
+        p.append(txt(X + 34, y + 46, "I" * (i + 1), "num", 15, VIO))
+        p.append(txt(X + 70, y + 26, nombre, "rot", 12, VIO, "start"))
+        p.append(txt(X + 70, y + 44, griego, "et", 11, CALIDO, "start"))
+        p.append(txt(X + 70, y + 60, que, "et", 11.5, CLARO, "start"))
+        p.append(txt(X + 70, y + 74, para, "et", 10.6, APAGADO, "start"))
+        if i < 2:
+            p.append(f'<path d="M{X + 34} {y + 80} V{y + ALTO_F - 4}" fill="none" '
+                     f'stroke="{VIO}" stroke-width="2"/>')
+            p.append(flecha(X + 34, y + ALTO_F - 2, 90, 8))
+    p.append(txt(232, ALTO - 6,
+                 "EN ESTE ORDEN · NO SE PASA A LA SIGUIENTE SIN LA ANTERIOR",
+                 "rot", 8.4, APAGADO))
+    p.append("</symbol>")
+    return "".join(p)
+
+
 # ══════════════════════════════════════════════════════════════════════
 def main():
     piezas = [
@@ -369,10 +413,11 @@ def main():
         lamina_reloj(),
         lamina_respiracion(),
         lamina_emociones(),
+        lamina_disciplinas(),
         "</svg>",
     ]
     DESTINO.write_text("\n".join(piezas) + "\n")
-    print(f"  {DESTINO.relative_to(RAIZ)}: 6 láminas · "
+    print(f"  {DESTINO.relative_to(RAIZ)}: 7 láminas · "
           f"{DESTINO.stat().st_size / 1024:.0f} KB")
 
 
