@@ -163,13 +163,17 @@
         </product-form>
 
         {%- comment -%} ---------- TRUST BADGES + COLLAPSIBLES (editable blocks) ---------- {%- endcomment -%}
-        {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
-        {%- if trust_blocks.size > 0 -%}
-          <ul class="product-trust">
-            {%- for block in trust_blocks -%}
+        {%- comment -%} 'visible' permite apagar un bloque desde el editor sin borrarlo {%- endcomment -%}
+        {%- capture trust_html -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust' and block.settings.visible -%}
               <li {{ block.shopify_attributes }}>{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.text }}</span></li>
-            {%- endfor -%}
-          </ul>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign trust_trim = trust_html | strip -%}
+        {%- if trust_trim != blank -%}
+          <ul class="product-trust">{{ trust_html }}</ul>
         {%- endif -%}
 
         {%- comment -%}
@@ -186,16 +190,19 @@
           <div class="product-description rte">{{ product.description }}</div>
         {%- endif -%}
 
-        {%- assign info_blocks = section.blocks | where: 'type', 'collapsible' -%}
-        {%- if info_blocks.size > 0 -%}
-          <div class="product-accordion">
-            {%- for block in info_blocks -%}
-              <details class="product-acc-item"{% if forloop.first and block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
+        {%- capture info_html -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'collapsible' and block.settings.visible -%}
+              <details class="product-acc-item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
                 <summary class="product-acc-head">{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.title }}</span><span class="acc-chev">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
                 <div class="product-acc-body rte">{{ block.settings.content }}</div>
               </details>
-            {%- endfor -%}
-          </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign info_trim = info_html | strip -%}
+        {%- if info_trim != blank -%}
+          <div class="product-accordion">{{ info_html }}</div>
         {%- endif -%}
 
         {%- if section.settings.show_share -%}
@@ -291,6 +298,7 @@
       "type": "trust",
       "name": "Sello de confianza",
       "settings": [
+        { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
         { "type": "select", "id": "icon", "label": "Icono", "options": [
           { "value": "bolt", "label": "Rayo" },
           { "value": "check", "label": "Check" },
@@ -306,6 +314,7 @@
       "type": "collapsible",
       "name": "Desplegable (info)",
       "settings": [
+        { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
         { "type": "text", "id": "title", "label": "Título", "default": "Envío y devoluciones" },
         { "type": "select", "id": "icon", "label": "Icono", "options": [
           { "value": "cube", "label": "Caja" },
@@ -324,11 +333,11 @@
     {
       "name": "Producto",
       "blocks": [
-        { "type": "trust", "settings": { "icon": "bolt", "text": "Envío rápido 3–7 días" } },
-        { "type": "trust", "settings": { "icon": "check", "text": "Pago 100% seguro" } },
-        { "type": "trust", "settings": { "icon": "trophy", "text": "Garantía de satisfacción" } },
-        { "type": "collapsible", "settings": { "title": "Envío y devoluciones", "icon": "cube" } },
-        { "type": "collapsible", "settings": { "title": "Cómo se usa", "icon": "bolt", "content": "<p>Describe aquí el modo de uso de tu producto.</p>" } }
+        { "type": "trust", "settings": { "visible": true, "icon": "bolt", "text": "Envío rápido 3–7 días" } },
+        { "type": "trust", "settings": { "visible": true, "icon": "check", "text": "Pago 100% seguro" } },
+        { "type": "trust", "settings": { "visible": true, "icon": "trophy", "text": "Garantía de satisfacción" } },
+        { "type": "collapsible", "settings": { "visible": true, "title": "Envío y devoluciones", "icon": "cube" } },
+        { "type": "collapsible", "settings": { "visible": false, "title": "Cómo se usa", "icon": "bolt", "content": "<p>Describe aquí el modo de uso de tu producto.</p>" } }
       ]
     }
   ]
