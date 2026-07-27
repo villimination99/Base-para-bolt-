@@ -4,7 +4,7 @@
   - data-splash-3d → effects.js mounts the magnetic particle field on #splash-canvas.
   - Falls back to CSS particles + respects prefers-reduced-motion.
 {%- endcomment -%}
-<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name }}">
+<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
   <div class="splash-bg"></div>
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
   <div class="splash-particles" aria-hidden="true">

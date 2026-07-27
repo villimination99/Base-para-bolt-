@@ -17,7 +17,7 @@
       {%- endif -%}
 
       {%- if show_cd -%}
-        <span class="announcement-cd" data-countdown="{{ section.settings.countdown_date }}" data-expired="{{ section.settings.countdown_expired | escape }}">
+        <span class="announcement-cd" data-countdown="{{ section.settings.countdown_date | escape }}" data-expired="{{ section.settings.countdown_expired | escape }}">
           {%- if section.settings.countdown_prefix != blank -%}<span class="announcement-cd-label">{{ section.settings.countdown_prefix }}</span>{%- endif -%}
           <span class="announcement-cd-time"><b data-cd-days>00</b><i>d</i> <b data-cd-hours>00</b><i>h</i> <b data-cd-mins>00</b><i>m</i> <b data-cd-secs>00</b><i>s</i></span>
         </span>

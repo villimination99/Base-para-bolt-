@@ -9,7 +9,7 @@
 {%- endstyle -%}
 <nav class="navbar{% if section.settings.transparent_top %} transparent-top{% endif %}" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
   <div class="navbar-inner">
-    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name }}">
+    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name | escape }}">
       {%- if settings.logo != blank -%}
         {%- assign logo_h = settings.logo_height | default: 44 -%}
         <img src="{{ settings.logo | image_url: width: 240 }}"

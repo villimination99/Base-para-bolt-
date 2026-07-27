@@ -109,7 +109,7 @@
     {%- unless settings.price_show_compare %}.product-price-compare { display: none; }{% endunless -%}
     {%- unless settings.price_show_save %}.product-save-line, .product-save-badge { display: none !important; }{% endunless -%}
     {%- if settings.card_text_align == 'center' %}.product-card-body { text-align: center; } .product-card-footer { justify-content: center; }{% endif -%}
-    {%- unless settings.search_show_header %}.nav-actions .nav-icon-btn[href*="search"] { display: none; }{% endunless -%}
+    {%- unless settings.search_show_header %}[data-search-toggle], .search-panel { display: none !important; }{% endunless -%}
     {%- if settings.variant_style == 'square' %}.product-option-value { border-radius: 6px; }{% endif -%}
     {%- if settings.custom_css != blank -%}
       {{ settings.custom_css }}

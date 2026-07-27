@@ -13,7 +13,7 @@
           <div class="nl-success">
             <p class="form-success">{%- if section.settings.success_text != blank -%}{{ section.settings.success_text }}{%- else -%}{{ 'general.newsletter.success' | t }}{%- endif -%}</p>
             {%- if section.settings.coupon_code != blank -%}
-              <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code }}">
+              <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code | escape }}">
                 <span class="nl-code-val">{{ section.settings.coupon_code }}</span>
                 <span class="nl-code-hint">Toca para copiar</span>
               </button>

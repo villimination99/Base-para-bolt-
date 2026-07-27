@@ -11,7 +11,7 @@
         <div class="stat-item" style="--stat-accent:{{ block.settings.accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
           <span class="stat-num">
             {%- if block.settings.prefix != blank -%}<span class="stat-suffix">{{ block.settings.prefix }}</span>{%- endif -%}
-            <span data-countup="{{ block.settings.number }}">0</span>
+            <span data-countup="{{ block.settings.number | escape }}">0</span>
             {%- if block.settings.suffix != blank -%}<span class="stat-suffix">{{ block.settings.suffix }}</span>{%- endif -%}
           </span>
           <span class="stat-label-txt">{{ block.settings.label }}</span>
