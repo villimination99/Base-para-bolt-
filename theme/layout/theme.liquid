@@ -20,8 +20,22 @@
 
   <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
 
-  {%- if page_description -%}
-    <meta name="description" content="{{ page_description | escape }}">
+  {%- comment -%}
+    Meta description con respaldo: si no hay descripción SEO para la página, se usa la de
+    la tienda y, en su defecto, el eslogan. Una página sin description deja que Google
+    invente el fragmento del resultado, y eso baja el porcentaje de clics.
+  {%- endcomment -%}
+  {%- liquid
+    assign meta_desc = page_description
+    if meta_desc == blank
+      assign meta_desc = shop.description
+    endif
+    if meta_desc == blank
+      assign meta_desc = settings.brand_tagline
+    endif
+  -%}
+  {%- if meta_desc != blank -%}
+    <meta name="description" content="{{ meta_desc | strip_html | truncate: 300 | escape }}">
   {%- endif -%}
 
   {%- render 'meta-tags' -%}

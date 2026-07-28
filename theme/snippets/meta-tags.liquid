@@ -24,6 +24,7 @@
   endif
 -%}
 <meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:locale" content="{{ request.locale.iso_code }}">
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
