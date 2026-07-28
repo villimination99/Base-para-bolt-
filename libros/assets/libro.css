@@ -30,6 +30,10 @@
 .acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
 .acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
@@ -79,12 +83,32 @@ body.cubierta-doc.acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:
 body.cubierta-doc.acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 body.cubierta-doc.acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
 body.cubierta-doc.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+body.cubierta-doc.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+body.cubierta-doc.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+body.cubierta-doc.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+body.cubierta-doc.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
+.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
 .acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
 .acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
 .acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
 .acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+.acento-mesa   { --acento:#00ff88; --acento-2:#ffd75c; --a-rgb:0,255,136; }
+.acento-carga  { --acento:#ff7a3c; --acento-2:#ffd75c; --a-rgb:255,122,60; }
+.acento-fuerza { --acento:#ff4fd8; --acento-2:#5cd6ff; --a-rgb:255,79,216; }
+.acento-calma  { --acento:#00e5c0; --acento-2:#a97bff; --a-rgb:0,229,192; }
 
 .cubierta{
   display:flex; flex-direction:column; justify-content:space-between;
