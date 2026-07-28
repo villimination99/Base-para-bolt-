@@ -29,6 +29,7 @@
 .acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
 .acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
+.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 
@@ -77,9 +78,13 @@ body.cubierta-doc.acento-magenta{ --acento:#ff00e5; --acento-2:#7b2fff; --a-rgb:
 body.cubierta-doc.acento-verde  { --acento:#00ff88; --acento-2:#ff6600; --a-rgb:0,255,136; }
 body.cubierta-doc.acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 body.cubierta-doc.acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
+body.cubierta-doc.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
+.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
+.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
 .acento-oro    { --acento:#ffd75c; --acento-2:#ff6600; --a-rgb:255,215,92; }
 .acento-violeta{ --acento:#a97bff; --acento-2:#00f0ff; --a-rgb:169,123,255; }
+.acento-carmin { --acento:#ff5c8a; --acento-2:#5cd6ff; --a-rgb:255,92,138; }
 
 .cubierta{
   display:flex; flex-direction:column; justify-content:space-between;
