@@ -1,0 +1,16 @@
+# Carpeta de entrega: empaquetados que se arman al vuelo para mandar los PDF
+# (por ejemplo el zip de la edición de papel). Su contenido siempre se puede
+# reconstruir desde planes/dist y libros/dist, que sí están versionados, así
+# que versionarlo además sería duplicar binario en el historial.
+entrega/
+
+# Intermedios de composición. El HTML y los PDF por piezas que Chromium
+# necesita antes de unir cada documento; build.py los regenera enteros.
+planes/build/
+libros/build/
+
+# Basura del sistema y de los editores
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
