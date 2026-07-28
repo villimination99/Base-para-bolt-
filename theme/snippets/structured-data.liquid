@@ -11,8 +11,28 @@
   "@type": "Organization",
   "name": {{ shop.name | json }},
   "url": {{ shop.url | json }}
-  {%- if settings.logo != blank -%},
-  "logo": {{ settings.logo | image_url: width: 512 | prepend: 'https:' | json }}
+  {%- comment -%}
+    Logo para Google. Exige un mínimo de 112x112 px: si el logo es apaisado, se amplía el
+    ancho lo necesario para que la ALTURA también supere ese mínimo, y se declaran las
+    dimensiones de forma explícita (ImageObject) para que Google no tenga que deducirlas.
+  {%- endcomment -%}
+  {%- if settings.logo != blank -%}
+    {%- liquid
+      assign l_ar = settings.logo.aspect_ratio | default: 1
+      assign l_w = 512
+      assign min_w = l_ar | times: 140 | round
+      if min_w > l_w
+        assign l_w = min_w
+      endif
+      assign l_h = l_w | divided_by: l_ar | round
+    -%},
+  "logo": {
+    "@type": "ImageObject",
+    "url": {{ settings.logo | image_url: width: l_w | prepend: 'https:' | json }},
+    "width": {{ l_w }},
+    "height": {{ l_h }}
+  },
+  "image": {{ settings.logo | image_url: width: l_w | prepend: 'https:' | json }}
   {%- endif -%}
   {%- if shop.description != blank -%},
   "description": {{ shop.description | strip_html | json }}

@@ -7,8 +7,15 @@
   <meta name="theme-color" content="{{ settings.color_bg }}">
   <link rel="canonical" href="{{ canonical_url }}">
 
+  {%- comment -%}
+    Favicon. Google IGNORA los favicons menores de 48x48 y por eso no muestra el icono
+    del sitio en los resultados: se emiten tamaños múltiplos de 48 tal y como pide.
+  {%- endcomment -%}
   {%- if settings.favicon != blank -%}
-    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    <link rel="icon" type="image/png" sizes="48x48" href="{{ settings.favicon | image_url: width: 48, height: 48, crop: 'center' }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ settings.favicon | image_url: width: 96, height: 96, crop: 'center' }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ settings.favicon | image_url: width: 192, height: 192, crop: 'center' }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180, height: 180, crop: 'center' }}">
   {%- endif -%}
 
   <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
