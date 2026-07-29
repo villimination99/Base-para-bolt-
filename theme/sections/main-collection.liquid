@@ -46,6 +46,8 @@
     </div>
 
     {%- paginate collection.products by section.settings.per_page -%}
+      {%- comment -%} Las tarjetas usan h3; este h2 evita el salto h1→h3 sin alterar el diseño. {%- endcomment -%}
+      <h2 class="visually-hidden">{{ collection.title }}</h2>
       <div class="product-grid">
         {%- for product in collection.products -%}
           {%- render 'product-card', product: product -%}

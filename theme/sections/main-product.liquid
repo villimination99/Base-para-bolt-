@@ -10,13 +10,13 @@
   endif
 -%}
 
-<section class="product-page section-padding" data-section-id="{{ section.id }}" data-low-stock="{{ section.settings.low_stock_threshold }}">
+<section class="product-page section-padding" data-low-stock="{{ section.settings.low_stock_threshold }}">
   <div class="container">
     <div class="product-layout">
 
       {%- comment -%} ---------- MEDIA GALLERY (with 3D / AR) ---------- {%- endcomment -%}
       <div class="product-media">
-        <div class="product-media-main" data-product-media>
+        <div class="product-media-main">
           {%- if on_sale -%}<span class="product-media-sale">-{{ save_pct }}%</span>{%- endif -%}
           {%- if product.media.size > 0 -%}
             {%- for media in product.media -%}
@@ -105,7 +105,7 @@
           </div>
         {%- endif -%}
 
-        <div class="product-price product-price--lg" data-price-wrap>
+        <div class="product-price product-price--lg">
           {%- if on_sale -%}
             <span class="product-price-compare" data-compare>{{ current_variant.compare_at_price | money }}</span>
           {%- endif -%}
@@ -123,7 +123,7 @@
           {%- render 'icon', name: 'bolt' -%} <span>{{ section.settings.low_stock_text | replace: '[n]', current_variant.inventory_quantity }}</span>
         </p>
 
-        <product-form class="product-form" data-section="{{ section.id }}">
+        <product-form class="product-form">
           {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
             <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
 

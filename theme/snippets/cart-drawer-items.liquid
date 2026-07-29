@@ -18,7 +18,7 @@
   {%- endif -%}
   <ul class="cart-drawer-items" role="list">
     {%- for item in cart.items -%}
-      <li class="cart-drawer-item" data-line="{{ forloop.index }}" data-key="{{ item.key }}">
+      <li class="cart-drawer-item" data-key="{{ item.key }}">
         <a href="{{ item.url }}" class="cart-drawer-item-media">
           {%- if item.image -%}
             <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="72" height="72" loading="lazy">
