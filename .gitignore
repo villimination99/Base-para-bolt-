@@ -9,5 +9,6 @@ tcrun*.mjs
 *.log
 .DS_Store
 
-# Built theme package (generated from theme/)
+# Built theme package (generated from theme/, incluidas las versionadas)
 villumination-3d-theme.zip
+villumination-3d-theme-*.zip
