@@ -32,7 +32,7 @@
           </div>
         {%- else -%}
           {%- for i in (1..4) -%}
-            <div class="carousel-slide"><div class="product-card product-card--placeholder"><div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div><div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div></div></div>
+            <div class="carousel-slide"><div class="product-card"><div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div><div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div></div></div>
           {%- endfor -%}
         {%- endfor -%}
       </div>
