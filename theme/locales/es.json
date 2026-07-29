@@ -103,7 +103,8 @@
       "details": "Detalles de la cuenta",
       "view_addresses": "Ver direcciones",
       "return": "Volver a la cuenta",
-      "log_out": "Cerrar sesión"
+      "log_out": "Cerrar sesión",
+      "no_address": "Todavía no has guardado ninguna dirección."
     },
     "login": {
       "title": "Iniciar sesión",
@@ -126,7 +127,13 @@
       "date": "Realizado el {{ date }}",
       "product": "Producto",
       "quantity": "Cant.",
-      "total": "Total"
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "tax": "Impuestos",
+      "status": "Estado",
+      "payment": "Pago",
+      "shipping_address": "Dirección de envío"
     },
     "register": {
       "title": "Crear cuenta",
@@ -140,7 +147,8 @@
     "recover_password": {
       "email": "Correo",
       "submit": "Restablecer contraseña",
-      "success": "Te enviamos un correo con un enlace para restablecer tu contraseña."
+      "success": "Te enviamos un correo con un enlace para restablecer tu contraseña.",
+      "title": "Restablecer tu contraseña"
     },
     "reset_password": {
       "title": "Restablecer contraseña",

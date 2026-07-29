@@ -79,7 +79,25 @@
         {%- endif -%}
 
         {%- if model_count > 0 and settings.product_enable_3d -%}
-          <p class="product-ar-hint">{%- render 'icon', name: 'cube' -%} {{ 'products.product.view_in_space' | t }}</p>
+          {%- comment -%}
+            Botón real de realidad aumentada. Antes esto era un simple <p> que
+            anunciaba "míralo en tu espacio" en todos los aparatos (incluido el
+            escritorio, donde la RA no existe) y no se podía pulsar.
+            Shopify quita data-shopify-xr-hidden únicamente en dispositivos con
+            RA, así que el botón se oculta solo donde no funcionaría.
+          {%- endcomment -%}
+          {%- assign first_model = product.media | where: 'media_type', 'model' | first -%}
+          <button type="button"
+                  class="btn btn-outline product-ar-button"
+                  data-shopify-xr
+                  data-shopify-model3d-id="{{ first_model.id }}"
+                  data-shopify-title="{{ product.title | escape }}"
+                  data-shopify-xr-hidden>
+            {%- render 'icon', name: 'cube' -%} {{ 'products.product.view_in_space' | t }}
+          </button>
+          <script type="application/json" data-model-json>
+            {{ product.media | where: 'media_type', 'model' | json }}
+          </script>
         {%- endif -%}
       </div>
 

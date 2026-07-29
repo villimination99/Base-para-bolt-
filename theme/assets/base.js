@@ -749,6 +749,56 @@
     }
   })();
 
+  /* ---------- Modelos 3D y realidad aumentada ----------
+     model_viewer_tag solo escribe el elemento <model-viewer>: es un elemento
+     personalizado que no existe hasta que se cargan las funciones oficiales de
+     Shopify. Sin esto el visor no giraba, no tenía controles y el botón de RA
+     no hacía nada. Se carga solo si la página tiene algún modelo. */
+  var xrRequested = false;
+
+  function initModelViewers() {
+    if (!window.Shopify || typeof window.Shopify.ModelViewerUI !== 'function') return;
+    Array.prototype.forEach.call(document.querySelectorAll('model-viewer'), function (el) {
+      if (!once(el, 'mvui')) return;
+      try { new window.Shopify.ModelViewerUI(el); } catch (e) {}
+    });
+  }
+
+  function setupXR() {
+    if (!window.ShopifyXR) {
+      // La librería avisa cuando termina de arrancar.
+      document.addEventListener('shopify_xr_initialized', setupXR);
+      return;
+    }
+    Array.prototype.forEach.call(document.querySelectorAll('[data-model-json]'), function (tag) {
+      if (!once(tag, 'xrjson')) return;
+      try { window.ShopifyXR.addModels(JSON.parse(tag.textContent)); } catch (e) {}
+    });
+    try { window.ShopifyXR.setupXRElements(); } catch (e) {}
+  }
+
+  mod(function () {
+    if (!document.querySelector('model-viewer')) return;
+    if (!window.Shopify || typeof window.Shopify.loadFeatures !== 'function') return;
+
+    // Al recargar una sección en el editor solo hay que registrar lo nuevo.
+    if (xrRequested) { initModelViewers(); setupXR(); return; }
+    xrRequested = true;
+
+    if (!document.getElementById('shopify-model-viewer-ui-styles')) {
+      var link = document.createElement('link');
+      link.id = 'shopify-model-viewer-ui-styles';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css';
+      document.head.appendChild(link);
+    }
+
+    window.Shopify.loadFeatures([
+      { name: 'model-viewer-ui', version: '1.0', onLoad: function (errors) { if (!errors) initModelViewers(); } },
+      { name: 'shopify-xr', version: '1.0', onLoad: function (errors) { if (!errors) setupXR(); } }
+    ]);
+  });
+
   /* ---------- Recently viewed (localStorage, no server/app needed) ---------- */
   (function () {
     var KEY = 'v99_recently_viewed';

@@ -1,16 +1,62 @@
 <section class="section-padding customer-page">
   <div class="container">
     <h1 class="section-title">{{ 'customer.order.title' | t: name: order.name }}</h1>
-    <p>{{ order.created_at | date: '%d %b %Y' }}</p>
+
+    {%- comment -%}
+      Antes solo se veía la fecha suelta y el total. El cliente no podía saber
+      si su pedido estaba pagado ni enviado, ni cuánto se le cobró de envío o
+      de impuestos, ni seguir el paquete.
+    {%- endcomment -%}
+    {%- capture order_date -%}{{ order.created_at | date: '%d %b %Y' }}{%- endcapture -%}
+    <p class="order-date">{{ 'customer.order.date' | t: date: order_date }}</p>
+
+    <div class="order-status">
+      <span class="order-status-item"><strong>{{ 'customer.order.payment' | t }}:</strong> {{ order.financial_status_label }}</span>
+      <span class="order-status-item"><strong>{{ 'customer.order.status' | t }}:</strong> {{ order.fulfillment_status_label }}</span>
+    </div>
+
     <table class="account-table">
       <thead><tr><th>{{ 'customer.order.product' | t }}</th><th>{{ 'customer.order.quantity' | t }}</th><th>{{ 'customer.order.total' | t }}</th></tr></thead>
       <tbody>
         {%- for line_item in order.line_items -%}
-          <tr><td>{{ line_item.title }}</td><td>{{ line_item.quantity }}</td><td>{{ line_item.final_line_price | money }}</td></tr>
+          <tr>
+            <td>
+              {{ line_item.title }}
+              {%- if line_item.fulfillment.tracking_number != blank -%}
+                <br><small>
+                  {{ line_item.fulfillment.tracking_company }}
+                  {%- if line_item.fulfillment.tracking_url -%}
+                    <a href="{{ line_item.fulfillment.tracking_url }}" class="customer-link">{{ line_item.fulfillment.tracking_number }}</a>
+                  {%- else -%}
+                    {{ line_item.fulfillment.tracking_number }}
+                  {%- endif -%}
+                </small>
+              {%- endif -%}
+            </td>
+            <td>{{ line_item.quantity }}</td>
+            <td>{{ line_item.final_line_price | money }}</td>
+          </tr>
         {%- endfor -%}
       </tbody>
+      <tfoot>
+        <tr><td colspan="2">{{ 'customer.order.subtotal' | t }}</td><td>{{ order.subtotal_price | money }}</td></tr>
+        {%- for shipping_method in order.shipping_methods -%}
+          <tr><td colspan="2">{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</td><td>{{ shipping_method.price | money }}</td></tr>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <tr><td colspan="2">{{ 'customer.order.tax' | t }} ({{ tax_line.title }})</td><td>{{ tax_line.price | money }}</td></tr>
+        {%- endfor -%}
+        <tr class="order-total-row"><td colspan="2"><strong>{{ 'customer.order.total' | t }}</strong></td><td><strong>{{ order.total_price | money }}</strong></td></tr>
+      </tfoot>
     </table>
-    <div class="order-total">{{ 'customer.order.total' | t }}: <strong>{{ order.total_price | money }}</strong></div>
+
+    {%- if order.shipping_address -%}
+      <div class="order-address">
+        <h2>{{ 'customer.order.shipping_address' | t }}</h2>
+        {{ order.shipping_address | format_address }}
+      </div>
+    {%- endif -%}
+
     <a href="{{ routes.account_url }}" class="customer-link">&larr; {{ 'customer.account.return' | t }}</a>
   </div>
 </section>

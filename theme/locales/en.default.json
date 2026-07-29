@@ -103,7 +103,8 @@
       "details": "Account details",
       "view_addresses": "View addresses",
       "return": "Return to account",
-      "log_out": "Log out"
+      "log_out": "Log out",
+      "no_address": "You have not saved any address yet."
     },
     "login": {
       "title": "Log in",
@@ -126,7 +127,13 @@
       "date": "Placed on {{ date }}",
       "product": "Product",
       "quantity": "Qty",
-      "total": "Total"
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "status": "Status",
+      "payment": "Payment",
+      "shipping_address": "Shipping address"
     },
     "register": {
       "title": "Create account",
@@ -140,7 +147,8 @@
     "recover_password": {
       "email": "Email",
       "submit": "Reset password",
-      "success": "We've sent you an email with a link to reset your password."
+      "success": "We've sent you an email with a link to reset your password.",
+      "title": "Reset your password"
     },
     "reset_password": {
       "title": "Reset password",

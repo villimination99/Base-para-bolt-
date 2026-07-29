@@ -29,7 +29,15 @@
       </div>
       <div class="account-details">
         <h2>{{ 'customer.account.details' | t }}</h2>
-        {{ customer.default_address | format_address }}
+        {%- comment -%}
+          Sin esta comprobación, un cliente sin dirección guardada veía el
+          apartado vacío, como si la página estuviera rota.
+        {%- endcomment -%}
+        {%- if customer.default_address -%}
+          {{ customer.default_address | format_address }}
+        {%- else -%}
+          <p class="account-no-address">{{ 'customer.account.no_address' | t }}</p>
+        {%- endif -%}
         <a href="{{ routes.account_addresses_url }}" class="customer-link">{{ 'customer.account.view_addresses' | t }} ({{ customer.addresses_count }})</a>
       </div>
     </div>

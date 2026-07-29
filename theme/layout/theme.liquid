@@ -40,12 +40,24 @@
 
   {%- render 'meta-tags' -%}
 
-  {%- comment -%} Brand display font (Orbitron) — kept for the neon identity {%- endcomment -%}
+  {%- comment -%}
+    Tipografía de marca (Orbitron), ahora servida por el CDN de Shopify en vez
+    de Google Fonts. Es la misma fuente variable (pesos 400-900, 11 KB) pero:
+    ahorra dos conexiones a un tercero, aparece antes porque no hay que esperar
+    a descargar una hoja de estilos externa, y no envía la IP de cada visitante
+    a Google, cosa que la justicia europea considera incompatible con el RGPD.
+  {%- endcomment -%}
   {%- if settings.use_display_font -%}
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap"></noscript>
+    {{ 'orbitron-variable.woff2' | asset_url | preload_tag: as: 'font' }}
+    {%- style -%}
+      @font-face {
+        font-family: 'Orbitron';
+        src: url({{ 'orbitron-variable.woff2' | asset_url }}) format('woff2');
+        font-weight: 400 900;
+        font-style: normal;
+        font-display: swap;
+      }
+    {%- endstyle -%}
   {%- endif -%}
 
   {%- comment -%} Acelera miniaturas de video (YouTube) sin bloquear el render {%- endcomment -%}
