@@ -18,7 +18,11 @@
           <span class="catlist-media">
             {%- assign img = block.settings.image | default: coll.featured_image -%}
             {%- if img -%}
-              <img src="{{ img | image_url: width: 600 }}" alt="{{ block.settings.title | default: coll.title | escape }}" width="600" height="420" loading="lazy">
+              <img src="{{ img | image_url: width: 600 }}"
+                           srcset="{{ img | image_url: width: 300 }} 300w,
+                           {{ img | image_url: width: 450 }} 450w,
+                           {{ img | image_url: width: 600 }} 600w"
+                           sizes="(min-width: 861px) 33vw, 100vw" alt="{{ block.settings.title | default: coll.title | escape }}" width="600" height="420" loading="lazy">
             {%- else -%}
               <span class="catlist-icon-fallback">{%- render 'icon', name: block.settings.icon -%}</span>
             {%- endif -%}

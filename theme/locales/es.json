@@ -162,7 +162,10 @@
       "last_name": "Apellido",
       "address1": "Dirección",
       "city": "Ciudad",
+      "country": "País",
+      "province": "Provincia / Región",
       "zip": "Código postal",
+      "phone": "Teléfono",
       "add": "Agregar dirección",
       "edit": "Editar"
     }

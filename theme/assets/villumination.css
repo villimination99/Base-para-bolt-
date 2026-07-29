@@ -307,3 +307,13 @@ body:not(.pimg-glow) .holo-stage::after{display:none}
 .product-app-block,.collection-app-block{margin:1.2rem 0}
 .collection-app-block{margin-top:2rem}
 .collection-description{margin-top:.8rem;color:#c6d4e8;max-width:70ch;margin-left:auto;margin-right:auto}
+
+/* Errores de formulario de Shopify (direcciones, contacto, cuenta): sin esto el
+   cliente reenvía el formulario sin saber qué campo rechazó Shopify. */
+.form-errors{background:rgba(255,60,90,.1);border:1px solid rgba(255,60,90,.45);border-radius:.6rem;padding:.8rem 1rem;margin:.6rem 0 .4rem;color:#ffd7de}
+.form-errors ul{margin:0;padding-left:1.1rem;list-style:disc}
+.form-errors li{margin:.15rem 0;font-size:.95rem;line-height:1.45}
+/* El <select> de país no heredaba el estilo de los inputs y se veía nativo/blanco */
+.customer-form select{background:var(--color-surface);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:.6rem;padding:.7rem .9rem;font-family:var(--font-body);font-size:1rem;appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#c7c7de 50%),linear-gradient(135deg,#c7c7de 50%,transparent 50%);background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:2.4rem}
+.customer-form select:focus-visible,.customer-form input:focus-visible,.customer-form textarea:focus-visible{outline:2px solid var(--neon-cyan);outline-offset:2px}
+.customer-form option{background:#0b0b18;color:#fff}

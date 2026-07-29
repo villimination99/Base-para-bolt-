@@ -7,7 +7,11 @@
           <a href="{{ article.url }}" class="article-card{% if settings.enable_card_tilt %} js-tilt{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
             {%- if article.image -%}
               <div class="article-card-media">
-                <img src="{{ article.image | image_url: width: 700 }}" alt="{{ article.title | escape }}" width="700" height="450" loading="lazy">
+                <img src="{{ article.image | image_url: width: 700 }}"
+                           srcset="{{ article.image | image_url: width: 300 }} 300w,
+                           {{ article.image | image_url: width: 450 }} 450w,
+                           {{ article.image | image_url: width: 700 }} 700w"
+                           sizes="(min-width: 861px) 33vw, 100vw" alt="{{ article.title | escape }}" width="700" height="450" loading="lazy">
               </div>
             {%- endif -%}
             <div class="article-card-body">

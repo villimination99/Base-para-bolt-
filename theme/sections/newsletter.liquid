@@ -20,6 +20,15 @@
             {%- endif -%}
           </div>
         {%- else -%}
+          {%- if form.errors -%}
+            <div class="form-errors" role="alert">
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
           <div class="footer-newsletter-form">
             <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
             <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>

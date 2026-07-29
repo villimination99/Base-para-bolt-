@@ -58,6 +58,15 @@
           <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
           <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
           {%- if form.posted_successfully? -%}<p class="form-success">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
+          {%- if form.errors -%}
+            <div class="form-errors" role="alert">
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
         {%- endform -%}
       </div>
     {%- endif -%}

@@ -32,20 +32,33 @@
     catch (e) { return '$' + (cents / 100).toFixed(2); }
   }
 
+  /* Almacenamiento seguro. En Safari privado, con "bloquear todas las cookies"
+     o dentro de algunos navegadores integrados, el simple hecho de leer
+     sessionStorage lanza SecurityError; sin esta envoltura ese error tumbaba
+     todo el script (menú, carrito, buscador…) en esos dispositivos. */
+  var store = {
+    get: function (k, session) {
+      try { return (session ? sessionStorage : localStorage).getItem(k); } catch (e) { return null; }
+    },
+    set: function (k, v, session) {
+      try { (session ? sessionStorage : localStorage).setItem(k, v); } catch (e) {}
+    }
+  };
+
   /* ---------- Splash intro ---------- */
   (function () {
     var splash = $('[data-splash]');
     if (!splash) return;
     var enter = $('#splash-enter');
     var once = settings.splashOnce;
-    if (once && sessionStorage.getItem('v99_intro_seen')) { splash.style.display = 'none'; return; }
+    if (once && store.get('v99_intro_seen', true)) { splash.style.display = 'none'; return; }
     document.body.style.overflow = 'hidden';
     var done = false;
     function dismiss() {
       if (done) return; done = true;
       splash.classList.add('dismissed');
       document.body.style.overflow = '';
-      if (once) sessionStorage.setItem('v99_intro_seen', '1');
+      if (once) store.set('v99_intro_seen', '1', true);
       setTimeout(function () { splash.style.display = 'none'; }, 900);
     }
     if (enter) enter.addEventListener('click', dismiss);
@@ -403,15 +416,15 @@
     var form = document.getElementById('LangSelectorForm');
     if (sel && form) {
       sel.addEventListener('change', function () {
-        try { localStorage.setItem('v99_lang_choice', sel.value); } catch (e) {}
+        store.set('v99_lang_choice', sel.value);
         form.submit();
       });
     }
     // Auto-detect (browser language) only once, never overriding a manual choice.
     if (!settings.autoLang || !form || !sel) return;
     try {
-      if (localStorage.getItem('v99_lang_choice') || sessionStorage.getItem('v99_lang_auto')) return;
-      sessionStorage.setItem('v99_lang_auto', '1');
+      if (store.get('v99_lang_choice') || store.get('v99_lang_auto', true)) return;
+      store.set('v99_lang_auto', '1', true);
       var current = (settings.locale || 'es').slice(0, 2).toLowerCase();
       // navigator.languages es el más fiable en iOS/Android/Mac/Windows; probamos
       // las preferencias del visitante en orden hasta encontrar un idioma disponible.

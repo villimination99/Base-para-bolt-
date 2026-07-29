@@ -8,7 +8,17 @@
       </header>
       {%- if article.image -%}
         <div class="article-hero-media">
-          <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" width="1400" height="800" loading="eager">
+          {%- comment -%}
+            height="800" estaba fijo: con imágenes que no fueran 1400x800 el
+            navegador reservaba un alto equivocado y la página saltaba (CLS).
+          {%- endcomment -%}
+          <img src="{{ article.image | image_url: width: 1400 }}"
+               srcset="{{ article.image | image_url: width: 600 }} 600w,
+                       {{ article.image | image_url: width: 900 }} 900w,
+                       {{ article.image | image_url: width: 1400 }} 1400w"
+               sizes="(min-width: 1000px) 900px, 100vw"
+               alt="{{ article.title | escape }}"
+               width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}" loading="eager">
         </div>
       {%- endif -%}
       <div class="rte article-content">{{ article.content }}</div>

@@ -162,7 +162,10 @@
       "last_name": "Last name",
       "address1": "Address",
       "city": "City",
+      "country": "Country / Region",
+      "province": "State / Province",
       "zip": "Postal code",
+      "phone": "Phone",
       "add": "Add address",
       "edit": "Edit"
     }
