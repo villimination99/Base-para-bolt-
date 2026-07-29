@@ -70,40 +70,72 @@
     });
   }
 
-  function cartAdd(id, qty) {
-    return fetch(routes.cartAdd, {
+  /* Aviso visible. Sin esto, un fallo del carrito es invisible para el cliente. */
+  function toast(msg, isError) {
+    if (!msg) return;
+    var t = document.createElement('div');
+    t.className = 'toast';
+    t.setAttribute('role', isError ? 'alert' : 'status');
+    if (isError) { t.style.borderColor = 'var(--neon-orange)'; t.style.color = 'var(--neon-orange)'; }
+    t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add('show'); });
+    setTimeout(function () {
+      t.classList.remove('show');
+      setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 400);
+    }, 4000);
+  }
+
+  /* Shopify responde 422 cuando no puede añadir (sin stock, excede inventario…).
+     Hay que comprobar r.ok: si no, el fallo se toma por éxito y el cliente no ve nada. */
+  function cartRequest(url, payload) {
+    return fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ id: id, quantity: qty || 1 })
-    }).then(function (r) { return r.json(); });
+      body: JSON.stringify(payload)
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (data) {
+        if (!r.ok) {
+          var err = new Error(data.description || data.message || 'No se pudo actualizar el carrito');
+          err.data = data;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  /* Cola: las peticiones del carrito se ejecutan en orden. Pulsar +/- rápido lanzaba
+     llamadas solapadas cuyas respuestas podían llegar desordenadas y dejar mal la cantidad. */
+  var cartChain = Promise.resolve();
+  function queueCart(task) {
+    var run = cartChain.then(task, task);
+    cartChain = run.catch(function () {});
+    return run;
+  }
+
+  function cartAdd(id, qty) {
+    return queueCart(function () { return cartRequest(routes.cartAdd, { id: id, quantity: qty || 1 }); });
   }
 
   function cartChange(key, qty) {
-    return fetch(routes.cartChange, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ id: key, quantity: qty })
-    }).then(function (r) { return r.json(); });
+    return queueCart(function () { return cartRequest(routes.cartChange, { id: key, quantity: qty }); });
   }
 
+  // Una sola petición: Shopify renderiza sections/cart-drawer.liquid (barra de envío gratis
+  // y venta cruzada incluidas) y el contador se lee del propio marcado devuelto.
   function syncDrawer() {
     var body = $('[data-cart-drawer-body]');
-    return fetch(routes.cart + '.js').then(function (r) { return r.json(); }).then(function (cart) {
-      updateCartCount(cart.item_count);
-      if (!body) return cart;
-      // El contenido lo renderiza Shopify desde sections/cart-drawer.liquid, no JavaScript.
-      // Así el carrito conserva la barra de envío gratis y la venta cruzada, y ningún dato
-      // del comerciante (títulos con comillas, <, &…) se inserta sin escapar.
-      return fetch(routes.cart + '?section_id=cart-drawer')
-        .then(function (r) { return r.text(); })
-        .then(function (markup) {
-          var doc = new DOMParser().parseFromString(markup, 'text/html');
-          var fresh = doc.querySelector('[data-cart-drawer-body]');
-          if (fresh) body.innerHTML = fresh.innerHTML;
-          return cart;
-        })
-        .catch(function () { return cart; });
-    });
+    return fetch(routes.cart + '?section_id=cart-drawer')
+      .then(function (r) { return r.text(); })
+      .then(function (markup) {
+        var doc = new DOMParser().parseFromString(markup, 'text/html');
+        var fresh = doc.querySelector('[data-cart-drawer-body]');
+        if (!fresh) return;
+        updateCartCount(parseInt(fresh.getAttribute('data-cart-count') || '0', 10));
+        if (body) body.innerHTML = fresh.innerHTML;
+      })
+      .catch(function () {});
   }
 
   document.addEventListener('click', function (e) {
@@ -111,7 +143,7 @@
     if (e.target.closest('[data-cart-drawer-close]')) { closeDrawer(); return; }
 
     var remove = e.target.closest('.cart-drawer-item-remove');
-    if (remove) { e.preventDefault(); cartChange(remove.getAttribute('data-key'), 0).then(syncDrawer); return; }
+    if (remove) { e.preventDefault(); cartChange(remove.getAttribute('data-key'), 0).then(syncDrawer).catch(function (err) { toast(err && err.message, true); }); return; }
 
     var qUp = e.target.closest('[data-qty-up]');
     var qDown = e.target.closest('[data-qty-down]');
@@ -123,7 +155,7 @@
       val = qUp ? val + 1 : Math.max(parseInt(input.min || '0', 10), val - 1);
       input.value = val;
       var key = input.getAttribute('data-key');
-      if (key) { cartChange(key, val).then(syncDrawer); }
+      if (key) { cartChange(key, val).then(syncDrawer).catch(function (err) { toast(err && err.message, true); }); }
       return;
     }
 
@@ -136,7 +168,7 @@
   document.addEventListener('change', function (e) {
     var input = e.target.closest('[data-cart-drawer-body] [data-qty-input]');
     if (input && input.getAttribute('data-key')) {
-      cartChange(input.getAttribute('data-key'), Math.max(0, parseInt(input.value, 10) || 0)).then(syncDrawer);
+      cartChange(input.getAttribute('data-key'), Math.max(0, parseInt(input.value, 10) || 0)).then(syncDrawer).catch(function (err) { toast(err && err.message, true); });
     }
   });
 
@@ -152,7 +184,10 @@
       if (btn) btn.classList.remove('is-loading');
       if (settings.cartType === 'drawer') { syncDrawer().then(openDrawer); }
       else { window.location.href = routes.cart; }
-    }).catch(function () { if (btn) btn.classList.remove('is-loading'); });
+    }).catch(function (err) {
+      if (btn) btn.classList.remove('is-loading');
+      toast(err && err.message, true);
+    });
   });
 
   /* ---------- Product page ---------- */
@@ -245,7 +280,10 @@
           if (addBtn) addBtn.classList.remove('is-loading');
           if (settings.cartType === 'drawer') { syncDrawer().then(openDrawer); }
           else { window.location.href = routes.cart; }
-        }).catch(function () { if (addBtn) addBtn.classList.remove('is-loading'); });
+        }).catch(function (err) {
+          if (addBtn) addBtn.classList.remove('is-loading');
+          toast(err && err.message, true);
+        });
       });
     }
 
