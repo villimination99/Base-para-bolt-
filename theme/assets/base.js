@@ -86,39 +86,23 @@
     }).then(function (r) { return r.json(); });
   }
 
-  function imgAt(src, size) {
-    if (!src) return '';
-    return src.replace(/(\.(?:jpg|jpeg|png|webp|gif))(\?.*)?$/i, '_' + size + '$1$2');
-  }
-
   function syncDrawer() {
     var body = $('[data-cart-drawer-body]');
     return fetch(routes.cart + '.js').then(function (r) { return r.json(); }).then(function (cart) {
       updateCartCount(cart.item_count);
       if (!body) return cart;
-      if (cart.item_count === 0) {
-        body.innerHTML = '<div class="cart-drawer-empty"><p>' + (strings.cartEmpty || 'Tu carrito está vacío') + '</p>' +
-          '<a href="' + routes.cart + '" class="btn btn-outline" data-cart-drawer-close>' + (strings.shop || 'Tienda') + '</a></div>';
-        return cart;
-      }
-      var html = '<ul class="cart-drawer-items" role="list">';
-      cart.items.forEach(function (item) {
-        html += '<li class="cart-drawer-item" data-key="' + item.key + '">' +
-          '<a href="' + item.url + '" class="cart-drawer-item-media">' +
-          (item.image ? '<img src="' + imgAt(item.image, '160x') + '" alt="" width="72" height="72" loading="lazy">' : '') + '</a>' +
-          '<div class="cart-drawer-item-info"><a href="' + item.url + '" class="cart-drawer-item-title">' + item.product_title + '</a>' +
-          '<div class="cart-drawer-qty" data-qty><button type="button" data-qty-down aria-label="-">−</button>' +
-          '<input type="number" value="' + item.quantity + '" min="0" data-qty-input data-key="' + item.key + '">' +
-          '<button type="button" data-qty-up aria-label="+">+</button></div></div>' +
-          '<div class="cart-drawer-item-right"><span class="cart-drawer-item-price">' + money(item.final_line_price) + '</span>' +
-          '<button type="button" class="cart-drawer-item-remove" data-key="' + item.key + '" aria-label="remove">✕</button></div></li>';
-      });
-      html += '</ul><div class="cart-drawer-foot"><div class="cart-drawer-subtotal"><span>' + (strings.subtotal || 'Subtotal') + '</span>' +
-        '<span class="cart-drawer-subtotal-amount">' + money(cart.total_price) + '</span></div>' +
-        '<form action="' + routes.cart + '" method="post"><button type="submit" name="checkout" class="btn btn-primary btn-block">' + (strings.checkout || 'Finalizar compra') + '</button></form>' +
-        '<a href="' + routes.cart + '" class="cart-drawer-viewcart">' + (strings.viewCart || 'Ver carrito completo') + '</a></div>';
-      body.innerHTML = html;
-      return cart;
+      // El contenido lo renderiza Shopify desde sections/cart-drawer.liquid, no JavaScript.
+      // Así el carrito conserva la barra de envío gratis y la venta cruzada, y ningún dato
+      // del comerciante (títulos con comillas, <, &…) se inserta sin escapar.
+      return fetch(routes.cart + '?section_id=cart-drawer')
+        .then(function (r) { return r.text(); })
+        .then(function (markup) {
+          var doc = new DOMParser().parseFromString(markup, 'text/html');
+          var fresh = doc.querySelector('[data-cart-drawer-body]');
+          if (fresh) body.innerHTML = fresh.innerHTML;
+          return cart;
+        })
+        .catch(function () { return cart; });
     });
   }
 
