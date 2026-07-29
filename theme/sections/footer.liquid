@@ -55,7 +55,7 @@
         <h3>{{ section.settings.newsletter_title }}</h3>
         {%- form 'customer', class: 'footer-newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+          <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
           <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
           {%- if form.posted_successfully? -%}<p class="form-success">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
         {%- endform -%}

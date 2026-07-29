@@ -21,7 +21,7 @@
           </div>
         {%- else -%}
           <div class="footer-newsletter-form">
-            <input type="email" name="contact[email]" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+            <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
             <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>
           </div>
           {%- if section.settings.privacy_note != blank -%}<p class="nl-privacy">{{ section.settings.privacy_note }}</p>{%- endif -%}
