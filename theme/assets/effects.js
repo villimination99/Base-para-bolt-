@@ -11,14 +11,31 @@
 
   function $(s, c) { return (c || document).querySelector(s); }
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  /* Editor de Shopify: al editar una sección, Shopify sustituye su HTML y el JS ligado a
+     esos elementos deja de existir. Se registran los módulos y se vuelven a ejecutar en
+     shopify:section:load. once() garantiza que un elemento ya inicializado no se vuelva a
+     enganchar, así no se duplican manejadores en las secciones que no cambiaron. */
+  var MODS = [];
+  function mod(fn) { MODS.push(fn); try { fn(); } catch (e) {} }
+  function once(el, key) {
+    if (!el) return false;
+    var k = 'vinit' + key;
+    if (el.getAttribute('data-' + k)) return false;
+    el.setAttribute('data-' + k, '1');
+    return true;
+  }
+  document.addEventListener('shopify:section:load', function () {
+    MODS.forEach(function (f) { try { f(); } catch (e) {} });
+  });
+
   var hex = function (c, fallback) { return (c && /^#/.test(c)) ? c : fallback; };
   var CYAN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan').trim(), '#00d4ff');
   var PINK = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim(), '#ff2ecb');
   var GREEN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-green').trim(), '#00e87b');
 
   /* ============ 1. Scroll reveal (fail-safe: content can NEVER stay hidden) ============ */
-  (function () {
-    var els = $all('[data-reveal]');
+  mod(function () {
+    var els = $all('[data-reveal]').filter(function (e) { return once(e, 'reveal'); });
     if (!els.length) return;
     function showAll() { els.forEach(function (el) { el.classList.add('is-visible'); el.classList.remove('reveal-init'); }); }
     // If reveal is off, reduced motion, or no observer support → just show everything.
@@ -38,7 +55,7 @@
     // Absolute safety net — reveal any stragglers a moment after load.
     setTimeout(showAll, 2500);
     window.addEventListener('load', function () { setTimeout(showAll, 300); });
-  })();
+  });
 
   /* ============ 2. Parallax ============ */
   (function () {
@@ -62,9 +79,10 @@
   })();
 
   /* ============ 3. Card tilt (3D hover) ============ */
-  (function () {
+  mod(function () {
     if (!settings.cardTilt || reduce || window.matchMedia('(hover: none)').matches) return;
     $all('.js-tilt').forEach(function (card) {
+      if (!once(card, 'tilt')) return;
       card.addEventListener('pointermove', function (e) {
         var r = card.getBoundingClientRect();
         var px = (e.clientX - r.left) / r.width - 0.5;
@@ -73,7 +91,7 @@
       });
       card.addEventListener('pointerleave', function () { card.style.transform = ''; });
     });
-  })();
+  });
 
   /* ============ 4. Seasonal floating effects ============ */
   (function () {
@@ -126,11 +144,12 @@
   })();
 
   /* ============ 4b. Holo stage: 3D tilt (desktop) + drag-to-spin (touch) ============ */
-  (function () {
+  mod(function () {
     var stages = $all('[data-tilt-3d]');
     if (!stages.length) return;
     var noHover = window.matchMedia('(hover: none)').matches;
     stages.forEach(function (stage) {
+      if (!once(stage, 'holo')) return;
       var obj = $('.holo-obj', stage);
       if (!obj) return;
       obj.classList.add('holo-auto');
@@ -176,7 +195,7 @@
         stage.addEventListener('pointerenter', function () { obj.classList.remove('holo-auto'); });
       }
     });
-  })();
+  });
 
   /* ============ 4c. Ambient futuristic background (aurora + drifting particles) ============
      Fondo negro intacto: pinta detrás del contenido (z-index -1), 30 fps,
@@ -397,10 +416,11 @@
   })();
 
   /* ---- Curved infinite 3D carousel (coverflow ring) ------------------------- */
-  (function () {
+  mod(function () {
     var stages = $all('[data-cc]');
     if (!stages.length) return;
     stages.forEach(function (stage) {
+      if (!once(stage, 'cc')) return;
       var ring = $('[data-cc-ring]', stage);
       if (!ring) return;
       var auto = stage.getAttribute('data-cc-auto') !== 'false' && !reduce;
@@ -438,13 +458,14 @@
       io.observe(stage);
       render();
     });
-  })();
+  });
 
   /* ---- Flowing menu: direction-aware neon reveal ---------------------------- */
-  (function () {
+  mod(function () {
     var rows = $all('[data-fm-row]');
     if (!rows.length) return;
     rows.forEach(function (row) {
+      if (!once(row, 'fm')) return;
       var mq = $('.fm-marquee', row);
       if (!mq) return;
       function edge(e) {
@@ -464,10 +485,10 @@
         mq.style.transform = 'translateY(' + edge(e) + '%)';
       });
     });
-  })();
+  });
 
   /* ---- Hero cinematic particle field (depth + mouse parallax) --------------- */
-  (function () {
+  mod(function () {
     var canvas = $('[data-hero-particles]');
     if (!canvas || reduce || saveData) return;
     var host = canvas.closest('.hero') || canvas.parentNode;
@@ -528,5 +549,5 @@
     document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
     var io = new IntersectionObserver(function (en) { en.forEach(function (x) { x.isIntersecting ? start() : stop(); }); }, { threshold: 0 });
     resize(); build(); io.observe(canvas);
-  })();
+  });
 })();

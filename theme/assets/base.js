@@ -8,6 +8,23 @@
 
   function $(s, c) { return (c || document).querySelector(s); }
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  /* Editor de Shopify: al editar una sección, Shopify sustituye su HTML y el JS ligado a
+     esos elementos deja de existir. Se registran los módulos y se vuelven a ejecutar en
+     shopify:section:load. once() garantiza que un elemento ya inicializado no se vuelva a
+     enganchar, así no se duplican manejadores en las secciones que no cambiaron. */
+  var MODS = [];
+  function mod(fn) { MODS.push(fn); try { fn(); } catch (e) {} }
+  function once(el, key) {
+    if (!el) return false;
+    var k = 'vinit' + key;
+    if (el.getAttribute('data-' + k)) return false;
+    el.setAttribute('data-' + k, '1');
+    return true;
+  }
+  document.addEventListener('shopify:section:load', function () {
+    MODS.forEach(function (f) { try { f(); } catch (e) {} });
+  });
+
 
   var currencyCode = ((settings.moneyFormat || '').match(/[A-Z]{3}/) || ['USD'])[0];
   function money(cents) {
@@ -234,9 +251,26 @@
       if (!opts.length) return variants[0];
       return variants.find(function (v) { return opts.every(function (o, i) { return v.options[i] === o; }); });
     }
+    function setUnavailable() {
+      // La combinación elegida no existe. Antes se hacía "return" y quedaba el estado de la
+      // variante ANTERIOR: precio viejo, su id en el formulario y el botón activo, de modo que
+      // el cliente podía comprar una variante distinta a la que seleccionó.
+      if (idInput) idInput.value = '';
+      if (addBtn) {
+        addBtn.disabled = true;
+        if (addText) addText.textContent = strings.unavailable || 'No disponible';
+      }
+      var sBtnU = $('[data-sticky-add]', section);
+      if (sBtnU) { sBtnU.disabled = true; sBtnU.textContent = strings.unavailable || 'No disponible'; }
+      if (compareEl) compareEl.style.display = 'none';
+      if (savePctEl) savePctEl.style.display = 'none';
+      if (saveWrap) saveWrap.style.display = 'none';
+      if (stockEl) stockEl.style.display = 'none';
+    }
+
     function update() {
       var v = matchVariant();
-      if (!v) return;
+      if (!v) { setUnavailable(); return; }
       if (idInput) idInput.value = v.id;
       priceEls.forEach(function (el) { el.textContent = money(v.price); });
       var onSale = v.compare_at_price > v.price;
@@ -292,6 +326,8 @@
       pform.addEventListener('submit', function (e) {
         e.preventDefault();
         var id = idInput ? idInput.value : (pform.querySelector('[name="id"]') || {}).value;
+        // Sin variante válida no se envía nada: evita pedidos de la variante equivocada.
+        if (!id) { toast(strings.unavailable || 'No disponible', true); return; }
         var qtyEl = pform.querySelector('[name="quantity"]');
         var qty = parseInt(qtyEl ? qtyEl.value : '1', 10) || 1;
         if (addBtn) addBtn.classList.add('is-loading');
@@ -394,9 +430,10 @@
   })();
 
   /* ---------- Carousels (videos, etc.) ---------- */
-  (function () {
+  mod(function () {
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     $all('[data-carousel]').forEach(function (root) {
+      if (!once(root, 'car')) return;
       var track = $('[data-carousel-track]', root);
       if (!track) return;
       var prev = $('[data-carousel-prev]', root);
@@ -437,7 +474,7 @@
         document.addEventListener('visibilitychange', function () { if (document.hidden) { stop(); } else { start(); } });
       }
     });
-  })();
+  });
 
   /* ---------- Flipbook / PDF catalog (lazy) ---------- */
   $all('[data-flipbook-load]').forEach(function (btn) {
@@ -467,8 +504,9 @@
   });
 
   /* ---------- Animated counters (stats band) ---------- */
-  (function () {
+  mod(function () {
     var els = $all('[data-countup]');
+    els = els.filter(function (e) { return once(e, 'countup'); });
     if (!els.length) return;
     var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function animate(el) {
@@ -489,7 +527,7 @@
       entries.forEach(function (e) { if (e.isIntersecting) { animate(e.target); io.unobserve(e.target); } });
     }, { threshold: 0.4 });
     els.forEach(function (el) { io.observe(el); });
-  })();
+  });
 
   /* ---------- Countdown ---------- */
   $all('[data-countdown]').forEach(function (root) {
@@ -515,9 +553,9 @@
   });
 
   /* ---------- Footer motivational quotes (fade rotation) ---------- */
-  (function () {
+  mod(function () {
     var wrap = $('[data-quotes]');
-    if (!wrap) return;
+    if (!wrap || !once(wrap, 'quotes')) return;
     var textEl = $('[data-quote-text]', wrap);
     var listEl = $('[data-quote-list]', wrap);
     if (!textEl || !listEl) return;
@@ -531,12 +569,12 @@
       textEl.classList.add('is-fading');
       setTimeout(function () { textEl.textContent = quotes[i]; textEl.classList.remove('is-fading'); }, 400);
     }, 5000);
-  })();
+  });
 
   /* ---------- Hero rotating words ---------- */
-  (function () {
+  mod(function () {
     var el = $('[data-typed]');
-    if (!el) return;
+    if (!el || !once(el, 'typed')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var words = [];
     try { words = JSON.parse(el.getAttribute('data-typed')).map(function (w) { return w.trim(); }); } catch (e) { return; }
@@ -548,7 +586,7 @@
       el.style.opacity = '0';
       setTimeout(function () { el.textContent = words[i]; el.style.opacity = '1'; }, 250);
     }, 2600);
-  })();
+  });
 
   /* Pre-decodifica la 2ª imagen de cada tarjeta al entrar en pantalla, para que
      el cambio al pasar el cursor sea instantáneo (sin tirón de decodificación). */
@@ -564,7 +602,7 @@
       });
     }, { rootMargin: '300px 1100px' }); // margen horizontal amplio: precarga las diapositivas vecinas de los carruseles
     imgs.forEach(function (img) { io.observe(img); });
-  })();
+  });
 
   /* ---------- Product image lightbox (zoom) ---------- */
   (function () {
