@@ -122,6 +122,24 @@
     return queueCart(function () { return cartRequest(routes.cartChange, { id: key, quantity: qty }); });
   }
 
+  /* La PÁGINA de carrito también debe refrescarse: al cambiar la cantidad por AJAX, sus
+     precios de línea y el subtotal se quedaban obsoletos hasta recargar a mano. */
+  function syncCartPage() {
+    var page = $('[data-cart-page]');
+    if (!page) return Promise.resolve();
+    return fetch(routes.cart + '?section_id=main')
+      .then(function (r) { return r.text(); })
+      .then(function (markup) {
+        var doc = new DOMParser().parseFromString(markup, 'text/html');
+        var fresh = doc.querySelector('[data-cart-page]');
+        if (fresh) page.innerHTML = fresh.innerHTML;
+      })
+      .catch(function () {});
+  }
+
+  /* Refresca lo que esté visible: el carrito lateral y/o la página de carrito. */
+  function syncCart() { return Promise.all([syncDrawer(), syncCartPage()]); }
+
   // Una sola petición: Shopify renderiza sections/cart-drawer.liquid (barra de envío gratis
   // y venta cruzada incluidas) y el contador se lee del propio marcado devuelto.
   function syncDrawer() {
@@ -143,7 +161,7 @@
     if (e.target.closest('[data-cart-drawer-close]')) { closeDrawer(); return; }
 
     var remove = e.target.closest('.cart-drawer-item-remove');
-    if (remove) { e.preventDefault(); cartChange(remove.getAttribute('data-key'), 0).then(syncDrawer).catch(function (err) { toast(err && err.message, true); }); return; }
+    if (remove) { e.preventDefault(); cartChange(remove.getAttribute('data-key'), 0).then(syncCart).catch(function (err) { toast(err && err.message, true); }); return; }
 
     var qUp = e.target.closest('[data-qty-up]');
     var qDown = e.target.closest('[data-qty-down]');
@@ -155,7 +173,7 @@
       val = qUp ? val + 1 : Math.max(parseInt(input.min || '0', 10), val - 1);
       input.value = val;
       var key = input.getAttribute('data-key');
-      if (key) { cartChange(key, val).then(syncDrawer).catch(function (err) { toast(err && err.message, true); }); }
+      if (key) { cartChange(key, val).then(syncCart).catch(function (err) { toast(err && err.message, true); }); }
       return;
     }
 
@@ -166,9 +184,10 @@
 
   // Live qty typing in drawer
   document.addEventListener('change', function (e) {
-    var input = e.target.closest('[data-cart-drawer-body] [data-qty-input]');
+    // Vale tanto para el carrito lateral como para la página de carrito.
+    var input = e.target.closest('[data-cart-drawer-body] [data-qty-input], [data-cart-page] [data-qty-input]');
     if (input && input.getAttribute('data-key')) {
-      cartChange(input.getAttribute('data-key'), Math.max(0, parseInt(input.value, 10) || 0)).then(syncDrawer).catch(function (err) { toast(err && err.message, true); });
+      cartChange(input.getAttribute('data-key'), Math.max(0, parseInt(input.value, 10) || 0)).then(syncCart).catch(function (err) { toast(err && err.message, true); });
     }
   });
 

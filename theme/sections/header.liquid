@@ -124,7 +124,7 @@
       <a href="{{ routes.cart_url }}" class="cart-btn" id="cart-btn-open" aria-label="{{ 'general.cart.title' | t }} ({{ cart.item_count }})"
          {% if settings.cart_type == 'drawer' %}data-cart-drawer-open{% endif %}>
         {%- render 'icon', name: 'cart' -%}
-        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+        <span class="cart-count" data-cart-count aria-live="polite" aria-atomic="true" {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
       </a>
 
       <button class="mobile-toggle" aria-label="{{ 'accessibility.menu' | t }}" aria-expanded="false" aria-controls="mobile-menu">
