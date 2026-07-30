@@ -201,6 +201,9 @@
       if (!input) return;
       var val = parseInt(input.value, 10) || 0;
       val = qUp ? val + 1 : Math.max(parseInt(input.min || '0', 10), val - 1);
+      // El botón "+" subía sin límite aunque no hubiera existencias.
+      var max = parseInt(input.getAttribute('max') || '', 10);
+      if (!isNaN(max) && val > max) val = max;
       input.value = val;
       var key = input.getAttribute('data-key');
       if (key) { cartChange(key, val).then(syncCart).catch(function (err) { toast(err && err.message, true); }); }
@@ -258,11 +261,77 @@
     var stockEl = $('[data-stock]', section);
     var lowStock = parseInt(section.getAttribute('data-low-stock') || '0', 10);
 
-    function selectedOptions() { return $all('[data-option-selector]:checked', section).map(function (i) { return i.value; }); }
+    // Mapa de existencias por variante: [id, cantidad, gestión, política]
+    var inv = {};
+    var invTag = $('[data-inventory-json]', section);
+    if (invTag) {
+      try {
+        JSON.parse(invTag.textContent).forEach(function (r) {
+          inv[r[0]] = { qty: r[1], tracked: r[2], policy: r[3] };
+        });
+      } catch (e) {}
+    }
+    function stockOf(v) {
+      var rec = v && inv[v.id];
+      if (rec) return rec;
+      // Reserva por si el mapa no estuviera: los datos de la variante.
+      return v ? { qty: v.inventory_quantity, tracked: v.inventory_management, policy: v.inventory_policy } : null;
+    }
+
+    // La posición se lee del nombre (option1, option2, option3). Antes se
+    // recogían los marcados en orden de aparición: si un grupo se quedaba sin
+    // ninguno marcado, la lista se acortaba, los índices se desplazaban y se
+    // podía emparejar una variante distinta a la elegida.
+    function optionPosition(input) {
+      var m = (input.name || '').match(/(\d+)/);
+      return m ? parseInt(m[1], 10) - 1 : 0;
+    }
+    function selectedOptions() {
+      var out = [];
+      $all('[data-option-selector]', section).forEach(function (i) {
+        if (i.checked) out[optionPosition(i)] = i.value;
+      });
+      return out;
+    }
+    function optionCount() {
+      var n = 0;
+      $all('[data-option-selector]', section).forEach(function (i) {
+        var p = optionPosition(i) + 1;
+        if (p > n) n = p;
+      });
+      return n;
+    }
     function matchVariant() {
       var opts = selectedOptions();
-      if (!opts.length) return variants[0];
-      return variants.find(function (v) { return opts.every(function (o, i) { return v.options[i] === o; }); });
+      var need = optionCount();
+      if (!need) return variants[0];
+      // Toda opción debe estar elegida; si falta alguna no hay variante válida.
+      for (var i = 0; i < need; i++) { if (opts[i] == null) return null; }
+      return variants.find(function (v) {
+        for (var i = 0; i < need; i++) { if (v.options[i] !== opts[i]) return false; }
+        return true;
+      });
+    }
+
+    // Marca las combinaciones agotadas o inexistentes para que el cliente no
+    // vaya probando a ciegas. No se desactivan: si se desactivaran, quien
+    // eligiera una talla que solo existe en un color quedaría atrapado.
+    function markOptions() {
+      var current = selectedOptions();
+      $all('[data-option-selector]', section).forEach(function (input) {
+        var trial = current.slice();
+        trial[optionPosition(input)] = input.value;
+        var matches = variants.filter(function (v) {
+          for (var i = 0; i < trial.length; i++) {
+            if (trial[i] != null && v.options[i] !== trial[i]) return false;
+          }
+          return true;
+        });
+        var label = section.querySelector('label[for="' + input.id + '"]');
+        if (!label) return;
+        label.classList.toggle('is-unavailable', matches.length === 0);
+        label.classList.toggle('is-sold-out', matches.length > 0 && !matches.some(function (v) { return v.available; }));
+      });
     }
     function setUnavailable() {
       // La combinación elegida no existe. Antes se hacía "return" y quedaba el estado de la
@@ -281,9 +350,29 @@
       if (stockEl) stockEl.style.display = 'none';
     }
 
+    // Sin esto el cliente podía pedir 50 unidades de algo con 3 en existencia:
+    // Shopify rechazaba el carrito y el error aparecía después, sin explicación
+    // clara. Ahora el propio campo no deja pasar de lo que hay.
+    function applyStockLimit(v) {
+      var qtyEl = section.querySelector('[name="quantity"]');
+      if (!qtyEl) return;
+      var rec = stockOf(v);
+      var tracked = rec && rec.tracked != null && rec.tracked !== '';
+      var denies = !rec || rec.policy !== 'continue';
+      var q = rec ? rec.qty : null;
+      if (tracked && denies && typeof q === 'number' && q > 0) {
+        qtyEl.setAttribute('max', q);
+        if ((parseInt(qtyEl.value, 10) || 1) > q) qtyEl.value = q;
+      } else {
+        qtyEl.removeAttribute('max');
+      }
+    }
+
     function update() {
+      markOptions();
       var v = matchVariant();
       if (!v) { setUnavailable(); return; }
+      applyStockLimit(v);
       if (idInput) idInput.value = v.id;
       priceEls.forEach(function (el) { el.textContent = money(v.price); });
       var onSale = v.compare_at_price > v.price;
@@ -300,7 +389,9 @@
         else { saveWrap.style.display = 'none'; }
       }
       if (stockEl) {
-        var q = v.inventory_quantity, managed = v.inventory_management != null && v.inventory_management !== '';
+        var srec = stockOf(v);
+        var q = srec ? srec.qty : null;
+        var managed = srec && srec.tracked != null && srec.tracked !== '';
         if (lowStock > 0 && managed && typeof q === 'number' && q > 0 && q <= lowStock) {
           var tpl = stockEl.getAttribute('data-stock-tpl') || '';
           var span = stockEl.querySelector('span');
@@ -325,6 +416,7 @@
       } catch (e) {}
     }
     $all('[data-option-selector]', section).forEach(function (i) { i.addEventListener('change', update); });
+    markOptions();   // estado inicial al cargar la ficha
 
     $all('[data-media-target]', section).forEach(function (thumb) {
       thumb.addEventListener('click', function () {

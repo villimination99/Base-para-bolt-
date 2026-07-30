@@ -183,7 +183,13 @@
             <div class="product-purchase">
               <div class="product-qty" data-qty>
                 <button type="button" data-qty-down aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
-                <input type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}" data-qty-input>
+                {%- comment -%}
+                  El tope sale ya del servidor para que valga aunque el
+                  JavaScript no haya cargado todavía.
+                {%- endcomment -%}
+                <input type="number" name="quantity" value="1" min="1"
+                       {% if current_variant.inventory_management != blank and current_variant.inventory_policy != 'continue' and current_variant.inventory_quantity > 0 %}max="{{ current_variant.inventory_quantity }}"{% endif %}
+                       aria-label="{{ 'products.product.quantity' | t }}" data-qty-input>
                 <button type="button" data-qty-up aria-label="{{ 'products.product.increase' | t }}">&plus;</button>
               </div>
               <button type="submit" name="add" class="btn btn-primary btn-lg btn-block product-add"
@@ -292,6 +298,22 @@
 
   <script type="application/json" data-product-json>
     {{ product.variants | json }}
+  </script>
+
+  {%- comment -%}
+    Inventario real por variante. No se puede sacar de product.variants | json,
+    que no trae inventory_quantity: por eso el aviso de "últimas unidades"
+    dejaba de actualizarse en cuanto el cliente cambiaba de variante, y el tope
+    de cantidad no podía saber cuántas quedaban.
+    Se usa una lista de listas a propósito, sin llaves literales.
+    Formato: [id, existencias, gestión de inventario, política]
+  {%- endcomment -%}
+  <script type="application/json" data-inventory-json>
+    [
+      {%- for v in product.variants -%}
+        [{{ v.id | json }}, {{ v.inventory_quantity | default: 0 | json }}, {{ v.inventory_management | default: '' | json }}, {{ v.inventory_policy | default: '' | json }}]{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
   </script>
 
   {%- comment -%} Ficha mínima para el historial "Vistos recientemente" (localStorage) {%- endcomment -%}
