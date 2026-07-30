@@ -77,7 +77,7 @@
         <p class="cc-hint">{%- render 'icon', name: 'chevron-left' -%} {{ section.settings.hint }} {%- render 'icon', name: 'chevron-right' -%}</p>
       {%- endif -%}
     {%- else -%}
-      <p class="cc-hint">{{ 'Añade tarjetas desde el editor.' }}</p>
+      {%- if request.design_mode -%}<p class="cc-hint">Añade tarjetas desde el editor.</p>{%- endif -%}
     {%- endif -%}
   </div>
 </section>

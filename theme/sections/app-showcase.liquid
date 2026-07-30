@@ -13,9 +13,13 @@
     {%- endif -%}
     <div class="app-slot">
       {%- for block in section.blocks -%}
-        {%- render block -%}
+        {%- comment -%} El envoltorio con shopify_attributes permite seleccionar el bloque en el editor, como en las otras dos ranuras de app del tema. {%- endcomment -%}
+        <div class="product-app-block" {{ block.shopify_attributes }}>{%- render block -%}</div>
       {%- else -%}
-        <p class="section-subtitle" style="text-align:center;">Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.</p>
+        {%- comment -%} Solo dentro del editor: en la tienda en vivo el cliente no debe leer instrucciones. {%- endcomment -%}
+        {%- if request.design_mode -%}
+          <p class="section-subtitle" style="text-align:center;">Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.</p>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </div>

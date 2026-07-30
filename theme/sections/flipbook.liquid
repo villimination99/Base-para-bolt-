@@ -10,7 +10,7 @@
         {%- if section.settings.pdf_url != blank -%}
           <button class="flipbook-load btn btn-outline" type="button" data-flipbook-load>{%- render 'icon', name: 'play' -%} {{ section.settings.button_label | default: 'Abrir catálogo' }}</button>
         {%- else -%}
-          <div style="display:grid;place-items:center;height:100%;color:#8fd8ea;">Añade la URL de un PDF o flipbook.</div>
+          {%- if request.design_mode -%}<div style="display:grid;place-items:center;height:100%;color:#8fd8ea;">Añade la URL de un PDF o flipbook.</div>{%- endif -%}
         {%- endif -%}
       </div>
       <p class="flipbook-hint">{{ section.settings.hint }}</p>

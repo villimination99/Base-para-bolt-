@@ -5,16 +5,21 @@
 
     {%- form 'contact', class: 'customer-form contact-form' -%}
       {%- if form.posted_successfully? -%}
-        <p class="form-success">{{ 'contact.form.post_success' | t | default: '¡Gracias! Te responderemos pronto.' }}</p>
+        <p class="form-success" role="status">{{ 'contact.form.post_success' | t }}</p>
       {%- endif -%}
       {{ form.errors | default_errors }}
-      <label for="ContactName">{{ 'contact.form.name' | t | default: 'Nombre' }}</label>
-      <input type="text" id="ContactName" name="contact[name]" autocomplete="name">
-      <label for="ContactEmail">{{ 'contact.form.email' | t | default: 'Correo' }}</label>
-      <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required>
-      <label for="ContactBody">{{ 'contact.form.message' | t | default: 'Mensaje' }}</label>
-      <textarea id="ContactBody" name="contact[body]" rows="5" required></textarea>
-      <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'contact.form.send' | t | default: 'Enviar' }}</button>
+      {%- comment -%}
+        Los campos no conservaban lo escrito: si Shopify rechazaba el envío, el
+        visitante se encontraba el formulario en blanco y tenía que volver a
+        redactar todo el mensaje. Casi nadie lo hace dos veces.
+      {%- endcomment -%}
+      <label for="ContactName">{{ 'contact.form.name' | t }}</label>
+      <input type="text" id="ContactName" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+      <label for="ContactEmail">{{ 'contact.form.email' | t }}</label>
+      <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+      <label for="ContactBody">{{ 'contact.form.message' | t }}</label>
+      <textarea id="ContactBody" name="contact[body]" rows="5" required>{{ form.body }}</textarea>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'contact.form.send' | t }}</button>
     {%- endform -%}
   </div>
 </section>

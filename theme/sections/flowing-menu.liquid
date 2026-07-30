@@ -42,7 +42,7 @@
       {%- endfor -%}
     </nav>
   {%- else -%}
-    <div class="container"><p class="cc-hint">Añade filas desde el editor.</p></div>
+    {%- if request.design_mode -%}<div class="container"><p class="cc-hint">Añade filas desde el editor.</p></div>{%- endif -%}
   {%- endif -%}
 </section>
 
