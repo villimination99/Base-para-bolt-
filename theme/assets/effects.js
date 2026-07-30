@@ -463,7 +463,9 @@
   /* ---- Flowing menu: direction-aware neon reveal ---------------------------- */
   mod(function () {
     var rows = $all('[data-fm-row]');
-    if (!rows.length) return;
+    // Faltaba respetar "reducir movimiento": el panel entraba deslizándose
+    // igualmente para quien pide en su sistema que no haya animaciones.
+    if (!rows.length || reduce) return;
     rows.forEach(function (row) {
       if (!once(row, 'fm')) return;
       var mq = $('.fm-marquee', row);
@@ -496,8 +498,35 @@
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var W = 0, H = 0, parts = [], raf = null, mx = 0, my = 0, tmx = 0, tmy = 0;
     var mobile = window.matchMedia('(max-width:749px)').matches;
-    var N = Math.round((parseFloat(canvas.getAttribute('data-density')) || 70) * (mobile ? 0.5 : 1));
+    // Aparatos de gama baja: menos partículas todavía.
+    var lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+                 (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+    var N = Math.round((parseFloat(canvas.getAttribute('data-density')) || 70) *
+                       (mobile ? 0.5 : 1) * (lowEnd ? 0.5 : 1));
     var colors = ['#00d4ff', '#7b2fff', '#ff2ecb'];
+
+    /* shadowBlur es de lo más caro que existe en canvas: obliga a un desenfoque
+       por cada partícula y cada fotograma (miles por segundo). Se dibuja una
+       sola vez cada combinación de color y tamaño en un lienzo aparte y después
+       solo se copia esa imagen ya desenfocada. */
+    var sprites = {};
+    function sprite(color, r) {
+      var rr = Math.max(0.5, Math.round(r * 4) / 4);
+      var key = color + '|' + rr;
+      if (sprites[key]) return sprites[key];
+      var pad = rr * 3 + 2;
+      var size = Math.ceil((rr + pad) * 2);
+      var c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      var g = c.getContext('2d');
+      var cx = size / 2;
+      g.fillStyle = color;
+      g.shadowColor = color;
+      g.shadowBlur = rr * 3;
+      g.beginPath(); g.arc(cx, cx, rr, 0, 6.283); g.fill();
+      sprites[key] = c;
+      return c;
+    }
     function resize() {
       W = canvas.clientWidth; H = canvas.clientHeight;
       canvas.width = W * dpr; canvas.height = H * dpr;
@@ -507,12 +536,15 @@
       parts = [];
       for (var i = 0; i < N; i++) {
         var z = Math.random() * 0.8 + 0.2; // depth 0.2..1
+        var rad = z * (mobile ? 2 : 2.8) + 0.4;
+        var col = colors[(Math.random() * colors.length) | 0];
         parts.push({
           x: Math.random() * W, y: Math.random() * H, z: z,
-          r: z * (mobile ? 2 : 2.8) + 0.4,
+          r: rad,
           vy: (Math.random() * 0.22 + 0.05) * z,
           vx: (Math.random() - 0.5) * 0.15 * z,
-          c: colors[(Math.random() * colors.length) | 0],
+          c: col,
+          s: sprite(col, rad),   // imagen ya desenfocada, lista para copiar
           a: Math.random() * 0.45 + 0.4
         });
       }
@@ -532,11 +564,9 @@
         if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
         if (p.x < -4) p.x = W + 4; else if (p.x > W + 4) p.x = -4;
         ctx.globalAlpha = p.a;
-        ctx.fillStyle = p.c;
-        ctx.shadowColor = p.c; ctx.shadowBlur = p.r * 3;
-        ctx.beginPath(); ctx.arc(px, py, p.r, 0, 6.283); ctx.fill();
+        ctx.drawImage(p.s, px - p.s.width / 2, py - p.s.height / 2);
       }
-      ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+      ctx.globalAlpha = 1;
     }
     function start() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
     function stop() { cancelAnimationFrame(raf); raf = null; }
