@@ -6,11 +6,16 @@
     {%- assign fs_pct = cart.total_price | times: 100 | divided_by: fs_threshold -%}
     {%- if fs_pct > 100 -%}{%- assign fs_pct = 100 -%}{%- endif -%}
     <div class="cart-ship{% if fs_remaining <= 0 %} is-unlocked{% endif %}">
+      {%- comment -%}
+        Este mensaje estaba escrito en español dentro del código: un visitante
+        en inglés veía la barra de envío gratis en otro idioma.
+      {%- endcomment -%}
       <p class="cart-ship-msg">
         {%- if fs_remaining > 0 -%}
-          {%- render 'icon', name: 'bolt' -%} Te faltan <b>{{ fs_remaining | money }}</b> para <span class="cart-ship-hl">ENVÍO GRATIS</span>
+          {%- capture fs_amount -%}{{ fs_remaining | money }}{%- endcapture -%}
+          {%- render 'icon', name: 'bolt' -%} {{ 'cart.free_shipping.remaining_html' | t: amount: fs_amount }}
         {%- else -%}
-          {%- render 'icon', name: 'check' -%} <b>¡Envío GRATIS desbloqueado!</b>
+          {%- render 'icon', name: 'check' -%} {{ 'cart.free_shipping.unlocked_html' | t }}
         {%- endif -%}
       </p>
       <div class="cart-ship-track"><span class="cart-ship-fill" style="width:{{ fs_pct }}%"></span></div>
@@ -31,6 +36,16 @@
           {%- unless item.variant.title contains 'Default' -%}
             <p class="cart-drawer-item-variant">{{ item.variant.title }}</p>
           {%- endunless -%}
+          {%- comment -%} Propiedades personalizadas (grabado, talla a medida…) {%- endcomment -%}
+          {%- for prop in item.properties -%}
+            {%- unless prop.last == blank or prop.first[0] == '_' -%}
+              <p class="cart-item-prop">{{ prop.first }}: {{ prop.last }}</p>
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- comment -%} Descuentos aplicados a esta línea: sin esto el cupón era invisible {%- endcomment -%}
+          {%- for allocation in item.line_level_discount_allocations -%}
+            <p class="cart-item-discount">{%- render 'icon', name: 'bolt' -%} {{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})</p>
+          {%- endfor -%}
           <div class="cart-drawer-qty" data-qty>
             <button type="button" data-qty-down aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
             <input type="number" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.product.quantity' | t }}" data-qty-input data-key="{{ item.key }}">
@@ -38,7 +53,12 @@
           </div>
         </div>
         <div class="cart-drawer-item-right">
-          <span class="cart-drawer-item-price">{{ item.final_line_price | money }}</span>
+          <span class="cart-drawer-item-price">
+            {%- if item.original_line_price > item.final_line_price -%}
+              <s class="cart-price-was">{{ item.original_line_price | money }}</s>
+            {%- endif -%}
+            {{ item.final_line_price | money }}
+          </span>
           <button type="button" class="cart-drawer-item-remove" data-key="{{ item.key }}" aria-label="{{ 'cart.general.remove' | t }}">
             {%- render 'icon', name: 'trash' -%}
           </button>
@@ -87,9 +107,24 @@
   {%- endif -%}
 
   <div class="cart-drawer-foot">
+    {%- comment -%}
+      Descuentos de carrito completo. Antes solo se veía el total ya rebajado,
+      sin ninguna señal de que el cupón hubiera funcionado.
+    {%- endcomment -%}
+    {%- for discount in cart.cart_level_discount_applications -%}
+      <div class="cart-discount-row">
+        <span>{%- render 'icon', name: 'bolt' -%} {{ discount.title }}</span>
+        <span>&minus;{{ discount.total_allocated_amount | money }}</span>
+      </div>
+    {%- endfor -%}
     <div class="cart-drawer-subtotal">
       <span>{{ 'cart.general.subtotal' | t }}</span>
-      <span class="cart-drawer-subtotal-amount">{{ cart.total_price | money }}</span>
+      <span class="cart-drawer-subtotal-amount">
+        {%- if cart.original_total_price > cart.total_price -%}
+          <s class="cart-price-was">{{ cart.original_total_price | money }}</s>
+        {%- endif -%}
+        {{ cart.total_price | money }}
+      </span>
     </div>
     <form action="{{ routes.cart_url }}" method="post">
       <button type="submit" name="checkout" class="btn btn-primary btn-block">{{ 'cart.general.checkout' | t }}</button>

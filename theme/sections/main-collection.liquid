@@ -24,7 +24,7 @@
           {%- if collection.description != blank and section.settings.show_description -%}
             <div class="collection-hero-desc rte">{{ collection.description }}</div>
           {%- endif -%}
-          <span class="collection-hero-count">{%- render 'icon', name: 'bolt' -%} {{ collection.products_count }} productos</span>
+          <span class="collection-hero-count">{%- render 'icon', name: 'bolt' -%} {{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
         </div>
       </div>
     {%- else -%}

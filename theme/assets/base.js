@@ -722,18 +722,39 @@
         esc(strings.viewAll || 'Ver todos los resultados') + '</a>';
     }
 
+    // Si la búsqueda falla no dejamos el panel colgado en "…": ofrecemos el
+    // enlace a la búsqueda completa, que es una página normal y siempre carga.
+    function renderError(q) {
+      results.innerHTML = '<p class="search-empty">' + esc(strings.searchError || 'No se pudo buscar ahora mismo.') + '</p>' +
+        '<a class="search-all" href="' + esc(routes.search + '?q=' + encodeURIComponent(q)) + '">' +
+        esc(strings.viewAll || 'Ver todos los resultados') + '</a>';
+      if (input) input.setAttribute('aria-expanded', 'false');
+    }
+
     function search(q) {
       if (controller) controller.abort();
       controller = new AbortController();
-      var url = '/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last';
+      // routes.predictiveSearch respeta el prefijo de idioma (/fr/, /es/);
+      // la ruta fija /search/suggest.json devolvía resultados en otro idioma.
+      var base = routes.predictiveSearch || '/search/suggest.json';
+      var url = base + (base.indexOf('?') > -1 ? '&' : '?') + 'q=' + encodeURIComponent(q) +
+        '&resources[type]=product&resources[limit]=6&resources[options][unavailable_products]=last';
       fetch(url, { signal: controller.signal })
-        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (!r.ok) throw new Error('search ' + r.status);
+          return r.json();
+        })
         .then(function (d) {
           var items = (d.resources && d.resources.results && d.resources.results.products) || [];
           render(items, q);
           if (input) input.setAttribute('aria-expanded', items.length ? 'true' : 'false');
         })
-        .catch(function () {});
+        .catch(function (e) {
+          // Abortar es normal (el visitante siguió escribiendo): no es un fallo.
+          if (e && e.name === 'AbortError') return;
+          lastQ = '';   // permite reintentar escribiendo lo mismo otra vez
+          renderError(q);
+        });
     }
 
     if (input) {
@@ -746,7 +767,36 @@
         results.innerHTML = '<p class="search-loading">…</p>';
         timer = setTimeout(function () { search(q); }, 250);
       });
+
+      // Navegación con teclado dentro de la lista de resultados.
+      input.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') return;
+        var links = results.querySelectorAll('a');
+        if (!links.length) return;
+        if (e.key === 'Enter') {
+          var active = results.querySelector('.is-active');
+          if (active) { e.preventDefault(); active.click(); }
+          return;
+        }
+        e.preventDefault();
+        var idx = -1;
+        for (var i = 0; i < links.length; i++) {
+          if (links[i].classList.contains('is-active')) { idx = i; links[i].classList.remove('is-active'); break; }
+        }
+        idx = e.key === 'ArrowDown' ? idx + 1 : idx - 1;
+        if (idx < 0) idx = links.length - 1;
+        if (idx >= links.length) idx = 0;
+        links[idx].classList.add('is-active');
+        links[idx].scrollIntoView({ block: 'nearest' });
+      });
     }
+
+    // Cerrar al pulsar fuera del panel.
+    document.addEventListener('click', function (e) {
+      if (panel.hidden) return;
+      if (panel.contains(e.target) || toggle.contains(e.target)) return;
+      close();
+    });
   })();
 
   /* ---------- Modelos 3D y realidad aumentada ----------
@@ -850,7 +900,16 @@
       var done = function () {
         btn.classList.add('copied');
         var hint = btn.querySelector('.nl-code-hint');
-        if (hint) { var prev = hint.textContent; hint.textContent = '¡Copiado!'; setTimeout(function () { hint.textContent = prev; btn.classList.remove('copied'); }, 1600); }
+        if (hint) {
+          // Guardamos el texto original una sola vez: al pulsar dos veces
+          // seguidas se quedaba "¡Copiado!" fijo para siempre.
+          if (!hint.getAttribute('data-label')) hint.setAttribute('data-label', hint.textContent);
+          hint.textContent = strings.copied || 'OK';
+          setTimeout(function () {
+            hint.textContent = hint.getAttribute('data-label');
+            btn.classList.remove('copied');
+          }, 1600);
+        }
       };
       if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(code).then(done).catch(done); }
       else { var t = document.createElement('textarea'); t.value = code; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(t); done(); }

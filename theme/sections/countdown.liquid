@@ -5,13 +5,13 @@
     {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
 
     <div class="countdown" data-countdown="{{ section.settings.end_date | escape }}" data-expired="{{ section.settings.expired_text | escape }}">
-      <div class="countdown-unit"><span class="countdown-num" data-cd-days>00</span><span class="countdown-label">días</span></div>
+      <div class="countdown-unit"><span class="countdown-num" data-cd-days>00</span><span class="countdown-label">{{ 'general.countdown.days' | t }}</span></div>
       <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><span class="countdown-num" data-cd-hours>00</span><span class="countdown-label">horas</span></div>
+      <div class="countdown-unit"><span class="countdown-num" data-cd-hours>00</span><span class="countdown-label">{{ 'general.countdown.hours' | t }}</span></div>
       <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><span class="countdown-num" data-cd-mins>00</span><span class="countdown-label">min</span></div>
+      <div class="countdown-unit"><span class="countdown-num" data-cd-mins>00</span><span class="countdown-label">{{ 'general.countdown.minutes' | t }}</span></div>
       <div class="countdown-sep">:</div>
-      <div class="countdown-unit"><span class="countdown-num" data-cd-secs>00</span><span class="countdown-label">seg</span></div>
+      <div class="countdown-unit"><span class="countdown-num" data-cd-secs>00</span><span class="countdown-label">{{ 'general.countdown.seconds' | t }}</span></div>
     </div>
 
     {%- if section.settings.button_label != blank -%}

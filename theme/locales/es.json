@@ -20,7 +20,8 @@
       "results_with_count": "{{ count }} resultados para \"{{ terms }}\"",
       "no_results": "No se encontraron resultados para \"{{ terms }}\".",
       "no_results_short": "Sin resultados para",
-      "view_all": "Ver todos los resultados"
+      "view_all": "Ver todos los resultados",
+      "error": "No se pudo buscar ahora mismo. Prueba la página de búsqueda completa."
     },
     "cart": {
       "title": "Carrito"
@@ -41,7 +42,15 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "language": "Idioma",
-    "explore": "Explorar"
+    "explore": "Explorar",
+    "countdown": {
+      "days": "días",
+      "hours": "horas",
+      "minutes": "min",
+      "seconds": "seg"
+    },
+    "copy_hint": "Toca para copiar",
+    "copied": "¡Copiado!"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",
@@ -64,7 +73,8 @@
       "media": "Medio",
       "share": "Compartir",
       "example": "Producto de ejemplo",
-      "reviews": "reseñas"
+      "reviews": "reseñas",
+      "drag_to_rotate": "Arrastra para girar"
     }
   },
   "collections": {
@@ -89,6 +99,10 @@
       "remove": "Eliminar",
       "empty": "Tu carrito está vacío",
       "note": "Nota del pedido"
+    },
+    "free_shipping": {
+      "remaining_html": "Te faltan <b>{{ amount }}</b> para <span class=\"cart-ship-hl\">ENVÍO GRATIS</span>",
+      "unlocked_html": "<b>¡Envío GRATIS desbloqueado!</b>"
     }
   },
   "blogs": {

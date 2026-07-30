@@ -23,7 +23,7 @@
             <span class="col-index-overlay" aria-hidden="true"></span>
           </div>
           <div class="col-index-body">
-            <span class="col-index-count">{{ collection.products_count }} productos</span>
+            <span class="col-index-count">{{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
             <h2 class="col-index-title">{{ collection.title }}</h2>
             <span class="col-index-cta">{{ section.settings.cta_text }} {%- render 'icon', name: 'arrow-right' -%}</span>
           </div>

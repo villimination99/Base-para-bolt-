@@ -337,3 +337,12 @@ body:not(.pimg-glow) .holo-stage::after{display:none}
 .order-address{margin-top:2rem;color:#cfe0f0}
 .order-address h2{font-size:1.1rem;margin:0 0 .5rem}
 .account-no-address{color:#9fb2c8;margin:.2rem 0 .6rem}
+/* Resultado resaltado con las flechas del teclado en el buscador */
+.search-item.is-active,.search-all.is-active{background:rgba(0,212,255,.12);outline:2px solid var(--neon-cyan);outline-offset:-2px}
+/* Descuentos y propiedades de línea en el carrito */
+.cart-item-prop{font-size:.82rem;color:#9fb2c8;margin:.15rem 0}
+.cart-item-discount{display:flex;align-items:center;gap:.3rem;font-size:.82rem;color:var(--neon-green);margin:.2rem 0}
+.cart-item-discount svg{width:13px;height:13px}
+.cart-discount-row{display:flex;justify-content:space-between;align-items:center;gap:.6rem;color:var(--neon-green);font-size:.9rem;margin-bottom:.4rem}
+.cart-discount-row svg{width:14px;height:14px;vertical-align:-2px}
+.cart-price-was{color:#7d8ea4;text-decoration:line-through;margin-right:.35rem;font-weight:400}

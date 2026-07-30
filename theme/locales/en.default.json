@@ -20,7 +20,8 @@
       "results_with_count": "{{ count }} results for \"{{ terms }}\"",
       "no_results": "No results found for \"{{ terms }}\".",
       "no_results_short": "No results for",
-      "view_all": "View all results"
+      "view_all": "View all results",
+      "error": "We couldn't search right now. Try the full search page."
     },
     "cart": {
       "title": "Cart"
@@ -41,7 +42,15 @@
     "previous": "Previous",
     "next": "Next",
     "language": "Language",
-    "explore": "Explore"
+    "explore": "Explore",
+    "countdown": {
+      "days": "days",
+      "hours": "hours",
+      "minutes": "min",
+      "seconds": "sec"
+    },
+    "copy_hint": "Tap to copy",
+    "copied": "Copied!"
   },
   "accessibility": {
     "skip_to_content": "Skip to content",
@@ -64,7 +73,8 @@
       "media": "Media",
       "share": "Share",
       "example": "Example product",
-      "reviews": "reviews"
+      "reviews": "reviews",
+      "drag_to_rotate": "Drag to rotate"
     }
   },
   "collections": {
@@ -89,6 +99,10 @@
       "remove": "Remove",
       "empty": "Your cart is empty",
       "note": "Order note"
+    },
+    "free_shipping": {
+      "remaining_html": "You're <b>{{ amount }}</b> away from <span class=\"cart-ship-hl\">FREE SHIPPING</span>",
+      "unlocked_html": "<b>Free shipping unlocked!</b>"
     }
   },
   "blogs": {

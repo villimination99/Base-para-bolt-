@@ -17,7 +17,22 @@
               <div class="cart-row-info">
                 <a href="{{ item.url }}" class="cart-row-title">{{ item.product.title }}</a>
                 {%- unless item.variant.title contains 'Default' -%}<p class="cart-row-variant">{{ item.variant.title }}</p>{%- endunless -%}
-                <p class="cart-row-price">{{ item.final_price | money }}</p>
+                {%- comment -%} Propiedades personalizadas (grabado, talla a medida…) {%- endcomment -%}
+                {%- for prop in item.properties -%}
+                  {%- unless prop.last == blank or prop.first[0] == '_' -%}
+                    <p class="cart-item-prop">{{ prop.first }}: {{ prop.last }}</p>
+                  {%- endunless -%}
+                {%- endfor -%}
+                <p class="cart-row-price">
+                  {%- if item.original_price > item.final_price -%}
+                    <s class="cart-price-was">{{ item.original_price | money }}</s>
+                  {%- endif -%}
+                  {{ item.final_price | money }}
+                </p>
+                {%- comment -%} Descuentos de esta línea: sin esto el cupón era invisible {%- endcomment -%}
+                {%- for allocation in item.line_level_discount_allocations -%}
+                  <p class="cart-item-discount">{%- render 'icon', name: 'bolt' -%} {{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})</p>
+                {%- endfor -%}
               </div>
               <div class="cart-row-controls">
                 <div class="cart-drawer-qty" data-qty>
@@ -26,7 +41,12 @@
                   <button type="button" data-qty-up aria-label="{{ 'products.product.increase' | t }}">&plus;</button>
                 </div>
                 <span class="cart-row-total">{{ item.final_line_price | money }}</span>
-                <a href="{{ item.url_to_remove }}" class="cart-row-remove" aria-label="{{ 'cart.general.remove' | t }}">{%- render 'icon', name: 'trash' -%}</a>
+                {%- comment -%}
+                  rel="nofollow": este enlace vacía una línea del carrito con un
+                  GET, así que los buscadores y los precargadores del navegador
+                  no deben seguirlo.
+                {%- endcomment -%}
+                <a href="{{ item.url_to_remove }}" rel="nofollow" class="cart-row-remove" aria-label="{{ 'cart.general.remove' | t }}">{%- render 'icon', name: 'trash' -%}</a>
               </div>
             </li>
           {%- endfor -%}
@@ -40,9 +60,24 @@
         {%- endif -%}
 
         <div class="cart-footer">
+          {%- comment -%}
+            Descuentos de carrito completo. Antes solo aparecía el total ya
+            rebajado, sin ninguna señal de que el cupón se hubiera aplicado.
+          {%- endcomment -%}
+          {%- for discount in cart.cart_level_discount_applications -%}
+            <div class="cart-discount-row">
+              <span>{%- render 'icon', name: 'bolt' -%} {{ discount.title }}</span>
+              <span>&minus;{{ discount.total_allocated_amount | money }}</span>
+            </div>
+          {%- endfor -%}
           <div class="cart-subtotal">
             <span>{{ 'cart.general.subtotal' | t }}</span>
-            <span class="cart-subtotal-amount">{{ cart.total_price | money }}</span>
+            <span class="cart-subtotal-amount">
+              {%- if cart.original_total_price > cart.total_price -%}
+                <s class="cart-price-was">{{ cart.original_total_price | money }}</s>
+              {%- endif -%}
+              {{ cart.total_price | money }}
+            </span>
           </div>
           <p class="cart-taxes">{{ 'cart.general.taxes_and_shipping' | t }}</p>
           <div class="cart-actions">
