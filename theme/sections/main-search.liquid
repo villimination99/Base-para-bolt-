@@ -3,6 +3,12 @@
     <h1 class="section-title">{{ 'general.search.title' | t }}</h1>
 
     <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      {%- comment -%}
+        Sin options[prefix]=last, Shopify solo encuentra palabras completas:
+        buscar "prote" no devolvía nada aunque hubiera "proteína". Es la opción
+        que recomienda Shopify y la que usan sus temas oficiales.
+      {%- endcomment -%}
+      <input type="hidden" name="options[prefix]" value="last">
       <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}" autocomplete="off">
       <button type="submit" class="btn btn-primary" aria-label="{{ 'general.search.title' | t }}">{%- render 'icon', name: 'search' -%}</button>
     </form>
@@ -27,7 +33,7 @@
           {%- endfor -%}
         </div>
         {%- if paginate.pages > 1 -%}
-          <nav class="pagination" role="navigation">
+          <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
             {%- for part in paginate.parts -%}
               {%- if part.is_link -%}<a href="{{ part.url }}" class="pagination-num">{{ part.title }}</a>
               {%- else -%}<span class="pagination-num is-current">{{ part.title }}</span>{%- endif -%}

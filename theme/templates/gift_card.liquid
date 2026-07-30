@@ -1,11 +1,46 @@
 {% layout 'gift_card' %}
+{%- comment -%}
+  Antes se mostraba el saldo tal cual, aunque la tarjeta estuviera caducada o
+  desactivada: quien la recibiera creería que puede gastarla. Tampoco se veía
+  el importe original cuando ya se había usado una parte, ni la fecha de
+  caducidad de las que sí siguen vigentes.
+{%- endcomment -%}
+{%- liquid
+  assign gc_usable = false
+  if gift_card.enabled and gift_card.expired != true
+    assign gc_usable = true
+  endif
+  assign gc_expiry = gift_card.expires_on | date: '%d/%m/%Y'
+-%}
 <section class="section-padding giftcard-page">
   <div class="container container--xnarrow" style="text-align:center;">
     <h1 class="section-title">{{ 'gift_cards.issued.subtext' | t }}</h1>
-    <div class="giftcard-balance neon-text-cyan">{{ gift_card.balance | money }}</div>
-    <div class="giftcard-code">
-      <span>{{ gift_card.code | format_code }}</span>
+
+    <div class="giftcard-card{% unless gc_usable %} is-void{% endunless %}">
+      <div class="giftcard-balance neon-text-cyan">{{ gift_card.balance | money }}</div>
+
+      {%- if gift_card.balance != gift_card.initial_value -%}
+        {%- capture gc_bal -%}{{ gift_card.balance | money }}{%- endcapture -%}
+        {%- capture gc_ini -%}{{ gift_card.initial_value | money }}{%- endcapture -%}
+        <p class="giftcard-remaining">{{ 'gift_cards.issued.remaining' | t: balance: gc_bal, initial: gc_ini }}</p>
+      {%- endif -%}
+
+      {%- if gift_card.enabled != true -%}
+        <p class="giftcard-notice is-void" role="status">{{ 'gift_cards.issued.disabled' | t }}</p>
+      {%- elsif gift_card.expired -%}
+        <p class="giftcard-notice is-void" role="status">{{ 'gift_cards.issued.expired' | t }}</p>
+      {%- elsif gift_card.expires_on -%}
+        <p class="giftcard-notice">{{ 'gift_cards.issued.expires_on' | t: date: gc_expiry }}</p>
+      {%- endif -%}
+
+      <div class="giftcard-code">
+        <span class="visually-hidden">{{ 'gift_cards.issued.code_label' | t }}</span>
+        <span>{{ gift_card.code | format_code }}</span>
+      </div>
     </div>
-    <a href="{{ shop.url }}" class="btn btn-primary btn-lg">{{ 'gift_cards.issued.shop_link' | t }}</a>
+
+    {%- if gc_usable -%}
+      <a href="{{ shop.url }}" class="btn btn-primary btn-lg">{{ 'gift_cards.issued.shop_link' | t }}</a>
+    {%- endif -%}
   </div>
 </section>

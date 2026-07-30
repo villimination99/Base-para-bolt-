@@ -207,7 +207,12 @@
     "issued": {
       "title": "Gift card",
       "subtext": "Here is your gift card!",
-      "shop_link": "Start shopping"
+      "shop_link": "Start shopping",
+      "expired": "This gift card has expired.",
+      "expires_on": "Expires on {{ date }}",
+      "disabled": "This gift card is no longer active.",
+      "remaining": "{{ balance }} left of {{ initial }}",
+      "code_label": "Gift card code"
     }
   },
   "contact": {

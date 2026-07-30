@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_bg }}">
+  {%- if settings.favicon != blank -%}<link rel="icon" type="image/png" sizes="48x48" href="{{ settings.favicon | image_url: width: 48, height: 48, crop: 'center' }}">{%- endif -%}
   {%- assign gc_balance = gift_card.balance | money -%}
   <title>{{ 'gift_cards.issued.title' | t: value: gc_balance, shop: shop.name }}</title>
   {%- style -%}

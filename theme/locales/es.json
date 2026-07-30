@@ -207,7 +207,12 @@
     "issued": {
       "title": "Tarjeta de regalo",
       "subtext": "¡Aquí está tu tarjeta de regalo!",
-      "shop_link": "Ir a la tienda"
+      "shop_link": "Ir a la tienda",
+      "expired": "Esta tarjeta de regalo ha caducado.",
+      "expires_on": "Caduca el {{ date }}",
+      "disabled": "Esta tarjeta de regalo ya no está activa.",
+      "remaining": "Quedan {{ balance }} de {{ initial }}",
+      "code_label": "Código de la tarjeta"
     }
   },
   "contact": {

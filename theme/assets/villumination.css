@@ -366,3 +366,13 @@ body:not(.pimg-glow) .holo-stage::after{display:none}
 .comment-form textarea{min-height:120px;resize:vertical}
 /* La página propia del menú padre, destacada como primera entrada del submenú */
 .mobile-subparent{opacity:.9}
+/* Tarjeta de regalo: estado caducada/desactivada y saldo parcial */
+.giftcard-card{margin:1.5rem 0 2rem}
+.giftcard-card.is-void .giftcard-balance{opacity:.45;text-decoration:line-through}
+.giftcard-remaining{color:#9fb2c8;font-size:.95rem;margin:.3rem 0 0}
+.giftcard-notice{margin:.7rem 0 0;font-size:.95rem;color:#cfe0f0}
+.giftcard-notice.is-void{color:#ffd7de;background:rgba(255,60,90,.1);border:1px solid rgba(255,60,90,.45);border-radius:.6rem;padding:.6rem .9rem;display:inline-block}
+/* Con "Encabezado fijo" desactivado la barra se queda arriba y se va con el scroll */
+.navbar--static{position:absolute}
+/* Buscador de la página 404 */
+.error-404-search{margin:1.5rem auto;max-width:420px}
