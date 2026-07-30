@@ -25,7 +25,11 @@
     </article>
 
     {%- if blog.comments_enabled? -%}
-      <div class="article-comments">
+      {%- comment -%}
+        El id "comments" es el ancla a la que Shopify devuelve al visitante
+        después de enviar un comentario.
+      {%- endcomment -%}
+      <div class="article-comments" id="comments">
         {%- if article.comments_count > 0 -%}
           <h2>{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
           {%- for comment in article.comments -%}
@@ -34,7 +38,43 @@
               <span class="comment-author">— {{ comment.author }}</span>
             </div>
           {%- endfor -%}
+        {%- else -%}
+          <p class="comment-none">{{ 'blogs.article.no_comments' | t }}</p>
         {%- endif -%}
+
+        {%- comment -%}
+          Faltaba por completo el formulario: los comentarios se mostraban pero
+          nadie podía escribir ninguno, así que activar los comentarios en
+          Shopify no servía de nada.
+        {%- endcomment -%}
+        <h2 class="comment-form-title">{{ 'blogs.article.comment_title' | t }}</h2>
+        {%- form 'new_comment', article, class: 'customer-form comment-form' -%}
+          {%- if form.errors -%}
+            <div class="form-errors" role="alert">
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-success" role="status">
+              {%- if blog.moderated? -%}
+                {{ 'blogs.article.comment_moderated' | t }}
+              {%- else -%}
+                {{ 'blogs.article.comment_success' | t }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          <label for="CommentAuthor">{{ 'blogs.article.comment_name' | t }}</label>
+          <input type="text" name="comment[author]" id="CommentAuthor" autocomplete="name" required value="{{ form.author }}">
+          <label for="CommentEmail">{{ 'blogs.article.comment_email' | t }}</label>
+          <input type="email" name="comment[email]" id="CommentEmail" autocomplete="email" required value="{{ form.email }}">
+          <label for="CommentBody">{{ 'blogs.article.comment_message' | t }}</label>
+          <textarea name="comment[body]" id="CommentBody" rows="5" required>{{ form.body }}</textarea>
+          <button type="submit" class="btn btn-primary">{{ 'blogs.article.comment_submit' | t }}</button>
+        {%- endform -%}
       </div>
     {%- endif -%}
   </div>

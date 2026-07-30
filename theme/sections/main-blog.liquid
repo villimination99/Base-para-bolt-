@@ -20,10 +20,13 @@
               <p class="article-card-excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
             </div>
           </a>
+        {%- else -%}
+          {%- comment -%} Un blog sin artículos dejaba solo el título y una rejilla vacía. {%- endcomment -%}
+          <p class="collection-empty">{{ 'blogs.general.no_articles' | t }}</p>
         {%- endfor -%}
       </div>
       {%- if paginate.pages > 1 -%}
-        <nav class="pagination" role="navigation">
+        <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
           {%- for part in paginate.parts -%}
             {%- if part.is_link -%}<a href="{{ part.url }}" class="pagination-num">{{ part.title }}</a>
             {%- else -%}<span class="pagination-num is-current">{{ part.title }}</span>{%- endif -%}

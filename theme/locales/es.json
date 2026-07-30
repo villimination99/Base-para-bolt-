@@ -108,7 +108,18 @@
   "blogs": {
     "article": {
       "by": "por",
-      "comments": "{{ count }} comentarios"
+      "comments": "{{ count }} comentarios",
+      "comment_title": "Deja un comentario",
+      "comment_name": "Nombre",
+      "comment_email": "Correo",
+      "comment_message": "Comentario",
+      "comment_submit": "Publicar comentario",
+      "comment_success": "Tu comentario se publicó.",
+      "comment_moderated": "¡Gracias! Tu comentario aparecerá en cuanto se apruebe.",
+      "no_comments": "Todavía no hay comentarios."
+    },
+    "general": {
+      "no_articles": "Todavía no hay artículos publicados."
     }
   },
   "customer": {

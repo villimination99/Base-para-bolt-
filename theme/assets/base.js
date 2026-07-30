@@ -83,9 +83,23 @@
     if (!toggle || !menu) return;
     function open() { menu.classList.add('open'); document.body.style.overflow = 'hidden'; toggle.setAttribute('aria-expanded', 'true'); }
     function close() { menu.classList.remove('open'); document.body.style.overflow = ''; toggle.setAttribute('aria-expanded', 'false'); }
-    toggle.addEventListener('click', open);
+    // El botón solo abría: al volver a pulsarlo no pasaba nada y había que
+    // buscar la X o el fondo para cerrar.
+    toggle.addEventListener('click', function () {
+      if (menu.classList.contains('open')) close(); else open();
+    });
     $all('[data-mobile-close]', menu).forEach(function (b) { b.addEventListener('click', close); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+
+    // Al girar una tableta a horizontal la barra de escritorio toma el relevo y
+    // el botón de menú desaparece, pero el panel seguía abierto y el body
+    // bloqueado: la página quedaba sin poder desplazarse.
+    if (window.matchMedia) {
+      var wide = matchMedia('(min-width: 1024px)');
+      var onWide = function (ev) { if (ev.matches) close(); };
+      if (wide.addEventListener) wide.addEventListener('change', onWide);
+      else if (wide.addListener) wide.addListener(onWide);
+    }
   })();
 
   /* ---------- Cart drawer ---------- */
@@ -488,6 +502,48 @@
       iframe.className = 'video-card-iframe';
       btn.parentNode.replaceChild(iframe, btn);
     });
+  });
+
+  /* ---------- Desplegables del escritorio en pantallas táctiles ----------
+     La barra de escritorio aparece a partir de 1024px, que es justo el ancho
+     de una tableta en horizontal. Ahí el puntero no tiene hover: al tocar
+     "Catálogo" se navegaba a la colección y el mega-menú, que solo se abre
+     con :hover, no se veía nunca. Primer toque abre, segundo navega. */
+  mod(function () {
+    if (!window.matchMedia || !matchMedia('(hover: none)').matches) return;
+
+    function closeAll(except) {
+      $all('.nav-item.is-open').forEach(function (o) {
+        if (o === except) return;
+        o.classList.remove('is-open');
+        var a = o.querySelector('.nav-link');
+        if (a) a.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    $all('.nav-item > .nav-link').forEach(function (link) {
+      if (!once(link, 'tapdd')) return;
+      var item = link.parentElement;
+      if (!item.querySelector('.nav-dropdown')) return;
+      link.setAttribute('aria-expanded', 'false');
+      link.addEventListener('click', function (e) {
+        if (item.classList.contains('is-open')) return;   // segundo toque: navega
+        e.preventDefault();
+        closeAll(item);
+        item.classList.add('is-open');
+        link.setAttribute('aria-expanded', 'true');
+      });
+    });
+
+    if (once(document.documentElement, 'tapddout')) {
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('.nav-item')) return;
+        closeAll(null);
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeAll(null);
+      });
+    }
   });
 
   /* ---------- Mobile submenu toggle (tap to open/close) ---------- */

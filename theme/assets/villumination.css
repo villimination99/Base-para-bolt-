@@ -352,3 +352,18 @@ body:not(.pimg-glow) .holo-stage::after{display:none}
 .product-option-value.is-unavailable{opacity:.3}
 .product-option-input:checked + .product-option-value.is-sold-out,
 .product-option-input:checked + .product-option-value.is-unavailable{opacity:.7}
+/* En tabletas (puntero sin hover) el desplegable era inalcanzable: el primer
+   toque en el enlace padre navegaba y el menú, que solo abre con :hover,
+   nunca aparecía. La clase is-open la pone el JS en ese caso. */
+.nav-item.is-open .nav-dropdown{opacity:1;visibility:visible;transform:translateX(-50%) translateY(2px)}
+.nav-item--mega.is-open .nav-mega{opacity:1;visibility:visible;transform:translateX(-50%) translateY(2px)}
+.nav-item.is-open .nav-caret{transform:rotate(180deg)}
+/* Red de seguridad: en escritorio el panel móvil no debe poder quedarse abierto
+   (por ejemplo al girar una tableta con el menú desplegado). */
+@media (min-width:1024px){.mobile-menu,.mobile-menu.open{display:none}}
+/* Formulario de comentarios del blog */
+.comment-form-title{font-size:1.15rem;margin:2rem 0 .2rem}
+.comment-none{color:#9fb2c8;margin:.4rem 0 1rem}
+.comment-form textarea{min-height:120px;resize:vertical}
+/* La página propia del menú padre, destacada como primera entrada del submenú */
+.mobile-subparent{opacity:.9}

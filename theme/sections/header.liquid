@@ -33,7 +33,7 @@
 
         {%- if is_coll_menu -%}
           <div class="nav-item nav-item--mega">
-            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}" aria-haspopup="true">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
             <div class="nav-dropdown nav-mega">
               {%- assign mega_blocks = section.blocks | where: 'type', 'mega_link' -%}
               {%- if link.links.size > 0 -%}
@@ -86,7 +86,7 @@
           </div>
         {%- elsif link.links.size > 0 -%}
           <div class="nav-item">
-            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}" aria-haspopup="true">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
             <div class="nav-dropdown{% if link.links.first.links.size > 0 %} nav-dropdown--grouped{% endif %}">
               {%- for child in link.links -%}
                 {%- if child.links.size > 0 -%}
@@ -167,6 +167,14 @@
             <span>{{ link.title }}</span><span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span>
           </button>
           <div class="mobile-submenu" hidden>
+            {%- comment -%}
+              El padre es un botón que solo abre el submenú, así que su propia
+              página (por ejemplo la colección "Vêtements") no se podía visitar
+              desde el móvil. Se añade como primera entrada.
+            {%- endcomment -%}
+            {%- if link.url != blank and link.url != '#' -%}
+              <a href="{{ link.url }}" class="mobile-subhead mobile-subparent"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+            {%- endif -%}
             {%- if link.links.size > 0 -%}
               {%- comment -%} Navegación anidada: cada hijo con sus sub-colecciones indentadas {%- endcomment -%}
               {%- for child in link.links -%}
