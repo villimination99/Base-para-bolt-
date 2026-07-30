@@ -3,11 +3,11 @@
     {%- if section.settings.show_hero -%}
       <div class="collection-hero ntile-{{ collection.id | modulo: 4 }}{% if collection.image %} has-img{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
         {%- if collection.image -%}
-          <img class="collection-hero-bg" src="{{ collection.image | image_url: width: 1600 }}"
-               srcset="{{ collection.image | image_url: width: 600 }} 600w,
-                       {{ collection.image | image_url: width: 900 }} 900w,
-                       {{ collection.image | image_url: width: 1200 }} 1200w,
-                       {{ collection.image | image_url: width: 1600 }} 1600w"
+          <img class="collection-hero-bg" src="{{ collection.image | image_url: width: 1600, height: 500, crop: 'center' }}"
+               srcset="{{ collection.image | image_url: width: 600, height: 188, crop: 'center' }} 600w,
+                       {{ collection.image | image_url: width: 900, height: 281, crop: 'center' }} 900w,
+                       {{ collection.image | image_url: width: 1200, height: 375, crop: 'center' }} 1200w,
+                       {{ collection.image | image_url: width: 1600, height: 500, crop: 'center' }} 1600w"
                sizes="100vw"
                alt="" width="1600" height="500" loading="eager" fetchpriority="high" decoding="async">
         {%- else -%}

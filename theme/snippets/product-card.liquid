@@ -12,8 +12,22 @@
            alt="{{ product.featured_media.alt | default: product.title | escape }}"
            width="500" height="{{ 500 | divided_by: product.featured_media.aspect_ratio | round }}"
            loading="lazy" decoding="async" data-decode>
-      {%- if product.media[1] != blank -%}
-        <img class="product-card-image-alt" src="{{ product.media[1] | image_url: width: 500 }}" alt="" width="500" height="500" loading="lazy" decoding="async" fetchpriority="low" data-decode>
+      {%- comment -%}
+        Antes se usaba product.media[1]: el segundo MEDIO, que puede ser un
+        vídeo o un modelo 3D, no una foto. Con product.images[1] siempre es una
+        imagen. El alto era fijo (500x500): con fotos que no fueran cuadradas la
+        imagen de paso del ratón cambiaba de proporción respecto a la principal
+        y la tarjeta daba un salto.
+      {%- endcomment -%}
+      {%- assign card_alt_img = product.images[1] -%}
+      {%- if card_alt_img != blank -%}
+        <img class="product-card-image-alt" src="{{ card_alt_img | image_url: width: 500 }}"
+             srcset="{{ card_alt_img | image_url: width: 300 }} 300w,
+                     {{ card_alt_img | image_url: width: 500 }} 500w,
+                     {{ card_alt_img | image_url: width: 700 }} 700w"
+             sizes="(max-width: 600px) 45vw, 260px"
+             alt="" width="500" height="{{ 500 | divided_by: card_alt_img.aspect_ratio | round }}"
+             loading="lazy" decoding="async" fetchpriority="low" data-decode>
       {%- endif -%}
     {%- else -%}
       <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
@@ -35,8 +49,18 @@
       {%- else -%}
         {%- assign new_days = settings.badge_new_days | default: 0 -%}
         {%- if new_days > 0 -%}
-          {%- assign age_s = 'now' | date: '%s' | minus: product.published_at | date: '%s' -%}
-          {%- assign age_days = age_s | divided_by: 86400 -%}
+          {%- comment -%}
+            Antes era:  'now' | date: '%s' | minus: product.published_at | date: '%s'
+            Liquid encadena los filtros de izquierda a derecha, así que restaba
+            un objeto fecha (que no se convierte a número) a los segundos de hoy
+            y volvía a aplicar el filtro date al resultado. La antigüedad salía
+            en unos 20.000 días, siempre por encima del umbral, y la etiqueta
+            "Nuevo" no se mostraba nunca. Hay que convertir cada fecha a número
+            por separado antes de restar.
+          {%- endcomment -%}
+          {%- assign now_s = 'now' | date: '%s' | plus: 0 -%}
+          {%- assign pub_s = product.published_at | date: '%s' | plus: 0 -%}
+          {%- assign age_days = now_s | minus: pub_s | divided_by: 86400 -%}
           {%- if age_days <= new_days -%}
             <span class="product-card-badge pcb-new">{{ 'products.product.new' | t }}</span>
           {%- endif -%}
@@ -64,11 +88,21 @@
       </div>
     {%- endif -%}
     <div class="product-card-footer">
+      {%- comment -%}
+        Se mostraba product.price, que es el precio MÁS BAJO de todas las
+        variantes, mientras que el botón de añadir rápido mete en el carrito la
+        primera variante disponible. En un producto con varias tallas a distinto
+        precio, el cliente veía 19 € y en el carrito le aparecía 29 €. También
+        la etiqueta de descuento se calculaba sobre esa variante y no sobre el
+        precio mostrado, así que podían contradecirse. Ahora todo usa la misma
+        variante: la que realmente se añade.
+      {%- endcomment -%}
+      {%- assign card_v = product.selected_or_first_available_variant -%}
       <div class="product-price">
-        {%- if product.compare_at_price > product.price -%}
-          <span class="product-price-compare">{{ product.compare_at_price | money }}</span>
+        {%- if card_v.compare_at_price > card_v.price -%}
+          <span class="product-price-compare">{{ card_v.compare_at_price | money }}</span>
         {%- endif -%}
-        <span class="product-price-amount">{{ product.price | money }}</span>
+        <span class="product-price-amount">{{ card_v.price | money }}</span>
       </div>
       {%- if product.available -%}
         <product-form>

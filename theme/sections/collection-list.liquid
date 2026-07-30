@@ -11,16 +11,16 @@
           <a href="{{ coll.url }}" class="collection-tile{% if settings.enable_card_tilt %} js-tilt{% endif %}" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
             <div class="collection-tile-media">
               {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 700 }}"
-                             srcset="{{ block.settings.image | image_url: width: 300 }} 300w,
-                             {{ block.settings.image | image_url: width: 450 }} 450w,
-                             {{ block.settings.image | image_url: width: 700 }} 700w"
+                <img src="{{ block.settings.image | image_url: width: 700, height: 500, crop: 'center' }}"
+                             srcset="{{ block.settings.image | image_url: width: 300, height: 214, crop: 'center' }} 300w,
+                             {{ block.settings.image | image_url: width: 450, height: 321, crop: 'center' }} 450w,
+                             {{ block.settings.image | image_url: width: 700, height: 500, crop: 'center' }} 700w"
                              sizes="(min-width: 861px) 33vw, 100vw" alt="{{ coll.title | escape }}" width="700" height="500" loading="lazy">
               {%- elsif coll.featured_image -%}
-                <img src="{{ coll.featured_image | image_url: width: 700 }}"
-                             srcset="{{ coll.featured_image | image_url: width: 300 }} 300w,
-                             {{ coll.featured_image | image_url: width: 450 }} 450w,
-                             {{ coll.featured_image | image_url: width: 700 }} 700w"
+                <img src="{{ coll.featured_image | image_url: width: 700, height: 500, crop: 'center' }}"
+                             srcset="{{ coll.featured_image | image_url: width: 300, height: 214, crop: 'center' }} 300w,
+                             {{ coll.featured_image | image_url: width: 450, height: 321, crop: 'center' }} 450w,
+                             {{ coll.featured_image | image_url: width: 700, height: 500, crop: 'center' }} 700w"
                              sizes="(min-width: 861px) 33vw, 100vw" alt="{{ coll.title | escape }}" width="700" height="500" loading="lazy">
               {%- else -%}
                 <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>

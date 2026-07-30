@@ -19,10 +19,10 @@
           <span class="catgrid-media">
             {%- assign img = block.settings.image | default: coll.featured_image -%}
             {%- if img -%}
-              <img src="{{ img | image_url: width: 700 }}"
-                           srcset="{{ img | image_url: width: 300 }} 300w,
-                           {{ img | image_url: width: 450 }} 450w,
-                           {{ img | image_url: width: 700 }} 700w"
+              <img src="{{ img | image_url: width: 700, height: 500, crop: 'center' }}"
+                           srcset="{{ img | image_url: width: 300, height: 214, crop: 'center' }} 300w,
+                           {{ img | image_url: width: 450, height: 321, crop: 'center' }} 450w,
+                           {{ img | image_url: width: 700, height: 500, crop: 'center' }} 700w"
                            sizes="(min-width: 861px) 33vw, 100vw" alt="{{ block.settings.title | default: coll.title | escape }}" width="700" height="500" loading="lazy">
             {%- endif -%}
             <span class="catgrid-shade" aria-hidden="true"></span>

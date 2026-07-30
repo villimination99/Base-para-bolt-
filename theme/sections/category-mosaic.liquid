@@ -17,10 +17,10 @@
            {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
           {%- assign img = block.settings.image | default: coll.featured_image -%}
           {%- if img -%}
-            <img src="{{ img | image_url: width: 900 }}"
-                           srcset="{{ img | image_url: width: 400 }} 400w,
-                           {{ img | image_url: width: 600 }} 600w,
-                           {{ img | image_url: width: 900 }} 900w"
+            <img src="{{ img | image_url: width: 900, height: 700, crop: 'center' }}"
+                           srcset="{{ img | image_url: width: 400, height: 311, crop: 'center' }} 400w,
+                           {{ img | image_url: width: 600, height: 467, crop: 'center' }} 600w,
+                           {{ img | image_url: width: 900, height: 700, crop: 'center' }} 900w"
                            sizes="(min-width: 861px) 50vw, 100vw" alt="{{ block.settings.title | default: coll.title | escape }}" width="900" height="700" loading="lazy">
           {%- endif -%}
           <span class="catmosaic-shade" aria-hidden="true"></span>

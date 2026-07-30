@@ -12,8 +12,8 @@
            {% if settings.enable_scroll_reveal %}data-reveal{% endif %} aria-label="{{ collection.title | escape }}">
           <div class="col-index-media">
             {%- if collection.featured_image -%}
-              <img src="{{ collection.featured_image | image_url: width: 800 }}"
-                   srcset="{{ collection.featured_image | image_url: width: 500 }} 500w, {{ collection.featured_image | image_url: width: 800 }} 800w"
+              <img src="{{ collection.featured_image | image_url: width: 800, height: 600, crop: 'center' }}"
+                   srcset="{{ collection.featured_image | image_url: width: 500, height: 375, crop: 'center' }} 500w, {{ collection.featured_image | image_url: width: 800, height: 600, crop: 'center' }} 800w"
                    sizes="(max-width:749px) 90vw, 40vw"
                    alt="{{ collection.title | escape }}" width="800" height="600" loading="lazy" decoding="async">
             {%- else -%}

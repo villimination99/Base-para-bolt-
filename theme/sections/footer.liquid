@@ -13,7 +13,15 @@
       <div class="footer-brand">
         <div class="footer-brand-head">
           {%- if settings.logo != blank -%}
-            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}" width="120" height="40" style="height:36px;width:auto;">
+            {%- comment -%}
+              width/height estaban fijos en 120x40: con un logo de otra
+              proporción el navegador reservaba un hueco equivocado y el pie
+              daba un salto al cargar. Se usan las medidas reales, como en el
+              encabezado.
+            {%- endcomment -%}
+            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}"
+                 width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+                 loading="lazy" style="height:36px;width:auto;">
           {%- else -%}
             {%- render 'logo-mark' -%}
             {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
