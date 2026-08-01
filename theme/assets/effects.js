@@ -493,6 +493,11 @@
   mod(function () {
     var canvas = $('[data-hero-particles]');
     if (!canvas || reduce || saveData) return;
+    // Sin esta guarda, cada recarga de sección en el editor arrancaba OTRO
+    // bucle de animación sobre el mismo lienzo, con su propio observador y sus
+    // propios escuchadores: tras unos pocos cambios la vista previa se
+    // arrastraba. Es el único módulo de este archivo al que le faltaba.
+    if (!once(canvas, 'hp')) return;
     var host = canvas.closest('.hero') || canvas.parentNode;
     var ctx = canvas.getContext('2d');
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
