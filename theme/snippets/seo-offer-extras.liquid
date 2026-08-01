@@ -1,0 +1,55 @@
+{%- comment -%}
+  Envío y devoluciones dentro de la oferta (JSON-LD).
+
+  Google usa estos datos para las insignias de "envío gratis" y "devolución
+  gratuita" en los resultados de compra, que son de lo que más sube la tasa de
+  clic frente a la competencia.
+
+  Todo es OPCIONAL a propósito: declarar un plazo de devolución o un envío que
+  luego no cumples es peor que no declarar nada, porque Google penaliza el
+  desajuste. Solo se emite lo que el comerciante haya rellenado en
+  Parámetros del tema → SEO.
+
+  Se renderiza DENTRO del objeto "offers", así que empieza siempre por coma.
+{%- endcomment -%}
+{%- liquid
+  assign ship_country = settings.seo_ship_country | strip
+  assign free_from = settings.cart_free_shipping_threshold | default: 0
+  assign return_days = settings.seo_return_days | default: 0
+-%}
+
+{%- if ship_country != blank -%},
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": {{ ship_country | json }}
+      }
+      {%- if free_from > 0 -%},
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 0,
+        "currency": {{ cart.currency.iso_code | json }}
+      },
+      "freeShippingThreshold": {
+        "@type": "DeliveryChargeSpecification",
+        "eligibleTransactionVolume": {
+          "@type": "PriceSpecification",
+          "price": {{ free_from | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }}
+        }
+      }
+      {%- endif -%}
+    }
+{%- endif -%}
+
+{%- if return_days > 0 and ship_country != blank -%},
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": {{ ship_country | json }},
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": {{ return_days }},
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": {% if settings.seo_return_free %}"https://schema.org/FreeReturn"{% else %}"https://schema.org/ReturnShippingFees"{% endif %}
+    }
+{%- endif -%}

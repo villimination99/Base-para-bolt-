@@ -779,7 +779,11 @@
       box.setAttribute('aria-modal', 'true');
       box.innerHTML = '<button class="img-lightbox-close" aria-label="Cerrar">&times;</button><img alt="">';
       boxImg = box.querySelector('img');
-      box.addEventListener('click', function (e) { if (e.target === box || e.target.classList.contains('img-lightbox-close')) close(); });
+      // El puntero muestra "zoom-out" sobre todo el visor, así que cualquier
+      // clic dentro debe cerrarlo. Antes solo cerraba el fondo o la X, y esa X
+      // quedaba tapada por la barra de navegación: no había forma de salir
+      // salvo con Escape.
+      box.addEventListener('click', close);
       document.body.appendChild(box);
     }
     var lastFocus = null;

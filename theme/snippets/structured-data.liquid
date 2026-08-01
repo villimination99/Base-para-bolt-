@@ -8,7 +8,12 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  {%- comment -%}
+    OnlineStore es el subtipo que schema.org define para tiendas en línea y que
+    Google reconoce para el panel de comerciante. Es más específico que
+    Organization y no pierde ninguna de sus propiedades.
+  {%- endcomment -%}
+  "@type": "OnlineStore",
   "@id": {{ shop.url | append: '#organization' | json }},
   "name": {{ shop.name | json }},
   "url": {{ shop.url | json }}
@@ -121,6 +126,7 @@
     "availability": {% if product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
     "itemCondition": "https://schema.org/NewCondition",
     "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
+    {%- render 'seo-offer-extras' -%}
   }
   {%- else -%}
   "offers": {
@@ -133,6 +139,7 @@
     "availability": {% if product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
     "itemCondition": "https://schema.org/NewCondition",
     "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
+    {%- render 'seo-offer-extras' -%}
   }
   {%- endif -%}
 }

@@ -1,8 +1,46 @@
+{%- comment -%}
+  El mega menú exigía que el nombre del enlace coincidiera EXACTAMENTE con el
+  ajuste (por defecto "Colecciones"). Con un menú en otro idioma o con acentos
+  ("Catálogo", "Boutique") nunca coincidía y el mega menú no aparecía jamás,
+  sin ningún aviso. Ahora:
+    1. Se comparan handles (catálogo y Catalogo dan el mismo), así que ni los
+       acentos ni las mayúsculas ni los espacios importan.
+    2. Se admiten varios nombres separados por comas.
+    3. Si aun así ninguno coincide, se usa automáticamente el primer elemento
+       del menú que tenga hijos, para que el mega menú funcione de salida.
+{%- endcomment -%}
 {%- liquid
   assign yt = settings.social_youtube
   assign ig = settings.social_instagram
-  assign trigger = section.settings.collections_trigger | downcase | strip
   assign dd_alpha = section.settings.menu_opacity | default: 85 | divided_by: 100.0
+
+  assign trigger_keys = ','
+  assign trigger_parts = section.settings.collections_trigger | split: ','
+  for t in trigger_parts
+    assign tk = t | strip | handle
+    if tk != blank
+      assign trigger_keys = trigger_keys | append: tk | append: ','
+    endif
+  endfor
+
+  assign any_match = false
+  for link in section.settings.menu.links
+    assign lk = link.title | handle
+    assign lk_wrapped = ',' | append: lk | append: ','
+    if trigger_keys contains lk_wrapped
+      assign any_match = true
+    endif
+  endfor
+
+  unless any_match
+    for link in section.settings.menu.links
+      if link.links.size > 0 and any_match == false
+        assign auto_key = link.title | handle
+        assign trigger_keys = trigger_keys | append: auto_key | append: ','
+        assign any_match = true
+      endif
+    endfor
+  endunless
 -%}
 {%- style -%}
   #navbar, #mobile-menu { --dd-alpha: {{ dd_alpha }}; }
@@ -31,9 +69,10 @@
 
     <div class="nav-links" id="nav-links">
       {%- for link in section.settings.menu.links -%}
-        {%- assign link_key = link.title | downcase | strip -%}
+        {%- assign link_key = link.title | handle -%}
+        {%- assign link_key_wrapped = ',' | append: link_key | append: ',' -%}
         {%- assign is_coll_menu = false -%}
-        {%- if trigger != blank and link_key == trigger -%}{%- assign is_coll_menu = true -%}{%- endif -%}
+        {%- if trigger_keys contains link_key_wrapped -%}{%- assign is_coll_menu = true -%}{%- endif -%}
 
         {%- if is_coll_menu -%}
           <div class="nav-item nav-item--mega">
@@ -160,9 +199,10 @@
       {%- render 'icon', name: 'close' -%}
     </button>
     {%- for link in section.settings.menu.links -%}
-      {%- assign m_key = link.title | downcase | strip -%}
+      {%- assign m_key = link.title | handle -%}
+      {%- assign m_key_wrapped = ',' | append: m_key | append: ',' -%}
       {%- assign m_is_coll = false -%}
-      {%- if trigger != blank and m_key == trigger -%}{%- assign m_is_coll = true -%}{%- endif -%}
+      {%- if trigger_keys contains m_key_wrapped -%}{%- assign m_is_coll = true -%}{%- endif -%}
 
       {%- if m_is_coll or link.links.size > 0 -%}
         {%- comment -%} Parent with submenu: tap toggles it open/closed {%- endcomment -%}
@@ -259,7 +299,7 @@
       "id": "collections_trigger",
       "label": "Ítem que abre las colecciones",
       "default": "Colecciones",
-      "info": "Escribe el nombre EXACTO del ítem del menú (ej: Colecciones o Catálogo). Al pasar el cursor mostrará el mega-menú. SUB-COLECCIONES: en Tienda online → Navegación, añade elementos hijos a ese ítem (ej. Ropa) y a su vez nietos (ej. Hombre, Mujer); el mega-menú los mostrará como columnas automáticamente."
+      "info": "Nombre del ítem del menú que abre el mega-menú (ej: Colecciones, Catálogo). Puedes poner varios separados por comas. No importan mayúsculas ni acentos. Si ninguno coincide, se usa automáticamente el primer ítem del menú que tenga sub-elementos. SUB-COLECCIONES: en Tienda online → Navegación, añade elementos hijos a ese ítem (ej. Ropa) y a su vez nietos (ej. Hombre, Mujer); el mega-menú los mostrará como columnas automáticamente."
     },
     {
       "type": "range",
