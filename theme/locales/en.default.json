@@ -116,10 +116,23 @@
       "comment_submit": "Post comment",
       "comment_success": "Your comment was posted.",
       "comment_moderated": "Thanks! Your comment will appear once it is approved.",
-      "no_comments": "No comments yet."
+      "no_comments": "No comments yet.",
+      "reading_time": "{{ minutes }} min read",
+      "tags": "Tags",
+      "share": "Share",
+      "share_x": "Share on X",
+      "share_fb": "Share on Facebook",
+      "share_wa": "Share on WhatsApp",
+      "copy_link": "Copy link",
+      "link_copied": "Link copied",
+      "related": "Keep reading",
+      "back_to_blog": "All articles"
     },
     "general": {
-      "no_articles": "No articles published yet."
+      "no_articles": "No articles published yet.",
+      "featured": "Featured",
+      "filter_tag": "Filtered by",
+      "clear_filter": "Show all"
     }
   },
   "customer": {

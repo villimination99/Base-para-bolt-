@@ -1,8 +1,27 @@
 <section class="section-padding article-main">
   <div class="container container--narrow">
+    {%- comment -%}
+      Migas de pan visibles: además de orientar al lector, son la ruta que
+      Google muestra bajo el título en los resultados.
+    {%- endcomment -%}
+    <nav class="collection-crumbs article-crumbs" aria-label="breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+    </nav>
+
     <article>
       <header class="article-header" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-        <span class="article-card-date">{{ article.published_at | date: '%d %b, %Y' }}</span>
+        <div class="article-meta">
+          <span class="article-card-date">{{ article.published_at | date: '%d %b, %Y' }}</span>
+          {%- comment -%}
+            Tiempo de lectura estimado a 200 palabras por minuto. Da al lector
+            una idea del compromiso antes de empezar, y reduce el rebote.
+          {%- endcomment -%}
+          {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+          {%- assign read_min = word_count | divided_by: 200 | plus: 1 -%}
+          <span class="article-readtime">{%- render 'icon', name: 'bolt' -%} {{ 'blogs.article.reading_time' | t: minutes: read_min }}</span>
+        </div>
         <h1 class="section-title">{{ article.title }}</h1>
         {%- if article.author != blank -%}<p class="article-author">{{ 'blogs.article.by' | t }} {{ article.author }}</p>{%- endif -%}
       </header>
@@ -22,6 +41,31 @@
         </div>
       {%- endif -%}
       <div class="rte article-content">{{ article.content }}</div>
+
+      {%- if article.tags.size > 0 -%}
+        <div class="article-tags">
+          <span class="article-tags-label">{{ 'blogs.article.tags' | t }}</span>
+          {%- for tag in article.tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
+        Compartir sin scripts de terceros: son enlaces normales, así que no
+        cargan nada, no rastrean a nadie y funcionan sin JavaScript.
+      {%- endcomment -%}
+      {%- assign share_url = shop.url | append: article.url | url_encode -%}
+      {%- assign share_title = article.title | url_encode -%}
+      <div class="article-share">
+        <span class="article-share-label">{{ 'blogs.article.share' | t }}</span>
+        <a class="article-share-btn" href="https://wa.me/?text={{ share_title }}%20{{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_wa' | t }}">{%- render 'icon', name: 'whatsapp' -%}</a>
+        <a class="article-share-btn" href="https://x.com/intent/tweet?text={{ share_title }}&url={{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_x' | t }}">{%- render 'icon', name: 'x' -%}</a>
+        <a class="article-share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_fb' | t }}">{%- render 'icon', name: 'facebook' -%}</a>
+        <button type="button" class="article-share-btn" data-copy-code data-code="{{ shop.url }}{{ article.url }}" aria-label="{{ 'blogs.article.copy_link' | t }}">
+          {%- render 'icon', name: 'link' -%}<span class="nl-code-hint visually-hidden">{{ 'blogs.article.copy_link' | t }}</span>
+        </button>
+      </div>
     </article>
 
     {%- if blog.comments_enabled? -%}
@@ -77,6 +121,42 @@
         {%- endform -%}
       </div>
     {%- endif -%}
+    {%- comment -%}
+      Artículos relacionados: mantienen al lector dentro y crean enlaces
+      internos entre artículos, que es de lo que más ayuda a que Google entienda
+      la estructura del blog. Se excluye el artículo actual y se limita a 3.
+    {%- endcomment -%}
+    {%- assign related_shown = 0 -%}
+    {%- capture related_html -%}
+      {%- for art in blog.articles -%}
+        {%- if art.id != article.id and related_shown < 3 -%}
+          <a href="{{ art.url }}" class="article-card">
+            {%- if art.image -%}
+              <div class="article-card-media">
+                <img src="{{ art.image | image_url: width: 700, height: 450, crop: 'center' }}"
+                     srcset="{{ art.image | image_url: width: 300, height: 193, crop: 'center' }} 300w,
+                             {{ art.image | image_url: width: 700, height: 450, crop: 'center' }} 700w"
+                     sizes="(min-width: 861px) 33vw, 100vw"
+                     alt="{{ art.title | escape }}" width="700" height="450" loading="lazy">
+              </div>
+            {%- endif -%}
+            <div class="article-card-body">
+              <span class="article-card-date">{{ art.published_at | date: '%d %b, %Y' }}</span>
+              <h3 class="article-card-title">{{ art.title }}</h3>
+            </div>
+          </a>
+          {%- assign related_shown = related_shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if related_shown > 0 -%}
+      <div class="article-related">
+        <h2 class="section-title">{{ 'blogs.article.related' | t }}</h2>
+        <div class="article-grid">{{ related_html }}</div>
+      </div>
+    {%- endif -%}
+
+    <a href="{{ blog.url }}" class="customer-link article-back">&larr; {{ 'blogs.article.back_to_blog' | t }}</a>
   </div>
 </section>
 

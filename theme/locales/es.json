@@ -116,10 +116,23 @@
       "comment_submit": "Publicar comentario",
       "comment_success": "Tu comentario se publicó.",
       "comment_moderated": "¡Gracias! Tu comentario aparecerá en cuanto se apruebe.",
-      "no_comments": "Todavía no hay comentarios."
+      "no_comments": "Todavía no hay comentarios.",
+      "reading_time": "{{ minutes }} min de lectura",
+      "tags": "Etiquetas",
+      "share": "Compartir",
+      "share_x": "Compartir en X",
+      "share_fb": "Compartir en Facebook",
+      "share_wa": "Compartir en WhatsApp",
+      "copy_link": "Copiar enlace",
+      "link_copied": "Enlace copiado",
+      "related": "Sigue leyendo",
+      "back_to_blog": "Todos los artículos"
     },
     "general": {
-      "no_articles": "Todavía no hay artículos publicados."
+      "no_articles": "Todavía no hay artículos publicados.",
+      "featured": "Destacado",
+      "filter_tag": "Filtrado por",
+      "clear_filter": "Ver todos"
     }
   },
   "customer": {
