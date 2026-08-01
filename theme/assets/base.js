@@ -257,9 +257,11 @@
   });
 
   /* ---------- Product page ---------- */
-  (function () {
+  /* Registrado con mod(): al recargar la seccion en el editor de temas hay que
+     volver a enlazar los selectores de variante, si no la ficha se queda muerta. */
+  mod(function () {
     var section = $('.product-page');
-    if (!section) return;
+    if (!section || !once(section, 'prod')) return;
     var variants = [];
     var json = $('[data-product-json]', section);
     if (json) { try { variants = JSON.parse(json.textContent); } catch (e) {} }
@@ -477,7 +479,7 @@
       var sAdd = $('[data-sticky-add]', stickyBar);
       if (sAdd && addBtn) sAdd.addEventListener('click', function () { addBtn.click(); });
     }
-  })();
+  });
 
   /* ---------- Collection sort auto-submit ---------- */
   $all('[data-collection-sort] select').forEach(function (sel) {
@@ -1017,8 +1019,11 @@
     }
 
     // 2) Render the history section (excluding the product being viewed)
+    //    Registrado con mod(): al añadir o mover esta sección en el editor de
+    //    temas, antes se quedaba oculta hasta recargar la página entera.
+    mod(function () {
     var host = $('[data-recently-viewed]');
-    if (!host) return;
+    if (!host || !once(host, 'rv')) return;
     var grid = $('[data-rv-grid]', host);
     if (!grid) return;
     var limit = parseInt(host.getAttribute('data-limit') || '4', 10);
@@ -1039,10 +1044,15 @@
         '</div></div>';
     }).join('');
     host.hidden = false;
+    });
   })();
 
   /* ---------- Copy coupon code ---------- */
+  /* Registrado con mod(): el cupón de una sección de boletín añadida desde el
+     editor no reaccionaba al pulsarlo hasta recargar la página. */
+  mod(function () {
   $all('[data-copy-code]').forEach(function (btn) {
+    if (!once(btn, 'copy')) return;
     btn.addEventListener('click', function () {
       var code = btn.getAttribute('data-code') || '';
       var done = function () {
@@ -1062,6 +1072,7 @@
       if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(code).then(done).catch(done); }
       else { var t = document.createElement('textarea'); t.value = code; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch (e) {} document.body.removeChild(t); done(); }
     });
+  });
   });
 
   /* ---------- Back to top ---------- */

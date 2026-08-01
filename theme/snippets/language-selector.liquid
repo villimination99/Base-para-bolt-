@@ -19,6 +19,14 @@
           </option>
         {%- endfor -%}
       </select>
+      {%- comment -%}
+        El formulario lo envía base.js al cambiar la selección. Sin JavaScript
+        no había forma de cambiar de idioma: el desplegable se movía y no
+        pasaba nada. Este botón solo aparece cuando el JavaScript está apagado.
+      {%- endcomment -%}
+      <noscript>
+        <button type="submit" class="btn btn-outline lang-selector-go">{{ 'general.language' | t }}</button>
+      </noscript>
     {%- endform -%}
   </div>
 {%- endif -%}
