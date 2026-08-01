@@ -104,6 +104,25 @@
     "bestRating": {{ r_mf.value.scale_max | default: 5 | json }}
   },
   {%- endif -%}
+  {%- comment -%}
+    Con varias variantes a distinto precio, un único Offer le decía a Google un
+    solo importe y el resto del abanico quedaba invisible en los resultados.
+    AggregateOffer es el tipo que schema.org define justo para eso: declara el
+    precio mínimo, el máximo y cuántas ofertas hay.
+  {%- endcomment -%}
+  {%- if product.price_varies -%}
+  "offers": {
+    "@type": "AggregateOffer",
+    "url": {{ shop.url | append: product.url | json }},
+    "lowPrice": {{ product.price_min | divided_by: 100.0 | json }},
+    "highPrice": {{ product.price_max | divided_by: 100.0 | json }},
+    "offerCount": {{ product.variants.size }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "availability": {% if product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
+    "itemCondition": "https://schema.org/NewCondition",
+    "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
+  }
+  {%- else -%}
   "offers": {
     "@type": "Offer",
     "url": {{ shop.url | append: product.url | json }},
@@ -115,6 +134,7 @@
     "itemCondition": "https://schema.org/NewCondition",
     "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
   }
+  {%- endif -%}
 }
 </script>
 {%- endif -%}
@@ -126,9 +146,21 @@
   "@type": "Article",
   "headline": {{ article.title | json }},
   "url": {{ shop.url | append: article.url | json }},
-  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+  {%- comment -%}
+    La fecha llevaba una "Z" fija al final, que significa UTC, pero Shopify da
+    la hora en el huso de la tienda: se estaba declarando una hora falsa, con
+    horas de desfase. %z escribe el desplazamiento real. Se añade también
+    dateModified, que Google usa para saber si el artículo está actualizado.
+  {%- endcomment -%}
+  "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  "dateModified": {{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json }},
+  {%- if article.author != blank -%}
   "author": { "@type": "Person", "name": {{ article.author | json }} },
-  "publisher": { "@type": "Organization", "name": {{ shop.name | json }} }
+  {%- else -%}
+  "author": { "@type": "Organization", "name": {{ shop.name | json }} },
+  {%- endif -%}
+  {%- comment -%} Se referencia la Organización ya declarada, con su logo, en vez de repetir solo el nombre. {%- endcomment -%}
+  "publisher": { "@id": {{ shop.url | append: '#organization' | json }} }
   {%- if article.image -%},
   "image": {{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}
   {%- endif -%}
@@ -147,7 +179,13 @@
   "@type": "ItemList",
   "name": {{ collection.title | json }},
   "url": {{ shop.url | append: collection.url | json }},
-  "numberOfItems": {{ collection.products_count }},
+  {%- comment -%}
+    numberOfItems debe describir la lista que se envía, no la colección entera:
+    se declaraban cientos de productos y solo se listaban 24.
+  {%- endcomment -%}
+  {%- assign il_count = collection.products_count -%}
+  {%- if il_count > 24 -%}{%- assign il_count = 24 -%}{%- endif -%}
+  "numberOfItems": {{ il_count }},
   "itemListElement": [
     {%- for p in collection.products limit: 24 -%}
     {
