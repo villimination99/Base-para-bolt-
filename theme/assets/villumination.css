@@ -376,3 +376,5 @@ body:not(.pimg-glow) .holo-stage::after{display:none}
 .navbar--static{position:absolute}
 /* Buscador de la página 404 */
 .error-404-search{margin:1.5rem auto;max-width:420px}
+/* Botón de idioma que solo aparece sin JavaScript */
+.lang-selector-go{margin-left:.5rem;padding:.35rem .8rem;font-size:.85rem}
