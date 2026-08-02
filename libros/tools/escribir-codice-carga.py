@@ -743,6 +743,380 @@ C11 = cap(
 )
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  CAPÍTULOS AÑADIDOS EN LA SEGUNDA EDICIÓN
+# ══════════════════════════════════════════════════════════════════════
+
+CE1 = cap(
+    "Los ocho patrones",
+    p("Un programa de fuerza no se organiza por músculos: se organiza por "
+      "patrones de movimiento. Son ocho, cubren todo lo que un cuerpo humano "
+      "hace contra una resistencia, y una semana que los toca todos no deja "
+      "huecos por definición. Es la manera más rápida de auditar cualquier plan, "
+      "incluido uno que te vendan."),
+    fig("ca-patrones",
+        "Los ocho patrones y una opción para cada uno",
+        "Organizados por lo que hace la articulación y no por el músculo que se "
+        "quiere «trabajar». Cualquier ejercicio conocido cae en uno de los ocho, "
+        "y si tu semana deja alguno vacío, ahí está tu hueco."),
+    ficha("Los ocho, con ejemplos",
+          [(nombre, f"{que} · {ejemplos}")
+           for nombre, que, ejemplos in D.PATRONES]),
+    h("Por qué esta forma de organizar y no la de las revistas"),
+    p("El reparto clásico por grupos musculares —lunes pecho, martes espalda— "
+      "viene del culturismo de competición y sirve razonablemente para su "
+      "propósito, que es hipertrofiar zonas concretas con mucho volumen y mucha "
+      "frecuencia semanal de gimnasio. Para casi todo el mundo, ese no es el "
+      "propósito."),
+    p("Organizar por patrones tiene tres ventajas prácticas. La primera: se "
+      "detectan los huecos de un vistazo, y el hueco típico de un gimnasio "
+      "entero es la bisagra de cadera y el transporte. La segunda: cada patrón "
+      "admite decenas de variantes, así que una lesión o una máquina ocupada no "
+      "rompen la sesión. Y la tercera: son los movimientos que la vida pide "
+      "fuera del gimnasio, que es literalmente para lo que sirve todo esto."),
+    sep(),
+    h("El hueco más común, y el más caro"),
+    p("La bisagra de cadera. Es el patrón de recoger algo del suelo, y es el que "
+      "más gente evita porque el peso muerto tiene mala fama inmerecida. La "
+      "consecuencia es previsible: musculatura posterior débil en una población "
+      "que pasa el día sentada, en el mismo movimiento en el que se producen la "
+      "mayoría de los sustos de espalda. La ecuación del NIOSH del capítulo "
+      "siguiente explica por qué entrenarlo importa tanto."),
+    p("El segundo hueco es el transporte: sostener peso y andar. No aparece en "
+      "casi ningún programa, no requiere técnica y entrena agarre, tronco y "
+      "postura a la vez. La compra pesada del supermercado es el ejercicio "
+      "funcional que nadie tuvo que inventar."),
+    nota("Cómo se audita una semana en dos minutos",
+         "Escribe los ocho patrones en una columna y pon al lado los ejercicios "
+         "que hiciste la semana pasada. Los que queden vacíos son tu programa "
+         "real, y casi nunca coinciden con el que crees que estás haciendo."),
+)
+
+CE2 = cap(
+    "Las seis variables",
+    p("Un entrenamiento solo tiene seis cosas que se puedan mover. Conocerlas "
+      "sirve para dos cosas: para progresar cuando el peso no sube, y para no "
+      "cometer el error más habitual de todos, que es subir dos a la vez."),
+    fig("ca-variables",
+        "Las seis variables del entrenamiento",
+        "Cada una modifica el estímulo por su cuenta. Se sube una y se sostiene "
+        "unas semanas; subir dos a la vez multiplica la carga real sin que uno "
+        "se dé cuenta, y es la fábrica de lesiones del mes dos."),
+    ficha("Las seis", [(nombre, glosa) for nombre, glosa in D.VARIABLES]),
+    h("La que más rinde en los primeros meses"),
+    p("El recorrido. Media sentadilla con el doble de peso no es más "
+      "entrenamiento que una sentadilla completa con la mitad: es otro "
+      "ejercicio, y bastante peor. La amplitud completa produce más adaptación "
+      "en la parte del músculo que trabaja estirada, mantiene la movilidad de la "
+      "articulación y, de paso, obliga a usar un peso honesto."),
+    p("Es también la variable que más se sacrifica por vanidad, porque bajar el "
+      "peso para completar el recorrido se siente como retroceder. No lo es. Es "
+      "la única forma de que el número que apuntas signifique algo."),
+    h("La que casi nadie cuenta bien: el volumen"),
+    p("La cuenta que predice la ganancia de tamaño son las series efectivas por "
+      "músculo y por semana, no el tiempo en el gimnasio ni el número de "
+      "ejercicios. Una serie efectiva es la que se lleva cerca del fallo "
+      "técnico: con cuatro o cinco repeticiones de margen sobrando, el estímulo "
+      "es escaso por muchas series que se hagan."),
+    p("De ahí que una sesión de cuarenta y cinco minutos bien apretada rinda más "
+      "que dos horas de deambular entre máquinas, y de ahí también que "
+      "aumentar el volumen sin límite deje de funcionar: llega un punto en que "
+      "lo que se añade no se recupera, y lo que no se recupera no adapta."),
+    sep(),
+    h("La escala de esfuerzo, que resuelve el problema de los porcentajes"),
+    p("Programar por porcentaje del máximo exige conocer el máximo, y el máximo "
+      "cambia con el sueño, el estrés y la semana. La alternativa práctica es "
+      "puntuar cuántas repeticiones te quedaban en reserva al terminar la serie:"),
+    ficha("Repeticiones en reserva", [
+        ("0", "No podías hacer ni una más. Se usa poco y con criterio"),
+        ("1 a 2", "La zona de trabajo de las series de fuerza y de tamaño"),
+        ("3 a 4", "Estímulo válido y mucho menos coste de recuperación"),
+        ("5 o más", "Calentamiento, técnica o volumen de relleno"),
+    ]),
+    p("Con esta escala, un mal día se ajusta solo: el peso que hoy te deja a dos "
+      "repeticiones puede ser menor que el de la semana pasada, y aun así la "
+      "sesión ha sido correcta. Programar por porcentaje fijo obliga a fallar o "
+      "a mentir."),
+    nota("La regla de progresión que evita casi todo",
+         "Una variable, un escalón, y sostenerlo dos o tres semanas antes de "
+         "tocar otra. Si el rendimiento baja tres sesiones seguidas, o si "
+         "aparece dolor articular, el escalón anterior era el bueno: se vuelve "
+         "y se sostiene más tiempo. Bajar no es retroceder; es lo que hace "
+         "posible seguir subiendo el año que viene."),
+)
+
+CE3 = cap(
+    "Calentar, enfriar y lo que no sirve",
+    p("El calentamiento es la parte del entrenamiento con más mitología por "
+      "minuto invertido. Lo que sigue separa lo que tiene respaldo razonable de "
+      "lo que se repite por costumbre."),
+    h("Un calentamiento que sí hace algo, en tres actos"),
+    pasos(
+        "Cinco o diez minutos de movimiento general que suba la temperatura y "
+        "la frecuencia cardíaca. Andar rápido, bici suave, cuerda ligera. "
+        "Cualquier cosa que no sea estirar.",
+        "Movilidad activa de las articulaciones que vas a usar. Círculos, "
+        "balanceos, sentadillas sin peso, rotaciones. Movimiento, no posturas "
+        "sostenidas.",
+        "Series de aproximación del primer ejercicio: la barra vacía, después "
+        "la mitad del peso, después algo por debajo del peso de trabajo. Es la "
+        "parte del calentamiento que más rinde y la que más gente se salta.",
+    ),
+    p("El objetivo no es prevenir lesiones —la evidencia sobre eso es más floja "
+      "de lo que se dice— sino rendir mejor en las primeras series, que es un "
+      "efecto inmediato y comprobable: la primera serie después de calentar bien "
+      "se siente distinta, y eso ya justifica los diez minutos."),
+    sep(),
+    h("El estiramiento estático, en su sitio"),
+    lista(
+        "Antes de entrenar, sostener un estiramiento largo reduce ligeramente la "
+        "fuerza disponible durante los minutos siguientes. Si lo haces, que sea "
+        "breve y no justo antes de la serie pesada.",
+        "No previene lesiones de forma demostrada, y llevamos décadas "
+        "intentando demostrarlo.",
+        "No previene ni cura las agujetas. Esto está bastante bien establecido y "
+        "sigue apareciendo en todas partes.",
+        "Sí mejora el rango de movimiento si se hace de forma regular, y eso "
+        "tiene valor propio. Hazlo porque quieres más movilidad, no porque creas "
+        "que te protege.",
+    ),
+    h("Las agujetas, que no son lo que la gente cree"),
+    p("Aparecen sobre todo tras trabajo excéntrico —la fase de bajada— y tras "
+      "ejercicios nuevos, alcanzan su punto máximo entre veinticuatro y "
+      "cuarenta y ocho horas después y se van solas. No son un indicador de que "
+      "la sesión haya sido buena: un programa bien llevado produce cada vez "
+      "menos agujetas mientras el rendimiento sigue subiendo, y perseguirlas es "
+      "perseguir la señal equivocada."),
+    p("Lo que mejor las alivia es moverse suave. Lo que no las quita es "
+      "estirar. Y si duran más de cuatro o cinco días, o si vienen con hinchazón "
+      "marcada y orina oscura después de una sesión inusualmente dura, eso ya no "
+      "son agujetas y es motivo de consulta el mismo día."),
+    nota("Enfriar",
+         "Bajar el ritmo cinco minutos al final no acelera la recuperación de "
+         "forma apreciable, pero evita el mareo de parar en seco tras un "
+         "esfuerzo intenso y es un buen momento para el trabajo de movilidad, "
+         "porque el tejido está caliente. Es un hábito barato con dos ventajas "
+         "pequeñas; no le pidas más."),
+)
+
+CE4 = cap(
+    "El aerobio por dentro",
+    p("«Hacer cardio» describe tan poco como «comer comida». Bajo esa etiqueta "
+      "caben tres cosas distintas que producen adaptaciones distintas y cuestan "
+      "recuperaciones distintas, y saber cuál es cuál cambia el resultado de una "
+      "temporada."),
+    ficha("Los tres tipos", [
+        ("Base", "Conversación posible durante toda la sesión. Volumen "
+                 "cómodo, de treinta minutos a dos horas. Construye la "
+                 "capacidad de fondo y apenas cuesta recuperación."),
+        ("Umbral", "Ritmo sostenido en el que las frases se acortan. Bloques "
+                   "de diez a veinte minutos. Mejora el ritmo que puedes "
+                   "sostener mucho tiempo."),
+        ("Intervalos", "Esfuerzos cortos muy intensos con descanso. Mejoran el "
+                       "techo, cuestan bastante recuperación y son los que más "
+                       "se abusan."),
+    ]),
+    h("El error de vivir en el medio"),
+    p("La trampa más común del aerobio amateur es hacerlo todo a una intensidad "
+      "intermedia: demasiado fuerte para acumular volumen sin fatiga y demasiado "
+      "suave para producir la adaptación de la intensidad alta. Es cómodo, se "
+      "siente productivo y rinde poco por lo que cuesta."),
+    p("La corrección es sencilla y funciona: que la mayor parte del volumen sea "
+      "claramente fácil —de verdad fácil, hablando cómodamente— y que la parte "
+      "dura sea claramente dura y ocupe poco. Los extremos hacen el trabajo; el "
+      "medio acumula fatiga."),
+    sep(),
+    h("¿Interfiere el aerobio con la fuerza?"),
+    p("La pregunta lleva décadas en el aire y la respuesta razonable es: mucho "
+      "menos de lo que teme el gimnasio, y algo más que cero. Lo que se sabe con "
+      "cierta solidez es que la interferencia aparece sobre todo con volúmenes "
+      "muy altos de aerobio, con las dos cosas en la misma sesión y con poca "
+      "recuperación entre ellas."),
+    lista(
+        "Si puedes, separa las dos sesiones por varias horas o ponlas en días "
+        "distintos.",
+        "Si tienen que ir juntas, haz primero lo que sea prioritario para ti.",
+        "Correr interfiere más que pedalear, probablemente por el componente "
+        "excéntrico de la zancada.",
+        "Para la inmensa mayoría de la gente, que hace tres o cuatro horas "
+        "semanales en total, esta discusión es puramente teórica.",
+    ),
+    nota("Lo que el aerobio hace y la fuerza no",
+         "Cambia el corazón y el sistema vascular de una manera que el "
+         "entrenamiento de fuerza no reproduce, y esos cambios son los que mejor "
+         "se asocian con vivir más años y con vivirlos mejor. Por eso las guías "
+         "piden las dos cosas y no dejan elegir: no son sustitutos."),
+)
+
+CE5 = cap(
+    "Dolor: cómo se distingue",
+    p("Este capítulo existe porque la alternativa a tenerlo es que la gente "
+      "aprenda a distinguir por el método caro. No sustituye a un diagnóstico; "
+      "da criterios para saber cuándo seguir, cuándo cambiar y cuándo parar y "
+      "consultar."),
+    ficha("Tres cosas que se confunden", [
+        ("Molestia muscular difusa", "Repartida por el vientre del músculo, "
+                                     "simétrica, aparece a las horas, mejora al "
+                                     "moverse y se va en dos o tres días. Es "
+                                     "normal."),
+        ("Dolor articular localizado", "Se puede señalar con un dedo, aparece "
+                                       "siempre en el mismo gesto y en el mismo "
+                                       "punto del recorrido, no mejora al "
+                                       "calentar. No es normal."),
+        ("Dolor que crece sesión a sesión", "Empieza al final del entrenamiento, "
+                                            "luego al principio, luego en la "
+                                            "vida diaria. Es el guion clásico de "
+                                            "una lesión por sobreuso, y cuanto "
+                                            "antes se corta, menos cuesta."),
+    ]),
+    h("Qué hacer con cada uno"),
+    pasos(
+        "Molestia muscular: seguir, moverse suave y no medir la calidad de una "
+        "sesión por cuánto duele después.",
+        "Dolor en un gesto concreto: cambiar el gesto, no abandonar el patrón. "
+        "Si duele el press de banca, prueba con mancuernas o con otro ángulo; "
+        "casi siempre hay una variante que no duele, y seguir entrenando el "
+        "patrón es mejor que dejarlo.",
+        "Dolor que crece: reducir la carga de ese patrón un escalón grande "
+        "durante dos semanas, mantener el resto y observar. Si en dos semanas no "
+        "mejora, consulta.",
+        "Cualquier dolor con hinchazón, pérdida de fuerza súbita, bloqueo "
+        "articular, hormigueo o pérdida de sensibilidad: consulta directamente y "
+        "sin fase de prueba.",
+    ),
+    sep(),
+    h("Y las señales que paran una sesión en el acto"),
+    lista(
+        "Dolor u opresión en el pecho, o dolor que irradia al brazo, al cuello o "
+        "a la mandíbula.",
+        "Falta de aire desproporcionada al esfuerzo que estás haciendo.",
+        "Mareo, visión borrosa, palpitaciones irregulares o sensación de "
+        "desmayo.",
+        "Dolor de cabeza súbito e intenso durante un esfuerzo.",
+        "Orina de color oscuro tras una sesión inusualmente dura, sobre todo si "
+        "va con dolor muscular desproporcionado e hinchazón.",
+    ),
+    p("Estas cinco no son «escuchar al cuerpo»: son motivo de atención médica el "
+      "mismo día. Ninguna sesión de ningún plan de ningún libro merece la duda, "
+      "y esta es la página que conviene recordar de todo el volumen."),
+    nota("La regla de las setenta y dos horas",
+         "Si algo duele igual o peor tres días después de haber reducido la "
+         "carga, ha dejado de ser un asunto de programación. Lo que sigue no es "
+         "elegir otro ejercicio: es que alguien te vea."),
+)
+
+CE6 = cap(
+    "Entrenar a partir de los sesenta",
+    p("Las guías de actividad física tienen una sección específica para adultos "
+      "mayores, y contiene la única recomendación de todo el documento que no "
+      "aparece para el resto de la población. Merece un capítulo porque casi "
+      "nadie la conoce y porque es la que más años de autonomía compra."),
+    ficha("Lo que añaden las guías para adultos mayores", [
+        ("Equilibrio", "Trabajo de equilibrio como componente propio, además "
+                       "del aerobio y de la fuerza. Es la recomendación "
+                       "adicional y va dirigida a lo que de verdad quita "
+                       "autonomía, que son las caídas."),
+        ("Fuerza", "Igual de necesaria que a cualquier edad, y más urgente: la "
+                   "pérdida de masa muscular con los años es lo que convierte "
+                   "una caída en una fractura y una fractura en una vida "
+                   "distinta."),
+        ("Aerobio", "La misma dosis, con la coletilla de que quien no pueda "
+                    "alcanzarla debe ser tan activo como su condición le "
+                    "permita. El listón se adapta; no se cancela."),
+        ("Adaptación", "Ajustar el esfuerzo al nivel de forma, con especial "
+                       "atención a las condiciones crónicas. Adaptar no es "
+                       "rebajar a cero."),
+    ]),
+    h("El equilibrio se entrena, y es barato"),
+    lista(
+        "Sostenerse sobre una pierna mientras te lavas los dientes. Dos minutos "
+        "al día que no ocupan tiempo nuevo.",
+        "Caminar en línea, talón contra punta, unos metros por el pasillo.",
+        "Levantarse de una silla sin usar los brazos, varias veces seguidas. Es "
+        "a la vez fuerza y equilibrio, y es la prueba que mejor predice la "
+        "autonomía a diez años.",
+        "Cambios de dirección y de superficie al andar: hierba, cuesta, "
+        "arena. El equilibrio se entrena obligándolo a corregir.",
+        "Todo esto se hace con un apoyo cerca al principio. La progresión es "
+        "quitar el apoyo, no empezar sin él.",
+    ),
+    sep(),
+    h("La pérdida de músculo con la edad, en su tamaño real"),
+    p("A partir de la mediana edad se pierde masa muscular de forma continua si "
+      "no se hace nada al respecto, y la fuerza se pierde todavía más deprisa "
+      "que la masa. Ese proceso no es una fatalidad biológica que haya que "
+      "aceptar: responde al entrenamiento de fuerza a cualquier edad, y hay "
+      "programas documentados que producen ganancias en personas de más de "
+      "ochenta años."),
+    p("El error más común es el contrario del que se supone: no es entrenar "
+      "demasiado fuerte, es entrenar demasiado suave. Un peso que se puede "
+      "levantar treinta veces sin esfuerzo no produce adaptación a ninguna edad. "
+      "La progresión tiene que existir también aquí, con más cuidado en la "
+      "técnica y más margen en el descanso, pero tiene que existir."),
+    nota("La proteína en esta etapa",
+         "El suelo poblacional de 0,8 gramos por kilo se queda corto para frenar "
+         "la pérdida de masa a partir de cierta edad, y la literatura geriátrica "
+         "maneja cifras claramente mayores. Esa cifra no sale de las tablas de "
+         "referencia y lo digo: sale de otra literatura. Es una conversación que "
+         "merece tenerse con un profesional, sobre todo si hay función renal "
+         "comprometida, donde la respuesta puede ser la contraria."),
+)
+
+CE7 = cap(
+    "Una batería para medirse, y es pública",
+    p("Medir el progreso con la báscula es una mala idea por motivos que trata "
+      "el Códice de la Voluntad. Medirlo con pruebas físicas es mucho mejor, y "
+      "existe una batería completa, descrita al detalle y de acceso libre, que "
+      "el Ejército de Estados Unidos publica entera."),
+    fig("ca-acft",
+        "Seis pruebas, seis cualidades distintas",
+        "La batería está construida para que ninguna prueba se pueda compensar "
+        "con otra: hay un mínimo por prueba. Esa regla es la lección "
+        "transferible, aunque nunca vayas a hacer ninguna de las seis."),
+    ficha("Qué mide cada una",
+          [(nombre, f"{como} · mide {mide.lower()}")
+           for nombre, como, mide in D.ACFT]),
+    p(D.ACFT_PUNTOS["nota"]),
+    h("Por qué esto es interesante para alguien que no es militar"),
+    p("Por el diseño, no por las pruebas concretas. Una batería que exige un "
+      "mínimo en seis cualidades distintas está diciendo algo que el gimnasio "
+      "medio ignora: que un cuerpo bien preparado no es el que destaca en una "
+      "cosa, sino el que no falla en ninguna. Alguien que levanta mucho y no "
+      "puede correr dos millas tiene un hueco, y ese hueco no se tapa levantando "
+      "más."),
+    p("El segundo motivo es que es un objetivo de proceso disfrazado de "
+      "resultado. Puntuar mejor en seis pruebas es una diana clara, medible y "
+      "que depende enteramente de lo que hagas, a diferencia del peso corporal, "
+      "que depende de media docena de cosas que no controlas."),
+    sep(),
+    h("Una versión casera de la misma idea"),
+    p("No hace falta un trineo ni una barra hexagonal. Lo que hace falta es "
+      "elegir cinco o seis pruebas que cubran cualidades distintas, medirlas hoy "
+      "y repetirlas cada tres meses en las mismas condiciones:"),
+    ficha("Batería casera", [
+        ("Fuerza de piernas", "Sentadillas en un minuto, o peso de tu serie de "
+                              "cinco repeticiones"),
+        ("Fuerza de empuje", "Flexiones máximas con técnica completa"),
+        ("Fuerza de tirón", "Dominadas, o remo invertido máximo"),
+        ("Tronco", "Plancha sostenida, en segundos"),
+        ("Aerobio", "Distancia en doce minutos, o tiempo en un recorrido fijo "
+                    "que puedas repetir"),
+        ("Equilibrio", "Segundos sobre una pierna con los ojos cerrados"),
+    ]),
+    p("Anota los seis números y guárdalos. Dentro de tres meses tendrás algo que "
+      "ninguna báscula da: seis pruebas de que el trabajo hizo algo, o seis "
+      "señales de dónde no lo hizo. Y a diferencia del peso, estos números no "
+      "oscilan tres kilos según lo que cenaste."),
+    nota("Cómo NO se hace esta medición",
+         "No se hace en un mal día para castigarse, ni el mismo día de una "
+         "sesión dura, ni cambiando las condiciones entre una vez y la "
+         "siguiente. Se hace descansado, con el mismo protocolo, y se apunta "
+         "aunque salga peor que la vez anterior. Un resultado peor es un dato "
+         "sobre el plan, no un veredicto sobre la persona."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-carga",
@@ -757,10 +1131,11 @@ LIBRO = {
     "claves": ["entrenamiento", "actividad física", "MET", "fuerza", "NIOSH",
                "descarga", "desentrenamiento", "villuminations"],
     "capitulos": [
-        C1, C2, C3, C4, C4B,  # I · La dosis
-        C5, C6,               # II · Lo que pasa cuando no hay carga
-        C7, C8,               # III · Levantar
-        C9, C10, C11,         # IV · El oficio
+        C1, C2, C3, C4, C4B,       # I · La dosis
+        CE1, CE2, CE3, CE4,        # II · El oficio de entrenar
+        C5, C6, CE5,               # III · Lo que pasa cuando no hay carga
+        C7, C8, CE6,               # IV · Levantar y durar
+        CE7, C9, C10, C11,         # V · El oficio
     ],
 }
 

@@ -406,6 +406,326 @@
    ]
   },
   {
+   "titulo": "Los ocho patrones",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Un programa de fuerza no se organiza por músculos: se organiza por patrones de movimiento. Son ocho, cubren todo lo que un cuerpo humano hace contra una resistencia, y una semana que los toca todos no deja huecos por definición. Es la manera más rápida de auditar cualquier plan, incluido uno que te vendan."
+    },
+    {
+     "t": "figura",
+     "x": "ca-patrones",
+     "tit": "Los ocho patrones y una opción para cada uno",
+     "pie": "Organizados por lo que hace la articulación y no por el músculo que se quiere «trabajar». Cualquier ejercicio conocido cae en uno de los ocho, y si tu semana deja alguno vacío, ahí está tu hueco.",
+     "clase": ""
+    },
+    {
+     "t": "ficha",
+     "tit": "Los ocho, con ejemplos",
+     "x": [
+      [
+       "Sentadilla",
+       "Rodilla y cadera flexionan juntas · Sentadilla, prensa, zancada, subir escalón"
+      ],
+      [
+       "Bisagra de cadera",
+       "La cadera manda y la rodilla apenas se dobla · Peso muerto, buenos días, empuje de cadera, balanceo"
+      ],
+      [
+       "Empuje horizontal",
+       "Alejar peso del pecho · Press de banca, flexiones, fondos"
+      ],
+      [
+       "Empuje vertical",
+       "Llevar peso por encima de la cabeza · Press militar, press con mancuernas"
+      ],
+      [
+       "Tirón horizontal",
+       "Traer peso hacia el tronco · Remo con barra, remo con mancuerna, remo invertido"
+      ],
+      [
+       "Tirón vertical",
+       "Traer el cuerpo o el peso desde arriba · Dominadas, jalón al pecho"
+      ],
+      [
+       "Transporte",
+       "Sostener y andar con carga · Paseo del granjero, transporte lateral, acarreo frontal"
+      ],
+      [
+       "Antirrotación",
+       "Resistir un giro sin girar · Plancha, press Pallof, transporte a un solo lado"
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "Por qué esta forma de organizar y no la de las revistas"
+    },
+    {
+     "t": "p",
+     "x": "El reparto clásico por grupos musculares —lunes pecho, martes espalda— viene del culturismo de competición y sirve razonablemente para su propósito, que es hipertrofiar zonas concretas con mucho volumen y mucha frecuencia semanal de gimnasio. Para casi todo el mundo, ese no es el propósito."
+    },
+    {
+     "t": "p",
+     "x": "Organizar por patrones tiene tres ventajas prácticas. La primera: se detectan los huecos de un vistazo, y el hueco típico de un gimnasio entero es la bisagra de cadera y el transporte. La segunda: cada patrón admite decenas de variantes, así que una lesión o una máquina ocupada no rompen la sesión. Y la tercera: son los movimientos que la vida pide fuera del gimnasio, que es literalmente para lo que sirve todo esto."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "El hueco más común, y el más caro"
+    },
+    {
+     "t": "p",
+     "x": "La bisagra de cadera. Es el patrón de recoger algo del suelo, y es el que más gente evita porque el peso muerto tiene mala fama inmerecida. La consecuencia es previsible: musculatura posterior débil en una población que pasa el día sentada, en el mismo movimiento en el que se producen la mayoría de los sustos de espalda. La ecuación del NIOSH del capítulo siguiente explica por qué entrenarlo importa tanto."
+    },
+    {
+     "t": "p",
+     "x": "El segundo hueco es el transporte: sostener peso y andar. No aparece en casi ningún programa, no requiere técnica y entrena agarre, tronco y postura a la vez. La compra pesada del supermercado es el ejercicio funcional que nadie tuvo que inventar."
+    },
+    {
+     "t": "nota",
+     "tit": "Cómo se audita una semana en dos minutos",
+     "x": "Escribe los ocho patrones en una columna y pon al lado los ejercicios que hiciste la semana pasada. Los que queden vacíos son tu programa real, y casi nunca coinciden con el que crees que estás haciendo."
+    }
+   ]
+  },
+  {
+   "titulo": "Las seis variables",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Un entrenamiento solo tiene seis cosas que se puedan mover. Conocerlas sirve para dos cosas: para progresar cuando el peso no sube, y para no cometer el error más habitual de todos, que es subir dos a la vez."
+    },
+    {
+     "t": "figura",
+     "x": "ca-variables",
+     "tit": "Las seis variables del entrenamiento",
+     "pie": "Cada una modifica el estímulo por su cuenta. Se sube una y se sostiene unas semanas; subir dos a la vez multiplica la carga real sin que uno se dé cuenta, y es la fábrica de lesiones del mes dos.",
+     "clase": ""
+    },
+    {
+     "t": "ficha",
+     "tit": "Las seis",
+     "x": [
+      [
+       "Intensidad",
+       "Cuánto pesa respecto a tu máximo, o cuántas repeticiones te quedaban en reserva al terminar la serie"
+      ],
+      [
+       "Volumen",
+       "Series efectivas por músculo y por semana. La cuenta que de verdad predice la ganancia de tamaño"
+      ],
+      [
+       "Frecuencia",
+       "Cuántas veces por semana recibe estímulo cada músculo"
+      ],
+      [
+       "Densidad",
+       "Cuánto descansas entre series. Cambia el estímulo sin cambiar el peso"
+      ],
+      [
+       "Recorrido",
+       "Cuánto rango articular usas. La variable más barata y la que más se sacrifica por vanidad"
+      ],
+      [
+       "Tempo",
+       "A qué velocidad bajas y subes. La fase de bajada es donde más adaptación se genera"
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "La que más rinde en los primeros meses"
+    },
+    {
+     "t": "p",
+     "x": "El recorrido. Media sentadilla con el doble de peso no es más entrenamiento que una sentadilla completa con la mitad: es otro ejercicio, y bastante peor. La amplitud completa produce más adaptación en la parte del músculo que trabaja estirada, mantiene la movilidad de la articulación y, de paso, obliga a usar un peso honesto."
+    },
+    {
+     "t": "p",
+     "x": "Es también la variable que más se sacrifica por vanidad, porque bajar el peso para completar el recorrido se siente como retroceder. No lo es. Es la única forma de que el número que apuntas signifique algo."
+    },
+    {
+     "t": "h2",
+     "x": "La que casi nadie cuenta bien: el volumen"
+    },
+    {
+     "t": "p",
+     "x": "La cuenta que predice la ganancia de tamaño son las series efectivas por músculo y por semana, no el tiempo en el gimnasio ni el número de ejercicios. Una serie efectiva es la que se lleva cerca del fallo técnico: con cuatro o cinco repeticiones de margen sobrando, el estímulo es escaso por muchas series que se hagan."
+    },
+    {
+     "t": "p",
+     "x": "De ahí que una sesión de cuarenta y cinco minutos bien apretada rinda más que dos horas de deambular entre máquinas, y de ahí también que aumentar el volumen sin límite deje de funcionar: llega un punto en que lo que se añade no se recupera, y lo que no se recupera no adapta."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "La escala de esfuerzo, que resuelve el problema de los porcentajes"
+    },
+    {
+     "t": "p",
+     "x": "Programar por porcentaje del máximo exige conocer el máximo, y el máximo cambia con el sueño, el estrés y la semana. La alternativa práctica es puntuar cuántas repeticiones te quedaban en reserva al terminar la serie:"
+    },
+    {
+     "t": "ficha",
+     "tit": "Repeticiones en reserva",
+     "x": [
+      [
+       "0",
+       "No podías hacer ni una más. Se usa poco y con criterio"
+      ],
+      [
+       "1 a 2",
+       "La zona de trabajo de las series de fuerza y de tamaño"
+      ],
+      [
+       "3 a 4",
+       "Estímulo válido y mucho menos coste de recuperación"
+      ],
+      [
+       "5 o más",
+       "Calentamiento, técnica o volumen de relleno"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Con esta escala, un mal día se ajusta solo: el peso que hoy te deja a dos repeticiones puede ser menor que el de la semana pasada, y aun así la sesión ha sido correcta. Programar por porcentaje fijo obliga a fallar o a mentir."
+    },
+    {
+     "t": "nota",
+     "tit": "La regla de progresión que evita casi todo",
+     "x": "Una variable, un escalón, y sostenerlo dos o tres semanas antes de tocar otra. Si el rendimiento baja tres sesiones seguidas, o si aparece dolor articular, el escalón anterior era el bueno: se vuelve y se sostiene más tiempo. Bajar no es retroceder; es lo que hace posible seguir subiendo el año que viene."
+    }
+   ]
+  },
+  {
+   "titulo": "Calentar, enfriar y lo que no sirve",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "El calentamiento es la parte del entrenamiento con más mitología por minuto invertido. Lo que sigue separa lo que tiene respaldo razonable de lo que se repite por costumbre."
+    },
+    {
+     "t": "h2",
+     "x": "Un calentamiento que sí hace algo, en tres actos"
+    },
+    {
+     "t": "pasos",
+     "x": [
+      "Cinco o diez minutos de movimiento general que suba la temperatura y la frecuencia cardíaca. Andar rápido, bici suave, cuerda ligera. Cualquier cosa que no sea estirar.",
+      "Movilidad activa de las articulaciones que vas a usar. Círculos, balanceos, sentadillas sin peso, rotaciones. Movimiento, no posturas sostenidas.",
+      "Series de aproximación del primer ejercicio: la barra vacía, después la mitad del peso, después algo por debajo del peso de trabajo. Es la parte del calentamiento que más rinde y la que más gente se salta."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "El objetivo no es prevenir lesiones —la evidencia sobre eso es más floja de lo que se dice— sino rendir mejor en las primeras series, que es un efecto inmediato y comprobable: la primera serie después de calentar bien se siente distinta, y eso ya justifica los diez minutos."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "El estiramiento estático, en su sitio"
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Antes de entrenar, sostener un estiramiento largo reduce ligeramente la fuerza disponible durante los minutos siguientes. Si lo haces, que sea breve y no justo antes de la serie pesada.",
+      "No previene lesiones de forma demostrada, y llevamos décadas intentando demostrarlo.",
+      "No previene ni cura las agujetas. Esto está bastante bien establecido y sigue apareciendo en todas partes.",
+      "Sí mejora el rango de movimiento si se hace de forma regular, y eso tiene valor propio. Hazlo porque quieres más movilidad, no porque creas que te protege."
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "Las agujetas, que no son lo que la gente cree"
+    },
+    {
+     "t": "p",
+     "x": "Aparecen sobre todo tras trabajo excéntrico —la fase de bajada— y tras ejercicios nuevos, alcanzan su punto máximo entre veinticuatro y cuarenta y ocho horas después y se van solas. No son un indicador de que la sesión haya sido buena: un programa bien llevado produce cada vez menos agujetas mientras el rendimiento sigue subiendo, y perseguirlas es perseguir la señal equivocada."
+    },
+    {
+     "t": "p",
+     "x": "Lo que mejor las alivia es moverse suave. Lo que no las quita es estirar. Y si duran más de cuatro o cinco días, o si vienen con hinchazón marcada y orina oscura después de una sesión inusualmente dura, eso ya no son agujetas y es motivo de consulta el mismo día."
+    },
+    {
+     "t": "nota",
+     "tit": "Enfriar",
+     "x": "Bajar el ritmo cinco minutos al final no acelera la recuperación de forma apreciable, pero evita el mareo de parar en seco tras un esfuerzo intenso y es un buen momento para el trabajo de movilidad, porque el tejido está caliente. Es un hábito barato con dos ventajas pequeñas; no le pidas más."
+    }
+   ]
+  },
+  {
+   "titulo": "El aerobio por dentro",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "«Hacer cardio» describe tan poco como «comer comida». Bajo esa etiqueta caben tres cosas distintas que producen adaptaciones distintas y cuestan recuperaciones distintas, y saber cuál es cuál cambia el resultado de una temporada."
+    },
+    {
+     "t": "ficha",
+     "tit": "Los tres tipos",
+     "x": [
+      [
+       "Base",
+       "Conversación posible durante toda la sesión. Volumen cómodo, de treinta minutos a dos horas. Construye la capacidad de fondo y apenas cuesta recuperación."
+      ],
+      [
+       "Umbral",
+       "Ritmo sostenido en el que las frases se acortan. Bloques de diez a veinte minutos. Mejora el ritmo que puedes sostener mucho tiempo."
+      ],
+      [
+       "Intervalos",
+       "Esfuerzos cortos muy intensos con descanso. Mejoran el techo, cuestan bastante recuperación y son los que más se abusan."
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "El error de vivir en el medio"
+    },
+    {
+     "t": "p",
+     "x": "La trampa más común del aerobio amateur es hacerlo todo a una intensidad intermedia: demasiado fuerte para acumular volumen sin fatiga y demasiado suave para producir la adaptación de la intensidad alta. Es cómodo, se siente productivo y rinde poco por lo que cuesta."
+    },
+    {
+     "t": "p",
+     "x": "La corrección es sencilla y funciona: que la mayor parte del volumen sea claramente fácil —de verdad fácil, hablando cómodamente— y que la parte dura sea claramente dura y ocupe poco. Los extremos hacen el trabajo; el medio acumula fatiga."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "¿Interfiere el aerobio con la fuerza?"
+    },
+    {
+     "t": "p",
+     "x": "La pregunta lleva décadas en el aire y la respuesta razonable es: mucho menos de lo que teme el gimnasio, y algo más que cero. Lo que se sabe con cierta solidez es que la interferencia aparece sobre todo con volúmenes muy altos de aerobio, con las dos cosas en la misma sesión y con poca recuperación entre ellas."
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Si puedes, separa las dos sesiones por varias horas o ponlas en días distintos.",
+      "Si tienen que ir juntas, haz primero lo que sea prioritario para ti.",
+      "Correr interfiere más que pedalear, probablemente por el componente excéntrico de la zancada.",
+      "Para la inmensa mayoría de la gente, que hace tres o cuatro horas semanales en total, esta discusión es puramente teórica."
+     ]
+    },
+    {
+     "t": "nota",
+     "tit": "Lo que el aerobio hace y la fuerza no",
+     "x": "Cambia el corazón y el sistema vascular de una manera que el entrenamiento de fuerza no reproduce, y esos cambios son los que mejor se asocian con vivir más años y con vivirlos mejor. Por eso las guías piden las dos cosas y no dejan elegir: no son sustitutos."
+    }
+   ]
+  },
+  {
    "titulo": "El experimento de quitar el peso",
    "bloques": [
     {
@@ -544,6 +864,72 @@
      "t": "nota",
      "tit": "El fenómeno que juega a tu favor",
      "x": "Recuperar es más rápido que construir por primera vez. Quien tuvo masa muscular la recupera antes que quien nunca la tuvo, y esto se observa de forma consistente. Es un buen argumento contra la idea de que abandonar dos meses tira por tierra dos años: no lo hace."
+    }
+   ]
+  },
+  {
+   "titulo": "Dolor: cómo se distingue",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Este capítulo existe porque la alternativa a tenerlo es que la gente aprenda a distinguir por el método caro. No sustituye a un diagnóstico; da criterios para saber cuándo seguir, cuándo cambiar y cuándo parar y consultar."
+    },
+    {
+     "t": "ficha",
+     "tit": "Tres cosas que se confunden",
+     "x": [
+      [
+       "Molestia muscular difusa",
+       "Repartida por el vientre del músculo, simétrica, aparece a las horas, mejora al moverse y se va en dos o tres días. Es normal."
+      ],
+      [
+       "Dolor articular localizado",
+       "Se puede señalar con un dedo, aparece siempre en el mismo gesto y en el mismo punto del recorrido, no mejora al calentar. No es normal."
+      ],
+      [
+       "Dolor que crece sesión a sesión",
+       "Empieza al final del entrenamiento, luego al principio, luego en la vida diaria. Es el guion clásico de una lesión por sobreuso, y cuanto antes se corta, menos cuesta."
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "Qué hacer con cada uno"
+    },
+    {
+     "t": "pasos",
+     "x": [
+      "Molestia muscular: seguir, moverse suave y no medir la calidad de una sesión por cuánto duele después.",
+      "Dolor en un gesto concreto: cambiar el gesto, no abandonar el patrón. Si duele el press de banca, prueba con mancuernas o con otro ángulo; casi siempre hay una variante que no duele, y seguir entrenando el patrón es mejor que dejarlo.",
+      "Dolor que crece: reducir la carga de ese patrón un escalón grande durante dos semanas, mantener el resto y observar. Si en dos semanas no mejora, consulta.",
+      "Cualquier dolor con hinchazón, pérdida de fuerza súbita, bloqueo articular, hormigueo o pérdida de sensibilidad: consulta directamente y sin fase de prueba."
+     ]
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "Y las señales que paran una sesión en el acto"
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Dolor u opresión en el pecho, o dolor que irradia al brazo, al cuello o a la mandíbula.",
+      "Falta de aire desproporcionada al esfuerzo que estás haciendo.",
+      "Mareo, visión borrosa, palpitaciones irregulares o sensación de desmayo.",
+      "Dolor de cabeza súbito e intenso durante un esfuerzo.",
+      "Orina de color oscuro tras una sesión inusualmente dura, sobre todo si va con dolor muscular desproporcionado e hinchazón."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Estas cinco no son «escuchar al cuerpo»: son motivo de atención médica el mismo día. Ninguna sesión de ningún plan de ningún libro merece la duda, y esta es la página que conviene recordar de todo el volumen."
+    },
+    {
+     "t": "nota",
+     "tit": "La regla de las setenta y dos horas",
+     "x": "Si algo duele igual o peor tres días después de haber reducido la carga, ha dejado de ser un asunto de programación. Lo que sigue no es elegir otro ejercicio: es que alguien te vea."
     }
    ]
   },
@@ -750,6 +1136,183 @@
      "t": "nota",
      "tit": "Sobre el calentamiento y el estiramiento",
      "x": "Calentar sirve, y sirve sobre todo para rendir mejor en las primeras series: cinco o diez minutos de movimiento general y unas series ligeras del ejercicio que vas a hacer. Estirar antes, en cambio, no previene lesiones —la evidencia sobre eso es bastante mala— y el estiramiento estático prolongado justo antes reduce un poco la fuerza disponible. Si te gusta estirar, hazlo después o en otro momento del día."
+    }
+   ]
+  },
+  {
+   "titulo": "Entrenar a partir de los sesenta",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Las guías de actividad física tienen una sección específica para adultos mayores, y contiene la única recomendación de todo el documento que no aparece para el resto de la población. Merece un capítulo porque casi nadie la conoce y porque es la que más años de autonomía compra."
+    },
+    {
+     "t": "ficha",
+     "tit": "Lo que añaden las guías para adultos mayores",
+     "x": [
+      [
+       "Equilibrio",
+       "Trabajo de equilibrio como componente propio, además del aerobio y de la fuerza. Es la recomendación adicional y va dirigida a lo que de verdad quita autonomía, que son las caídas."
+      ],
+      [
+       "Fuerza",
+       "Igual de necesaria que a cualquier edad, y más urgente: la pérdida de masa muscular con los años es lo que convierte una caída en una fractura y una fractura en una vida distinta."
+      ],
+      [
+       "Aerobio",
+       "La misma dosis, con la coletilla de que quien no pueda alcanzarla debe ser tan activo como su condición le permita. El listón se adapta; no se cancela."
+      ],
+      [
+       "Adaptación",
+       "Ajustar el esfuerzo al nivel de forma, con especial atención a las condiciones crónicas. Adaptar no es rebajar a cero."
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "El equilibrio se entrena, y es barato"
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Sostenerse sobre una pierna mientras te lavas los dientes. Dos minutos al día que no ocupan tiempo nuevo.",
+      "Caminar en línea, talón contra punta, unos metros por el pasillo.",
+      "Levantarse de una silla sin usar los brazos, varias veces seguidas. Es a la vez fuerza y equilibrio, y es la prueba que mejor predice la autonomía a diez años.",
+      "Cambios de dirección y de superficie al andar: hierba, cuesta, arena. El equilibrio se entrena obligándolo a corregir.",
+      "Todo esto se hace con un apoyo cerca al principio. La progresión es quitar el apoyo, no empezar sin él."
+     ]
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "La pérdida de músculo con la edad, en su tamaño real"
+    },
+    {
+     "t": "p",
+     "x": "A partir de la mediana edad se pierde masa muscular de forma continua si no se hace nada al respecto, y la fuerza se pierde todavía más deprisa que la masa. Ese proceso no es una fatalidad biológica que haya que aceptar: responde al entrenamiento de fuerza a cualquier edad, y hay programas documentados que producen ganancias en personas de más de ochenta años."
+    },
+    {
+     "t": "p",
+     "x": "El error más común es el contrario del que se supone: no es entrenar demasiado fuerte, es entrenar demasiado suave. Un peso que se puede levantar treinta veces sin esfuerzo no produce adaptación a ninguna edad. La progresión tiene que existir también aquí, con más cuidado en la técnica y más margen en el descanso, pero tiene que existir."
+    },
+    {
+     "t": "nota",
+     "tit": "La proteína en esta etapa",
+     "x": "El suelo poblacional de 0,8 gramos por kilo se queda corto para frenar la pérdida de masa a partir de cierta edad, y la literatura geriátrica maneja cifras claramente mayores. Esa cifra no sale de las tablas de referencia y lo digo: sale de otra literatura. Es una conversación que merece tenerse con un profesional, sobre todo si hay función renal comprometida, donde la respuesta puede ser la contraria."
+    }
+   ]
+  },
+  {
+   "titulo": "Una batería para medirse, y es pública",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Medir el progreso con la báscula es una mala idea por motivos que trata el Códice de la Voluntad. Medirlo con pruebas físicas es mucho mejor, y existe una batería completa, descrita al detalle y de acceso libre, que el Ejército de Estados Unidos publica entera."
+    },
+    {
+     "t": "figura",
+     "x": "ca-acft",
+     "tit": "Seis pruebas, seis cualidades distintas",
+     "pie": "La batería está construida para que ninguna prueba se pueda compensar con otra: hay un mínimo por prueba. Esa regla es la lección transferible, aunque nunca vayas a hacer ninguna de las seis.",
+     "clase": ""
+    },
+    {
+     "t": "ficha",
+     "tit": "Qué mide cada una",
+     "x": [
+      [
+       "Peso muerto máximo",
+       "Tres repeticiones con la barra hexagonal · mide fuerza máxima de la cadena posterior"
+      ],
+      [
+       "Lanzamiento de balón",
+       "Balón de 4,5 kg lanzado hacia atrás por encima de la cabeza · mide potencia explosiva de todo el cuerpo"
+      ],
+      [
+       "Flexión con liberación de manos",
+       "Pecho al suelo y manos fuera en cada repetición · mide resistencia del tren superior, sin recorrido a medias"
+      ],
+      [
+       "Sprint, arrastre y acarreo",
+       "250 m: esprintar, arrastrar trineo, desplazamiento lateral y acarreo de dos pesas · mide potencia anaeróbica y agarre"
+      ],
+      [
+       "Plancha",
+       "Sostenida, con el cuerpo alineado · mide resistencia del tronco en isometría"
+      ],
+      [
+       "Carrera de dos millas",
+       "3,2 km cronometrados · mide capacidad aeróbica"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Cada prueba puntúa de 0 a 100 y hay que sacar al menos 60 en cada una: no se compensa una prueba mala con otra excelente. Esa regla es la lección transferible."
+    },
+    {
+     "t": "h2",
+     "x": "Por qué esto es interesante para alguien que no es militar"
+    },
+    {
+     "t": "p",
+     "x": "Por el diseño, no por las pruebas concretas. Una batería que exige un mínimo en seis cualidades distintas está diciendo algo que el gimnasio medio ignora: que un cuerpo bien preparado no es el que destaca en una cosa, sino el que no falla en ninguna. Alguien que levanta mucho y no puede correr dos millas tiene un hueco, y ese hueco no se tapa levantando más."
+    },
+    {
+     "t": "p",
+     "x": "El segundo motivo es que es un objetivo de proceso disfrazado de resultado. Puntuar mejor en seis pruebas es una diana clara, medible y que depende enteramente de lo que hagas, a diferencia del peso corporal, que depende de media docena de cosas que no controlas."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "Una versión casera de la misma idea"
+    },
+    {
+     "t": "p",
+     "x": "No hace falta un trineo ni una barra hexagonal. Lo que hace falta es elegir cinco o seis pruebas que cubran cualidades distintas, medirlas hoy y repetirlas cada tres meses en las mismas condiciones:"
+    },
+    {
+     "t": "ficha",
+     "tit": "Batería casera",
+     "x": [
+      [
+       "Fuerza de piernas",
+       "Sentadillas en un minuto, o peso de tu serie de cinco repeticiones"
+      ],
+      [
+       "Fuerza de empuje",
+       "Flexiones máximas con técnica completa"
+      ],
+      [
+       "Fuerza de tirón",
+       "Dominadas, o remo invertido máximo"
+      ],
+      [
+       "Tronco",
+       "Plancha sostenida, en segundos"
+      ],
+      [
+       "Aerobio",
+       "Distancia en doce minutos, o tiempo en un recorrido fijo que puedas repetir"
+      ],
+      [
+       "Equilibrio",
+       "Segundos sobre una pierna con los ojos cerrados"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Anota los seis números y guárdalos. Dentro de tres meses tendrás algo que ninguna báscula da: seis pruebas de que el trabajo hizo algo, o seis señales de dónde no lo hizo. Y a diferencia del peso, estos números no oscilan tres kilos según lo que cenaste."
+    },
+    {
+     "t": "nota",
+     "tit": "Cómo NO se hace esta medición",
+     "x": "No se hace en un mal día para castigarse, ni el mismo día de una sesión dura, ni cambiando las condiciones entre una vez y la siguiente. Se hace descansado, con el mismo protocolo, y se apunta aunque salga peor que la vez anterior. Un resultado peor es un dato sobre el plan, no un veredicto sobre la persona."
     }
    ]
   },

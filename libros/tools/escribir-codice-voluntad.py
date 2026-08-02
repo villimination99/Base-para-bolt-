@@ -95,16 +95,18 @@ C1 = cap(
          "ellas, lo diré en la misma frase y no la disfrazaré de recomendación "
          "gubernamental. Es la diferencia entre citar y aparentar."),
     sep(),
-    h("Los cinco dominios, y por qué esta colección tiene cuatro libros"),
-    p("El manual de salud y preparación física del Ejército organiza la "
-      "condición de una persona en cinco dominios que se sostienen unos a otros: "
-      "físico, nutricional, mental, del sueño y espiritual. La idea de fondo es "
-      "que trabajar uno solo no aguanta, porque el que falla arrastra al resto."),
-    p("Esta colección cubre cuatro de los cinco, uno por libro: la mesa, la "
-      "carga, la voluntad y el descanso. El quinto —el dominio de sentido y "
-      "valores— queda fuera a propósito, porque no es asunto de un libro de "
-      "fitness decirle a nadie qué le da sentido. Se menciona porque en la "
-      "doctrina original está, y omitirlo sin avisar sería contar mal la fuente."),
+    h("Cómo está construido lo que sigue"),
+    p("El capítulo siguiente presenta el marco de los cinco dominios de "
+      "preparación, que es el armazón de toda la colección y la mejor "
+      "herramienta de diagnóstico que conozco para saber POR DÓNDE empezar. "
+      "Después vienen la variable que domina el resultado, la mecánica de una "
+      "conducta repetida, el plan que sobrevive al día malo y la distinción "
+      "entre un fallo y un abandono, que es el capítulo que más gente habría "
+      "necesitado leer antes de dejarlo."),
+    p("Los cuatro últimos tratan lo que rodea a todo eso: el entorno, la "
+      "comparación, el regreso después de meses parado y los límites de lo que "
+      "un libro como este puede arreglar. Ese último capítulo es, con "
+      "diferencia, el más importante del libro."),
 )
 
 C2 = cap(
@@ -651,6 +653,282 @@ C11 = cap(
 )
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  CAPÍTULOS AÑADIDOS EN LA SEGUNDA EDICIÓN
+# ══════════════════════════════════════════════════════════════════════
+
+CE1 = cap(
+    "Los cinco dominios",
+    p("La doctrina pública de la que se nutre este libro no organiza la "
+      "condición de una persona en «cuerpo y mente». La organiza en cinco "
+      "dominios que se sostienen unos a otros, y la idea de fondo es la única "
+      "que explica por qué tanta gente hace todo bien en uno y aun así no "
+      "avanza."),
+    fig("vo-dominios",
+        "Los cinco dominios y el libro que cubre cada uno",
+        "Cuatro de los cinco tienen su Códice en esta colección. El quinto queda "
+        "fuera a propósito: no es asunto de un libro de fitness decirle a nadie "
+        "qué le da sentido a su vida."),
+    ficha("Los cinco",
+          [(nombre, f"{que} · {libro}") for nombre, que, libro in D.DOMINIOS]),
+    h("La regla que hace útil el modelo"),
+    p("Un dominio en mal estado limita a los demás, y lo hace de forma "
+      "silenciosa. Quien duerme cinco horas no rinde en el gimnasio por mucho "
+      "que su programa sea excelente. Quien come mal no recupera. Quien tiene la "
+      "cabeza en otra parte no sostiene ningún hábito por bueno que sea el "
+      "diseño. El eslabón que falla no se compensa apretando los otros: los "
+      "arrastra."),
+    p("De ahí sale el consejo de diagnóstico más útil de este libro: cuando algo "
+      "no funciona, la pregunta correcta no es «¿cómo me esfuerzo más?» sino "
+      "«¿cuál de los cinco está roto?». Nueve de cada diez veces es el sueño, y "
+      "casi nadie lo mira primero."),
+    sep(),
+    h("El quinto dominio, y por qué no lo trato"),
+    p("La doctrina original incluye un dominio de sentido, valores y propósito. "
+      "Lo menciono porque omitirlo sin avisar sería contar mal la fuente, y no "
+      "lo desarrollo porque no me corresponde. Un libro que te vende "
+      "entrenamiento no tiene ninguna autoridad para decirte para qué vives, y "
+      "la industria del fitness lleva años cruzando esa línea con resultados "
+      "que van del ridículo al daño."),
+    p("Lo único que diré es que la conexión existe y está en la doctrina: la "
+      "gente sostiene mejor los hábitos que encajan con algo que le importa de "
+      "verdad, y peor los que solo encajan con una imagen que quiere dar. Qué "
+      "te importa de verdad es tuyo y no de este libro."),
+    nota("Cómo usar esto de forma práctica",
+         "Puntúate del uno al cinco en los cuatro dominios que sí cubre esta "
+         "colección, hoy, sin pensarlo mucho. El más bajo es donde está tu "
+         "siguiente mes de trabajo, y casi nunca es el que estabas a punto de "
+         "elegir."),
+)
+
+CE2 = cap(
+    "Objetivos que sirven para algo",
+    p("La fijación de objetivos figura en la doctrina pública de preparación "
+      "mental y en el apartado de cambio de conducta de las guías de actividad "
+      "física. También es lo que peor se hace: casi todos los objetivos que la "
+      "gente se pone incumplen al menos dos de las condiciones que los harían "
+      "útiles."),
+    h("Los tres pisos"),
+    ficha("Un objetivo tiene tres alturas y hacen falta las tres", [
+        ("Resultado", "Adónde quieres llegar. Depende en parte de cosas que no "
+                      "controlas y solo te contesta al final. Sirve para "
+                      "orientar, no para puntuarte."),
+        ("Rendimiento", "Una marca concreta y medible en algo que sí depende de "
+                        "ti: un peso, un tiempo, un número de repeticiones. Es "
+                        "el puente entre los otros dos."),
+        ("Proceso", "Lo que vas a hacer esta semana. Lo controlas entero y te "
+                    "contesta todos los días. Es el único por el que hay que "
+                    "puntuarse."),
+    ]),
+    p("El error universal es tener solo el primero. «Quiero perder ocho kilos» "
+      "no dice qué hacer el martes, no te felicita por hacerlo y encima te "
+      "castiga por una cifra que oscila por motivos ajenos a tu conducta. Es un "
+      "objetivo diseñado para desmoralizar a alguien que lo está haciendo bien."),
+    sep(),
+    h("Cómo se escribe uno de proceso"),
+    pasos(
+        "Conducta concreta, no intención. «Tres sesiones de fuerza» y no "
+        "«entrenar más».",
+        "Cantidad y plazo cortos. Semana, no trimestre. Un objetivo a tres meses "
+        "no corrige nada hasta que ya es tarde.",
+        "Ambición calibrada al peor escenario de la semana, no al mejor. Si "
+        "solo se cumple cuando todo va bien, está mal dimensionado.",
+        "Con un criterio de éxito binario. Al final de la semana la respuesta "
+        "tiene que ser sí o no, sin interpretación.",
+        "Escrito. Un objetivo que solo existe en la cabeza se renegocia solo, y "
+        "siempre a la baja.",
+    ),
+    h("Y una cosa más, que es la que casi nadie hace"),
+    p("Escribe también qué harás cuando NO se cumpla. No como castigo, sino como "
+      "procedimiento: si esta semana salen dos de tres, ¿bajo el objetivo, lo "
+      "mantengo, o cambio lo que estorbaba? Decidirlo por adelantado evita la "
+      "conversación que de verdad hace daño, que es la que empieza con «entonces "
+      "esto no es para mí»."),
+    nota("La revisión mensual, en cuatro preguntas",
+         "¿Qué se cumplió? ¿Qué no? ¿Qué situación concreta lo impidió más "
+         "veces? ¿Qué UNA cosa cambio el mes que viene? Cuatro preguntas, diez "
+         "minutos, una vez al mes. Es más de lo que hace el noventa por ciento "
+         "de la gente que lleva años entrenando."),
+)
+
+CE3 = cap(
+    "La activación y la respiración",
+    p("El control de la activación es una de las habilidades que la doctrina "
+      "pública describe como entrenables, y es la más inmediata de todas: se "
+      "nota en el primer intento, a diferencia del resto de este libro."),
+    h("Activación no es lo mismo que motivación"),
+    p("La activación es cuánto está encendido el sistema: pulso, tensión "
+      "muscular, velocidad del pensamiento. Hay un nivel demasiado bajo —apático, "
+      "lento, sin chispa— y un nivel demasiado alto —acelerado, disperso, con "
+      "la técnica rota— y entre los dos hay una franja donde se rinde mejor. La "
+      "franja no es la misma para todo: una serie máxima de fuerza pide un nivel "
+      "alto; una sesión técnica o una conversación difícil piden bastante menos."),
+    ficha("Las dos direcciones", [
+        ("Para subir", "Respiración corta y rápida, movimiento, música, "
+                       "postura erguida, palmadas, frases de acción. Sirve para "
+                       "la serie pesada y para el día sin ganas."),
+        ("Para bajar", "Espiración larga, respiración lenta y contada, aflojar "
+                       "mandíbula y hombros, foco en una sola cosa. Sirve antes "
+                       "de dormir, después de una discusión y entre series de "
+                       "una sesión que se ha desbocado."),
+    ]),
+    fig("vo-respiracion",
+        "El compás cuadrado",
+        "Cuatro tiempos iguales: inspirar, sostener, espirar, sostener. Lo que "
+        "baja la activación es alargar la espiración y sostener sin tensión, no "
+        "llenar mucho los pulmones."),
+    p(D.RESPIRACION["nota"]),
+    pasos(
+        f"Inspira por la nariz contando {D.RESPIRACION['segundos']}.",
+        f"Sostén {D.RESPIRACION['segundos']}, sin apretar.",
+        f"Espira {D.RESPIRACION['segundos']}, despacio, como si soplaras una "
+        "vela sin apagarla.",
+        f"Sostén {D.RESPIRACION['segundos']} y vuelve a empezar. "
+        f"{D.RESPIRACION['rondas'][0]} a {D.RESPIRACION['rondas'][1]} rondas "
+        "bastan.",
+    ),
+    p("Si cuatro tiempos te resultan largos, empieza por tres. Si te marea, es "
+      "que estás llenando demasiado: el objetivo no es respirar mucho, es "
+      "respirar despacio y con un ritmo fijo."),
+    sep(),
+    h("Dónde usarlo de verdad"),
+    lista(
+        "En los últimos minutos antes de acostarte, que es donde más rinde y "
+        "donde conecta con el Códice del Descanso.",
+        "Entre series, si la sesión se ha vuelto frenética y la técnica se está "
+        "cayendo.",
+        "Antes de una situación que sabes que te acelera: una prueba, una "
+        "presentación, una conversación.",
+        "Después de un fallo del plan, ANTES de decidir qué haces. El capítulo "
+        "de la recaída dice que la decisión importante viene después del fallo; "
+        "esta es la herramienta para tomarla con la cabeza fría.",
+    ),
+    nota("Lo que no es",
+         "No es meditación, no cura la ansiedad y no sustituye a un tratamiento. "
+         "Es una palanca fisiológica sencilla que baja la activación durante "
+         "unos minutos. Si la ansiedad es persistente e interfiere con tu vida, "
+         "eso es motivo de consulta y ninguna técnica de respiración lo resuelve."),
+)
+
+CE4 = cap(
+    "Identidad, comparación y el ruido de fuera",
+    p("Los capítulos anteriores tratan la mecánica. Este trata dos cosas que la "
+      "rodean y que deciden más de lo que parece: cómo te describes a ti mismo y "
+      "con quién te comparas."),
+    h("La diferencia entre hacer y ser"),
+    p("«Estoy intentando entrenar» y «soy de los que entrenan» describen la "
+      "misma conducta y se comportan de forma distinta ante un fallo. La primera "
+      "convierte cada sesión perdida en una prueba de que el intento no va bien. "
+      "La segunda la convierte en una excepción de alguien que, en general, "
+      "entrena."),
+    p("Y esto no es autoengaño ni pensamiento positivo, porque la frase se gana "
+      "con datos: dos meses de cuaderno con la mayoría de las casillas marcadas "
+      "es la prueba. La secuencia correcta va de la conducta a la identidad y no "
+      "al revés. Primero se acumulan pruebas pequeñas, después la descripción "
+      "cambia sola, y a partir de ahí el mantenimiento cuesta mucho menos."),
+    lista(
+        "Empieza por conductas tan pequeñas que la prueba sea inmediata. El "
+        "suelo del capítulo cuatro sirve exactamente para esto.",
+        "Cuenta lo que haces en presente y sin adjetivos épicos: «entreno tres "
+        "días» dice más y aguanta mejor que «estoy en una transformación».",
+        "Cuando falles, describe el hecho y no la persona. «No fui el martes» es "
+        "un dato; «no tengo constancia» es una profecía.",
+    ),
+    sep(),
+    h("La comparación, que es el impuesto de esta época"),
+    p("Compararse con otros es inevitable y no siempre es malo: alguien un poco "
+      "por delante es una referencia útil. El problema es con quién se compara "
+      "uno cuando la referencia la elige un algoritmo, porque lo que ve no es "
+      "una muestra de gente: es una selección de los casos extremos, editada, "
+      "con luz favorable y sin los años que hay detrás."),
+    ficha("Tres correcciones que funcionan", [
+        ("Compárate con tu registro", "El cuaderno del mes pasado es la única "
+                                      "comparación con la que puedes hacer algo."),
+        ("Ajusta lo que consumes", "Si una cuenta te deja peor cada vez que la "
+                                   "ves, deja de verla. No es debilidad: es "
+                                   "modificación del entorno, que es la "
+                                   "estrategia mejor documentada de todo el "
+                                   "libro."),
+        ("Desconfía de los plazos", "Cualquier transformación con fecha oculta "
+                                    "años previos, genética, circunstancias o "
+                                    "directamente farmacología. El plazo es la "
+                                    "parte que casi siempre miente."),
+    ]),
+    h("Y el ruido de cerca, que pesa más"),
+    p("La familia, la pareja y el trabajo influyen bastante más que cualquier "
+      "cuenta de internet, y no siempre a favor. Hay entornos donde comer de una "
+      "manera concreta o irse a entrenar genera fricción real, y fingir que eso "
+      "se resuelve con voluntad es no haber vivido en ninguno."),
+    p("Lo que sí funciona es tratarlo como lo que es —una situación previsible— "
+      "y escribirle su si-entonces: qué haces exactamente en la cena familiar, "
+      "en la comida de empresa, en el fin de semana en casa de tus padres. "
+      "Decidido de antemano, en frío, y sin convertirlo en un asunto moral con "
+      "nadie."),
+    nota("Un límite honesto",
+         "Si el entorno no es solo poco favorable sino activamente hostil —si "
+         "hay control, burla sistemática o presión sobre lo que comes o sobre tu "
+         "cuerpo— eso ya no es un problema de adherencia y este libro no es la "
+         "herramienta. Es una conversación distinta, y a veces es una "
+         "conversación con un profesional."),
+)
+
+CE5 = cap(
+    "Volver después de meses",
+    p("Todos los capítulos anteriores tratan de sostener algo. Este trata de la "
+      "otra situación, que es más frecuente: llevas meses o años sin hacer nada "
+      "y quieres volver. Merece su propio capítulo porque las reglas son "
+      "distintas y porque casi todo el mundo lo hace igual de mal."),
+    h("Los tres errores del regreso"),
+    ficha("", [
+        ("Empezar donde lo dejaste", "La memoria guarda el mejor momento, no el "
+                                     "promedio. Volver al peso o al ritmo de "
+                                     "entonces es la vía rápida a la lesión de "
+                                     "la segunda semana, porque el músculo "
+                                     "recupera antes que el tendón."),
+        ("Empezar con todo a la vez", "Dieta, gimnasio, sueño, suplementos y "
+                                      "aplicación nueva el mismo lunes. Cinco "
+                                      "cambios simultáneos es cero cambios "
+                                      "sostenidos, y además impide saber cuál "
+                                      "funcionaba."),
+        ("Empezar por castigo", "Volver como penitencia por los meses perdidos "
+                                "garantiza que la actividad quede asociada a "
+                                "una emoción que nadie repite voluntariamente."),
+    ]),
+    h("El protocolo de las cuatro semanas"),
+    pasos(
+        "Semana 1: solo aparecer. Dos sesiones muy fáciles, la mitad de lo que "
+        "crees que puedes. El objetivo es que existan, no que sirvan.",
+        "Semana 2: las mismas dos sesiones, un escalón más. Añade una sola cosa "
+        "de comida, la más fácil de todas.",
+        "Semana 3: tres sesiones si las dos anteriores salieron. Si no salieron, "
+        "repite la semana 2 sin dramatismo: el plan era demasiado grande y ahora "
+        "lo sabes.",
+        "Semana 4: mide algo. Un peso, un tiempo, una prueba de la batería "
+        "casera del Códice de la Carga. Ese número es tu punto de partida real, "
+        "y a partir de aquí ya estás entrenando y no volviendo.",
+    ),
+    p("Cuatro semanas parecen pocas para un regreso de dos años y son "
+      "exactamente las que hacen falta: lo que se está construyendo no es "
+      "condición física, es la costumbre de aparecer. La condición viene después "
+      "y viene sola si la costumbre aguanta."),
+    sep(),
+    h("Lo que juega a tu favor y casi nadie te cuenta"),
+    p("Recuperar es más rápido que construir por primera vez. Quien tuvo masa "
+      "muscular la recupera antes que quien nunca la tuvo, y esto se observa de "
+      "forma bastante consistente. Los primeros dos meses de un regreso suelen "
+      "ser sorprendentemente buenos, y conviene saberlo por dos razones: para "
+      "empezar con menos pereza, y para no confundir esa velocidad inicial con "
+      "el ritmo normal y frustrarse cuando se estabilice."),
+    nota("Si el parón fue por una lesión o una enfermedad",
+         "Entonces el escalón lo marca quien te trató y no este libro. El "
+         "protocolo de arriba sirve para un parón por vida ocupada, no para una "
+         "vuelta tras una cirugía, un episodio cardíaco, un embarazo o una "
+         "enfermedad prolongada. En esos casos la primera sesión es una "
+         "consulta."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-voluntad",
@@ -666,10 +944,11 @@ LIBRO = {
                "preparación mental", "FM 7-22", "cambio de conducta",
                "villuminations"],
     "capitulos": [
-        C1, C2,               # I · La variable que manda
-        C3, C4, C5,           # II · La mecánica
-        C6, C7,               # III · La doctrina
-        C8, C9, C10, C11,     # IV · El oficio
+        C1, CE1, C2,               # I · La variable que manda
+        C3, C4, C5,                # II · La mecánica
+        C6, CE2, CE3, C7,          # III · La doctrina
+        C8, CE4, CE5,              # IV · El entorno y el regreso
+        C9, C10, C11,              # V · El oficio
     ],
 }
 

@@ -553,6 +553,393 @@ C9 = cap(
 )
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  CAPÍTULOS AÑADIDOS EN LA SEGUNDA EDICIÓN
+# ══════════════════════════════════════════════════════════════════════
+
+CE1 = cap(
+    "El reloj interno",
+    p("Detrás del sueño hay un reloj que no mide horas del reloj de pared sino "
+      "un ciclo propio de algo más de un día, y que se pone en hora todas las "
+      "mañanas con la luz. Casi todos los problemas de sueño de gente sana son, "
+      "en realidad, problemas de ese reloj."),
+    fig("de-reloj",
+        "El día biológico, hito por hito",
+        "Las horas van contadas desde el despertar habitual y corresponden a un "
+        "cronotipo intermedio. Ninguno de estos hitos se decide a voluntad: se "
+        "arrastran cambiando la hora de levantarse y la exposición a la luz."),
+    ficha("Los hitos del día",
+          [(f"{'+' if h >= 0 else ''}{h:g} h".replace(".", ",") + f" · {nombre}",
+            glosa) for h, nombre, glosa in D.CIRCADIANO]),
+    h("Los tres que más se pueden usar"),
+    p("El mínimo de temperatura central cae unas dos horas antes de la hora "
+      "habitual de despertar, y es el peor momento posible para levantarse. "
+      "Quien adelanta el despertador dos horas un día suelto no está robando "
+      "dos horas de sueño cualquiera: está despertando en el fondo del pozo, y "
+      "de ahí la sensación desproporcionada."),
+    p("La zona de mantenimiento de la vigilia es el hito que más consuela "
+      "conocer. Las dos o tres horas anteriores a la hora habitual de dormirse "
+      "son, paradójicamente, de las más difíciles del día para dormirse: el "
+      "reloj empuja hacia arriba justo antes de soltar. Por eso irse a la cama "
+      "dos horas antes de lo normal la víspera de un madrugón casi nunca "
+      "funciona, y por eso no significa que tengas insomnio."),
+    p("Y el inicio de la melatonina, que ocurre con luz tenue un par de horas "
+      "antes de dormirse, es el que explica la última hora sin pantallas fuertes "
+      "y sin luz de techo. No porque una pantalla envenene: porque la luz "
+      "intensa a esa hora retrasa el inicio, y el retraso se paga a la mañana "
+      "siguiente."),
+    sep(),
+    h("El cronotipo, y por qué no es una excusa"),
+    p("Existe una variación individual real en la preferencia horaria y tiene "
+      "base biológica: hay personas cuyo reloj corre naturalmente adelantado y "
+      "otras cuyo reloj corre atrasado. No es una cuestión de disciplina y "
+      "burlarse de ello es tan sensato como burlarse de la altura."),
+    p("Lo que sí es cierto es que el reloj se puede desplazar dentro de un "
+      "margen, y que la herramienta para hacerlo es la luz: luz intensa poco "
+      "después de despertar adelanta el reloj; luz intensa por la noche lo "
+      "atrasa. Quien quiera madrugar mejor tiene ahí su palanca, y no en "
+      "acostarse antes a mirar el techo."),
+    nota("Cuándo el desfase deja de ser un cronotipo",
+         "Si la preferencia horaria es tan extrema que impide dormir en horarios "
+         "socialmente viables durante meses, con repercusión seria en el trabajo "
+         "o en los estudios, eso tiene nombre clínico y tratamiento, que incluye "
+         "pautas de luz con horarios concretos. No se arregla con fuerza de "
+         "voluntad y merece una consulta."),
+)
+
+CE2 = cap(
+    "Cafeína, alcohol y nicotina",
+    p("Tres sustancias legales, dos de ellas de consumo diario para media "
+      "población, y las tres actúan sobre el sueño de maneras distintas y "
+      "predecibles. La cafeína merece el grueso del capítulo porque es la que "
+      "más se subestima."),
+    fig("de-cafeina",
+        "La curva de eliminación de la cafeína",
+        "Cada vida media se lleva la mitad de lo que quedaba. Con unas cinco "
+        "horas de vida media, a las diez horas queda una cuarta parte y a las "
+        "quince, una octava. Las cifras se calculan a partir de la vida media, "
+        "no están escritas a mano."),
+    p(D.CAFEINA["nota"]),
+    h("Las cuatro cosas que hay que saber de la cafeína"),
+    ficha("", [
+        ("No impide dormirse necesariamente", "Puede dejarte dormir y aun así "
+                                              "recortar el sueño profundo de esa "
+                                              "noche. Ese efecto no se percibe, "
+                                              "y de ahí el «a mí no me afecta»."),
+        ("La velocidad varía muchísimo", f"La vida media va de unas "
+                                         f"{D.CAFEINA['rango_vida_media'][0]} a "
+                                         f"{D.CAFEINA['rango_vida_media'][1]} "
+                                         "horas entre personas sanas. Hay quien "
+                                         "la elimina al doble de rápido que su "
+                                         "vecino."),
+        ("Tarda en actuar", f"Del orden de {D.CAFEINA['efecto_min']} a treinta "
+                            "minutos. Es lo que hace posible la siesta con café "
+                            "del capítulo de la siesta."),
+        ("Se acumula", "El café de las cinco se suma a lo que queda del de las "
+                       "once. La cuenta del día importa más que la última taza."),
+    ]),
+    p("La prueba para saber si te afecta no es razonarlo: es quitarla dos "
+      "semanas y comparar el registro. Cualquier otra respuesta es una opinión "
+      "sobre uno mismo, y en esto las opiniones sobre uno mismo son "
+      "notoriamente malas."),
+    h("Y la abstinencia, que existe"),
+    p("Quitar la cafeína de golpe produce dolor de cabeza, irritabilidad y "
+      "cansancio durante unos días en quien la consume a diario. No es un signo "
+      "de nada grave y se pasa; conviene saberlo para no confundirlo con «me "
+      "sienta mal dejar el café». Bajar de forma escalonada a lo largo de una "
+      "semana lo evita casi por completo."),
+    sep(),
+    h("El alcohol: el engaño mejor mantenido"),
+    p("Acorta el tiempo que se tarda en dormirse, y de ahí su fama de ayudar. "
+      "Después hace lo contrario: fragmenta la segunda mitad de la noche y "
+      "suprime parte del sueño con movimientos oculares rápidos, que es "
+      "exactamente el que vive ahí. La noche empieza fácil y termina mal, con "
+      "más despertares, más sed y peor sensación de descanso."),
+    p("Se suma un segundo efecto que interesa a cualquiera que ronque: el "
+      "alcohol relaja la musculatura de la vía aérea superior y empeora los "
+      "episodios de apnea. Alguien con apnea no diagnosticada tiene sus peores "
+      "noches precisamente después de beber, y suele atribuirlas a otra cosa."),
+    h("La nicotina"),
+    p("Es un estimulante, aunque el gesto de fumar se viva como relajante. "
+      "Alarga el tiempo que se tarda en dormirse y, en consumo alto, produce "
+      "despertares de madrugada por la caída de niveles: una abstinencia en "
+      "miniatura en mitad de la noche. Los primeros días de dejarlo el sueño "
+      "empeora, y eso conviene anticiparlo para no interpretarlo como una razón "
+      "para volver."),
+    nota("Y una que casi nadie mira: los medicamentos",
+         "Varios fármacos de uso común alteran el sueño: algunos "
+         "antihipertensivos, algunos antidepresivos, los corticoides, los "
+         "descongestionantes y los broncodilatadores, entre otros. Si tu sueño "
+         "empeoró de forma clara al empezar un tratamiento, eso se comenta con "
+         "quien te lo recetó. A menudo hay una alternativa o un cambio de hora "
+         "de la toma que lo resuelve, y es una conversación de dos minutos."),
+)
+
+CE3 = cap(
+    "La habitación",
+    p("La higiene del sueño se ocupa de la conducta; este capítulo se ocupa del "
+      "sitio. Es la parte más barata de arreglar y la que más gente ignora "
+      "mientras compra suplementos."),
+    ficha("Las cuatro variables físicas", [
+        ("Temperatura", "Fresca. Dormirse requiere que la temperatura central "
+                        "baje, y una habitación caliente lo impide. Es la "
+                        "variable con más efecto y la más fácil de cambiar."),
+        ("Luz", "Oscuridad real. Las persianas que dejan pasar la farola, el "
+                "piloto del televisor y el móvil boca arriba en la mesilla "
+                "cuentan. Un antifaz cuesta poco y funciona."),
+        ("Ruido", "El ruido fragmenta el sueño aunque no llegue a despertar, y "
+                  "ese despertar parcial no se recuerda por la mañana. Tapones, "
+                  "o ruido de fondo constante que enmascare los picos."),
+        ("Superficie", "Que no duela. Más allá de eso, la industria del colchón "
+                       "promete bastante más de lo que puede demostrar: la "
+                       "mejor almohada es la que mantiene el cuello alineado en "
+                       "tu postura habitual, y eso no depende del precio."),
+    ]),
+    h("La regla que convierte la cama en una señal"),
+    p("Este es el punto más importante del capítulo y viene del tratamiento no "
+      "farmacológico del insomnio, donde se llama control de estímulos. La idea "
+      "es que la cama sea una señal inequívoca de dormir, y para eso no puede "
+      "ser también el sitio donde se trabaja, se ve una serie, se discute o se "
+      "da vueltas durante una hora sin dormir."),
+    pasos(
+        "La cama es para dormir y para el sexo. Nada más: ni portátil, ni "
+        "papeleo, ni noticias.",
+        "A la cama solo cuando hay sueño de verdad, no solo cansancio.",
+        "Si llevas unos veinte minutos despierto y empiezas a agobiarte, "
+        "levántate y ve a otra habitación con luz tenue a hacer algo aburrido. "
+        "Vuelve cuando vuelva el sueño. Sí, aunque sea la tercera vez.",
+        "Nada de mirar el reloj. Saber la hora no ayuda a dormir y sí alimenta "
+        "la cuenta atrás mental, que es lo que mantiene despierto.",
+        "La hora de levantarse no cambia por una mala noche. Es el ancla, y "
+        "moverla convierte una noche mala en una semana mala.",
+    ),
+    p("Estas cinco reglas parecen severas y son la parte que de verdad funciona. "
+      "Levantarse de la cama a las tres de la madrugada resulta contraintuitivo, "
+      "y es precisamente lo que rompe la asociación entre la cama y la "
+      "frustración, que es lo que sostiene un insomnio una vez instalado."),
+    sep(),
+    h("Compartir cama"),
+    p("Dos personas con horarios, temperaturas preferidas y ronquidos distintos "
+      "en el mismo espacio es un problema de ingeniería, no de romanticismo. Las "
+      "soluciones que funcionan son poco glamurosas: mantas separadas, tapones, "
+      "colchón con menos transmisión de movimiento y, cuando hace falta, "
+      "habitaciones separadas algunas noches. Dormir mal por costumbre social "
+      "tiene un coste real sobre la salud de los dos."),
+    nota("Las mascotas",
+         "Un animal en la cama produce microdespertares que no se recuerdan y "
+         "que aparecen en cuanto se mide. Si duermes bien, no hay ningún motivo "
+         "para cambiar nada. Si duermes mal y tienes un animal en la cama, es "
+         "una de las variables más fáciles de probar durante dos semanas."),
+)
+
+CE4 = cap(
+    "Cuando el sueño no llega: lo que de verdad funciona",
+    p("Este capítulo trata el insomnio que no es un trastorno diagnosticado sino "
+      "una racha, y describe el enfoque que la evidencia respalda como primera "
+      "línea, que no es un fármaco. Si la situación es persistente, el capítulo "
+      "final dice cuándo hay que consultar, y hay que hacerlo."),
+    h("El bucle que lo mantiene"),
+    p("Casi todos los insomnios empiezan por una causa —un disgusto, un cambio "
+      "de horario, una enfermedad— y se mantienen después por otra distinta: por "
+      "lo que la persona hace para compensarlos. Es un bucle reconocible:"),
+    ficha("Cómo se instala", [
+        ("Duermo mal una noche", "Causa cualquiera. Hasta aquí, normal"),
+        ("Compenso", "Me acuesto antes, me levanto más tarde, echo una siesta "
+                     "larga, cancelo cosas"),
+        ("Paso más tiempo en la cama sin dormir", "La cama pasa a asociarse con "
+                                                  "estar despierto y "
+                                                  "frustrado"),
+        ("Me preocupa no dormir", "La preocupación activa, y la activación es lo "
+                                  "contrario de dormir"),
+        ("Duermo peor", "Y vuelta al segundo escalón, ahora con más "
+                        "convicción"),
+    ]),
+    p("La clave del bucle está en el segundo escalón, y es contraintuitiva: "
+      "compensar empeora. Pasar diez horas en la cama para conseguir seis de "
+      "sueño produce un sueño más fragmentado y menos profundo que pasar siete "
+      "para conseguir seis y media."),
+    h("Las dos palancas que funcionan"),
+    ficha("", [
+        ("Control de estímulos", "Las cinco reglas del capítulo de la habitación. La "
+                                 "cama vuelve a significar dormir."),
+        ("Restricción del tiempo en cama", "Ajustar el tiempo en la cama a lo "
+                                           "que realmente se duerme, y "
+                                           "ampliarlo poco a poco a medida que "
+                                           "el sueño se consolida. Es la parte "
+                                           "que más funciona y la que peor "
+                                           "suena."),
+    ]),
+    pasos(
+        "Durante una semana anota a qué hora te acuestas, a qué hora te "
+        "levantas y cuánto crees que dormiste.",
+        "Calcula la media de sueño real. Digamos que sale seis horas.",
+        "Fija una ventana en la cama de esa cifra más media hora, con la hora "
+        "de levantarse fija. Seis y media, ni más ni menos.",
+        "Cuando durante una semana duermas la mayor parte de esa ventana, "
+        "amplíala quince o veinte minutos. Y así.",
+        "No bajes nunca de cinco horas de ventana, y no hagas esto por tu cuenta "
+        "si conduces profesionalmente, si tienes epilepsia, trastorno bipolar o "
+        "apnea sin tratar. En esos casos se hace acompañado.",
+    ),
+    p("Las primeras noches se duerme peor y se está más cansado durante el día: "
+      "es lo esperado y es el mecanismo, porque lo que se está haciendo es "
+      "acumular presión de sueño hasta que la noche se consolide. Suele "
+      "empezar a notarse en una o dos semanas."),
+    sep(),
+    h("Lo que no funciona, aunque lo parezca"),
+    lista(
+        "Quedarse en la cama «descansando» sin dormir. Alimenta el bucle "
+        "entero.",
+        "Recuperar con siestas largas. Consume la presión de sueño que "
+        "necesitas por la noche. Con insomnio, la siesta se suspende.",
+        "Acostarse mucho antes. La zona de mantenimiento de la vigilia "
+        "garantiza que no vas a dormirte, y añade una hora de frustración en la "
+        "cama.",
+        "Beber para dormir. El capítulo de la cafeína y el alcohol explica por "
+        "qué es exactamente la peor idea de la lista.",
+        "Comprobar el móvil «ya que estoy despierto». Luz, activación y hora en "
+        "la pantalla, los tres a la vez.",
+    ),
+    nota("Sobre los fármacos y la melatonina",
+         "Los hipnóticos tienen indicaciones concretas, plazos cortos y efectos "
+         "adversos, y esa conversación es con quien receta y no con un libro. La "
+         "melatonina no es un somnífero: es una señal horaria, y su utilidad "
+         "depende de la dosis y sobre todo de la hora a la que se toma, que es "
+         "lo que casi nadie tiene en cuenta. Tomarla al acostarse «para dormir» "
+         "es el uso más común y el que menos respaldo tiene."),
+)
+
+CE5 = cap(
+    "Turnos, viajes y noches rotas",
+    p("Todo lo anterior supone una vida con horarios estables. Buena parte de la "
+      "población no la tiene, y merece un capítulo en vez de la recomendación "
+      "inútil de «mantén un horario regular»."),
+    h("Trabajo por turnos"),
+    p("Trabajar de noche obliga a dormir cuando el reloj interno empuja hacia "
+      "arriba, y a estar despierto cuando empuja hacia abajo. No hay manera de "
+      "que eso salga gratis, y conviene decirlo con claridad porque la "
+      "literatura es consistente: el trabajo nocturno prolongado se asocia a "
+      "peor salud metabólica y cardiovascular. Lo que sigue reduce el daño; no "
+      "lo elimina."),
+    ficha("Lo que ayuda", [
+        ("Luz durante el turno", "Ambiente bien iluminado en la primera mitad "
+                                 "del turno ayuda a mantener la alerta."),
+        ("Gafas oscuras al volver", "Al salir con luz de día, la luz de la "
+                                    "mañana ordena al reloj despertarse. "
+                                    "Filtrarla en el trayecto a casa ayuda a "
+                                    "dormir después."),
+        ("Habitación a oscuras total", "Aquí el antifaz y las persianas dejan de "
+                                       "ser un lujo."),
+        ("Cafeína al principio", "Al principio del turno, no al final. La cuenta "
+                                 "de la vida media sigue valiendo aunque sea de "
+                                 "noche."),
+        ("Siesta antes del turno", "Una siesta profiláctica antes de entrar "
+                                   "rinde más que intentar aguantar y compensar "
+                                   "después."),
+        ("Rotación hacia delante", "Si el turno rota, hacia delante —mañana, "
+                                   "tarde, noche— se tolera mejor que hacia "
+                                   "atrás. Es más fácil retrasar el reloj que "
+                                   "adelantarlo."),
+    ]),
+    sep(),
+    h("Viajes con cambio de huso"),
+    p("El desfase horario tiene una regla útil: al viajar hacia el este hay que "
+      "adelantar el reloj, y adelantarlo cuesta más que atrasarlo. Por eso los "
+      "viajes hacia el este sientan peor que los viajes hacia el oeste con el "
+      "mismo número de husos."),
+    pasos(
+        "Ponte en hora de destino en cuanto subas al avión: el reloj, las "
+        "comidas y el sueño.",
+        "Al llegar, sal a la luz del día en el horario que le toca al destino. "
+        "La luz es la que pone el reloj en hora; el resto es acompañamiento.",
+        "Hacia el este, busca luz por la mañana en destino y evítala a última "
+        "hora. Hacia el oeste, al revés: luz por la tarde y evitarla temprano.",
+        "Cuenta con aproximadamente un día por huso para ajustarte del todo. Un "
+        "viaje de tres días a seis husos no da tiempo a nada: en ese caso a "
+        "veces conviene NO ajustarse y mantener el horario de origen.",
+        "El alcohol del vuelo empeora todo lo anterior, y la deshidratación de "
+        "la cabina no ayuda.",
+    ),
+    h("La noche rota que no se elige"),
+    p("Un bebé, una guardia, un familiar enfermo. Aquí no hay optimización "
+      "posible y sí hay tres cosas que reducen el daño: dormir en bloques "
+      "aunque sean cortos en vez de estar despierto en vigilancia continua, "
+      "repartir las noches con alguien si es posible, y proteger la seguridad —no "
+      "conducir con sueño acumulado— por encima de cualquier otra "
+      "consideración."),
+    nota("La regla que no se negocia",
+         "La somnolencia al volante deteriora la atención y el tiempo de "
+         "reacción de forma comparable a otras causas que sí están perseguidas "
+         "por ley, y a diferencia de ellas no se compensa con voluntad. Si "
+         "llevas una racha de sueño corto, esa es la parte de este libro que "
+         "puede salvarte la vida: no conduzcas, o para y duerme veinte minutos "
+         "antes de seguir."),
+)
+
+CE6 = cap(
+    "Recuperación: lo que se puede comprar y lo que no",
+    p("La palabra recuperación se ha convertido en una categoría comercial: "
+      "botas de compresión, crioterapia, pistolas de masaje, bebidas, "
+      "dispositivos. Este capítulo ordena todo eso por lo que se sabe de cada "
+      "cosa, y el orden es incómodo para el sector."),
+    ficha("Por orden de importancia real", [
+        ("1 · Dormir suficiente", "Sin discusión y sin sustituto. Es la "
+                                  "intervención de recuperación con mejor "
+                                  "respaldo, la más barata y la que menos se "
+                                  "hace."),
+        ("2 · Comer suficiente", "Energía total y proteína. Un déficit "
+                                 "sostenido convierte cualquier programa en "
+                                 "acumulación de fatiga."),
+        ("3 · Programar bien la carga", "Semanas de menos, variación de "
+                                        "intensidad, un día fácil después de "
+                                        "uno duro. La recuperación se diseña "
+                                        "antes de necesitarla."),
+        ("4 · Moverse suave los días de descanso", "Andar, nadar, pedalear "
+                                                   "flojo. Barato y con efecto "
+                                                   "modesto y real sobre cómo se "
+                                                   "llega al día siguiente."),
+        ("5 · Todo lo demás", "Masaje, frío, compresión, dispositivos. Efectos "
+                              "pequeños, sobre todo en la sensación, y ninguno "
+                              "compensa un fallo en los cuatro primeros."),
+    ]),
+    h("El caso del frío, que merece un párrafo aparte"),
+    p("Meterse en agua fría después de entrenar reduce la sensación de agujetas, "
+      "y eso está bastante bien descrito. Lo que también está descrito es que, "
+      "usado de forma sistemática justo después del entrenamiento de fuerza, "
+      "puede atenuar parte de la adaptación que ese entrenamiento buscaba: la "
+      "inflamación que se está apagando es, en parte, la señal."),
+    p("La lectura práctica: si el objetivo es rendir mañana en una competición, "
+      "el frío tiene sentido. Si el objetivo es ganar masa y fuerza a lo largo "
+      "de meses, apagar la señal cada día no parece buena idea. Es un ejemplo "
+      "limpio de que una herramienta puede ser útil para un objetivo y "
+      "contraproducente para otro."),
+    sep(),
+    h("La semana de menos"),
+    p("Programar una semana de carga reducida cada cierto tiempo —cuatro a ocho "
+      "semanas, según lo dura que sea la etapa— no es perder el tiempo: es lo "
+      "que permite que la adaptación acumulada se exprese. Se reduce el volumen "
+      "más o menos a la mitad, se mantiene algo de intensidad para no perder el "
+      "punto, y se descansa de verdad."),
+    lista(
+        "Las señales de que hace falta antes de lo previsto: el rendimiento baja "
+        "tres sesiones seguidas, el sueño empeora, las ganas de entrenar "
+        "desaparecen y las molestias articulares se acumulan.",
+        "Esas cuatro señales aparecen en ese orden más o menos, y las dos "
+        "primeras son las que se ven en el cuaderno.",
+        "Bajar antes de romperse cuesta una semana. Bajar después de romperse "
+        "cuesta meses. Es toda la aritmética del asunto.",
+    ),
+    nota("Los dispositivos que miden el sueño",
+         "Estiman las fases con una fiabilidad bastante limitada, y producen un "
+         "efecto secundario documentado: la ansiedad por la puntuación del "
+         "sueño, que empeora precisamente lo que se está intentando medir. "
+         "Sirven razonablemente para una cosa —estimar la duración total y ver "
+         "tendencias de semanas— y bastante mal para el resto. Si el número de "
+         "la mañana te condiciona el día, apágalo."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-descanso",
@@ -567,9 +954,11 @@ LIBRO = {
     "claves": ["sueño", "recuperación", "hipnograma", "deuda de sueño",
                "higiene del sueño", "siesta", "cafeína", "villuminations"],
     "capitulos": [
-        C1, C2, C3,       # I · La noche por dentro
-        C4, C5, C6,       # II · Lo que se puede hacer
-        C7, C8, C9,       # III · El oficio
+        C1, CE1, C2, C3,       # I · La noche por dentro
+        C4, CE2, CE3, C6,      # II · Lo que se puede hacer
+        CE4, CE5,              # III · Cuando no llega
+        C5, CE6,               # IV · Entrenamiento y recuperación
+        C7, C8, C9,            # V · El oficio
     ],
 }
 

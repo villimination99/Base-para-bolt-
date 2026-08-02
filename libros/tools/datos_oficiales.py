@@ -236,6 +236,188 @@ NIOSH = {
             "lo es con los brazos estirados.",
 }
 
+# ══════════════════════════════════════════════════════════════════════
+#  GASTO ENERGÉTICO · de qué se compone el día
+# ══════════════════════════════════════════════════════════════════════
+# Porcentajes del gasto total diario. Se dan como rangos porque la proporción
+# varía muchísimo entre personas; lo que no varía es el orden de importancia.
+GASTO = [
+    ("Metabolismo basal", 60, 70,
+     "Lo que cuesta estar vivo en reposo. La mayor parte del día y la que "
+     "menos se puede cambiar a voluntad"),
+    ("Actividad no deportiva", 15, 30,
+     "Andar, estar de pie, gesticular, tareas. Es el componente MÁS variable "
+     "entre personas y el que se hunde en silencio al comer poco"),
+    ("Efecto térmico de los alimentos", 8, 12,
+     "Lo que cuesta digerir y asimilar. La proteína es la que más gasta en "
+     "este apartado, con diferencia"),
+    ("Ejercicio estructurado", 0, 30,
+     "La parte que todo el mundo cuenta y que en la mayoría de la gente es "
+     "la más pequeña de las cuatro"),
+]
+
+# Tolerancias del etiquetado en Estados Unidos, que son públicas y explican
+# por qué dos análisis del mismo producto no dan lo mismo.
+ETIQUETA = {
+    "exceso_max": 20,     # % por encima del valor declarado, nutrientes a limitar
+    "defecto_min": 80,    # % del valor declarado como mínimo, nutrientes añadidos
+    "nota": "Para calorías, azúcares, grasa total, grasa saturada, colesterol y "
+            "sodio, el valor medido no debe superar en más de una quinta parte "
+            "al declarado. Para vitaminas, minerales, proteína y fibra, el "
+            "medido debe alcanzar al menos cuatro quintos del declarado. Es "
+            "decir: la etiqueta es una franja, no un número.",
+}
+
+# ══════════════════════════════════════════════════════════════════════
+#  INOCUIDAD ALIMENTARIA · temperaturas internas seguras
+# ══════════════════════════════════════════════════════════════════════
+# Cifras del servicio de inocuidad e inspección de alimentos del USDA, en
+# grados Celsius con su equivalente Fahrenheit original entre paréntesis en el
+# texto. Es material público que no aparece en ningún libro de fitness.
+INOCUIDAD = [
+    ("Aves, entera o en piezas", 74, "Sin excepción y sin reposo"),
+    ("Sobras y guisos recalentados", 74, "Hasta que humee, no solo templado"),
+    ("Carne picada de res, cerdo, cordero", 71,
+     "Más alta que la del corte entero: al picar, la superficie se reparte "
+     "por dentro"),
+    ("Platos con huevo", 71, "Tortillas cuajadas, quiches, flanes"),
+    ("Cortes enteros de res, cerdo, cordero", 63, "Más tres minutos de reposo"),
+    ("Pescado y marisco", 63, "O hasta que la carne se separe en láminas"),
+]
+
+ZONA_PELIGRO = {
+    "min": 4, "max": 60,          # °C
+    "horas": 2,                   # fuera de la nevera, a temperatura ambiente
+    "horas_calor": 1,             # si hace más de 32 °C
+    "nevera": 4, "congelador": -18,
+    "pasos": [
+        ("Limpiar", "Manos veinte segundos con jabón, antes y después de tocar "
+                    "crudo. Tablas y superficies entre alimento y alimento"),
+        ("Separar", "Crudo lejos de listo para comer. Tabla distinta para carne "
+                    "cruda, y nunca el plato que llevó el crudo a la parrilla"),
+        ("Cocinar", "Con termómetro y no con el color. El color de la carne no "
+                    "indica temperatura: hay carne gris a 60 °C y rosada a 75"),
+        ("Enfriar", "A la nevera antes de dos horas. Las porciones grandes, "
+                    "repartidas en recipientes bajos para que bajen rápido"),
+    ],
+}
+
+# ══════════════════════════════════════════════════════════════════════
+#  ENTRENAMIENTO · patrones, variables y la prueba pública del Ejército
+# ══════════════════════════════════════════════════════════════════════
+PATRONES = [
+    ("Sentadilla", "Rodilla y cadera flexionan juntas",
+     "Sentadilla, prensa, zancada, subir escalón"),
+    ("Bisagra de cadera", "La cadera manda y la rodilla apenas se dobla",
+     "Peso muerto, buenos días, empuje de cadera, balanceo"),
+    ("Empuje horizontal", "Alejar peso del pecho",
+     "Press de banca, flexiones, fondos"),
+    ("Empuje vertical", "Llevar peso por encima de la cabeza",
+     "Press militar, press con mancuernas"),
+    ("Tirón horizontal", "Traer peso hacia el tronco",
+     "Remo con barra, remo con mancuerna, remo invertido"),
+    ("Tirón vertical", "Traer el cuerpo o el peso desde arriba",
+     "Dominadas, jalón al pecho"),
+    ("Transporte", "Sostener y andar con carga",
+     "Paseo del granjero, transporte lateral, acarreo frontal"),
+    ("Antirrotación", "Resistir un giro sin girar",
+     "Plancha, press Pallof, transporte a un solo lado"),
+]
+
+VARIABLES = [
+    ("Intensidad", "Cuánto pesa respecto a tu máximo, o cuántas repeticiones "
+                   "te quedaban en reserva al terminar la serie"),
+    ("Volumen", "Series efectivas por músculo y por semana. La cuenta que de "
+                "verdad predice la ganancia de tamaño"),
+    ("Frecuencia", "Cuántas veces por semana recibe estímulo cada músculo"),
+    ("Densidad", "Cuánto descansas entre series. Cambia el estímulo sin "
+                 "cambiar el peso"),
+    ("Recorrido", "Cuánto rango articular usas. La variable más barata y la "
+                  "que más se sacrifica por vanidad"),
+    ("Tempo", "A qué velocidad bajas y subes. La fase de bajada es donde más "
+              "adaptación se genera"),
+]
+
+# La prueba de condición física del Ejército de Estados Unidos, en su versión
+# de seis pruebas. Es pública, está descrita al detalle y sirve como batería de
+# referencia porque mide seis cualidades distintas y no una sola.
+ACFT = [
+    ("Peso muerto máximo", "Tres repeticiones con la barra hexagonal",
+     "Fuerza máxima de la cadena posterior"),
+    ("Lanzamiento de balón", "Balón de 4,5 kg lanzado hacia atrás por encima "
+                             "de la cabeza",
+     "Potencia explosiva de todo el cuerpo"),
+    ("Flexión con liberación de manos", "Pecho al suelo y manos fuera en cada "
+                                        "repetición",
+     "Resistencia del tren superior, sin recorrido a medias"),
+    ("Sprint, arrastre y acarreo", "250 m: esprintar, arrastrar trineo, "
+                                   "desplazamiento lateral y acarreo de dos "
+                                   "pesas",
+     "Potencia anaeróbica y agarre"),
+    ("Plancha", "Sostenida, con el cuerpo alineado",
+     "Resistencia del tronco en isometría"),
+    ("Carrera de dos millas", "3,2 km cronometrados",
+     "Capacidad aeróbica"),
+]
+ACFT_PUNTOS = {"minimo": 60, "maximo": 100,
+               "nota": "Cada prueba puntúa de 0 a 100 y hay que sacar al menos "
+                       "60 en cada una: no se compensa una prueba mala con otra "
+                       "excelente. Esa regla es la lección transferible."}
+
+# ══════════════════════════════════════════════════════════════════════
+#  LOS CINCO DOMINIOS DE PREPARACIÓN
+# ══════════════════════════════════════════════════════════════════════
+DOMINIOS = [
+    ("Físico", "Fuerza, resistencia, movilidad y potencia", "Códice de la Carga"),
+    ("Nutricional", "Lo que entra y cuándo", "Códice de la Mesa"),
+    ("Mental", "Objetivos, atención, diálogo interno y activación",
+     "Códice de la Voluntad"),
+    ("Del sueño", "Duración, horario y calidad", "Códice del Descanso"),
+    ("Espiritual", "Sentido, valores y propósito propio",
+     "Fuera de esta colección a propósito"),
+]
+
+# Respiración de compás cuadrado: la herramienta de bajada de activación que
+# figura en la doctrina pública de preparación mental.
+RESPIRACION = {"fases": ["Inspirar", "Sostener", "Espirar", "Sostener"],
+               "segundos": 4, "rondas": (4, 6),
+               "nota": "Cuatro tiempos iguales. Lo que hace bajar la activación "
+                       "es alargar la espiración y sostener sin tensión, no "
+                       "llenar mucho los pulmones."}
+
+# ══════════════════════════════════════════════════════════════════════
+#  RELOJ INTERNO Y CAFEÍNA
+# ══════════════════════════════════════════════════════════════════════
+# Hitos del día biológico, situados en horas relativas a la hora habitual de
+# despertar (0 = despertar). Son promedios de un cronotipo intermedio.
+CIRCADIANO = [
+    (-2, "Mínimo de temperatura central",
+     "El punto más bajo del día. Despertar aquí es lo que peor sienta"),
+    (0, "Despertar", "Sube el cortisol de forma brusca: es normal y es útil"),
+    (0.6, "Pico de cortisol matinal", "Treinta a cuarenta y cinco minutos "
+                                      "después de abrir los ojos"),
+    (7, "Bajón de alerta de la tarde", "No lo causa la comida: ocurre igual en "
+                                       "ayunas. Es el hueco de la siesta corta"),
+    (10, "Máximo de fuerza y temperatura", "La franja en que mejor se rinde en "
+                                           "casi todas las pruebas físicas"),
+    (14, "Zona de mantenimiento de la vigilia", "Las dos o tres horas antes de "
+                                                "dormir en que cuesta más "
+                                                "dormirse, aunque haya sueño"),
+    (15, "Inicio de la melatonina", "Con luz tenue. La luz intensa a esta hora "
+                                    "lo retrasa"),
+    (16, "Sueño", "Si el horario es estable"),
+]
+
+CAFEINA = {
+    "vida_media": 5,          # horas, adulto medio
+    "rango_vida_media": (3, 7),
+    "efecto_min": 20,         # minutos hasta notar el efecto
+    "nota": "Cada vida media elimina la mitad de lo que quedaba. Con cinco "
+            "horas, a las diez queda una cuarta parte y a las quince, una "
+            "octava. La velocidad varía mucho entre personas: hay quien la "
+            "elimina al doble de rápido que su vecino.",
+}
+
 
 # ══════════════════════════════════════════════════════════════════════
 #  COMPROBACIONES
@@ -304,6 +486,73 @@ def comprobar():
 
     if len(NIOSH["factores"]) != 6:
         raise SystemExit("La ecuación del NIOSH tiene seis factores")
+
+    # Gasto: los cuatro componentes tienen que poder sumar 100 en algún punto
+    # de sus rangos, igual que los macronutrientes.
+    gmin = sum(g[1] for g in GASTO)
+    gmax = sum(g[2] for g in GASTO)
+    if not (gmin <= 100 <= gmax):
+        raise SystemExit(
+            f"Los componentes del gasto no admiten el 100 %: {gmin} a {gmax}")
+    if GASTO[0][1] < 50:
+        raise SystemExit("El metabolismo basal tiene que ser el componente "
+                         "mayoritario; si no, la tabla está mal transcrita")
+
+    # Inocuidad: ninguna temperatura segura puede caer dentro de la zona de
+    # peligro, que es justamente lo que la cocción tiene que superar.
+    for alimento, grados, _ in INOCUIDAD:
+        if grados <= ZONA_PELIGRO["max"]:
+            raise SystemExit(
+                f"{alimento}: {grados} °C no supera la zona de peligro "
+                f"({ZONA_PELIGRO['max']} °C)")
+    if ZONA_PELIGRO["nevera"] > ZONA_PELIGRO["min"]:
+        raise SystemExit("La nevera tiene que estar por debajo del suelo de la "
+                         "zona de peligro")
+    if ZONA_PELIGRO["horas_calor"] >= ZONA_PELIGRO["horas"]:
+        raise SystemExit("Con calor el margen tiene que ser MENOR, no mayor")
+    if len(ZONA_PELIGRO["pasos"]) != 4:
+        raise SystemExit("Los pasos de inocuidad son cuatro")
+
+    # Etiquetado: las dos tolerancias tienen que ser simétricas respecto al
+    # 100 %, que es como están redactadas en la norma.
+    if ETIQUETA["exceso_max"] != 100 - ETIQUETA["defecto_min"]:
+        raise SystemExit("Las dos tolerancias de etiquetado no son simétricas")
+
+    # La prueba del Ejército: seis pruebas y un mínimo que no se compensa.
+    if len(ACFT) != 6:
+        raise SystemExit("La prueba de condición física tiene seis pruebas")
+    if not 0 < ACFT_PUNTOS["minimo"] < ACFT_PUNTOS["maximo"]:
+        raise SystemExit("El mínimo por prueba tiene que estar bajo el máximo")
+
+    # Patrones y variables: sin nombres repetidos, que es el error típico al
+    # ampliar una lista.
+    for etiqueta, tabla in (("patrones", PATRONES), ("variables", VARIABLES),
+                            ("dominios", DOMINIOS)):
+        nombres = [t[0] for t in tabla]
+        if len(set(nombres)) != len(nombres):
+            raise SystemExit(f"Hay {etiqueta} repetidos")
+    if len(DOMINIOS) != 5:
+        raise SystemExit("Los dominios de preparación son cinco")
+
+    # Respiración cuadrada: cuatro fases del mismo largo, o no es cuadrada.
+    if len(RESPIRACION["fases"]) != 4:
+        raise SystemExit("La respiración de compás cuadrado tiene cuatro fases")
+
+    # Circadiano: los hitos tienen que ir en orden y el sueño tiene que caer
+    # a una distancia del despertar coherente con la recomendación.
+    horas = [h for h, _, _ in CIRCADIANO]
+    if horas != sorted(horas):
+        raise SystemExit("Los hitos circadianos no están en orden")
+    despierto = next(h for h, n, _ in CIRCADIANO if n == "Sueño")
+    if not 15 <= despierto <= 24 - SUENO["adulto_horas"] + 1:
+        raise SystemExit(
+            f"El sueño a las {despierto} h de vigilia no deja sitio para las "
+            f"{SUENO['adulto_horas']} horas recomendadas")
+
+    # Cafeína: la vida media declarada tiene que caer dentro de su rango.
+    lo, hi = CAFEINA["rango_vida_media"]
+    if not lo <= CAFEINA["vida_media"] <= hi:
+        raise SystemExit("La vida media de la cafeína cae fuera de su rango")
     return True
 
 
@@ -338,4 +587,7 @@ FUENTES = [
 if __name__ == "__main__":
     comprobar()
     print(f"  datos_oficiales: {len(MICRO)} micronutrientes · "
-          f"{len(MET)} actividades · {len(FUENTES)} fuentes · todo cuadra")
+          f"{len(MET)} actividades · {len(INOCUIDAD)} temperaturas · "
+          f"{len(PATRONES)} patrones · {len(ACFT)} pruebas · "
+          f"{len(CIRCADIANO)} hitos del reloj · {len(FUENTES)} fuentes · "
+          "todo cuadra")

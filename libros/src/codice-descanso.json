@@ -79,6 +79,96 @@
    ]
   },
   {
+   "titulo": "El reloj interno",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Detrás del sueño hay un reloj que no mide horas del reloj de pared sino un ciclo propio de algo más de un día, y que se pone en hora todas las mañanas con la luz. Casi todos los problemas de sueño de gente sana son, en realidad, problemas de ese reloj."
+    },
+    {
+     "t": "figura",
+     "x": "de-reloj",
+     "tit": "El día biológico, hito por hito",
+     "pie": "Las horas van contadas desde el despertar habitual y corresponden a un cronotipo intermedio. Ninguno de estos hitos se decide a voluntad: se arrastran cambiando la hora de levantarse y la exposición a la luz.",
+     "clase": ""
+    },
+    {
+     "t": "ficha",
+     "tit": "Los hitos del día",
+     "x": [
+      [
+       "-2 h · Mínimo de temperatura central",
+       "El punto más bajo del día. Despertar aquí es lo que peor sienta"
+      ],
+      [
+       "+0 h · Despertar",
+       "Sube el cortisol de forma brusca: es normal y es útil"
+      ],
+      [
+       "+0,6 h · Pico de cortisol matinal",
+       "Treinta a cuarenta y cinco minutos después de abrir los ojos"
+      ],
+      [
+       "+7 h · Bajón de alerta de la tarde",
+       "No lo causa la comida: ocurre igual en ayunas. Es el hueco de la siesta corta"
+      ],
+      [
+       "+10 h · Máximo de fuerza y temperatura",
+       "La franja en que mejor se rinde en casi todas las pruebas físicas"
+      ],
+      [
+       "+14 h · Zona de mantenimiento de la vigilia",
+       "Las dos o tres horas antes de dormir en que cuesta más dormirse, aunque haya sueño"
+      ],
+      [
+       "+15 h · Inicio de la melatonina",
+       "Con luz tenue. La luz intensa a esta hora lo retrasa"
+      ],
+      [
+       "+16 h · Sueño",
+       "Si el horario es estable"
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "Los tres que más se pueden usar"
+    },
+    {
+     "t": "p",
+     "x": "El mínimo de temperatura central cae unas dos horas antes de la hora habitual de despertar, y es el peor momento posible para levantarse. Quien adelanta el despertador dos horas un día suelto no está robando dos horas de sueño cualquiera: está despertando en el fondo del pozo, y de ahí la sensación desproporcionada."
+    },
+    {
+     "t": "p",
+     "x": "La zona de mantenimiento de la vigilia es el hito que más consuela conocer. Las dos o tres horas anteriores a la hora habitual de dormirse son, paradójicamente, de las más difíciles del día para dormirse: el reloj empuja hacia arriba justo antes de soltar. Por eso irse a la cama dos horas antes de lo normal la víspera de un madrugón casi nunca funciona, y por eso no significa que tengas insomnio."
+    },
+    {
+     "t": "p",
+     "x": "Y el inicio de la melatonina, que ocurre con luz tenue un par de horas antes de dormirse, es el que explica la última hora sin pantallas fuertes y sin luz de techo. No porque una pantalla envenene: porque la luz intensa a esa hora retrasa el inicio, y el retraso se paga a la mañana siguiente."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "El cronotipo, y por qué no es una excusa"
+    },
+    {
+     "t": "p",
+     "x": "Existe una variación individual real en la preferencia horaria y tiene base biológica: hay personas cuyo reloj corre naturalmente adelantado y otras cuyo reloj corre atrasado. No es una cuestión de disciplina y burlarse de ello es tan sensato como burlarse de la altura."
+    },
+    {
+     "t": "p",
+     "x": "Lo que sí es cierto es que el reloj se puede desplazar dentro de un margen, y que la herramienta para hacerlo es la luz: luz intensa poco después de despertar adelanta el reloj; luz intensa por la noche lo atrasa. Quien quiera madrugar mejor tiene ahí su palanca, y no en acostarse antes a mirar el techo."
+    },
+    {
+     "t": "nota",
+     "tit": "Cuándo el desfase deja de ser un cronotipo",
+     "x": "Si la preferencia horaria es tan extrema que impide dormir en horarios socialmente viables durante meses, con repercusión seria en el trabajo o en los estudios, eso tiene nombre clínico y tratamiento, que incluye pautas de luz con horarios concretos. No se arregla con fuerza de voluntad y merece una consulta."
+    }
+   ]
+  },
+  {
    "titulo": "La arquitectura de una noche",
    "bloques": [
     {
@@ -283,6 +373,387 @@
    ]
   },
   {
+   "titulo": "Cafeína, alcohol y nicotina",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Tres sustancias legales, dos de ellas de consumo diario para media población, y las tres actúan sobre el sueño de maneras distintas y predecibles. La cafeína merece el grueso del capítulo porque es la que más se subestima."
+    },
+    {
+     "t": "figura",
+     "x": "de-cafeina",
+     "tit": "La curva de eliminación de la cafeína",
+     "pie": "Cada vida media se lleva la mitad de lo que quedaba. Con unas cinco horas de vida media, a las diez horas queda una cuarta parte y a las quince, una octava. Las cifras se calculan a partir de la vida media, no están escritas a mano.",
+     "clase": ""
+    },
+    {
+     "t": "p",
+     "x": "Cada vida media elimina la mitad de lo que quedaba. Con cinco horas, a las diez queda una cuarta parte y a las quince, una octava. La velocidad varía mucho entre personas: hay quien la elimina al doble de rápido que su vecino."
+    },
+    {
+     "t": "h2",
+     "x": "Las cuatro cosas que hay que saber de la cafeína"
+    },
+    {
+     "t": "ficha",
+     "tit": "",
+     "x": [
+      [
+       "No impide dormirse necesariamente",
+       "Puede dejarte dormir y aun así recortar el sueño profundo de esa noche. Ese efecto no se percibe, y de ahí el «a mí no me afecta»."
+      ],
+      [
+       "La velocidad varía muchísimo",
+       "La vida media va de unas 3 a 7 horas entre personas sanas. Hay quien la elimina al doble de rápido que su vecino."
+      ],
+      [
+       "Tarda en actuar",
+       "Del orden de 20 a treinta minutos. Es lo que hace posible la siesta con café del capítulo de la siesta."
+      ],
+      [
+       "Se acumula",
+       "El café de las cinco se suma a lo que queda del de las once. La cuenta del día importa más que la última taza."
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "x": "La prueba para saber si te afecta no es razonarlo: es quitarla dos semanas y comparar el registro. Cualquier otra respuesta es una opinión sobre uno mismo, y en esto las opiniones sobre uno mismo son notoriamente malas."
+    },
+    {
+     "t": "h2",
+     "x": "Y la abstinencia, que existe"
+    },
+    {
+     "t": "p",
+     "x": "Quitar la cafeína de golpe produce dolor de cabeza, irritabilidad y cansancio durante unos días en quien la consume a diario. No es un signo de nada grave y se pasa; conviene saberlo para no confundirlo con «me sienta mal dejar el café». Bajar de forma escalonada a lo largo de una semana lo evita casi por completo."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "El alcohol: el engaño mejor mantenido"
+    },
+    {
+     "t": "p",
+     "x": "Acorta el tiempo que se tarda en dormirse, y de ahí su fama de ayudar. Después hace lo contrario: fragmenta la segunda mitad de la noche y suprime parte del sueño con movimientos oculares rápidos, que es exactamente el que vive ahí. La noche empieza fácil y termina mal, con más despertares, más sed y peor sensación de descanso."
+    },
+    {
+     "t": "p",
+     "x": "Se suma un segundo efecto que interesa a cualquiera que ronque: el alcohol relaja la musculatura de la vía aérea superior y empeora los episodios de apnea. Alguien con apnea no diagnosticada tiene sus peores noches precisamente después de beber, y suele atribuirlas a otra cosa."
+    },
+    {
+     "t": "h2",
+     "x": "La nicotina"
+    },
+    {
+     "t": "p",
+     "x": "Es un estimulante, aunque el gesto de fumar se viva como relajante. Alarga el tiempo que se tarda en dormirse y, en consumo alto, produce despertares de madrugada por la caída de niveles: una abstinencia en miniatura en mitad de la noche. Los primeros días de dejarlo el sueño empeora, y eso conviene anticiparlo para no interpretarlo como una razón para volver."
+    },
+    {
+     "t": "nota",
+     "tit": "Y una que casi nadie mira: los medicamentos",
+     "x": "Varios fármacos de uso común alteran el sueño: algunos antihipertensivos, algunos antidepresivos, los corticoides, los descongestionantes y los broncodilatadores, entre otros. Si tu sueño empeoró de forma clara al empezar un tratamiento, eso se comenta con quien te lo recetó. A menudo hay una alternativa o un cambio de hora de la toma que lo resuelve, y es una conversación de dos minutos."
+    }
+   ]
+  },
+  {
+   "titulo": "La habitación",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "La higiene del sueño se ocupa de la conducta; este capítulo se ocupa del sitio. Es la parte más barata de arreglar y la que más gente ignora mientras compra suplementos."
+    },
+    {
+     "t": "ficha",
+     "tit": "Las cuatro variables físicas",
+     "x": [
+      [
+       "Temperatura",
+       "Fresca. Dormirse requiere que la temperatura central baje, y una habitación caliente lo impide. Es la variable con más efecto y la más fácil de cambiar."
+      ],
+      [
+       "Luz",
+       "Oscuridad real. Las persianas que dejan pasar la farola, el piloto del televisor y el móvil boca arriba en la mesilla cuentan. Un antifaz cuesta poco y funciona."
+      ],
+      [
+       "Ruido",
+       "El ruido fragmenta el sueño aunque no llegue a despertar, y ese despertar parcial no se recuerda por la mañana. Tapones, o ruido de fondo constante que enmascare los picos."
+      ],
+      [
+       "Superficie",
+       "Que no duela. Más allá de eso, la industria del colchón promete bastante más de lo que puede demostrar: la mejor almohada es la que mantiene el cuello alineado en tu postura habitual, y eso no depende del precio."
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "La regla que convierte la cama en una señal"
+    },
+    {
+     "t": "p",
+     "x": "Este es el punto más importante del capítulo y viene del tratamiento no farmacológico del insomnio, donde se llama control de estímulos. La idea es que la cama sea una señal inequívoca de dormir, y para eso no puede ser también el sitio donde se trabaja, se ve una serie, se discute o se da vueltas durante una hora sin dormir."
+    },
+    {
+     "t": "pasos",
+     "x": [
+      "La cama es para dormir y para el sexo. Nada más: ni portátil, ni papeleo, ni noticias.",
+      "A la cama solo cuando hay sueño de verdad, no solo cansancio.",
+      "Si llevas unos veinte minutos despierto y empiezas a agobiarte, levántate y ve a otra habitación con luz tenue a hacer algo aburrido. Vuelve cuando vuelva el sueño. Sí, aunque sea la tercera vez.",
+      "Nada de mirar el reloj. Saber la hora no ayuda a dormir y sí alimenta la cuenta atrás mental, que es lo que mantiene despierto.",
+      "La hora de levantarse no cambia por una mala noche. Es el ancla, y moverla convierte una noche mala en una semana mala."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Estas cinco reglas parecen severas y son la parte que de verdad funciona. Levantarse de la cama a las tres de la madrugada resulta contraintuitivo, y es precisamente lo que rompe la asociación entre la cama y la frustración, que es lo que sostiene un insomnio una vez instalado."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "Compartir cama"
+    },
+    {
+     "t": "p",
+     "x": "Dos personas con horarios, temperaturas preferidas y ronquidos distintos en el mismo espacio es un problema de ingeniería, no de romanticismo. Las soluciones que funcionan son poco glamurosas: mantas separadas, tapones, colchón con menos transmisión de movimiento y, cuando hace falta, habitaciones separadas algunas noches. Dormir mal por costumbre social tiene un coste real sobre la salud de los dos."
+    },
+    {
+     "t": "nota",
+     "tit": "Las mascotas",
+     "x": "Un animal en la cama produce microdespertares que no se recuerdan y que aparecen en cuanto se mide. Si duermes bien, no hay ningún motivo para cambiar nada. Si duermes mal y tienes un animal en la cama, es una de las variables más fáciles de probar durante dos semanas."
+    }
+   ]
+  },
+  {
+   "titulo": "La siesta, bien hecha",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "La siesta es una herramienta con instrucciones, y usarla mal produce exactamente el efecto que sus detractores describen. Con dos parámetros bien elegidos —duración y hora— hace lo que promete."
+    },
+    {
+     "t": "ficha",
+     "tit": "Las dos duraciones que funcionan",
+     "x": [
+      [
+       "De 10 a 20 minutos",
+       "Se sale de sueño ligero, sin aturdimiento, y mejora la alerta durante unas horas. Es la siesta por defecto y la que sirve para casi todo."
+      ],
+      [
+       "Unos 90 minutos",
+       "Un ciclo completo, así que se despierta al final del ciclo y no en mitad del sueño profundo. Solo tiene sentido con déficit acumulado o antes de una noche que se sabe corta."
+      ],
+      [
+       "Entre 30 y 60 minutos",
+       "La franja mala: bastante probabilidad de despertar en sueño profundo, con la sensación pastosa que dura media hora."
+      ]
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "La hora"
+    },
+    {
+     "t": "p",
+     "x": "A primera hora de la tarde hay un descenso natural de alerta que no se debe a la comida —ocurre igual sin comer— y ese es el momento en el que una siesta corta encaja sin coste. A partir de media tarde empieza a restarle presión de sueño a la noche, y ahí sí compite con lo importante."
+    },
+    {
+     "t": "p",
+     "x": "La regla práctica: siesta corta, temprana, y solo si duermes bien por la noche. Quien tiene insomnio debería evitarla, porque parte del tratamiento del insomnio consiste precisamente en concentrar toda la presión de sueño en la noche."
+    },
+    {
+     "t": "nota",
+     "tit": "La siesta de café, que suena a truco y no lo es",
+     "x": "Tomar un café inmediatamente ANTES de una siesta de quince minutos funciona porque la cafeína tarda del orden de veinte a treinta minutos en hacer efecto: la siesta ocurre antes de que llegue y los dos efectos se suman al despertar. Es una práctica que también aparece en contextos de gestión de la fatiga profesional, y es la única cosa de este libro que se puede probar hoy mismo."
+    }
+   ]
+  },
+  {
+   "titulo": "Cuando el sueño no llega: lo que de verdad funciona",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Este capítulo trata el insomnio que no es un trastorno diagnosticado sino una racha, y describe el enfoque que la evidencia respalda como primera línea, que no es un fármaco. Si la situación es persistente, el capítulo final dice cuándo hay que consultar, y hay que hacerlo."
+    },
+    {
+     "t": "h2",
+     "x": "El bucle que lo mantiene"
+    },
+    {
+     "t": "p",
+     "x": "Casi todos los insomnios empiezan por una causa —un disgusto, un cambio de horario, una enfermedad— y se mantienen después por otra distinta: por lo que la persona hace para compensarlos. Es un bucle reconocible:"
+    },
+    {
+     "t": "ficha",
+     "tit": "Cómo se instala",
+     "x": [
+      [
+       "Duermo mal una noche",
+       "Causa cualquiera. Hasta aquí, normal"
+      ],
+      [
+       "Compenso",
+       "Me acuesto antes, me levanto más tarde, echo una siesta larga, cancelo cosas"
+      ],
+      [
+       "Paso más tiempo en la cama sin dormir",
+       "La cama pasa a asociarse con estar despierto y frustrado"
+      ],
+      [
+       "Me preocupa no dormir",
+       "La preocupación activa, y la activación es lo contrario de dormir"
+      ],
+      [
+       "Duermo peor",
+       "Y vuelta al segundo escalón, ahora con más convicción"
+      ]
+     ]
+    },
+    {
+     "t": "p",
+     "x": "La clave del bucle está en el segundo escalón, y es contraintuitiva: compensar empeora. Pasar diez horas en la cama para conseguir seis de sueño produce un sueño más fragmentado y menos profundo que pasar siete para conseguir seis y media."
+    },
+    {
+     "t": "h2",
+     "x": "Las dos palancas que funcionan"
+    },
+    {
+     "t": "ficha",
+     "tit": "",
+     "x": [
+      [
+       "Control de estímulos",
+       "Las cinco reglas del capítulo de la habitación. La cama vuelve a significar dormir."
+      ],
+      [
+       "Restricción del tiempo en cama",
+       "Ajustar el tiempo en la cama a lo que realmente se duerme, y ampliarlo poco a poco a medida que el sueño se consolida. Es la parte que más funciona y la que peor suena."
+      ]
+     ]
+    },
+    {
+     "t": "pasos",
+     "x": [
+      "Durante una semana anota a qué hora te acuestas, a qué hora te levantas y cuánto crees que dormiste.",
+      "Calcula la media de sueño real. Digamos que sale seis horas.",
+      "Fija una ventana en la cama de esa cifra más media hora, con la hora de levantarse fija. Seis y media, ni más ni menos.",
+      "Cuando durante una semana duermas la mayor parte de esa ventana, amplíala quince o veinte minutos. Y así.",
+      "No bajes nunca de cinco horas de ventana, y no hagas esto por tu cuenta si conduces profesionalmente, si tienes epilepsia, trastorno bipolar o apnea sin tratar. En esos casos se hace acompañado."
+     ]
+    },
+    {
+     "t": "p",
+     "x": "Las primeras noches se duerme peor y se está más cansado durante el día: es lo esperado y es el mecanismo, porque lo que se está haciendo es acumular presión de sueño hasta que la noche se consolide. Suele empezar a notarse en una o dos semanas."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "Lo que no funciona, aunque lo parezca"
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Quedarse en la cama «descansando» sin dormir. Alimenta el bucle entero.",
+      "Recuperar con siestas largas. Consume la presión de sueño que necesitas por la noche. Con insomnio, la siesta se suspende.",
+      "Acostarse mucho antes. La zona de mantenimiento de la vigilia garantiza que no vas a dormirte, y añade una hora de frustración en la cama.",
+      "Beber para dormir. El capítulo de la cafeína y el alcohol explica por qué es exactamente la peor idea de la lista.",
+      "Comprobar el móvil «ya que estoy despierto». Luz, activación y hora en la pantalla, los tres a la vez."
+     ]
+    },
+    {
+     "t": "nota",
+     "tit": "Sobre los fármacos y la melatonina",
+     "x": "Los hipnóticos tienen indicaciones concretas, plazos cortos y efectos adversos, y esa conversación es con quien receta y no con un libro. La melatonina no es un somnífero: es una señal horaria, y su utilidad depende de la dosis y sobre todo de la hora a la que se toma, que es lo que casi nadie tiene en cuenta. Tomarla al acostarse «para dormir» es el uso más común y el que menos respaldo tiene."
+    }
+   ]
+  },
+  {
+   "titulo": "Turnos, viajes y noches rotas",
+   "bloques": [
+    {
+     "t": "p",
+     "x": "Todo lo anterior supone una vida con horarios estables. Buena parte de la población no la tiene, y merece un capítulo en vez de la recomendación inútil de «mantén un horario regular»."
+    },
+    {
+     "t": "h2",
+     "x": "Trabajo por turnos"
+    },
+    {
+     "t": "p",
+     "x": "Trabajar de noche obliga a dormir cuando el reloj interno empuja hacia arriba, y a estar despierto cuando empuja hacia abajo. No hay manera de que eso salga gratis, y conviene decirlo con claridad porque la literatura es consistente: el trabajo nocturno prolongado se asocia a peor salud metabólica y cardiovascular. Lo que sigue reduce el daño; no lo elimina."
+    },
+    {
+     "t": "ficha",
+     "tit": "Lo que ayuda",
+     "x": [
+      [
+       "Luz durante el turno",
+       "Ambiente bien iluminado en la primera mitad del turno ayuda a mantener la alerta."
+      ],
+      [
+       "Gafas oscuras al volver",
+       "Al salir con luz de día, la luz de la mañana ordena al reloj despertarse. Filtrarla en el trayecto a casa ayuda a dormir después."
+      ],
+      [
+       "Habitación a oscuras total",
+       "Aquí el antifaz y las persianas dejan de ser un lujo."
+      ],
+      [
+       "Cafeína al principio",
+       "Al principio del turno, no al final. La cuenta de la vida media sigue valiendo aunque sea de noche."
+      ],
+      [
+       "Siesta antes del turno",
+       "Una siesta profiláctica antes de entrar rinde más que intentar aguantar y compensar después."
+      ],
+      [
+       "Rotación hacia delante",
+       "Si el turno rota, hacia delante —mañana, tarde, noche— se tolera mejor que hacia atrás. Es más fácil retrasar el reloj que adelantarlo."
+      ]
+     ]
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "Viajes con cambio de huso"
+    },
+    {
+     "t": "p",
+     "x": "El desfase horario tiene una regla útil: al viajar hacia el este hay que adelantar el reloj, y adelantarlo cuesta más que atrasarlo. Por eso los viajes hacia el este sientan peor que los viajes hacia el oeste con el mismo número de husos."
+    },
+    {
+     "t": "pasos",
+     "x": [
+      "Ponte en hora de destino en cuanto subas al avión: el reloj, las comidas y el sueño.",
+      "Al llegar, sal a la luz del día en el horario que le toca al destino. La luz es la que pone el reloj en hora; el resto es acompañamiento.",
+      "Hacia el este, busca luz por la mañana en destino y evítala a última hora. Hacia el oeste, al revés: luz por la tarde y evitarla temprano.",
+      "Cuenta con aproximadamente un día por huso para ajustarte del todo. Un viaje de tres días a seis husos no da tiempo a nada: en ese caso a veces conviene NO ajustarse y mantener el horario de origen.",
+      "El alcohol del vuelo empeora todo lo anterior, y la deshidratación de la cabina no ayuda."
+     ]
+    },
+    {
+     "t": "h2",
+     "x": "La noche rota que no se elige"
+    },
+    {
+     "t": "p",
+     "x": "Un bebé, una guardia, un familiar enfermo. Aquí no hay optimización posible y sí hay tres cosas que reducen el daño: dormir en bloques aunque sean cortos en vez de estar despierto en vigilancia continua, repartir las noches con alguien si es posible, y proteger la seguridad —no conducir con sueño acumulado— por encima de cualquier otra consideración."
+    },
+    {
+     "t": "nota",
+     "tit": "La regla que no se negocia",
+     "x": "La somnolencia al volante deteriora la atención y el tiempo de reacción de forma comparable a otras causas que sí están perseguidas por ley, y a diferencia de ellas no se compensa con voluntad. Si llevas una racha de sueño corto, esa es la parte de este libro que puede salvarte la vida: no conduzcas, o para y duerme veinte minutos antes de seguir."
+    }
+   ]
+  },
+  {
    "titulo": "Sueño y entrenamiento, en las dos direcciones",
    "bloques": [
     {
@@ -380,46 +851,73 @@
    ]
   },
   {
-   "titulo": "La siesta, bien hecha",
+   "titulo": "Recuperación: lo que se puede comprar y lo que no",
    "bloques": [
     {
      "t": "p",
-     "x": "La siesta es una herramienta con instrucciones, y usarla mal produce exactamente el efecto que sus detractores describen. Con dos parámetros bien elegidos —duración y hora— hace lo que promete."
+     "x": "La palabra recuperación se ha convertido en una categoría comercial: botas de compresión, crioterapia, pistolas de masaje, bebidas, dispositivos. Este capítulo ordena todo eso por lo que se sabe de cada cosa, y el orden es incómodo para el sector."
     },
     {
      "t": "ficha",
-     "tit": "Las dos duraciones que funcionan",
+     "tit": "Por orden de importancia real",
      "x": [
       [
-       "De 10 a 20 minutos",
-       "Se sale de sueño ligero, sin aturdimiento, y mejora la alerta durante unas horas. Es la siesta por defecto y la que sirve para casi todo."
+       "1 · Dormir suficiente",
+       "Sin discusión y sin sustituto. Es la intervención de recuperación con mejor respaldo, la más barata y la que menos se hace."
       ],
       [
-       "Unos 90 minutos",
-       "Un ciclo completo, así que se despierta al final del ciclo y no en mitad del sueño profundo. Solo tiene sentido con déficit acumulado o antes de una noche que se sabe corta."
+       "2 · Comer suficiente",
+       "Energía total y proteína. Un déficit sostenido convierte cualquier programa en acumulación de fatiga."
       ],
       [
-       "Entre 30 y 60 minutos",
-       "La franja mala: bastante probabilidad de despertar en sueño profundo, con la sensación pastosa que dura media hora."
+       "3 · Programar bien la carga",
+       "Semanas de menos, variación de intensidad, un día fácil después de uno duro. La recuperación se diseña antes de necesitarla."
+      ],
+      [
+       "4 · Moverse suave los días de descanso",
+       "Andar, nadar, pedalear flojo. Barato y con efecto modesto y real sobre cómo se llega al día siguiente."
+      ],
+      [
+       "5 · Todo lo demás",
+       "Masaje, frío, compresión, dispositivos. Efectos pequeños, sobre todo en la sensación, y ninguno compensa un fallo en los cuatro primeros."
       ]
      ]
     },
     {
      "t": "h2",
-     "x": "La hora"
+     "x": "El caso del frío, que merece un párrafo aparte"
     },
     {
      "t": "p",
-     "x": "A primera hora de la tarde hay un descenso natural de alerta que no se debe a la comida —ocurre igual sin comer— y ese es el momento en el que una siesta corta encaja sin coste. A partir de media tarde empieza a restarle presión de sueño a la noche, y ahí sí compite con lo importante."
+     "x": "Meterse en agua fría después de entrenar reduce la sensación de agujetas, y eso está bastante bien descrito. Lo que también está descrito es que, usado de forma sistemática justo después del entrenamiento de fuerza, puede atenuar parte de la adaptación que ese entrenamiento buscaba: la inflamación que se está apagando es, en parte, la señal."
     },
     {
      "t": "p",
-     "x": "La regla práctica: siesta corta, temprana, y solo si duermes bien por la noche. Quien tiene insomnio debería evitarla, porque parte del tratamiento del insomnio consiste precisamente en concentrar toda la presión de sueño en la noche."
+     "x": "La lectura práctica: si el objetivo es rendir mañana en una competición, el frío tiene sentido. Si el objetivo es ganar masa y fuerza a lo largo de meses, apagar la señal cada día no parece buena idea. Es un ejemplo limpio de que una herramienta puede ser útil para un objetivo y contraproducente para otro."
+    },
+    {
+     "t": "sep"
+    },
+    {
+     "t": "h2",
+     "x": "La semana de menos"
+    },
+    {
+     "t": "p",
+     "x": "Programar una semana de carga reducida cada cierto tiempo —cuatro a ocho semanas, según lo dura que sea la etapa— no es perder el tiempo: es lo que permite que la adaptación acumulada se exprese. Se reduce el volumen más o menos a la mitad, se mantiene algo de intensidad para no perder el punto, y se descansa de verdad."
+    },
+    {
+     "t": "lista",
+     "x": [
+      "Las señales de que hace falta antes de lo previsto: el rendimiento baja tres sesiones seguidas, el sueño empeora, las ganas de entrenar desaparecen y las molestias articulares se acumulan.",
+      "Esas cuatro señales aparecen en ese orden más o menos, y las dos primeras son las que se ven en el cuaderno.",
+      "Bajar antes de romperse cuesta una semana. Bajar después de romperse cuesta meses. Es toda la aritmética del asunto."
+     ]
     },
     {
      "t": "nota",
-     "tit": "La siesta de café, que suena a truco y no lo es",
-     "x": "Tomar un café inmediatamente ANTES de una siesta de quince minutos funciona porque la cafeína tarda del orden de veinte a treinta minutos en hacer efecto: la siesta ocurre antes de que llegue y los dos efectos se suman al despertar. Es una práctica que también aparece en contextos de gestión de la fatiga profesional, y es la única cosa de este libro que se puede probar hoy mismo."
+     "tit": "Los dispositivos que miden el sueño",
+     "x": "Estiman las fases con una fiabilidad bastante limitada, y producen un efecto secundario documentado: la ansiedad por la puntuación del sueño, que empeora precisamente lo que se está intentando medir. Sirven razonablemente para una cosa —estimar la duración total y ver tendencias de semanas— y bastante mal para el resto. Si el número de la mañana te condiciona el día, apágalo."
     }
    ]
   },

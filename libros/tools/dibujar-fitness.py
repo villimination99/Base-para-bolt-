@@ -809,17 +809,467 @@ def cubierta_descanso():
 
 
 # ══════════════════════════════════════════════════════════════════════
+
+# ══════════════════════════════════════════════════════════════════════
+#  LÁMINAS AÑADIDAS EN LA SEGUNDA EDICIÓN
+# ══════════════════════════════════════════════════════════════════════
+def me_gasto():
+    """De qué se compone el gasto de un día. La sorpresa de la lámina es el
+    tamaño relativo: el ejercicio estructurado es la porción pequeña.
+
+    El raíl de la izquierda solo lleva el nombre; la glosa va bajo la barra,
+    donde hay ancho de sobra. Ponerla también en el raíl la sacaba del marco.
+    """
+    PRI, SEC = ACENTOS["mesa"]
+    X0, ANCHO, FILA = 196, 200, 58
+    ALTO = 44 + len(D.GASTO) * FILA + 44
+    p = [f'<symbol id="me-gasto" viewBox="0 0 464 {ALTO}">']
+    for k in range(0, 81, 20):
+        x = X0 + ANCHO * k / 80
+        p.append(f'<path d="M{f(x)} 30 V{44 + len(D.GASTO)*FILA - 16}" '
+                 f'fill="none" stroke="{APAGADO}" stroke-width=".5" '
+                 'opacity=".3"/>')
+        p.append(txt(x, 22, f"{k} %", "num", 8.2, APAGADO))
+    for i, (nombre, lo, hi, nota) in enumerate(D.GASTO):
+        y = 44 + i * FILA
+        col = PRI if i == 0 else SEC if i == 1 else APAGADO
+        p.append(txt(X0 - 12, y + 18, nombre.upper(), "rot", 7.4, col, "end"))
+        x = X0 + ANCHO * lo / 80
+        w = ANCHO * (hi - lo) / 80
+        p.append(barra(x, y + 4, max(w, 6), 24, col, ".24"))
+        p.append(txt(x + max(w, 6) + 8, y + 21, f"{lo}–{hi} %", "num", 9.6,
+                     col, "start"))
+        corto = nota[:64] + ("…" if len(nota) > 64 else "")
+        p.append(txt(14, y + 40, corto, "et", 8.8, APAGADO, "start"))
+    p.append(f'<rect x="14" y="{ALTO-38}" width="436" height="22" rx="6" '
+             f'fill="{PRI}" opacity=".07"/>')
+    p.append(txt(232, ALTO - 23,
+                 "LA PORCIÓN QUE TODOS CUENTAN ES LA MÁS PEQUEÑA",
+                 "rot", 8.2, PRI))
+    p.append(pie(464, ALTO, "COMPONENTES DEL GASTO DIARIO · RANGOS TÍPICOS"))
+    p.append("</symbol>")
+    return "".join(p)
+
+def me_etiqueta():
+    """Anatomía de una etiqueta, con la tolerancia legal marcada: el valor
+    declarado es una franja y no un número."""
+    PRI, SEC = ACENTOS["mesa"]
+    E = D.ETIQUETA
+    ALTO = 300
+    p = [f'<symbol id="me-etiqueta" viewBox="0 0 464 {ALTO}">']
+    # el envase
+    p.append(f'<rect x="14" y="18" width="196" height="230" rx="10" '
+             f'fill="none" stroke="{PRI}" stroke-width="1.6" opacity=".7"/>')
+    p.append(txt(112, 40, "INFORMACIÓN NUTRICIONAL", "rot", 8, PRI))
+    p.append(f'<path d="M26 50 H198" fill="none" stroke="{PRI}" '
+             'stroke-width="1.4" opacity=".6"/>')
+    filas = [("Por 100 g", "SIEMPRE COMPARABLE", SEC),
+             ("Por porción", "LA PORCIÓN LA ELIGE LA MARCA", ALERTA),
+             ("Energía", "", None), ("Grasas · de las cuales saturadas", "", None),
+             ("Hidratos · de los cuales azúcares", "", None),
+             ("Fibra", "", None), ("Proteínas", "", None), ("Sal", "", None)]
+    for i, (etq, aviso, col) in enumerate(filas):
+        y = 66 + i * 22
+        p.append(txt(26, y, etq, "et", 9.6, CLARO if col is None else col,
+                     "start"))
+        if aviso:
+            p.append(txt(26, y + 10, aviso, "rot", 6, col, "start"))
+    p.append(f'<path d="M26 244 H198" fill="none" stroke="{PRI}" '
+             'stroke-width=".8" opacity=".4"/>')
+    # la tolerancia
+    p.append(txt(340, 40, "LO QUE DICE LA NORMA", "rot", 9, PRI))
+    BX, BY, BW = 240, 60, 210
+    for j, (etq, pct, col, glosa) in enumerate((
+            ("A limitar", E["exceso_max"], ALERTA,
+             "Calorías, azúcares, grasas, sodio: como mucho una quinta parte "
+             "POR ENCIMA de lo declarado"),
+            ("A alcanzar", E["defecto_min"], SEC,
+             "Vitaminas, minerales, proteína y fibra: al menos cuatro quintos "
+             "de lo declarado"))):
+        y = BY + j * 96
+        p.append(f'<rect x="{BX}" y="{y}" width="{BW}" height="84" rx="9" '
+                 f'fill="{col}" opacity=".06"/>')
+        p.append(txt(BX + 12, y + 22, etq.upper(), "rot", 8.4, col, "start"))
+        p.append(txt(BX + BW - 12, y + 26, f"{pct} %", "num", 17, col, "end"))
+        for k, linea in enumerate(_partir(glosa, 42)[:3]):
+            p.append(txt(BX + 12, y + 42 + k * 13, linea, "et", 9, CLARO,
+                         "start"))
+    p.append(f'<rect x="240" y="252" width="210" height="26" rx="6" '
+             f'fill="{PRI}" opacity=".08"/>')
+    p.append(txt(345, 269, "EL VALOR DECLARADO ES UNA FRANJA", "rot", 7.8, PRI))
+    p.append(pie(464, ALTO, "TOLERANCIAS PÚBLICAS DEL ETIQUETADO"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def me_inocuidad():
+    """La escala de temperaturas: la zona de peligro y lo que hay que superar.
+
+    Las seis cifras seguras caen en tres valores muy próximos (74, 71 y 63),
+    así que en el termómetro se pisarían. Se agrupan POR TEMPERATURA y cada
+    grupo lleva una sola línea guía: así el dibujo dice lo mismo sin amontonar.
+    """
+    PRI, SEC = ACENTOS["mesa"]
+    Z = D.ZONA_PELIGRO
+    XT, Y0, ALTO_G = 66, 40, 208
+    ALTO = 306
+    tope, suelo = 80, -24
+
+    def ay(t):
+        return Y0 + ALTO_G * (tope - t) / (tope - suelo)
+
+    p = [f'<symbol id="me-inocuidad" viewBox="0 0 464 {ALTO}">']
+    p.append(f'<rect x="{XT}" y="{f(ay(Z["max"]))}" width="26" '
+             f'height="{f(ay(Z["min"]) - ay(Z["max"]))}" '
+             f'fill="{ALERTA}" opacity=".22"/>')
+    p.append(f'<rect x="{XT}" y="{Y0}" width="26" height="{ALTO_G}" rx="4" '
+             f'fill="none" stroke="{APAGADO}" stroke-width="1" opacity=".55"/>')
+    medio = ay((Z["min"] + Z["max"]) / 2)
+    p.append(txt(XT - 8, medio - 6, "ZONA DE", "rot", 7.6, ALERTA, "end"))
+    p.append(txt(XT - 8, medio + 6, "PELIGRO", "rot", 7.6, ALERTA, "end"))
+    p.append(txt(XT - 8, medio + 20, f'{Z["min"]}–{Z["max"]} °C', "num", 8.6,
+                 ALERTA, "end"))
+    for t, etq in ((Z["congelador"], f'Congelador · {Z["congelador"]} °C'),
+                   (Z["nevera"], f'Nevera · {Z["nevera"]} °C o menos')):
+        y = ay(t)
+        p.append(f'<path d="M{XT} {f(y)} H{XT+26}" fill="none" stroke="{SEC}" '
+                 'stroke-width="1.8"/>')
+        p.append(txt(XT + 34, y + 4, etq, "et", 9.8, SEC, "start"))
+    # agrupadas por temperatura, de mayor a menor
+    grupos = {}
+    for alimento, grados, nota in D.INOCUIDAD:
+        grupos.setdefault(grados, []).append((alimento, nota))
+    BX, BW = 190, 262
+    for k, grados in enumerate(sorted(grupos, reverse=True)):
+        filas = grupos[grados]
+        bh = 22 + len(filas) * 24
+        by = Y0 + k * 74
+        p.append(f'<path d="M{XT+26} {f(ay(grados))} L{BX-8} {by+18}" '
+                 f'fill="none" stroke="{PRI}" stroke-width=".8" '
+                 'stroke-dasharray="3 3" opacity=".55"/>')
+        p.append(f'<circle cx="{XT+26}" cy="{f(ay(grados))}" r="3.4" '
+                 f'fill="{PRI}"/>')
+        p.append(f'<rect x="{BX}" y="{by}" width="{BW}" height="{bh}" rx="8" '
+                 f'fill="{PRI}" opacity=".06"/>')
+        p.append(txt(BX + 12, by + 20, f"{grados} °C", "num", 15, PRI, "start"))
+        for j, (alimento, nota) in enumerate(filas):
+            yy = by + 16 + j * 24
+            p.append(txt(BX + 70, yy, alimento[:34]
+                         + ("…" if len(alimento) > 34 else ""),
+                         "et", 9.8, CLARO, "start"))
+            p.append(txt(BX + 70, yy + 11, nota[:40]
+                         + ("…" if len(nota) > 40 else ""),
+                         "et", 8.2, APAGADO, "start"))
+    p.append(f'<rect x="14" y="262" width="436" height="24" rx="6" '
+             f'fill="{ALERTA}" opacity=".08"/>')
+    p.append(txt(232, 278,
+                 f'FUERA DE LA NEVERA: {Z["horas"]} HORAS · '
+                 f'CON MÁS DE 32 °C, {Z["horas_calor"]}',
+                 "rot", 8, ALERTA))
+    p.append(pie(464, ALTO,
+                 "TEMPERATURAS INTERNAS · SE MIDEN CON TERMÓMETRO, NO POR COLOR"))
+    p.append("</symbol>")
+    return "".join(p)
+
+def ca_patrones():
+    """Los ocho patrones de movimiento. Una semana que los toca todos no deja
+    huecos, y esa es toda la teoría de programación que hace falta."""
+    PRI, SEC = ACENTOS["carga"]
+    FILA = 46
+    ALTO = 26 + len(D.PATRONES) * FILA + 26
+    p = [f'<symbol id="ca-patrones" viewBox="0 0 464 {ALTO}">']
+    for i, (nombre, que, ejemplos) in enumerate(D.PATRONES):
+        y = 22 + i * FILA
+        col = PRI if i % 2 == 0 else SEC
+        p.append(f'<rect x="12" y="{y}" width="440" height="38" rx="8" '
+                 f'fill="{col}" opacity=".055"/>')
+        p.append(f'<circle cx="34" cy="{y+19}" r="12" fill="none" '
+                 f'stroke="{col}" stroke-width="1.3"/>')
+        p.append(txt(34, y + 23, str(i + 1), "num", 10, col))
+        p.append(txt(56, y + 15, nombre.upper(), "rot", 8.4, col, "start"))
+        p.append(txt(56, y + 30, que, "et", 9.4, APAGADO, "start"))
+        p.append(txt(446, y + 24, ejemplos[:38] + ("…" if len(ejemplos) > 38
+                                                   else ""),
+                     "et", 9.4, CLARO, "end"))
+    p.append(pie(464, ALTO, "OCHO PATRONES · UNA SEMANA QUE LOS TOCA TODOS NO "
+                            "DEJA HUECOS"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def ca_variables():
+    """Las seis variables que se pueden mover, en rejilla de dos columnas.
+
+    Se probó en rueda con las etiquetas alrededor y no cabían: a este tamaño,
+    seis rótulos radiales se pisan entre sí y con los nodos. La rejilla dice lo
+    mismo y se lee.
+    """
+    PRI, SEC = ACENTOS["carga"]
+    COL, FILA, ANCHO_T = 224, 74, 214
+    filas = (len(D.VARIABLES) + 1) // 2
+    ALTO = 44 + filas * FILA + 34
+    p = [f'<symbol id="ca-variables" viewBox="0 0 464 {ALTO}">']
+    p.append(txt(232, 24, "SEIS VARIABLES · SE SUBE UNA CADA VEZ", "rot", 9.4,
+                 PRI))
+    for i, (nombre, glosa) in enumerate(D.VARIABLES):
+        c, r = i % 2, i // 2
+        x = 12 + c * COL
+        y = 40 + r * FILA
+        p.append(f'<rect x="{x}" y="{y}" width="{ANCHO_T}" height="64" rx="9" '
+                 f'fill="{PRI}" opacity=".055"/>')
+        p.append(f'<circle cx="{x+22}" cy="{y+22}" r="13" fill="none" '
+                 f'stroke="{SEC}" stroke-width="1.3"/>')
+        p.append(txt(x + 22, y + 26, str(i + 1), "num", 10, SEC))
+        p.append(txt(x + 44, y + 26, nombre.upper(), "rot", 8.6, PRI, "start"))
+        lineas = _partir(glosa, 34)
+        if len(lineas) > 3:               # que un recorte nunca sea silencioso
+            lineas = lineas[:3]
+            lineas[2] = lineas[2][:32] + "…"
+        for j, linea in enumerate(lineas):
+            p.append(txt(x + 12, y + 44 + j * 11, linea, "et", 8.6, APAGADO,
+                         "start"))
+    p.append(pie(464, ALTO, "SUBIR DOS A LA VEZ ES CÓMO SE LESIONA UNO"))
+    p.append("</symbol>")
+    return "".join(p)
+
+def ca_acft():
+    """La batería pública del Ejército: seis pruebas, seis cualidades, y un
+    mínimo por prueba que no se compensa con otra."""
+    PRI, SEC = ACENTOS["carga"]
+    FILA = 50
+    ALTO = 46 + len(D.ACFT) * FILA + 40
+    p = [f'<symbol id="ca-acft" viewBox="0 0 464 {ALTO}">']
+    p.append(txt(232, 22, "SEIS PRUEBAS · SEIS CUALIDADES DISTINTAS", "rot",
+                 9.2, PRI))
+    for i, (nombre, como, mide) in enumerate(D.ACFT):
+        y = 40 + i * FILA
+        p.append(f'<rect x="12" y="{y}" width="440" height="42" rx="8" '
+                 f'fill="{PRI}" opacity=".055"/>')
+        p.append(f'<rect x="12" y="{y}" width="4" height="42" rx="2" '
+                 f'fill="{SEC}" opacity=".8"/>')
+        p.append(txt(28, y + 16, nombre.upper(), "rot", 8.2, PRI, "start"))
+        p.append(txt(28, y + 31, como[:52] + ("…" if len(como) > 52 else ""),
+                     "et", 9.2, APAGADO, "start"))
+        p.append(txt(446, y + 25, mide[:30] + ("…" if len(mide) > 30 else ""),
+                     "et", 9.4, SEC, "end"))
+    p.append(f'<rect x="12" y="{ALTO-34}" width="440" height="22" rx="6" '
+             f'fill="{SEC}" opacity=".09"/>')
+    p.append(txt(232, ALTO - 19,
+                 f'MÍNIMO {D.ACFT_PUNTOS["minimo"]} DE '
+                 f'{D.ACFT_PUNTOS["maximo"]} EN CADA UNA · NO SE COMPENSAN',
+                 "rot", 8, SEC))
+    p.append(pie(464, ALTO, "BATERÍA PÚBLICA DE CONDICIÓN FÍSICA"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def vo_dominios():
+    """Los cinco dominios de preparación y el libro que cubre cada uno. El
+    quinto queda fuera a propósito y la lámina lo dice."""
+    PRI, SEC = ACENTOS["voluntad"]
+    ALTO = 300
+    p = [f'<symbol id="vo-dominios" viewBox="0 0 464 {ALTO}">']
+    cx, cy, r = 232, 128, 96
+    n = len(D.DOMINIOS)
+    for i, (nombre, que, libro) in enumerate(D.DOMINIOS):
+        a0 = i * 360 / n - 90
+        a1 = (i + 1) * 360 / n - 90
+        propio = "Fuera" not in libro
+        col = PRI if propio else APAGADO
+        x1, y1 = pol(cx, cy, r, a0)
+        x2, y2 = pol(cx, cy, r, a1)
+        p.append(f'<path d="M{cx} {cy} L{f(x1)} {f(y1)} A{r} {r} 0 0 1 '
+                 f'{f(x2)} {f(y2)} Z" fill="{col}" '
+                 f'opacity="{".18" if propio else ".07"}" stroke="{col}" '
+                 'stroke-width="1.2"/>')
+        mx, my = pol(cx, cy, r * 0.62, (a0 + a1) / 2)
+        p.append(txt(mx, my + 4, nombre.upper(), "rot", 7.6, col))
+    p.append(f'<circle cx="{cx}" cy="{cy}" r="34" fill="#05060b"/>')
+    p.append(f'<circle cx="{cx}" cy="{cy}" r="34" fill="none" stroke="{SEC}" '
+             'stroke-width="1.4"/>')
+    p.append(txt(cx, cy - 2, "CINCO", "rot", 9.6, SEC))
+    p.append(txt(cx, cy + 13, "dominios", "et", 10, CLARO))
+    for i, (nombre, que, libro) in enumerate(D.DOMINIOS):
+        y = 240 + i * 13
+        col = PRI if "Fuera" not in libro else APAGADO
+        p.append(txt(14, y, nombre.upper(), "rot", 7.4, col, "start"))
+        p.append(txt(96, y, que[:44] + ("…" if len(que) > 44 else ""),
+                     "et", 9, CLARO, "start"))
+        p.append(txt(450, y, libro, "et", 8.6, col, "end"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def vo_respiracion():
+    """El compás cuadrado: cuatro tiempos iguales recorriendo un cuadrado."""
+    PRI, SEC = ACENTOS["voluntad"]
+    R = D.RESPIRACION
+    ALTO = 256
+    p = [f'<symbol id="vo-respiracion" viewBox="0 0 464 {ALTO}">']
+    L, X0, Y0 = 132, 166, 44
+    p.append(f'<rect x="{X0}" y="{Y0}" width="{L}" height="{L}" rx="10" '
+             f'fill="none" stroke="{PRI}" stroke-width="2.4" opacity=".8"/>')
+    # El rótulo de arriba va 26 unidades por encima: a 12 el «4 s» caía sobre
+    # el propio trazo del cuadrado.
+    lados = [((X0, Y0), (X0 + L, Y0), 0, "middle", X0 + L / 2, Y0 - 26),
+             ((X0 + L, Y0), (X0 + L, Y0 + L), 90, "start", X0 + L + 12,
+              Y0 + L / 2),
+             ((X0 + L, Y0 + L), (X0, Y0 + L), 180, "middle", X0 + L / 2,
+              Y0 + L + 24),
+             ((X0, Y0 + L), (X0, Y0), 270, "end", X0 - 12, Y0 + L / 2)]
+    for i, (ini, fin, ang, anchor, tx, ty) in enumerate(lados):
+        col = PRI if i % 2 == 0 else SEC
+        mx, my = (ini[0] + fin[0]) / 2, (ini[1] + fin[1]) / 2
+        p.append(flecha(mx, my, ang, 8, col))
+        p.append(txt(tx, ty, R["fases"][i].upper(), "rot", 8.4, col, anchor))
+        p.append(txt(tx, ty + 13, f'{R["segundos"]} s', "num", 10, CLARO,
+                     anchor))
+    p.append(txt(X0 + L / 2, Y0 + L / 2 - 4, "COMPÁS", "rot", 9.6, PRI))
+    p.append(txt(X0 + L / 2, Y0 + L / 2 + 12, "CUADRADO", "rot", 9.6, PRI))
+    p.append(txt(X0 + L / 2, Y0 + L / 2 + 30,
+                 f'{R["rondas"][0]} a {R["rondas"][1]} rondas', "et", 10.4,
+                 CLARO))
+    p.append(pie(464, ALTO, "CUATRO TIEMPOS IGUALES · BAJA LA ACTIVACIÓN, NO "
+                            "LLENA LOS PULMONES"))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def de_reloj():
+    """El día biológico: los hitos, situados en horas desde el despertar.
+
+    Las fichas van en dos columnas alternas y los nombres se parten en dos
+    líneas: en una sola, «zona de mantenimiento de la vigilia» se salía de la
+    ficha.
+    """
+    PRI, SEC = ACENTOS["descanso"]
+    ALTO = 336
+    p = [f'<symbol id="de-reloj" viewBox="0 0 464 {ALTO}">']
+    X0, Y0, ANCHO = 40, 30, 384
+    lo = min(h for h, _, _ in D.CIRCADIANO)
+    hi = max(h for h, _, _ in D.CIRCADIANO)
+
+    def ax(h):
+        return X0 + ANCHO * (h - lo) / (hi - lo)
+
+    p.append(f'<path d="M{X0} {Y0+18} H{X0+ANCHO}" fill="none" stroke="{PRI}" '
+             'stroke-width="1.6" opacity=".5"/>')
+    for h in range(0, int(hi) + 1, 4):
+        x = ax(h)
+        p.append(f'<path d="M{f(x)} {Y0+12} V{Y0+24}" fill="none" '
+                 f'stroke="{APAGADO}" stroke-width=".8"/>')
+        p.append(txt(x, Y0 + 6, f"+{h} h", "num", 7.6, APAGADO))
+    BW, BH = 212, 50
+    for i, (h, nombre, glosa) in enumerate(D.CIRCADIANO):
+        x = ax(h)
+        col = SEC if nombre in ("Sueño", "Despertar") else PRI
+        bx = 14 if i % 2 == 0 else 238
+        by = 80 + (i // 2) * 60
+        p.append(f'<circle cx="{f(x)}" cy="{Y0+18}" r="4" fill="{col}"/>')
+        p.append(f'<path d="M{f(x)} {Y0+22} L{bx + BW/2} {by}" fill="none" '
+                 f'stroke="{col}" stroke-width=".6" stroke-dasharray="2 3" '
+                 'opacity=".38"/>')
+        p.append(f'<rect x="{bx}" y="{by}" width="{BW}" height="{BH}" rx="7" '
+                 f'fill="{col}" opacity=".06"/>')
+        etq = f"{h:g} h".replace(".", ",")
+        if h >= 0:
+            etq = "+" + etq
+        p.append(txt(bx + 10, by + 16, etq, "num", 9.2, SEC, "start"))
+        lineas = _partir(nombre.upper(), 26)[:2]
+        for j, linea in enumerate(lineas):
+            p.append(txt(bx + 52, by + 16 + j * 10, linea, "rot", 7, col,
+                         "start"))
+        p.append(txt(bx + 10, by + 40, glosa[:46]
+                     + ("…" if len(glosa) > 46 else ""),
+                     "et", 8.6, APAGADO, "start"))
+    p.append(pie(464, ALTO, "HORAS CONTADAS DESDE EL DESPERTAR HABITUAL · "
+                            "CRONOTIPO INTERMEDIO"))
+    p.append("</symbol>")
+    return "".join(p)
+
+def de_cafeina():
+    """La curva de eliminación: cada vida media se lleva la mitad de lo que
+    quedaba. La cuenta se calcula, no se teclea."""
+    PRI, SEC = ACENTOS["descanso"]
+    C = D.CAFEINA
+    X0, Y0, ANCHO, ALTO_G = 56, 44, 384, 168
+    ALTO = 292
+    p = [f'<symbol id="de-cafeina" viewBox="0 0 464 {ALTO}">']
+    horas_max = 16
+    p.append(f'<path d="M{X0} {Y0} V{Y0+ALTO_G} H{X0+ANCHO}" fill="none" '
+             f'stroke="{APAGADO}" stroke-width="1"/>')
+    for pct in (0, 25, 50, 75, 100):
+        y = Y0 + ALTO_G - ALTO_G * pct / 100
+        p.append(f'<path d="M{X0} {f(y)} H{X0+ANCHO}" fill="none" '
+                 f'stroke="{APAGADO}" stroke-width=".5" opacity=".3"/>')
+        p.append(txt(X0 - 8, y + 4, f"{pct} %", "num", 8, APAGADO, "end"))
+    pts = []
+    for k in range(0, horas_max * 4 + 1):
+        h = k / 4
+        frac = 0.5 ** (h / C["vida_media"])
+        pts.append((X0 + ANCHO * h / horas_max,
+                    Y0 + ALTO_G - ALTO_G * frac))
+    p.append('<path d="M' + " L".join(f"{f(a)} {f(b)}" for a, b in pts)
+             + f'" fill="none" stroke="{PRI}" stroke-width="2.6"/>')
+    for n in (1, 2, 3):
+        h = n * C["vida_media"]
+        if h > horas_max:
+            continue
+        x = X0 + ANCHO * h / horas_max
+        frac = 0.5 ** n
+        y = Y0 + ALTO_G - ALTO_G * frac
+        p.append(f'<path d="M{f(x)} {f(y)} V{Y0+ALTO_G}" fill="none" '
+                 f'stroke="{SEC}" stroke-width="1.2" stroke-dasharray="4 3"/>')
+        p.append(f'<circle cx="{f(x)}" cy="{f(y)}" r="4" fill="{SEC}"/>')
+        p.append(txt(x, y - 10, f"{frac*100:g} %".replace(".", ","), "num",
+                     9.4, SEC))
+        p.append(txt(x, Y0 + ALTO_G + 16, f"{h:g} h", "num", 9, SEC))
+    p.append(txt(232, 24,
+                 f'VIDA MEDIA DE UNAS {C["vida_media"]} HORAS · '
+                 f'ENTRE {C["rango_vida_media"][0]} Y '
+                 f'{C["rango_vida_media"][1]} SEGÚN LA PERSONA',
+                 "rot", 8.4, PRI))
+    p.append(txt(X0 + ANCHO, Y0 + ALTO_G + 32, "horas desde la taza", "et", 10,
+                 APAGADO, "end"))
+    p.append(f'<rect x="56" y="246" width="384" height="26" rx="6" '
+             f'fill="{SEC}" opacity=".08"/>')
+    p.append(txt(248, 263,
+                 "NO IMPIDE DORMIRSE · RECORTA EL SUEÑO PROFUNDO DE ESA NOCHE",
+                 "rot", 7.8, SEC))
+    p.append("</symbol>")
+    return "".join(p)
+
+
+def _partir(texto, ancho):
+    """Parte un texto en líneas de como mucho `ancho` letras, sin cortar
+    palabras. Lo necesitan las láminas con párrafos dentro."""
+    palabras, lineas, actual = texto.split(), [], ""
+    for w in palabras:
+        if len(actual) + len(w) + 1 > ancho:
+            lineas.append(actual)
+            actual = w
+        else:
+            actual = f"{actual} {w}".strip()
+    if actual:
+        lineas.append(actual)
+    return lineas
+
+
 def main():
     D.comprobar()
     libros = {
         "mesa": [simbolo_cubierta("mesa", cubierta_mesa()),
-                 me_amdr(), me_micro(), me_margen(), me_plato()],
+                 me_amdr(), me_gasto(), me_micro(), me_margen(), me_plato(),
+                 me_etiqueta(), me_inocuidad()],
         "carga": [simbolo_cubierta("carga", cubierta_carga()),
-                  ca_dosis(), ca_met(), ca_descarga(), ca_niosh()],
+                  ca_dosis(), ca_met(), ca_patrones(), ca_variables(),
+                  ca_acft(), ca_descarga(), ca_niosh()],
         "voluntad": [simbolo_cubierta("voluntad", cubierta_voluntad()),
-                     vo_adherencia(), vo_habito(), vo_recaida()],
+                     vo_dominios(), vo_adherencia(), vo_habito(),
+                     vo_recaida(), vo_respiracion()],
         "descanso": [simbolo_cubierta("descanso", cubierta_descanso()),
-                     de_hipnograma(), de_fases(), de_deuda(), de_ventana()],
+                     de_reloj(), de_hipnograma(), de_fases(), de_deuda(),
+                     de_cafeina(), de_ventana()],
     }
     total = 0
     for clave, piezas in libros.items():

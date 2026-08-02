@@ -61,6 +61,17 @@ def num(v):
     return f"{v:,}".replace(",", " ")
 
 
+_LETRAS = {1: "una", 2: "dos", 3: "tres", 4: "cuatro", 5: "cinco", 6: "seis",
+           7: "siete", 8: "ocho", 9: "nueve", 10: "diez", 11: "once",
+           12: "doce"}
+
+
+def letras(n):
+    """El numeral en palabras. Se usa para que el texto no pueda decir «siete
+    fuentes» el día que el módulo de datos tenga ocho."""
+    return _LETRAS.get(n, str(n))
+
+
 def fila_micro(clave):
     """Una entrada de la tabla oficial, formateada para una ficha."""
     nombre, unidad, rh, rm, ul, notaest = MICRO[clave]
@@ -132,7 +143,8 @@ C1 = cap(
          "libro."),
     sep(),
     h("De dónde sale cada cifra"),
-    p("De siete fuentes públicas, todas citadas por su nombre en el último "
+    p(f"De {letras(len(D.FUENTES))} fuentes públicas, todas citadas por su "
+      "nombre en el último "
       "capítulo con indicación de dónde se consultan. Ninguna cifra de este "
       "libro está inventada, redondeada por comodidad ni copiada de otro libro "
       "de divulgación."),
@@ -807,8 +819,8 @@ C13 = cap(
     "Cómo comprobarlo tú mismo",
     p("Un libro que dice «según los organismos oficiales» y no dice cuál ni dónde "
       "no se puede verificar, y por tanto no se puede corregir. Este capítulo es "
-      "el aparato de comprobación: siete fuentes, todas gratuitas, todas en "
-      "línea, con lo que se busca en cada una."),
+      f"el aparato de comprobación: {letras(len(D.FUENTES))} fuentes, todas "
+      "gratuitas, todas en línea, con lo que se busca en cada una."),
     ficha("Las fuentes de este libro", [(n, d) for n, d in D.FUENTES]),
     sep(),
     h("Dónde se consulta cada cosa"),
@@ -1016,6 +1028,314 @@ C15 = cap(
 )
 
 
+
+# ══════════════════════════════════════════════════════════════════════
+#  CAPÍTULOS AÑADIDOS EN LA SEGUNDA EDICIÓN
+# ══════════════════════════════════════════════════════════════════════
+
+CE1 = cap(
+    "De qué se compone el gasto de un día",
+    p("Antes de hablar de cuánto comer conviene saber en qué se va la energía, "
+      "porque el reparto real no se parece nada al que la gente imagina. Casi "
+      "todo el mundo cree que el ejercicio es el gran sumidero del día. Es el "
+      "más pequeño de los cuatro."),
+    fig("me-gasto",
+        "Los cuatro componentes del gasto diario",
+        "Porcentajes del gasto total, en rangos típicos. El metabolismo basal se "
+        "lleva la mayor parte y apenas se puede cambiar a voluntad; la actividad "
+        "no deportiva es el componente más variable entre personas; el ejercicio "
+        "estructurado, en la mayoría de la gente, es la porción menor."),
+    ficha("Los cuatro, uno por uno",
+          [(nombre, f"del {lo} al {hi} % · {nota[0].lower() + nota[1:]}")
+           for nombre, lo, hi, nota in D.GASTO]),
+    h("La consecuencia incómoda"),
+    p("Si el ejercicio estructurado es como mucho una fracción modesta del "
+      "gasto, entonces intentar compensar comida con ejercicio es una batalla "
+      "perdida de antemano por pura aritmética. Media hora de carrera decente "
+      "ronda las cuatrocientas kilocalorías en una persona de setenta kilos; una "
+      "cena de restaurante puede llevar el doble en veinte minutos y sin "
+      "esfuerzo. Este dato no es un argumento contra el ejercicio: es un "
+      "argumento contra usarlo para lo que no sirve."),
+    p("Y en la otra dirección hay una noticia mejor. La actividad no deportiva "
+      "—andar, estar de pie, subir escaleras, moverse mientras se trabaja— puede "
+      "duplicarse entre dos personas del mismo peso, y en el conjunto del día "
+      "aporta bastante más que la sesión de gimnasio. Es el componente sobre el "
+      "que más se puede influir sin quitarle tiempo a nada."),
+    sep(),
+    h("El componente que se hunde en silencio"),
+    p("Cuando alguien reduce mucho lo que come de forma sostenida, ese "
+      "componente baja sin que la persona lo decida ni lo note: se mueve menos, "
+      "gesticula menos, sube menos escaleras, pasa más rato sentada. La "
+      "consecuencia práctica es que el déficit real acaba siendo menor que el "
+      "planeado, y de ahí buena parte de la frustración de los meses tres y "
+      "cuatro de cualquier dieta."),
+    p("El antídoto no es apretar más. Es proteger deliberadamente el movimiento "
+      "cotidiano —un objetivo de pasos, subir andando, llamadas de pie— "
+      "precisamente en las etapas en que se come menos. Es de las cosas más "
+      "útiles que se pueden hacer y no aparece en ninguna dieta."),
+    nota("El efecto térmico y la proteína",
+         "De los tres macronutrientes, el que más energía cuesta procesar es la "
+         "proteína, con diferencia. No convierte a nadie en una máquina de "
+         "quemar grasa —la magnitud es modesta— pero explica parte de por qué "
+         "las dietas con más proteína salen algo mejor en los estudios de "
+         "pérdida de peso, junto con la saciedad, que probablemente pesa más."),
+)
+
+CE2 = cap(
+    "Cómo se lee una etiqueta",
+    p("La etiqueta de un envase es el único documento nutricional que la mayoría "
+      "de la gente tiene delante todos los días, y casi nadie sabe leerlo. Tiene "
+      "cuatro trampas conocidas y una franja de tolerancia legal que muy poca "
+      "gente sospecha."),
+    fig("me-etiqueta",
+        "Anatomía de una etiqueta y sus tolerancias legales",
+        "La columna por cien gramos es la única comparable entre productos. La "
+        "porción la elige el fabricante. Y a la derecha, la tolerancia: el valor "
+        "declarado no es un número, es una franja."),
+    h("La primera trampa: la porción"),
+    p("La ley obliga a declarar los valores por cien gramos, y eso es lo que "
+      "hace comparables dos productos. Junto a esa columna suele aparecer otra "
+      "«por porción», y la porción la decide quien vende. Una porción de treinta "
+      "gramos de un cereal de desayuno es aproximadamente una cuarta parte de lo "
+      "que cualquiera se sirve, y todas las cifras de esa columna están "
+      "divididas por cuatro respecto a lo que va a pasar de verdad."),
+    p("Regla: comparar siempre por cien gramos, y después mirar cuánto se come "
+      "de verdad. Nunca al revés."),
+    h("La segunda: el orden de los ingredientes"),
+    p("Los ingredientes van por peso descendente, y eso convierte a la lista en "
+      "una radiografía bastante honesta. Si el azúcar aparece en los tres "
+      "primeros puestos, el producto es principalmente azúcar por mucho que la "
+      "portada hable de fibra. La contramedida de la industria es dividir el "
+      "azúcar en varios nombres —jarabe, dextrosa, concentrado de zumo, melaza— "
+      "para que cada uno pese menos y baje puestos. Sumarlos mentalmente "
+      "devuelve la imagen real."),
+    h("La tercera: las palabras que no significan nada"),
+    lista(
+        "«Natural» no tiene una definición reglada que sirva para juzgar nada.",
+        "«Artesano», «casero», «de siempre», «receta tradicional» son estilo, no "
+        "composición.",
+        "«Sin azúcares añadidos» no equivale a poco azúcar: un zumo cumple y "
+        "lleva tanto azúcar como un refresco.",
+        "«Light» solo obliga a una reducción respecto al producto de referencia, "
+        "que puede seguir siendo altísimo en términos absolutos.",
+        "«Enriquecido con vitaminas» suele señalar un producto que necesitaba "
+        "una razón para estar en el carro.",
+    ),
+    sep(),
+    h("La cuarta, y la que nadie cuenta: la tolerancia"),
+    p("Las normas de etiquetado admiten una diferencia entre lo declarado y lo "
+      "medido, y las cifras son públicas. Para lo que conviene limitar —calorías, "
+      "azúcares, grasas, sodio— el valor medido no debe superar en más de una "
+      "quinta parte al declarado. Para lo que conviene alcanzar —vitaminas, "
+      "minerales, proteína, fibra— el medido debe llegar al menos a cuatro "
+      "quintos de lo declarado."),
+    p(D.ETIQUETA["nota"]),
+    p("De aquí se sigue algo práctico: contar calorías con dos decimales es "
+      "aritmética de fantasía. Un día entero de comida envasada puede llevar una "
+      "desviación apreciable respecto a lo apuntado sin que nadie haya "
+      "incumplido nada. Eso no invalida el registro; invalida la precisión "
+      "falsa, y aconseja usar tendencias de varias semanas en vez de cuadrar "
+      "días sueltos."),
+    nota("La lectura de treinta segundos",
+         "En la práctica, tres miradas bastan para casi todo: la columna por cien "
+         "gramos, los tres primeros ingredientes y la cifra de sal. Con eso se "
+         "distingue un alimento de un producto sin haber aprendido nada de "
+         "bioquímica."),
+)
+
+CE3 = cap(
+    "Comer alrededor del entrenamiento",
+    p("Es la pregunta que más se hace y la que menos importa, y merece un "
+      "capítulo precisamente para ponerla en su sitio. El orden de importancia "
+      "va de arriba abajo, y la mayoría de la gente empieza por el último "
+      "escalón."),
+    ficha("Orden de importancia real", [
+        ("1 · El total del día", "Energía y proteína totales. Aquí se decide "
+                                 "casi todo, y sin esto ordenado el resto no "
+                                 "cambia nada."),
+        ("2 · La calidad del patrón", "Que haya verdura, fruta, legumbre, "
+                                      "cereal poco procesado y una fuente "
+                                      "proteica decente."),
+        ("3 · El reparto a lo largo del día", "Repartir la proteína en tres o "
+                                              "cuatro tomas en vez de "
+                                              "concentrarla. Efecto modesto y "
+                                              "real."),
+        ("4 · El momento exacto respecto a la sesión", "La famosa ventana. Es el "
+                                                       "escalón más pequeño de "
+                                                       "los cuatro."),
+    ]),
+    h("Qué pasó con la ventana anabólica"),
+    p("Durante años se enseñó que había una media hora sagrada después de "
+      "entrenar en la que había que meter proteína o se perdía la sesión. Esa "
+      "urgencia no ha resistido bien el examen: si se ha comido en las horas "
+      "previas, el margen es de horas y no de minutos, y el total del día pesa "
+      "muchísimo más."),
+    p("Donde el momento sí importa es en dos situaciones concretas y acotadas: "
+      "cuando se entrena en ayunas y la comida siguiente queda muy lejos, y "
+      "cuando hay dos sesiones exigentes separadas por pocas horas, que es "
+      "situación de deportista y no de la mayoría."),
+    sep(),
+    h("Antes de entrenar"),
+    lista(
+        "Una comida normal dos o tres horas antes funciona para casi todo el "
+        "mundo y no requiere nada especial.",
+        "Si se entrena poco después de comer, conviene bajar la grasa y la "
+        "fibra de esa comida: retrasan el vaciado del estómago y es lo que "
+        "produce la sensación de piedra.",
+        "Entrenar en ayunas no es peligroso ni mágico. Rinde algo peor en "
+        "sesiones largas o muy intensas y da igual en sesiones cortas. Es una "
+        "preferencia, no una estrategia.",
+        "El café antes de entrenar tiene un efecto sobre el rendimiento bien "
+        "descrito. Ojo con la hora: el capítulo de la cafeína del Códice del "
+        "Descanso explica por qué una sesión de tarde puede costar sueño.",
+    ),
+    h("Durante"),
+    p("Por debajo de una hora de esfuerzo, agua. A partir de ahí, y sobre todo "
+      "con calor o en pruebas largas, tiene sentido aportar hidratos y "
+      "electrolitos: es exactamente la única declaración de salud autorizada "
+      "para las bebidas deportivas, y la palabra que hace todo el trabajo en esa "
+      "frase es «prolongado»."),
+    h("Después"),
+    p("Una comida normal con proteína y con hidratos, cuando toque. Si la sesión "
+      "fue muy dura y la siguiente es mañana, no hay ninguna prisa. Si hay otra "
+      "sesión dentro de pocas horas, entonces sí conviene comer pronto y "
+      "priorizar los hidratos, porque el depósito de glucógeno tarda en "
+      "reponerse y ahí el reloj sí corre."),
+    nota("El agua y el peso de después",
+         "Perder un kilo durante una sesión larga es agua, no grasa, y conviene "
+         "reponerla a lo largo de las horas siguientes con bebida y con comida "
+         "que lleve sal. Pesarse justo después de entrenar y celebrar el número "
+         "es el error de interpretación más común del gimnasio."),
+)
+
+CE4 = cap(
+    "Lo que no se cocina bien hace más daño que lo que se come mal",
+    p("Este capítulo no aparece en ningún libro de fitness y debería aparecer en "
+      "todos. Un plan de alimentación impecable ejecutado con un pollo mal "
+      "conservado produce en dos días más perjuicio del que compensan seis meses "
+      "de macros perfectos. Las cifras que siguen son públicas, del servicio de "
+      "inocuidad alimentaria estadounidense, y son sencillas."),
+    fig("me-inocuidad",
+        "La zona de peligro y las temperaturas que hay que superar",
+        "Entre los cuatro y los sesenta grados las bacterias se multiplican con "
+        "rapidez. Las temperaturas internas seguras están todas por encima de "
+        "esa franja, y ninguna se alcanza por color: se miden."),
+    ficha("Temperaturas internas seguras",
+          [(alimento, f"{grados} °C · {nota[0].lower() + nota[1:]}")
+           for alimento, grados, nota in D.INOCUIDAD]),
+    h("Por qué la carne picada necesita más temperatura que el filete"),
+    p("Es la pregunta que revela si alguien ha entendido el asunto. En un corte "
+      "entero, la contaminación está en la superficie, y la superficie es "
+      "justamente lo que recibe el calor directo: por eso un filete poco hecho "
+      "por dentro puede ser seguro. Al picar la carne, esa superficie se "
+      "distribuye por toda la masa, así que el interior necesita alcanzar la "
+      "temperatura por sí mismo. Una hamburguesa poco hecha no es lo mismo que "
+      "un entrecot poco hecho, y la diferencia no es de gusto."),
+    sep(),
+    h("Los cuatro pasos"),
+    ficha("", [(nombre, glosa) for nombre, glosa in D.ZONA_PELIGRO["pasos"]]),
+    p("El paso que más se salta es el cuarto. Dejar enfriar una olla grande "
+      "sobre la encimera toda la tarde la mantiene horas dentro de la zona de "
+      "peligro por pura inercia térmica, aunque la superficie parezca fría. La "
+      "solución es repartir en recipientes bajos y meterlos pronto: enfrían en "
+      "una fracción del tiempo."),
+    ficha("Los márgenes de tiempo", [
+        ("A temperatura ambiente",
+         f"como mucho {D.ZONA_PELIGRO['horas']} horas fuera de la nevera"),
+        ("Con más de 32 °C",
+         f"como mucho {D.ZONA_PELIGRO['horas_calor']} hora"),
+        ("Nevera", f"{D.ZONA_PELIGRO['nevera']} °C o menos, comprobado con "
+                   "termómetro y no con la rueda del mando"),
+        ("Congelador", f"{D.ZONA_PELIGRO['congelador']} °C. Congelar no mata "
+                       "bacterias: las detiene. Al descongelar vuelven a "
+                       "multiplicarse"),
+    ]),
+    h("Tres cosas que casi todo el mundo hace mal"),
+    lista(
+        "Descongelar sobre la encimera. La superficie entra en la zona de "
+        "peligro mucho antes de que el centro se descongele. Se descongela en la "
+        "nevera, en agua fría cambiada cada media hora, o en el microondas para "
+        "cocinar inmediatamente después.",
+        "Lavar el pollo crudo bajo el grifo. No elimina bacterias y salpica "
+        "gotas a más de medio metro alrededor, contaminando fregadero, encimera "
+        "y lo que haya cerca. El calor de la sartén hace ese trabajo; el grifo "
+        "solo lo reparte.",
+        "Usar el mismo plato para llevar la carne cruda a la parrilla y "
+        "recogerla hecha. Es la vía de contaminación cruzada más frecuente en "
+        "cualquier cocina doméstica, y se resuelve con un plato limpio.",
+    ),
+    nota("Quién tiene que ser más estricto",
+         "Embarazadas, mayores, niños pequeños y personas con la inmunidad "
+         "comprometida tienen un riesgo apreciablemente mayor, y en ese caso "
+         "algunas categorías —quesos de leche cruda, huevo crudo, pescado crudo, "
+         "embutidos no curados, brotes germinados— dejan de ser una cuestión de "
+         "preferencia. Si estás en alguno de esos grupos, esto se consulta y no "
+         "se improvisa."),
+)
+
+CE5 = cap(
+    "Las cuatro situaciones en las que la tabla cambia",
+    p("Todo lo anterior está escrito para un adulto sano. Hay al menos cuatro "
+      "situaciones en las que las cifras se mueven, y en dos de ellas se mueven "
+      "tanto que aplicar la tabla general es un error."),
+    h("1 · A partir de los sesenta y cinco"),
+    ficha("Lo que cambia", [
+        ("Proteína", "El suelo poblacional de 0,8 g/kg se queda corto para "
+                     "frenar la pérdida de masa muscular asociada a la edad. La "
+                     "literatura geriátrica maneja cifras claramente mayores. "
+                     "Esto no sale de las tablas de referencia: sale de otra "
+                     "literatura, y lo digo."),
+        ("Vitamina D", "La referencia sube a partir de los 71 años, y la "
+                       "síntesis en la piel disminuye con la edad."),
+        ("Vitamina B12", "La absorción empeora por la menor acidez gástrica, y "
+                         "por eso a esta edad se recomienda a menudo la forma de "
+                         "alimentos fortificados o suplemento, que se absorbe "
+                         "mejor que la de la carne."),
+        ("Calcio", "La referencia sube en mujeres desde los 51 y en hombres "
+                   "desde los 71."),
+        ("Agua", "La sensación de sed disminuye con la edad, así que el aviso "
+                 "interno deja de ser fiable y hay que beber por horario."),
+    ]),
+    h("2 · Dieta sin productos de origen animal"),
+    p("Es una dieta que resiste cualquier análisis si se lleva con atención, y "
+      "tiene exactamente cinco puntos que exigen atención y no opinión:"),
+    lista(
+        "Vitamina B12: suplemento o alimento fortificado. Sin excepciones y sin "
+        "debate. La carencia sostenida produce daño neurológico que no siempre "
+        "revierte.",
+        "Hierro: se absorbe bastante peor el de origen vegetal, y las propias "
+        "fuentes oficiales señalan una necesidad notablemente mayor. La vitamina "
+        "C en la misma comida ayuda de forma apreciable.",
+        "Zinc: los fitatos de legumbres y cereales integrales reducen su "
+        "absorción, y la necesidad puede subir hasta la mitad. Remojar, "
+        "fermentar y germinar reduce el efecto.",
+        "Yodo: sin pescado ni lácteos, la sal yodada es la vía. Las algas son "
+        "una fuente imprevisible: algunas llevan cantidades enormes y superan el "
+        "techo con facilidad.",
+        "Grasas de cadena larga: la conversión desde las vegetales es limitada. "
+        "Existe una alternativa de origen no animal para quien quiera cubrirlo.",
+    ),
+    h("3 · Quien entrena en serio"),
+    p("Cambia sobre todo la proteína, ya tratada, y cambia la energía total, que "
+      "es lo que casi nadie ajusta. Comer para entrenar cinco horas semanales no "
+      "es lo mismo que comer para entrenar una, y la señal más común de que la "
+      "energía se ha quedado corta no es el hambre: es la fatiga persistente, el "
+      "sueño malo, el estancamiento del rendimiento y, en mujeres, la alteración "
+      "del ciclo, que es un signo que merece consulta y no ajuste por internet."),
+    h("4 · Embarazo y lactancia"),
+    p("Aquí este libro se detiene. Las referencias cambian en varios nutrientes, "
+      "en algunos de forma sustancial, hay uno donde el margen es crítico y hay "
+      "categorías de alimentos con recomendaciones específicas por riesgo "
+      "microbiológico. Es la única situación de todo el libro en la que no doy "
+      "ninguna cifra: se sigue el seguimiento profesional y punto."),
+    nota("Y una quinta que no es una situación sino una advertencia",
+         "Cualquier enfermedad renal, hepática, cardíaca o digestiva reordena "
+         "esta tabla, y en algunos casos la invierte: hay nutrientes que pasan "
+         "de recomendables a limitados. Si tienes un diagnóstico, la tabla que "
+         "vale es la que te dé quien te trata, no esta."),
+)
+
+
 # ══════════════════════════════════════════════════════════════════════
 LIBRO = {
     "id": "codice-mesa",
@@ -1032,10 +1352,10 @@ LIBRO = {
                "villuminations"],
     "capitulos": [
         C1, C2,                          # I · Cómo se lee una tabla
-        C3, C4, C5, C6, C7,              # II · La energía y su reparto
+        CE1, C3, C4, C5, C6, C7,         # II · La energía y su reparto
         C8, C9, C10,                     # III · La tabla entera
-        C11, C12,                        # IV · De las cifras a la comida
-        C13, C14, C15,                   # V · El oficio
+        C11, CE2, CE3, CE4, C12,         # IV · De las cifras a la comida
+        CE5, C13, C14, C15,              # V · El oficio
     ],
 }
 
