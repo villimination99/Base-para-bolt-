@@ -18,6 +18,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
+import i18n                                                   # noqa: E402
+
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT / "src"
 BUILD = ROOT / "build"
@@ -151,27 +154,51 @@ def page_count(pdf: Path) -> int:
         return -1
 
 
-def run(chrome: str, sources, impresion: bool) -> None:
-    """Genera una edicion completa (pantalla o impresion)."""
+def run(chrome: str, sources, impresion: bool, idioma: str = "es") -> None:
+    """Genera una edicion completa (pantalla o impresion) en un idioma.
+
+    Un PDF en ingles con frases sueltas en espanol no sale a la venta, asi que
+    la cobertura de traduccion se mide por documento y por debajo del 100 % el
+    fichero no se escribe. Es preferible no tener la edicion que tenerla mal.
+    """
+    sufijo = "" if idioma == "es" else f"-{idioma}"
     out_dir = DIST / "impresion" if impresion else DIST
+    if idioma != "es":
+        out_dir = out_dir / idioma
     build_dir = BUILD / "impresion" if impresion else BUILD
+    if idioma != "es":
+        build_dir = build_dir / idioma
     out_dir.mkdir(parents=True, exist_ok=True)
     build_dir.mkdir(parents=True, exist_ok=True)
-    print(f"\nEdicion {'IMPRESION (papel blanco)' if impresion else 'PANTALLA (neon)'}")
+    nombre_idioma = i18n.IDIOMAS[idioma][0]
+    print(f"\nEdicion {'IMPRESION (papel blanco)' if impresion else 'PANTALLA (neon)'}"
+          f"  ·  {nombre_idioma}")
+    cat = i18n.cargar()
 
     problems = []
     total = 0
     for src in sources:
         raw = src.read_text()
+        # Primero ensamblar y despues traducir: las ilustraciones se inyectan
+        # al ensamblar y sus rotulos tambien son texto del producto.
+        doc = assemble(raw, impresion)
+        if idioma != "es":
+            doc, hechos, piezas = i18n.traducir(doc, idioma, cat)
+            if piezas and hechos < piezas:
+                problems.append(
+                    f"  SIN TRADUCIR  {src.name}  {piezas - hechos} de {piezas} "
+                    f"segmentos  ->  no se publica en {nombre_idioma}")
+                continue
+            doc = doc.replace('<html lang="es">', f'<html lang="{idioma}">')
         built = build_dir / src.name
-        built.write_text(assemble(raw, impresion))
+        built.write_text(doc)
 
-        out = out_dir / (src.stem + ".pdf")
+        out = out_dir / (src.stem + sufijo + ".pdf")
         render(chrome, built, out)
 
-        title_match = re.search(r"<title>(.*?)</title>", raw, re.S)
+        title_match = re.search(r"<title>(.*?)</title>", doc, re.S)
         title = title_match.group(1).strip() if title_match else src.stem
-        stamp_metadata(out, title, titulos_de_paginas(raw))
+        stamp_metadata(out, title, titulos_de_paginas(doc))
 
         declared = len(re.findall(r'class="page[ "]', raw))
         actual = page_count(out)
@@ -212,17 +239,30 @@ def main() -> None:
     args = [a for a in sys.argv[1:]]
     impresion = "--impresion" in args
     ambas = "--ambas" in args
-    flt = next((a for a in args if not a.startswith("--")), "")
 
+    # --idioma es,en,fr    o    --todos-los-idiomas
+    idiomas = ["es"]
+    for a in args:
+        if a.startswith("--idioma="):
+            idiomas = [c.strip() for c in a.split("=", 1)[1].split(",")]
+    if "--todos-los-idiomas" in args:
+        idiomas = list(i18n.IDIOMAS)
+    desconocidos = [c for c in idiomas if c not in i18n.IDIOMAS]
+    if desconocidos:
+        raise SystemExit(f"Idioma no soportado: {', '.join(desconocidos)}. "
+                         f"Disponibles: {', '.join(i18n.IDIOMAS)}")
+
+    flt = next((a for a in args if not a.startswith("--")), "")
     sources = sorted(p for p in SRC.glob("*.html") if flt in p.name)
     if not sources:
         raise SystemExit(f"Sin documentos que coincidan con '{flt}'.")
 
-    if ambas:
-        run(chrome, sources, impresion=False)
-        run(chrome, sources, impresion=True)
-    else:
-        run(chrome, sources, impresion=impresion)
+    for idioma in idiomas:
+        if ambas:
+            run(chrome, sources, impresion=False, idioma=idioma)
+            run(chrome, sources, impresion=True, idioma=idioma)
+        else:
+            run(chrome, sources, impresion=impresion, idioma=idioma)
 
 
 if __name__ == "__main__":
