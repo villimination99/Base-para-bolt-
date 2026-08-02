@@ -1,852 +1,210 @@
 [
   {
-    "name": "theme_info",
-    "theme_name": "Villumination 3D",
-    "theme_version": "4.7.0",
-    "theme_author": "Villumination99",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
+      "name": "theme_info",
+      "theme_name": "Villumination 3D",
+      "theme_version": "4.7.1",
+      "theme_author": "Villumination99",
+      "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+      "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
   },
   {
     "name": "Colores",
     "settings": [
-      {
-        "type": "header",
-        "content": "Base"
-      },
-      {
-        "type": "color",
-        "id": "color_bg",
-        "label": "Fondo principal",
-        "default": "#000000"
-      },
-      {
-        "type": "color",
-        "id": "color_surface",
-        "label": "Superficies / tarjetas",
-        "default": "#0b0b1e"
-      },
-      {
-        "type": "color",
-        "id": "color_text",
-        "label": "Texto",
-        "default": "#d8f6ff"
-      },
-      {
-        "type": "header",
-        "content": "Paleta neón"
-      },
-      {
-        "type": "color",
-        "id": "color_cyan",
-        "label": "Cian (principal)",
-        "default": "#00d4ff"
-      },
-      {
-        "type": "color",
-        "id": "color_pink",
-        "label": "Rosa",
-        "default": "#ff2ecb"
-      },
-      {
-        "type": "color",
-        "id": "color_green",
-        "label": "Verde",
-        "default": "#00e87b"
-      },
-      {
-        "type": "color",
-        "id": "color_orange",
-        "label": "Naranja",
-        "default": "#ff7700"
-      },
-      {
-        "type": "color",
-        "id": "color_purple",
-        "label": "Púrpura",
-        "default": "#7b2fff"
-      },
-      {
-        "type": "header",
-        "content": "Estados"
-      },
-      {
-        "type": "color",
-        "id": "color_sale",
-        "label": "Precio rebajado",
-        "default": "#ff2ecb"
-      },
-      {
-        "type": "color",
-        "id": "color_star",
-        "label": "Estrellas de valoración",
-        "default": "#ffd000"
-      }
+      {"type": "header", "content": "Base"},
+      {"type": "color", "id": "color_bg", "label": "Fondo principal", "default": "#000000"},
+      {"type": "color", "id": "color_surface", "label": "Superficies / tarjetas", "default": "#0b0b1e"},
+      {"type": "color", "id": "color_text", "label": "Texto", "default": "#d8f6ff"},
+      {"type": "header", "content": "Paleta neón"},
+      {"type": "color", "id": "color_cyan", "label": "Cian (principal)", "default": "#00d4ff"},
+      {"type": "color", "id": "color_pink", "label": "Rosa", "default": "#ff2ecb"},
+      {"type": "color", "id": "color_green", "label": "Verde", "default": "#00e87b"},
+      {"type": "color", "id": "color_orange", "label": "Naranja", "default": "#ff7700"},
+      {"type": "color", "id": "color_purple", "label": "Púrpura", "default": "#7b2fff"},
+      {"type": "header", "content": "Estados"},
+      {"type": "color", "id": "color_sale", "label": "Precio rebajado", "default": "#ff2ecb"},
+      {"type": "color", "id": "color_star", "label": "Estrellas de valoración", "default": "#ffd000"}
     ]
   },
   {
     "name": "Tipografía",
     "settings": [
-      {
-        "type": "font_picker",
-        "id": "font_heading",
-        "label": "Fuente de títulos",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "font_picker",
-        "id": "font_body",
-        "label": "Fuente del texto",
-        "default": "assistant_n4"
-      },
-      {
-        "type": "range",
-        "id": "font_body_scale",
-        "min": 90,
-        "max": 130,
-        "step": 5,
-        "unit": "%",
-        "label": "Tamaño del texto",
-        "default": 110
-      },
-      {
-        "type": "range",
-        "id": "heading_spacing",
-        "min": 0,
-        "max": 12,
-        "step": 1,
-        "label": "Espaciado entre letras (títulos)",
-        "default": 2,
-        "info": "En centésimas de em. Más alto = más aire entre letras."
-      },
-      {
-        "type": "checkbox",
-        "id": "use_display_font",
-        "label": "Usar fuente futurista (Orbitron) en la marca",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "accessibility_mode",
-        "label": "Modo alta legibilidad",
-        "default": false,
-        "info": "Aumenta contraste y grosor del texto para personas con baja visión."
-      }
+      {"type": "font_picker", "id": "font_heading", "label": "Fuente de títulos", "default": "assistant_n4"},
+      {"type": "font_picker", "id": "font_body", "label": "Fuente del texto", "default": "assistant_n4"},
+      {"type": "range", "id": "font_body_scale", "min": 90, "max": 130, "step": 5, "unit": "%", "label": "Tamaño del texto", "default": 110},
+      {"type": "range", "id": "heading_spacing", "min": 0, "max": 12, "step": 1, "label": "Espaciado entre letras (títulos)", "default": 2, "info": "En centésimas de em. Más alto = más aire entre letras."},
+      {"type": "checkbox", "id": "use_display_font", "label": "Usar fuente futurista (Orbitron) en la marca", "default": true},
+      {"type": "checkbox", "id": "accessibility_mode", "label": "Modo alta legibilidad", "default": false, "info": "Aumenta contraste y grosor del texto para personas con baja visión."}
     ]
   },
   {
     "name": "Diseño y espaciado",
     "settings": [
-      {
-        "type": "range",
-        "id": "page_width",
-        "min": 1000,
-        "max": 1600,
-        "step": 20,
-        "unit": "px",
-        "label": "Ancho máximo de la página",
-        "default": 1280
-      },
-      {
-        "type": "range",
-        "id": "section_spacing",
-        "min": 32,
-        "max": 160,
-        "step": 8,
-        "unit": "px",
-        "label": "Espacio entre secciones",
-        "default": 96
-      },
-      {
-        "type": "range",
-        "id": "grid_gap",
-        "min": 8,
-        "max": 48,
-        "step": 2,
-        "unit": "px",
-        "label": "Separación de la rejilla",
-        "default": 28
-      },
-      {
-        "type": "range",
-        "id": "card_radius",
-        "min": 0,
-        "max": 32,
-        "step": 2,
-        "unit": "px",
-        "label": "Redondeo de tarjetas",
-        "default": 18
-      }
+      {"type": "range", "id": "page_width", "min": 1000, "max": 1600, "step": 20, "unit": "px", "label": "Ancho máximo de la página", "default": 1280},
+      {"type": "range", "id": "section_spacing", "min": 32, "max": 160, "step": 8, "unit": "px", "label": "Espacio entre secciones", "default": 96},
+      {"type": "range", "id": "grid_gap", "min": 8, "max": 48, "step": 2, "unit": "px", "label": "Separación de la rejilla", "default": 28},
+      {"type": "range", "id": "card_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Redondeo de tarjetas", "default": 18}
     ]
   },
   {
     "name": "Animaciones",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "enable_scroll_reveal",
-        "label": "Aparición al hacer scroll",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_parallax",
-        "label": "Parallax",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "enable_card_tilt",
-        "label": "Inclinación 3D de tarjetas",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "cursor_glow",
-        "label": "Luz de neón que sigue el cursor (PC)",
-        "default": true,
-        "info": "Se desactiva solo en móvil/táctil."
-      },
-      {
-        "type": "select",
-        "id": "ambient_bg",
-        "label": "Fondo animado futurista",
-        "options": [
-          {
-            "value": "none",
-            "label": "Ninguno"
-          },
-          {
-            "value": "aurora",
-            "label": "Auroras neón"
-          },
-          {
-            "value": "particles",
-            "label": "Partículas flotantes"
-          },
-          {
-            "value": "full",
-            "label": "Auroras + partículas"
-          }
-        ],
-        "default": "full"
-      },
-      {
-        "type": "header",
-        "content": "Sistema neón"
-      },
-      {
-        "type": "range",
-        "id": "neon_speed",
-        "min": 2,
-        "max": 14,
-        "step": 1,
-        "unit": "s",
-        "label": "Velocidad de la animación neón",
-        "default": 6
-      },
-      {
-        "type": "range",
-        "id": "neon_intensity",
-        "min": 20,
-        "max": 100,
-        "step": 10,
-        "unit": "%",
-        "label": "Intensidad del resplandor",
-        "default": 60
-      },
-      {
-        "type": "header",
-        "content": "Efectos estacionales"
-      },
-      {
-        "type": "select",
-        "id": "seasonal_effect",
-        "label": "Partículas flotantes",
-        "options": [
-          {
-            "value": "none",
-            "label": "Ninguno"
-          },
-          {
-            "value": "snow",
-            "label": "Nieve"
-          },
-          {
-            "value": "confetti",
-            "label": "Confeti"
-          },
-          {
-            "value": "hearts",
-            "label": "Corazones"
-          },
-          {
-            "value": "sparks",
-            "label": "Chispas"
-          }
-        ],
-        "default": "none"
-      },
-      {
-        "type": "range",
-        "id": "seasonal_density",
-        "min": 10,
-        "max": 120,
-        "step": 10,
-        "label": "Densidad",
-        "default": 50
-      },
-      {
-        "type": "paragraph",
-        "content": "Todas las animaciones respetan la preferencia 'reducir movimiento' del visitante y se pausan fuera de pantalla."
-      }
+      {"type": "checkbox", "id": "enable_scroll_reveal", "label": "Aparición al hacer scroll", "default": true},
+      {"type": "checkbox", "id": "enable_parallax", "label": "Parallax", "default": true},
+      {"type": "checkbox", "id": "enable_card_tilt", "label": "Inclinación 3D de tarjetas", "default": true},
+      {"type": "checkbox", "id": "cursor_glow", "label": "Luz de neón que sigue el cursor (PC)", "default": true, "info": "Se desactiva solo en móvil/táctil."},
+      {"type": "select", "id": "ambient_bg", "label": "Fondo animado futurista", "options": [{"value": "none", "label": "Ninguno"}, {"value": "aurora", "label": "Auroras neón"}, {"value": "particles", "label": "Partículas flotantes"}, {"value": "full", "label": "Auroras + partículas"}], "default": "full"},
+      {"type": "header", "content": "Sistema neón"},
+      {"type": "range", "id": "neon_speed", "min": 2, "max": 14, "step": 1, "unit": "s", "label": "Velocidad de la animación neón", "default": 6},
+      {"type": "range", "id": "neon_intensity", "min": 20, "max": 100, "step": 10, "unit": "%", "label": "Intensidad del resplandor", "default": 60},
+      {"type": "header", "content": "Efectos estacionales"},
+      {"type": "select", "id": "seasonal_effect", "label": "Partículas flotantes", "options": [{"value": "none", "label": "Ninguno"}, {"value": "snow", "label": "Nieve"}, {"value": "confetti", "label": "Confeti"}, {"value": "hearts", "label": "Corazones"}, {"value": "sparks", "label": "Chispas"}], "default": "none"},
+      {"type": "range", "id": "seasonal_density", "min": 10, "max": 120, "step": 10, "label": "Densidad", "default": 50},
+      {"type": "paragraph", "content": "Todas las animaciones respetan la preferencia 'reducir movimiento' del visitante y se pausan fuera de pantalla."}
     ]
   },
   {
     "name": "Botones",
     "settings": [
-      {
-        "type": "range",
-        "id": "button_radius",
-        "min": 0,
-        "max": 32,
-        "step": 2,
-        "unit": "px",
-        "label": "Redondeo",
-        "default": 12,
-        "info": "0 = esquinas rectas. 32 = cápsula."
-      },
-      {
-        "type": "range",
-        "id": "button_border",
-        "min": 0,
-        "max": 3,
-        "step": 1,
-        "unit": "px",
-        "label": "Grosor del borde",
-        "default": 1
-      },
-      {
-        "type": "checkbox",
-        "id": "button_uppercase",
-        "label": "Texto en MAYÚSCULAS",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "button_glow",
-        "label": "Resplandor neón al pasar el cursor",
-        "default": true
-      }
+      {"type": "range", "id": "button_radius", "min": 0, "max": 32, "step": 2, "unit": "px", "label": "Redondeo", "default": 12, "info": "0 = esquinas rectas. 32 = cápsula."},
+      {"type": "range", "id": "button_border", "min": 0, "max": 3, "step": 1, "unit": "px", "label": "Grosor del borde", "default": 1},
+      {"type": "checkbox", "id": "button_uppercase", "label": "Texto en MAYÚSCULAS", "default": true},
+      {"type": "checkbox", "id": "button_glow", "label": "Resplandor neón al pasar el cursor", "default": true}
     ]
   },
   {
     "name": "Badges (etiquetas)",
     "settings": [
-      {
-        "type": "paragraph",
-        "content": "Etiquetas automáticas en las tarjetas de producto. Se muestra solo una, en este orden: descuento → pocas unidades → novedad."
-      },
-      {
-        "type": "range",
-        "id": "badge_new_days",
-        "min": 0,
-        "max": 90,
-        "step": 5,
-        "unit": "d",
-        "label": "Marcar como Nuevo durante",
-        "default": 30,
-        "info": "Días desde la publicación. 0 = desactivado."
-      },
-      {
-        "type": "range",
-        "id": "badge_low_stock",
-        "min": 0,
-        "max": 25,
-        "step": 1,
-        "label": "Umbral de Últimas unidades",
-        "default": 5,
-        "info": "Requiere inventario rastreado. 0 = desactivado."
-      },
-      {
-        "type": "range",
-        "id": "badge_radius",
-        "min": 0,
-        "max": 20,
-        "step": 2,
-        "unit": "px",
-        "label": "Redondeo de las etiquetas",
-        "default": 10
-      }
+      {"type": "paragraph", "content": "Etiquetas automáticas en las tarjetas de producto. Se muestra solo una, en este orden: descuento → pocas unidades → novedad."},
+      {"type": "range", "id": "badge_new_days", "min": 0, "max": 90, "step": 5, "unit": "d", "label": "Marcar como Nuevo durante", "default": 30, "info": "Días desde la publicación. 0 = desactivado."},
+      {"type": "range", "id": "badge_low_stock", "min": 0, "max": 25, "step": 1, "label": "Umbral de Últimas unidades", "default": 5, "info": "Requiere inventario rastreado. 0 = desactivado."},
+      {"type": "range", "id": "badge_radius", "min": 0, "max": 20, "step": 2, "unit": "px", "label": "Redondeo de las etiquetas", "default": 10}
     ]
   },
   {
     "name": "Tarjetas de producto",
     "settings": [
-      {
-        "type": "select",
-        "id": "product_card_style",
-        "label": "Estilo de la tarjeta",
-        "options": [
-          {
-            "value": "float",
-            "label": "Flotante (sin caja)"
-          },
-          {
-            "value": "card",
-            "label": "Tarjeta con fondo"
-          }
-        ],
-        "default": "float"
-      },
-      {
-        "type": "select",
-        "id": "card_text_align",
-        "label": "Alineación del texto",
-        "options": [
-          {
-            "value": "left",
-            "label": "Izquierda"
-          },
-          {
-            "value": "center",
-            "label": "Centro"
-          }
-        ],
-        "default": "left"
-      },
-      {
-        "type": "checkbox",
-        "id": "card_show_vendor",
-        "label": "Mostrar la marca del producto",
-        "default": false
-      },
-      {
-        "type": "header",
-        "content": "Fotos"
-      },
-      {
-        "type": "select",
-        "id": "product_img_fit",
-        "label": "Ajuste de la imagen",
-        "options": [
-          {
-            "value": "contain",
-            "label": "Contener (recomendado)"
-          },
-          {
-            "value": "cover",
-            "label": "Cubrir (recortar para llenar)"
-          }
-        ],
-        "default": "contain"
-      },
-      {
-        "type": "range",
-        "id": "product_img_pad",
-        "min": 0,
-        "max": 16,
-        "step": 2,
-        "unit": "%",
-        "label": "Aire alrededor del producto",
-        "default": 8
-      },
-      {
-        "type": "checkbox",
-        "id": "product_img_glow",
-        "label": "Halo neón bajo el producto",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "product_img_blend",
-        "label": "Recortar fondo oscuro de la foto (solo si NO es transparente)",
-        "default": false,
-        "info": "Actívalo únicamente si alguna foto tiene fondo negro incrustado. Con PNG transparentes déjalo desactivado."
-      }
+      {"type": "select", "id": "product_card_style", "label": "Estilo de la tarjeta", "options": [{"value": "float", "label": "Flotante (sin caja)"}, {"value": "card", "label": "Tarjeta con fondo"}], "default": "float"},
+      {"type": "select", "id": "card_text_align", "label": "Alineación del texto", "options": [{"value": "left", "label": "Izquierda"}, {"value": "center", "label": "Centro"}], "default": "left"},
+      {"type": "checkbox", "id": "card_show_vendor", "label": "Mostrar la marca del producto", "default": false},
+      {"type": "header", "content": "Fotos"},
+      {"type": "select", "id": "product_img_fit", "label": "Ajuste de la imagen", "options": [{"value": "contain", "label": "Contener (recomendado)"}, {"value": "cover", "label": "Cubrir (recortar para llenar)"}], "default": "contain"},
+      {"type": "range", "id": "product_img_pad", "min": 0, "max": 16, "step": 2, "unit": "%", "label": "Aire alrededor del producto", "default": 8},
+      {"type": "checkbox", "id": "product_img_glow", "label": "Halo neón bajo el producto", "default": true},
+      {"type": "checkbox", "id": "product_img_blend", "label": "Recortar fondo oscuro de la foto (solo si NO es transparente)", "default": false, "info": "Actívalo únicamente si alguna foto tiene fondo negro incrustado. Con PNG transparentes déjalo desactivado."}
     ]
   },
   {
     "name": "Precios",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "price_show_compare",
-        "label": "Mostrar el precio tachado en ofertas",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "price_show_save",
-        "label": "Mostrar cuánto ahorra el cliente",
-        "default": true
-      },
-      {
-        "type": "range",
-        "id": "price_size",
-        "min": 90,
-        "max": 140,
-        "step": 5,
-        "unit": "%",
-        "label": "Tamaño del precio",
-        "default": 100
-      }
+      {"type": "checkbox", "id": "price_show_compare", "label": "Mostrar el precio tachado en ofertas", "default": true},
+      {"type": "checkbox", "id": "price_show_save", "label": "Mostrar cuánto ahorra el cliente", "default": true},
+      {"type": "range", "id": "price_size", "min": 90, "max": 140, "step": 5, "unit": "%", "label": "Tamaño del precio", "default": 100}
     ]
   },
   {
     "name": "Campos de entrada",
     "settings": [
-      {
-        "type": "range",
-        "id": "input_radius",
-        "min": 0,
-        "max": 24,
-        "step": 2,
-        "unit": "px",
-        "label": "Redondeo",
-        "default": 10
-      },
-      {
-        "type": "range",
-        "id": "input_border_opacity",
-        "min": 10,
-        "max": 100,
-        "step": 5,
-        "unit": "%",
-        "label": "Intensidad del borde",
-        "default": 30
-      }
+      {"type": "range", "id": "input_radius", "min": 0, "max": 24, "step": 2, "unit": "px", "label": "Redondeo", "default": 10},
+      {"type": "range", "id": "input_border_opacity", "min": 10, "max": 100, "step": 5, "unit": "%", "label": "Intensidad del borde", "default": 30}
     ]
   },
   {
     "name": "Cajones y ventanas",
     "settings": [
-      {
-        "type": "range",
-        "id": "drawer_width",
-        "min": 300,
-        "max": 520,
-        "step": 20,
-        "unit": "px",
-        "label": "Ancho del carrito lateral",
-        "default": 400
-      },
-      {
-        "type": "range",
-        "id": "overlay_opacity",
-        "min": 40,
-        "max": 95,
-        "step": 5,
-        "unit": "%",
-        "label": "Oscurecimiento del fondo",
-        "default": 80
-      },
-      {
-        "type": "range",
-        "id": "overlay_blur",
-        "min": 0,
-        "max": 20,
-        "step": 2,
-        "unit": "px",
-        "label": "Desenfoque del fondo",
-        "default": 8,
-        "info": "0 = sin desenfoque (más rápido en móviles antiguos)."
-      }
+      {"type": "range", "id": "drawer_width", "min": 300, "max": 520, "step": 20, "unit": "px", "label": "Ancho del carrito lateral", "default": 400},
+      {"type": "range", "id": "overlay_opacity", "min": 40, "max": 95, "step": 5, "unit": "%", "label": "Oscurecimiento del fondo", "default": 80},
+      {"type": "range", "id": "overlay_blur", "min": 0, "max": 20, "step": 2, "unit": "px", "label": "Desenfoque del fondo", "default": 8, "info": "0 = sin desenfoque (más rápido en móviles antiguos)."}
     ]
   },
   {
     "name": "Iconos",
     "settings": [
-      {
-        "type": "range",
-        "id": "icon_stroke",
-        "min": 1,
-        "max": 3,
-        "step": 1,
-        "unit": "px",
-        "label": "Grosor de línea",
-        "default": 2
-      }
+      {"type": "range", "id": "icon_stroke", "min": 1, "max": 3, "step": 1, "unit": "px", "label": "Grosor de línea", "default": 2}
     ]
   },
   {
     "name": "Búsqueda",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "search_show_header",
-        "label": "Mostrar buscador en el encabezado",
-        "default": true
-      }
+      {"type": "checkbox", "id": "search_show_header", "label": "Mostrar buscador en el encabezado", "default": true}
     ]
   },
   {
     "name": "Selectores de variantes",
     "settings": [
-      {
-        "type": "select",
-        "id": "variant_style",
-        "label": "Estilo",
-        "options": [
-          {
-            "value": "pill",
-            "label": "Píldoras"
-          },
-          {
-            "value": "square",
-            "label": "Rectangulares"
-          }
-        ],
-        "default": "pill"
-      }
+      {"type": "select", "id": "variant_style", "label": "Estilo", "options": [{"value": "pill", "label": "Píldoras"}, {"value": "square", "label": "Rectangulares"}], "default": "pill"}
     ]
   },
   {
     "name": "Logo y marca",
     "settings": [
-      {
-        "type": "image_picker",
-        "id": "logo",
-        "label": "Logo"
-      },
-      {
-        "type": "range",
-        "id": "logo_height",
-        "min": 24,
-        "max": 90,
-        "step": 2,
-        "unit": "px",
-        "label": "Altura del logo",
-        "default": 44
-      },
-      {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon",
-        "info": "Imagen cuadrada, mínimo 32×32 px. Aparece en la pestaña del navegador."
-      },
-      {
-        "type": "text",
-        "id": "brand_display_name",
-        "label": "Nombre de marca (si no hay logo)",
-        "default": "VILLUMINATION"
-      },
-      {
-        "type": "text",
-        "id": "brand_display_suffix",
-        "label": "Sufijo del nombre"
-      },
-      {
-        "type": "text",
-        "id": "brand_tagline",
-        "label": "Eslogan",
-        "default": "Transforma tu cuerpo. Domina tu mente."
-      }
+      {"type": "image_picker", "id": "logo", "label": "Logo"},
+      {"type": "range", "id": "logo_height", "min": 24, "max": 90, "step": 2, "unit": "px", "label": "Altura del logo", "default": 44},
+      {"type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Imagen cuadrada, mínimo 32×32 px. Aparece en la pestaña del navegador."},
+      {"type": "text", "id": "brand_display_name", "label": "Nombre de marca (si no hay logo)", "default": "VILLUMINATION"},
+      {"type": "text", "id": "brand_display_suffix", "label": "Sufijo del nombre"},
+      {"type": "text", "id": "brand_tagline", "label": "Eslogan", "default": "Transforma tu cuerpo. Domina tu mente."}
     ]
   },
   {
     "name": "Intro splash 3D",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "splash_enabled",
-        "label": "Activar intro",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "splash_3d",
-        "label": "Partículas 3D interactivas",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "splash_once_per_session",
-        "label": "Mostrar solo una vez por visita",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "splash_home_only",
-        "label": "Solo en la página de inicio",
-        "default": true
-      },
-      {
-        "type": "text",
-        "id": "splash_title",
-        "label": "Título",
-        "default": "VILLUMINATION"
-      },
-      {
-        "type": "text",
-        "id": "splash_tagline",
-        "label": "Eslogan",
-        "default": "TRANSFORMA TU CUERPO. DOMINA TU MENTE."
-      }
+      {"type": "checkbox", "id": "splash_enabled", "label": "Activar intro", "default": true},
+      {"type": "checkbox", "id": "splash_3d", "label": "Partículas 3D interactivas", "default": true},
+      {"type": "checkbox", "id": "splash_once_per_session", "label": "Mostrar solo una vez por visita", "default": true},
+      {"type": "checkbox", "id": "splash_home_only", "label": "Solo en la página de inicio", "default": true},
+      {"type": "text", "id": "splash_title", "label": "Título", "default": "VILLUMINATION"},
+      {"type": "text", "id": "splash_tagline", "label": "Eslogan", "default": "TRANSFORMA TU CUERPO. DOMINA TU MENTE."}
     ]
   },
   {
     "name": "Producto y 3D/AR",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "product_enable_3d",
-        "label": "Visor 3D / Realidad aumentada",
-        "default": true,
-        "info": "Se activa en los productos que tengan un modelo 3D (.glb) subido en Shopify."
-      },
-      {
-        "type": "checkbox",
-        "id": "product_zoom",
-        "label": "Zoom de imagen a pantalla completa",
-        "default": true
-      },
-      {
-        "type": "checkbox",
-        "id": "product_sticky_form",
-        "label": "Fijar la ficha de compra al hacer scroll",
-        "default": true
-      }
+      {"type": "checkbox", "id": "product_enable_3d", "label": "Visor 3D / Realidad aumentada", "default": true, "info": "Se activa en los productos que tengan un modelo 3D (.glb) subido en Shopify."},
+      {"type": "checkbox", "id": "product_zoom", "label": "Zoom de imagen a pantalla completa", "default": true},
+      {"type": "checkbox", "id": "product_sticky_form", "label": "Fijar la ficha de compra al hacer scroll", "default": true}
     ]
   },
   {
     "name": "Carrito",
     "settings": [
-      {
-        "type": "select",
-        "id": "cart_type",
-        "label": "Tipo de carrito",
-        "options": [
-          {
-            "value": "drawer",
-            "label": "Lateral deslizante"
-          },
-          {
-            "value": "page",
-            "label": "Página de carrito"
-          }
-        ],
-        "default": "drawer"
-      },
-      {
-        "type": "checkbox",
-        "id": "cart_show_note",
-        "label": "Permitir notas del pedido",
-        "default": true
-      },
-      {
-        "type": "header",
-        "content": "Venta cruzada"
-      },
-      {
-        "type": "checkbox",
-        "id": "cart_cross_sell",
-        "label": "Sugerir productos en el carrito",
-        "default": true,
-        "info": "Muestra hasta 2 productos de la misma colección con botón para añadirlos."
-      },
-      {
-        "type": "text",
-        "id": "cart_cross_sell_title",
-        "label": "Título de las sugerencias",
-        "default": "Completa tu compra"
-      },
-      {
-        "type": "header",
-        "content": "Barra de envío gratis"
-      },
-      {
-        "type": "number",
-        "id": "cart_free_shipping_threshold",
-        "label": "Umbral de envío gratis",
-        "info": "Importe sin símbolo. Muestra una barra de progreso. Vacío o 0 = desactivado. Configura también el envío gratis real en Configuración → Envíos."
-      }
+      {"type": "select", "id": "cart_type", "label": "Tipo de carrito", "options": [{"value": "drawer", "label": "Lateral deslizante"}, {"value": "page", "label": "Página de carrito"}], "default": "drawer"},
+      {"type": "checkbox", "id": "cart_show_note", "label": "Permitir notas del pedido", "default": true},
+      {"type": "header", "content": "Venta cruzada"},
+      {"type": "checkbox", "id": "cart_cross_sell", "label": "Sugerir productos en el carrito", "default": true, "info": "Muestra hasta 2 productos de la misma colección con botón para añadirlos."},
+      {"type": "text", "id": "cart_cross_sell_title", "label": "Título de las sugerencias", "default": "Completa tu compra"},
+      {"type": "header", "content": "Barra de envío gratis"},
+      {"type": "number", "id": "cart_free_shipping_threshold", "label": "Umbral de envío gratis", "info": "Importe sin símbolo. Muestra una barra de progreso. Vacío o 0 = desactivado. Configura también el envío gratis real en Configuración → Envíos."}
     ]
   },
   {
     "name": "Idioma",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "auto_language",
-        "label": "Detectar el idioma del visitante",
-        "default": true,
-        "info": "Cambia al idioma del navegador la primera vez, si lo tienes publicado en Configuración → Idiomas. Nunca sobreescribe una elección manual."
-      }
+      {"type": "checkbox", "id": "auto_language", "label": "Detectar el idioma del visitante", "default": true, "info": "Cambia al idioma del navegador la primera vez, si lo tienes publicado en Configuración → Idiomas. Nunca sobreescribe una elección manual."}
     ]
   },
   {
     "name": "Redes sociales",
     "settings": [
-      {
-        "type": "text",
-        "id": "social_youtube",
-        "label": "YouTube",
-        "default": "https://www.youtube.com/@villumination99"
-      },
-      {
-        "type": "text",
-        "id": "social_instagram",
-        "label": "Instagram",
-        "default": "https://www.instagram.com/villumination99"
-      },
-      {
-        "type": "text",
-        "id": "social_tiktok",
-        "label": "TikTok"
-      },
-      {
-        "type": "text",
-        "id": "social_x",
-        "label": "X (Twitter)"
-      }
+      {"type": "text", "id": "social_youtube", "label": "YouTube", "default": "https://www.youtube.com/@villumination99"},
+      {"type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://www.instagram.com/villumination99"},
+      {"type": "text", "id": "social_tiktok", "label": "TikTok"},
+      {"type": "text", "id": "social_x", "label": "X (Twitter)"}
     ]
   },
   {
     "name": "SEO y visibilidad",
     "settings": [
-      {
-        "type": "paragraph",
-        "content": "Datos que Google usa para las insignias de envío y devoluciones en los resultados de compra. Déjalos vacíos si no estás seguro: declarar algo que no cumples es peor que no declarar nada."
-      },
-      {
-        "type": "text",
-        "id": "seo_ship_country",
-        "label": "País principal de envío (código ISO)",
-        "info": "Dos letras, por ejemplo FR, ES o US. Vacío = no se declara nada de envío.",
-        "default": ""
-      },
-      {
-        "type": "range",
-        "id": "seo_return_days",
-        "min": 0,
-        "max": 90,
-        "step": 5,
-        "label": "Plazo de devolución (días)",
-        "info": "0 = no declarar. Debe coincidir con tu política real.",
-        "default": 0
-      },
-      {
-        "type": "checkbox",
-        "id": "seo_return_free",
-        "label": "La devolución es gratuita para el cliente",
-        "default": false
-      }
+      {"type": "paragraph", "content": "Datos que Google usa para las insignias de envío y devoluciones en los resultados de compra. Déjalos vacíos si no estás seguro: declarar algo que no cumples es peor que no declarar nada."},
+      {"type": "text", "id": "seo_ship_country", "label": "País principal de envío (código ISO)", "info": "Dos letras, por ejemplo FR, ES o US. Vacío = no se declara nada de envío.", "default": ""},
+      {"type": "range", "id": "seo_return_days", "min": 0, "max": 90, "step": 5, "label": "Plazo de devolución (días)", "info": "0 = no declarar. Debe coincidir con tu política real.", "default": 0},
+      {"type": "checkbox", "id": "seo_return_free", "label": "La devolución es gratuita para el cliente", "default": false}
     ]
   },
   {
     "name": "CSS personalizado",
     "settings": [
-      {
-        "type": "paragraph",
-        "content": "Añade tus propias reglas CSS. Se cargan al final, por lo que tienen prioridad sobre el tema."
-      },
-      {
-        "type": "textarea",
-        "id": "custom_css",
-        "label": "CSS",
-        "info": "Ejemplo: .product-title { letter-spacing: .04em; }"
-      }
+      {"type": "paragraph", "content": "Añade tus propias reglas CSS. Se cargan al final, por lo que tienen prioridad sobre el tema."},
+      {"type": "textarea", "id": "custom_css", "label": "CSS", "info": "Ejemplo: .product-title { letter-spacing: .04em; }"}
     ]
   }
 ]
