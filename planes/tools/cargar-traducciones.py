@@ -51,6 +51,18 @@ def main() -> None:
     por_texto = {re.sub(r"\s+", " ", v).strip(): k
                  for k, v in inventario.items()}
 
+    # Segunda vía de emparejamiento: la misma cadena con los espacios entre
+    # etiquetas colapsados. Al copiar un original desde el fuente es fácil
+    # dejar un salto de línea donde no lo había, y ese detalle invisible no
+    # debe costar una ronda de correcciones. La CLAVE se calcula siempre
+    # desde el original real del documento, nunca desde lo que se tecleó.
+    def pegado(t: str) -> str:
+        return re.sub(r">\s+<", "><", re.sub(r"\s+", " ", t)).strip()
+
+    por_pegado = {}
+    for k, v in inventario.items():
+        por_pegado.setdefault(pegado(v), (k, v))
+
     catalogo, errores, entradas = {}, [], 0
     for modulo in sorted(FUENTES.glob("*.py")):
         spec = importlib.util.spec_from_file_location(modulo.stem, modulo)
@@ -59,7 +71,12 @@ def main() -> None:
         for original, versiones in getattr(mod, "T", {}).items():
             plano = re.sub(r"\s+", " ", original).strip()
             entradas += 1
-            if plano not in por_texto:
+            real = original
+            if plano in por_texto:
+                clave_seg = por_texto[plano]
+            elif pegado(original) in por_pegado:
+                clave_seg, real = por_pegado[pegado(original)]
+            else:
                 errores.append(f"{modulo.name}: original inexistente en los "
                                f"planes → «{plano[:70]}»")
                 continue
@@ -73,7 +90,7 @@ def main() -> None:
                         f"{modulo.name} [{idioma}]: el marcado no coincide → "
                         f"«{plano[:50]}»")
                     continue
-                catalogo.setdefault(i18n.clave(original), {})[idioma] = destino
+                catalogo.setdefault(clave_seg, {})[idioma] = destino
 
     if errores:
         print(f"\n{len(errores)} problema(s):")
