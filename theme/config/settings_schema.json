@@ -2,7 +2,7 @@
   {
       "name": "theme_info",
       "theme_name": "Villumination 3D",
-      "theme_version": "4.7.1",
+      "theme_version": "4.7.2",
       "theme_author": "Villumination99",
       "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
       "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -72,7 +72,7 @@
     ]
   },
   {
-    "name": "Badges (etiquetas)",
+    "name": "Etiquetas de producto",
     "settings": [
       {"type": "paragraph", "content": "Etiquetas automáticas en las tarjetas de producto. Se muestra solo una, en este orden: descuento → pocas unidades → novedad."},
       {"type": "range", "id": "badge_new_days", "min": 0, "max": 90, "step": 5, "unit": "d", "label": "Marcar como Nuevo durante", "default": 30, "info": "Días desde la publicación. 0 = desactivado."},
@@ -157,7 +157,7 @@
     ]
   },
   {
-    "name": "Producto y 3D/AR",
+    "name": "Producto 3D y AR",
     "settings": [
       {"type": "checkbox", "id": "product_enable_3d", "label": "Visor 3D / Realidad aumentada", "default": true, "info": "Se activa en los productos que tengan un modelo 3D (.glb) subido en Shopify."},
       {"type": "checkbox", "id": "product_zoom", "label": "Zoom de imagen a pantalla completa", "default": true},
