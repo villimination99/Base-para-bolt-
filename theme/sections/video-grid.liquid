@@ -43,6 +43,43 @@
   </div>
 </section>
 
+{%- comment -%}
+  VideoObject en JSON-LD. Google puede mostrar los videos con su propia
+  miniatura y ficha en los resultados, y ademas los indexa en la pestana de
+  Videos, que es un canal de trafico aparte del de la busqueda normal.
+  Solo se emite para los bloques que tengan titulo, porque Google exige nombre
+  y descripcion: sin ellos el dato seria rechazado.
+{%- endcomment -%}
+{%- assign vid_count = 0 -%}
+{%- capture video_ld -%}
+  {%- for block in section.blocks -%}
+    {%- assign vid = block.settings.video_id | strip -%}
+    {%- if vid contains 'youtu' -%}
+      {%- if vid contains 'v=' -%}{%- assign vid = vid | split: 'v=' | last | split: '&' | first -%}
+      {%- elsif vid contains '/shorts/' -%}{%- assign vid = vid | split: '/shorts/' | last | split: '?' | first | split: '/' | first -%}
+      {%- else -%}{%- assign vid = vid | split: '/' | last | split: '?' | first -%}{%- endif -%}
+    {%- endif -%}
+    {%- if vid != blank and block.settings.title != blank -%}
+      {%- if vid_count > 0 -%},{%- endif -%}
+    {
+      "@type": "VideoObject",
+      "name": {{ block.settings.title | json }},
+      "description": {{ block.settings.title | append: ' - ' | append: shop.name | json }},
+      "thumbnailUrl": {{ vid | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg' | json }},
+      "embedUrl": {{ vid | prepend: 'https://www.youtube.com/embed/' | json }},
+      "uploadDate": {{ shop.published_at | default: 'now' | date: '%Y-%m-%d' | json }}
+    }
+      {%- assign vid_count = vid_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if vid_count > 0 -%}
+<script type="application/ld+json">
+[{{ video_ld }}]
+</script>
+{%- endif -%}
+
+
 {% schema %}
 {
   "name": "Carrusel de videos",
