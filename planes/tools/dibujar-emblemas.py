@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-VILLUMINATION 99 — Emblemas de portada
+VILLUMINATIONS — Emblemas de portada
 ======================================
 Escribe partials/emblemas.svg: una insignia por documento.
 
@@ -340,7 +340,7 @@ def main():
               'aria-hidden="true">',
               """
 <!-- ════════════════════════════════════════════════════════════════
-     VILLUMINATION 99 · emblemas de portada
+     VILLUMINATIONS · emblemas de portada
      Dibujo original — generado por tools/dibujar-emblemas.py.
      No editar a mano.
      ════════════════════════════════════════════════════════════ -->""",

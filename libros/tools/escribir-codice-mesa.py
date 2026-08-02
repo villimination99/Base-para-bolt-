@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DE LA MESA — obra original de VILLUMINATION 99
+CÓDICE DE LA MESA — obra original de VILLUMINATIONS
 =====================================================
 Quinto libro de la colección y primero de la serie de fitness. Nutrición
 adulta a partir de fuentes públicas y libres: las obras del gobierno federal
@@ -89,7 +89,7 @@ def fila_micro(clave):
 
 C1 = cap(
     "Lo que este libro afirma",
-    p("Este libro no tiene un método. No hay una dieta de VILLUMINATION 99, no "
+    p("Este libro no tiene un método. No hay una dieta de VILLUMINATIONS, no "
       "hay alimentos prohibidos y no hay una lista de suplementos al final. Lo "
       "digo en la primera línea porque es lo contrario de lo que un libro de "
       "nutrición suele ofrecer, y porque el resto solo se entiende con esto "
@@ -148,24 +148,22 @@ C1 = cap(
       "capítulo con indicación de dónde se consultan. Ninguna cifra de este "
       "libro está inventada, redondeada por comodidad ni copiada de otro libro "
       "de divulgación."),
-    p("Y hay algo más, que es lo que convierte a esta colección en un sistema y "
-      "no en un montón de libros con la misma portada: las tablas se comprueban "
-      "solas. El programa que compone estas páginas ejecuta primero una batería "
+    p("Y hay algo más, que es lo que convierte a este libro en un sistema y no "
+      "en un folleto bien maquetado: las tablas se comprueban solas. El programa que compone estas páginas ejecuta primero una batería "
       "de verificaciones —que los rangos de macronutrientes admitan el cien por "
       "cien, que la fibra cuadre con su regla de catorce gramos por cada mil "
       "kilocalorías, que ningún valor de referencia supere su propio techo sin "
       "una nota que explique por qué— y si alguna falla, se niega a escribir el "
       "libro. Una de esas comprobaciones cazó un error mío mientras escribía "
       "esto. Por eso están."),
-    nota("Cómo encaja con los otros tres de la serie",
-         "Este libro se ocupa de lo que entra. El Códice de la Carga se ocupa de "
-         "lo que se hace con el cuerpo, con la dosis oficial de actividad y la "
-         "biomecánica de levantar peso. El Códice de la Voluntad se ocupa de la "
-         "única variable que decide si un plan sirve, que es cuánto se cumple. Y "
-         "el Códice del Descanso se ocupa de la mitad del día que casi todo el "
-         "mundo trata como tiempo muerto. Los cuatro comparten el mismo módulo de "
-         "datos comprobados, así que ninguno puede contradecir a otro en una "
-         "cifra."),
+    nota("Cómo se lee este libro",
+         "Se puede leer de principio a fin, y está escrito para eso. Pero "
+         "también funciona como manual de consulta: las cuatro siglas del "
+         "capítulo «Las cuatro letras que nadie explica» son la llave de todo lo "
+         "demás; la tabla de los diecinueve es la referencia que se vuelve a "
+         "mirar cada vez que aparece un bote nuevo; y el cuaderno del final es "
+         "lo único que hay que ejecutar. Si solo vas a leer tres capítulos, que "
+         "sean esos tres."),
 )
 
 C2 = cap(
@@ -839,7 +837,8 @@ C13 = cap(
                                             "documento entero se descarga en PDF."),
         ("Dosis de actividad física", "Las Physical Activity Guidelines for "
                                       "Americans, segunda edición, en el mismo "
-                                      "sitio. Es la fuente del Códice de la Carga."),
+                                      "sitio. De ahí sale la dosis semanal de "
+                                      "actividad que se cita en este libro."),
         ("Doctrina de entrenamiento y sueño", "El FM 7-22, Holistic Health and "
                                               "Fitness, en la biblioteca de "
                                               "publicaciones del Ejército de "
@@ -1003,8 +1002,9 @@ C15 = cap(
         ("Hierro hemo y no hemo", "El primero, de origen animal, se absorbe "
                                   "bastante mejor; el segundo, vegetal, depende "
                                   "del acompañamiento."),
-        ("MET", "Equivalente metabólico. Múltiplo del gasto en reposo. Se usa en "
-                "el Códice de la Carga."),
+        ("MET", "Equivalente metabólico. Múltiplo del gasto energético en "
+                "reposo: un MET equivale aproximadamente a una kilocaloría por "
+                "kilo de peso y hora."),
         ("NE · Equivalente de niacina", "Unidad que incluye la niacina fabricada "
                                         "a partir de triptófano."),
         ("RAE · Equivalente de retinol", "Unidad que corrige la distinta "
@@ -1017,14 +1017,16 @@ C15 = cap(
                                  "adversos empieza a aumentar."),
     ]),
     sep(),
-    p("Y con esto se cierra el primero de los cuatro Códices de fitness. No "
-      "trae ninguna dieta, y eso es lo que ofrece: la tabla completa en vez de la "
-      "mitad publicitable, las fuentes con nombre para que puedas discutirle al "
-      "libro, y una advertencia repetida las veces necesarias de que ninguna "
-      "cifra poblacional es una prescripción para una persona."),
-    p("El siguiente se ocupa de lo que se hace con el cuerpo, y empieza con la "
-      "cifra de actividad física que un gobierno estableció y casi nadie ha "
-      "leído entera."),
+    p("Y con esto se cierra el libro. No trae ninguna dieta, y eso es "
+      "exactamente lo que ofrece: la tabla completa en vez de la mitad "
+      "publicitable, el techo junto a la recomendación, las unidades explicadas, "
+      "las fuentes con nombre y con ruta para que puedas discutirle al libro, y "
+      "una advertencia repetida las veces necesarias de que ninguna cifra "
+      "poblacional es una prescripción para una persona."),
+    p("Si dentro de un año lo único que queda de estas páginas es la costumbre "
+      "de mirar las dos columnas antes de comprar un bote, y la de leer la "
+      "etiqueta por cien gramos en vez de por porción, el libro habrá hecho su "
+      "trabajo. Todo lo demás es aparato para llegar a esas dos costumbres."),
 )
 
 
@@ -1186,8 +1188,9 @@ CE3 = cap(
         "sesiones largas o muy intensas y da igual en sesiones cortas. Es una "
         "preferencia, no una estrategia.",
         "El café antes de entrenar tiene un efecto sobre el rendimiento bien "
-        "descrito. Ojo con la hora: el capítulo de la cafeína del Códice del "
-        "Descanso explica por qué una sesión de tarde puede costar sueño.",
+        "descrito. Ojo con la hora: la vida media de la cafeína ronda "
+        "las cinco horas, así que una sesión de tarde puede costar sueño esa "
+        "misma noche.",
     ),
     h("Durante"),
     p("Por debajo de una hora de esfuerzo, agua. A partir de ahí, y sobre todo "
@@ -1341,7 +1344,7 @@ LIBRO = {
     "id": "codice-mesa",
     "titulo": "Códice de la Mesa",
     "subtitulo": "Nutrición con las dos columnas de la tabla: lo que hay que tomar, lo que conviene no pasar y de dónde sale cada cifra",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-mesa",
     "acento": "mesa",

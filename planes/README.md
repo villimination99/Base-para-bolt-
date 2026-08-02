@@ -1,4 +1,4 @@
-# Planes VILLUMINATION 99 — PDFs optimizados
+# Planes VILLUMINATIONS — PDFs optimizados
 
 Rediseño y ampliación de los 11 planes descargables de [villuminations.com](https://villuminations.com),
 con la identidad neón de la tienda aplicada de forma consistente.

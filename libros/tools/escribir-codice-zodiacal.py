@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE ZODIACAL — obra original de VILLUMINATION 99
+CÓDICE ZODIACAL — obra original de VILLUMINATIONS
 ====================================================
 Aquí se escribe el libro. No es texto extraído de ningún PDF: es redacción
 propia sobre material tradicional (las correspondencias astrológicas clásicas
@@ -2213,7 +2213,7 @@ LIBRO = {
     "id": "codice-zodiacal",
     "titulo": "Códice Zodiacal",
     "subtitulo": "Los doce signos como mapa del carácter, del cuerpo y del trabajo interior",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-zodiaco",
     "acento": "cyan",

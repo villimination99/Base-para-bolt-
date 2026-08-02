@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-VILLUMINATION 99 — Generador de libros
+VILLUMINATIONS — Generador de libros
 --------------------------------------
 Toma el JSON limpio de src/, monta el HTML del libro y lo renderiza a PDF A5.
 
@@ -161,9 +161,9 @@ def indice_html(caps: list[dict], paginas: list[int] | None) -> str:
 
 
 def cabecera(libro: dict, clase: str) -> str:
-    return f"""<!-- VILLUMINATION 99 · {libro['titulo']} -->
+    return f"""<!-- VILLUMINATIONS · {libro['titulo']} -->
 <meta charset="utf-8">
-<title>{esc(libro['titulo'])} | VILLUMINATION 99</title>
+<title>{esc(libro['titulo'])} | VILLUMINATIONS</title>
 <link rel="stylesheet" href="{ASSETS.as_uri()}/fonts.css">
 <link rel="stylesheet" href="{ASSETS.as_uri()}/libro.css">
 <body class="{clase}">
@@ -193,7 +193,7 @@ def cubierta(libro: dict) -> str:
     return cabecera(libro, f"cubierta-doc acento-{libro['acento']}") + """
 <style>@page{ size:148mm 210mm; margin:0 }</style>""" + f"""
 <div class="cubierta">
-  <div class="sello">Villumination 99 · Biblioteca</div>
+  <div class="sello">Villuminations · Biblioteca</div>
   <div>
     <svg class="simbolo"><use href="#{libro['mascota']}"/></svg>
     <h1 class="{largo.strip()}">{esc(libro['titulo'])}</h1>
@@ -241,7 +241,7 @@ CREDITOS_ORIGINAL = """
 CIERRE_ORIGINAL = """
   <div class="nota">
     <strong>Sobre los derechos.</strong> Obra original.
-    © 2026 Villumination 99 · villuminations.com. Todos los derechos
+    © 2026 Villuminations · villuminations.com. Todos los derechos
     reservados. Licencia de lectura personal: no se autoriza la reventa ni la
     redistribución del archivo. Si este libro te ha servido, la mejor forma de
     apoyarlo es recomendarlo por la vía legítima.
@@ -271,11 +271,11 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
 {capitulos}
 
 <section class="cierre">
-  <h2>Villumination 99</h2>
+  <h2>Villuminations</h2>
   <svg class="filigrana"><use href="#filigrana"/></svg>
-  <div class="marca"><span class="v">VILLUMINATION</span><span class="n">99</span></div>
+  <div class="marca"><span class="v">VILLUMINATIONS</span></div>
   <span class="url">villuminations.com</span>
-  <div class="redes">YouTube <b>@villumination99</b> &nbsp;·&nbsp; Instagram <b>@villumination99</b></div>
+  <div class="redes">YouTube <b>@villuminations</b> &nbsp;·&nbsp; Instagram <b>@villuminations</b></div>
 {CIERRE_ORIGINAL}
 </section>
 </body>"""
@@ -328,9 +328,9 @@ def marcadores(pdf: Path, libro: dict, paginas: list[int]) -> None:
     w.add_metadata({
         "/Title": titulo,
         "/Author": (f"{libro['autor']} — villuminations.com" if original
-                    else "VILLUMINATION 99 — villuminations.com"),
+                    else "VILLUMINATIONS — villuminations.com"),
         "/Subject": libro["subtitulo"],
-        "/Creator": "VILLUMINATION 99",
+        "/Creator": "VILLUMINATIONS",
         "/Keywords": ", ".join(libro.get("claves", [])) or "villuminations.com",
     })
     tmp = pdf.with_suffix(".tmp.pdf")

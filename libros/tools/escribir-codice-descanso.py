@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DEL DESCANSO — obra original de VILLUMINATION 99
+CÓDICE DEL DESCANSO — obra original de VILLUMINATIONS
 =======================================================
 Octavo libro de la colección y cuarto de la serie de fitness. El sueño y la
 recuperación tratados como parte del entrenamiento y no como lo que sobra del
@@ -318,10 +318,11 @@ C5 = cap(
       "de mañana existirá; esta noche solo hay una."),
     sep(),
     h("La descarga y el descanso no son lo mismo"),
-    p("Vale la pena distinguir dos cosas que la palabra «descanso» confunde. El "
-      "Códice de la Carga describe qué le pasa a un cuerpo al que se le retira la "
-      "carga mecánica: pierde músculo, fuerza y hueso. Eso es descarga, y es "
-      "deterioro."),
+    p("Vale la pena distinguir dos cosas que la palabra «descanso» confunde. "
+      "Cuando a un cuerpo se le retira la carga mecánica durante semanas —reposo "
+      "en cama, inmovilización, ausencia de gravedad— pierde músculo, pierde "
+      "fuerza y pierde hueso, en ese orden y a ritmos distintos. Eso es "
+      "descarga, y es deterioro."),
     ficha("Los cinco efectos de la descarga, para no confundirlos con descansar",
           [(que, ritmo) for que, ritmo, _ in D.DESCARGA]),
     p("El descanso de este libro es lo contrario: es el intervalo entre cargas "
@@ -383,10 +384,10 @@ C6 = cap(
 
 C7 = cap(
     "Cómo comprobarlo tú mismo",
-    p("Como en el resto de la colección, aquí van las fuentes con nombre y con "
+    p("Aquí van las fuentes con nombre y con "
       "indicación de dónde se consultan, para que este libro se pueda verificar y "
       "corregir."),
-    ficha("Las fuentes de la colección", [(n, d) for n, d in D.FUENTES]),
+    ficha("Las fuentes de este libro", [(n, d) for n, d in D.FUENTES]),
     sep(),
     h("Las que sostienen específicamente este libro"),
     ficha("Rutas concretas", [
@@ -409,9 +410,10 @@ C7 = cap(
                               "la distinción entre descarga y descanso."),
     ]),
     h("Y cómo se comprueba este libro a sí mismo"),
-    p("Las cifras de sueño de estas páginas viven en el mismo módulo de datos que "
-      "los otros tres libros, y una de las comprobaciones que se ejecutan antes "
-      "de componer es específica de aquí:"),
+    p("Las cifras de sueño de estas páginas no están escritas en el texto: "
+      "viven en un módulo de datos que el programa de composición verifica antes "
+      "de escribir una sola línea. Una de esas comprobaciones es específica de "
+      "este libro:"),
     lista(
         f"Que {CICLO_MAX} ciclos de {S['ciclo_min']} minutos —{hh(HORAS_MAX)} "
         f"horas— alcancen la recomendación de {S['adulto_horas']} horas. Si la "
@@ -541,15 +543,19 @@ C9 = cap(
                        "medio."),
     ]),
     sep(),
-    p("Y con esto se cierra la serie de fitness y, con ella, los ocho Códices de "
-      "VILLUMINATION 99. Cuatro libros para el cuerpo —la mesa, la carga, la "
-      "voluntad y el descanso— construidos sobre material público que casi nadie "
-      "abre, con las cifras comprobadas antes de imprimirlas y con las fuentes "
-      "puestas por su nombre para que puedas llevarle la contraria al libro."),
-    p("No prometen ningún resultado y no traen ningún método secreto. Traen la "
-      "tabla entera en vez de la mitad publicitable, y la costumbre de comprobar. "
-      "Con eso, las decisiones que tomes serán tuyas, que es lo máximo que un "
-      "libro honesto puede ofrecer."),
+    p("Y con esto se cierra el libro. Está construido sobre material público "
+      "que casi nadie abre, con las cifras comprobadas antes de imprimirlas y "
+      "con las fuentes puestas por su nombre y con su ruta, para que puedas "
+      "llevarle la contraria si crees que se equivoca."),
+    p("No promete ningún resultado y no trae ningún método secreto. Trae la "
+      "arquitectura de una noche, la cuenta de lo que cuesta recortarla, un "
+      "orden temporal para lo que se corta y cuándo, las dos palancas que "
+      "rompen el bucle del insomnio, y la lista de señales que dejan de ser "
+      "asunto de este libro y pasan a ser asunto de una consulta."),
+    p("Si de todas estas páginas solo se queda una cosa, que sea la hora fija "
+      "de levantarse. Es el ancla del reloj entero, no cuesta dinero y arregla "
+      "más que cualquier ritual nocturno. Con eso, las decisiones que tomes "
+      "serán tuyas, que es lo máximo que un libro honesto puede ofrecer."),
 )
 
 
@@ -945,7 +951,7 @@ LIBRO = {
     "id": "codice-descanso",
     "titulo": "Códice del Descanso",
     "subtitulo": "La arquitectura de una noche, la deuda que deja una semana corta y la diferencia entre descansar y descargarse",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-descanso",
     "acento": "calma",

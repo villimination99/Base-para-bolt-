@@ -2,7 +2,7 @@
  "id": "codice-carga",
  "titulo": "Códice de la Carga",
  "subtitulo": "La dosis oficial de actividad, la escala que la mide, la ecuación de levantar y lo que le pasa a un cuerpo sin peso",
- "autor": "Villumination 99",
+ "autor": "Villuminations",
  "fuente": "Obra original · Primera edición, 2026",
  "mascota": "r-carga",
  "acento": "carga",
@@ -89,7 +89,7 @@
     },
     {
      "t": "p",
-     "x": "Y como en el resto de la colección, las cifras de estas páginas no se teclearon en el texto: viven en un módulo de datos que se verifica antes de componer el libro. Si la equivalencia entre minutos moderados y vigorosos no cuadrase, o si alguna actividad de la escala metabólica cayese fuera de la banda de intensidad que declara, el libro no se escribiría."
+     "x": "Y una cosa más: las cifras de estas páginas no se teclearon en el texto. Viven en un módulo de datos que se verifica antes de componer el libro. Si la equivalencia entre minutos moderados y vigorosos no cuadrase, o si alguna actividad de la escala metabólica cayese fuera de la banda de intensidad que declara, el libro no se escribiría."
     }
    ]
   },
@@ -131,7 +131,7 @@
     },
     {
      "t": "p",
-     "x": "De aquí sale el consejo más contraintuitivo del libro para alguien que empieza: no diseñes la semana que te gustaría hacer. Diseña la que harás aunque salga mal, porque los primeros minutos son los que más valen y son precisamente los que se pierden cuando el plan es demasiado ambicioso y se abandona en la semana tres. El Códice de la Voluntad trata ese problema entero."
+     "x": "De aquí sale el consejo más contraintuitivo del libro para alguien que empieza: no diseñes la semana que te gustaría hacer. Diseña la que harás aunque salga mal, porque los primeros minutos son los que más valen y son precisamente los que se pierden cuando el plan es demasiado ambicioso y se abandona en la semana tres. Cuánto se cumple pesa más que qué se elige, y por eso el capítulo de la semana da tres plantillas de tamaños distintos en vez de una sola."
     },
     {
      "t": "sep"
@@ -226,23 +226,23 @@
      "x": [
       [
        "Caminar a paso vivo · 5 km/h",
-       "3.5 MET · unas 122 kcal · moderada"
+       "3,5 MET · unas 122 kcal · moderada"
       ],
       [
        "Pesas, sesión general",
-       "3.5 MET · unas 122 kcal · moderada"
+       "3,5 MET · unas 122 kcal · moderada"
       ],
       [
        "Bicicleta · 20 km/h",
-       "8.0 MET · unas 280 kcal · vigorosa"
+       "8 MET · unas 280 kcal · vigorosa"
       ],
       [
        "Trotar · 8 km/h",
-       "8.0 MET · unas 280 kcal · vigorosa"
+       "8 MET · unas 280 kcal · vigorosa"
       ],
       [
        "Correr · 11 km/h",
-       "11.0 MET · unas 385 kcal · vigorosa"
+       "11 MET · unas 385 kcal · vigorosa"
       ]
      ]
     },
@@ -1209,7 +1209,7 @@
    "bloques": [
     {
      "t": "p",
-     "x": "Medir el progreso con la báscula es una mala idea por motivos que trata el Códice de la Voluntad. Medirlo con pruebas físicas es mucho mejor, y existe una batería completa, descrita al detalle y de acceso libre, que el Ejército de Estados Unidos publica entera."
+     "x": "El peso corporal oscila varios kilos en cuestión de días por agua, sal, glucógeno y contenido intestinal, así que medir el progreso con la báscula es reaccionar a ruido. Medirlo con pruebas físicas es mucho mejor, y existe una batería completa, descrita al detalle y de acceso libre, que el Ejército de Estados Unidos publica entera."
     },
     {
      "t": "figura",
@@ -1325,7 +1325,7 @@
     },
     {
      "t": "ficha",
-     "tit": "Las fuentes de la colección",
+     "tit": "Las fuentes de este libro",
      "x": [
       [
        "Dietary Reference Intakes",
@@ -1378,7 +1378,7 @@
       ],
       [
        "La doctrina de entrenamiento",
-       "FM 7-22, Holistic Health and Fitness, en la biblioteca de publicaciones del Ejército de Estados Unidos. Publicado entero. Sus cinco dominios de preparación —física, nutricional, mental, del sueño y espiritual— son el esqueleto de esta serie de cuatro libros."
+       "FM 7-22, Holistic Health and Fitness, en la biblioteca de publicaciones del Ejército de Estados Unidos. Publicado entero. Sus cinco dominios de preparación —física, nutricional, mental, del sueño y espiritual— explican por qué un plan de entrenamiento impecable no rinde cuando falla cualquiera de los otros cuatro."
       ],
       [
        "La ecuación de levantamiento",
@@ -1492,9 +1492,9 @@
      "t": "lista",
      "x": [
       "Un programa para tu caso. Las guías dan un marco poblacional. Una lesión previa, una patología, una competición o un objetivo estético concreto exigen a alguien que te vea.",
-      "Una promesa de composición corporal. El ejercicio cambia la salud de forma muy robusta y el peso de forma bastante modesta; la mayor parte del cambio de peso se decide en la mesa, que es el libro anterior.",
-      "Una respuesta sobre suplementos deportivos. Están fuera de estas fuentes. Lo poco que se puede afirmar legalmente sobre ellos está en el capítulo del registro europeo del Códice de la Mesa, y es menos de lo que la publicidad sugiere.",
-      "Un veredicto sobre qué método es mejor. Series largas o cortas, frecuencia alta o baja, máquinas o peso libre: dentro de un rango razonable, todo funciona si se hace con progresión y constancia. La variable dominante es otra, y tiene su propio libro.",
+      "Una promesa de composición corporal. El ejercicio cambia la salud de forma muy robusta y el peso de forma bastante modesta; la mayor parte del cambio de peso se decide en la cocina y no en el gimnasio.",
+      "Una respuesta sobre suplementos deportivos. Están fuera de las fuentes de este libro. Lo que se puede afirmar legalmente sobre ellos en Europa consta en un registro público de declaraciones de propiedades saludables, y es bastante menos de lo que sugiere la publicidad: conviene consultarlo antes de comprar nada.",
+      "Un veredicto sobre qué método es mejor. Series largas o cortas, frecuencia alta o baja, máquinas o peso libre: dentro de un rango razonable, todo funciona si se hace con progresión y constancia. La variable dominante no es el método: es cuánto lo cumples.",
       "Permiso para ignorar el dolor. Molestia muscular difusa que dura uno o dos días es normal. Dolor articular localizado, dolor que aparece siempre en el mismo gesto, o dolor que empeora sesión a sesión, no lo es."
      ]
     },
@@ -1548,11 +1548,11 @@
     },
     {
      "t": "p",
-     "x": "Y con esto se cierra el segundo Códice de fitness. Tiene una dosis, una escala para medirla, una ecuación para levantar y una descripción de lo que pasa cuando no hay nada de todo eso. No tiene un programa, porque el programa depende de ti y porque el problema de casi todo el mundo no es elegir el programa correcto."
+     "x": "Y con esto se cierra el libro. Tiene una dosis con su curva, una escala para medir la intensidad, ocho patrones con los que auditar cualquier semana, seis variables para progresar cuando el peso no sube, una ecuación para levantar, una batería para medirse y una descripción de lo que le pasa a un cuerpo cuando no hay nada de todo eso."
     },
     {
      "t": "p",
-     "x": "El problema de casi todo el mundo es cumplirlo, y de eso trata el siguiente."
+     "x": "Lo que no tiene es un programa cerrado, y es a propósito: el programa depende de tu horario, de tu material y de tu historial. El problema de casi todo el mundo no es elegir el programa correcto, sino cumplir cualquiera de los razonables durante el tiempo suficiente. Con lo que hay en estas páginas puedes construir el tuyo, auditarlo cada semana y corregirlo con datos en vez de con impresiones. Eso vale más que cualquier plantilla."
     }
    ]
   }

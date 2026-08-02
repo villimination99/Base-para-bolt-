@@ -3,7 +3,7 @@
 CÓDICES DE FITNESS — generador del repertorio gráfico
 =====================================================
 Escribe cuatro sprites de una vez: mesa.svg, carga.svg, voluntad.svg y
-descanso.svg. Dibujo original de VILLUMINATION 99.
+descanso.svg. Dibujo original de VILLUMINATIONS.
 
 Un solo generador para los cuatro libros porque comparten todo el andamiaje
 —barras, ejes, silueta, bisel de cubierta— y tenerlo cuatro veces sería tenerlo
@@ -45,6 +45,13 @@ MITAD = ("M72 30 L52 36 L42 44 L36 74 L30 114 L35 120 L43 80 L49 50 "
 # ── Utilidades ────────────────────────────────────────────────────────
 def f(x):
     return f"{x:.2f}".rstrip("0").rstrip(".")
+
+
+def cifra(x):
+    """Número para imprimir: coma decimal, que es la que usa el castellano.
+    NO se usa para coordenadas SVG —ahí manda el punto— sino para los valores
+    que lee el comprador."""
+    return f"{x:g}".replace(".", ",")
 
 
 def pol(cx, cy, r, g):
@@ -106,7 +113,7 @@ def sprite(clave, piezas):
         f"""
 <!-- ════════════════════════════════════════════════════════════════
      CÓDICE · {clave.upper()} · repertorio gráfico
-     Dibujo original de VILLUMINATION 99 — generado por
+     Dibujo original de VILLUMINATIONS — generado por
      tools/dibujar-fitness.py. No editar a mano.
      Los datos vienen de tools/datos_oficiales.py y se comprueban.
      ════════════════════════════════════════════════════════════ -->""",
@@ -182,12 +189,12 @@ def me_micro():
                      f'rx="3" fill="{PRI}" opacity=".045"/>')
         p.append(txt(10, y + 3, nombre, "et", 10.8, CLARO, "start"))
         p.append(txt(172, y + 3, unidad, "et", 9.8, APAGADO, "end"))
-        p.append(txt(238, y + 3, f"{rh:g}", "num", 10, PRI, "end"))
-        p.append(txt(300, y + 3, f"{rm:g}", "num", 10, PRI, "end"))
+        p.append(txt(238, y + 3, cifra(rh), "num", 10, PRI, "end"))
+        p.append(txt(300, y + 3, cifra(rm), "num", 10, PRI, "end"))
         if ul is None:
             p.append(txt(382, y + 3, "sin techo", "et", 9.8, APAGADO, "end"))
         else:
-            p.append(txt(382, y + 3, f"{ul:g}", "num", 10, ALERTA, "end"))
+            p.append(txt(382, y + 3, cifra(ul), "num", 10, ALERTA, "end"))
         # margen: cuántas veces cabe el RDA dentro del techo
         if ul:
             veces = ul / max(rh, rm)
@@ -369,7 +376,8 @@ def ca_met():
         p.append(txt(188, y + 14, nombre, "et", 10.6, col, "end"))
         w = ANCHO * met / tope
         p.append(barra(X0, y + 3, w, 18, col, ".26"))
-        p.append(txt(X0 + w + 7, y + 17, f"{met:g}", "num", 9.6, col, "start"))
+        p.append(txt(X0 + w + 7, y + 17, cifra(met),
+                     "num", 9.6, col, "start"))
     p.append(txt(232, ALTO - 20,
                  "UN MINUTO VIGOROSO CUENTA COMO DOS MODERADOS",
                  "rot", 8.2, SEC))
@@ -687,9 +695,9 @@ def de_deuda():
         p.append(barra(x, Y0 + ALTO_G - alto, w, alto, col, ".26"))
         p.append(txt(x + w / 2, Y0 + ALTO_G + 16, d, "rot", 9, col))
         p.append(txt(x + w / 2, Y0 + ALTO_G - alto - 6,
-                     f"{h:g}".replace(".", ","), "num", 8.6, col))
+                     cifra(h), "num", 8.6, col))
     p.append(txt(232, 24, "DEUDA ACUMULADA EN LA SEMANA: "
-                 + f"{deuda:.1f}".replace(".", ",") + " HORAS",
+                 + cifra(round(deuda, 1)) + " HORAS",
                  "rot", 9.4, ALERTA))
     p.append(f'<rect x="52" y="252" width="388" height="26" rx="6" '
              f'fill="{ALERTA}" opacity=".08"/>')
@@ -1064,17 +1072,19 @@ def ca_acft():
 
 
 def vo_dominios():
-    """Los cinco dominios de preparación y el libro que cubre cada uno. El
-    quinto queda fuera a propósito y la lámina lo dice."""
+    """Los cinco dominios de preparación, con lo que se rompe cuando cada uno
+    está bajo. Es una rueda de diagnóstico, no un índice."""
     PRI, SEC = ACENTOS["voluntad"]
-    ALTO = 300
+    # 330 y no 300: con cinco filas de leyenda a 14 de paso, la última caía
+    # justo encima del pie de la lámina.
+    ALTO = 330
     p = [f'<symbol id="vo-dominios" viewBox="0 0 464 {ALTO}">']
     cx, cy, r = 232, 128, 96
     n = len(D.DOMINIOS)
-    for i, (nombre, que, libro) in enumerate(D.DOMINIOS):
+    for i, (nombre, que, cae) in enumerate(D.DOMINIOS):
         a0 = i * 360 / n - 90
         a1 = (i + 1) * 360 / n - 90
-        propio = "Fuera" not in libro
+        propio = i < 4
         col = PRI if propio else APAGADO
         x1, y1 = pol(cx, cy, r, a0)
         x2, y2 = pol(cx, cy, r, a1)
@@ -1089,13 +1099,15 @@ def vo_dominios():
              'stroke-width="1.4"/>')
     p.append(txt(cx, cy - 2, "CINCO", "rot", 9.6, SEC))
     p.append(txt(cx, cy + 13, "dominios", "et", 10, CLARO))
-    for i, (nombre, que, libro) in enumerate(D.DOMINIOS):
-        y = 240 + i * 13
-        col = PRI if "Fuera" not in libro else APAGADO
+    p.append(txt(14, 240, "QUÉ SE ROMPE CUANDO ESE DOMINIO ESTÁ BAJO", "rot",
+                 7.4, SEC, "start"))
+    for i, (nombre, que, cae) in enumerate(D.DOMINIOS):
+        y = 258 + i * 14
+        col = PRI if i < 4 else APAGADO
         p.append(txt(14, y, nombre.upper(), "rot", 7.4, col, "start"))
-        p.append(txt(96, y, que[:44] + ("…" if len(que) > 44 else ""),
+        p.append(txt(96, y, cae[:52] + ("…" if len(cae) > 52 else ""),
                      "et", 9, CLARO, "start"))
-        p.append(txt(450, y, libro, "et", 8.6, col, "end"))
+    p.append(pie(464, ALTO, "RUEDA DE DIAGNÓSTICO · EL MÁS BAJO MANDA"))
     p.append("</symbol>")
     return "".join(p)
 
@@ -1221,9 +1233,9 @@ def de_cafeina():
         p.append(f'<path d="M{f(x)} {f(y)} V{Y0+ALTO_G}" fill="none" '
                  f'stroke="{SEC}" stroke-width="1.2" stroke-dasharray="4 3"/>')
         p.append(f'<circle cx="{f(x)}" cy="{f(y)}" r="4" fill="{SEC}"/>')
-        p.append(txt(x, y - 10, f"{frac*100:g} %".replace(".", ","), "num",
+        p.append(txt(x, y - 10, f"{cifra(frac*100)} %", "num",
                      9.4, SEC))
-        p.append(txt(x, Y0 + ALTO_G + 16, f"{h:g} h", "num", 9, SEC))
+        p.append(txt(x, Y0 + ALTO_G + 16, f"{cifra(h)} h", "num", 9, SEC))
     p.append(txt(232, 24,
                  f'VIDA MEDIA DE UNAS {C["vida_media"]} HORAS · '
                  f'ENTRE {C["rango_vida_media"][0]} Y '

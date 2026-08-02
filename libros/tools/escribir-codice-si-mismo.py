@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DEL SÍ MISMO — obra original de VILLUMINATION 99
+CÓDICE DEL SÍ MISMO — obra original de VILLUMINATIONS
 =======================================================
 Redacción propia. El material de partida es de dominio público y de tradición
 común: el «Manual» de Epicteto, las «Meditaciones» de Marco Aurelio y las
@@ -1363,7 +1363,7 @@ LIBRO = {
     "id": "codice-si-mismo",
     "titulo": "Códice del Sí Mismo",
     "subtitulo": "Manual de observación interior: la atención dividida, los tres centros y el trabajo de estar presente",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-ojo",
     "acento": "violeta",

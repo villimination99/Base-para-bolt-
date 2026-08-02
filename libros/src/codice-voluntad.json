@@ -2,7 +2,7 @@
  "id": "codice-voluntad",
  "titulo": "Códice de la Voluntad",
  "subtitulo": "Adherencia, hábito y regreso: por qué los planes buenos se caen y cómo se construye uno que sobreviva a los días malos",
- "autor": "Villumination 99",
+ "autor": "Villuminations",
  "fuente": "Obra original · Primera edición, 2026",
  "mascota": "r-voluntad",
  "acento": "fuerza",
@@ -56,7 +56,7 @@
     {
      "t": "nota",
      "tit": "Dónde se separa este libro de sus fuentes",
-     "x": "El resto de la colección se apoya en cifras oficiales. Aquí eso solo es posible en parte: la doctrina de preparación mental del Ejército de Estados Unidos es pública y da un armazón sólido, y las guías de actividad física tienen un apartado de estrategias de cambio de conducta. Pero varias de las ideas más útiles de este campo vienen de literatura académica que NO es de dominio público. Cuando use una de ellas, lo diré en la misma frase y no la disfrazaré de recomendación gubernamental. Es la diferencia entre citar y aparentar."
+     "x": "Un libro sobre nutrición o sobre entrenamiento se apoya casi entero en cifras oficiales. Aquí eso solo es posible en parte: la doctrina de preparación mental del Ejército de Estados Unidos es pública y da un armazón sólido, y las guías de actividad física tienen un apartado de estrategias de cambio de conducta. Pero varias de las ideas más útiles de este campo vienen de literatura académica que NO es de dominio público. Cuando use una de ellas, lo diré en la misma frase y no la disfrazaré de recomendación gubernamental. Es la diferencia entre citar y aparentar."
     },
     {
      "t": "sep"
@@ -67,7 +67,7 @@
     },
     {
      "t": "p",
-     "x": "El capítulo siguiente presenta el marco de los cinco dominios de preparación, que es el armazón de toda la colección y la mejor herramienta de diagnóstico que conozco para saber POR DÓNDE empezar. Después vienen la variable que domina el resultado, la mecánica de una conducta repetida, el plan que sobrevive al día malo y la distinción entre un fallo y un abandono, que es el capítulo que más gente habría necesitado leer antes de dejarlo."
+     "x": "El capítulo siguiente presenta el marco de los cinco dominios de preparación, que es el armazón de todo el libro y la mejor herramienta de diagnóstico que conozco para saber POR DÓNDE empezar. Después vienen la variable que domina el resultado, la mecánica de una conducta repetida, el plan que sobrevive al día malo y la distinción entre un fallo y un abandono, que es el capítulo que más gente habría necesitado leer antes de dejarlo."
     },
     {
      "t": "p",
@@ -85,33 +85,33 @@
     {
      "t": "figura",
      "x": "vo-dominios",
-     "tit": "Los cinco dominios y el libro que cubre cada uno",
-     "pie": "Cuatro de los cinco tienen su Códice en esta colección. El quinto queda fuera a propósito: no es asunto de un libro de fitness decirle a nadie qué le da sentido a su vida.",
+     "tit": "Los cinco dominios y lo que se rompe en cada uno",
+     "pie": "La rueda no es un índice: es una herramienta de diagnóstico. La columna de abajo dice qué falla primero cuando ese dominio está bajo, y el dominio más bajo es siempre por donde hay que empezar. El quinto se nombra y no se desarrolla: no es asunto de un libro de fitness decirle a nadie qué le da sentido a su vida.",
      "clase": ""
     },
     {
      "t": "ficha",
-     "tit": "Los cinco",
+     "tit": "Los cinco, y qué se rompe cuando cada uno está bajo",
      "x": [
       [
        "Físico",
-       "Fuerza, resistencia, movilidad y potencia · Códice de la Carga"
+       "Fuerza, resistencia, movilidad y potencia. Si está bajo: se pierde autonomía y aparecen las lesiones"
       ],
       [
        "Nutricional",
-       "Lo que entra y cuándo · Códice de la Mesa"
+       "Lo que entra y cuándo. Si está bajo: no se recupera de lo que se entrena"
       ],
       [
        "Mental",
-       "Objetivos, atención, diálogo interno y activación · Códice de la Voluntad"
+       "Objetivos, atención, diálogo interno y activación. Si está bajo: nada se sostiene más de unas semanas"
       ],
       [
        "Del sueño",
-       "Duración, horario y calidad · Códice del Descanso"
+       "Duración, horario y calidad. Si está bajo: se hunden los otros cuatro a la vez"
       ],
       [
        "Espiritual",
-       "Sentido, valores y propósito propio · Fuera de esta colección a propósito"
+       "Sentido, valores y propósito propio. Si está bajo: solo tú puedes juzgarlo, y por eso aquí no se juzga"
       ]
      ]
     },
@@ -145,7 +145,7 @@
     {
      "t": "nota",
      "tit": "Cómo usar esto de forma práctica",
-     "x": "Puntúate del uno al cinco en los cuatro dominios que sí cubre esta colección, hoy, sin pensarlo mucho. El más bajo es donde está tu siguiente mes de trabajo, y casi nunca es el que estabas a punto de elegir."
+     "x": "Puntúate del uno al cinco en los cuatro primeros dominios, hoy, sin pensarlo mucho. El más bajo es donde está tu siguiente mes de trabajo, y casi nunca es el que estabas a punto de elegir."
     }
    ]
   },
@@ -264,7 +264,7 @@
     {
      "t": "nota",
      "tit": "De dónde viene esta idea y de dónde no",
-     "x": "El esquema de señal, rutina y recompensa es material clásico de la psicología del aprendizaje y no procede de las fuentes gubernamentales de esta colección. Lo uso porque es el armazón más limpio que conozco y lo digo para que quede claro qué parte del libro está respaldada por un organismo oficial y qué parte es un marco conceptual de uso común."
+     "x": "El esquema de señal, rutina y recompensa es material clásico de la psicología del aprendizaje y no procede de las fuentes gubernamentales de este libro. Lo uso porque es el armazón más limpio que conozco y lo digo para que quede claro qué parte del libro está respaldada por un organismo oficial y qué parte es un marco conceptual de uso común."
     }
    ]
   },
@@ -610,7 +610,7 @@
     {
      "t": "lista",
      "x": [
-      "En los últimos minutos antes de acostarte, que es donde más rinde y donde conecta con el Códice del Descanso.",
+      "En los últimos minutos antes de acostarte, que es donde más rinde y donde más se nota al día siguiente.",
       "Entre series, si la sesión se ha vuelto frenética y la técnica se está cayendo.",
       "Antes de una situación que sabes que te acelera: una prueba, una presentación, una conversación.",
       "Después de un fallo del plan, ANTES de decidir qué haces. El capítulo de la recaída dice que la decisión importante viene después del fallo; esta es la herramienta para tomarla con la cabeza fría."
@@ -876,7 +876,7 @@
       "Semana 1: solo aparecer. Dos sesiones muy fáciles, la mitad de lo que crees que puedes. El objetivo es que existan, no que sirvan.",
       "Semana 2: las mismas dos sesiones, un escalón más. Añade una sola cosa de comida, la más fácil de todas.",
       "Semana 3: tres sesiones si las dos anteriores salieron. Si no salieron, repite la semana 2 sin dramatismo: el plan era demasiado grande y ahora lo sabes.",
-      "Semana 4: mide algo. Un peso, un tiempo, una prueba de la batería casera del Códice de la Carga. Ese número es tu punto de partida real, y a partir de aquí ya estás entrenando y no volviendo."
+      "Semana 4: mide algo. Un peso, un tiempo, una prueba de la batería sencilla: flexiones máximas, plancha en segundos o distancia en doce minutos. Ese número es tu punto de partida real, y a partir de aquí ya estás entrenando y no volviendo."
      ]
     },
     {
@@ -906,11 +906,11 @@
    "bloques": [
     {
      "t": "p",
-     "x": "Este es el libro de la colección con menos respaldo oficial disponible, y por eso es el que más necesita este capítulo. Aquí queda separado, línea por línea, qué viene de una fuente pública y qué es un marco conceptual de uso común."
+     "x": "De todo lo que trata esta obra, la conducta es lo que menos respaldo oficial tiene disponible, y por eso este capítulo es indispensable. Aquí queda separado, línea por línea, qué viene de una fuente pública y qué es un marco conceptual de uso común."
     },
     {
      "t": "ficha",
-     "tit": "Las fuentes de la colección",
+     "tit": "Las fuentes de este libro",
      "x": [
       [
        "Dietary Reference Intakes",
@@ -959,7 +959,7 @@
       "Los cinco dominios de preparación y las habilidades de rendimiento mental —objetivos, ensayo mental, diálogo interno, control de la activación, atención y confianza— están en el FM 7-22, Holistic Health and Fitness, publicado íntegro por el Ejército de Estados Unidos y descargable en su biblioteca de publicaciones.",
       "Las estrategias de cambio de conducta —objetivos, autorregistro, apoyo social, modificación del entorno— aparecen en las Physical Activity Guidelines for Americans, segunda edición, en health.gov.",
       "Los beneficios agudos de una sola sesión sobre humor, ansiedad, sueño y sensibilidad a la insulina están en esas mismas guías, y son la base del consejo de fabricar un premio inmediato.",
-      "La dosis de referencia que se usa como objetivo —150 a 300 minutos moderados y 2 días de fuerza— sale del mismo módulo de datos comprobados que el Códice de la Carga, así que los dos libros no pueden discrepar."
+      "La dosis de referencia que se usa como objetivo —150 a 300 minutos moderados y 2 días de fuerza— sale del módulo de datos comprobados que este libro ejecuta antes de componerse, no de una cifra escrita a mano en el texto."
      ]
     },
     {
@@ -977,7 +977,7 @@
     },
     {
      "t": "p",
-     "x": "Hago esta separación porque un libro que envuelve todo en la palabra «científicamente probado» te está pidiendo que confíes sin comprobar, y toda esta colección está construida sobre lo contrario. La parte conceptual de este libro vale lo que valga por sí misma, no por quién la firma."
+     "x": "Hago esta separación porque un libro que envuelve todo en la palabra «científicamente probado» te está pidiendo que confíes sin comprobar, y este libro está construido sobre lo contrario. La parte conceptual de este libro vale lo que valga por sí misma, no por quién la firma."
     }
    ]
   },
@@ -986,7 +986,7 @@
    "bloques": [
     {
      "t": "p",
-     "x": "Cuatro semanas. No mide el cuerpo: mide la conducta y las situaciones que la rompen. Es el cuaderno más incómodo de la colección y el que más cambia decisiones."
+     "x": "Cuatro semanas. No mide el cuerpo: mide la conducta y las situaciones que la rompen. Es incómodo de llevar y es el que más decisiones cambia."
     },
     {
      "t": "h2",
@@ -1052,7 +1052,7 @@
    "bloques": [
     {
      "t": "p",
-     "x": "Cierre, y el límite más importante de la colección entera. Hay cosas que parecen falta de disciplina y no lo son, y tratarlas como si lo fueran hace daño."
+     "x": "Cierre, y el límite más importante del libro entero. Hay cosas que parecen falta de disciplina y no lo son, y tratarlas como si lo fueran hace daño."
     },
     {
      "t": "h2",
@@ -1064,7 +1064,7 @@
       "Si comer se ha vuelto una fuente constante de culpa, si hay episodios de atracón, si hay conductas compensatorias —vómito, laxantes, ejercicio como castigo—, o si contar comida ocupa la cabeza casi todo el día, eso es un trastorno de la conducta alimentaria y no un problema de adherencia. Este libro no ayuda ahí y puede empeorarlo. Se busca ayuda profesional, y cuanto antes mejor: el pronóstico depende mucho de eso.",
       "Si no puedes parar de entrenar aunque estés lesionado o enfermo, si saltarte una sesión produce angustia intensa, o si el ejercicio ha desplazado el trabajo y las relaciones, eso tampoco es virtud. Es el mismo mecanismo con otro signo.",
       "Si la falta de energía y de ganas dura semanas y afecta a todo, no solo al gimnasio, la pregunta no es cómo motivarse: es si hay una depresión o un problema médico detrás. Un análisis y una consulta antes que un plan.",
-      "Si el sueño es malo de forma persistente pese a hacer las cosas bien, hay causas médicas frecuentes y tratables. El Códice del Descanso lo explica y dice cuándo consultar."
+      "Si el sueño es malo de forma persistente pese a hacer las cosas bien, hay causas médicas frecuentes y tratables: apnea, insomnio crónico, síndrome de piernas inquietas. Ninguna se arregla con disciplina y todas tienen tratamiento. Eso se consulta."
      ]
     },
     {
@@ -1117,11 +1117,11 @@
     },
     {
      "t": "p",
-     "x": "Y con esto se cierra el tercer Códice de fitness. No trae motivación, porque la motivación no se puede regalar en un libro. Trae lo otro: un suelo que aguanta los días malos, frases escritas para las situaciones que te rompen el plan, y la idea —que es la más útil de todas— de que un fallo no significa nada hasta que decides que sí."
+     "x": "Y con esto se cierra el libro. No trae motivación, porque la motivación no se puede regalar en un libro. Trae lo otro: una rueda para saber por dónde empezar, un suelo que aguanta los días malos, frases escritas de antemano para las situaciones que te rompen el plan, un protocolo de veinticuatro horas para después de un fallo, y la idea —que es la más útil de todas— de que un fallo no significa nada hasta que decides que sí."
     },
     {
      "t": "p",
-     "x": "Queda el cuarto, y trata de la mitad del día que casi todo el mundo considera tiempo perdido."
+     "x": "Si dentro de un año sigues teniendo un suelo definido y la costumbre de volver al día siguiente en vez de al lunes, este libro habrá hecho su trabajo. Todo lo demás es andamiaje para llegar a esas dos cosas."
     }
    ]
   }

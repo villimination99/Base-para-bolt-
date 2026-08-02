@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DE LA CARGA — obra original de VILLUMINATION 99
+CÓDICE DE LA CARGA — obra original de VILLUMINATIONS
 ======================================================
 Sexto libro de la colección y segundo de la serie de fitness. Entrenamiento
 adulto a partir de fuentes públicas y libres: Physical Activity Guidelines for
@@ -48,6 +48,12 @@ def fig(simbolo, tit, pie, clase=""):
 
 def cap(titulo, *bloques):
     return {"titulo": titulo, "bloques": [b for b in bloques if b]}
+
+
+def dec(x):
+    """Coma decimal, que es la que corresponde en español. Sin esto los MET
+    salían impresos como «3.5» en un libro escrito en castellano."""
+    return f"{x:g}".replace(".", ",")
 
 
 def kcal(met, peso, minutos):
@@ -113,9 +119,8 @@ C1 = cap(
       "investigación de la agencia espacial sobre lo que le ocurre a un cuerpo al "
       "que se le quita el peso. Las cuatro se citan por su nombre en el capítulo "
       "de comprobación, con indicación de dónde se descargan."),
-    p("Y como en el resto de la colección, las cifras de estas páginas no se "
-      "teclearon en el texto: viven en un módulo de datos que se verifica antes "
-      "de componer el libro. Si la equivalencia entre minutos moderados y "
+    p("Y una cosa más: las cifras de estas páginas no se teclearon en el texto. "
+      "Viven en un módulo de datos que se verifica antes de componer el libro. Si la equivalencia entre minutos moderados y "
       "vigorosos no cuadrase, o si alguna actividad de la escala metabólica "
       "cayese fuera de la banda de intensidad que declara, el libro no se "
       "escribiría."),
@@ -153,8 +158,9 @@ C2 = cap(
       "empieza: no diseñes la semana que te gustaría hacer. Diseña la que harás "
       "aunque salga mal, porque los primeros minutos son los que más valen y son "
       "precisamente los que se pierden cuando el plan es demasiado ambicioso y se "
-      "abandona en la semana tres. El Códice de la Voluntad trata ese problema "
-      "entero."),
+      "abandona en la semana tres. Cuánto se cumple pesa más que qué se elige, "
+      "y por eso el capítulo de la semana da tres plantillas de tamaños "
+      "distintos en vez de una sola."),
     sep(),
     h("Lo que cambió en la segunda edición, y que casi nadie sabe"),
     p("Durante años se recomendó que la actividad se acumulara en tandas de al "
@@ -222,8 +228,8 @@ C3 = cap(
       "kilocaloría por kilo de peso y por hora. La fórmula completa cabe en una "
       "línea: MET por kilos por horas."),
     ficha("Media hora, en una persona de 70 kilos", [
-        (nombre, f"{MET[nombre][0]} MET · unas {kcal(MET[nombre][0], 70, 30)} kcal "
-                 f"· {MET[nombre][1]}")
+        (nombre, f"{dec(MET[nombre][0])} MET · unas "
+                 f"{kcal(MET[nombre][0], 70, 30)} kcal · {MET[nombre][1]}")
         for nombre in ("Caminar a paso vivo · 5 km/h", "Pesas, sesión general",
                        "Bicicleta · 20 km/h", "Trotar · 8 km/h",
                        "Correr · 11 km/h")
@@ -579,7 +585,7 @@ C9 = cap(
     p("Las cuatro fuentes de este libro son gratuitas y están en línea. Este "
       "capítulo dice cuáles son y qué se busca en cada una, porque un libro que "
       "no se puede verificar tampoco se puede corregir."),
-    ficha("Las fuentes de la colección", [(n, d) for n, d in D.FUENTES]),
+    ficha("Las fuentes de este libro", [(n, d) for n, d in D.FUENTES]),
     sep(),
     h("Las cuatro que sostienen específicamente este libro"),
     ficha("Rutas concretas", [
@@ -593,9 +599,11 @@ C9 = cap(
                                          "Ejército de Estados Unidos. Publicado "
                                          "entero. Sus cinco dominios de "
                                          "preparación —física, nutricional, "
-                                         "mental, del sueño y espiritual— son el "
-                                         "esqueleto de esta serie de cuatro "
-                                         "libros."),
+                                         "mental, del sueño y espiritual— "
+                                         "explican por qué un plan de "
+                                         "entrenamiento impecable no rinde "
+                                         "cuando falla cualquiera de los otros "
+                                         "cuatro."),
         ("La ecuación de levantamiento", "NIOSH, en cdc.gov/niosh. Busca la "
                                          "ecuación revisada de levantamiento y su "
                                          "manual de aplicación, que trae ejemplos "
@@ -697,15 +705,16 @@ C11 = cap(
         "concreto exigen a alguien que te vea.",
         "Una promesa de composición corporal. El ejercicio cambia la salud de "
         "forma muy robusta y el peso de forma bastante modesta; la mayor parte "
-        "del cambio de peso se decide en la mesa, que es el libro anterior.",
-        "Una respuesta sobre suplementos deportivos. Están fuera de estas "
-        "fuentes. Lo poco que se puede afirmar legalmente sobre ellos está en el "
-        "capítulo del registro europeo del Códice de la Mesa, y es menos de lo "
-        "que la publicidad sugiere.",
+        "del cambio de peso se decide en la cocina y no en el gimnasio.",
+        "Una respuesta sobre suplementos deportivos. Están fuera de las fuentes "
+        "de este libro. Lo que se puede afirmar legalmente sobre ellos en Europa "
+        "consta en un registro público de declaraciones de propiedades "
+        "saludables, y es bastante menos de lo que sugiere la publicidad: "
+        "conviene consultarlo antes de comprar nada.",
         "Un veredicto sobre qué método es mejor. Series largas o cortas, "
         "frecuencia alta o baja, máquinas o peso libre: dentro de un rango "
         "razonable, todo funciona si se hace con progresión y constancia. La "
-        "variable dominante es otra, y tiene su propio libro.",
+        "variable dominante no es el método: es cuánto lo cumples.",
         "Permiso para ignorar el dolor. Molestia muscular difusa que dura uno o "
         "dos días es normal. Dolor articular localizado, dolor que aparece "
         "siempre en el mismo gesto, o dolor que empeora sesión a sesión, no lo es.",
@@ -733,13 +742,18 @@ C11 = cap(
                     "o minutos totales en el caso aeróbico."),
     ]),
     sep(),
-    p("Y con esto se cierra el segundo Códice de fitness. Tiene una dosis, una "
-      "escala para medirla, una ecuación para levantar y una descripción de lo "
-      "que pasa cuando no hay nada de todo eso. No tiene un programa, porque el "
-      "programa depende de ti y porque el problema de casi todo el mundo no es "
-      "elegir el programa correcto."),
-    p("El problema de casi todo el mundo es cumplirlo, y de eso trata el "
-      "siguiente."),
+    p("Y con esto se cierra el libro. Tiene una dosis con su curva, una escala "
+      "para medir la intensidad, ocho patrones con los que auditar cualquier "
+      "semana, seis variables para progresar cuando el peso no sube, una "
+      "ecuación para levantar, una batería para medirse y una descripción de lo "
+      "que le pasa a un cuerpo cuando no hay nada de todo eso."),
+    p("Lo que no tiene es un programa cerrado, y es a propósito: el programa "
+      "depende de tu horario, de tu material y de tu historial. El problema de "
+      "casi todo el mundo no es elegir el programa correcto, sino cumplir "
+      "cualquiera de los razonables durante el tiempo suficiente. Con lo que hay "
+      "en estas páginas puedes construir el tuyo, auditarlo cada semana y "
+      "corregirlo con datos en vez de con impresiones. Eso vale más que "
+      "cualquier plantilla."),
 )
 
 
@@ -1065,10 +1079,11 @@ CE6 = cap(
 
 CE7 = cap(
     "Una batería para medirse, y es pública",
-    p("Medir el progreso con la báscula es una mala idea por motivos que trata "
-      "el Códice de la Voluntad. Medirlo con pruebas físicas es mucho mejor, y "
-      "existe una batería completa, descrita al detalle y de acceso libre, que "
-      "el Ejército de Estados Unidos publica entera."),
+    p("El peso corporal oscila varios kilos en cuestión de días por agua, sal, "
+      "glucógeno y contenido intestinal, así que medir el progreso con la "
+      "báscula es reaccionar a ruido. Medirlo con pruebas físicas es mucho "
+      "mejor, y existe una batería completa, descrita al detalle y de acceso "
+      "libre, que el Ejército de Estados Unidos publica entera."),
     fig("ca-acft",
         "Seis pruebas, seis cualidades distintas",
         "La batería está construida para que ninguna prueba se pueda compensar "
@@ -1122,7 +1137,7 @@ LIBRO = {
     "id": "codice-carga",
     "titulo": "Códice de la Carga",
     "subtitulo": "La dosis oficial de actividad, la escala que la mide, la ecuación de levantar y lo que le pasa a un cuerpo sin peso",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-carga",
     "acento": "carga",

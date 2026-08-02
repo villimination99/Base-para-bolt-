@@ -1,5 +1,5 @@
 /* ============================================================
-   VILLUMINATION 99 — Sistema de diseño para libros
+   VILLUMINATIONS — Sistema de diseño para libros
    Formato A5. A diferencia de los planes (páginas de altura fija),
    aquí el texto fluye y Chromium pagina solo: son libros de lectura.
    ============================================================ */
@@ -277,7 +277,6 @@ blockquote{
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent; display:inline-block;
 }
-.cierre .marca .n{ color:var(--naranja); }
 .cierre .url{
   font-family:'Orbitron',sans-serif; font-weight:700; font-size:11pt;
   color:var(--acento); letter-spacing:.05em; display:block; margin:4mm 0;
@@ -301,7 +300,6 @@ blockquote{
   -webkit-background-clip:text; background-clip:text;
   -webkit-text-fill-color:transparent;
 }
-.cierre .marca .n{ color:var(--naranja); }
 
 /* Titulares del interior.
    IMPORTANTE: aquí NO se usa filter:drop-shadow(). Chromium rasteriza como

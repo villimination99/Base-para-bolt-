@@ -2,7 +2,7 @@
 """
 CÓDICE DE LOS ARCANOS — generador del repertorio gráfico
 =======================================================
-Escribe partials/arcanos.svg. Dibujo original de VILLUMINATION 99 sobre el
+Escribe partials/arcanos.svg. Dibujo original de VILLUMINATIONS sobre el
 patrón de Marsella (grabados del XVII y XVIII, de dominio público) y las
 correspondencias que Éliphas Lévi (1856) y Papus (1889) pusieron por escrito.
 
@@ -457,7 +457,7 @@ def main():
         """
 <!-- ════════════════════════════════════════════════════════════════
      CÓDICE DE LOS ARCANOS · repertorio gráfico
-     Dibujo original de VILLUMINATION 99 — generado por
+     Dibujo original de VILLUMINATIONS — generado por
      tools/dibujar-arcanos.py. No editar a mano.
      ════════════════════════════════════════════════════════════ -->""",
         '<style>'

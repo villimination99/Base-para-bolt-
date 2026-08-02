@@ -2,7 +2,7 @@
 """
 CÓDICE DEL SÍ MISMO — generador del repertorio gráfico
 ======================================================
-Escribe partials/si-mismo.svg. Dibujo original de VILLUMINATION 99.
+Escribe partials/si-mismo.svg. Dibujo original de VILLUMINATIONS.
 
 Seis láminas sobre atención y observación de sí: la atención dividida, los
 tres centros, el bucle de identificación, el reloj de los recuerdos, las dos
@@ -398,7 +398,7 @@ def main():
         """
 <!-- ════════════════════════════════════════════════════════════════
      CÓDICE DEL SÍ MISMO · repertorio gráfico
-     Dibujo original de VILLUMINATION 99 — generado por
+     Dibujo original de VILLUMINATIONS — generado por
      tools/dibujar-si-mismo.py. No editar a mano.
      ════════════════════════════════════════════════════════════ -->""",
         '<style>'

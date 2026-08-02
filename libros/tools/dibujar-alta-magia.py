@@ -2,7 +2,7 @@
 """
 CÓDICE DE LAS INVOCACIONES — generador del repertorio gráfico
 =============================================================
-Escribe partials/alta-magia.svg. Dibujo original de VILLUMINATION 99 sobre
+Escribe partials/alta-magia.svg. Dibujo original de VILLUMINATIONS sobre
 material de tradición común: el pentagrama y el hexagrama con sus atribuciones
 elementales y planetarias, el árbol de los diez números, el círculo de los
 cuatro cuartos, las cuatro armas y los siete cuadrados planetarios.
@@ -615,7 +615,7 @@ def main():
         """
 <!-- ════════════════════════════════════════════════════════════════
      CÓDICE DE LAS INVOCACIONES · repertorio gráfico
-     Dibujo original de VILLUMINATION 99 — generado por
+     Dibujo original de VILLUMINATIONS — generado por
      tools/dibujar-alta-magia.py. No editar a mano.
      ════════════════════════════════════════════════════════════ -->""",
         '<style>'

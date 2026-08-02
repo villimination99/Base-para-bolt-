@@ -3,7 +3,7 @@
 CÓDICE ZODIACAL — generador del repertorio gráfico
 ==================================================
 Escribe partials/zodiaco.svg: los doce glifos, los siete sigilos planetarios
-y siete láminas explicativas. Dibujo original de VILLUMINATION 99.
+y siete láminas explicativas. Dibujo original de VILLUMINATIONS.
 
 Se genera con código y no a mano por dos razones: la trigonometría de la rueda
 (doce sectores, radios, glifos girados) es imposible de mantener a ojo, y las
@@ -752,7 +752,7 @@ def main():
               """
 <!-- ════════════════════════════════════════════════════════════════
      CÓDICE ZODIACAL · repertorio gráfico
-     Dibujo original de VILLUMINATION 99 — generado por
+     Dibujo original de VILLUMINATIONS — generado por
      tools/dibujar-zodiaco.py. No editar a mano.
      ════════════════════════════════════════════════════════════ -->""",
               '<defs>'

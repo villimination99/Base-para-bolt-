@@ -367,14 +367,20 @@ ACFT_PUNTOS = {"minimo": 60, "maximo": 100,
 # ══════════════════════════════════════════════════════════════════════
 #  LOS CINCO DOMINIOS DE PREPARACIÓN
 # ══════════════════════════════════════════════════════════════════════
+# El tercer campo NO es un índice de otros títulos: es lo que se rompe primero
+# cuando ese dominio está bajo. Es el dato que convierte la rueda en una
+# herramienta de diagnóstico en vez de en un catálogo.
 DOMINIOS = [
-    ("Físico", "Fuerza, resistencia, movilidad y potencia", "Códice de la Carga"),
-    ("Nutricional", "Lo que entra y cuándo", "Códice de la Mesa"),
+    ("Físico", "Fuerza, resistencia, movilidad y potencia",
+     "Se pierde autonomía y aparecen las lesiones"),
+    ("Nutricional", "Lo que entra y cuándo",
+     "No se recupera de lo que se entrena"),
     ("Mental", "Objetivos, atención, diálogo interno y activación",
-     "Códice de la Voluntad"),
-    ("Del sueño", "Duración, horario y calidad", "Códice del Descanso"),
+     "Nada se sostiene más de unas semanas"),
+    ("Del sueño", "Duración, horario y calidad",
+     "Se hunden los otros cuatro a la vez"),
     ("Espiritual", "Sentido, valores y propósito propio",
-     "Fuera de esta colección a propósito"),
+     "Solo tú puedes juzgarlo, y por eso aquí no se juzga"),
 ]
 
 # Respiración de compás cuadrado: la herramienta de bajada de activación que

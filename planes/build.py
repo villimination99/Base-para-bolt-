@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-VILLUMINATION 99 — Generador de PDFs premium
+VILLUMINATIONS — Generador de PDFs premium
 --------------------------------------------
 Toma los HTML de src/, inyecta el sistema de diseño y las ilustraciones,
 produce HTML autocontenido en build/ y PDFs A4 en dist/.
@@ -36,9 +36,9 @@ CHROME_CANDIDATES = [
 ]
 
 META = {
-    "author": "VILLUMINATION 99",
+    "author": "VILLUMINATIONS",
     "subject": "Plan de nutricion y entrenamiento — villuminations.com",
-    "keywords": "fitness, nutricion, dieta, entrenamiento, villumination99",
+    "keywords": "fitness, nutricion, dieta, entrenamiento, villuminations",
 }
 
 
@@ -133,7 +133,7 @@ def stamp_metadata(pdf: Path, title: str, marcadores: list[str] | None = None) -
             "/Author": META["author"],
             "/Subject": META["subject"],
             "/Keywords": META["keywords"],
-            "/Creator": "VILLUMINATION 99 — villuminations.com",
+            "/Creator": "VILLUMINATIONS — villuminations.com",
         }
     )
     tmp = pdf.with_suffix(".tmp.pdf")

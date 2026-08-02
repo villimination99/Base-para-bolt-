@@ -1,4 +1,4 @@
-# Biblioteca VILLUMINATION 99 — libros recuperados
+# Biblioteca VILLUMINATIONS — libros recuperados
 
 Recuperación tipográfica de tres obras esotéricas a partir de sus digitalizaciones
 originales, compuestas en formato de libro A5 con la identidad de
@@ -111,7 +111,7 @@ correcciones manuales. Conviene hacer una copia antes.
 
 ## Sobre los derechos
 
-**Estas tres obras no son originales de VILLUMINATION 99.** Pertenecen a sus
+**Estas tres obras no son originales de VILLUMINATIONS.** Pertenecen a sus
 autores y a las instituciones que las difunden (Instituto Cultural Quetzalcóatl y
 otras entidades gnósticas). El trabajo hecho aquí es exclusivamente de
 recuperación tipográfica: no se ha alterado el contenido ni se reclama autoría

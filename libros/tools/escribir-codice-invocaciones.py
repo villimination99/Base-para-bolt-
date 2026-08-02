@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DE LAS INVOCACIONES — obra original de VILLUMINATION 99
+CÓDICE DE LAS INVOCACIONES — obra original de VILLUMINATIONS
 ==============================================================
 Redacción propia sobre material de dominio público y de tradición común: el
 «Dogma y ritual de la alta magia» de Éliphas Lévi (1856), la «Clavícula de
@@ -1537,7 +1537,7 @@ LIBRO = {
     "id": "codice-invocaciones",
     "titulo": "Códice de las Invocaciones",
     "subtitulo": "Manual de práctica ritual: el círculo, las armas, los nombres y el trabajo sobre uno mismo",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-pentagrama",
     "acento": "oro",

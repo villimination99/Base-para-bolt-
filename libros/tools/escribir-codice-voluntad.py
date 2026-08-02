@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DE LA VOLUNTAD — obra original de VILLUMINATION 99
+CÓDICE DE LA VOLUNTAD — obra original de VILLUMINATIONS
 =========================================================
 Séptimo libro de la colección y tercero de la serie de fitness. La mentalidad
 del entrenamiento tratada como un problema de ingeniería de conducta y no de
@@ -86,8 +86,9 @@ C1 = cap(
         "antes y después.",
     ),
     nota("Dónde se separa este libro de sus fuentes",
-         "El resto de la colección se apoya en cifras oficiales. Aquí eso solo es "
-         "posible en parte: la doctrina de preparación mental del Ejército de "
+         "Un libro sobre nutrición o sobre entrenamiento se apoya casi entero en "
+         "cifras oficiales. Aquí eso solo es posible en parte: la doctrina de "
+         "preparación mental del Ejército de "
          "Estados Unidos es pública y da un armazón sólido, y las guías de "
          "actividad física tienen un apartado de estrategias de cambio de "
          "conducta. Pero varias de las ideas más útiles de este campo vienen de "
@@ -97,8 +98,8 @@ C1 = cap(
     sep(),
     h("Cómo está construido lo que sigue"),
     p("El capítulo siguiente presenta el marco de los cinco dominios de "
-      "preparación, que es el armazón de toda la colección y la mejor "
-      "herramienta de diagnóstico que conozco para saber POR DÓNDE empezar. "
+      "preparación, que es el armazón de todo el libro y la mejor herramienta "
+      "de diagnóstico que conozco para saber POR DÓNDE empezar. "
       "Después vienen la variable que domina el resultado, la mecánica de una "
       "conducta repetida, el plan que sobrevive al día malo y la distinción "
       "entre un fallo y un abandono, que es el capítulo que más gente habría "
@@ -217,7 +218,7 @@ C3 = cap(
     nota("De dónde viene esta idea y de dónde no",
          "El esquema de señal, rutina y recompensa es material clásico de la "
          "psicología del aprendizaje y no procede de las fuentes gubernamentales "
-         "de esta colección. Lo uso porque es el armazón más limpio que conozco y "
+         "de este libro. Lo uso porque es el armazón más limpio que conozco y "
          "lo digo para que quede claro qué parte del libro está respaldada por un "
          "organismo oficial y qué parte es un marco conceptual de uso común."),
 )
@@ -496,11 +497,11 @@ C8 = cap(
 
 C9 = cap(
     "Cómo comprobarlo tú mismo",
-    p("Este es el libro de la colección con menos respaldo oficial disponible, y "
-      "por eso es el que más necesita este capítulo. Aquí queda separado, línea "
+    p("De todo lo que trata esta obra, la conducta es lo que menos respaldo "
+      "oficial tiene disponible, y por eso este capítulo es indispensable. Aquí queda separado, línea "
       "por línea, qué viene de una fuente pública y qué es un marco conceptual "
       "de uso común."),
-    ficha("Las fuentes de la colección", [(n, d) for n, d in D.FUENTES]),
+    ficha("Las fuentes de este libro", [(n, d) for n, d in D.FUENTES]),
     sep(),
     h("Lo que en este libro viene de una fuente oficial"),
     lista(
@@ -517,8 +518,8 @@ C9 = cap(
         "consejo de fabricar un premio inmediato.",
         f"La dosis de referencia que se usa como objetivo —{A['moderada_min']} a "
         f"{A['moderada_max']} minutos moderados y {A['fuerza_dias']} días de "
-        "fuerza— sale del mismo módulo de datos comprobados que el Códice de la "
-        "Carga, así que los dos libros no pueden discrepar.",
+        "fuerza— sale del módulo de datos comprobados que este libro ejecuta "
+        "antes de componerse, no de una cifra escrita a mano en el texto.",
     ),
     h("Lo que NO viene de una fuente oficial, y se dice"),
     lista(
@@ -535,7 +536,7 @@ C9 = cap(
     ),
     p("Hago esta separación porque un libro que envuelve todo en la palabra "
       "«científicamente probado» te está pidiendo que confíes sin comprobar, y "
-      "toda esta colección está construida sobre lo contrario. La parte "
+      "este libro está construido sobre lo contrario. La parte "
       "conceptual de este libro vale lo que valga por sí misma, no por quién la "
       "firma."),
 )
@@ -543,8 +544,7 @@ C9 = cap(
 C10 = cap(
     "Cuaderno de la voluntad",
     p("Cuatro semanas. No mide el cuerpo: mide la conducta y las situaciones que "
-      "la rompen. Es el cuaderno más incómodo de la colección y el que más "
-      "cambia decisiones."),
+      "la rompen. Es incómodo de llevar y es el que más decisiones cambia."),
     h("Semana 1 · El registro sin juicio"),
     pasos(
         "Cada día, dos líneas: qué hiciste del plan y qué no.",
@@ -598,7 +598,7 @@ C10 = cap(
 
 C11 = cap(
     "Lo que no se arregla con un plan",
-    p("Cierre, y el límite más importante de la colección entera. Hay cosas que "
+    p("Cierre, y el límite más importante del libro entero. Hay cosas que "
       "parecen falta de disciplina y no lo son, y tratarlas como si lo fueran "
       "hace daño."),
     h("Cuándo esto deja de ser un tema de fitness"),
@@ -617,8 +617,9 @@ C11 = cap(
         "al gimnasio, la pregunta no es cómo motivarse: es si hay una depresión o "
         "un problema médico detrás. Un análisis y una consulta antes que un plan.",
         "Si el sueño es malo de forma persistente pese a hacer las cosas bien, "
-        "hay causas médicas frecuentes y tratables. El Códice del Descanso lo "
-        "explica y dice cuándo consultar.",
+        "hay causas médicas frecuentes y tratables: apnea, insomnio crónico, "
+        "síndrome de piernas inquietas. Ninguna se arregla con disciplina y "
+        "todas tienen tratamiento. Eso se consulta.",
     ),
     p("Digo esto en el libro de la mentalidad y no en otro sitio a propósito, "
       "porque es aquí donde la industria del fitness dice «solo te faltan ganas» "
@@ -643,13 +644,16 @@ C11 = cap(
                   "el resultado."),
     ]),
     sep(),
-    p("Y con esto se cierra el tercer Códice de fitness. No trae motivación, "
-      "porque la motivación no se puede regalar en un libro. Trae lo otro: un "
-      "suelo que aguanta los días malos, frases escritas para las situaciones que "
-      "te rompen el plan, y la idea —que es la más útil de todas— de que un fallo "
-      "no significa nada hasta que decides que sí."),
-    p("Queda el cuarto, y trata de la mitad del día que casi todo el mundo "
-      "considera tiempo perdido."),
+    p("Y con esto se cierra el libro. No trae motivación, porque la motivación "
+      "no se puede regalar en un libro. Trae lo otro: una rueda para saber por "
+      "dónde empezar, un suelo que aguanta los días malos, frases escritas de "
+      "antemano para las situaciones que te rompen el plan, un protocolo de "
+      "veinticuatro horas para después de un fallo, y la idea —que es la más "
+      "útil de todas— de que un fallo no significa nada hasta que decides que "
+      "sí."),
+    p("Si dentro de un año sigues teniendo un suelo definido y la costumbre de "
+      "volver al día siguiente en vez de al lunes, este libro habrá hecho su "
+      "trabajo. Todo lo demás es andamiaje para llegar a esas dos cosas."),
 )
 
 
@@ -666,12 +670,15 @@ CE1 = cap(
       "que explica por qué tanta gente hace todo bien en uno y aun así no "
       "avanza."),
     fig("vo-dominios",
-        "Los cinco dominios y el libro que cubre cada uno",
-        "Cuatro de los cinco tienen su Códice en esta colección. El quinto queda "
-        "fuera a propósito: no es asunto de un libro de fitness decirle a nadie "
-        "qué le da sentido a su vida."),
-    ficha("Los cinco",
-          [(nombre, f"{que} · {libro}") for nombre, que, libro in D.DOMINIOS]),
+        "Los cinco dominios y lo que se rompe en cada uno",
+        "La rueda no es un índice: es una herramienta de diagnóstico. La "
+        "columna de abajo dice qué falla primero cuando ese dominio está bajo, y "
+        "el dominio más bajo es siempre por donde hay que empezar. El quinto se "
+        "nombra y no se desarrolla: no es asunto de un libro de fitness decirle "
+        "a nadie qué le da sentido a su vida."),
+    ficha("Los cinco, y qué se rompe cuando cada uno está bajo",
+          [(nombre, f"{que}. Si está bajo: {cae[0].lower() + cae[1:]}")
+           for nombre, que, cae in D.DOMINIOS]),
     h("La regla que hace útil el modelo"),
     p("Un dominio en mal estado limita a los demás, y lo hace de forma "
       "silenciosa. Quien duerme cinco horas no rinde en el gimnasio por mucho "
@@ -696,8 +703,8 @@ CE1 = cap(
       "verdad, y peor los que solo encajan con una imagen que quiere dar. Qué "
       "te importa de verdad es tuyo y no de este libro."),
     nota("Cómo usar esto de forma práctica",
-         "Puntúate del uno al cinco en los cuatro dominios que sí cubre esta "
-         "colección, hoy, sin pensarlo mucho. El más bajo es donde está tu "
+         "Puntúate del uno al cinco en los cuatro primeros dominios, hoy, sin "
+         "pensarlo mucho. El más bajo es donde está tu "
          "siguiente mes de trabajo, y casi nunca es el que estabas a punto de "
          "elegir."),
 )
@@ -795,7 +802,7 @@ CE3 = cap(
     h("Dónde usarlo de verdad"),
     lista(
         "En los últimos minutos antes de acostarte, que es donde más rinde y "
-        "donde conecta con el Códice del Descanso.",
+        "donde más se nota al día siguiente.",
         "Entre series, si la sesión se ha vuelto frenética y la técnica se está "
         "cayendo.",
         "Antes de una situación que sabes que te acelera: una prueba, una "
@@ -905,7 +912,8 @@ CE5 = cap(
         "repite la semana 2 sin dramatismo: el plan era demasiado grande y ahora "
         "lo sabes.",
         "Semana 4: mide algo. Un peso, un tiempo, una prueba de la batería "
-        "casera del Códice de la Carga. Ese número es tu punto de partida real, "
+        "sencilla: flexiones máximas, plancha en segundos o distancia en doce "
+        "minutos. Ese número es tu punto de partida real, "
         "y a partir de aquí ya estás entrenando y no volviendo.",
     ),
     p("Cuatro semanas parecen pocas para un regreso de dos años y son "
@@ -934,7 +942,7 @@ LIBRO = {
     "id": "codice-voluntad",
     "titulo": "Códice de la Voluntad",
     "subtitulo": "Adherencia, hábito y regreso: por qué los planes buenos se caen y cómo se construye uno que sobreviva a los días malos",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-voluntad",
     "acento": "fuerza",

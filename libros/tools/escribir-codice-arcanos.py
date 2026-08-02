@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CÓDICE DE LOS ARCANOS — obra original de VILLUMINATION 99
+CÓDICE DE LOS ARCANOS — obra original de VILLUMINATIONS
 =========================================================
 Cuarto libro de la colección. Redacción propia sobre material de dominio
 público: el patrón de Marsella (grabados del XVII y XVIII), el «Dogma y ritual
@@ -126,20 +126,20 @@ C1 = cap(
       "sistematiza ese atado. Los tres son libres."),
     p("Lo que aquí es propio: la redacción entera, la estructura, las lecturas de "
       "los setenta y ocho, las tres tiradas, el cuaderno y las cinco láminas. Y "
-      "una cosa más, que es la que hace de esta colección un sistema y no cuatro "
-      "libros sueltos: las tablas se deducen. Cada arcano mayor recibe su "
+      "una cosa más, que es la que hace de este libro un sistema y no un "
+      "repertorio de significados: las tablas se deducen. Cada arcano mayor recibe su "
       "letra por posición y de la letra hereda su atribución; cada carta del dos "
       "al diez recibe su decanato por regla. Nada de eso está teclado a mano, y "
       "el generador de las láminas se niega a dibujar si alguna deducción no "
       "cierra."),
-    nota("Cómo encaja con los otros tres Códices",
-         "Las veintidós letras de los mayores son las mismas veintidós del Códice "
-         "de las Invocaciones, con su mismo reparto de tres madres, siete dobles y "
-         "doce simples. Los treinta y seis decanatos de las cartas menores son los "
-         "mismos treinta y seis del Códice Zodiacal, con su mismo regente. Y el "
-         "modo de leer una tirada sin identificarse con lo que sale es el trabajo "
-         "del Códice del Sí Mismo. Los cuatro libros se pueden leer solos; leídos "
-         "juntos, cada tabla confirma a las otras."),
+    nota("Las dos tablas que sostienen todo el libro",
+         "Una es el alfabeto hebreo con su reparto de tres letras madres, siete "
+         "dobles y doce simples, que es lo que reparte los veintidós arcanos "
+         "mayores entre elementos, planetas y signos sin que nadie tenga que "
+         "decidirlo. La otra son los treinta y seis decanatos del zodiaco, que "
+         "reparten las treinta y seis cartas del dos al diez. Ninguna de las dos "
+         "se teclea: se deducen y se comprueban, y si una no cierra el libro no "
+         "se compone."),
 )
 
 C2 = cap(
@@ -254,7 +254,7 @@ C4 = cap(
       "cierra la serie con la letra que queda. Es el reparto de Lévi y de Papus, "
       "el continental, y se elige por dos razones: es el más antiguo de los dos "
       "que existen, y encaja exactamente con el reparto de tres madres, siete "
-      "dobles y doce simples que ya trae el Códice de las Invocaciones."),
+      "dobles y doce simples del alfabeto hebreo."),
     p("Ese encaje es lo que hace que cada arcano herede una atribución sin que "
       "nadie tenga que decidirla: tres de los veintidós rigen un elemento, siete "
       "rigen un planeta y doce rigen un signo. No se asigna: se deduce."),
@@ -278,11 +278,12 @@ C4 = cap(
          "VIII y la Fuerza en el XI."),
     h("Cómo leer las fichas de los capítulos siguientes"),
     lista(
-        "«Letra» da el nombre, el valor numérico y la clase. El valor sirve para "
-        "la gematría del Códice de las Invocaciones; la clase, para saber qué "
-        "familia de atribución le toca.",
+        "«Letra» da el nombre, el valor numérico y la clase. El valor es el que "
+        "usa la gematría; la clase, la que decide qué familia de atribución le "
+        "toca.",
         "«Rige» es el elemento, planeta o signo heredado. No es un adorno: es lo "
-        "que conecta el arcano con las tablas de los otros libros.",
+        "que da a la carta un contorno preciso en vez de un significado "
+        "elástico.",
         "«La lámina» describe con palabras la imagen del patrón de Marsella. Se "
         "describe y no se reproduce, porque este libro dibuja lo suyo.",
         "Después van tres párrafos: lo que dice la carta derecha, lo que dice "
@@ -390,8 +391,9 @@ C6 = cap(
             "Una rueda con figuras que suben por un lado y bajan por el otro.",
             "Derecho: esto cambia y no depende de ti. Es la carta del ciclo y del "
             "azar, y su lección es de las duras: hay un tramo del asunto que solo "
-            "admite esperar bien. Enlaza directamente con el capítulo del Códice "
-            "del Sí Mismo sobre lo que no depende de nosotros.",
+            "admite esperar bien. Enlaza con la distinción más vieja y más útil de la "
+      "filosofía práctica: la que separa lo que depende de nosotros de lo que "
+      "no.",
             "Invertido: pelearse con la rueda. Empujar contra un ciclo, o "
             "atribuirse el mérito de una subida que era del propio giro.",
             "¿Qué parte de esto está girando sola, y qué estoy haciendo para "
@@ -651,8 +653,7 @@ C10 = cap(
 
 C11 = cap(
     "Las treinta y seis y sus decanatos",
-    p("Aquí está la pieza que ata este libro al Códice Zodiacal y la que da al "
-      "tarot su capa más fina de precisión. Las treinta y seis cartas del dos al "
+    p("Aquí está la pieza que da al tarot su capa más fina de precisión. Las treinta y seis cartas del dos al "
       "diez no son treinta y seis significados sueltos: son los treinta y seis "
       "decanatos del zodiaco, uno por carta, sin sobrar ni faltar ninguno."),
     fig("ar-decanatos", "Lám. 4",
@@ -669,8 +670,8 @@ C11 = cap(
         "mutables el ocho, el nueve y el diez.",
         "Dentro del signo, el primer decanato va al primer número del trío, el "
         "segundo al segundo y el tercero al tercero.",
-        "Y el regente de cada decanato sale del orden caldeo empezando en Marte, "
-        "exactamente igual que en el Códice Zodiacal.",
+        "Y el regente de cada decanato sale del orden caldeo empezando en "
+        "Marte, que es el reparto clásico y el que cierra sin dejar huecos.",
     ),
     ficha("Un ejemplo entero", [
         ("Aries", "Fuego cardinal → Bastos, trío 2-3-4"),
@@ -692,8 +693,8 @@ C11 = cap(
       "decanato, regido por el Sol: la intensidad con propósito. Es una lectura "
       "más específica, más difícil de estirar a conveniencia y con una tabla "
       "detrás que se puede comprobar."),
-    p("Y el puente funciona en los dos sentidos. Si trabajas con el Códice "
-      "Zodiacal, cada decanato tiene ahora una carta que lo representa; si "
+    p("Y el puente funciona en los dos sentidos. Si trabajas también con astrología, cada decanato tiene "
+      "ahora una carta que lo representa; si "
       "trabajas con el tarot, cada carta menor tiene ahora treinta grados de "
       "zodiaco y un planeta regente detrás. Los dos libros se leen mejor juntos, "
       "y eso es deliberado."),
@@ -796,8 +797,8 @@ C13 = cap(
          "No informa de lo que la otra persona piensa: no hay manera de que un "
          "mazo sepa eso. Lo que hace es obligarte a construir su versión con "
          "material que no has elegido, y eso produce un ejercicio de perspectiva "
-         "que la reflexión espontánea casi nunca produce. Es la misma técnica del "
-         "triángulo de examen del Códice de las Invocaciones, con otras "
+         "que la reflexión espontánea casi nunca produce. Es la misma lógica de "
+         "cualquier examen de conciencia con estructura, con otras "
          "herramientas."),
     h("La regla del número de cartas"),
     p("Pocas. Tres o cuatro para casi todo, y nunca más de siete. Una tirada de "
@@ -928,9 +929,9 @@ C16 = cap(
 
 C17 = cap(
     "El cuaderno de tiradas",
-    p("Si de este libro solo conservas una práctica, conserva esta. Es lo mismo "
-      "que dicen los otros tres Códices y por el mismo motivo: sin registro "
-      "escrito no hay forma de saber si algo funciona."),
+    p("Si de este libro solo conservas una práctica, conserva esta. El motivo "
+      "es sencillo y no admite discusión: sin registro escrito no hay forma de "
+      "saber si algo funciona."),
     h("Por qué en el tarot importa más que en nada"),
     p("Porque la lectura de cartas es el terreno más fértil que existe para el "
       "autoengaño. Una tirada ambigua interpretada a posteriori siempre parece "
@@ -978,8 +979,8 @@ C18 = cap(
                       "tirada de Las Tres por semana, con revisión a cuatro "
                       "semanas."),
         ("Meses 7–9", "Se añaden los decanatos: cada carta menor se lee también "
-                      "por su signo y su regente. Aquí es donde el Códice "
-                      "Zodiacal se vuelve necesario."),
+                      "por su signo y su regente. Aquí es donde conviene tener a mano la tabla de "
+        "decanatos y regentes del capítulo once."),
         ("Meses 10–12", "No se añade nada. Se sostiene, se revisa el año y se "
                         "releen las primeras noventa entradas. Ese último "
                         "ejercicio es el que enseña."),
@@ -1020,8 +1021,9 @@ C19 = cap(
     ficha("F – P", [
         ("Figura", "Sota, Caballo, Reina o Rey. Cuatro por palo, dieciséis en "
                    "total."),
-        ("Gematría", "Suma de los valores numéricos de las letras de una palabra. "
-                     "Se desarrolla en el Códice de las Invocaciones."),
+        ("Gematría", "Suma de los valores numéricos de las letras de una "
+                     "palabra. Las veintidós letras suman 1 495 entre todas, y "
+                     "esa cifra se comprueba en este libro."),
         ("Inversión", "Carta que sale del revés. Se lee como exceso, defecto, "
                       "bloqueo o interioridad — elegido de antemano."),
         ("Marsella", "Patrón de grabados francés estabilizado entre el XVII y el "
@@ -1046,15 +1048,15 @@ C19 = cap(
                      "italianos del siglo XV. De ahí «tarocchi» y «tarot»."),
     ]),
     sep(),
-    p("Y con esto se cierra el cuarto Códice. Cuatro libros: la rueda del año, el "
-      "oficio del rito, la observación de sí y las setenta y ocho. Cuatro "
-      "lenguajes distintos para la misma tarea, que es mirarse con algo más de "
-      "precisión de la que se tiene por defecto."),
-    p("Ninguno de los cuatro promete nada, y eso es a propósito. Lo que ofrecen es "
-      "estructura donde había intuición, y un cuaderno para comprobar si la "
-      "estructura sirve. Con eso, quien practique de verdad averiguará cosas sobre "
-      "sí mismo que no sabía. Y quien no practique tendrá cuatro libros bonitos, "
-      "que también es un destino digno pero es otro."),
+    p("Y con esto se cierra el libro. Setenta y ocho figuras, veintidós letras, "
+      "treinta y seis decanatos, cuatro palos, tres tiradas y un cuaderno: un "
+      "lenguaje entero para la misma tarea de siempre, que es mirarse con algo "
+      "más de precisión de la que se tiene por defecto."),
+    p("No promete nada, y eso es a propósito. Lo que ofrece es estructura donde "
+      "había intuición, y un cuaderno para comprobar si la estructura sirve. Con "
+      "eso, quien practique de verdad averiguará cosas sobre sí mismo que no "
+      "sabía. Y quien no practique tendrá un libro bonito, que también es un "
+      "destino digno pero es otro."),
 )
 
 
@@ -1063,7 +1065,7 @@ LIBRO = {
     "id": "codice-arcanos",
     "titulo": "Códice de los Arcanos",
     "subtitulo": "Las setenta y ocho cartas como instrumento de lectura: los veintidós mayores, los cuatro palos y los treinta y seis decanatos",
-    "autor": "Villumination 99",
+    "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
     "mascota": "r-arcano",
     "acento": "carmin",
