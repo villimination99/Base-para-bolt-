@@ -1,0 +1,25 @@
+{%- comment -%}
+  Instrucciones para los buscadores.
+
+  Vive en un snippet y no en el layout a proposito: el layout lo carga TODA la
+  tienda, asi que cualquier problema alli deja el sitio entero sin renderizar y
+  el editor en blanco. Aqui el riesgo queda acotado.
+
+  - max-image-preview:large permite a Google mostrar la foto grande junto al
+    resultado en vez de una miniatura. Es de lo que mas sube la tasa de clic en
+    una tienda visual, y no viene activado por defecto.
+  - Las paginas sin valor de busqueda (resultados, carrito, cuenta) se marcan
+    como noindex pero siguen rastreables, para que no compitan con las fichas de
+    producto ni gasten presupuesto de rastreo.
+
+  La lista va delimitada por comas por los dos lados y el tipo de pagina se
+  envuelve igual antes de comparar: si no, password coincidiria por accidente
+  dentro de customers/reset_password.
+{%- endcomment -%}
+{%- assign thin_pages = ',search,cart,password,customers/account,customers/login,customers/register,customers/order,customers/addresses,customers/reset_password,customers/activate_account,' -%}
+{%- assign this_page = ',' | append: request.page_type | append: ',' -%}
+{%- if thin_pages contains this_page -%}
+  <meta name="robots" content="noindex, follow">
+{%- else -%}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{%- endif -%}
