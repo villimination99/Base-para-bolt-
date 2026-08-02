@@ -99,6 +99,26 @@
   {%- endif -%}
   {%- if pv.sku != blank -%}
   "sku": {{ pv.sku | json }},
+  "mpn": {{ pv.sku | json }},
+  {%- endif -%}
+  {%- comment -%}
+    Identificador global (código de barras). Google lo usa para reconocer que tu
+    producto es EL MISMO que vende otra tienda y poder compararlo; sin él, las
+    fichas quedan fuera de buena parte de los resultados de compra. El nombre de
+    la propiedad depende de la longitud: 8, 12, 13 o 14 dígitos.
+  {%- endcomment -%}
+  {%- if pv.barcode != blank -%}
+    {%- assign bc = pv.barcode | strip -%}
+    {%- assign bc_len = bc | size -%}
+    {%- if bc_len == 8 -%}
+  "gtin8": {{ bc | json }},
+    {%- elsif bc_len == 12 -%}
+  "gtin12": {{ bc | json }},
+    {%- elsif bc_len == 13 -%}
+  "gtin13": {{ bc | json }},
+    {%- elsif bc_len == 14 -%}
+  "gtin14": {{ bc | json }},
+    {%- endif -%}
   {%- endif -%}
   {%- assign r_mf = product.metafields.reviews.rating -%}
   {%- if r_mf != blank and r_mf.value != blank and product.metafields.reviews.rating_count.value > 0 -%}
