@@ -215,12 +215,12 @@ T = {
     "Conclusiones del mes y objetivos del siguiente": {
         "en": "Conclusions for the month and targets for the next",
         "fr": "Conclusions du mois et objectifs du suivant"},
-    'QUE ALGUIEN LEA <span class="a">TUS DATOS CONTIGO</span>': {
-        "en": 'HAVE SOMEONE READ <span class="a">YOUR DATA WITH YOU</span>',
-        "fr": 'FAITES LIRE <span class="a">VOS DONNÉES AVEC VOUS</span>'},
-    "En <strong>ELITE</strong> revisamos este registro cada semana en tu sesión 1 a 1 y decidimos juntos el siguiente ajuste.": {
-        "en": "In <strong>ELITE</strong> we go through this tracker every week in your one-to-one session and decide the next adjustment together.",
-        "fr": "En <strong>ÉLITE</strong>, nous passons ce suivi en revue chaque semaine lors de votre séance individuelle et décidons ensemble du prochain ajustement."},
+    'EL DATO SOLO SIRVE <span class="a">SI SE MIDE IGUAL</span>': {
+        "en": 'A NUMBER ONLY COUNTS <span class="a">IF IT IS MEASURED THE SAME WAY</span>',
+        "fr": 'UNE DONNÉE NE VAUT <span class="a">QUE SI ELLE EST MESURÉE PAREIL</span>'},
+    "Misma hora, misma báscula, mismas condiciones: <strong>la tendencia de cuatro semanas</strong> es la única cifra que decide algo. Un solo día nunca es una señal, por mucho que lo parezca.": {
+        "en": "Same time, same scale, same conditions: <strong>the four-week trend</strong> is the only figure that decides anything. A single day is never a signal, however much it looks like one.",
+        "fr": "Même heure, même balance, mêmes conditions : <strong>la tendance sur quatre semaines</strong> est le seul chiffre qui décide de quelque chose. Un jour isolé n'est jamais un signal, même quand il en a l'air."},
     "<b>Aviso importante</b><br>\n      Plantilla de seguimiento con finalidad informativa y educativa. No constituye consejo\n      médico, diagnóstico ni tratamiento, y no sustituye la valoración de un profesional\n      sanitario colegiado. El registro de peso y medidas puede resultar contraproducente en\n      personas con antecedentes de trastorno de la conducta alimentaria: en ese caso, consulta\n      con un profesional antes de usar este documento. Los resultados varían entre personas y no\n      están garantizados. Contenido protegido por derechos de autor: prohibida su reproducción,\n      distribución o reventa sin autorización escrita de VILLUMINATIONS.": {
         "en": "<b>Important notice</b><br>\n      A tracking template for informational and educational purposes. It does not constitute medical advice, diagnosis or treatment, and it does not replace assessment by a registered health professional. Logging weight and measurements can be counterproductive for people with a history of eating disorders: in that case, consult a professional before using this document. Results vary between individuals and are not guaranteed. Copyrighted content: reproduction, distribution or resale without written permission from VILLUMINATIONS is prohibited.",
         "fr": "<b>Avertissement important</b><br>\n      Modèle de suivi à finalité informative et éducative. Il ne constitue ni un avis médical, ni un diagnostic, ni un traitement. Le relevé du poids et des mesures peut être contre-productif en cas d'antécédents de trouble du comportement alimentaire : consultez alors un professionnel avant usage. Les résultats varient et ne sont pas garantis. Contenu protégé : reproduction, distribution ou revente interdites sans autorisation écrite de VILLUMINATIONS."},

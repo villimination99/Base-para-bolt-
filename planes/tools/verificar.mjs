@@ -30,7 +30,12 @@ for (const archivo of archivos) {
     return salida;
   });
 
-  const nombre = archivo.split('/').pop();
+  // Con tres idiomas, el nombre del archivo ya no basta: 07-…-hiit.html existe
+  // en build/, build/en/ y build/fr/, y saber en cuál desborda es medio arreglo.
+  const partes = archivo.split('/');
+  const carpeta = partes[partes.length - 2];
+  const idioma = (carpeta === 'en' || carpeta === 'fr') ? carpeta : 'es';
+  const nombre = `[${idioma}] ` + partes[partes.length - 1];
   if (problemas.length) {
     fallos += problemas.length;
     for (const p of problemas) {

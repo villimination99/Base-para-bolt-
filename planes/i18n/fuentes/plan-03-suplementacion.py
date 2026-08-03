@@ -454,12 +454,12 @@ T = {
     "Vas a hacerte una analítica: avisa de que tomas creatina": {
         "en": "You are about to have blood work: mention that you take creatine",
         "fr": "Vous allez faire une prise de sang : signalez que vous prenez de la créatine"},
-    'AJUSTA TU SUPLEMENTACIÓN <span class="a">CONTIGO DELANTE</span>': {
-        "en": 'TUNE YOUR SUPPLEMENTS <span class="a">WITH YOU IN THE ROOM</span>',
-        "fr": 'AJUSTEZ VOS COMPLÉMENTS <span class="a">AVEC VOUS EN FACE</span>'},
-    "En <strong>ELITE</strong> revisamos tu caso concreto en la sesión de coaching semanal: qué tomar según tu fase, tu presupuesto y tus analíticas.": {
-        "en": "In <strong>ELITE</strong> we go through your specific case in the weekly coaching session: what to take given your phase, your budget and your blood work.",
-        "fr": "En <strong>ÉLITE</strong>, nous examinons votre cas précis lors de la séance de coaching hebdomadaire : quoi prendre selon votre phase, votre budget et vos analyses."},
+    'PRIMERO LA COMIDA, <span class="a">DESPUÉS EL BOTE</span>': {
+        "en": 'FOOD FIRST, <span class="a">THE TUB SECOND</span>',
+        "fr": 'D\'ABORD L\'ASSIETTE, <span class="a">ENSUITE LE POT</span>'},
+    "Ningún suplemento de esta guía compensa dormir mal o comer poco: <strong>son el 5 % final</strong>, no el atajo. Empieza por los dos esenciales, dales ocho semanas y no añadas nada más hasta poder medir qué ha cambiado.": {
+        "en": "No supplement in this guide makes up for sleeping badly or eating too little: <strong>they are the final 5 %</strong>, not the shortcut. Start with the two essentials, give them eight weeks, and add nothing else until you can measure what changed.",
+        "fr": "Aucun complément de ce guide ne compense un mauvais sommeil ou une alimentation insuffisante : <strong>ils représentent les 5 % finaux</strong>, pas le raccourci. Commencez par les deux essentiels, laissez-leur huit semaines et n'ajoutez rien d'autre avant de pouvoir mesurer ce qui a changé."},
     # Cabecera de la tabla de la compra: aquí «marca» es el fabricante.
     "Marca": {"en": "Brand", "fr": "Marque"},
 

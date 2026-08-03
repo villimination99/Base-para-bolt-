@@ -50,15 +50,11 @@ T = {
     "Tu plan actual<br>Guías rápidas y fundamentos": {
         "en": "Your current plan<br>Quick guides and fundamentals",
         "fr": "Votre formule actuelle<br>Guides rapides et fondamentaux"},
-    "Ciclado de carbos, suplementación<br>y registro de progreso": {
-        "en": "Carb cycling, supplementation<br>and progress tracking",
-        "fr": "Cyclage des glucides, compléments<br>et suivi des progrès"},
-    "Entrenamiento, HIIT, sueño<br>y coaching 1 a 1": {
-        "en": "Training, HIIT, sleep<br>and one-to-one coaching",
-        "fr": "Entraînement, HIIT, sommeil<br>et coaching individuel"},
-    '¿LISTO PARA EL <span class="a">SIGUIENTE NIVEL</span>?': {
-        "en": 'READY FOR THE <span class="a">NEXT LEVEL</span>?',
-        "fr": 'PRÊT POUR LE <span class="a">NIVEAU SUIVANT</span> ?'},
+    # La tarjeta de nivel describe el nivel, nunca el catálogo: enumerar los
+    # otros documentos en el pie de un PDF estropea el misterio del resto.
+    "Todo incluido<br>+ coaching 1 a 1": {
+        "en": "Everything included<br>+ one-to-one coaching",
+        "fr": "Tout inclus<br>+ coaching individuel"},
 
     # ── Página de fuentes verificadas (idéntica en los once) ──────────
     "Fuentes verificadas": {

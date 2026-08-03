@@ -109,9 +109,6 @@ T = {
     "Nutrición avanzada<br>y seguimiento": {
         "en": "Advanced nutrition<br>and tracking",
         "fr": "Nutrition avancée<br>et suivi"},
-    "Entrenamiento, HIIT,<br>sueño y coaching 1 a 1": {
-        "en": "Training, HIIT,<br>sleep and one-to-one coaching",
-        "fr": "Entraînement, HIIT,<br>sommeil et coaching individuel"},
     "Tu plan actual<br>Nutrición avanzada": {
         "en": "Your current plan<br>Advanced nutrition",
         "fr": "Votre formule actuelle<br>Nutrition avancée"},

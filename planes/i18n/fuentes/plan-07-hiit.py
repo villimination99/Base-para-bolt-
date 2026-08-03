@@ -61,10 +61,9 @@ T = {
         "en": "HIIT is powerful, and that is exactly why it is easy to overdose: done "
               "well it burns fat and raises your work capacity; done badly it steals "
               "the recovery your lifting depends on.",
-        "fr": "Le HIIT est puissant, et c'est précisément pour cela qu'il est facile "
-              "d'en abuser : bien mené, il brûle de la graisse et augmente votre "
-              "capacité de travail ; mal mené, il vole la récupération dont vos "
-              "séances de force dépendent."},
+        "fr": "Le HIIT est puissant, donc facile à surdoser : bien mené, il brûle de la "
+              "graisse et augmente votre capacité de travail ; mal mené, il vole la "
+              "récupération de vos séances de force."},
 
     "<b>Fig. 1</b>Intervalos y frecuencia cardiaca": {
         "en": "<b>Fig. 1</b>Intervals and heart rate",
@@ -87,26 +86,24 @@ T = {
     "directamente con tu sesión de tren inferior por los mismos recursos.": {
         "en": "<b>Never the day before leg day</b>Nor the day right after. HIIT "
               "competes directly with your lower-body session for the same resources.",
-        "fr": "<b>Jamais la veille du jour des jambes</b>Ni le lendemain. Le HIIT "
-              "entre en concurrence directe avec votre séance de bas du corps pour "
-              "les mêmes ressources."},
+        "fr": "<b>Jamais la veille du jour des jambes</b>Ni le lendemain. Le HIIT puise "
+              "dans les mêmes ressources que votre séance de bas du corps."},
 
     "<b>Calienta 5 minutos siempre</b>Movilidad de cadera y tobillo, 20 jumping jacks, "
     "10 sentadillas sin peso y 10 rotaciones de hombro. No es opcional.": {
         "en": "<b>Always warm up for 5 minutes</b>Hip and ankle mobility, 20 jumping "
               "jacks, 10 bodyweight squats and 10 shoulder rotations. It is not optional.",
-        "fr": "<b>Échauffez-vous toujours 5 minutes</b>Mobilité de hanche et de "
-              "cheville, 20 jumping jacks, 10 squats au poids du corps et 10 rotations "
-              "d'épaules. Ce n'est pas facultatif."},
+        "fr": "<b>Échauffez-vous toujours 5 minutes</b>Mobilité hanche et cheville, 20 "
+              "jumping jacks, 10 squats et 10 rotations d'épaules. Ce n'est pas facultatif."},
 
     "<b>El intervalo es al máximo o no es HIIT</b>Si puedes mantener una conversación "
     "durante el trabajo, estás haciendo cardio moderado con nombre elegante.": {
         "en": "<b>The interval is all-out or it is not HIIT</b>If you can hold a "
               "conversation during the work phase, you are doing moderate cardio under "
               "a fancier name.",
-        "fr": "<b>L'intervalle est maximal, sinon ce n'est pas du HIIT</b>Si vous "
-              "pouvez tenir une conversation pendant la phase de travail, vous faites "
-              "du cardio modéré sous un nom plus élégant."},
+        "fr": "<b>L'intervalle est maximal, sinon ce n'est pas du HIIT</b>Si vous pouvez "
+              "parler pendant la phase de travail, vous faites du cardio modéré sous un nom "
+              "élégant."},
 
     "<b>El descanso también es parte del entrenamiento</b>Respira por la nariz y camina. "
     "Recortarlo no lo hace más efectivo, solo peor ejecutado.": {
@@ -114,15 +111,15 @@ T = {
               "walking. Cutting it short does not make the session more effective, only "
               "worse executed.",
         "fr": "<b>Le repos fait aussi partie de l'entraînement</b>Respirez par le nez et "
-              "marchez. Le raccourcir ne rend pas la séance plus efficace, seulement "
-              "moins bien exécutée."},
+              "marchez. Le raccourcir ne rend pas la séance plus efficace, seulement moins "
+              "propre."},
 
     "<b>Registra rondas y repeticiones</b>Progresar en HIIT es hacer más trabajo en el "
     "mismo tiempo, no simplemente terminar reventado.": {
         "en": "<b>Log your rounds and reps</b>Progressing in HIIT means doing more work "
               "in the same time, not simply finishing wrecked.",
         "fr": "<b>Notez vos rounds et vos répétitions</b>Progresser en HIIT, c'est faire "
-              "plus de travail dans le même temps, pas seulement finir à bout de souffle."},
+              "plus de travail dans le même temps, pas finir à bout de souffle."},
 
     "Cuándo NO hacer HIIT": {
         "en": "When NOT to do HIIT", "fr": "Quand NE PAS faire de HIIT"},
@@ -139,13 +136,12 @@ T = {
     "Estás en la última semana de un déficit calórico agresivo y la fuerza está cayendo.": {
         "en": "You are in the final week of an aggressive calorie deficit and your "
               "strength is dropping.",
-        "fr": "Vous êtes dans la dernière semaine d'un déficit calorique agressif et "
-              "votre force baisse."},
+        "fr": "Vous finissez un déficit calorique agressif et votre force baisse."},
 
     "Notas molestia articular en rodilla, tobillo, hombro o zona lumbar.": {
         "en": "You feel joint discomfort in a knee, an ankle, a shoulder or your lower back.",
-        "fr": "Vous ressentez une gêne articulaire au genou, à la cheville, à l'épaule "
-              "ou dans le bas du dos."},
+        "fr": "Vous ressentez une gêne au genou, à la cheville, à l'épaule ou au bas du "
+              "dos."},
 
     "Señal de alarma: para inmediatamente": {
         "en": "Warning sign: stop immediately",
@@ -158,8 +154,8 @@ T = {
               "of all proportion to the effort. Stop the session, sit down and seek "
               "medical attention if it does not pass within a few minutes.",
         "fr": "Douleur thoracique, vertige, vision trouble, nausées intenses ou "
-              "essoufflement disproportionné. Arrêtez la séance, asseyez-vous et "
-              "consultez un médecin si cela ne passe pas en quelques minutes."},
+              "essoufflement disproportionné. Arrêtez, asseyez-vous et consultez un médecin "
+              "si cela ne passe pas en quelques minutes."},
 
     # ── Cabeceras de las fichas ────────────────────────────────────────────
     "Trabajo": {"en": "Work", "fr": "Travail"},
@@ -564,7 +560,7 @@ T = {
 
     "Ejecución correcta": {"en": "Correct execution", "fr": "Exécution correcte"},
     "Error que causa lesión": {
-        "en": "The mistake that causes injury", "fr": "L'erreur qui provoque la blessure"},
+        "en": "The mistake that causes injury", "fr": "L'erreur qui blesse"},
 
     "Burpee": {"en": "Burpee", "fr": "Burpee"},
     "Manos al suelo, salto atrás controlado, pecho abajo, salto adelante y salto vertical": {
@@ -577,8 +573,7 @@ T = {
         "fr": "Laisser tomber les hanches en descendant (hyperextension lombaire)"},
     "Aterriza con la punta del pie primero y absorbe flexionando rodilla y cadera": {
         "en": "Land on the ball of the foot first and absorb by bending knee and hip",
-        "fr": "Atterrissez d'abord sur l'avant du pied et amortissez en fléchissant genou "
-              "et hanche"},
+        "fr": "Atterrissez sur l'avant du pied, amortissez genou et hanche"},
     "Caer con la pierna rígida y la rodilla hacia dentro": {
         "en": "Landing with a stiff leg and the knee caving inwards",
         "fr": "Atterrir jambe raide et genou rentré vers l'intérieur"},
@@ -613,7 +608,7 @@ T = {
         "en": "Jump up, step down", "fr": "Montez en sautant, descendez en marchant"},
     "Bajar de un salto: multiplica la carga sobre el tendón rotuliano": {
         "en": "Jumping back down: it multiplies the load on the patellar tendon",
-        "fr": "Redescendre en sautant : cela multiplie la charge sur le tendon rotulien"},
+        "fr": "Redescendre en sautant : charge multipliée sur le tendon rotulien"},
 
     "La técnica se rompe antes que el músculo": {
         "en": "Technique breaks before the muscle does",
@@ -625,10 +620,10 @@ T = {
         "en": "In the last 10 seconds of every interval, fatigue degrades execution. If you "
               "feel your position going, <strong>stop and end the interval</strong>. A badly "
               "done burpee does not add work, it adds risk.",
-        "fr": "Dans les 10 dernières secondes de chaque intervalle, la fatigue dégrade "
-              "l'exécution. Si vous sentez que la position se perd, <strong>arrêtez et "
-              "terminez l'intervalle</strong>. Un burpee mal fait n'ajoute pas de travail, "
-              "il ajoute du risque."},
+        "fr": "Dans les 10 dernières secondes d'un intervalle, la fatigue dégrade "
+              "l'exécution. Si la position se perd, <strong>arrêtez et terminez "
+              "l'intervalle</strong>. Un burpee mal fait n'ajoute pas de travail, il ajoute "
+              "du risque."},
 
     # ── Cierre ─────────────────────────────────────────────────────────────
     'EL HIIT ES SOLO <span class="a">UNA PIEZA</span>': {
@@ -643,8 +638,8 @@ T = {
               "strength work, enough food and sleep. On its own it turns into wear and tear.",
         "fr": "Le HIIT paie quand il <strong>n'est pas la seule chose que vous "
               "faites</strong> : deux séances par semaine au maximum, jamais deux jours de "
-              "suite, et toujours sur une base de force, d'alimentation suffisante et de "
-              "sommeil. Seul, il devient de l'usure."},
+              "suite, sur une base de force, d'alimentation et de sommeil. Seul, il devient "
+              "de l'usure."},
 
     # ── Aviso legal ────────────────────────────────────────────────────────
     "<b>Aviso importante</b><br> "

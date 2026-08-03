@@ -436,7 +436,10 @@ T = {
     "Semana 2": {"en": "Week 2", "fr": "Semaine 2"},
     "Semana 3": {"en": "Week 3", "fr": "Semaine 3"},
     "Semana 4": {"en": "Week 4", "fr": "Semaine 4"},
-    "Has dominado los principios. El plan <strong>PRO</strong> convierte estos\n        principios en un protocolo de 8 semanas con ciclado de carbohidratos, suplementación y\n        seguimiento medido.": {
-        "en": "You have mastered the principles. The <strong>PRO</strong> plan turns them into an 8-week protocol with carb cycling, supplementation and measured tracking.",
-        "fr": "Vous maîtrisez les principes. La formule <strong>PRO</strong> les transforme en un protocole de 8 semaines avec cyclage des glucides, compléments et suivi mesuré."},
+    'LOS PRINCIPIOS <span class="a">NO CADUCAN</span>': {
+        "en": 'THE PRINCIPLES <span class="a">DO NOT EXPIRE</span>',
+        "fr": 'LES PRINCIPES <span class="a">NE PÉRIMENT PAS</span>'},
+    "Todo lo anterior se sostiene sobre una sola idea: <strong>superávit\n        pequeño y medido</strong>. Repite el ciclo tantas veces como quieras — cada vuelta parte\n        de más masa magra y de un cálculo mejor ajustado que la anterior.": {
+        "en": "Everything above rests on a single idea: a <strong>small, measured surplus</strong>. Repeat the cycle as many times as you like — each pass starts from more lean mass and from a better-calibrated calculation than the one before.",
+        "fr": "Tout ce qui précède repose sur une seule idée : un <strong>surplus petit et mesuré</strong>. Répétez le cycle autant de fois que vous voulez — chaque tour repart de plus de masse maigre et d'un calcul mieux ajusté que le précédent."},
 }
