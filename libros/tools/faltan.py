@@ -34,20 +34,20 @@ def main() -> None:
 
     documentos = dict(i18n._documentos_es())
     if not filtros:
-        for nombre, html in documentos.items():
-            inv = i18n.inventario([html])
+        for nombre, docs in documentos.items():
+            inv = i18n.inventario(docs)
             falta = [k for k in inv
                      if not all(cat.get(k, {}).get(c) for c in idiomas)]
             print(f"  {nombre:<26} faltan {len(falta):>5} de {len(inv)}")
         return
 
-    elegidos = {n: h for n, h in documentos.items() if any(f in n for f in filtros)}
+    elegidos = {n: d for n, d in documentos.items() if any(f in n for f in filtros)}
     if not elegidos:
         raise SystemExit(f"Ningún libro coincide con {filtros}")
 
     desde, hasta = entero("--desde", 0), entero("--hasta", 10**9)
-    for nombre, html in elegidos.items():
-        inv = i18n.inventario([html])
+    for nombre, docs in elegidos.items():
+        inv = i18n.inventario(docs)
         pendientes = [(k, t) for k, t in inv.items()
                       if not all(cat.get(k, {}).get(c) for c in idiomas)]
         print(f"# ── {nombre} · {len(pendientes)} pendientes ──")

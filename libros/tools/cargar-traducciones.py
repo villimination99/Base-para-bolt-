@@ -49,7 +49,7 @@ def pegado(t: str) -> str:
 
 def main() -> None:
     documentos = dict(i18n._documentos_es())
-    inv_total = i18n.inventario(documentos.values())
+    inv_total = i18n.inventario(d for docs in documentos.values() for d in docs)
     por_texto = {re.sub(r"\s+", " ", v).strip(): k for k, v in inv_total.items()}
     por_pegado = {}
     for k, v in inv_total.items():
@@ -97,8 +97,8 @@ def main() -> None:
               f"{100 * hechos / max(len(inv_total), 1):5.1f} %")
 
     print("\n  Cobertura por libro")
-    for nombre, html in documentos.items():
-        inv = i18n.inventario([html])
+    for nombre, docs in documentos.items():
+        inv = i18n.inventario(docs)
         linea = f"    {nombre:<24}"
         for cod in i18n.IDIOMAS:
             if cod == "es":

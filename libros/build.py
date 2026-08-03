@@ -161,9 +161,14 @@ def indice_html(caps: list[dict], paginas: list[int] | None) -> str:
     for i, cap in enumerate(caps, 1):
         pg = f"{paginas[i - 1]}" if paginas else "&nbsp;"
         filas.append(
+            # El folio va en un <div> y no en un <span> a propósito. El <li> es
+            # flex, así que visualmente no cambia nada; pero para el segmentador
+            # un hijo de bloque hace que la FILA deje de ser un segmento y lo sea
+            # solo el título. Si no, cada renumeración del índice inventaría
+            # dieciséis segmentos nuevos y tiraría abajo su traducción.
             f'<li><span class="n">{i:02d}</span>'
             f'<span class="t">{esc(cap["titulo"])}</span>'
-            f'<span class="pg">{pg}</span></li>'
+            f'<div class="pg">{pg}</div></li>'
         )
     return f"""
 <section class="indice">

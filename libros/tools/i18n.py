@@ -96,22 +96,29 @@ def inventario(documentos) -> dict:
 
 
 def _documentos_es():
-    """Los ocho libros compuestos en español: cubierta + interior."""
+    """Los ocho libros compuestos en español.
+
+    Devuelve los DOS documentos de cada libro por separado —cubierta e
+    interior— y no concatenados, porque el generador también los traduce por
+    separado. Segmentar una concatenación empareja mal las etiquetas del final
+    de uno con las del principio del otro y produce un inventario que no
+    corresponde a lo que se va a componer.
+    """
     import sys
     sys.path.insert(0, str(RAIZ))
     from build import cubierta, documento          # noqa: E402
 
     for ruta in sorted((RAIZ / "src").glob("*.json")):
         libro = json.loads(ruta.read_text(encoding="utf-8"))
-        yield ruta.stem, cubierta(libro) + documento(libro, None)
+        yield ruta.stem, [cubierta(libro), documento(libro, None)]
 
 
 if __name__ == "__main__":
     cat = cargar()
     total = {}
     print("  Segmentos por libro")
-    for nombre, html in _documentos_es():
-        inv = inventario([html])
+    for nombre, docs in _documentos_es():
+        inv = inventario(docs)
         total.update(inv)
         hechos = {c: sum(1 for k in inv if cat.get(k, {}).get(c))
                   for c in IDIOMAS if c != "es"}

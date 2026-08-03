@@ -74,54 +74,9 @@ T = {
               "ces cas, c'est là qu'il faut commencer, pas dans ce livre."},
 
     # ── Índice ─────────────────────────────────────────────────────────────
-    '<span class="n">01</span><span class="t">El libro que no habla de motivación</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">01</span><span class="t">The book that does not talk about motivation</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">01</span><span class="t">Le livre qui ne parle pas de motivation</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">02</span><span class="t">Los cinco dominios</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">02</span><span class="t">The five domains</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">02</span><span class="t">Les cinq domaines</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">03</span><span class="t">La única variable que domina</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">03</span><span class="t">The one variable that rules</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">03</span><span class="t">La seule variable qui commande</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">04</span><span class="t">El bucle y sus tres palancas</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">04</span><span class="t">The loop and its three levers</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">04</span><span class="t">La boucle et ses trois leviers</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">05</span><span class="t">El plan que sobrevive al día malo</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">05</span><span class="t">The plan that survives the bad day</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">05</span><span class="t">Le plan qui survit au mauvais jour</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">06</span><span class="t">El fallo y la recaída no son lo mismo</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">06</span><span class="t">A lapse and a relapse are not the same thing</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">06</span><span class="t">L\'écart et la rechute ne sont pas la même chose</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">07</span><span class="t">Las habilidades de rendimiento, según un manual público</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">07</span><span class="t">Performance skills, according to a public manual</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">07</span><span class="t">Les compétences de performance, selon un manuel public</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">08</span><span class="t">Objetivos que sirven para algo</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">08</span><span class="t">Goals that are actually good for something</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">08</span><span class="t">Des objectifs qui servent à quelque chose</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">09</span><span class="t">La activación y la respiración</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">09</span><span class="t">Arousal and breathing</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">09</span><span class="t">L\'activation et la respiration</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">10</span><span class="t">Medirse sin castigarse</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">10</span><span class="t">Measuring yourself without punishing yourself</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">10</span><span class="t">Se mesurer sans se punir</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">11</span><span class="t">Diseñar el entorno antes que la fuerza de voluntad</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">11</span><span class="t">Design the environment before the willpower</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">11</span><span class="t">Concevoir l\'environnement avant la volonté</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">12</span><span class="t">Identidad, comparación y el ruido de fuera</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">12</span><span class="t">Identity, comparison and the noise from outside</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">12</span><span class="t">Identité, comparaison et le bruit du dehors</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">13</span><span class="t">Volver después de meses</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">13</span><span class="t">Coming back after months away</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">13</span><span class="t">Revenir après des mois d\'arrêt</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">14</span><span class="t">Cómo comprobarlo tú mismo</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">14</span><span class="t">How to check it yourself</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">14</span><span class="t">Comment le vérifier vous-même</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">15</span><span class="t">Cuaderno de la voluntad</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">15</span><span class="t">The notebook of the will</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">15</span><span class="t">Le carnet de la volonté</span><span class="pg">&nbsp;</span>'},
-    '<span class="n">16</span><span class="t">Lo que no se arregla con un plan</span><span class="pg">&nbsp;</span>': {
-        "en": '<span class="n">16</span><span class="t">What no plan can fix</span><span class="pg">&nbsp;</span>',
-        "fr": '<span class="n">16</span><span class="t">Ce qu\'aucun plan ne répare</span><span class="pg">&nbsp;</span>'},
+    # Las filas del índice ya no son segmentos: el folio va en un <div>, de modo
+    # que el segmento es solo el título del capítulo, que se traduce una vez y
+    # sirve para el índice, el encabezado y el marcador del PDF.
 
     # ── Capítulo 1 ─────────────────────────────────────────────────────────
     "El libro que no habla de motivación": {
