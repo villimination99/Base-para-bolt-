@@ -75,6 +75,7 @@
     "badge_new_days": 30,
     "badge_low_stock": 5,
     "cart_cross_sell": true,
-    "cart_cross_sell_title": "Completa tu compra"
+    "cart_cross_sell_title": "Completa tu compra",
+    "seo_google_verification": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE"
   }
 }

@@ -7,6 +7,11 @@
   <meta name="theme-color" content="{{ settings.color_bg }}">
   <link rel="canonical" href="{{ canonical_url }}">
 
+  {%- comment -%} Verificacion de propiedad del sitio en Google Search Console {%- endcomment -%}
+  {%- if settings.seo_google_verification != blank -%}
+    <meta name="google-site-verification" content="{{ settings.seo_google_verification | escape }}">
+  {%- endif -%}
+
   {%- comment -%}
     Favicon. Google IGNORA los favicons menores de 48x48 y por eso no muestra el icono
     del sitio en los resultados: se emiten tamaños múltiplos de 48 tal y como pide.
