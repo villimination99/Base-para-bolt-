@@ -1139,6 +1139,23 @@ LIBRO = {
     "subtitulo": "La dosis oficial de actividad, la escala que la mide, la ecuación de levantar y lo que le pasa a un cuerpo sin peso",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece al <strong>dominio público</strong>:
+     los manuales de acondicionamiento físico y los criterios de manejo de
+     cargas publicados por organismos del Gobierno de los Estados Unidos
+     —entre ellos el FM 7-22 y las guías del NIOSH— no están sujetos a
+     derechos de autor conforme al 17 U.S.C. § 105. Lo que aquí se ofrece —la
+     redacción, la estructura de capítulos, las progresiones, las tablas y las
+     ilustraciones— es trabajo propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro sobre
+     <em>carga y adaptación</em>: sobre cuánto trabajo se puede acumular y a
+     qué ritmo. El entrenamiento con cargas conlleva riesgo de lesión. Nada de
+     lo que sigue diagnostica ni trata ninguna dolencia, y no sustituye la
+     valoración de un profesional sanitario colegiado ni la supervisión
+     presencial de un entrenador cualificado. Si tienes una patología
+     articular, cardiovascular o respiratoria, consúltalo antes de empezar.""",
     "mascota": "r-carga",
     "acento": "carga",
     "original": True,

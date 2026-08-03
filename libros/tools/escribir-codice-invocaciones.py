@@ -1539,6 +1539,20 @@ LIBRO = {
     "subtitulo": "Manual de práctica ritual: el círculo, las armas, los nombres y el trabajo sobre uno mismo",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece a la <strong>tradición común</strong>:
+     las fórmulas, los nombres y las estructuras rituales que aquí se comentan
+     se transmiten por escrito desde hace siglos en obras de dominio público y
+     no son propiedad de nadie. Lo que aquí se ofrece —la redacción, la
+     estructura de capítulos, las prácticas, las fichas y las ilustraciones—
+     es trabajo propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Lo que aquí se practica es un
+     <em>lenguaje simbólico</em>: una manera antigua de ordenar la atención y
+     la intención. No es una ciencia predictiva ni una promesa de resultados.
+     Nada de lo que sigue anuncia hechos futuros, diagnostica enfermedades ni
+     sustituye la atención de un médico o un psicólogo colegiado.""",
     "mascota": "r-pentagrama",
     "acento": "oro",
     "original": True,

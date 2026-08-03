@@ -57,11 +57,12 @@ def cap(titulo, *bloques):
 
 C1 = cap(
     "El libro que no habla de motivación",
-    p("Los dos libros anteriores dan cifras: cuánto comer y cuánto moverse. Este "
-      "trata del problema que hace que esas cifras no sirvan de nada, que es que "
-      "casi nadie las cumple más de unas semanas. Y lo trata sin apelar ni una "
-      "sola vez a la fuerza de voluntad, porque la fuerza de voluntad es "
-      "exactamente lo que no está disponible el martes por la noche a las once."),
+    p("Cuánto comer y cuánto moverse son preguntas resueltas: hay cifras, y son "
+      "públicas. Este libro trata del problema que hace que esas cifras no sirvan "
+      "de nada, que es que casi nadie las cumple más de unas semanas. Y lo trata "
+      "sin apelar ni una sola vez a la fuerza de voluntad, porque la fuerza de "
+      "voluntad es exactamente lo que no está disponible el martes por la noche a "
+      "las once."),
     h("La afirmación de este libro"),
     p("El cumplimiento no es un rasgo de carácter: es el resultado de un diseño. "
       "Quien cumple no suele tener más voluntad que quien abandona; tiene menos "
@@ -944,6 +945,23 @@ LIBRO = {
     "subtitulo": "Adherencia, hábito y regreso: por qué los planes buenos se caen y cómo se construye uno que sobreviva a los días malos",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece al <strong>dominio público</strong>:
+     los manuales de instrucción física y de preparación mental publicados por
+     el Gobierno de los Estados Unidos —entre ellos el FM 7-22 del Ejército—
+     no están sujetos a derechos de autor conforme al 17 U.S.C. § 105. Lo que
+     aquí se ofrece —la redacción, la estructura en cinco partes, los
+     ejercicios de registro, las tablas y las ilustraciones— es trabajo propio
+     y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro sobre
+     <em>adherencia</em>: sobre por qué un plan correcto se abandona y qué se
+     puede construir para que sobreviva a los días malos. No es un tratado de
+     psicología clínica. Nada de lo que sigue diagnostica ni trata un trastorno
+     de la conducta alimentaria, una depresión ni una adicción, y no sustituye
+     la atención de un profesional sanitario colegiado. Si te reconoces en algo
+     de eso, ese es el primer paso, no este libro.""",
     "mascota": "r-voluntad",
     "acento": "fuerza",
     "original": True,

@@ -1365,6 +1365,21 @@ LIBRO = {
     "subtitulo": "Manual de observación interior: la atención dividida, los tres centros y el trabajo de estar presente",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece a la <strong>tradición común</strong>:
+     los ejercicios clásicos de examen de conciencia, atención y registro
+     interior se transmiten por escrito desde hace siglos y no son propiedad
+     de nadie. Lo que aquí se ofrece —la redacción, la estructura de
+     capítulos, las prácticas, las fichas y las ilustraciones— es trabajo
+     propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro de
+     <em>trabajo interior</em>, escrito en un lenguaje simbólico. No es
+     psicología clínica ni terapia. Nada de lo que sigue diagnostica ni trata
+     ningún trastorno, y no sustituye la atención de un psicólogo o un
+     psiquiatra colegiado. Si atraviesas una crisis, busca ayuda profesional:
+     este libro puede acompañar ese camino, no reemplazarlo.""",
     "mascota": "r-ojo",
     "acento": "violeta",
     "original": True,

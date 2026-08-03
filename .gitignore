@@ -18,3 +18,7 @@ __pycache__/
 # El catálogo de traducción es un derivado: lo reconstruye
 # planes/tools/cargar-traducciones.py desde i18n/fuentes/, que sí se versiona.
 planes/i18n/catalogo.json
+
+# Igual que el de los planes: el catálogo de los libros es un derivado que
+# reconstruye libros/tools/cargar-traducciones.py desde i18n/fuentes/.
+libros/i18n/catalogo.json

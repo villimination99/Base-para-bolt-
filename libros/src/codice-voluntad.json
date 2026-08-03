@@ -4,6 +4,8 @@
  "subtitulo": "Adherencia, hábito y regreso: por qué los planes buenos se caen y cómo se construye uno que sobreviva a los días malos",
  "autor": "Villuminations",
  "fuente": "Obra original · Primera edición, 2026",
+ "base": "El material del que parte pertenece al <strong>dominio público</strong>:\n     los manuales de instrucción física y de preparación mental publicados por\n     el Gobierno de los Estados Unidos —entre ellos el FM 7-22 del Ejército—\n     no están sujetos a derechos de autor conforme al 17 U.S.C. § 105. Lo que\n     aquí se ofrece —la redacción, la estructura en cinco partes, los\n     ejercicios de registro, las tablas y las ilustraciones— es trabajo propio\n     y está protegido como tal.",
+ "lectura": "<strong>Cómo leer este libro.</strong> Es un libro sobre\n     <em>adherencia</em>: sobre por qué un plan correcto se abandona y qué se\n     puede construir para que sobreviva a los días malos. No es un tratado de\n     psicología clínica. Nada de lo que sigue diagnostica ni trata un trastorno\n     de la conducta alimentaria, una depresión ni una adicción, y no sustituye\n     la atención de un profesional sanitario colegiado. Si te reconoces en algo\n     de eso, ese es el primer paso, no este libro.",
  "mascota": "r-voluntad",
  "acento": "fuerza",
  "original": true,
@@ -26,7 +28,7 @@
    "bloques": [
     {
      "t": "p",
-     "x": "Los dos libros anteriores dan cifras: cuánto comer y cuánto moverse. Este trata del problema que hace que esas cifras no sirvan de nada, que es que casi nadie las cumple más de unas semanas. Y lo trata sin apelar ni una sola vez a la fuerza de voluntad, porque la fuerza de voluntad es exactamente lo que no está disponible el martes por la noche a las once."
+     "x": "Cuánto comer y cuánto moverse son preguntas resueltas: hay cifras, y son públicas. Este libro trata del problema que hace que esas cifras no sirvan de nada, que es que casi nadie las cumple más de unas semanas. Y lo trata sin apelar ni una sola vez a la fuerza de voluntad, porque la fuerza de voluntad es exactamente lo que no está disponible el martes por la noche a las once."
     },
     {
      "t": "h2",

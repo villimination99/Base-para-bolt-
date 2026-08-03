@@ -1067,6 +1067,20 @@ LIBRO = {
     "subtitulo": "Las setenta y ocho cartas como instrumento de lectura: los veintidós mayores, los cuatro palos y los treinta y seis decanatos",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece a la <strong>tradición común</strong>:
+     la secuencia de los arcanos, su iconografía y las correspondencias
+     clásicas se transmiten por escrito desde hace siglos en obras de dominio
+     público y no son propiedad de nadie. Lo que aquí se ofrece —la redacción,
+     la estructura de capítulos, las lecturas, las fichas y las
+     ilustraciones— es trabajo propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Los arcanos son un
+     <em>lenguaje simbólico</em>: una manera antigua y muy afinada de nombrar
+     situaciones y temperamentos. No es una ciencia predictiva. Nada de lo que
+     sigue anuncia hechos futuros, diagnostica enfermedades ni sustituye la
+     atención de un médico o un psicólogo colegiado.""",
     "mascota": "r-arcano",
     "acento": "carmin",
     "original": True,

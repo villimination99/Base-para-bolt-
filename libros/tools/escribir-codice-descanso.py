@@ -421,9 +421,11 @@ C7 = cap(
         "cuadran con la recomendación, el libro no se escribiría.",
         "Que las cuatro fases estén completas con sus cuatro campos, que es lo "
         "que garantiza que la tabla del texto y la lámina digan lo mismo.",
-        "Y las comprobaciones compartidas con los otros libros: rangos de "
-        "macronutrientes, coherencia de la fibra, techos de micronutrientes, "
-        "equivalencia de intensidades y bandas metabólicas.",
+        "Y el resto del módulo de datos verificados del que sale este libro: "
+        "rangos de macronutrientes, coherencia de la fibra, techos de "
+        "micronutrientes, equivalencia de intensidades y bandas metabólicas. "
+        "Si una sola de esas comprobaciones falla, el generador se detiene y no "
+        "escribe nada.",
     ),
     p("Los números de horas que aparecen en el capítulo primero no están "
       "tecleados: se calculan multiplicando ciclos por duración. Es una precaución "
@@ -953,6 +955,23 @@ LIBRO = {
     "subtitulo": "La arquitectura de una noche, la deuda que deja una semana corta y la diferencia entre descansar y descargarse",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece al <strong>dominio público</strong>:
+     las recomendaciones de duración del sueño, los datos de ritmo circadiano
+     y las guías de higiene del sueño publicadas por organismos del Gobierno
+     de los Estados Unidos no están sujetas a derechos de autor conforme al
+     17 U.S.C. § 105. Lo que aquí se ofrece —la redacción, la estructura de
+     capítulos, los protocolos, las tablas y las ilustraciones— es trabajo
+     propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro sobre
+     <em>higiene del sueño</em> para personas sanas. El insomnio persistente,
+     la apnea y la somnolencia diurna excesiva son cuadros clínicos: nada de
+     lo que sigue los diagnostica ni los trata, y no sustituye la atención de
+     un médico. Si llevas más de tres meses durmiendo mal, o si alguien te ha
+     dicho que dejas de respirar mientras duermes, ese es el motivo de una
+     consulta, no de un capítulo.""",
     "mascota": "r-descanso",
     "acento": "calma",
     "original": True,

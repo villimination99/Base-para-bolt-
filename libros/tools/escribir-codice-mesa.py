@@ -1346,6 +1346,23 @@ LIBRO = {
     "subtitulo": "Nutrición con las dos columnas de la tabla: lo que hay que tomar, lo que conviene no pasar y de dónde sale cada cifra",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece al <strong>dominio público</strong>:
+     las tablas de referencia de nutrientes, los rangos de macronutrientes y
+     los criterios de inocuidad alimentaria publicados por organismos del
+     Gobierno de los Estados Unidos no están sujetos a derechos de autor
+     conforme al 17 U.S.C. § 105. Lo que aquí se ofrece —la redacción, la
+     estructura de capítulos, las fichas, los ejercicios de registro y las
+     ilustraciones— es trabajo propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro de
+     <em>referencia nutricional</em>, no un plan dietético personalizado. Las
+     cifras que recoge son promedios de población sana y hay que ajustarlas a
+     tu caso. Nada de lo que sigue diagnostica ni trata ninguna enfermedad, y
+     no sustituye la atención de un médico o de un dietista-nutricionista
+     colegiado. Si tienes una patología, alergia, embarazo o tratamiento en
+     curso, consúltalo antes con tu profesional sanitario.""",
     "mascota": "r-mesa",
     "acento": "mesa",
     "original": True,

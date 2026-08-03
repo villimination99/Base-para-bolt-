@@ -4,6 +4,8 @@
  "subtitulo": "La arquitectura de una noche, la deuda que deja una semana corta y la diferencia entre descansar y descargarse",
  "autor": "Villuminations",
  "fuente": "Obra original · Primera edición, 2026",
+ "base": "El material del que parte pertenece al <strong>dominio público</strong>:\n     las recomendaciones de duración del sueño, los datos de ritmo circadiano\n     y las guías de higiene del sueño publicadas por organismos del Gobierno\n     de los Estados Unidos no están sujetas a derechos de autor conforme al\n     17 U.S.C. § 105. Lo que aquí se ofrece —la redacción, la estructura de\n     capítulos, los protocolos, las tablas y las ilustraciones— es trabajo\n     propio y está protegido como tal.",
+ "lectura": "<strong>Cómo leer este libro.</strong> Es un libro sobre\n     <em>higiene del sueño</em> para personas sanas. El insomnio persistente,\n     la apnea y la somnolencia diurna excesiva son cuadros clínicos: nada de\n     lo que sigue los diagnostica ni los trata, y no sustituye la atención de\n     un médico. Si llevas más de tres meses durmiendo mal, o si alguien te ha\n     dicho que dejas de respirar mientras duermes, ese es el motivo de una\n     consulta, no de un capítulo.",
  "mascota": "r-descanso",
  "acento": "calma",
  "original": true,
@@ -1008,7 +1010,7 @@
      "x": [
       "Que 6 ciclos de 90 minutos —9 horas— alcancen la recomendación de 7 horas. Si la duración del ciclo o el número de ciclos se cambiaran a valores que no cuadran con la recomendación, el libro no se escribiría.",
       "Que las cuatro fases estén completas con sus cuatro campos, que es lo que garantiza que la tabla del texto y la lámina digan lo mismo.",
-      "Y las comprobaciones compartidas con los otros libros: rangos de macronutrientes, coherencia de la fibra, techos de micronutrientes, equivalencia de intensidades y bandas metabólicas."
+      "Y el resto del módulo de datos verificados del que sale este libro: rangos de macronutrientes, coherencia de la fibra, techos de micronutrientes, equivalencia de intensidades y bandas metabólicas. Si una sola de esas comprobaciones falla, el generador se detiene y no escribe nada."
      ]
     },
     {

@@ -30,9 +30,22 @@ DIST = ROOT / "dist"
 ASSETS = ROOT / "assets"
 PARTIALS = ROOT / "partials"
 
+sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
+import i18n                                                     # noqa: E402
+
 NODE = "/opt/node22/bin/node"
 
 FOLIO = "#8a93ab"   # folio claro: el interior es oscuro
+
+
+class Incompleto(Exception):
+    """Un libro sin traducir del todo. No es un error del generador: es la
+    puerta que impide publicar un producto medio en un idioma y medio en otro."""
+
+    def __init__(self, libro, idioma, hechos, totales):
+        self.libro, self.idioma = libro, idioma
+        self.hechos, self.totales = hechos, totales
+        super().__init__(f"{libro} [{idioma}]: {hechos}/{totales} segmentos")
 
 
 def esc(s: str) -> str:
@@ -215,24 +228,10 @@ CREDITOS_ORIGINAL = """
   <p><strong>{titulo}</strong> es una obra original de {autor},
      escrita y compuesta íntegramente para <strong>villuminations.com</strong>.
      {fuente}.</p>
-  <p>El material del que parte pertenece a la <strong>tradición común</strong>:
-     las correspondencias astrológicas clásicas, los regentes planetarios, la
-     división en elementos y modalidades y las tablas de decanatos se
-     transmiten por escrito desde hace más de dos milenios y no son propiedad
-     de nadie. Lo que aquí se ofrece —la redacción, la estructura de nueve
-     claves, las prácticas de cuatro semanas, la lectura corporal y de hábito
-     de cada signo, las fichas, los ejercicios de registro y las
-     ilustraciones— es trabajo propio y está protegido como tal.</p>
+  <p>{base}</p>
   <p>No se reproduce texto de ningún autor moderno. Donde una idea proviene
      de una fuente concreta se dice en el propio capítulo.</p>
-  <p><strong>Cómo leer este libro.</strong> La astrología que aquí se practica
-     es un <em>lenguaje simbólico</em>: una manera antigua y muy afinada de
-     nombrar temperamentos, tensiones y ciclos. No es una ciencia predictiva.
-     Nada de lo que sigue anuncia hechos futuros, diagnostica enfermedades ni
-     sustituye la atención de un médico, un psicólogo o un dietista-nutricionista
-     colegiado. Las pautas de alimentación, sueño y movimiento son de sentido
-     común y deben adaptarse a tu caso; si tienes una patología, embarazo o
-     tratamiento en curso, consúltalas antes con tu profesional sanitario.</p>
+  <p>{lectura}</p>
   <p><strong>Uso permitido.</strong> Tu compra te da una licencia personal e
      intransferible para leer e imprimir este archivo. No se autoriza su
      reventa, redistribución ni publicación total o parcial.</p>
@@ -258,10 +257,21 @@ def documento(libro: dict, paginas: list[int] | None) -> str:
             f"{libro['id']}: el catálogo es de obra original. Un libro sin "
             '"original": true no tiene plantilla de créditos y no se compone.'
         )
+    # La página de créditos es la que dice de qué es esta obra y sobre qué
+    # material común se apoya. Si un libro no lo declara, no se compone: un
+    # texto de créditos genérico acaba diciendo del libro algo que no es.
+    faltan = [c for c in ("base", "lectura") if not libro.get(c)]
+    if faltan:
+        raise SystemExit(
+            f"{libro['id']}: faltan {', '.join(faltan)} en el catálogo. Cada "
+            "libro declara su propia base documental y su propia advertencia "
+            "de lectura; no hay plantilla común que sirva para todos.")
     creditos = CREDITOS_ORIGINAL.format(
         titulo=esc(libro["titulo"]),
         autor=esc(libro["autor"]),
         fuente=esc(libro["fuente"]),
+        base=libro["base"],
+        lectura=libro["lectura"],
     )
 
     return cabecera(libro, f"acento-{libro['acento']}") + f"""
@@ -292,17 +302,25 @@ def render(html_path: Path, pdf_path: Path, titulillo: str, sangre: bool = False
         raise SystemExit(f"Fallo al renderizar {html_path.name}:\n{res.stderr[-2000:]}")
 
 
-def paginas_de_capitulos(pdf: Path, caps: list[dict]) -> list[int]:
-    """Localiza en qué página del PDF empieza cada capítulo."""
+def paginas_de_capitulos(pdf: Path, caps: list[dict], idioma: str = "es",
+                         cat: dict | None = None) -> list[int]:
+    """Localiza en qué página del PDF empieza cada capítulo.
+
+    Busca el texto TAL Y COMO aparece impreso, así que en la edición inglesa
+    hay que buscar «Chapter 3», no «Capítulo 3». Se resuelve contra el mismo
+    catálogo que compuso la página: si buscara el español, el índice de las
+    ediciones traducidas saldría entero a cero sin avisar.
+    """
     import pypdfium2 as pdfium
 
+    cat = cat if cat is not None else {}
     doc = pdfium.PdfDocument(str(pdf))
     textos = [clave(doc[i].get_textpage().get_text_range()) for i in range(len(doc))]
 
     paginas, desde = [], 0
     for i, cap in enumerate(caps, 1):
-        marca = clave(f"Capítulo {i}")
-        objetivo = clave(cap["titulo"])[:20]
+        marca = clave(i18n.cadena(f"Capítulo {i}", idioma, cat))
+        objetivo = clave(i18n.cadena(cap["titulo"], idioma, cat))[:20]
         encontrada = 0
         for n in range(desde, len(textos)):
             if marca in textos[n] and objetivo[:12] in textos[n]:
@@ -313,23 +331,27 @@ def paginas_de_capitulos(pdf: Path, caps: list[dict]) -> list[int]:
     return paginas
 
 
-def marcadores(pdf: Path, libro: dict, paginas: list[int]) -> None:
+def marcadores(pdf: Path, libro: dict, paginas: list[int], idioma: str = "es",
+               cat: dict | None = None) -> None:
     from pypdf import PdfWriter
 
-    caps, titulo = libro["capitulos"], libro["titulo"]
+    cat = cat if cat is not None else {}
+    caps = libro["capitulos"]
+    titulo = i18n.cadena(libro["titulo"], idioma, cat)
     w = PdfWriter(clone_from=str(pdf))
     for page in w.pages:
         page.compress_content_streams(level=9)
     raiz = w.add_outline_item(titulo, 0)
     for cap, pg in zip(caps, paginas):
         if pg:
-            w.add_outline_item(cap["titulo"], pg - 1, parent=raiz)
+            w.add_outline_item(i18n.cadena(cap["titulo"], idioma, cat),
+                               pg - 1, parent=raiz)
     original = bool(libro.get("original"))
     w.add_metadata({
         "/Title": titulo,
         "/Author": (f"{libro['autor']} — villuminations.com" if original
                     else "VILLUMINATIONS — villuminations.com"),
-        "/Subject": libro["subtitulo"],
+        "/Subject": i18n.cadena(libro["subtitulo"], idioma, cat),
         "/Creator": "VILLUMINATIONS",
         "/Keywords": ", ".join(libro.get("claves", [])) or "villuminations.com",
     })
@@ -339,32 +361,55 @@ def marcadores(pdf: Path, libro: dict, paginas: list[int]) -> None:
     tmp.replace(pdf)
 
 
-def construir(libro: dict) -> None:
+def construir(libro: dict, idioma: str = "es", cat: dict | None = None) -> None:
     BUILD.mkdir(parents=True, exist_ok=True)
     DIST.mkdir(parents=True, exist_ok=True)
 
+    cat = cat if cat is not None else i18n.cargar()
     caps = libro["capitulos"]
     base = libro["id"]
-    html_cub = BUILD / f"{base}-cubierta.html"
-    html_int = BUILD / f"{base}-interior.html"
-    pdf_cub = BUILD / f"{base}-cubierta.pdf"
-    pdf_int = BUILD / f"{base}-interior.pdf"
-    destino = DIST / f"{base}.pdf"
+    sufijo = "" if idioma == "es" else f"-{idioma}"
+    carpeta_b = BUILD if idioma == "es" else BUILD / idioma
+    carpeta_d = DIST if idioma == "es" else DIST / idioma
+    carpeta_b.mkdir(parents=True, exist_ok=True)
+    carpeta_d.mkdir(parents=True, exist_ok=True)
+
+    html_cub = carpeta_b / f"{base}-cubierta.html"
+    html_int = carpeta_b / f"{base}-interior.html"
+    pdf_cub = carpeta_b / f"{base}-cubierta.pdf"
+    pdf_int = carpeta_b / f"{base}-interior.pdf"
+    destino = carpeta_d / f"{base}{sufijo}.pdf"
+
+    def local(html: str) -> str:
+        """Traduce, y solo publica con cobertura completa.
+
+        Un libro a medio traducir no es un libro en inglés: es un libro en
+        español con frases sueltas en inglés. Por eso, por debajo del 100 %,
+        no se escribe nada.
+        """
+        if idioma == "es":
+            return html
+        salida, hechos, totales = i18n.traducir(html, idioma, cat)
+        if hechos < totales:
+            raise Incompleto(base, idioma, hechos, totales)
+        return salida
+
+    titulillo = i18n.cadena(libro["titulo"], idioma, cat)
 
     # 1 · Cubierta a sangre, en documento propio
-    html_cub.write_text(cubierta(libro))
+    html_cub.write_text(local(cubierta(libro)))
     render(html_cub, pdf_cub, "", sangre=True)
 
     # 2 · Interior. Hacen falta dos pasadas: la primera para saber en qué
     #     página cae cada capítulo, la segunda ya con el índice numerado.
-    html_int.write_text(documento(libro, None))
-    render(html_int, pdf_int, libro["titulo"])
-    folios = paginas_de_capitulos(pdf_int, caps)
+    html_int.write_text(local(documento(libro, None)))
+    render(html_int, pdf_int, titulillo)
+    folios = paginas_de_capitulos(pdf_int, caps, idioma, cat)
 
     for _ in range(2):                       # el índice puede desplazar el texto
-        html_int.write_text(documento(libro, folios))
-        render(html_int, pdf_int, libro["titulo"])
-        nuevos = paginas_de_capitulos(pdf_int, caps)
+        html_int.write_text(local(documento(libro, folios)))
+        render(html_int, pdf_int, titulillo)
+        nuevos = paginas_de_capitulos(pdf_int, caps, idioma, cat)
         if nuevos == folios:
             break
         folios = nuevos
@@ -374,7 +419,7 @@ def construir(libro: dict) -> None:
 
     # La cubierta va sin numerar, como en cualquier libro: el folio 1 es la
     # primera página del interior, que en el PDF es la segunda.
-    marcadores(destino, libro, [f + 1 for f in folios])
+    marcadores(destino, libro, [f + 1 for f in folios], idioma, cat)
 
     from pypdf import PdfReader
     n = len(PdfReader(str(destino)).pages)
@@ -429,13 +474,40 @@ def unir(cubierta_pdf: Path, interior_pdf: Path, destino: Path,
 
 
 def main() -> None:
-    flt = next((a for a in sys.argv[1:] if not a.startswith("--")), "")
+    args = sys.argv[1:]
+    flt = next((a for a in args if not a.startswith("--")), "")
     libros = [json.loads(p.read_text()) for p in sorted(SRC.glob("*.json"))
               if flt in p.name]
     if not libros:
         raise SystemExit(f"Sin libros que coincidan con '{flt}'.")
-    for libro in libros:
-        construir(libro)
+
+    # --idioma en,fr   ·   --todos-los-idiomas
+    idiomas = ["es"]
+    for a in args:
+        if a.startswith("--idioma="):
+            idiomas = [c.strip() for c in a.split("=", 1)[1].split(",")]
+    if "--todos-los-idiomas" in args:
+        idiomas = list(i18n.IDIOMAS)
+    desconocidos = [c for c in idiomas if c not in i18n.IDIOMAS]
+    if desconocidos:
+        raise SystemExit(f"Idioma no soportado: {', '.join(desconocidos)}. "
+                         f"Disponibles: {', '.join(i18n.IDIOMAS)}")
+
+    cat = i18n.cargar()
+    pendientes = []
+    for idioma in idiomas:
+        print(f"\n  {i18n.IDIOMAS[idioma][0]}")
+        for libro in libros:
+            try:
+                construir(libro, idioma, cat)
+            except Incompleto as e:
+                pendientes.append(e)
+                print(f"  {e.libro + ('' if idioma == 'es' else '-' + idioma):<32} "
+                      f"SIN TRADUCIR  {e.hechos}/{e.totales} segmentos")
+
+    if pendientes:
+        print(f"\n  {len(pendientes)} edición(es) no publicadas por cobertura "
+              "incompleta. Se traduce lo que falta y se vuelve a lanzar.")
 
 
 if __name__ == "__main__":

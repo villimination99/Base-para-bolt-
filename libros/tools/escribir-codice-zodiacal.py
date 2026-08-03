@@ -2215,6 +2215,25 @@ LIBRO = {
     "subtitulo": "Los doce signos como mapa del carácter, del cuerpo y del trabajo interior",
     "autor": "Villuminations",
     "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece a la <strong>tradición común</strong>:
+     las correspondencias astrológicas clásicas, los regentes planetarios, la
+     división en elementos y modalidades y las tablas de decanatos se
+     transmiten por escrito desde hace más de dos milenios y no son propiedad
+     de nadie. Lo que aquí se ofrece —la redacción, la estructura de nueve
+     claves, las prácticas de cuatro semanas, la lectura corporal y de hábito
+     de cada signo, las fichas, los ejercicios de registro y las
+     ilustraciones— es trabajo propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> La astrología que aquí se practica
+     es un <em>lenguaje simbólico</em>: una manera antigua y muy afinada de
+     nombrar temperamentos, tensiones y ciclos. No es una ciencia predictiva.
+     Nada de lo que sigue anuncia hechos futuros, diagnostica enfermedades ni
+     sustituye la atención de un médico, un psicólogo o un dietista-nutricionista
+     colegiado. Las pautas de alimentación, sueño y movimiento son de sentido
+     común y deben adaptarse a tu caso; si tienes una patología, embarazo o
+     tratamiento en curso, consúltalas antes con tu profesional sanitario.""",
     "mascota": "r-zodiaco",
     "acento": "cyan",
     "original": True,
