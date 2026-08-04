@@ -20,6 +20,14 @@ y comprueba, uno por uno, lo que un comprador notaría:
 
     python3 tools/auditar.py            # dist/ entero
     python3 tools/auditar.py dist/en    # solo una edición
+
+La comprobación 6 vale para los planes y NO vale para los libros. Un plan tiene
+una retícula fija: cada apartado ocupa el sitio que se le asignó, y una página
+de más significa que una traducción larga ha empujado algo fuera de su caja. Un
+libro fluye, se pagina solo y lleva un índice que se recompone: que la edición
+francesa tenga cuatro páginas más que la inglesa es lo normal y no delata nada.
+Por eso los libros se auditan con --paginas-libres, que hace las cinco primeras
+comprobaciones y se salta la sexta en vez de fingir un descuadre.
 """
 
 import re
@@ -67,7 +75,20 @@ def fuentes(pdf: Path) -> set:
     return tipos
 
 
-def auditar(pdf: Path, idioma: str) -> list[str]:
+def contar_marcadores(nodo) -> int:
+    """Cuenta el árbol de marcadores entero, no solo su primer nivel.
+
+    Un plan trae una lista plana, un marcador por página. Un libro trae un
+    árbol: el título del volumen y, colgando de él, un marcador por capítulo.
+    len() sobre ese árbol devuelve 2 —el tronco y la lista de hijos— y eso
+    hacía que los ocho libros fallaran a la vez por un defecto que no tenían.
+    """
+    if isinstance(nodo, list):
+        return sum(contar_marcadores(hijo) for hijo in nodo)
+    return 1
+
+
+def auditar(pdf: Path, idioma: str, paginas_libres: bool = False) -> list[str]:
     from pypdf import PdfReader
 
     fallos = []
@@ -81,11 +102,16 @@ def auditar(pdf: Path, idioma: str) -> list[str]:
         fallos.append("ninguna fuente incrustada")
 
     try:
-        marcadores = len(lector.outline)
+        marcadores = contar_marcadores(lector.outline)
     except Exception:
         marcadores = 0
-    if marcadores < paginas - 1:
-        fallos.append(f"solo {marcadores} marcadores para {paginas} páginas")
+    # Un plan lleva un marcador por página porque cada página es un apartado.
+    # Un libro lleva uno por capítulo, y el criterio pasa a ser el del lector:
+    # que nadie tenga que recorrer más de diez páginas para saber dónde está.
+    minimo = -(-paginas // 10) if paginas_libres else paginas - 1
+    if marcadores < minimo:
+        fallos.append(f"solo {marcadores} marcadores para {paginas} páginas "
+                      f"(hacen falta {minimo})")
 
     meta = lector.metadata or {}
     for clave in ("/Title", "/Author", "/Subject"):
@@ -112,8 +138,22 @@ def auditar(pdf: Path, idioma: str) -> list[str]:
     return fallos
 
 
+def raiz_dist(pdf: Path) -> Path:
+    """El dist/ que contiene a este PDF, sea el de planes o el de libros.
+
+    Se busca hacia arriba en vez de darlo por sentado: el script se invoca
+    también sobre libros/dist, y colgar la ruta de la raíz de planes convertía
+    una auditoría de libros en un ValueError."""
+    for padre in pdf.parents:
+        if padre.name == "dist":
+            return padre
+    return pdf.parent
+
+
 def main() -> None:
-    objetivos = [Path(a) for a in sys.argv[1:]] or [RAIZ / "dist"]
+    argumentos = [a for a in sys.argv[1:] if a != "--paginas-libres"]
+    comparar_paginas = "--paginas-libres" not in sys.argv[1:]
+    objetivos = [Path(a) for a in argumentos] or [RAIZ / "dist"]
     archivos = []
     for o in objetivos:
         archivos.extend(sorted(o.rglob("*.pdf")) if o.is_dir() else [o])
@@ -130,29 +170,32 @@ def main() -> None:
         # La edición de impresión tiene su propia paginación (no lleva las
         # mismas separatas que la de pantalla), así que forma una familia
         # aparte: compararla con la de pantalla daría un descuadre falso.
-        partes = pdf.relative_to(RAIZ / "dist").parts
+        partes = pdf.relative_to(raiz_dist(pdf)).parts
         idioma = next((p for p in partes if p in ("en", "fr")), "es")
         familia = ("impresion · " if "impresion" in partes else "pantalla · ")
         base = familia + re.sub(r"-(en|fr)\.pdf$", ".pdf", pdf.name)
         por_documento[base][idioma] = len(PdfReader(str(pdf)).pages)
 
         total += 1
-        fallos = auditar(pdf, idioma)
+        fallos = auditar(pdf, idioma, paginas_libres=not comparar_paginas)
         if fallos:
             malos += 1
-            print(f"\n  {pdf.relative_to(RAIZ)}")
+            print(f"\n  {raiz_dist(pdf).name}/{'/'.join(partes)}")
             for f in fallos:
                 print(f"      · {f}")
 
-    print("\n  Paginación comparada")
     descuadres = 0
-    for base, cuentas in sorted(por_documento.items()):
-        if len(set(cuentas.values())) > 1:
-            descuadres += 1
-            detalle = "  ".join(f"{k} {v}" for k, v in sorted(cuentas.items()))
-            print(f"    DESCUADRE  {base:<58} {detalle}")
-    if not descuadres:
-        print("    Las tres ediciones de cada documento tienen las mismas páginas.")
+    if comparar_paginas:
+        print("\n  Paginación comparada")
+        for base, cuentas in sorted(por_documento.items()):
+            if len(set(cuentas.values())) > 1:
+                descuadres += 1
+                detalle = "  ".join(f"{k} {v}" for k, v in sorted(cuentas.items()))
+                print(f"    DESCUADRE  {base:<58} {detalle}")
+        if not descuadres:
+            print("    Las tres ediciones de cada documento tienen las mismas páginas.")
+    else:
+        print("\n  Paginación libre: no se comparan las ediciones entre sí.")
 
     print(f"\n  {total} PDF auditados · {malos} con problemas · "
           f"{descuadres} descuadres de paginación")
