@@ -247,7 +247,7 @@ T = {
               "laisse croire le débat public."},
 
     '<span class="fig-n">Los tres rangos aceptables, a escala sobre el cien por '
-    "ciento</span> Cada barra es el rango de porcentaje de la energía total que admiten los "
+    "cien</span> Cada barra es el rango de porcentaje de la energía total que admiten los "
     "valores de referencia para ese macronutriente. Los tres rangos se solapan y dan margen "
     "de sobra para dietas muy distintas: por eso una dieta con el treinta por ciento de "
     "proteína y otra con el quince pueden ser las dos correctas.": {
