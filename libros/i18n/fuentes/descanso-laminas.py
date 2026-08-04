@@ -31,7 +31,7 @@ T = {
     "Sube el cortisol de forma brusca:": {
         "en": "Cortisol rises sharply:", "fr": "Le cortisol monte brusquement :"},
     "es normal y es útil": {
-        "en": "this is normal and it is useful", "fr": "c'est normal et c'est utile"},
+        "en": "normal, and useful", "fr": "normal et utile"},
 
     "PICO DE CORTISOL MATINAL": {
         "en": "MORNING CORTISOL PEAK", "fr": "PIC DE CORTISOL MATINAL"},
@@ -128,7 +128,7 @@ T = {
         "fr": "Concentré sur la seconde moitié. Si l'on coupe le sommeil par la fin, c'est "
               "celui-ci que l'on perd"},
     "Crece en cada ciclo": {
-        "en": "It grows with every cycle", "fr": "Il s'allonge à chaque cycle"},
+        "en": "It grows with every cycle", "fr": "Il croît à chaque cycle"},
     "ARQUITECTURA DEL SUEÑO · CUATRO ESTADOS, NO UNO": {
         "en": "SLEEP ARCHITECTURE · FOUR STATES, NOT ONE",
         "fr": "ARCHITECTURE DU SOMMEIL · QUATRE ÉTATS, PAS UN"},
@@ -149,7 +149,7 @@ T = {
     "horas desde la taza": {"en": "hours since the cup", "fr": "heures depuis la tasse"},
     "NO IMPIDE DORMIRSE · RECORTA EL SUEÑO PROFUNDO DE ESA NOCHE": {
         "en": "IT DOES NOT STOP YOU FALLING ASLEEP · IT CUTS THAT NIGHT'S DEEP SLEEP",
-        "fr": "ELLE N'EMPÊCHE PAS DE S'ENDORMIR · ELLE ROGNE LE SOMMEIL PROFOND DE LA NUIT"},
+        "fr": "ELLE N'EMPÊCHE PAS DE DORMIR · ELLE ROGNE LE PROFOND DE LA NUIT"},
 
     # ── Lámina: la cuenta atrás ────────────────────────────────────────────
     "ÚLTIMA CAFEÍNA": {"en": "LAST CAFFEINE", "fr": "DERNIÈRE CAFÉINE"},

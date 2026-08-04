@@ -151,7 +151,7 @@ def me_amdr():
     for i, (nombre, lo, hi, nota) in enumerate(D.AMDR):
         y = 46 + i * FILA
         p.append(txt(X0 - 12, y + 20, nombre, "rot", 9.6, PRI, "end"))
-        corto = nota[:62] + ("…" if len(nota) > 62 else "")
+        corto = recortar(nota, 62)
         p.append(txt(X0, y + 46, corto, "et", 9.2, APAGADO, "start"))
         x = X0 + ANCHO * lo / 100
         w = ANCHO * (hi - lo) / 100
@@ -425,7 +425,7 @@ def ca_descarga():
         p.append(txt(258, y + 16, que.upper(), "rot", 8.4, PRI, "start"))
         p.append(txt(258, y + 30, ritmo, "et", 10.4, ALERTA, "start"))
         # 198 unidades de ancho útil: a 8,8 en Rajdhani entran unas 40 letras.
-        corto = nota[:40].rstrip() + ("…" if len(nota) > 40 else "")
+        corto = recortar(nota, 40)
         p.append(txt(258, y + 44, corto, "et", 8.8, APAGADO, "start"))
     p.append(pie(464, ALTO,
                  "REPOSO EN CAMA Y VUELO ESPACIAL · ÓRDENES DE MAGNITUD"))
@@ -454,7 +454,7 @@ def ca_niosh():
                  f'stroke="{SEC}" stroke-width="1.4"/>')
         p.append(txt(x + 22, y + 30, sig, "rot", 9, SEC))
         p.append(txt(x + 44, y + 20, nombre.upper(), "rot", 8.4, PRI, "start"))
-        corto = glosa[:44] + ("…" if len(glosa) > 44 else "")
+        corto = recortar(glosa, 44)
         p.append(txt(x + 44, y + 36, corto, "et", 9.8, CLARO, "start"))
     p.append(f'<rect x="14" y="262" width="436" height="24" rx="6" '
              f'fill="{ALERTA}" opacity=".08"/>')
@@ -847,7 +847,7 @@ def me_gasto():
         p.append(barra(x, y + 4, max(w, 6), 24, col, ".24"))
         p.append(txt(x + max(w, 6) + 8, y + 21, f"{lo}–{hi} %", "num", 9.6,
                      col, "start"))
-        corto = nota[:64] + ("…" if len(nota) > 64 else "")
+        corto = recortar(nota, 64)
         p.append(txt(14, y + 40, corto, "et", 8.8, APAGADO, "start"))
     p.append(f'<rect x="14" y="{ALTO-38}" width="436" height="22" rx="6" '
              f'fill="{PRI}" opacity=".07"/>')
@@ -962,11 +962,9 @@ def me_inocuidad():
         p.append(txt(BX + 12, by + 20, f"{grados} °C", "num", 15, PRI, "start"))
         for j, (alimento, nota) in enumerate(filas):
             yy = by + 16 + j * 24
-            p.append(txt(BX + 70, yy, alimento[:34]
-                         + ("…" if len(alimento) > 34 else ""),
+            p.append(txt(BX + 70, yy, recortar(alimento, 34),
                          "et", 9.8, CLARO, "start"))
-            p.append(txt(BX + 70, yy + 11, nota[:40]
-                         + ("…" if len(nota) > 40 else ""),
+            p.append(txt(BX + 70, yy + 11, recortar(nota, 40),
                          "et", 8.2, APAGADO, "start"))
     p.append(f'<rect x="14" y="262" width="436" height="24" rx="6" '
              f'fill="{ALERTA}" opacity=".08"/>')
@@ -996,8 +994,7 @@ def ca_patrones():
         p.append(txt(34, y + 23, str(i + 1), "num", 10, col))
         p.append(txt(56, y + 15, nombre.upper(), "rot", 8.4, col, "start"))
         p.append(txt(56, y + 30, que, "et", 9.4, APAGADO, "start"))
-        p.append(txt(446, y + 24, ejemplos[:38] + ("…" if len(ejemplos) > 38
-                                                   else ""),
+        p.append(txt(446, y + 24, recortar(ejemplos, 38),
                      "et", 9.4, CLARO, "end"))
     p.append(pie(464, ALTO, "OCHO PATRONES · UNA SEMANA QUE LOS TOCA TODOS NO "
                             "DEJA HUECOS"))
@@ -1032,7 +1029,7 @@ def ca_variables():
         lineas = _partir(glosa, 34)
         if len(lineas) > 3:               # que un recorte nunca sea silencioso
             lineas = lineas[:3]
-            lineas[2] = lineas[2][:32] + "…"
+            lineas[2] = recortar(lineas[2], 33)
         for j, linea in enumerate(lineas):
             p.append(txt(x + 12, y + 44 + j * 11, linea, "et", 8.6, APAGADO,
                          "start"))
@@ -1056,9 +1053,9 @@ def ca_acft():
         p.append(f'<rect x="12" y="{y}" width="4" height="42" rx="2" '
                  f'fill="{SEC}" opacity=".8"/>')
         p.append(txt(28, y + 16, nombre.upper(), "rot", 8.2, PRI, "start"))
-        p.append(txt(28, y + 31, como[:52] + ("…" if len(como) > 52 else ""),
+        p.append(txt(28, y + 31, recortar(como, 52),
                      "et", 9.2, APAGADO, "start"))
-        p.append(txt(446, y + 25, mide[:30] + ("…" if len(mide) > 30 else ""),
+        p.append(txt(446, y + 25, recortar(mide, 30),
                      "et", 9.4, SEC, "end"))
     p.append(f'<rect x="12" y="{ALTO-34}" width="440" height="22" rx="6" '
              f'fill="{SEC}" opacity=".09"/>')
@@ -1105,7 +1102,7 @@ def vo_dominios():
         y = 258 + i * 14
         col = PRI if i < 4 else APAGADO
         p.append(txt(14, y, nombre.upper(), "rot", 7.4, col, "start"))
-        p.append(txt(96, y, cae[:52] + ("…" if len(cae) > 52 else ""),
+        p.append(txt(96, y, recortar(cae, 52),
                      "et", 9, CLARO, "start"))
     p.append(pie(464, ALTO, "RUEDA DE DIAGNÓSTICO · EL MÁS BAJO MANDA"))
     p.append("</symbol>")
@@ -1253,6 +1250,27 @@ def de_cafeina():
                  "rot", 7.8, SEC))
     p.append("</symbol>")
     return "".join(p)
+
+
+def recortar(texto, ancho):
+    """Ajusta un rótulo a `ancho` letras SIN partir una palabra.
+
+    Antes esto se hacía con `texto[:ancho] + "…"`, y el resultado eran rótulos
+    como «Despertar aquí es l…» o «que consume el cere…» impresos en un PDF a
+    la venta. Cortar por el espacio anterior cuesta lo mismo y no produce
+    medias palabras.
+
+    Cuando cabe entero no toca nada, que es el caso que hay que buscar: el
+    recorte es la red de seguridad, no el diseño.
+    """
+    texto = texto.strip()
+    if len(texto) <= ancho:
+        return texto
+    corte = texto[:ancho - 1].rstrip()
+    espacio = corte.rfind(" ")
+    if espacio > ancho // 2:          # que no se quede en dos palabras sueltas
+        corte = corte[:espacio]
+    return corte.rstrip(" ,;:.") + "…"
 
 
 def _partir(texto, ancho):

@@ -95,6 +95,26 @@ def inventario(documentos) -> dict:
     return fuera
 
 
+def claves_de_lamina() -> dict:
+    """Los segmentos que viven DENTRO de una lámina, con su ancho original.
+
+    Un rótulo de lámina no es prosa: ocupa un hueco de ancho fijo dentro de un
+    SVG, y a diferencia del HTML no hay nada que lo reajuste. Si la traducción
+    es bastante más larga que el original, el texto se sale del recuadro y el
+    fallo no se ve hasta tener el PDF delante.
+
+    Con esta lista, el cargador puede comprobar la longitud de cada traducción
+    de rótulo y negarse a aceptarla. Es la misma disciplina que el resto: si se
+    puede comprobar, se comprueba.
+    """
+    fuera = {}
+    for ruta in sorted((RAIZ / "partials").glob("*.svg")):
+        html = ruta.read_text(encoding="utf-8")
+        for _, _, texto in segmentar(html):
+            fuera.setdefault(clave(texto), texto)
+    return fuera
+
+
 def _documentos_es():
     """Los ocho libros compuestos en español.
 

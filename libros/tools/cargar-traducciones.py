@@ -55,6 +55,12 @@ def main() -> None:
     for k, v in inv_total.items():
         por_pegado.setdefault(pegado(v), (k, v))
 
+    # Los rótulos de lámina tienen un ancho fijo que nadie reajusta: se les
+    # aplica un presupuesto de longitud. El margen es del 15 % más cuatro
+    # letras —lo que absorbe la diferencia normal entre idiomas sin dejar pasar
+    # una traducción del doble de larga— con un suelo para los rótulos cortos.
+    laminas = i18n.claves_de_lamina()
+
     catalogo, errores, entradas = {}, [], 0
     for modulo in sorted(FUENTES.glob("*.py")):
         spec = importlib.util.spec_from_file_location(modulo.stem, modulo)
@@ -79,6 +85,20 @@ def main() -> None:
                     errores.append(f"{modulo.name} [{idioma}]: el marcado no "
                                    f"coincide → «{plano[:50]}»")
                     continue
+                if clave_seg in laminas:
+                    # El suelo de 26 letras existe porque un rótulo corto NO
+                    # define el ancho de su recuadro: la segunda línea de
+                    # «BAJÓN DE ALERTA DE LA / TARDE» cabe en el hueco que abrió
+                    # la primera. Sin él, la regla marcaría como desbordes
+                    # traducciones que caben de sobra.
+                    tope = max(int(len(plano) * 1.15) + 4, 26)
+                    if len(destino) > tope:
+                        errores.append(
+                            f"{modulo.name} [{idioma}]: rótulo de lámina de "
+                            f"{len(destino)} letras donde caben {tope} → "
+                            f"«{plano[:40]}». Acórtalo: en un SVG no hay nada "
+                            "que reajuste el texto y se saldría del recuadro.")
+                        continue
                 catalogo.setdefault(clave_seg, {})[idioma] = destino
 
     if errores:
