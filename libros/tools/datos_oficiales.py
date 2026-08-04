@@ -396,23 +396,37 @@ RESPIRACION = {"fases": ["Inspirar", "Sostener", "Espirar", "Sostener"],
 # ══════════════════════════════════════════════════════════════════════
 # Hitos del día biológico, situados en horas relativas a la hora habitual de
 # despertar (0 = despertar). Son promedios de un cronotipo intermedio.
+# La glosa va partida en CLÁUSULAS, no en una cadena larga, porque la lámina
+# la imprime en dos renglones dentro de una ficha de ancho fijo. Partirla aquí
+# —y no con un recorte por caracteres al dibujar— tiene dos efectos: la lámina
+# no puede cortar una palabra por la mitad, y cada renglón es una frase
+# completa que se puede traducir por su cuenta. El libro las une con un
+# espacio, así que la prosa se lee igual.
 CIRCADIANO = [
     (-2, "Mínimo de temperatura central",
-     "El punto más bajo del día. Despertar aquí es lo que peor sienta"),
-    (0, "Despertar", "Sube el cortisol de forma brusca: es normal y es útil"),
-    (0.6, "Pico de cortisol matinal", "Treinta a cuarenta y cinco minutos "
-                                      "después de abrir los ojos"),
-    (7, "Bajón de alerta de la tarde", "No lo causa la comida: ocurre igual en "
-                                       "ayunas. Es el hueco de la siesta corta"),
-    (10, "Máximo de fuerza y temperatura", "La franja en que mejor se rinde en "
-                                           "casi todas las pruebas físicas"),
-    (14, "Zona de mantenimiento de la vigilia", "Las dos o tres horas antes de "
-                                                "dormir en que cuesta más "
-                                                "dormirse, aunque haya sueño"),
-    (15, "Inicio de la melatonina", "Con luz tenue. La luz intensa a esta hora "
-                                    "lo retrasa"),
-    (16, "Sueño", "Si el horario es estable"),
+     ("El punto más bajo del día.",
+      "Despertar aquí es lo que peor sienta")),
+    (0, "Despertar",
+     ("Sube el cortisol de forma brusca:", "es normal y es útil")),
+    (0.6, "Pico de cortisol matinal",
+     ("Treinta a cuarenta y cinco minutos", "después de abrir los ojos")),
+    (7, "Bajón de alerta de la tarde",
+     ("No lo causa la comida: ocurre igual en ayunas.",
+      "Es el hueco de la siesta corta")),
+    (10, "Máximo de fuerza y temperatura",
+     ("La franja en que mejor se rinde",
+      "en casi todas las pruebas físicas")),
+    (14, "Zona de mantenimiento de la vigilia",
+     ("Las dos o tres horas antes de dormir",
+      "en que cuesta más dormirse, aunque haya sueño")),
+    (15, "Inicio de la melatonina",
+     ("Con luz tenue.", "La luz intensa a esta hora lo retrasa")),
+    (16, "Sueño", ("Si el horario es estable",)),
 ]
+
+# Ancho útil de la ficha de la lámina, en caracteres. Si una glosa lo pasa, el
+# rótulo se saldría del recuadro, así que se comprueba y no se dibuja.
+CIRCADIANO_ANCHO = 46
 
 CAFEINA = {
     "vida_media": 5,          # horas, adulto medio
@@ -549,6 +563,16 @@ def comprobar():
     horas = [h for h, _, _ in CIRCADIANO]
     if horas != sorted(horas):
         raise SystemExit("Los hitos circadianos no están en orden")
+    for _, nombre, lineas in CIRCADIANO:
+        if not 1 <= len(lineas) <= 2:
+            raise SystemExit(
+                f"«{nombre}»: la glosa del reloj va en uno o dos renglones")
+        largo = max(len(x) for x in lineas)
+        if largo > CIRCADIANO_ANCHO:
+            raise SystemExit(
+                f"«{nombre}»: un renglón de {largo} caracteres no cabe en la "
+                f"ficha de la lámina, que admite {CIRCADIANO_ANCHO}. Pártelo "
+                "por una coma o un punto, no por la mitad de una palabra.")
     despierto = next(h for h, n, _ in CIRCADIANO if n == "Sueño")
     if not 15 <= despierto <= 24 - SUENO["adulto_horas"] + 1:
         raise SystemExit(

@@ -579,7 +579,7 @@ CE1 = cap(
         "arrastran cambiando la hora de levantarse y la exposición a la luz."),
     ficha("Los hitos del día",
           [(f"{'+' if h >= 0 else ''}{h:g} h".replace(".", ",") + f" · {nombre}",
-            glosa) for h, nombre, glosa in D.CIRCADIANO]),
+            " ".join(lineas)) for h, nombre, lineas in D.CIRCADIANO]),
     h("Los tres que más se pueden usar"),
     p("El mínimo de temperatura central cae unas dos horas antes de la hora "
       "habitual de despertar, y es el peor momento posible para levantarse. "

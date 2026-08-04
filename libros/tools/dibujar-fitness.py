@@ -1171,12 +1171,12 @@ def de_reloj():
         p.append(f'<path d="M{f(x)} {Y0+12} V{Y0+24}" fill="none" '
                  f'stroke="{APAGADO}" stroke-width=".8"/>')
         p.append(txt(x, Y0 + 6, f"+{h} h", "num", 7.6, APAGADO))
-    BW, BH = 212, 50
+    BW, BH = 212, 56
     for i, (h, nombre, glosa) in enumerate(D.CIRCADIANO):
         x = ax(h)
         col = SEC if nombre in ("Sueño", "Despertar") else PRI
         bx = 14 if i % 2 == 0 else 238
-        by = 80 + (i // 2) * 60
+        by = 74 + (i // 2) * 66
         p.append(f'<circle cx="{f(x)}" cy="{Y0+18}" r="4" fill="{col}"/>')
         p.append(f'<path d="M{f(x)} {Y0+22} L{bx + BW/2} {by}" fill="none" '
                  f'stroke="{col}" stroke-width=".6" stroke-dasharray="2 3" '
@@ -1187,13 +1187,16 @@ def de_reloj():
         if h >= 0:
             etq = "+" + etq
         p.append(txt(bx + 10, by + 16, etq, "num", 9.2, SEC, "start"))
-        lineas = _partir(nombre.upper(), 26)[:2]
-        for j, linea in enumerate(lineas):
+        for j, linea in enumerate(_partir(nombre.upper(), 26)[:2]):
             p.append(txt(bx + 52, by + 16 + j * 10, linea, "rot", 7, col,
                          "start"))
-        p.append(txt(bx + 10, by + 40, glosa[:46]
-                     + ("…" if len(glosa) > 46 else ""),
-                     "et", 8.6, APAGADO, "start"))
+        # Los renglones vienen ya partidos por cláusulas desde el módulo de
+        # datos, que además comprueba que ninguno se pase del ancho de la
+        # ficha. Aquí no se recorta nada: si algo no cupiera, el generador de
+        # datos ya se habría negado a arrancar.
+        for j, linea in enumerate(glosa):
+            p.append(txt(bx + 10, by + 38 + j * 10, linea, "et", 8.6,
+                         APAGADO, "start"))
     p.append(pie(464, ALTO, "HORAS CONTADAS DESDE EL DESPERTAR HABITUAL · "
                             "CRONOTIPO INTERMEDIO"))
     p.append("</symbol>")
