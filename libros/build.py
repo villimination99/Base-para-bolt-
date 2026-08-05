@@ -64,6 +64,64 @@ def clave(s: str) -> str:
     return re.sub(r"\s+", "", s).upper()
 
 
+_CARDINALES = {
+    "una": 1, "un": 1, "dos": 2, "tres": 3, "cuatro": 4, "cinco": 5, "seis": 6,
+    "siete": 7, "ocho": 8, "nueve": 9, "diez": 10, "once": 11, "doce": 12,
+}
+_CUENTA_LAMINAS = re.compile(
+    r"\b([a-záéíóúñ]+|\d+)\s+láminas\b", re.IGNORECASE)
+
+
+def comprobar_laminas(libro: dict) -> None:
+    """El texto no puede prometer más láminas de las que hay dibujadas.
+
+    Los libros se refieren a su propio repertorio gráfico por su número —«las
+    cinco láminas», «siete láminas dibujadas para este libro»— y ese número se
+    escribió a mano cuando el libro tenía otras tantas. Después se añaden
+    láminas y la frase se queda atrás, sin que nada chille: es una cifra en
+    medio de una frase, no una tabla, y no hay quien la vea al releer.
+
+    Aquí se cuenta lo que de verdad se compone —símbolos distintos, porque una
+    misma lámina puede citarse dos veces— y se compara con lo que el texto
+    afirma. Si no cuadra, no se compone el libro. Es la misma regla que rige
+    las tablas de datos: o se calcula, o se comprueba.
+    """
+    laminas = {b["x"] for c in libro["capitulos"]
+               for b in c["bloques"] if b.get("t") == "figura"}
+    fallos = []
+    for cap in libro["capitulos"]:
+        for bloque in cap["bloques"]:
+            for texto in _textos(bloque):
+                for m in _CUENTA_LAMINAS.finditer(texto):
+                    dicho = m.group(1).lower()
+                    n = _CARDINALES.get(dicho)
+                    if n is None and dicho.isdigit():
+                        n = int(dicho)
+                    if n is not None and n != len(laminas):
+                        fallos.append((cap["titulo"], m.group(0), n))
+    if fallos:
+        detalle = "\n".join(
+            f'    «{frase}» en «{titulo}» — dice {n}' for titulo, frase, n in fallos)
+        raise SystemExit(
+            f"\n  {libro['id']}: el libro tiene {len(laminas)} láminas y el "
+            f"texto dice otra cosa:\n{detalle}\n"
+            "  Corrige la frase o el repertorio; el libro no se compone así.\n")
+
+
+def _textos(bloque: dict):
+    """Todas las cadenas de prosa de un bloque, sea del tipo que sea."""
+    for clave_ in ("x", "tit", "pie"):
+        v = bloque.get(clave_)
+        if isinstance(v, str):
+            yield v
+        elif isinstance(v, list):
+            for i in v:
+                if isinstance(i, str):
+                    yield i
+                elif isinstance(i, (list, tuple)):
+                    yield from (c for c in i if isinstance(c, str))
+
+
 def inicial(s: str) -> str:
     """Primera letra de una entrada de vocabulario, sin tilde y en mayúscula.
 
@@ -465,6 +523,7 @@ def construir(libro: dict, idioma: str = "es", cat: dict | None = None) -> None:
     DIST.mkdir(parents=True, exist_ok=True)
 
     cat = cat if cat is not None else i18n.cargar()
+    comprobar_laminas(libro)
     libro = reordenar_vocabulario(libro, idioma, cat)
     caps = libro["capitulos"]
     base = libro["id"]

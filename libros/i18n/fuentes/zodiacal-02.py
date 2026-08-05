@@ -174,11 +174,11 @@ T = {
               "signe, le cycle lunaire pour ossature et un registre où écrire ce que vous "
               "observez."},
 
-    "Siete láminas dibujadas para este libro y un vocabulario final para poder leer cualquier "
+    "Diez láminas dibujadas para este libro y un vocabulario final para poder leer cualquier "
     "otro tratado sin perderse.": {
-        "en": "Seven plates drawn for this book and a closing vocabulary so that you can read "
+        "en": "Ten plates drawn for this book and a closing vocabulary so that you can read "
               "any other treatise without getting lost.",
-        "fr": "Sept planches dessinées pour ce livre et un vocabulaire final pour pouvoir lire "
+        "fr": "Dix planches dessinées pour ce livre et un vocabulaire final pour pouvoir lire "
               "n'importe quel autre traité sans s'y perdre."},
 
     "Lo que este libro no es": {

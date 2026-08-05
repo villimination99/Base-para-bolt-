@@ -102,7 +102,7 @@ C1 = cap(
         "Un programa de doce meses de trabajo interior, con una práctica concreta "
         "por signo, el ciclo lunar como armazón y un registro para escribir lo que "
         "observas.",
-        "Siete láminas dibujadas para este libro y un vocabulario final para poder "
+        "Diez láminas dibujadas para este libro y un vocabulario final para poder "
         "leer cualquier otro tratado sin perderse.",
     ),
     h("Lo que este libro no es"),

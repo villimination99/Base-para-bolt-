@@ -178,15 +178,15 @@ T = {
               "n'est à personne."},
 
     "Lo que aquí es propio: la redacción entera, la estructura del libro, el orden de las "
-    "operaciones, las fórmulas en castellano, el encuadre psicológico, las seis láminas "
+    "operaciones, las fórmulas en castellano, el encuadre psicológico, las ocho láminas "
     "dibujadas para esta edición y los ejercicios de registro. No se reproduce texto de "
     "ningún autor moderno.": {
         "en": "What is original here: the whole of the writing, the book's structure, the "
               "order of the operations, the formulae in the vernacular, the psychological "
-              "framing, the six plates drawn for this edition and the recording exercises. No "
+              "framing, the eight plates drawn for this edition and the recording exercises. No "
               "text by any modern author is reproduced.",
         "fr": "Ce qui est propre ici : toute la rédaction, la structure du livre, l'ordre des "
-              "opérations, les formules en langue vulgaire, le cadrage psychologique, les six "
+              "opérations, les formules en langue vulgaire, le cadrage psychologique, les huit "
               "planches dessinées pour cette édition et les exercices de relevé. Aucun texte "
               "d'auteur moderne n'est reproduit."},
 

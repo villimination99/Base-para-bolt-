@@ -94,7 +94,7 @@ C1 = cap(
       "no es de nadie."),
     p("Lo que aquí es propio: la redacción entera, la estructura del libro, el "
       "orden de las operaciones, las fórmulas en castellano, el encuadre "
-      "psicológico, las seis láminas dibujadas para esta edición y los ejercicios "
+      "psicológico, las ocho láminas dibujadas para esta edición y los ejercicios "
       "de registro. No se reproduce texto de ningún autor moderno."),
     h("Cómo leerlo"),
     pasos(
@@ -1349,7 +1349,7 @@ C22 = cap(
       "de cerca, lo único que teníamos para gastar."),
     p("Si al final del año tienes doce meses de registro escrito con tu letra y "
       "la gente que te rodea te encuentra un poco más presente, el oficio ha "
-      "funcionado. Y si además te has dado cuenta de que ninguna de las seis "
+      "funcionado. Y si además te has dado cuenta de que ninguna de las ocho "
       "láminas de este libro hacía nada por sí sola, entonces ha funcionado del "
       "todo."),
 )

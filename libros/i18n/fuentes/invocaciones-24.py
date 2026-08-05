@@ -10,7 +10,7 @@ línea de escritura. «Antes / después» conserva la barra y los espacios.
 en las tres lenguas.
 
 El párrafo final del libro dice que todo esto está construido para producir
-atención y que las seis láminas no hacían nada por sí solas. Es el cierre y se
+atención y que las ocho láminas no hacían nada por sí solas. Es el cierre y se
 traduce sin añadirle solemnidad: el original no la tiene.
 """
 
@@ -103,15 +103,15 @@ T = {
 
     "Si al final del año tienes doce meses de registro escrito con tu letra y la gente que te "
     "rodea te encuentra un poco más presente, el oficio ha funcionado. Y si además te has dado "
-    "cuenta de que ninguna de las seis láminas de este libro hacía nada por sí sola, entonces "
+    "cuenta de que ninguna de las ocho láminas de este libro hacía nada por sí sola, entonces "
     "ha funcionado del todo.": {
         "en": "If at the end of the year you have twelve months of record written in your own "
               "hand and the people around you find you a little more present, the trade has "
-              "worked. And if on top of that you have realised that not one of the six plates "
+              "worked. And if on top of that you have realised that not one of the eight plates "
               "in this book did anything on its own, then it has worked completely.",
         "fr": "Si à la fin de l'année vous avez douze mois de registre écrits de votre main et "
               "que les gens autour de vous vous trouvent un peu plus présent, le métier a "
-              "fonctionné. Et si en plus vous vous êtes rendu compte qu'aucune des six planches "
+              "fonctionné. Et si en plus vous vous êtes rendu compte qu'aucune des huit planches "
               "de ce livre ne faisait quoi que ce soit par elle-même, alors il a pleinement "
               "fonctionné."},
 }
