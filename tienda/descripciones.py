@@ -361,7 +361,8 @@ ou un traitement en cours, consultez d'abord votre professionnel de santé.</p>
 # --------------------------------------------------------------------------
 
 ZODIACAL = {
-    "handle": "el-zodiaco",
+    "handle": "codice-zodiacal",
+    "handle_viejo": "el-zodiaco",
     "portada": "codice-zodiacal.png",
     "coleccion": "codices",
     "gid": "gid://shopify/Product/7139483910193",
@@ -480,7 +481,8 @@ illustrations sont un travail propre.</p>
 }
 
 INVOCACIONES = {
-    "handle": "las-conjuraciones-y-la-invocacion-del-sello-salomon",
+    "handle": "codice-de-las-invocaciones",
+    "handle_viejo": "las-conjuraciones-y-la-invocacion-del-sello-salomon",
     "portada": "codice-invocaciones.png",
     "coleccion": "codices",
     "gid": "gid://shopify/Product/7139485974577",

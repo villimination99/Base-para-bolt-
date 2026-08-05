@@ -38,6 +38,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import descripciones                                            # noqa: E402
 import fichas_libros                                            # noqa: E402
+import seo                                                      # noqa: E402
 
 PORTADAS = Path(__file__).resolve().parent / "portadas"
 
@@ -138,6 +139,14 @@ mutation($c: CollectionInput!) {
   }
 }"""
 
+ACTUALIZAR_COL = """
+mutation($c: CollectionInput!) {
+  collectionUpdate(input: $c) {
+    userErrors { field message }
+    collection { id handle }
+  }
+}"""
+
 BUSCAR_COL = """
 query($h: String!) {
   collectionByHandle(handle: $h) { id handle }
@@ -147,6 +156,14 @@ METER = """
 mutation($id: ID!, $p: [ID!]!) {
   collectionAddProducts(id: $id, productIds: $p) {
     userErrors { field message }
+  }
+}"""
+
+REDIRIGIR = """
+mutation($r: UrlRedirectInput!) {
+  urlRedirectCreate(urlRedirect: $r) {
+    userErrors { field message }
+    urlRedirect { path target }
   }
 }"""
 
@@ -184,15 +201,16 @@ def multipart(url: str, parametros: list, nombre: str, datos: bytes) -> None:
 def portada(producto: str, ficha: dict) -> str:
     """Sube la portada, si la hay y si no está ya puesta.
 
-    El alt hace de marca: si ya existe una imagen con el alt de esta ficha,
-    no se vuelve a subir. Sin eso, cada pasada añadiría otra copia y la ficha
-    acabaría con seis portadas iguales en la galería.
+    El alt describe la imagen para quien no la ve y para el buscador de
+    imágenes, y de paso hace de marca: si ya hay una imagen con el alt de esta
+    ficha, no se vuelve a subir. Sin eso, cada pasada añadiría otra copia y la
+    galería acabaría con seis portadas iguales.
     """
     png = PORTADAS / (ficha.get("portada") or "")
     if not ficha.get("portada") or not png.exists():
         return "sin portada"
 
-    marca = f"VILLUMINATIONS · {ficha['handle']}"
+    marca = seo.ALT[ficha["handle"]]["es"]
     puestas = pedir(MEDIA, {"id": producto})["product"]["media"]["nodes"]
     if any(m.get("alt") == marca for m in puestas):
         return "portada ya puesta"
@@ -210,29 +228,62 @@ def portada(producto: str, ficha: dict) -> str:
     return "portada subida"
 
 
-def coleccion(handle: str, titulo: str, cuerpo: str, gids: list) -> None:
+def coleccion(handle: str, textos: dict, gids: list) -> None:
+    """Crea o actualiza la colección, con su SEO y sus dos traducciones."""
+    titulo, cuerpo, t_seo, d_seo = textos["es"]
+    entrada = {"handle": handle, "title": titulo, "descriptionHtml": cuerpo,
+               "seo": {"title": t_seo, "description": d_seo}}
+
     existente = pedir(BUSCAR_COL, {"h": handle})["collectionByHandle"]
     if existente:
-        cid = existente["id"]
+        entrada["id"] = existente["id"]
+        cid = pedir(ACTUALIZAR_COL, {"c": entrada})["collectionUpdate"]["collection"]["id"]
     else:
-        cid = pedir(COLECCION, {"c": {
-            "handle": handle, "title": titulo, "descriptionHtml": cuerpo,
-        }})["collectionCreate"]["collection"]["id"]
+        cid = pedir(COLECCION, {"c": entrada})["collectionCreate"]["collection"]["id"]
+
     if gids:
         pedir(METER, {"id": cid, "p": gids})
 
+    digests = {c["key"]: c["digest"] for c in
+               pedir(DIGESTS, {"id": cid})["translatableResource"]
+               ["translatableContent"]}
+    traducciones = []
+    for idioma in ("en", "fr"):
+        t_i, c_i, ts_i, ds_i = textos[idioma]
+        for clave, valor in (("title", t_i), ("body_html", c_i),
+                             ("meta_title", ts_i), ("meta_description", ds_i)):
+            if clave in digests:
+                traducciones.append({
+                    "key": clave, "locale": idioma, "value": valor,
+                    "translatableContentDigest": digests[clave]})
+    if traducciones:
+        pedir(TRADUCIR, {"id": cid, "t": traducciones})
+
 
 def publicar(ficha: dict, ensayo: bool) -> str:
-    handle = ficha["handle"]
-    existente = pedir(BUSCAR, {"h": handle})["productByHandle"]
+    """Crea o actualiza la ficha, y devuelve qué hizo.
 
+    Si el producto cambia de handle se busca primero por el nuevo y luego por
+    el viejo. Sin ese segundo intento, renombrar significaría crear un
+    duplicado y dejar huérfano el original con sus pedidos dentro.
+    """
+    handle = ficha["handle"]
+    viejo = ficha.get("handle_viejo")
+    existente = pedir(BUSCAR, {"h": handle})["productByHandle"]
+    renombrado = False
+    if not existente and viejo:
+        existente = pedir(BUSCAR, {"h": viejo})["productByHandle"]
+        renombrado = bool(existente)
+
+    titulo_seo, descripcion_seo = seo.META[handle]["es"]
     entrada = {
         "handle": handle,
         "title": ficha["titulo"]["es"],
         "descriptionHtml": ficha["es"].strip(),
         "vendor": "VILLUMINATIONS",
         "productType": "Descarga digital",
-        "tags": ["descarga-digital", "trilingue"],
+        "tags": seo.ETIQUETAS[handle] + seo.COMUNES,
+        "seo": {"title": titulo_seo, "description": descripcion_seo},
     }
 
     if existente:
@@ -266,6 +317,7 @@ def publicar(ficha: dict, ensayo: bool) -> str:
                ["translatableContent"]}
     traducciones = []
     for idioma in ("en", "fr"):
+        t_seo, d_seo = seo.META[handle][idioma]
         traducciones += [
             {"key": "title", "locale": idioma,
              "value": ficha["titulo"][idioma],
@@ -274,22 +326,81 @@ def publicar(ficha: dict, ensayo: bool) -> str:
              "value": ficha[idioma].strip(),
              "translatableContentDigest": digests["body_html"]},
         ]
+        # Shopify solo declara meta_title y meta_description como traducibles
+        # cuando el producto ya los tiene puestos. Se acaban de escribir en la
+        # misma pasada, así que estarán; se comprueba de todos modos para no
+        # reventar si algún día cambia el orden de las cosas.
+        for clave, valor in (("meta_title", t_seo),
+                             ("meta_description", d_seo)):
+            if clave in digests:
+                traducciones.append({
+                    "key": clave, "locale": idioma, "value": valor,
+                    "translatableContentDigest": digests[clave]})
     pedir(TRADUCIR, {"id": producto["id"], "t": traducciones})
     ficha["_gid"] = producto["id"]
+
+    # Renombrar sin redirigir tira a la basura los enlaces que ya existan y
+    # todo lo que el buscador tuviera indexado del handle anterior.
+    if renombrado:
+        pedir(REDIRIGIR, {"r": {"path": f"/products/{viejo}",
+                                "target": f"/products/{handle}"}})
+        accion += f" · /{viejo} → /{handle}"
+
     return f"{accion} · {portada(producto['id'], ficha)}"
 
 
 COLECCIONES = {
-    "planes": ("Planes de entrenamiento",
+    "planes": {
+        "es": ("Planes de entrenamiento",
                "<p>Alimentación, entrenamiento, descanso y seguimiento, en tres "
                "niveles. Cada nivel es una descarga digital en español, inglés y "
                "francés, con versión de pantalla y versión preparada para "
-               "imprimir.</p>"),
-    "codices": ("Biblioteca · Los ocho códices",
-                "<p>Ocho libros de referencia y de práctica, cada uno con sus "
-                "láminas dibujadas para la edición y su cuaderno de trabajo. "
-                "Todos se descargan en las tres lenguas: español, inglés y "
-                "francés.</p>"),
+               "imprimir.</p>",
+               "Planes de entrenamiento en PDF | VILLUMINATIONS",
+               "Tres niveles de planes en PDF: alimentación, entrenamiento, "
+               "descanso y seguimiento semanal. Español, inglés y francés."),
+        "en": ("Training plans",
+               "<p>Food, training, rest and follow-up, in three tiers. Each "
+               "tier is a digital download in English, Spanish and French, with "
+               "a screen version and a print-ready version.</p>",
+               "Training plans in PDF | VILLUMINATIONS",
+               "Three tiers of plans in PDF: food, training, rest and weekly "
+               "follow-up. In English, Spanish and French."),
+        "fr": ("Plans d'entraînement",
+               "<p>Alimentation, entraînement, repos et suivi, en trois "
+               "niveaux. Chaque niveau est un téléchargement numérique en "
+               "français, espagnol et anglais, avec une version écran et une "
+               "version prête à imprimer.</p>",
+               "Plans d'entraînement en PDF | VILLUMINATIONS",
+               "Trois niveaux de plans en PDF : alimentation, entraînement, "
+               "repos et suivi hebdomadaire. En trois langues."),
+    },
+    "codices": {
+        "es": ("Biblioteca · Los ocho códices",
+               "<p>Ocho libros de referencia y de práctica, cada uno con sus "
+               "láminas dibujadas para la edición y su cuaderno de trabajo. "
+               "Todos se descargan en las tres lenguas: español, inglés y "
+               "francés.</p>",
+               "Los ocho códices — libros en PDF | VILLUMINATIONS",
+               "Ocho libros en PDF con sus láminas y su cuaderno: nutrición, "
+               "carga, descanso, voluntad, tarot, zodiaco y práctica interior."),
+        "en": ("Library · The eight codices",
+               "<p>Eight books of reference and of practice, each with its own "
+               "plates drawn for the edition and its working notebook. All of "
+               "them download in three languages: English, Spanish and "
+               "French.</p>",
+               "The eight codices — PDF books | VILLUMINATIONS",
+               "Eight PDF books with their plates and notebooks: nutrition, "
+               "load, rest, will, tarot, zodiac and inner practice."),
+        "fr": ("Bibliothèque · Les huit codex",
+               "<p>Huit livres de référence et de pratique, chacun avec ses "
+               "planches dessinées pour l'édition et son cahier de travail. "
+               "Tous se téléchargent en trois langues : français, espagnol et "
+               "anglais.</p>",
+               "Les huit codex — livres en PDF | VILLUMINATIONS",
+               "Huit livres en PDF avec leurs planches et leurs cahiers : "
+               "nutrition, charge, repos, volonté, tarot, zodiaque, pratique."),
+    },
 }
 
 
@@ -299,6 +410,11 @@ def main() -> None:
         raise SystemExit(
             "\n  Faltan SHOPIFY_TIENDA y SHOPIFY_TOKEN en el entorno.\n"
             "  Con --ensayo se puede ver qué haría sin credenciales.\n")
+
+    fuera = seo.comprobar()
+    if fuera:
+        raise SystemExit("\n  SEO fuera de medida; no se publica:\n    "
+                         + "\n    ".join(fuera) + "\n")
 
     print(f"\n  Publicando {len(TODAS)} fichas · "
           f"{len(TODAS) * 3} textos" + ("  ·  ensayo" if ensayo else ""))
@@ -313,11 +429,12 @@ def main() -> None:
     # se acaban de crear, y una colección sin sus productos no sirve de nada.
     if not ensayo:
         print()
-        for clave, (titulo, cuerpo) in COLECCIONES.items():
+        for clave, textos in COLECCIONES.items():
             gids = [f["_gid"] for f in TODAS
                     if f.get("coleccion") == clave and f.get("_gid")]
-            coleccion(clave, titulo, cuerpo, gids)
-            print(f"    colección {clave:12} {titulo:34} {len(gids)} productos")
+            coleccion(clave, textos, gids)
+            print(f"    colección {clave:12} {textos['es'][0]:34} "
+                  f"{len(gids)} productos")
     print()
 
 
