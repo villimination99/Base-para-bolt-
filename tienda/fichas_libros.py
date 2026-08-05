@@ -22,6 +22,8 @@ publicar.py sabe que hay que crearlo en lugar de actualizarlo.
 
 MESA = {
     "handle": "codice-de-la-mesa",
+    "portada": "codice-mesa.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice de la Mesa",
@@ -144,6 +146,8 @@ illustrations sont un travail propre.</p>
 
 CARGA = {
     "handle": "codice-de-la-carga",
+    "portada": "codice-carga.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice de la Carga",
@@ -261,6 +265,8 @@ un travail propre.</p>
 
 DESCANSO = {
     "handle": "codice-del-descanso",
+    "portada": "codice-descanso.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice del Descanso",
@@ -382,6 +388,8 @@ travail propre.</p>
 
 VOLUNTAD = {
     "handle": "codice-de-la-voluntad",
+    "portada": "codice-voluntad.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice de la Voluntad",
@@ -499,6 +507,8 @@ illustrations sont un travail propre.</p>
 
 ARCANOS = {
     "handle": "codice-de-los-arcanos",
+    "portada": "codice-arcanos.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice de los Arcanos",
@@ -614,6 +624,8 @@ illustrations sont un travail propre.</p>
 
 SI_MISMO = {
     "handle": "codice-del-si-mismo",
+    "portada": "codice-si-mismo.png",
+    "coleccion": "codices",
     "gid": None,
     "titulo": {
         "es": "Códice del Sí Mismo",

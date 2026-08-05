@@ -40,6 +40,8 @@ que ya estén publicados.
 
 BASICO = {
     "handle": "basico-volumen-limpio",
+    "portada": "plan-basico.png",
+    "coleccion": "planes",
     "gid": "gid://shopify/Product/7141932138545",
     "titulo": {
         "es": "Básico · Volumen Limpio",
@@ -131,6 +133,8 @@ santé.</p>
 
 PRO = {
     "handle": "pro-definicion-volumen",
+    "portada": "plan-pro.png",
+    "coleccion": "planes",
     "gid": "gid://shopify/Product/7141932171313",
     "titulo": {
         "es": "Pro · Definición + Volumen",
@@ -231,6 +235,8 @@ traitement en cours, consultez d'abord votre professionnel de santé.</p>
 
 ELITE = {
     "handle": "elite-todo-incluido-coaching",
+    "portada": "plan-elite.png",
+    "coleccion": "planes",
     "gid": "gid://shopify/Product/7141932204081",
     "titulo": {
         "es": "Elite · Todo Incluido + Coaching",
@@ -356,6 +362,8 @@ ou un traitement en cours, consultez d'abord votre professionnel de santé.</p>
 
 ZODIACAL = {
     "handle": "el-zodiaco",
+    "portada": "codice-zodiacal.png",
+    "coleccion": "codices",
     "gid": "gid://shopify/Product/7139483910193",
     "titulo": {
         "es": "Códice Zodiacal",
@@ -473,6 +481,8 @@ illustrations sont un travail propre.</p>
 
 INVOCACIONES = {
     "handle": "las-conjuraciones-y-la-invocacion-del-sello-salomon",
+    "portada": "codice-invocaciones.png",
+    "coleccion": "codices",
     "gid": "gid://shopify/Product/7139485974577",
     "titulo": {
         "es": "Códice de las Invocaciones",

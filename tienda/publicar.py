@@ -39,6 +39,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import descripciones                                            # noqa: E402
 import fichas_libros                                            # noqa: E402
 
+PORTADAS = Path(__file__).resolve().parent / "portadas"
+
 API = "2025-01"
 TIENDA = os.environ.get("SHOPIFY_TIENDA", "")
 TOKEN = os.environ.get("SHOPIFY_TOKEN", "")
@@ -107,12 +109,117 @@ query($id: ID!) {
   }
 }"""
 
+MEDIA = """
+query($id: ID!) {
+  product(id: $id) { media(first: 20) { nodes { alt } } }
+}"""
+
+SUBIDA = """
+mutation($i: [StagedUploadInput!]!) {
+  stagedUploadsCreate(input: $i) {
+    userErrors { field message }
+    stagedTargets { url resourceUrl parameters { name value } }
+  }
+}"""
+
+ADJUNTAR = """
+mutation($id: ID!, $m: [CreateMediaInput!]!) {
+  productCreateMedia(productId: $id, media: $m) {
+    mediaUserErrors { field message }
+    media { alt }
+  }
+}"""
+
+COLECCION = """
+mutation($c: CollectionInput!) {
+  collectionCreate(input: $c) {
+    userErrors { field message }
+    collection { id handle }
+  }
+}"""
+
+BUSCAR_COL = """
+query($h: String!) {
+  collectionByHandle(handle: $h) { id handle }
+}"""
+
+METER = """
+mutation($id: ID!, $p: [ID!]!) {
+  collectionAddProducts(id: $id, productIds: $p) {
+    userErrors { field message }
+  }
+}"""
+
 TRADUCIR = """
 mutation($id: ID!, $t: [TranslationInput!]!) {
   translationsRegister(resourceId: $id, translations: $t) {
     userErrors { field message }
   }
 }"""
+
+
+def multipart(url: str, parametros: list, nombre: str, datos: bytes) -> None:
+    """Sube el fichero al destino que Shopify acaba de firmar.
+
+    Se monta el multipart a mano porque urllib no lo trae y añadir una
+    dependencia entera para cuatro líneas de frontera no compensa. El orden
+    importa: los parámetros firmados van ANTES del fichero o S3 rechaza la
+    petición sin decir por qué.
+    """
+    frontera = "----villuminations"
+    cuerpo = b""
+    for par in parametros:
+        cuerpo += (f"--{frontera}\r\n"
+                   f'Content-Disposition: form-data; name="{par["name"]}"\r\n\r\n'
+                   f"{par['value']}\r\n").encode()
+    cuerpo += (f"--{frontera}\r\n"
+               f'Content-Disposition: form-data; name="file"; filename="{nombre}"\r\n'
+               f"Content-Type: image/png\r\n\r\n").encode()
+    cuerpo += datos + f"\r\n--{frontera}--\r\n".encode()
+    peticion = urllib.request.Request(url, data=cuerpo, headers={
+        "Content-Type": f"multipart/form-data; boundary={frontera}"})
+    urllib.request.urlopen(peticion).read()
+
+
+def portada(producto: str, ficha: dict) -> str:
+    """Sube la portada, si la hay y si no está ya puesta.
+
+    El alt hace de marca: si ya existe una imagen con el alt de esta ficha,
+    no se vuelve a subir. Sin eso, cada pasada añadiría otra copia y la ficha
+    acabaría con seis portadas iguales en la galería.
+    """
+    png = PORTADAS / (ficha.get("portada") or "")
+    if not ficha.get("portada") or not png.exists():
+        return "sin portada"
+
+    marca = f"VILLUMINATIONS · {ficha['handle']}"
+    puestas = pedir(MEDIA, {"id": producto})["product"]["media"]["nodes"]
+    if any(m.get("alt") == marca for m in puestas):
+        return "portada ya puesta"
+
+    destino = pedir(SUBIDA, {"i": [{
+        "filename": png.name, "mimeType": "image/png",
+        "resource": "IMAGE", "httpMethod": "POST",
+    }]})["stagedUploadsCreate"]["stagedTargets"][0]
+    multipart(destino["url"], destino["parameters"], png.name, png.read_bytes())
+    pedir(ADJUNTAR, {"id": producto, "m": [{
+        "mediaContentType": "IMAGE",
+        "originalSource": destino["resourceUrl"],
+        "alt": marca,
+    }]})
+    return "portada subida"
+
+
+def coleccion(handle: str, titulo: str, cuerpo: str, gids: list) -> None:
+    existente = pedir(BUSCAR_COL, {"h": handle})["collectionByHandle"]
+    if existente:
+        cid = existente["id"]
+    else:
+        cid = pedir(COLECCION, {"c": {
+            "handle": handle, "title": titulo, "descriptionHtml": cuerpo,
+        }})["collectionCreate"]["collection"]["id"]
+    if gids:
+        pedir(METER, {"id": cid, "p": gids})
 
 
 def publicar(ficha: dict, ensayo: bool) -> str:
@@ -168,7 +275,22 @@ def publicar(ficha: dict, ensayo: bool) -> str:
              "translatableContentDigest": digests["body_html"]},
         ]
     pedir(TRADUCIR, {"id": producto["id"], "t": traducciones})
-    return accion
+    ficha["_gid"] = producto["id"]
+    return f"{accion} · {portada(producto['id'], ficha)}"
+
+
+COLECCIONES = {
+    "planes": ("Planes de entrenamiento",
+               "<p>Alimentación, entrenamiento, descanso y seguimiento, en tres "
+               "niveles. Cada nivel es una descarga digital en español, inglés y "
+               "francés, con versión de pantalla y versión preparada para "
+               "imprimir.</p>"),
+    "codices": ("Biblioteca · Los ocho códices",
+                "<p>Ocho libros de referencia y de práctica, cada uno con sus "
+                "láminas dibujadas para la edición y su cuaderno de trabajo. "
+                "Todos se descargan en las tres lenguas: español, inglés y "
+                "francés.</p>"),
+}
 
 
 def main() -> None:
@@ -186,6 +308,16 @@ def main() -> None:
         else:
             estado = publicar(ficha, ensayo)
         print(f"    {ficha['handle']:34} {ficha['titulo']['es']:32} {estado}")
+
+    # Las colecciones van al final: hasta aquí no se sabe el gid de los que
+    # se acaban de crear, y una colección sin sus productos no sirve de nada.
+    if not ensayo:
+        print()
+        for clave, (titulo, cuerpo) in COLECCIONES.items():
+            gids = [f["_gid"] for f in TODAS
+                    if f.get("coleccion") == clave and f.get("_gid")]
+            coleccion(clave, titulo, cuerpo, gids)
+            print(f"    colección {clave:12} {titulo:34} {len(gids)} productos")
     print()
 
 
