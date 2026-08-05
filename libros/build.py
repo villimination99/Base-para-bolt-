@@ -64,6 +64,100 @@ def clave(s: str) -> str:
     return re.sub(r"\s+", "", s).upper()
 
 
+def inicial(s: str) -> str:
+    """Primera letra de una entrada de vocabulario, sin tilde y en mayúscula.
+
+    «Élément» va bajo la E y «Ámbar» bajo la A: en las tres lenguas la letra
+    de la banda es la de la vocal desnuda, no la de la vocal acentuada.
+    """
+    for c in unicodedata.normalize("NFD", s):
+        if c.isalpha() and unicodedata.category(c) != "Mn":
+            return c.upper()
+    return ""
+
+
+def orden_alfabetico(s: str) -> str:
+    """Clave de ordenación: sin tildes y en minúsculas, con los espacios.
+
+    Los espacios se conservan —al revés que en clave()— porque aquí sí
+    separan palabras: «Signo solar» va después de «Sextil» y antes de
+    «Trígono», y quitarle el espacio no cambiaría nada, pero «Caldeo (orden)»
+    y «Cardinal» sí dependen de leerse enteros.
+    """
+    s = unicodedata.normalize("NFD", s.lower())
+    return "".join(c for c in s if unicodedata.category(c) != "Mn")
+
+
+_BANDA = re.compile(r"^\s*([A-Z])\s*[–—-]\s*([A-Z])\s*$")
+
+
+def reordenar_vocabulario(libro: dict, idioma: str, cat: dict) -> dict:
+    """Devuelve el libro con los vocabularios ordenados en la lengua de salida.
+
+    Los capítulos de vocabulario se reparten en bandas rotuladas «A – D»,
+    «E – M», «N – Z», y el rótulo es una promesa: dice qué letras hay dentro.
+    En castellano se cumple sola, porque las entradas se escribieron ya
+    ordenadas. Al traducir deja de cumplirse —Cuadratura es Square y Eje es
+    Axis— y el capítulo pasa a mentir sobre sí mismo en el peor sitio posible,
+    que es el único al que el lector vuelve a buscar algo.
+
+    Así que las bandas se rellenan de nuevo con las entradas traducidas: se
+    juntan todas las filas del capítulo, se ordenan por el término en su
+    lengua y cada una cae en la banda cuyo rango contiene su inicial. Los
+    rótulos no se tocan: son rangos fijos del alfabeto y siguen valiendo. Lo
+    que cambia es el reparto, y con él el número de filas por banda, que deja
+    de estar equilibrado — un vocabulario reparte lo que hay, no lo que
+    quedaría bonito.
+
+    En castellano la operación es idéntica al original y no mueve una sola
+    fila; eso es exactamente lo que debe pasar, y es la comprobación de que la
+    ordenación no se ha inventado un criterio propio.
+
+    Lo que se reordena son las filas EN CASTELLANO, aunque el criterio salga
+    de su traducción. El HTML tiene que salir de aquí en el idioma original
+    para que i18n.traducir() lo reconozca entero: si se colara ya traducido,
+    el catálogo no encontraría las cadenas, las contaría como pendientes y la
+    cobertura caería por debajo del 100 % — con lo que el libro no se
+    publicaría. Se ordena por la traducción y se escribe el original.
+    """
+    salida = dict(libro)
+    salida["capitulos"] = [dict(c) for c in libro["capitulos"]]
+
+    for cap in salida["capitulos"]:
+        bloques = cap["bloques"]
+        bandas = [(i, _BANDA.match(b.get("tit") or ""))
+                  for i, b in enumerate(bloques) if b.get("t") == "ficha"]
+        bandas = [(i, m) for i, m in bandas if m]
+        if len(bandas) < 2:
+            continue
+
+        # Cada fila viaja emparejada con el término tal como se leerá. Se
+        # ordena y se reparte por ese término, y se escribe la fila castellana.
+        filas = [(i18n.cadena(fila[0], idioma, cat), fila)
+                 for i, _ in bandas for fila in bloques[i]["x"]]
+        filas.sort(key=lambda par: orden_alfabetico(par[0]))
+
+        # Cada banda se queda con las entradas cuya inicial cae en su rango.
+        # La última recoge lo que sobre por arriba, para que ninguna entrada
+        # se pierda si una traducción empieza por un signo inesperado.
+        repartidas: list[list] = [[] for _ in bandas]
+        for termino, fila in filas:
+            letra = inicial(termino)
+            destino = len(bandas) - 1
+            for n, (_, m) in enumerate(bandas):
+                if m.group(1) <= letra <= m.group(2):
+                    destino = n
+                    break
+            repartidas[destino].append(fila)
+
+        nuevos = list(bloques)
+        for (i, _), filas_banda in zip(bandas, repartidas):
+            nuevos[i] = dict(bloques[i], x=filas_banda)
+        cap["bloques"] = nuevos
+
+    return salida
+
+
 # --------------------------------------------------------------------------
 def bloque_html(b: dict) -> str:
     t = b["t"]
@@ -371,6 +465,7 @@ def construir(libro: dict, idioma: str = "es", cat: dict | None = None) -> None:
     DIST.mkdir(parents=True, exist_ok=True)
 
     cat = cat if cat is not None else i18n.cargar()
+    libro = reordenar_vocabulario(libro, idioma, cat)
     caps = libro["capitulos"]
     base = libro["id"]
     sufijo = "" if idioma == "es" else f"-{idioma}"
