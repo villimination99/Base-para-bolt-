@@ -22,3 +22,6 @@ planes/i18n/catalogo.json
 # Igual que el de los planes: el catálogo de los libros es un derivado que
 # reconstruye libros/tools/cargar-traducciones.py desde i18n/fuentes/.
 libros/i18n/catalogo.json
+
+# Grafo de conocimiento: se regenera, no se versiona
+graphify-out/
