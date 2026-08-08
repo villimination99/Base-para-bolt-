@@ -1,0 +1,118 @@
+filters:
+  and:
+    - 'file.ext == "md"'
+
+formulas:
+  archivo: 'if(source_file, source_file, "")'
+  cohesion_pct: 'if(cohesion, (cohesion * 100).round(0), "")'
+  solidez: 'if(cohesion, if(cohesion >= 0.5, "sólida", if(cohesion >= 0.25, "media", "floja")), "")'
+  fiabilidad: 'if(file.hasTag("graphify/AMBIGUOUS"), "dudosa", if(file.hasTag("graphify/INFERRED"), "deducida", "directa"))'
+
+properties:
+  type:
+    displayName: "Tipo"
+  community:
+    displayName: "Comunidad"
+  location:
+    displayName: "Dónde"
+  members:
+    displayName: "Nodos"
+  formula.archivo:
+    displayName: "Archivo de origen"
+  formula.cohesion_pct:
+    displayName: "Cohesión %"
+  formula.solidez:
+    displayName: "Solidez"
+  formula.fiabilidad:
+    displayName: "Fiabilidad"
+
+views:
+  - type: table
+    name: "Mapa · las 235 comunidades"
+    filters:
+      and:
+        - 'type == "community"'
+    order:
+      - file.name
+      - members
+      - formula.cohesion_pct
+      - formula.solidez
+    summaries:
+      members: Sum
+    groupBy:
+      property: formula.solidez
+      direction: ASC
+
+  - type: table
+    name: "Los ocho libros"
+    filters:
+      and:
+        - 'source_file'
+        - 'source_file.startsWith("libros/")'
+    order:
+      - file.name
+      - type
+      - community
+      - formula.archivo
+      - location
+    groupBy:
+      property: community
+      direction: ASC
+
+  - type: table
+    name: "Los tres planes"
+    filters:
+      and:
+        - 'source_file'
+        - 'source_file.startsWith("planes/")'
+    order:
+      - file.name
+      - type
+      - community
+      - formula.archivo
+      - location
+    groupBy:
+      property: community
+      direction: ASC
+
+  - type: table
+    name: "La tienda"
+    filters:
+      and:
+        - 'source_file'
+        - 'source_file.startsWith("tienda/")'
+    order:
+      - file.name
+      - type
+      - community
+      - formula.archivo
+    groupBy:
+      property: community
+      direction: ASC
+
+  - type: table
+    name: "Por revisar · deducido o dudoso"
+    filters:
+      or:
+        - 'file.hasTag("graphify/AMBIGUOUS")'
+        - 'file.hasTag("graphify/INFERRED")'
+    order:
+      - file.name
+      - formula.fiabilidad
+      - type
+      - community
+      - formula.archivo
+    groupBy:
+      property: formula.fiabilidad
+      direction: ASC
+
+  - type: cards
+    name: "Ideas y razones"
+    filters:
+      or:
+        - 'type == "rationale"'
+        - 'type == "concept"'
+    order:
+      - file.name
+      - community
+      - formula.archivo

@@ -1,0 +1,102 @@
+# VILLUMINATIONS
+
+Tienda Shopify (**villuminations.com**, CAD, Canadá) más el generador de todo lo
+que vende de cosecha propia. La memoria larga del proyecto está en
+[`boveda/000 · VILLUMINATIONS.md`](boveda/000%20·%20VILLUMINATIONS.md); esto es
+solo lo que hay que tener delante antes de escribir una línea.
+
+## Reglas que no se negocian
+
+**La marca se escribe `VILLUMINATIONS`.** Nunca «VILLUMINATIONS 99», ni
+«VIllumination», ni «Ma boutique». Las tres han estado a la vez en la tienda.
+
+**Dos bases legales distintas, y no se mezclan.** Los datos de nutrición y
+entrenamiento vienen de organismos del Gobierno de EE. UU. y **no están sujetos
+a derechos de autor conforme al 17 U.S.C. § 105** — eso cubre las cifras, no la
+redacción. Los libros esotéricos se apoyan en la **tradición común y el dominio
+público**, que es otra cosa y se dice como tal. Y a nadie se le quita la firma.
+
+**Cada producto se explica solo.** Una ficha no nombra ni describe el contenido
+de las demás: el catálogo se descubre comprando. Única excepción: cada nivel
+enumera sus propios documentos, y Elite dice que es acumulativo porque lo es.
+
+**Nada de promesas de salud** en las fichas de suplementos, y **ninguna cifra
+que no esté en la ficha del proveedor** (véase `tienda/catalogo.py`).
+
+**Rama de trabajo: `claude/shopify-diet-plans-9k0wti`.** No se empuja a otra.
+
+## Cómo funciona esto
+
+El texto de los libros y los planes **no se edita a mano**: vive en
+`libros/src/*.json` y `planes/src/*.html`, y los `build.py` lo componen. Editar
+un PDF o un HTML de `dist/` es trabajo que se pierde en la siguiente pasada.
+
+Las traducciones son **datos, no marcado**: cada segmento se indexa por el SHA1
+de su original castellano normalizado, así que la maqueta existe una sola vez.
+
+### Guardas que abortan la construcción a propósito
+
+No se desactivan para «salir del paso» — cada una está por un fallo real:
+
+| Guarda | Qué impide |
+|---|---|
+| Cobertura < 100 % | Un libro medio traducido. Sale `Incompleto` y no se escribe el PDF. |
+| Ancho de lámina (`cargar-traducciones.py`) | Una etiqueta traducida que no cabe y rompe el dibujo. |
+| `comprobar_laminas()` (`libros/build.py`) | Que la prosa prometa siete láminas y haya seis. Pasó, en tres idiomas. |
+| `datos_oficiales.comprobar()` | Que una tabla no cuadre con su fuente. |
+
+Comprobaciones rápidas antes de dar nada por bueno:
+
+```
+python3 tienda/seo.py        # medidas de título y descripción de los 11 propios
+python3 tienda/catalogo.py   # ídem de los 29 de proveedor
+python3 libros/tools/faltan.py
+```
+
+## La API de Shopify, en corto
+
+Lo que costó descubrir y no está en ningún sitio evidente:
+
+- `productCreate` pide **`ProductCreateInput`** y `productUpdate` pide
+  **`ProductUpdateInput`**. No comparten tipo; `ProductInput` ya no vale.
+- Un producto en **borrador no admite canales de venta**: `publishablePublish`
+  devuelve éxito y no hace nada. Hay que ponerlo en `ACTIVE` primero.
+- `translationsRegister` necesita el **digest recién pedido**, después de
+  escribir el original. Si cambias el texto, el digest anterior ya no sirve.
+- El idioma primario de la tienda es el **castellano**; en/fr/de/ja están
+  publicados, y de/ja caen al castellano porque no tienen traducción.
+
+## Lo que sigue pendiente
+
+1. **No hay app de descargas digitales.** Once productos cobran y no entregan
+   nada. Se instala desde el panel; por API no se puede.
+2. Los 29 productos de proveedor no tienen traducción al inglés ni al francés.
+3. Precio provisional de 9,99 CAD en los seis libros nuevos.
+4. Los dos jabones están en UNLISTED y sin colección.
+
+## Si acabas de clonar esto
+
+Dos cosas no viajan en el repositorio y hay que rehacerlas a mano en cada
+máquina nueva:
+
+```
+uv tool install graphifyy && graphify install --platform claude
+graphify hook install     # post-commit: rehace el grafo al confirmar
+```
+
+Los hooks de git viven en `.git/hooks/`, que git no versiona por diseño. El
+`.claude/settings.json` sí viaja, y está escrito para no romperse si graphify
+no está instalado: comprueba antes de llamar.
+
+La bóveda de `boveda/` se abre como *vault* en Obsidian. Empieza por
+`000 · VILLUMINATIONS.md`, que es la única nota escrita a mano.
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).
