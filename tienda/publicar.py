@@ -31,7 +31,9 @@ Configuración → Aplicaciones → Desarrollar aplicaciones.
 
 import json
 import os
+import re
 import sys
+import unicodedata
 import urllib.request
 from pathlib import Path
 
@@ -42,11 +44,26 @@ import seo                                                      # noqa: E402
 
 PORTADAS = Path(__file__).resolve().parent / "portadas"
 
+TIPO = {"es": "Descarga digital",
+        "en": "Digital download",
+        "fr": "Téléchargement numérique"}
+
 API = "2025-01"
 TIENDA = os.environ.get("SHOPIFY_TIENDA", "")
 TOKEN = os.environ.get("SHOPIFY_TOKEN", "")
 
 TODAS = descripciones.FICHAS + fichas_libros.NUEVOS
+
+
+def rebanada(titulo: str) -> str:
+    """El handle que le toca a un título traducido.
+
+    Shopify solo admite letras sin tilde, cifras y guiones, así que «Codex de
+    la Volonté» tiene que salir como «codex-de-la-volonte».
+    """
+    plano = unicodedata.normalize("NFKD", titulo)
+    plano = plano.encode("ascii", "ignore").decode()
+    return re.sub(r"[^A-Za-z0-9]+", "-", plano).strip("-").lower()
 
 
 def pedir(consulta: str, variables: dict) -> dict:
@@ -80,19 +97,23 @@ query($h: String!) {
     variants(first: 1) { nodes { id } } }
 }"""
 
+# Ojo con los dos tipos de entrada: crear y actualizar no comparten el mismo.
+# `productCreate` pide ProductCreateInput y `productUpdate` pide
+# ProductUpdateInput; pasarles ProductInput, que es lo que aceptaban las
+# versiones viejas de la API, se rechaza con «Type mismatch on variable».
 CREAR = """
-mutation($p: ProductInput!) {
+mutation($p: ProductCreateInput!) {
   productCreate(product: $p) {
     userErrors { field message }
-    product { id handle variants(first: 1) { nodes { id } } }
+    product { id handle status variants(first: 1) { nodes { id } } }
   }
 }"""
 
 ACTUALIZAR = """
-mutation($p: ProductInput!) {
+mutation($p: ProductUpdateInput!) {
   productUpdate(product: $p) {
     userErrors { field message }
-    product { id handle variants(first: 1) { nodes { id } } }
+    product { id handle status variants(first: 1) { nodes { id } } }
   }
 }"""
 
@@ -128,6 +149,19 @@ mutation($id: ID!, $m: [CreateMediaInput!]!) {
   productCreateMedia(productId: $id, media: $m) {
     mediaUserErrors { field message }
     media { alt }
+  }
+}"""
+
+CANALES = """
+query { publications(first: 20) { nodes { id name } } }"""
+
+# Un producto en borrador no admite canales: Shopify acepta la mutación sin
+# quejarse y no la aplica. Por eso esto se lanza siempre después de ponerlo
+# en ACTIVE, nunca antes.
+PUBLICAR_EN = """
+mutation($id: ID!, $c: [PublicationInput!]!) {
+  publishablePublish(id: $id, input: $c) {
+    userErrors { field message }
   }
 }"""
 
@@ -173,6 +207,17 @@ mutation($id: ID!, $t: [TranslationInput!]!) {
     userErrors { field message }
   }
 }"""
+
+
+_CANALES: list = []
+
+
+def canales() -> list:
+    """Los canales de venta de la tienda, preguntados una sola vez."""
+    if not _CANALES:
+        _CANALES.extend({"publicationId": n["id"]} for n in
+                        pedir(CANALES, {})["publications"]["nodes"])
+    return _CANALES
 
 
 def multipart(url: str, parametros: list, nombre: str, datos: bytes) -> None:
@@ -281,7 +326,7 @@ def publicar(ficha: dict, ensayo: bool) -> str:
         "title": ficha["titulo"]["es"],
         "descriptionHtml": ficha["es"].strip(),
         "vendor": "VILLUMINATIONS",
-        "productType": "Descarga digital",
+        "productType": TIPO["es"],
         "tags": seo.ETIQUETAS[handle] + seo.COMUNES,
         "seo": {"title": titulo_seo, "description": descripcion_seo},
     }
@@ -325,6 +370,14 @@ def publicar(ficha: dict, ensayo: bool) -> str:
             {"key": "body_html", "locale": idioma,
              "value": ficha[idioma].strip(),
              "translatableContentDigest": digests["body_html"]},
+            # El handle también se traduce: sin esto la ficha inglesa vive en
+            # una dirección castellana y el buscador la lee como tal.
+            {"key": "handle", "locale": idioma,
+             "value": rebanada(ficha["titulo"][idioma]),
+             "translatableContentDigest": digests["handle"]},
+            {"key": "product_type", "locale": idioma,
+             "value": TIPO[idioma],
+             "translatableContentDigest": digests["product_type"]},
         ]
         # Shopify solo declara meta_title y meta_description como traducibles
         # cuando el producto ya los tiene puestos. Se acaban de escribir en la
@@ -338,6 +391,12 @@ def publicar(ficha: dict, ensayo: bool) -> str:
                     "translatableContentDigest": digests[clave]})
     pedir(TRADUCIR, {"id": producto["id"], "t": traducciones})
     ficha["_gid"] = producto["id"]
+
+    # Estar en ACTIVE no basta para que se vea: hay que darlo de alta en cada
+    # canal. Un producto creado por la API nace sin ninguno, así que si nadie
+    # hace esto se publica y no aparece en la tienda.
+    if producto["status"] == "ACTIVE":
+        pedir(PUBLICAR_EN, {"id": producto["id"], "c": canales()})
 
     # Renombrar sin redirigir tira a la basura los enlaces que ya existan y
     # todo lo que el buscador tuviera indexado del handle anterior.
@@ -375,29 +434,32 @@ COLECCIONES = {
                "Trois niveaux de plans en PDF : alimentation, entraînement, "
                "repos et suivi hebdomadaire. En trois langues."),
     },
-    "codices": {
-        "es": ("Biblioteca · Los ocho códices",
+    "conocimiento": {
+        "es": ("Conocimiento",
                "<p>Ocho libros de referencia y de práctica, cada uno con sus "
                "láminas dibujadas para la edición y su cuaderno de trabajo. "
-               "Todos se descargan en las tres lenguas: español, inglés y "
-               "francés.</p>",
-               "Los ocho códices — libros en PDF | VILLUMINATIONS",
+               "Nutrición, carga, descanso y voluntad para el cuerpo; tarot, "
+               "zodiaco, ritual y observación interior para lo demás. Todos se "
+               "descargan en las tres lenguas: español, inglés y francés.</p>",
+               "Conocimiento — ocho libros en PDF | VILLUMINATIONS",
                "Ocho libros en PDF con sus láminas y su cuaderno: nutrición, "
                "carga, descanso, voluntad, tarot, zodiaco y práctica interior."),
-        "en": ("Library · The eight codices",
+        "en": ("Knowledge",
                "<p>Eight books of reference and of practice, each with its own "
-               "plates drawn for the edition and its working notebook. All of "
-               "them download in three languages: English, Spanish and "
-               "French.</p>",
-               "The eight codices — PDF books | VILLUMINATIONS",
+               "plates drawn for the edition and its working notebook. "
+               "Nutrition, load, rest and will for the body; tarot, zodiac, "
+               "ritual and inner observation for the rest. All of them download "
+               "in three languages: English, Spanish and French.</p>",
+               "Knowledge — eight PDF books | VILLUMINATIONS",
                "Eight PDF books with their plates and notebooks: nutrition, "
                "load, rest, will, tarot, zodiac and inner practice."),
-        "fr": ("Bibliothèque · Les huit codex",
+        "fr": ("Connaissance",
                "<p>Huit livres de référence et de pratique, chacun avec ses "
                "planches dessinées pour l'édition et son cahier de travail. "
-               "Tous se téléchargent en trois langues : français, espagnol et "
-               "anglais.</p>",
-               "Les huit codex — livres en PDF | VILLUMINATIONS",
+               "Nutrition, charge, repos et volonté pour le corps ; tarot, "
+               "zodiaque, rituel et observation intérieure pour le reste. Tous "
+               "se téléchargent en trois langues.</p>",
+               "Connaissance — huit livres en PDF | VILLUMINATIONS",
                "Huit livres en PDF avec leurs planches et leurs cahiers : "
                "nutrition, charge, repos, volonté, tarot, zodiaque, pratique."),
     },

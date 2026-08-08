@@ -235,9 +235,9 @@ def main() -> None:
         pdf = ROOT / "libros" / "dist" / f"{libro['id']}.pdf"
         laminas = {b["x"] for c in libro["capitulos"]
                    for b in c["bloques"] if b.get("t") == "figura"}
-        # La cubierta no cuenta como página del libro: el folio 1 es la
-        # primera del interior, igual que en el PDF.
-        paginas = len(pdfium.PdfDocument(str(pdf))) - 1
+        # Se cuenta el archivo entero, cubierta incluida, que es lo que el
+        # comprador ve al abrirlo y la cifra que da la ficha de la tienda.
+        paginas = len(pdfium.PdfDocument(str(pdf)))
         acento, acento2 = mapa[libro["acento"]]
         html = LIBRO_HTML.format(
             css=css(acento, acento2), acento=acento, rgb1=rgb(acento),

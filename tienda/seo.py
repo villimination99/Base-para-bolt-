@@ -254,15 +254,15 @@ ETIQUETAS = {
     "pro-definicion-volumen": ["planes", "nutrición", "definición", "volumen"],
     "elite-todo-incluido-coaching": ["planes", "nutrición", "entrenamiento",
                                      "sueño", "meditación", "coaching"],
-    "codice-zodiacal": ["códices", "astrología", "zodiaco", "simbolismo"],
-    "codice-de-las-invocaciones": ["códices", "ritual", "simbolismo",
+    "codice-zodiacal": ["conocimiento", "astrología", "zodiaco", "simbolismo"],
+    "codice-de-las-invocaciones": ["conocimiento", "ritual", "simbolismo",
                                    "práctica"],
-    "codice-de-la-mesa": ["códices", "nutrición", "referencia"],
-    "codice-de-la-carga": ["códices", "entrenamiento", "referencia"],
-    "codice-del-descanso": ["códices", "sueño", "recuperación"],
-    "codice-de-la-voluntad": ["códices", "hábito", "adherencia"],
-    "codice-de-los-arcanos": ["códices", "tarot", "simbolismo"],
-    "codice-del-si-mismo": ["códices", "atención", "práctica"],
+    "codice-de-la-mesa": ["conocimiento", "nutrición", "referencia"],
+    "codice-de-la-carga": ["conocimiento", "entrenamiento", "referencia"],
+    "codice-del-descanso": ["conocimiento", "sueño", "recuperación"],
+    "codice-de-la-voluntad": ["conocimiento", "hábito", "adherencia"],
+    "codice-de-los-arcanos": ["conocimiento", "tarot", "simbolismo"],
+    "codice-del-si-mismo": ["conocimiento", "atención", "práctica"],
 }
 
 # Etiquetas comunes a todo: dicen lo que el producto ES, y son las que hacen

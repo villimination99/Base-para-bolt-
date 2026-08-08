@@ -364,7 +364,7 @@ ZODIACAL = {
     "handle": "codice-zodiacal",
     "handle_viejo": "el-zodiaco",
     "portada": "codice-zodiacal.png",
-    "coleccion": "codices",
+    "coleccion": "conocimiento",
     "gid": "gid://shopify/Product/7139483910193",
     "titulo": {
         "es": "Códice Zodiacal",
@@ -484,7 +484,7 @@ INVOCACIONES = {
     "handle": "codice-de-las-invocaciones",
     "handle_viejo": "las-conjuraciones-y-la-invocacion-del-sello-salomon",
     "portada": "codice-invocaciones.png",
-    "coleccion": "codices",
+    "coleccion": "conocimiento",
     "gid": "gid://shopify/Product/7139485974577",
     "titulo": {
         "es": "Códice de las Invocaciones",
