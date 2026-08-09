@@ -70,15 +70,20 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 
 1. **No hay app de descargas digitales.** Once productos cobran y no entregan
    nada. Se instala desde el panel; por API no se puede.
-2. **El blog está escrito y sin publicar.** Los cinco artículos de
-   `tienda/articulos.py` esperan a que el servidor de Shopify vuelva. Lanza
-   `python3 tienda/blog.py --esquema` antes de la primera pasada real: el
-   publicador se escribió sin poder hablar con la API y los nombres de campo
-   están puestos según la referencia, no comprobados.
-3. Los 29 productos de proveedor no tienen traducción al inglés ni al francés,
-   y los artículos tampoco.
-4. Precio provisional de 9,99 CAD en los seis libros nuevos.
-5. Los dos jabones están en UNLISTED y sin colección.
+2. **El nombre de la tienda sigue siendo «VIllumination».** Sale en la pestaña
+   del navegador, en el checkout y en cada correo. No se puede cambiar por API:
+   es Ajustes → Detalles de la tienda.
+3. **Veintinueve fichas tienen el cuerpo en inglés.** Se les puso el SEO en
+   castellano, pero la descripción que dejó el proveedor sigue en inglés en una
+   tienda cuyo idioma primario es el español. Lo correcto es escribir el cuerpo
+   en castellano y registrar el texto inglés del proveedor como su traducción
+   `en`, no al revés.
+4. Los 29 productos de proveedor no tienen traducción al francés, y los seis
+   artículos del Diario tampoco están traducidos.
+5. Precio provisional de 9,99 CAD en los seis libros nuevos.
+6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
+   corregidas; solo falta decidir si se venden. Piden envío y no llevan control
+   de existencias, así que activarlos significa poder vender sin stock.
 
 ## Si acabas de clonar esto
 
