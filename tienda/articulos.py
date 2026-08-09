@@ -27,6 +27,11 @@ Medidas de buscador: 60 caracteres el título, 155 la descripción. Se comprueba
 abajo, no se confía.
 """
 
+# El blog no se creó de cero: se reutilizó el que Shopify deja puesto por
+# defecto, que se llamaba «Actualités» —en francés, en una tienda cuyo idioma
+# primario es el castellano— y solo contenía un borrador sin publicar. Se
+# renombró con redirección automática en vez de añadir un tercer blog: dos
+# blogs ya reparten el poco enlace entrante que hay, y tres lo repartirían más.
 BLOG = {
     "handle": "diario",
     "titulo": "Diario",

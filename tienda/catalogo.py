@@ -254,6 +254,31 @@ FICHAS = {
     ),
 }
 
+# Las tres colecciones de proveedor. Las dos propias —conocimiento y planes—
+# viven en publicar.py, porque allí se crean junto con sus productos. Estas ya
+# existían en la tienda vacías: sin descripción, sin SEO y sin alternativo en la
+# imagen, que en una página de categoría es justo lo que el buscador lee.
+COLECCIONES = {
+    "suplementos": (
+        "Suplementos deportivos y de bienestar | VILLUMINATIONS",
+        "Proteína, creatina, preentreno, verdes y rojos, NAD+ y NMN. Cada ficha "
+        "dice qué lleva y cuánto, sin prometer nada sobre tu salud.",
+        "Suplementos de VILLUMINATIONS",
+    ),
+    "equipo": (
+        "Equipo de entrenamiento para casa | VILLUMINATIONS",
+        "Bancos, barras, cajones pliométricos, chalecos lastrados, bandas y "
+        "losetas de suelo. Para montar o completar un gimnasio en casa.",
+        "Equipo de entrenamiento de VILLUMINATIONS",
+    ),
+    "ropa": (
+        "Ropa deportiva | VILLUMINATIONS",
+        "Camisetas y shorts para entrenar: tejidos que apartan la humedad, sin "
+        "costuras y de secado rápido. Corte unisex y de mujer.",
+        "Ropa deportiva de VILLUMINATIONS",
+    ),
+}
+
 TOPE_TITULO = 60
 TOPE_DESCRIPCION = 155
 TOPE_ALT = 125
@@ -262,6 +287,11 @@ TOPE_ALT = 125
 def comprobar() -> list:
     """Las cadenas que se pasan de largo. Vacío es lo que hay que ver."""
     largas = []
+    for handle, (titulo, descripcion, alt) in COLECCIONES.items():
+        if len(titulo) > TOPE_TITULO:
+            largas.append(f"colección {handle} · título {len(titulo)}/{TOPE_TITULO}")
+        if len(descripcion) > TOPE_DESCRIPCION:
+            largas.append(f"colección {handle} · descripción {len(descripcion)}")
     for handle, (titulo, descripcion, alt, familia, _) in FICHAS.items():
         for texto, tope, que in ((titulo, TOPE_TITULO, "título"),
                                  (descripcion, TOPE_DESCRIPCION, "descripción"),
@@ -275,7 +305,8 @@ def comprobar() -> list:
 
 if __name__ == "__main__":
     malas = comprobar()
-    print(f"\n  {len(FICHAS)} fichas de catálogo · {len(malas)} fuera de medida\n")
+    print(f"\n  {len(FICHAS)} fichas y {len(COLECCIONES)} colecciones · "
+          f"{len(malas)} fuera de medida\n")
     for m in malas:
         print(f"    {m}")
     print()
