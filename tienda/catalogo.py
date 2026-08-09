@@ -818,6 +818,99 @@ CUERPOS.update({
  "antes de usarlo."),
 })
 
+
+# ---------------------------------------------------------------------------
+# Títulos en las tres lenguas: (es, en, fr)
+# ---------------------------------------------------------------------------
+# Los títulos del proveedor venían en inglés y con defectos a la vista:
+# «Glutes & Hip Thrust Machine.» con punto final, «Yoga Shorts Cross-Border»
+# —jerga de comercio chino que el comprador no tiene por qué entender— y
+# «Unisex sports jersey» en minúsculas. El castellano es el título del
+# producto; el inglés y el francés se registran como traducciones. Los
+# handles NO se tocan: cambiarlos rompería las URL ya indexadas.
+TITULOS = {
+"nad": ("NAD+ en cápsulas", "NAD+ Capsules", "NAD+ en gélules"),
+"nmn": ("NMN en cápsulas", "NMN Capsules", "NMN en gélules"),
+"creatine-hydration-powder": ("Creatina con electrolitos",
+    "Creatine with Electrolytes", "Créatine et électrolytes"),
+"greens-superfood": ("Greens Superfood en polvo", "Greens Superfood Powder",
+    "Greens Superfood en poudre"),
+"reds-superfood": ("Reds Superfood en polvo", "Reds Superfood Powder",
+    "Reds Superfood en poudre"),
+"advanced-100-whey-protein-isolate-chocolate": (
+    "Aislado de proteína de suero · Chocolate",
+    "100 % Whey Protein Isolate · Chocolate",
+    "Isolat de protéine de lactosérum · Chocolat"),
+"plant-protein-vanilla": ("Proteína vegetal · Vainilla",
+    "Plant Protein · Vanilla", "Protéine végétale · Vanille"),
+"bcaa-post-workout-powder-honeydew-watermelon": (
+    "BCAA en polvo · Melón y sandía",
+    "BCAA Powder · Honeydew and Watermelon",
+    "BCAA en poudre · Melon et pastèque"),
+"methylene-blue-drops": ("Azul de metileno en gotas", "Methylene Blue Drops",
+    "Bleu de méthylène en gouttes"),
+"nitric-shock-pre-workout-powder-fruit-punch": (
+    "Preentreno Nitric Shock · Ponche de frutas",
+    "Nitric Shock Pre-Workout · Fruit Punch",
+    "Pré-entraînement Nitric Shock · Punch aux fruits"),
+
+"steel-plyo-box-12-18-24-inch-high-anti-slip-pre-assembled-plyometric-jump-box-for-home-gym-conditioning-and-strength-training-sold-individually-plyometric-platform-step": (
+    "Cajón pliométrico de acero", "Steel Plyometric Jump Box",
+    "Caisson pliométrique en acier"),
+"finer-form-multi-functional-fid-weight-bench-for-full-all-in-one-body-workout-hyper-back-extension-roman-chair-adjustable-ab-sit-up-bench-incline-decline-bench-flat-bench": (
+    "Banco de musculación multifunción", "Multi-Functional Weight Bench",
+    "Banc de musculation multifonction"),
+"sport-basketball-backpack-travel-outdoor-waterproof-swimming-fitness-travel-sports-bag-basketball-pouch-hiking-climbing-backpack": (
+    "Mochila deportiva impermeable", "Waterproof Sport Backpack",
+    "Sac à dos de sport imperméable"),
+"weight-lifting-belt-premium-4-wide-functional-fitness-belt-for-men-women-squat-deadlift-support": (
+    "Cinturón de halterofilia de cuero", "Leather Weightlifting Belt",
+    "Ceinture d'haltérophilie en cuir"),
+"weighted-vest-6lb-8lb-10lb-12lb-15lb-18lb-20lb-24lb-30lb-for-men-women-reflective-stripe-adjustable-buckle-comfortable-durable-rucking-vest-for-walking-running-strength-training": (
+    "Chaleco lastrado ajustable", "Adjustable Weighted Vest",
+    "Gilet lesté réglable"),
+"steel-mace-bell-for-strength-training-support-full-body-muscles-shoulder-grips-forearms-workouts-stretching-5-7-10-15-20-25-30-lb-for-woman-man": (
+    "Maza de acero para entrenamiento de fuerza", "Steel Mace Bell",
+    "Masse en acier pour la force"),
+"glute-bridge-plate-loaded-hip-thrust-machine-black-steel-frame-176-37-lb": (
+    "Máquina de hip thrust con discos", "Plate-Loaded Hip Thrust Machine",
+    "Machine à hip thrust à disques"),
+"gym-exercise-foot-pedal-adjustable-cardio-pedal-exerciser-non-slip-stable-200kg-load-bearing-portable-fitness-equipment": (
+    "Step de cardio regulable", "Adjustable Cardio Stepper",
+    "Stepper de cardio réglable"),
+"8-16-pcs-foam-fitness-non-slip-yoga-mat-fitness-floor-tile-protection-pad-fitness-equipment-mat-suitable-for-indoor-fitness": (
+    "Losetas de espuma para el suelo", "Foam Floor Tiles",
+    "Dalles de sol en mousse"),
+"universal-olympic-trap-shrug-bar-500-lb-acity": (
+    "Barra hexagonal olímpica", "Olympic Trap-Shrug Bar",
+    "Barre hexagonale olympique"),
+"power-rack-phone-mount-hook-on-smartphone-holder-for-2-2-3-3-squat-rack-upright-tool-free-installation-vertical-horizontal-viewing-fits-phones-up-to-3-22-wide": (
+    "Soporte de móvil para jaula de fuerza", "Power Rack Phone Mount",
+    "Support de téléphone pour cage à squat"),
+"portable-breathing-trainer-with-adjustable-resistance-settings": (
+    "Entrenador respiratorio portátil", "Portable Breathing Trainer",
+    "Entraîneur respiratoire portable"),
+"ankle-resistance-bands-with-cuffs-for-women-men-3-level-adjustable-leg-glute-workout-equipment-portable-home-gym-exercise-bands-for-kickbacks-hip-thrusts-yoga-strength-training": (
+    "Bandas de resistencia con tobilleras", "Ankle Resistance Bands",
+    "Bandes de résistance avec chevillères"),
+
+"yoga-shorts-cross-border-honey-buttocks-buttocks-sports-high-waist-abdomen-stretch-tight-fitting-anti-glare-quick-drying-fitness": (
+    "Short de yoga de talle alto", "High-Waist Yoga Shorts",
+    "Short de yoga taille haute"),
+"yoga-shorts-women-fitness-elastic-running-workout-short-leggings-for-ladies-gym-sport-shorts-fitness-sportwear": (
+    "Short de deporte sin costuras", "Seamless Sport Shorts",
+    "Short de sport sans coutures"),
+"dryblend®-t-shirt": ("Camiseta DryBlend", "DryBlend® T-Shirt",
+    "T-shirt DryBlend®"),
+"unisex-sports-jersey": ("Camiseta de deporte unisex", "Unisex Sports Jersey",
+    "Maillot de sport unisexe"),
+
+"charcoal-soap": ("Jabón de carbón activado", "Activated Charcoal Soap",
+    "Savon au charbon actif"),
+"rich-sandalwood-soap": ("Jabón de sándalo", "Rich Sandalwood Soap",
+    "Savon au santal"),
+}
+
 TOPE_TITULO = 60
 TOPE_DESCRIPCION = 155
 TOPE_ALT = 125

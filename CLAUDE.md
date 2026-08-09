@@ -73,12 +73,11 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 2. **El nombre de la tienda sigue siendo «VIllumination».** Sale en la pestaña
    del navegador, en el checkout y en cada correo. No se puede cambiar por API:
    es Ajustes → Detalles de la tienda.
-3. **Nada del catálogo está traducido al inglés ni al francés salvo los once
-   propios.** Los 29 cuerpos en castellano de `tienda/catalogo.py` y los seis
-   artículos del Diario están solo en español. Al traducirlos, **no se copia el
-   texto del proveedor como versión inglesa**: viene lleno de declaraciones de
-   salud y las devolvería por la puerta de atrás. Se traduce lo que hay
-   escrito aquí.
+3. **Los títulos de los 29 ya van en tres lenguas; los cuerpos no.** Los
+   cuerpos en castellano de `tienda/catalogo.py` y los seis artículos del
+   Diario están solo en español. Al traducirlos, **no se copia el texto del
+   proveedor como versión inglesa**: viene lleno de declaraciones de salud y
+   las devolvería por la puerta de atrás. Se traduce lo que hay escrito aquí.
 5. Precio provisional de 9,99 CAD en los seis libros nuevos.
 6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
    corregidas; solo falta decidir si se venden. Piden envío y no llevan control
