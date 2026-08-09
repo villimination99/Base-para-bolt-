@@ -84,11 +84,15 @@ Por orden de urgencia real:
    publicados y cobran, y el comprador no recibe nada. Es lo único que separa
    esto de una tienda que funciona. Se instala desde el panel; no se puede hacer
    por API.
-2. **Los 29 productos de proveedor no tienen traducción.** La tienda va en tres
+2. **El blog está escrito y sin publicar.** Cinco artículos en
+   `tienda/articulos.py` con su publicador en `tienda/blog.py`, a la espera de
+   que vuelva el servidor de Shopify. Son la única puerta de entrada que tendrá
+   la tienda: hoy solo se llega buscando la marca por su nombre.
+3. **Los 29 productos de proveedor no tienen traducción.** La tienda va en tres
    lenguas para lo propio y solo en castellano para el resto.
-3. **Precio provisional de 9,99 CAD** en los seis libros nuevos, puesto para que
+4. **Precio provisional de 9,99 CAD** en los seis libros nuevos, puesto para que
    no quedaran a cero estando publicados. Los decide el dueño.
-4. **Los dos jabones** están en UNLISTED y sin colección. Si se quieren vender
+5. **Los dos jabones** están en UNLISTED y sin colección. Si se quieren vender
    hacen falta las dos cosas.
 
 ## Fiabilidad de esta bóveda

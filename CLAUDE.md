@@ -70,9 +70,15 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 
 1. **No hay app de descargas digitales.** Once productos cobran y no entregan
    nada. Se instala desde el panel; por API no se puede.
-2. Los 29 productos de proveedor no tienen traducción al inglés ni al francés.
-3. Precio provisional de 9,99 CAD en los seis libros nuevos.
-4. Los dos jabones están en UNLISTED y sin colección.
+2. **El blog está escrito y sin publicar.** Los cinco artículos de
+   `tienda/articulos.py` esperan a que el servidor de Shopify vuelva. Lanza
+   `python3 tienda/blog.py --esquema` antes de la primera pasada real: el
+   publicador se escribió sin poder hablar con la API y los nombres de campo
+   están puestos según la referencia, no comprobados.
+3. Los 29 productos de proveedor no tienen traducción al inglés ni al francés,
+   y los artículos tampoco.
+4. Precio provisional de 9,99 CAD en los seis libros nuevos.
+5. Los dos jabones están en UNLISTED y sin colección.
 
 ## Si acabas de clonar esto
 
