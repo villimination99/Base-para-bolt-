@@ -2,7 +2,7 @@
 """
 VILLUMINATIONS — Artículos del blog
 ------------------------------------
-Ocho entradas escritas para interceptar la pregunta que la gente sí teclea.
+Nueve entradas escritas para interceptar la pregunta que la gente sí teclea.
 Nadie busca «Códice de la Mesa»; buscan «cuántas horas hay que dormir». Cada
 artículo responde una de esas preguntas de verdad y, al final, señala el libro
 que la desarrolla.
@@ -989,6 +989,126 @@ segundo te está vendiendo otra cosa.</p>
             'se dice anuncia hechos futuros ni sustituye la atención de un '
             'profesional sanitario.</em></p>'
         ),
+    },
+    # ------------------------------------------------------------------ 9
+    {
+        "handle": "como-elegir-una-proteina-en-polvo",
+        "titulo": "Cómo elegir una proteína en polvo",
+        "resumen": (
+            "Concentrado, aislado o vegetal; qué mirar en el panel antes que "
+            "el precio del bote, y las dos trampas de etiqueta que hacen que "
+            "pagues por menos proteína de la que crees."
+        ),
+        "etiquetas": ["proteína", "suplementos", "guía"],
+        "meta": (
+            "Cómo elegir una proteína en polvo | VILLUMINATIONS",
+            "Concentrado, aislado o vegetal, el coste por gramo de proteína y "
+            "las dos trampas de etiqueta que hacen que pagues por menos de lo "
+            "que crees.",
+        ),
+        "cuerpo": """
+<p>Casi todo el mundo elige la proteína por el precio del bote, y el precio del
+bote es el dato menos informativo de la etiqueta. Estas son las cuatro
+decisiones reales, en el orden en que importan.</p>
+
+<h2>1. El coste por gramo de proteína, no por bote</h2>
+
+<p>Es la única comparación honesta y se hace en diez segundos: divide el precio
+entre los gramos de proteína totales del envase. Los gramos totales son
+<em>raciones por envase × gramos de proteína por ración</em>, y las dos cifras
+están en el panel.</p>
+
+<p>Dos botes al mismo precio pueden llevar el doble de proteína uno que otro,
+porque el peso del envase incluye cacao, aromas, espesantes y azúcar. La
+báscula pesa el polvo; tú pagas por la proteína.</p>
+
+<h2>2. Concentrado, aislado o vegetal</h2>
+
+<p>La diferencia entre los dos primeros es cuánto se ha filtrado el suero:</p>
+
+<ul>
+  <li><strong>Concentrado.</strong> Menos filtrado, así que lleva algo más de
+  grasa y de lactosa y algo menos de proteína por gramo de polvo. Es el más
+  barato y, si la lactosa no te da problemas, es una elección perfectamente
+  razonable.</li>
+  <li><strong>Aislado.</strong> Más filtrado: más proteína por gramo y muy poca
+  lactosa. Cuesta más. Tiene sentido si te sienta mal el concentrado o si
+  cuentas los macros con precisión.</li>
+  <li><strong>Vegetal.</strong> Guisante, haba, arroz o mezclas. La razón para
+  elegirla no es que sea «mejor»: es que no lleva lácteos. Conviene que el
+  perfil de aminoácidos esenciales esté completo, y eso lo consiguen las
+  mezclas mejor que una sola fuente.</li>
+</ul>
+
+<p>Para casi todo el mundo, la diferencia práctica entre las tres es pequeña al
+lado de llegar a la proteína total del día, que es lo que de verdad mueve la
+aguja.</p>
+
+<h2>3. Las dos trampas de la etiqueta</h2>
+
+<h3>La mezcla sin cantidades</h3>
+
+<p>Si la etiqueta lista una «mezcla patentada» con ocho ingredientes y una sola
+cifra al final, no puedes saber cuánto hay de cada uno. Ese es exactamente el
+motivo por el que se presenta así. La regla es simple: <strong>si no puedes
+comparar dos productos con lo que dice la etiqueta, la etiqueta está haciendo
+su trabajo y tú no puedes hacer el tuyo</strong>.</p>
+
+<h3>El relleno con aminoácidos sueltos</h3>
+
+<p>La cantidad de proteína declarada se calcula, en la práctica, a partir del
+nitrógeno. Aminoácidos baratos como la glicina o la taurina aportan nitrógeno
+sin aportar una proteína completa, así que añadirlos sube la cifra del panel sin
+subir lo que le sirve al músculo.</p>
+
+<p>Cómo detectarlo: mira la lista de ingredientes. Si aparecen aminoácidos
+sueltos <em>antes</em> o justo después de la fuente proteica, y el producto es
+llamativamente barato por gramo, desconfía. Una proteína honesta empieza su
+lista por la proteína.</p>
+
+<h2>4. Lo que no debería influir en la decisión</h2>
+
+<ul>
+  <li><strong>El sabor de la foto.</strong> Cambia entre lotes y no dice nada
+  del contenido.</li>
+  <li><strong>«Sin azúcar».</strong> Suele significar edulcorado con otra cosa.
+  Legítimo, pero no es un dato de calidad.</li>
+  <li><strong>Las promesas del envase.</strong> Un complemento alimenticio no
+  pasa por autorización previa antes de venderse, así que lo que promete el bote
+  no lo ha validado nadie. Está desarrollado en
+  <a href="/blogs/diario/que-suplementos-tienen-evidencia">qué suplementos
+  tienen evidencia y cuáles no</a>.</li>
+</ul>
+
+<h2>La comprobación de treinta segundos</h2>
+
+<ol>
+  <li>Gramos de proteína por ración ÷ gramos de polvo por ración. Por encima de
+  0,7 es un producto denso; por debajo de 0,6, estás comprando bastante relleno.</li>
+  <li>Precio ÷ gramos de proteína del envase. Ese es el número que compara.</li>
+  <li>Primera línea de la lista de ingredientes: ¿es la proteína?</li>
+  <li>¿Hay alguna «mezcla patentada» sin cantidades? Si la hay, siguiente
+  producto.</li>
+</ol>
+
+<p>Con eso se descarta la mayor parte del mercado sin leer una sola reseña. Las
+que hay <a href="/collections/suplementos">en esta tienda</a> declaran los
+gramos por toma y la lista completa de ingredientes en la ficha, que es lo que
+hace falta para hacer esta cuenta.</p>
+
+""" + _fuentes(
+            "<li>Las reglas del panel de información nutricional, la lista de "
+            "ingredientes por orden de peso y el régimen de los complementos "
+            "alimenticios —sin autorización previa a la venta— los publica la "
+            "autoridad federal de alimentos y medicamentos.</li>\n"
+            "<li>El cálculo de proteína a partir del nitrógeno es el método "
+            "analítico recogido en la propia norma de etiquetado.</li>\n"
+        ) + ETIQUETA.format(
+            frase="El reparto de la proteína por comidas, las tablas de "
+                  "contenido por alimento y cómo encaja con el resto del día "
+                  "están desarrollados entero.",
+            handle="codice-de-la-mesa", libro="el Códice de la Mesa", paginas="78",
+        ) + FIRMA,
     },
 ]
 
