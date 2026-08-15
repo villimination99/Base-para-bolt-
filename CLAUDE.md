@@ -50,8 +50,16 @@ Comprobaciones rápidas antes de dar nada por bueno:
 ```
 python3 tienda/seo.py        # medidas de título y descripción de los 11 propios
 python3 tienda/catalogo.py   # ídem de los 29 de proveedor
+python3 tienda/articulos.py  # ídem de los artículos del Diario
 python3 libros/tools/faltan.py
+python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 ```
+
+**Las dos bases legales tampoco se mezclan en el blog.** `_fuentes()` de
+`tienda/articulos.py` pide `base="federal"` o `base="tradicion"` y no tiene
+valor por defecto que sirva para las dos: antes firmaba siempre con el
+17 U.S.C. § 105 y el artículo del decanato salió publicado invocando una ley
+que no le tocaba.
 
 ## La API de Shopify, en corto
 
@@ -65,6 +73,13 @@ Lo que costó descubrir y no está en ningún sitio evidente:
   escribir el original. Si cambias el texto, el digest anterior ya no sirve.
 - El idioma primario de la tienda es el **castellano**; en/fr/de/ja están
   publicados, y de/ja caen al castellano porque no tienen traducción.
+- `menuUpdate` pide **`MenuItemUpdateInput`** y `menuCreate` **`MenuItemCreateInput`**,
+  igual que los productos. Los enlaces del menú se traducen aparte, como
+  recursos de tipo `LINK`, uno por entrada.
+- **`shopPolicyUpdate` está fuera de alcance**: pide `write_legal_policies`, un
+  permiso que esta app no tiene. Las políticas solo se tocan desde el panel.
+- Traducir el `handle` de una colección crea su URL localizada
+  (`/en/collections/supplements`). Está hecho en las seis.
 
 ## Lo que sigue pendiente
 
@@ -79,10 +94,21 @@ Lo que costó descubrir y no está en ningún sitio evidente:
    copia el texto del proveedor como versión inglesa**: viene lleno de
    declaraciones de salud y las devolvería por la puerta de atrás. Se traduce
    lo que hay escrito aquí.
-4. Precio provisional de 9,99 CAD en los seis libros nuevos.
-5. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
+4. **Las políticas de la tienda están mal y no se arreglan por API.** Escriben
+   la marca como «VIllumination», están redactadas en inglés bajo títulos
+   franceses, y las condiciones del servicio llevan a la vista literales sin
+   rellenar: `[INSERT TRADING NAME]`, `[INSERT BUSINESS ADDRESS]`, `[LINK]`.
+   Aparte de eso, la política de reembolso niega remedio incluso para producto
+   defectuoso o no entregado, lo que en Quebec es dudoso que se sostenga y
+   además invita a la contracargo. Es cosa de mirarlo con calma en el panel.
+5. Precio provisional de 9,99 CAD en los seis libros nuevos.
+6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
    corregidas; solo falta decidir si se venden. Piden envío y no llevan control
    de existencias, así que activarlos significa poder vender sin stock.
+7. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
+   apunta a él, y aun así `/blogs/suplementos` es una página indexable sin
+   contenido. O se llena o se borra desde el panel; no se ha tocado porque
+   borrar no se deshace.
 
 ## Si acabas de clonar esto
 
