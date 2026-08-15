@@ -41,7 +41,8 @@ RAIZ = Path(__file__).resolve().parent.parent
 TOPE_TITULO, TOPE_DESCRIPCION, TOPE_ALT = 60, 155, 125
 
 # Las carpetas de dibujo propio. Todo lo que se estampe sale de aquí.
-LAMINAS = (RAIZ / "libros" / "partials", RAIZ / "planes" / "partials")
+LAMINAS = (RAIZ / "libros" / "partials", RAIZ / "planes" / "partials",
+           RAIZ / "ropa" / "partials")
 
 # Prefijo de identificador -> de qué serie viene. Sirve para agrupar la oferta.
 # El orden importa: «dia-» va antes que «de-» porque los diagramas del zodiaco
@@ -52,6 +53,7 @@ SERIES = {
     "ca-": "Carga", "de-": "Descanso", "me-": "Mesa",
     "sm-": "Sí mismo", "vo-": "Voluntad", "si-": "Símbolos",
     "em-": "Emblemas", "fig-": "Figuras", "r-": "Rosetas",
+    "vi-": "Marca VI",
     "filigrana": "Ornamentos",
 }
 
