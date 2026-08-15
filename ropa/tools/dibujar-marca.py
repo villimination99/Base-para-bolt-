@@ -328,6 +328,19 @@ def barbas(p0, p1, p2, largo, lado, n=8, ancho=54, abre=46, cierra=11,
         ctl = (base[0] + curva[0] * L * .5, base[1] + curva[1] * L * .5)
         p.append(cinta(base, ctl, tip, ancho * env * (.6 + .5 * ritmo[i % len(ritmo)]),
                        afila=1.85))
+        # muescas sobre el canto: de cerca, cada hoja es una regla
+        for k in range(1, 6):
+            tk = .22 + .62 * k / 6
+            bm = _bez(base, ctl, tip, tk)
+            dm = _tan(base, ctl, tip, tk)
+            wm = ancho * env * (.6 + .5 * ritmo[i % len(ritmo)]) \
+                * _perfil(tk, sale=1.85) / 2
+            ox, oy = -dm[1] * wm * lado, dm[0] * wm * lado
+            ln = 13 if k % 2 == 0 else 7
+            p.append(linea(bm[0] + ox, bm[1] + oy,
+                           bm[0] + ox - dm[1] * ln * lado,
+                           bm[1] + oy + dm[0] * ln * lado,
+                           1.5 if k % 2 == 0 else 1, .9 if k % 2 == 0 else .5))
         if sub and ritmo[i % len(ritmo)] > .6:
             b2 = _bez(base, ctl, tip, .52)
             d2 = _rot(_tan(base, ctl, tip, .52), 26 * lado)
@@ -431,6 +444,16 @@ def vi_dorsal() -> tuple:
     cx = 600
     vert = (cx, 920)
     p = []
+
+    # el limbo graduado, por detrás: devuelve la lectura de instrumento que
+    # las hojas tapaban. Va fino a propósito, para no competir con la V.
+    p.append(arco(cx, 1010, 812, -58, 58, 36, ancho=2.0))
+    p.append(abanico(cx, 1010, 812, 762, -54, 54, 30))
+    p.append(arco(cx, 1010, 762, -54, 54, 24, ancho=1.5, hacia=-1))
+    for g in (-58, 58):
+        x1, y1 = pol(cx, 1010, 812, g)
+        p.append(circulo(x1, y1, 9, 2))
+        p.append(roseta(x1, y1, 34))
 
     for lado in (-1, 1):
         tip = (cx + 466 * lado, 196)
