@@ -40,7 +40,7 @@ SALIDA = RAIZ / "tablero" / "index.html"
 # Esto no se puede deducir del repositorio: vive en Shopify. Se anota aquí con
 # la fecha de la comprobación y el tablero avisa cuando envejece.
 TIENDA = {
-    "comprobado": "2026-08-15",
+    "comprobado": "2026-08-16",
     "dominio": "villuminations.com",
     "moneda": "CAD",
     "idioma_primario": "es",
@@ -68,14 +68,13 @@ LENGUAS = [
     ("Fichas propias", "11 productos", 1, 1, 1, "título, cuerpo, SEO y handle"),
     ("Títulos de proveedor", "29 productos", 1, 1, 1, ""),
     ("Metaetiquetas de proveedor", "29 productos", 1, 1, 1, "lo que enseña el buscador"),
-    ("Cuerpos de proveedor", "10 de 29 en la tienda", 1, 1, 1,
-     "los 29 escritos; 19 esperan a poder registrarse"),
-    ("Tipo de producto", "10 de 29 en la tienda", 1, 1, 1, ""),
-    ("Artículos escritos", "9", 1, 0, 0, "8 publicados; el noveno espera"),
+    ("Cuerpos de proveedor", "29 productos", 1, 1, 1, ""),
+    ("Tipo de producto", "40 productos", 1, 1, 1, ""),
+    ("Artículos del Diario", "9 propios", 1, 0, 0, "escritos en castellano"),
     ("Colecciones", "6", 1, 1, 1, "título, cuerpo, SEO y handle"),
     ("Menús", "18 enlaces", 1, 1, 1, ""),
     ("Diario (el blog)", "título y SEO", 1, 1, 1, ""),
-    ("Página «Cómo se hace»", "1", 1, 0, 0, ""),
+    ("Página «Cómo se hace»", "1", 1, 1, 1, "título, cuerpo, SEO y handle"),
     ("Página «Contacto»", "1", 1, 1, 1, ""),
     ("Políticas de la tienda", "6", 0, 1, 0, "redactadas en inglés; falta permiso de API"),
 ]
