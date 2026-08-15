@@ -48,6 +48,8 @@ COLORES = {
     "naranja": "#ff6600",
     "purpura": "#a97bff",
     "hueso": "#eef2ff",
+    # para prenda clara: los neones no se ven sobre blanco
+    "tinta": "#0a0a12",
 }
 
 DIVISIONES = 12          # los doce signos
