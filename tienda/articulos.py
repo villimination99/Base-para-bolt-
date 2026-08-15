@@ -2,7 +2,7 @@
 """
 VILLUMINATIONS — Artículos del blog
 ------------------------------------
-Cinco entradas escritas para interceptar la pregunta que la gente sí teclea.
+Ocho entradas escritas para interceptar la pregunta que la gente sí teclea.
 Nadie busca «Códice de la Mesa»; buscan «cuántas horas hay que dormir». Cada
 artículo responde una de esas preguntas de verdad y, al final, señala el libro
 que la desarrolla.
@@ -17,11 +17,12 @@ Tres reglas al escribir aquí, y no son de estilo:
   qué dice la evidencia pública sobre la creatina; no se puede decir que
   *nuestro* bote de creatina haga nada. La diferencia es jurídica, no de tono.
 
-· **Cada cifra con su fuente, y la fuente en el texto.** Casi todo lo que hay
-  aquí sale de organismos del Gobierno de EE. UU., que publican en abierto y
-  cuyas obras **no están sujetas a derechos de autor conforme al 17 U.S.C.
-  § 105**. Esa es la ventaja de esta tienda sobre un blog de fitness que copió
-  las cifras de otro blog: las nuestras se pueden comprobar.
+· **Cada cifra con su fuente, y la fuente en el texto.** Lo de nutrición y
+  entrenamiento sale de organismos del Gobierno de EE. UU., que publican en
+  abierto y cuyas obras **no están sujetas a derechos de autor conforme al
+  17 U.S.C. § 105**. Lo esotérico se apoya en la **tradición común y el dominio
+  público**, que es otra cosa. `_fuentes(filas, base=...)` firma con una o con
+  otra; no hay firma por defecto que valga para las dos.
 
 Medidas de buscador: 60 caracteres el título, 155 la descripción. Se comprueba
 abajo, no se confía.
@@ -48,14 +49,36 @@ FIRMA = (
 )
 
 
-def _fuentes(filas: str) -> str:
-    return (
-        "<h3>De dónde sale cada cifra</h3>\n"
-        "<ul>\n" + filas + "</ul>\n"
+# Las dos bases legales del catálogo no son la misma y el pie de fuentes no
+# puede darlas por intercambiables. Los datos de nutrición y entrenamiento
+# vienen de agencias federales estadounidenses (17 U.S.C. § 105); lo esotérico
+# se apoya en la tradición común y el dominio público. Antes esta función
+# firmaba siempre con el § 105, y el artículo del decanato salió publicado
+# invocando una ley que no le tocaba.
+_CIERRE = {
+    "federal": (
         "<p>Los organismos del Gobierno de los Estados Unidos publican en "
         "abierto y sus obras <strong>no están sujetas a derechos de autor "
         "conforme al 17 U.S.C. § 105</strong>. Las cifras se pueden comprobar "
         "una por una; la redacción de este artículo es trabajo propio.</p>\n"
+    ),
+    "tradicion": (
+        "<p>Este artículo no se apoya en fuentes oficiales sino en la "
+        "<strong>tradición común y el dominio público</strong>: material que "
+        "se transmite por escrito desde hace siglos y no pertenece a nadie. La "
+        "redacción, la selección y el orden son trabajo propio.</p>\n"
+    ),
+}
+
+
+def _fuentes(filas: str, base: str = "federal") -> str:
+    if base not in _CIERRE:
+        raise ValueError(f"base legal desconocida: {base}")
+    titulo = ("De dónde sale cada cifra" if base == "federal"
+              else "De dónde sale lo que aquí se cuenta")
+    return (
+        f"<h3>{titulo}</h3>\n"
+        "<ul>\n" + filas + "</ul>\n" + _CIERRE[base]
     )
 
 
@@ -636,7 +659,8 @@ posturas son coherentes consigo mismas.</p>
             "<li>La secuencia de los decanatos, las dignidades y los términos "
             "egipcios se transmiten por escrito desde hace más de dos milenios en "
             "obras de <strong>dominio público</strong>, y no son propiedad de nadie.</li>\n"
-            "<li>Las cifras de precesión son astronómicas y comprobables.</li>\n"
+            "<li>Las cifras de precesión son astronómicas y comprobables.</li>\n",
+            base="tradicion"
         ) + ETIQUETA.format(
             frase="La tabla completa de los treinta y seis decanatos con su regente, "
                   "las cuatro dignidades esenciales con el grado exacto de cada "
@@ -647,6 +671,323 @@ posturas son coherentes consigo mismas.</p>
             'es un lenguaje simbólico, no una ciencia predictiva: nada de lo que se '
             'dice anuncia hechos futuros ni sustituye la atención de un profesional '
             'sanitario.</em></p>'
+        ),
+    },
+    # ------------------------------------------------------------------ 6
+    {
+        "handle": "cuanta-proteina-hace-falta-al-dia",
+        "titulo": "Cuánta proteína hace falta al día",
+        "resumen": (
+            "La cantidad oficial, por qué es un mínimo y no un objetivo, cómo "
+            "se calcula con tu peso y qué pasa de verdad si te pasas."
+        ),
+        "etiquetas": ["nutrición", "proteína", "referencia"],
+        "meta": (
+            "Cuánta proteína hace falta al día | VILLUMINATIONS",
+            "0,8 g por kilo es el mínimo oficial, no el objetivo de quien "
+            "entrena. Cómo se calcula, cuánto absorbes de una vez y qué pasa "
+            "si te pasas.",
+        ),
+        "cuerpo": """
+<p>Es la pregunta que más se teclea sobre nutrición y la que peor se contesta,
+porque hay dos cifras distintas circulando y casi nadie aclara que responden a
+preguntas diferentes.</p>
+
+<h2>La cifra oficial: 0,8 g por kilo</h2>
+
+<p>La recomendación pública para una persona adulta sana es de
+<strong>0,8 gramos de proteína por kilo de peso corporal y día</strong>. Para
+setenta kilos son 56 gramos. La guía alimentaria federal la repite y el panel de
+la etiqueta usa un valor diario de <strong>50 gramos</strong> como referencia.</p>
+
+<p>Lo que casi nunca se dice es qué significa esa cifra. No es un óptimo: es la
+cantidad que cubre las necesidades de <strong>casi toda</strong> la población
+sana. Es un suelo pensado para que nadie se quede corto, no un techo ni una
+meta. Confundir el suelo con el objetivo es el error del que salen todos los
+demás.</p>
+
+<h2>El otro rango: el de quien entrena</h2>
+
+<p>Cuando hay entrenamiento de fuerza de por medio, las revisiones de nutrición
+deportiva trabajan con un rango bastante más alto, entre
+<strong>1,2 y 2,0 gramos por kilo</strong>, y con la parte alta reservada a
+fases de déficit calórico, donde la proteína protege la masa magra mientras el
+peso baja.</p>
+
+<p>Conviene decir de dónde sale cada cosa: los 0,8 g/kg son una recomendación
+pública de organismos federales; el rango de 1,2 a 2,0 procede de la literatura
+de nutrición deportiva y de las tomas de postura de sociedades profesionales.
+Son dos fuentes distintas y no se citan como si fueran la misma.</p>
+
+<h2>El margen del 10 al 35 %</h2>
+
+<p>Hay una tercera manera de mirarlo, por porcentaje de calorías. El rango
+aceptable para la proteína en una dieta adulta va del <strong>10 al 35 % de las
+calorías totales</strong>. Es amplio a propósito: dentro de ese margen hay
+muchas dietas correctas y muy distintas entre sí.</p>
+
+<p>Sirve de comprobación cruzada. Si haces los gramos por kilo y el resultado se
+sale del 35 % de tus calorías, algo no cuadra en el reparto.</p>
+
+<h2>«Solo se absorben 30 gramos de una vez»</h2>
+
+<p>Esto se repite mucho y es falso tal como se dice. El intestino absorbe
+prácticamente toda la proteína que le llega; lo que se satura no es la
+absorción, sino el <strong>estímulo de síntesis muscular</strong> de una sola
+comida, que llega a su techo en algún punto entre veinte y cuarenta gramos según
+la persona y la cantidad de músculo que tenga.</p>
+
+<p>La consecuencia práctica no es «no comas más de treinta», sino
+<strong>repartir</strong>: tres o cuatro tomas con proteína a lo largo del día
+aprovechan mejor que una cena enorme.</p>
+
+<h2>Qué pasa si te pasas</h2>
+
+<p>En una persona con los riñones sanos, no hay evidencia pública de daño renal
+por comer más proteína de la recomendada. Lo que sí ocurre es más prosaico: la
+proteína sacia mucho, y cada gramo que entra por ahí es un gramo que no entra
+por otro sitio. Comer 3 g/kg no es peligroso, es simplemente
+<strong>innecesario</strong> y desplaza a los hidratos que alimentan el
+entrenamiento.</p>
+
+<p>Quien tenga una enfermedad renal diagnosticada está en otro escenario y esa
+cifra la fija su médico, no un artículo.</p>
+
+<h2>Cómo se calcula en treinta segundos</h2>
+
+<ul>
+  <li>Peso en kilos × 0,8 → el mínimo para no quedarse corto.</li>
+  <li>Peso en kilos × 1,6 → punto de partida razonable si entrenas fuerza.</li>
+  <li>Divide el resultado entre las comidas que haces al día.</li>
+</ul>
+
+<p>Con setenta kilos: 56 g de suelo, 112 g como objetivo entrenando, unos 28 g
+en cada una de cuatro comidas.</p>
+
+""" + _fuentes(
+            "<li>Los 0,8 g/kg y el rango del 10 al 35 % de las calorías son "
+            "recomendaciones publicadas por organismos del Gobierno de los "
+            "Estados Unidos.</li>\n"
+            "<li>El valor diario de 50 g es el que fija la norma de etiquetado "
+            "para el panel nutricional.</li>\n"
+            "<li>El rango de 1,2 a 2,0 g/kg procede de la literatura de "
+            "nutrición deportiva, no de una recomendación federal, y así se "
+            "dice en el texto.</li>\n"
+        ) + ETIQUETA.format(
+            frase="El reparto por comidas, las tablas de contenido proteico por "
+                  "alimento y cómo encaja la proteína con el resto del día están "
+                  "desarrollados entero.",
+            handle="codice-de-la-mesa", libro="el Códice de la Mesa", paginas="78",
+        ) + FIRMA,
+    },
+    # ------------------------------------------------------------------ 7
+    {
+        "handle": "gimnasio-en-casa-que-comprar-primero",
+        "titulo": "Gimnasio en casa: qué comprar primero",
+        "resumen": (
+            "El orden en que conviene gastar el dinero, qué resuelve cada "
+            "pieza y las tres compras que casi todo el mundo hace demasiado "
+            "pronto."
+        ),
+        "etiquetas": ["equipo", "entrenamiento", "guía"],
+        "meta": (
+            "Gimnasio en casa: qué comprar primero | VILLUMINATIONS",
+            "El orden en que conviene gastar: suelo, banco, barra, bandas. Qué "
+            "resuelve cada pieza y las tres compras que se hacen demasiado "
+            "pronto.",
+        ),
+        "cuerpo": """
+<p>Montar un gimnasio en casa sale mal casi siempre por lo mismo: se compra por
+ilusión y no por orden. Este es el orden que aguanta, con el criterio detrás de
+cada paso.</p>
+
+<h2>Antes de comprar nada: cuánto hace falta entrenar</h2>
+
+<p>La recomendación pública de actividad física para personas adultas son
+<strong>150 minutos semanales</strong> de actividad aeróbica moderada —o 75 de
+intensidad alta— más <strong>dos días de trabajo de fuerza</strong> que
+involucren los grandes grupos musculares.</p>
+
+<p>Eso define lo que hay que comprar. Dos sesiones de fuerza a la semana no
+piden una sala entera: piden poder cargar los patrones básicos —empujar, tirar,
+flexionar cadera y rodilla— con una progresión posible.</p>
+
+<h2>1. El suelo, antes que el hierro</h2>
+
+<p>Es la compra menos emocionante y la que más se agradece. Unas
+<a href="/collections/equipo">losetas encajables</a> hacen tres cosas: protegen
+el suelo de la casa, amortiguan las articulaciones y delimitan un espacio que
+tu cabeza reconoce como «aquí se entrena». Lo tercero no es místico: reduce la
+fricción de empezar, que es donde se abandona.</p>
+
+<h2>2. Un banco regulable</h2>
+
+<p>Es la pieza que más ejercicios desbloquea por dólar gastado. Con un banco que
+se incline, se abata y se ponga plano tienes press en tres ángulos, remo
+apoyado, extensiones lumbares y todo el trabajo de brazo sentado. Sin él, media
+lista de ejercicios no existe.</p>
+
+<p>Al comparar bancos, mira la carga admitida que declara el fabricante y las
+posiciones reales de respaldo. Un banco de tres posiciones y uno de siete no son
+el mismo mueble.</p>
+
+<h2>3. Carga que progrese</h2>
+
+<p>La fuerza depende de poder <strong>subir la carga poco a poco</strong>. Ese
+es el criterio para elegir entre una barra con discos, un juego de mancuernas
+regulables o una máquina de carga con discos: la pregunta no es cuánto levanta
+hoy, sino en cuántos escalones puede subir.</p>
+
+<p>Una barra hexagonal es, para casa, la más agradecida: permite peso muerto con
+la espalda en mejor posición que la barra recta y sirve también para encogimientos
+y zancadas.</p>
+
+<h2>4. Bandas y chaleco, cuando ya hay rutina</h2>
+
+<p>Las bandas resuelven lo que el peso libre hace peor —abducciones, activación
+de glúteo, trabajo accesorio— y ocupan un cajón. El chaleco lastrado convierte
+en entrenamiento algo que ya hacías: caminar. Ninguna de las dos es una primera
+compra; las dos son excelentes cuartas compras.</p>
+
+<h2>Las tres compras prematuras</h2>
+
+<ul>
+  <li><strong>Una máquina grande de un solo ejercicio.</strong> Ocupa lo que
+  ocupa un banco y una barra juntos y hace una cosa. Tiene sentido cuando ese
+  ejercicio concreto es el eje de tu programa, no antes.</li>
+  <li><strong>Mancuernas fijas por pares.</strong> Se quedan cortas en dos meses
+  y no hay escalón siguiente.</li>
+  <li><strong>Accesorios antes que carga.</strong> Rodillos, poleas pequeñas,
+  agarres. Todos útiles, ninguno mueve la aguja si aún no puedes progresar en
+  los básicos.</li>
+</ul>
+
+<h2>La lista corta</h2>
+
+<ul>
+  <li>Losetas para dos metros cuadrados.</li>
+  <li>Banco regulable.</li>
+  <li>Una barra y discos, o carga regulable equivalente.</li>
+  <li>Un juego de bandas.</li>
+</ul>
+
+<p>Con eso se cubren los dos días de fuerza de la recomendación pública durante
+años. Todo lo demás es afinado, y se compra cuando el programa lo pide.</p>
+
+""" + _fuentes(
+            "<li>Los 150 minutos semanales y los dos días de fuerza son la "
+            "recomendación de actividad física publicada por el Gobierno de los "
+            "Estados Unidos.</li>\n"
+            "<li>Las cargas admitidas y las medidas de cada pieza salen de la "
+            "documentación del fabricante y solo se publican cuando esa "
+            "documentación no se contradice a sí misma.</li>\n"
+        ) + ETIQUETA.format(
+            frase="La progresión de cargas semana a semana, los patrones básicos "
+                  "y cómo se ordena una sesión con este material están "
+                  "desarrollados entero.",
+            handle="codice-de-la-carga", libro="el Códice de la Carga", paginas="70",
+        ) + FIRMA,
+    },
+    # ------------------------------------------------------------------ 8
+    {
+        "handle": "que-es-un-arcano-mayor",
+        "titulo": "Qué es un arcano mayor",
+        "resumen": (
+            "Los veintidós, por qué el Loco lleva un cero, en qué se "
+            "diferencian de los menores y qué significa realmente que una "
+            "carta salga «del revés»."
+        ),
+        "etiquetas": ["simbolismo", "arcanos", "referencia"],
+        "meta": (
+            "Qué es un arcano mayor | VILLUMINATIONS",
+            "Los veintidós arcanos mayores, por qué el Loco lleva un cero, la "
+            "diferencia con los menores y qué significa una carta invertida.",
+        ),
+        "cuerpo": """
+<p>«Arcano» significa simplemente <em>secreto</em>, y en la baraja designa a las
+cartas que no pertenecen a ningún palo. Son veintidós y forman una secuencia
+cerrada que se transmite por escrito desde hace siglos.</p>
+
+<h2>Veintidós cartas y dos barajas dentro de una</h2>
+
+<p>Una baraja completa tiene setenta y ocho cartas repartidas en dos bloques muy
+distintos:</p>
+
+<ul>
+  <li>Los <strong>arcanos menores</strong>, cincuenta y seis cartas en cuatro
+  palos con sus figuras. Son la estructura que heredó la baraja de juego
+  corriente.</li>
+  <li>Los <strong>arcanos mayores</strong>, veintidós cartas sueltas, numeradas
+  y con nombre propio.</li>
+</ul>
+
+<p>Los menores hablan de circunstancias; los mayores, de procesos. Esa es la
+diferencia funcional, y explica por qué en una lectura un mayor «pesa» más: no
+describe un episodio, describe la corriente en la que ocurre.</p>
+
+<h2>Por qué el Loco lleva un cero</h2>
+
+<p>Es la rareza más famosa del sistema y no es un capricho. Veintiuna cartas van
+numeradas del I al XXI; el Loco queda fuera de esa cuenta y por eso se le asigna
+el <strong>cero</strong>, un número que en las barajas antiguas simplemente no
+estaba.</p>
+
+<p>La consecuencia es que el Loco no tiene sitio fijo. Puede leerse al principio
+—lo que aún no ha empezado— o al final —lo que vuelve al mundo después de
+haberlo recorrido—, y las dos colocaciones tienen tradición detrás. Un sistema
+que deja una pieza sin posición fija está diciendo algo sobre sí mismo: la
+secuencia es un recorrido, no una escalera.</p>
+
+<h2>La secuencia como recorrido</h2>
+
+<p>Leídos en orden, los veintiún numerados describen un trayecto reconocible:
+primero las figuras de autoridad y aprendizaje, después las pruebas y los
+vuelcos, y al final las cartas grandes de disolución y recomposición. No hace
+falta creer en nada para ver el patrón; es la misma armadura que tienen los
+relatos de viaje desde mucho antes de que existiera la baraja.</p>
+
+<p>De ahí sale la costumbre de agruparlos en <strong>tres tramos de siete</strong>.
+Es una lectura tardía y no la única, pero ordena bien la memoria.</p>
+
+<h2>Qué significa una carta invertida</h2>
+
+<p>Que una carta salga del revés no invierte su significado como un signo menos.
+En la tradición se lee como el mismo contenido en otra intensidad o en otra
+dirección: bloqueado, todavía interior, excesivo o ya agotado.</p>
+
+<p>Hay escuelas enteras que no usan inversiones y leen las setenta y ocho
+siempre derechas. Ninguna de las dos posturas es la correcta: son convenios de
+lectura, y lo que importa es no mezclarlos a media tirada.</p>
+
+<h2>Lo que esto no es</h2>
+
+<p>Conviene decirlo claro. Los arcanos son un <strong>lenguaje simbólico</strong>
+de dominio público: un vocabulario muy trabajado para nombrar estados y
+procesos. No anuncian hechos futuros, no diagnostican nada y no sustituyen a un
+médico ni a un psicólogo colegiado.</p>
+
+<p>Usados como espejo funcionan; usados como pronóstico, no. Quien te venda lo
+segundo te está vendiendo otra cosa.</p>
+
+""" + _fuentes(
+            "<li>La secuencia de los veintidós arcanos, su numeración y las "
+            "convenciones de lectura se transmiten por escrito desde hace siglos "
+            "en obras de <strong>dominio público</strong>, y no son propiedad de "
+            "nadie.</li>\n"
+            "<li>La redacción, la selección y el orden de este artículo son "
+            "trabajo propio.</li>\n",
+            base="tradicion"
+        ) + ETIQUETA.format(
+            frase="Los veintidós uno por uno, con su lámina, sus correspondencias "
+                  "clásicas y las dos convenciones de inversión enfrentadas, no "
+                  "caben en un artículo.",
+            handle="codice-de-los-arcanos", libro="el Códice de los Arcanos",
+            paginas="62",
+        ) + (
+            '<p><em>Publicado por VILLUMINATIONS. El tarot que se practica aquí '
+            'es un lenguaje simbólico, no una ciencia predictiva: nada de lo que '
+            'se dice anuncia hechos futuros ni sustituye la atención de un '
+            'profesional sanitario.</em></p>'
         ),
     },
 ]
