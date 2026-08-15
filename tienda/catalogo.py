@@ -911,6 +911,248 @@ TITULOS = {
     "Savon au santal"),
 }
 
+# ---------------------------------------------------------------------------
+# Metaetiquetas en inglés y francés: handle -> {"en"|"fr": (título, descripción)}
+# ---------------------------------------------------------------------------
+# Es lo que Google enseña en cada lengua: el fragmento de búsqueda. El
+# castellano ya está en FICHAS; esto son sus traducciones, registradas en
+# Shopify como meta_title y meta_description con translationsRegister.
+# Mismas medidas que el resto: 60 el título, 155 la descripción.
+METAS = {
+"nad": {
+ "en": ("NAD+ 500 mg Capsules | VILLUMINATIONS",
+        "NAD+ supplement with 500 mg of nicotinamide adenine dinucleotide "
+        "per serving, plus quercetin and resveratrol. 60 capsules."),
+ "fr": ("NAD+ 500 mg en gélules | VILLUMINATIONS",
+        "Complément de NAD+ avec 500 mg de nicotinamide adénine dinucléotide "
+        "par prise, avec quercétine et resvératrol. 60 gélules."),
+},
+"creatine-hydration-powder": {
+ "en": ("Creatine with Electrolytes Powder | VILLUMINATIONS",
+        "Creatine monohydrate blended with magnesium, sodium and potassium. "
+        "Lemon flavour, for strength training."),
+ "fr": ("Créatine et électrolytes en poudre | VILLUMINATIONS",
+        "Créatine monohydrate avec magnésium, sodium et potassium. Saveur "
+        "citron, pour l'entraînement de force."),
+},
+"nmn": {
+ "en": ("NMN 500 mg Capsules, 99.9 % Purity | VILLUMINATIONS",
+        "ß-nicotinamide mononucleotide capsules, 500 mg per serving at "
+        "99.9 % purity. A single active ingredient."),
+ "fr": ("NMN 500 mg en gélules, pureté 99,9 % | VILLUMINATIONS",
+        "Gélules de ß-nicotinamide mononucléotide, 500 mg par prise, pureté "
+        "de 99,9 %. Un seul principe actif."),
+},
+"greens-superfood": {
+ "en": ("Greens Superfood Powder | VILLUMINATIONS",
+        "Greens powder with barley grass, spirulina and green tea. Plant "
+        "vitamins and minerals in one daily scoop."),
+ "fr": ("Greens Superfood en poudre | VILLUMINATIONS",
+        "Poudre verte à l'herbe d'orge, spiruline et thé vert. Vitamines et "
+        "minéraux d'origine végétale en une prise."),
+},
+"reds-superfood": {
+ "en": ("Reds Superfood Powder | VILLUMINATIONS",
+        "Reds powder with beetroot, strawberry and hibiscus. Antioxidants "
+        "and fibre from plants in one daily scoop."),
+ "fr": ("Reds Superfood en poudre | VILLUMINATIONS",
+        "Poudre rouge à la betterave, fraise et hibiscus. Antioxydants et "
+        "fibres d'origine végétale en une prise."),
+},
+"advanced-100-whey-protein-isolate-chocolate": {
+ "en": ("100 % Whey Protein Isolate, Chocolate | VILLUMINATIONS",
+        "Whey protein isolate with 22 g of protein per serving. Chocolate "
+        "flavour, sweetened with stevia."),
+ "fr": ("Isolat de protéine de lactosérum | VILLUMINATIONS",
+        "Isolat de lactosérum avec 22 g de protéines par prise. Saveur "
+        "chocolat, sucré à la stévia."),
+},
+"plant-protein-vanilla": {
+ "en": ("Plant Protein, Vanilla Flavour | VILLUMINATIONS",
+        "Plant protein with a complete amino acid profile and 20 g per "
+        "serving. Dairy-free, soy-free and gluten-free."),
+ "fr": ("Protéine végétale à la vanille | VILLUMINATIONS",
+        "Protéine végétale au profil complet d'acides aminés, 20 g par "
+        "prise. Sans lactose, sans soja, sans gluten."),
+},
+"bcaa-post-workout-powder-honeydew-watermelon": {
+ "en": ("BCAA Powder, Honeydew & Watermelon | VILLUMINATIONS",
+        "5000 mg of branched-chain amino acids with glutamine, in a 2:1:1 "
+        "ratio. Honeydew and watermelon flavour."),
+ "fr": ("BCAA en poudre, melon et pastèque | VILLUMINATIONS",
+        "5000 mg d'acides aminés ramifiés avec glutamine, en proportion "
+        "2:1:1. Saveur melon et pastèque."),
+},
+"methylene-blue-drops": {
+ "en": ("Methylene Blue Drops, 10 mg | VILLUMINATIONS",
+        "Methylene blue drops with 10 mg per serving. Liquid format with a "
+        "dropper, three ingredients only."),
+ "fr": ("Bleu de méthylène en gouttes, 10 mg | VILLUMINATIONS",
+        "Bleu de méthylène en gouttes, 10 mg par prise. Format liquide au "
+        "compte-gouttes, trois ingrédients."),
+},
+"nitric-shock-pre-workout-powder-fruit-punch": {
+ "en": ("Nitric Shock Pre-Workout, Fruit Punch | VILLUMINATIONS",
+        "Pre-workout powder with fruit punch flavour: creatine, "
+        "beta-alanine, taurine, caffeine and B vitamins."),
+ "fr": ("Pré-entraînement Nitric Shock | VILLUMINATIONS",
+        "Pré-entraînement saveur punch aux fruits : créatine, bêta-alanine, "
+        "taurine, caféine et vitamines B."),
+},
+"steel-plyo-box-12-18-24-inch-high-anti-slip-pre-assembled-plyometric-jump-box-for-home-gym-conditioning-and-strength-training-sold-individually-plyometric-platform-step": {
+ "en": ("Anti-Slip Steel Plyometric Box | VILLUMINATIONS",
+        "Pre-assembled steel jump box with an anti-slip surface, in three "
+        "heights. For plyometrics, step and conditioning."),
+ "fr": ("Caisson pliométrique en acier | VILLUMINATIONS",
+        "Caisson de saut en acier livré monté, surface antidérapante, trois "
+        "hauteurs. Pliométrie et conditionnement."),
+},
+"finer-form-multi-functional-fid-weight-bench-for-full-all-in-one-body-workout-hyper-back-extension-roman-chair-adjustable-ab-sit-up-bench-incline-decline-bench-flat-bench": {
+ "en": ("Multi-Functional Weight Bench | VILLUMINATIONS",
+        "Adjustable bench: flat, incline, decline and roman chair for back "
+        "extensions. Foldable, with transport wheels."),
+ "fr": ("Banc de musculation multifonction | VILLUMINATIONS",
+        "Banc réglable : plat, incliné, décliné et chaise romaine pour les "
+        "lombaires. Pliable, avec roulettes."),
+},
+"sport-basketball-backpack-travel-outdoor-waterproof-swimming-fitness-travel-sports-bag-basketball-pouch-hiking-climbing-backpack": {
+ "en": ("Waterproof Sport Backpack, 20 L | VILLUMINATIONS",
+        "Waterproof nylon backpack under twenty litres, with a ball "
+        "compartment. For the gym, the pool and day trips."),
+ "fr": ("Sac à dos de sport imperméable 20 L | VILLUMINATIONS",
+        "Sac en nylon imperméable de moins de vingt litres, avec "
+        "compartiment ballon. Salle, piscine et sorties."),
+},
+"weight-lifting-belt-premium-4-wide-functional-fitness-belt-for-men-women-squat-deadlift-support": {
+ "en": ("Leather Weightlifting Belt, 4 in | VILLUMINATIONS",
+        "Four-inch pre-broken-in leather belt for squats and deadlifts. "
+        "Lumbar support and core stability."),
+ "fr": ("Ceinture d'haltérophilie en cuir | VILLUMINATIONS",
+        "Ceinture en cuir de quatre pouces, déjà assouplie, pour squat et "
+        "soulevé de terre. Maintien lombaire."),
+},
+"weighted-vest-6lb-8lb-10lb-12lb-15lb-18lb-20lb-24lb-30lb-for-men-women-reflective-stripe-adjustable-buckle-comfortable-durable-rucking-vest-for-walking-running-strength-training": {
+ "en": ("Adjustable Weighted Vest, 6–30 lb | VILLUMINATIONS",
+        "Neoprene weighted vest from six to thirty pounds, with a "
+        "reflective stripe. Walking, running and rucking."),
+ "fr": ("Gilet lesté réglable, 6 à 30 lb | VILLUMINATIONS",
+        "Gilet lesté en néoprène de six à trente livres, avec bande "
+        "réfléchissante. Marche, course et rucking."),
+},
+"steel-mace-bell-for-strength-training-support-full-body-muscles-shoulder-grips-forearms-workouts-stretching-5-7-10-15-20-25-30-lb-for-woman-man": {
+ "en": ("Steel Mace Bell, 5–30 lb | VILLUMINATIONS",
+        "Solid steel mace from five to thirty pounds. Works grip, shoulder "
+        "mobility and stability in every swing."),
+ "fr": ("Masse en acier, 5 à 30 lb | VILLUMINATIONS",
+        "Masse en acier massif de cinq à trente livres. Travaille la prise, "
+        "l'épaule et la stabilité à chaque balancé."),
+},
+"glute-bridge-plate-loaded-hip-thrust-machine-black-steel-frame-176-37-lb": {
+ "en": ("Plate-Loaded Hip Thrust Machine | VILLUMINATIONS",
+        "Plate-loaded glute bridge machine with a black steel frame. "
+        "Isolates the glutes with hip and spine support."),
+ "fr": ("Machine à hip thrust à disques | VILLUMINATIONS",
+        "Machine de pont fessier à charge de disques, cadre en acier noir. "
+        "Isole le fessier, colonne soutenue."),
+},
+"gym-exercise-foot-pedal-adjustable-cardio-pedal-exerciser-non-slip-stable-200kg-load-bearing-portable-fitness-equipment": {
+ "en": ("Adjustable Cardio Stepper, 200 kg | VILLUMINATIONS",
+        "Portable one-piece ABS stepper with adjustable height, anti-slip "
+        "base and a 200 kg load rating."),
+ "fr": ("Stepper de cardio réglable, 200 kg | VILLUMINATIONS",
+        "Stepper portable en ABS moulé d'une pièce, hauteur réglable, base "
+        "antidérapante, charge admise de 200 kg."),
+},
+"8-16-pcs-foam-fitness-non-slip-yoga-mat-fitness-floor-tile-protection-pad-fitness-equipment-mat-suitable-for-indoor-fitness": {
+ "en": ("Foam Floor Tiles for Home Gyms | VILLUMINATIONS",
+        "Interlocking foam tiles, 30 × 30 × 1 cm, anti-slip. They protect "
+        "the floor and cushion your joints."),
+ "fr": ("Dalles de sol en mousse | VILLUMINATIONS",
+        "Dalles emboîtables en mousse de 30 × 30 × 1 cm, antidérapantes. "
+        "Protègent le sol, amortissent les articulations."),
+},
+"universal-olympic-trap-shrug-bar-500-lb-acity": {
+ "en": ("Olympic Trap-Shrug Bar, 500 lb | VILLUMINATIONS",
+        "Hex bar in tubular steel for deadlifts and shrugs. Rated for 500 "
+        "pounds, compact in a home gym."),
+ "fr": ("Barre hexagonale olympique, 227 kg | VILLUMINATIONS",
+        "Barre hexagonale en acier tubulaire pour soulevé de terre et "
+        "shrugs. Capacité de 500 livres, peu encombrante."),
+},
+"power-rack-phone-mount-hook-on-smartphone-holder-for-2-2-3-3-squat-rack-upright-tool-free-installation-vertical-horizontal-viewing-fits-phones-up-to-3-22-wide": {
+ "en": ("Power Rack Phone Mount | VILLUMINATIONS",
+        "Hooks onto the rack upright with no tools. Vertical or landscape "
+        "view, fits phones up to 8 cm wide."),
+ "fr": ("Support de téléphone pour cage à squat | VILLUMINATIONS",
+        "S'accroche au montant de la cage sans outils. Vue verticale ou "
+        "horizontale, téléphones jusqu'à 8 cm de large."),
+},
+"portable-breathing-trainer-with-adjustable-resistance-settings": {
+ "en": ("Portable Breathing Trainer | VILLUMINATIONS",
+        "Portable breathing trainer with adjustable resistance settings. "
+        "It fits in a pocket."),
+ "fr": ("Entraîneur respiratoire portable | VILLUMINATIONS",
+        "Entraîneur respiratoire portable à résistance réglable. Tient "
+        "dans une poche."),
+},
+"ankle-resistance-bands-with-cuffs-for-women-men-3-level-adjustable-leg-glute-workout-equipment-portable-home-gym-exercise-bands-for-kickbacks-hip-thrusts-yoga-strength-training": {
+ "en": ("Ankle Resistance Bands with Cuffs | VILLUMINATIONS",
+        "TPE bands with padded ankle cuffs and three resistance levels. "
+        "Kickbacks, hip thrusts and abductions."),
+ "fr": ("Bandes de résistance avec chevillères | VILLUMINATIONS",
+        "Bandes en TPE avec chevillères rembourrées, trois niveaux. "
+        "Extensions, ponts et abductions de hanche."),
+},
+"yoga-shorts-cross-border-honey-buttocks-buttocks-sports-high-waist-abdomen-stretch-tight-fitting-anti-glare-quick-drying-fitness": {
+ "en": ("High-Waist Yoga Shorts | VILLUMINATIONS",
+        "High-waist sport shorts in polyester, spandex and nylon. Stretchy, "
+        "quick-drying and squat-proof."),
+ "fr": ("Short de yoga taille haute | VILLUMINATIONS",
+        "Short de sport taille haute en polyester, élasthanne et nylon. "
+        "Extensible, séchage rapide, opaque."),
+},
+"yoga-shorts-women-fitness-elastic-running-workout-short-leggings-for-ladies-gym-sport-shorts-fitness-sportwear": {
+ "en": ("Seamless Sport Shorts for Women | VILLUMINATIONS",
+        "Nylon shorts in seamless four-way stretch fabric. Compressive "
+        "waist, light, breathable and quick-drying."),
+ "fr": ("Short de sport sans coutures | VILLUMINATIONS",
+        "Short en nylon sans coutures, extensible dans les quatre sens. "
+        "Taille compressive, léger et respirant."),
+},
+"dryblend®-t-shirt": {
+ "en": ("DryBlend T-Shirt, Cotton-Polyester | VILLUMINATIONS",
+        "Classic-fit tee in DryBlend moisture-management fabric. Half "
+        "cotton, half polyester, taped neck and shoulders."),
+ "fr": ("T-shirt DryBlend coton-polyester | VILLUMINATIONS",
+        "T-shirt de coupe classique en tissu DryBlend qui évacue "
+        "l'humidité. Moitié coton, moitié polyester."),
+},
+"unisex-sports-jersey": {
+ "en": ("Unisex Sports Jersey in Mesh | VILLUMINATIONS",
+        "Unisex jersey in breathable polyester mesh. Relaxed fit, extended "
+        "length and a bound collar."),
+ "fr": ("Maillot de sport unisexe en mesh | VILLUMINATIONS",
+        "Maillot unisexe en mesh de polyester respirant. Coupe ample, "
+        "longueur étendue, col bordé."),
+},
+"charcoal-soap": {
+ "en": ("Handmade Activated Charcoal Soap | VILLUMINATIONS",
+        "Handmade bar soap with activated charcoal, for face and body. "
+        "Bar format, no plastic packaging."),
+ "fr": ("Savon artisanal au charbon actif | VILLUMINATIONS",
+        "Savon artisanal au charbon actif, pour le visage et le corps. En "
+        "pain, sans emballage plastique."),
+},
+"rich-sandalwood-soap": {
+ "en": ("Handmade Rich Sandalwood Soap | VILLUMINATIONS",
+        "Handmade sandalwood soap with a woody scent. Suitable for all "
+        "skin types, including sensitive skin."),
+ "fr": ("Savon artisanal au santal | VILLUMINATIONS",
+        "Savon artisanal au santal, au parfum boisé. Convient à tous les "
+        "types de peau, même sensible."),
+},
+}
+
 TOPE_TITULO = 60
 TOPE_DESCRIPCION = 155
 TOPE_ALT = 125
@@ -932,6 +1174,19 @@ def comprobar() -> list:
                 largas.append(f"{handle} · {que} {len(texto)}/{tope}: {texto}")
         if familia not in TIPOS:
             largas.append(f"{handle} · familia desconocida: {familia}")
+    for handle, lenguas in METAS.items():
+        if handle not in FICHAS:
+            largas.append(f"METAS · handle desconocido: {handle}")
+        for lengua, (titulo, descripcion) in lenguas.items():
+            if len(titulo) > TOPE_TITULO:
+                largas.append(f"{handle} · meta {lengua} · título "
+                              f"{len(titulo)}/{TOPE_TITULO}: {titulo}")
+            if len(descripcion) > TOPE_DESCRIPCION:
+                largas.append(f"{handle} · meta {lengua} · descripción "
+                              f"{len(descripcion)}/{TOPE_DESCRIPCION}")
+    faltan = set(FICHAS) - set(METAS)
+    if faltan:
+        largas.append(f"METAS · sin traducción: {', '.join(sorted(faltan))}")
     return largas
 
 
