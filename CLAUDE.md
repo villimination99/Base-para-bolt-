@@ -51,9 +51,23 @@ Comprobaciones rápidas antes de dar nada por bueno:
 python3 tienda/seo.py        # medidas de título y descripción de los 11 propios
 python3 tienda/catalogo.py   # ídem de los 29 de proveedor
 python3 tienda/articulos.py  # ídem de los artículos del Diario
+python3 tienda/cuerpos_en_fr.py   # cuerpos traducidos: medidas y promesas de salud
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 ```
+
+Para llevarlo a la tienda hacen falta `SHOPIFY_TIENDA` y `SHOPIFY_TOKEN`:
+
+```
+python3 tienda/traducir.py --ensayo   # qué traducciones se registrarían
+python3 tienda/traducir.py            # las registra
+python3 tienda/blog.py --ensayo       # ídem con los artículos
+```
+
+**Las traducciones no se copian a mano dentro de una mutación.** Se hizo así
+una vez y se coló un «veintivún» que no estaba en el original; encontrarlo
+costó cotejar ocho artículos carácter a carácter. `traducir.py` pide los
+digests y manda el texto sin que pase por ningún teclado.
 
 **Las dos bases legales tampoco se mezclan en el blog.** `_fuentes()` de
 `tienda/articulos.py` pide `base="federal"` o `base="tradicion"` y no tiene
