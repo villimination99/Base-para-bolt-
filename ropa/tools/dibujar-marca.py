@@ -260,6 +260,108 @@ def graduar(p0, p1, p2, ancho, n=13, lado=1, afila=1.7, desde=.12):
     return "".join(p)
 
 
+def _rot(v, grados):
+    a = math.radians(grados)
+    return (v[0] * math.cos(a) - v[1] * math.sin(a),
+            v[0] * math.sin(a) + v[1] * math.cos(a))
+
+
+def _azar(semilla):
+    """Generador propio, reproducible. Un dibujo que cambia en cada pasada no
+    se puede corregir: hay que poder volver al mismo trazo."""
+    x = semilla
+    while True:
+        x = (1103515245 * x + 12345) % (1 << 31)
+        yield x / (1 << 31)
+
+
+def diente(p0, p1, p2, ancho, lado, n=26, alto=26, afila=1.5):
+    """Dentado del canto: triángulos que crecen y menguan con el brazo.
+
+    Es de donde sale la agresividad. Un canto liso es un pétalo; un canto
+    dentado es un arma, y sigue siendo la misma silueta.
+    """
+    p = []
+    for i in range(1, n + 1):
+        t = i / (n + 1)
+        x, y = _bez(p0, p1, p2, t)
+        dx, dy = _tan(p0, p1, p2, t)
+        w = ancho * _perfil(t, sale=afila) / 2
+        bx, by = x - dy * w * lado, y + dx * w * lado
+        h = alto * _perfil(t, entra=.6, sale=1.2) * (1.35 if i % 3 == 0 else .7)
+        # el diente se peina hacia la punta, no sale perpendicular
+        ux, uy = -dy * lado, dx * lado
+        px, py = ux * .78 + dx * .62, uy * .78 + dy * .62
+        p.append(f'<path d="M{f(bx)} {f(by)} '
+                 f'L{f(bx + px * h)} {f(by + py * h)} '
+                 f'L{f(bx + dx * h * .5)} {f(by + dy * h * .5)} Z" '
+                 f'fill="currentColor" stroke="none"/>')
+    return "".join(p)
+
+
+# El ritmo de las barbas. Un patrón corto que se repite da cadencia; el azar
+# da pelusa. Es la diferencia entre un dibujo compuesto y una textura.
+RITMO = (1.0, .46, .82, .34, .95, .52, .70, .30)
+
+
+def barbas(p0, p1, p2, largo, lado, n=8, ancho=54, abre=46, cierra=11,
+           afila=1.5, sub=True, desde=.22, ritmo=RITMO):
+    """Las barbas del raquis, peinadas casi paralelas a la punta.
+
+    Dos correcciones sobre la primera versión, las dos visibles en el render:
+    salían perpendiculares y con longitudes al azar, y el resultado era una
+    espiga —textura uniforme que se comía la silueta de la V—. Ahora salen muy
+    cerradas, siguen un patrón de longitudes que se repite, y entre ellas queda
+    negro. El negro es parte del dibujo.
+    """
+    p = []
+    for i in range(n):
+        t = desde + (0.94 - desde) * i / max(n - 1, 1)
+        base = _bez(p0, p1, p2, t)
+        tan = _tan(p0, p1, p2, t)
+        ang = (abre - (abre - cierra) * t) * lado
+        d = _rot(tan, ang)
+        env = math.sin(math.pi * min(max(t, 0), 1)) ** 0.55
+        L = largo * env * ritmo[i % len(ritmo)]
+        tip = (base[0] + d[0] * L, base[1] + d[1] * L)
+        curva = _rot(d, -13 * lado)
+        ctl = (base[0] + curva[0] * L * .5, base[1] + curva[1] * L * .5)
+        p.append(cinta(base, ctl, tip, ancho * env * (.6 + .5 * ritmo[i % len(ritmo)]),
+                       afila=1.85))
+        if sub and ritmo[i % len(ritmo)] > .6:
+            b2 = _bez(base, ctl, tip, .52)
+            d2 = _rot(_tan(base, ctl, tip, .52), 26 * lado)
+            L2 = L * .42
+            t2 = (b2[0] + d2[0] * L2, b2[1] + d2[1] * L2)
+            p.append(cinta(b2, ((b2[0] + t2[0]) / 2, (b2[1] + t2[1]) / 2),
+                           t2, ancho * env * .22, afila=2.1))
+    return "".join(p)
+
+
+def esquirlas(cx, cy, r1, r2, g1, g2, n=34, semilla=11, largo=52,
+              sesgo=26):
+    """Astillas sueltas alrededor de la silueta.
+
+    No gotean: caen hacia fuera siguiendo el radio, como fragmentos de la
+    propia escala que se hubieran desprendido. Añaden densidad en el borde sin
+    tocar la forma principal.
+    """
+    p = []
+    az = _azar(semilla)
+    for _ in range(n):
+        g = g1 + (g2 - g1) * next(az)
+        r = r1 + (r2 - r1) * next(az)
+        L = largo * (0.25 + 0.9 * next(az))
+        w = 2.5 + 7 * next(az)
+        # la astilla se peina hacia fuera siguiendo el barrido del brazo,
+        # no cae a plomo: nada aquí gotea
+        x1, y1 = pol(cx, cy, r, g)
+        x2, y2 = pol(cx, cy, r + L, g + sesgo * (1 if g > 0 else -1) * .35)
+        mx, my = pol(cx, cy, r + L * .45, g + sesgo * (1 if g > 0 else -1) * .15)
+        p.append(cinta((x1, y1), (mx, my), (x2, y2), w, afila=1.9))
+    return "".join(p)
+
+
 # ---------------------------------------------------------------------------
 # Las tres piezas
 # ---------------------------------------------------------------------------
@@ -311,64 +413,96 @@ def vi_sigilo() -> tuple:
 
 
 def vi_dorsal() -> tuple:
-    """La pieza de espalda: **la V que se abre**.
+    """La pieza de espalda: **la V que se abre**, en su versión elaborada.
 
     La composición —simétrica, naciendo del eje y abriéndose sobre los
-    omóplatos— es del género, no de nadie: la usan todas las marcas del ramo
-    porque es la que sigue el cuerpo. Lo que aquí es propio es el trazo: en vez
-    de alas de espinas, los dos brazos **son la V del monograma**, cintas
-    cónicas graduadas, y de su vértice cae la I a plomo. A diez metros se lee
-    una V enorme; de cerca, un instrumento.
+    omóplatos— es del género y la usan todas las marcas del ramo porque es la
+    que sigue el cuerpo. Lo propio es todo lo demás: los dos brazos son la V
+    del monograma, de su vértice cae la I a plomo, y el detalle no es adorno
+    sino la escala graduada de los códices ramificada.
+
+    La jerarquía es deliberada: dos formas enormes, catorce medianas por lado,
+    cien finas y treinta astillas. Nada de tamaño intermedio, que es lo que
+    convierte lo elaborado en emborronado.
 
     1200 × 1600, proporción de estampado de espalda.
     """
     W, H = 1200, 1600
     cx = 600
-    vert = (cx, 905)                        # el vértice de la V, media espalda
+    vert = (cx, 920)
     p = []
 
-    # --- brazo mayor: casi recto, con un quiebro al final. Una bézier con
-    # el control lejos del acorde curva el brazo hasta que la V se convierte
-    # en golondrina; pegado al acorde, se lee la letra.
     for lado in (-1, 1):
-        tip = (cx + 468 * lado, 212)
-        ctl = (cx + 250 * lado, 566)
-        p.append(hoja(vert, ctl, tip, 132, afila=1.5, travesanos=19))
-        p.append(graduar(vert, ctl, tip, 132, n=12, lado=lado, afila=1.5,
+        tip = (cx + 466 * lado, 196)
+        ctl = (cx + 246 * lado, 560)
+
+        # las barbas van debajo del raquis para que este las corte limpio
+        p.append(barbas(vert, ctl, tip, 452, lado, n=8, ancho=52,
+                        abre=44, cierra=10, desde=.31))
+
+        # el raquis: contorno, núcleo y travesaños
+        p.append(hoja(vert, ctl, tip, 94, afila=1.48, travesanos=23))
+        p.append(diente(vert, ctl, tip, 94, -lado, n=32, alto=34, afila=1.48))
+        p.append(graduar(vert, ctl, tip, 94, n=13, lado=lado, afila=1.48,
                          desde=.30))
 
-    # --- brazo interior, más empinado: da la segunda capa sin repetir ángulo
-    for lado in (-1, 1):
-        tip = (cx + 236 * lado, 318)
-        ctl = (cx + 128 * lado, 640)
-        p.append(hoja(vert, ctl, tip, 62, afila=1.8, nucleo=.46,
-                      travesanos=10))
+        # brazo interior, más empinado
+        tip2 = (cx + 232 * lado, 300)
+        ctl2 = (cx + 124 * lado, 636)
+        p.append(barbas(vert, ctl2, tip2, 168, lado, n=5, ancho=22,
+                        abre=38, cierra=10, sub=False, desde=.38,
+                        ritmo=(1.0, .42, .78, .36, .62)))
+        p.append(hoja(vert, ctl2, tip2, 48, afila=1.8, nucleo=.46,
+                      travesanos=11))
+        p.append(diente(vert, ctl2, tip2, 48, -lado, n=20, alto=17, afila=1.8))
 
-    # --- plumas: trazo fino que prolonga la silueta más allá de las puntas
-    for lado in (-1, 1):
-        for k, (dx, dy) in enumerate(((556, 268), (516, 372), (452, 470))):
-            tip = (cx + dx * lado, dy)
-            ctl = (cx + (dx - 150) * lado, dy + 330)
-            p.append(cinta(vert, ctl, tip, 17 - k * 4, afila=2.2))
+        # plumas exteriores: prolongan la silueta más allá de las puntas
+        for k, (dx, dy) in enumerate(((572, 236), (534, 344), (470, 452))):
+            tipf = (cx + dx * lado, dy)
+            ctlf = (cx + (dx - 156) * lado, dy + 336)
+            # arrancan ya despegadas del nudo, no del punto exacto
+            pie = _bez(vert, ctlf, tipf, .16 + k * .05)
+            p.append(cinta(pie, ctlf, tipf, 19 - k * 4, afila=2.3))
 
-    # --- la I: la plomada que cae del vértice a la cintura
-    p.append(escala(cx, 975, 1345, ancho=86, paso=26, cada=4))
-    for dx in (-15, 15):
-        p.append(linea(cx + dx, 1000, cx + dx, 1300, 1.6, .7))
-    for y, r in ((1046, 78), (1206, 52), (1318, 30)):
-        p.append(circulo(cx, y, r, 2, opacidad=.95))
+    # astillas sueltas en el borde superior, a los dos lados
+    p.append(esquirlas(cx, 900, 500, 640, -92, -46, n=9, semilla=13, largo=96))
+    p.append(esquirlas(cx, 900, 500, 640, 46, 92, n=9, semilla=29, largo=96))
+
+    # --- la I: columna vertebrada
+    p.append(escala(cx, 985, 1352, ancho=92, paso=26, cada=4))
+    for dx in (-19, 19):
+        p.append(linea(cx + dx, 1000, cx + dx, 1330, 1.8, .7))
+    for j, (y, r) in enumerate(((1046, 82), (1206, 56), (1320, 32))):
+        p.append(circulo(cx, y, r, 2.4, opacidad=.95))
+        p.append(circulo(cx, y, r * .58, 1.4, opacidad=.7))
         for i in range(DIVISIONES):
             g = i * 360 / DIVISIONES
             x1, y1 = pol(cx, y, r, g)
-            x2, y2 = pol(cx, y, r - 12, g)
-            p.append(linea(x1, y1, x2, y2, 1.4, .8))
-    p.append(linea(cx, 1345, cx, 1424, 3.2))
-    p.append(f'<path d="M{cx} 1462 L{cx - 16} 1418 L{cx + 16} 1418 Z" '
+            x2, y2 = pol(cx, y, r - 13, g)
+            p.append(linea(x1, y1, x2, y2, 1.5, .85))
+        # barbas laterales de la vértebra
+        for lado in (-1, 1):
+            for k in (0, 1):
+                g = (74 + k * 26) * lado
+                x1, y1 = pol(cx, y, r, g)
+                x2, y2 = pol(cx, y, r + (56 - j * 12) - k * 20, g + 6 * lado)
+                p.append(cinta((x1, y1), ((x1 + x2) / 2, (y1 + y2) / 2 + 8),
+                               (x2, y2), 13 - j * 3, afila=2.0))
+
+    p.append(linea(cx, 1352, cx, 1430, 3.2))
+    p.append(f'<path d="M{cx} 1470 L{cx - 17} 1424 L{cx + 17} 1424 Z" '
              f'fill="currentColor" stroke="none"/>')
 
-    # --- el nudo del vértice, que es de donde nace todo
-    p.append(circulo(cx, 905, 96, 3))
-    p.append(roseta(cx, 905, 74))
+    # --- el nudo del vértice
+    p.append(circulo(cx, 920, 104, 3.4))
+    p.append(roseta(cx, 920, 80))
+    for i in range(DECANOS):
+        g = i * 360 / DECANOS
+        if abs(((g + 180) % 360) - 180) > 128:      # solo el arco de abajo
+            x1, y1 = pol(cx, 920, 104, g)
+            x2, y2 = pol(cx, 920, 104 + (26 if i % 3 == 0 else 13), g)
+            p.append(linea(x1, y1, x2, y2, 1.8 if i % 3 == 0 else 1.1,
+                           1 if i % 3 == 0 else .6))
     return W, H, "".join(p)
 
 
