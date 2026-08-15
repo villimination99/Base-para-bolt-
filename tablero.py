@@ -110,6 +110,35 @@ PENDIENTE = [
      "poder vender sin stock.", "decisión"),
 ]
 
+# Las puertas que hay que abrir antes de gastar en anuncios, en el orden en que
+# dependen unas de otras. No es una lista de deseos: cada una bloquea a la
+# siguiente, y anunciar con la primera cerrada es pagar por quedar mal.
+# (puerta, quién, qué pasa si se anuncia sin ella)
+LANZAMIENTO = [
+    ("La tienda entrega lo que cobra", "dueño",
+     "Once documentos cobran y no mandan archivo. Cada clic pagado que compre "
+     "termina en devolución o en contracargo."),
+    ("La tienda puede cobrar", "comprobar",
+     "Sin pasarela activa el botón no cobra. `python3 tienda/despegue.py` lo "
+     "pregunta."),
+    ("Hay zonas de envío", "comprobar",
+     "Sin ellas, el pago de los 29 productos físicos se cae. Mismo comando."),
+    ("El pago dice VILLUMINATIONS", "dueño",
+     "Si en la pantalla de pago cambia el nombre, sube el abandono y el "
+     "cliente no reconoce el cargo en el extracto."),
+    ("Píxel de Meta y etiqueta de Google", "dueño",
+     "Sin ellos el anuncio gasta a ciegas: no se sabe qué campaña vendió."),
+    ("Captura de correo en la tienda", "dueño",
+     "El 97 % no compra en la primera visita. Sin captura, esa visita pagada "
+     "se pierde entera."),
+    ("Los cinco correos automáticos", "listo",
+     "Escritos en tres lenguas en `tienda/correos.py`; se pegan en "
+     "Marketing → Automatizaciones."),
+    ("Catálogo y buscador", "listo",
+     "40 fichas con SEO medido, seis colecciones, diez artículos y la "
+     "navegación entera en castellano, inglés y francés."),
+]
+
 PALETA = ["#00f0ff", "#ff00e5", "#00ff88", "#ff6600", "#ffdd00",
           "#7b2fff", "#00ffcc", "#ff3cac", "#00c8ff", "#a97bff"]
 
@@ -317,6 +346,17 @@ def construir() -> str:
         f'<p class="detalle">{html.escape(d)}</p></li>'
         for i, (t, d, tipo) in enumerate(PENDIENTE))
 
+    # La clase va en ascii aunque la etiqueta visible lleve eñe: un selector
+    # con caracteres no ascii funciona hasta que alguien copia el CSS a un
+    # fichero mal codificado, y entonces deja de funcionar en silencio.
+    CLASE = {"dueño": "dueno", "comprobar": "comprobar", "listo": "listo"}
+    puertas_html = "".join(
+        f'<li class="p-{CLASE[quien]}">'
+        f'<span class="quien">{html.escape(quien)}</span>'
+        f'<p class="asunto">{html.escape(puerta)}</p>'
+        f'<p class="detalle">{html.escape(riesgo)}</p></li>'
+        for puerta, quien, riesgo in LANZAMIENTO)
+
     if g:
         dibujo, leyenda = svg_grafo(g)
         # La salud del grafo se dice, no se esconde: hubo una época con 116
@@ -357,6 +397,7 @@ def construir() -> str:
         lenguas=lenguas_html,
         guardas=guardas_html,
         pendientes=pend_html,
+        puertas=puertas_html,
         dibujo=dibujo,
         leyenda=leyenda,
         nota_grafo=nota_grafo,
@@ -458,6 +499,23 @@ PLANTILLA = """<title>Tablero VILLUMINATIONS</title>
     word-break:break-all; }}
   .que {{ font-size:13.5px; color:var(--ink-2); margin:0; }}
 
+  ol.puertas {{ list-style:none; margin:0 0 16px; padding:0; display:grid;
+    gap:10px; counter-reset:puerta; }}
+  ol.puertas li {{ background:var(--panel); border:1px solid var(--linea);
+    border-left:3px solid var(--linea-2); border-radius:3px; padding:13px 16px;
+    position:relative; counter-increment:puerta; }}
+  ol.puertas li::before {{ content:counter(puerta); position:absolute;
+    right:14px; top:11px; font-family:var(--mono); font-size:11px;
+    color:var(--ink-3); font-variant-numeric:tabular-nums; }}
+  ol.puertas .quien {{ display:inline-block; font-family:var(--mono);
+    font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    padding:2px 8px; border-radius:2px; margin-bottom:7px; }}
+  .p-dueno {{ border-left-color:var(--naranja) !important; }}
+  .p-dueno .quien {{ background:rgba(255,102,0,.16); color:var(--naranja); }}
+  .p-comprobar {{ border-left-color:var(--amarillo) !important; }}
+  .p-comprobar .quien {{ background:rgba(255,221,0,.14); color:var(--amarillo); }}
+  .p-listo {{ border-left-color:var(--verde) !important; }}
+  .p-listo .quien {{ background:rgba(0,255,136,.14); color:var(--verde); }}
   ol.espera {{ list-style:none; margin:0; padding:0; display:grid; gap:12px; }}
   ol.espera li {{ background:var(--panel); border:1px solid var(--linea);
     border-radius:3px; padding:14px 16px; }}
@@ -543,6 +601,14 @@ PLANTILLA = """<title>Tablero VILLUMINATIONS</title>
   <section>
     <h2>Medidas de buscador</h2>
     {estado}
+  </section>
+
+  <section>
+    <h2>Antes de gastar en anuncios</h2>
+    <ol class="puertas">{puertas}</ol>
+    <p class="apunte">Cada puerta depende de la anterior. Anunciar con la
+    primera cerrada no es ir rápido: es pagar por que el cliente se lleve un
+    disgusto y el banco se entere.</p>
   </section>
 
   <section>

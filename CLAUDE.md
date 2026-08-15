@@ -62,7 +62,18 @@ Para llevarlo a la tienda hacen falta `SHOPIFY_TIENDA` y `SHOPIFY_TOKEN`:
 python3 tienda/traducir.py --ensayo   # qué traducciones se registrarían
 python3 tienda/traducir.py            # las registra
 python3 tienda/blog.py --ensayo       # ídem con los artículos
+python3 tienda/despegue.py            # ¿puede cobrar, enviar y entregar?
 ```
+
+`despegue.py` **solo lee**: no tiene una sola mutación. Contesta de una vez las
+preguntas que no se deducen del repositorio —si hay pasarela, si hay zonas de
+envío, qué productos están a precio cero o sin publicar— y dice al final lo que
+ni siquiera él puede ver.
+
+Los cinco correos automáticos viven en `tienda/correos.py`, en tres lenguas y
+con las mismas prohibiciones que las fichas. **No se publican por API**: las
+automatizaciones se montan en Marketing → Automatizaciones y el texto se pega
+allí. `--texto` los saca en claro.
 
 **Las traducciones no se copian a mano dentro de una mutación.** Se hizo así
 una vez y se coló un «veintivún» que no estaba en el original; encontrarlo
