@@ -52,6 +52,9 @@ python3 tienda/seo.py        # medidas de título y descripción de los 11 propi
 python3 tienda/catalogo.py   # ídem de los 29 de proveedor
 python3 tienda/articulos.py  # ídem de los artículos del Diario
 python3 tienda/cuerpos_en_fr.py   # cuerpos traducidos: medidas y promesas de salud
+python3 tienda/correos.py    # los cinco correos automáticos
+python3 tienda/menus.py      # la navegación, con sus traducciones
+python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 ```
@@ -74,6 +77,13 @@ Los cinco correos automáticos viven en `tienda/correos.py`, en tres lenguas y
 con las mismas prohibiciones que las fichas. **No se publican por API**: las
 automatizaciones se montan en Marketing → Automatizaciones y el texto se pega
 allí. `--texto` los saca en claro.
+
+**Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
+publica si no señala su lámina dentro del repositorio: hay **95 láminas
+propias** en `libros/partials/` y `planes/partials/`, vectoriales y de
+propiedad entera, y no hace falta buscar dibujos fuera. Faltan por rellenar la
+hoja del proveedor de estampación y qué lámina va en qué prenda; ninguna de las
+dos se puede inventar.
 
 **Las traducciones no se copian a mano dentro de una mutación.** Se hizo así
 una vez y se coló un «veintivún» que no estaba en el original; encontrarlo
