@@ -55,7 +55,7 @@ superávit tiene sentido, qué se mide cada semana y qué se hace con lo medido.
 
 <h3>Qué recibes</h3>
 <ul>
-  <li><strong>Guía Rápida — Volumen Limpio</strong>, en PDF.</li>
+  <li><strong>Guía Rápida — Volumen Limpio</strong>, en PDF de <strong>8 páginas</strong>.</li>
   <li>Las tres ediciones: <strong>español, inglés y francés</strong>, en el mismo archivo de descarga.</li>
   <li>Versión de pantalla y versión preparada para imprimir.</li>
 </ul>
@@ -82,7 +82,7 @@ you measured.</p>
 
 <h3>What you get</h3>
 <ul>
-  <li><strong>Quick Guide — Clean Bulk</strong>, as a PDF.</li>
+  <li><strong>Quick Guide — Clean Bulk</strong>, an <strong>8-page</strong> PDF.</li>
   <li>All three editions: <strong>English, Spanish and French</strong>, in the same download.</li>
   <li>A screen version and a print-ready version.</li>
 </ul>
@@ -109,7 +109,7 @@ l'on fait de ce que l'on a mesuré.</p>
 
 <h3>Ce que vous recevez</h3>
 <ul>
-  <li><strong>Guide rapide — Prise de masse propre</strong>, en PDF.</li>
+  <li><strong>Guide rapide — Prise de masse propre</strong>, un PDF de <strong>8 pages</strong>.</li>
   <li>Les trois éditions : <strong>français, espagnol et anglais</strong>, dans le même téléchargement.</li>
   <li>Une version écran et une version prête à imprimer.</li>
 </ul>
@@ -153,8 +153,8 @@ con números propios y no con reglas prestadas.</strong></p>
   <li><strong>Plan Definición + Volumen — 8 Semanas</strong></li>
   <li><strong>Registro de Progreso Semanal</strong></li>
 </ul>
-<p>Cinco PDF en <strong>español, inglés y francés</strong>, con versión de pantalla y
-versión preparada para imprimir.</p>
+<p>Cinco PDF, <strong>44 páginas</strong> en total, en <strong>español, inglés y
+francés</strong>, con versión de pantalla y versión preparada para imprimir.</p>
 
 <h3>Cómo está hecho</h3>
 <p>Todas las cifras proceden de fuentes oficiales de acceso público y están
@@ -183,8 +183,8 @@ numbers rather than on borrowed rules.</strong></p>
   <li><strong>Cutting + Bulking Plan — 8 Weeks</strong></li>
   <li><strong>Weekly Progress Record</strong></li>
 </ul>
-<p>Five PDFs in <strong>English, Spanish and French</strong>, with a screen version and a
-print-ready version.</p>
+<p>Five PDFs, <strong>44 pages</strong> in all, in <strong>English, Spanish and
+French</strong>, with a screen version and a print-ready version.</p>
 
 <h3>How it is made</h3>
 <p>Every figure comes from publicly available official sources and has been
@@ -213,8 +213,8 @@ avec ses propres chiffres et non avec des règles empruntées.</strong></p>
   <li><strong>Plan Sèche + Prise de masse — 8 semaines</strong></li>
   <li><strong>Relevé de progression hebdomadaire</strong></li>
 </ul>
-<p>Cinq PDF en <strong>français, espagnol et anglais</strong>, avec une version écran et une
-version prête à imprimer.</p>
+<p>Cinq PDF, <strong>44 pages</strong> au total, en <strong>français, espagnol et
+anglais</strong>, avec une version écran et une version prête à imprimer.</p>
 
 <h3>Comment c'est fait</h3>
 <p>Tous les chiffres proviennent de sources officielles publiques et ont été
@@ -259,10 +259,13 @@ entrenamiento, descanso, atención y el seguimiento semanal que los sostiene.</p
   <li><strong>Plan de Entrenamiento — 8 Semanas</strong></li>
   <li><strong>Meditación y Mindfulness — 21 Días</strong></li>
   <li><strong>Protocolo de Sueño</strong></li>
-  <li><strong>Coaching Semanal 1 a 1</strong></li>
+  <li><strong>Coaching Semanal 1 a 1</strong> — el cuaderno con el que se
+  prepara cada sesión: cuatro semanas con un foco distinto, banco de preguntas
+  y plan de acción.</li>
 </ul>
-<p>Once PDF en <strong>español, inglés y francés</strong> —treinta y tres documentos en
-total—, con versión de pantalla y versión preparada para imprimir.</p>
+<p>Once PDF, <strong>106 páginas</strong>, en <strong>español, inglés y francés</strong>
+—treinta y tres documentos en total—, con versión de pantalla y versión
+preparada para imprimir.</p>
 
 <h3>Cómo está hecho</h3>
 <p>Todas las cifras proceden de fuentes oficiales de acceso público y están
@@ -295,10 +298,13 @@ rest, attention and the weekly follow-up that holds them together.</p>
   <li><strong>Training Plan — 8 Weeks</strong></li>
   <li><strong>Meditation and Mindfulness — 21 Days</strong></li>
   <li><strong>Sleep Protocol</strong></li>
-  <li><strong>Weekly One-to-One Coaching</strong></li>
+  <li><strong>Weekly One-to-One Coaching</strong> — the workbook you prepare
+  each session with: four weeks with a different focus each, a question bank
+  and an action plan.</li>
 </ul>
-<p>Eleven PDFs in <strong>English, Spanish and French</strong> —thirty-three documents in
-all— with a screen version and a print-ready version.</p>
+<p>Eleven PDFs, <strong>106 pages</strong>, in <strong>English, Spanish and French</strong>
+—thirty-three documents in all— with a screen version and a print-ready
+version.</p>
 
 <h3>How it is made</h3>
 <p>Every figure comes from publicly available official sources and has been
@@ -331,10 +337,13 @@ entraînement, repos, attention et le suivi hebdomadaire qui les tient ensemble.
   <li><strong>Plan d'entraînement — 8 semaines</strong></li>
   <li><strong>Méditation et pleine conscience — 21 jours</strong></li>
   <li><strong>Protocole de sommeil</strong></li>
-  <li><strong>Coaching hebdomadaire en tête-à-tête</strong></li>
+  <li><strong>Coaching hebdomadaire en tête-à-tête</strong> — le cahier qui sert
+  à préparer chaque séance : quatre semaines avec un axe différent, une banque
+  de questions et un plan d'action.</li>
 </ul>
-<p>Onze PDF en <strong>français, espagnol et anglais</strong> —trente-trois documents en
-tout—, avec une version écran et une version prête à imprimer.</p>
+<p>Onze PDF, <strong>106 pages</strong>, en <strong>français, espagnol et anglais</strong>
+—trente-trois documents en tout—, avec une version écran et une version prête
+à imprimer.</p>
 
 <h3>Comment c'est fait</h3>
 <p>Tous les chiffres proviennent de sources officielles publiques et ont été

@@ -27,6 +27,14 @@ varios.
   desaprovecha lo único que la distingue de la de la competencia.
 
 · **Handles repetidos** entre superficies distintas, que en Shopify se pisan.
+
+· **El precio escrito dentro de los documentos.** Las once láminas de planes
+  llevan la escalera de los tres niveles impresa. Ese precio no lo sirve
+  Shopify: está dibujado en 66 PDF, en tres lenguas y dos ediciones. Si alguien
+  cambia el precio en la tienda, los documentos ya vendidos siguen diciendo el
+  viejo. Aquí no se puede comprobar contra la tienda —eso pide credenciales—,
+  pero sí que las once láminas digan todas lo mismo, y se imprime la tabla para
+  poder cotejarla de un vistazo.
 """
 
 import re
@@ -156,7 +164,50 @@ def auditar() -> dict:
         hallazgos["artículos huérfanos"].append(
             f"{handle} · no lo enlaza ninguna ficha ni colección")
 
+    for linea in precios_incoherentes():
+        hallazgos["precios de las láminas"].append(linea)
+
     return hallazgos
+
+
+# La insignia de nivel y la escalera de upsell, dentro de cada lámina.
+_INSIGNIA = re.compile(
+    r'class="tier-badge">.*?</span>\s*Plan\s+(\w+)\s*·\s*([^<]+)<', re.S)
+_ESCALON = re.compile(
+    r'<div class="n">([^<]+)</div>\s*<div class="pz">([^<]+)</div>')
+
+
+def precios_declarados() -> dict:
+    """nivel -> {precio: [láminas que lo dicen]}, leyendo las once fuentes."""
+    tabla = defaultdict(lambda: defaultdict(list))
+    for src in sorted((RAIZ / "planes" / "src").glob("*.html")):
+        html = src.read_text(encoding="utf-8")
+        for nivel, precio in _INSIGNIA.findall(html):
+            tabla[nivel.upper()][precio.strip()].append(f"{src.stem} · insignia")
+        for nivel, precio in _ESCALON.findall(html):
+            tabla[nivel.upper()][precio.strip()].append(f"{src.stem} · escalera")
+    return tabla
+
+
+def precios_incoherentes() -> list:
+    """Un nivel que dice dos precios distintos, o dos periodicidades."""
+    fuera = []
+    for nivel, precios in sorted(precios_declarados().items()):
+        # «9,99 $/mes» y «9,99 $» son la misma cifra dicha de dos maneras: la
+        # insignia declara mensualidad y la escalera no. Eso no es un error de
+        # cifra, pero sí deja al comprador sin saber si Pro son 19,99 una vez o
+        # al mes, así que se dice.
+        cifras = {re.sub(r"\s*/\s*\w+$", "", p).strip() for p in precios}
+        if len(cifras) > 1:
+            fuera.append(f"{nivel} · dice {len(cifras)} precios distintos: "
+                         f"{', '.join(sorted(cifras))}")
+            continue
+        periodos = {bool(re.search(r"/\s*\w+$", p)) for p in precios}
+        if len(periodos) > 1:
+            sin = sorted(p for p in precios if not re.search(r"/\s*\w+$", p))
+            fuera.append(f"{nivel} · {list(cifras)[0]} aparece con y sin "
+                         f"periodicidad ({', '.join(sin)} no dice si es al mes)")
+    return fuera
 
 
 if __name__ == "__main__":
@@ -172,3 +223,11 @@ if __name__ == "__main__":
         if len(hallazgos[titulo]) > 12:
             print(f"    … y {len(hallazgos[titulo]) - 12} más")
         print()
+
+    print("  PRECIO ESCRITO EN LAS LÁMINAS  (a cotejar con la tienda a mano)")
+    for nivel, precios in sorted(precios_declarados().items()):
+        for precio, donde in sorted(precios.items()):
+            n = len(donde)
+            print(f"    {nivel:8} {precio:14} en {n} "
+                  f"{'sitio' if n == 1 else 'sitios'}")
+    print()
