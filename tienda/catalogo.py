@@ -107,8 +107,9 @@ FICHAS = {
     ),
     "methylene-blue-drops": (
         "Azul de metileno en gotas, 10 mg | VILLUMINATIONS",
-        "Gotas con 10 mg de azul de metileno por toma. Formato líquido, "
-        "dosificable con cuentagotas.",
+        "Gotas con 10 mg de azul de metileno por toma. Frasco de 60 ml con "
+        "cuentagotas y tres ingredientes: azul de metileno, agua y sorbato "
+        "potásico.",
         "Frasco de azul de metileno en gotas de VILLUMINATIONS",
         "suplemento", ["suplementos", "azul de metileno", "gotas"],
     ),
@@ -213,7 +214,8 @@ FICHAS = {
     "portable-breathing-trainer-with-adjustable-resistance-settings": (
         "Entrenador respiratorio con resistencia | VILLUMINATIONS",
         "Dispositivo portátil de entrenamiento respiratorio con resistencia "
-        "regulable. Cabe en un bolsillo.",
+        "regulable al inspirar y al espirar. Plástico no tóxico y cabe en un "
+        "bolsillo.",
         "Entrenador respiratorio portátil con resistencia regulable, de VILLUMINATIONS",
         "equipo", ["equipo", "respiración", "portátil"],
     ),
@@ -226,29 +228,30 @@ FICHAS = {
     ),
     "dryblend®-t-shirt": (
         "Camiseta DryBlend, algodón y poliéster | VILLUMINATIONS",
-        "Camiseta de corte clásico en tejido DryBlend, que aparta la "
-        "humedad. Mitad algodón y mitad poliéster.",
+        "Camiseta de corte clásico en tejido DryBlend de 186 g/m², mitad algodón "
+        "y mitad poliéster. Cuello de canalé y hombros reforzados con cinta.",
         "Camiseta DryBlend de VILLUMINATIONS",
         "ropa", ["ropa", "camiseta", "algodón"],
     ),
     "unisex-sports-jersey": (
         "Camiseta de deporte unisex en malla | VILLUMINATIONS",
-        "Camiseta unisex en malla de poliéster transpirable. Corte holgado, "
-        "largo extra y ribete en el cuello.",
+        "Camiseta unisex en malla de poliéster de 140 g/m², de corte holgado y "
+        "largo extra. Manga ranglán corta, costura lateral y ribete en el "
+        "cuello.",
         "Camiseta de deporte unisex en malla, de VILLUMINATIONS",
         "ropa", ["ropa", "camiseta", "unisex", "malla"],
     ),
     "charcoal-soap": (
         "Jabón artesanal de carbón activado | VILLUMINATIONS",
-        "Jabón artesanal con carbón activado, para cara y cuerpo. Limpieza "
-        "en pastilla, sin envase de plástico.",
+        "Jabón artesanal de 113 g con carbón activado, menta y árbol del té, "
+        "para cara y cuerpo. En pastilla, sin plástico y de comercio justo.",
         "Pastilla de jabón artesanal de carbón activado, de VILLUMINATIONS",
         "bano", ["cuidado personal", "jabón", "carbón activado"],
     ),
     "rich-sandalwood-soap": (
         "Jabón artesanal de sándalo | VILLUMINATIONS",
-        "Jabón artesanal de sándalo, de aroma amaderado. Apto para todo tipo "
-        "de piel, también la sensible.",
+        "Jabón artesanal de sándalo de 113 g, con manteca de karité entre sus "
+        "aceites saponificados. Aroma amaderado, apto para piel sensible.",
         "Pastilla de jabón artesanal de sándalo, de VILLUMINATIONS",
         "bano", ["cuidado personal", "jabón", "sándalo"],
     ),
@@ -941,227 +944,228 @@ METAS = {
 },
 "creatine-hydration-powder": {
  "en": ("Creatine with Electrolytes Powder | VILLUMINATIONS",
-        "Creatine monohydrate blended with magnesium, sodium and potassium. "
-        "Lemon flavour, for strength training."),
+        "Powder with 5 g of creatine monohydrate plus magnesium, sodium and "
+        "potassium per serving. Lemon flavour, sweetened with stevia."),
  "fr": ("Créatine et électrolytes en poudre | VILLUMINATIONS",
-        "Créatine monohydrate avec magnésium, sodium et potassium. Saveur "
-        "citron, pour l'entraînement de force."),
+        "Poudre à 5 g de créatine monohydrate avec magnésium, sodium et "
+        "potassium par prise. Saveur citron, sucrée à la stévia, sans colorants."),
 },
 "nmn": {
  "en": ("NMN 500 mg Capsules, 99.9 % Purity | VILLUMINATIONS",
-        "ß-nicotinamide mononucleotide capsules, 500 mg per serving at "
-        "99.9 % purity. A single active ingredient."),
+        "ß-nicotinamide mononucleotide capsules, 500 mg per serving at 99.9 % "
+        "purity. A single active ingredient: no blends, nothing added."),
  "fr": ("NMN 500 mg en gélules, pureté 99,9 % | VILLUMINATIONS",
-        "Gélules de ß-nicotinamide mononucléotide, 500 mg par prise, pureté "
-        "de 99,9 %. Un seul principe actif."),
+        "Gélules de ß-nicotinamide mononucléotide, 500 mg par prise, pureté de "
+        "99,9 %. Un seul principe actif : ni mélange, ni ajout."),
 },
 "greens-superfood": {
  "en": ("Greens Superfood Powder | VILLUMINATIONS",
-        "Greens powder with barley grass, spirulina and green tea. Plant "
-        "vitamins and minerals in one daily scoop."),
+        "Greens powder with barley grass, spirulina and green tea. More than "
+        "twenty plant ingredients in one daily scoop, no artificial additives."),
  "fr": ("Greens Superfood en poudre | VILLUMINATIONS",
-        "Poudre verte à l'herbe d'orge, spiruline et thé vert. Vitamines et "
-        "minéraux d'origine végétale en une prise."),
+        "Poudre verte à l'herbe d'orge, spiruline et thé vert. Plus de vingt "
+        "ingrédients végétaux en une prise par jour, sans additifs."),
 },
 "reds-superfood": {
  "en": ("Reds Superfood Powder | VILLUMINATIONS",
-        "Reds powder with beetroot, strawberry and hibiscus. Antioxidants "
-        "and fibre from plants in one daily scoop."),
+        "Reds powder with beetroot, strawberry, hibiscus and pomegranate, plus "
+        "oat fibre, inulin and nine live cultures. One scoop a day."),
  "fr": ("Reds Superfood en poudre | VILLUMINATIONS",
-        "Poudre rouge à la betterave, fraise et hibiscus. Antioxydants et "
-        "fibres d'origine végétale en une prise."),
+        "Poudre rouge à la betterave, fraise, hibiscus et grenade, avec fibres "
+        "d'avoine, inuline et neuf ferments. Une prise par jour."),
 },
 "advanced-100-whey-protein-isolate-chocolate": {
  "en": ("100 % Whey Protein Isolate, Chocolate | VILLUMINATIONS",
-        "Whey protein isolate with 22 g of protein per serving. Chocolate "
-        "flavour, sweetened with stevia."),
+        "Whey protein isolate with 22 g of protein per serving, chocolate "
+        "flavour. With MCT oil powder and apple pectin, sweetened with stevia."),
  "fr": ("Isolat de protéine de lactosérum | VILLUMINATIONS",
-        "Isolat de lactosérum avec 22 g de protéines par prise. Saveur "
-        "chocolat, sucré à la stévia."),
+        "Isolat de lactosérum à 22 g de protéines par prise, saveur chocolat. "
+        "Avec MCT en poudre et pectine de pomme, sucré à la stévia."),
 },
 "plant-protein-vanilla": {
  "en": ("Plant Protein, Vanilla Flavour | VILLUMINATIONS",
-        "Plant protein with a complete amino acid profile and 20 g per "
-        "serving. Dairy-free, soy-free and gluten-free."),
+        "Fava bean plant protein with 20 g per serving and a complete amino acid "
+        "profile. Vanilla flavour, dairy-free, soy-free, gluten-free."),
  "fr": ("Protéine végétale à la vanille | VILLUMINATIONS",
-        "Protéine végétale au profil complet d'acides aminés, 20 g par "
-        "prise. Sans lactose, sans soja, sans gluten."),
+        "Protéine végétale de féverole, 20 g par prise, profil complet d'acides "
+        "aminés. Saveur vanille, sans lactose, soja ni gluten."),
 },
 "bcaa-post-workout-powder-honeydew-watermelon": {
  "en": ("BCAA Powder, Honeydew & Watermelon | VILLUMINATIONS",
-        "5000 mg of branched-chain amino acids with glutamine, in a 2:1:1 "
-        "ratio. Honeydew and watermelon flavour."),
+        "5000 mg of branched-chain amino acids in a 2:1:1 ratio, with glutamine "
+        "and vitamin B6. Honeydew and watermelon flavour, 292 g."),
  "fr": ("BCAA en poudre, melon et pastèque | VILLUMINATIONS",
-        "5000 mg d'acides aminés ramifiés avec glutamine, en proportion "
-        "2:1:1. Saveur melon et pastèque."),
+        "5000 mg d'acides aminés ramifiés en proportion 2:1:1, avec glutamine et "
+        "vitamine B6. Saveur melon et pastèque, pot de 292 g."),
 },
 "methylene-blue-drops": {
  "en": ("Methylene Blue Drops, 10 mg | VILLUMINATIONS",
-        "Methylene blue drops with 10 mg per serving. Liquid format with a "
-        "dropper, three ingredients only."),
+        "Methylene blue drops with 10 mg per serving. A 60 ml bottle with "
+        "dropper and three ingredients: methylene blue, water, potassium "
+        "sorbate."),
  "fr": ("Bleu de méthylène en gouttes, 10 mg | VILLUMINATIONS",
-        "Bleu de méthylène en gouttes, 10 mg par prise. Format liquide au "
-        "compte-gouttes, trois ingrédients."),
+        "Bleu de méthylène en gouttes, 10 mg par prise. Flacon de 60 ml au "
+        "compte-gouttes : bleu de méthylène, eau et sorbate de potassium."),
 },
 "nitric-shock-pre-workout-powder-fruit-punch": {
  "en": ("Nitric Shock Pre-Workout, Fruit Punch | VILLUMINATIONS",
-        "Pre-workout powder with fruit punch flavour: creatine, "
-        "beta-alanine, taurine, caffeine and B vitamins."),
+        "Fruit punch pre-workout with creatine, arginine AKG, beta-alanine, "
+        "taurine, caffeine, L-tyrosine and B vitamins. Twenty-three ingredients."),
  "fr": ("Pré-entraînement Nitric Shock | VILLUMINATIONS",
-        "Pré-entraînement saveur punch aux fruits : créatine, bêta-alanine, "
-        "taurine, caféine et vitamines B."),
+        "Pré-entraînement punch aux fruits : créatine, arginine AKG, bêta- "
+        "alanine, taurine, caféine et vitamines B. Vingt-trois ingrédients."),
 },
 "steel-plyo-box-12-18-24-inch-high-anti-slip-pre-assembled-plyometric-jump-box-for-home-gym-conditioning-and-strength-training-sold-individually-plyometric-platform-step": {
  "en": ("Anti-Slip Steel Plyometric Box | VILLUMINATIONS",
         "Pre-assembled steel jump box with an anti-slip surface, in three "
         "heights. For plyometrics, step and conditioning."),
  "fr": ("Caisson pliométrique en acier | VILLUMINATIONS",
-        "Caisson de saut en acier livré monté, surface antidérapante, trois "
-        "hauteurs. Pliométrie et conditionnement."),
+        "Caisson de saut en acier livré monté, surface antidérapante et "
+        "plusieurs hauteurs. Pour la pliométrie, le step et le conditionnement."),
 },
 "finer-form-multi-functional-fid-weight-bench-for-full-all-in-one-body-workout-hyper-back-extension-roman-chair-adjustable-ab-sit-up-bench-incline-decline-bench-flat-bench": {
  "en": ("Multi-Functional Weight Bench | VILLUMINATIONS",
         "Adjustable bench: flat, incline, decline and roman chair for back "
         "extensions. Foldable, with transport wheels."),
  "fr": ("Banc de musculation multifonction | VILLUMINATIONS",
-        "Banc réglable : plat, incliné, décliné et chaise romaine pour les "
-        "lombaires. Pliable, avec roulettes."),
+        "Banc réglable plat, incliné et décliné, avec chaise romaine pour "
+        "lombaires et abdominaux. Pliable et monté sur roulettes."),
 },
 "sport-basketball-backpack-travel-outdoor-waterproof-swimming-fitness-travel-sports-bag-basketball-pouch-hiking-climbing-backpack": {
  "en": ("Waterproof Sport Backpack, 20 L | VILLUMINATIONS",
-        "Waterproof nylon backpack under twenty litres, with a ball "
-        "compartment. For the gym, the pool and day trips."),
+        "Waterproof nylon backpack under twenty litres, with a ball compartment "
+        "that also takes shoes or wet kit. Gym, pool and day trips."),
  "fr": ("Sac à dos de sport imperméable 20 L | VILLUMINATIONS",
-        "Sac en nylon imperméable de moins de vingt litres, avec "
-        "compartiment ballon. Salle, piscine et sorties."),
+        "Sac à dos en nylon imperméable de moins de vingt litres, avec "
+        "compartiment ballon qui prend aussi les chaussures. Coupe unisexe."),
 },
 "weight-lifting-belt-premium-4-wide-functional-fitness-belt-for-men-women-squat-deadlift-support": {
  "en": ("Leather Weightlifting Belt, 4 in | VILLUMINATIONS",
-        "Four-inch pre-broken-in leather belt for squats and deadlifts. "
-        "Lumbar support and core stability."),
+        "Four-inch genuine leather belt, already broken in, for squats and "
+        "deadlifts. Double-prong buckle, suede lining and a constant width."),
  "fr": ("Ceinture d'haltérophilie en cuir | VILLUMINATIONS",
-        "Ceinture en cuir de quatre pouces, déjà assouplie, pour squat et "
-        "soulevé de terre. Maintien lombaire."),
+        "Ceinture en cuir véritable de quatre pouces, déjà assouplie, pour squat "
+        "et soulevé de terre. Boucle à double ardillon, doublure daim."),
 },
 "weighted-vest-6lb-8lb-10lb-12lb-15lb-18lb-20lb-24lb-30lb-for-men-women-reflective-stripe-adjustable-buckle-comfortable-durable-rucking-vest-for-walking-running-strength-training": {
  "en": ("Adjustable Weighted Vest, 6–30 lb | VILLUMINATIONS",
-        "Neoprene weighted vest from six to thirty pounds, with a "
-        "reflective stripe. Walking, running and rucking."),
+        "Neoprene weighted vest in eight weights from six to thirty pounds, with "
+        "a reflective stripe and adjustable buckle. Walking and rucking."),
  "fr": ("Gilet lesté réglable, 6 à 30 lb | VILLUMINATIONS",
-        "Gilet lesté en néoprène de six à trente livres, avec bande "
-        "réfléchissante. Marche, course et rucking."),
+        "Gilet lesté en néoprène, huit poids de six à trente livres, bande "
+        "réfléchissante et boucle réglable. Marche, course et rucking."),
 },
 "steel-mace-bell-for-strength-training-support-full-body-muscles-shoulder-grips-forearms-workouts-stretching-5-7-10-15-20-25-30-lb-for-woman-man": {
  "en": ("Steel Mace Bell, 5–30 lb | VILLUMINATIONS",
-        "Solid steel mace from five to thirty pounds. Works grip, shoulder "
-        "mobility and stability in every swing."),
+        "Solid steel mace in seven weights from five to thirty pounds, with a "
+        "diamond-knurled handle. Grip, shoulder mobility and stability."),
  "fr": ("Masse en acier, 5 à 30 lb | VILLUMINATIONS",
-        "Masse en acier massif de cinq à trente livres. Travaille la prise, "
-        "l'épaule et la stabilité à chaque balancé."),
+        "Masse en acier massif, sept poids de cinq à trente livres, poignée "
+        "moletée losange. Prise, mobilité de l'épaule et stabilité."),
 },
 "glute-bridge-plate-loaded-hip-thrust-machine-black-steel-frame-176-37-lb": {
  "en": ("Plate-Loaded Hip Thrust Machine | VILLUMINATIONS",
-        "Plate-loaded glute bridge machine with a black steel frame. "
-        "Isolates the glutes with hip and spine support."),
+        "Plate-loaded glute bridge machine with a black steel frame, articulated "
+        "back pad and a heavy-duty belt. Hip and spine supported."),
  "fr": ("Machine à hip thrust à disques | VILLUMINATIONS",
-        "Machine de pont fessier à charge de disques, cadre en acier noir. "
-        "Isole le fessier, colonne soutenue."),
+        "Machine de pont fessier à charge de disques, cadre en acier noir, "
+        "dossier articulé et ceinture de maintien. Hanche et colonne tenues."),
 },
 "gym-exercise-foot-pedal-adjustable-cardio-pedal-exerciser-non-slip-stable-200kg-load-bearing-portable-fitness-equipment": {
  "en": ("Adjustable Cardio Stepper, 200 kg | VILLUMINATIONS",
-        "Portable one-piece ABS stepper with adjustable height, anti-slip "
-        "base and a 200 kg load rating."),
+        "Portable one-piece moulded ABS stepper with three heights, honeycomb "
+        "anti-slip surface and a 200 kg load rating. Two risers included."),
  "fr": ("Stepper de cardio réglable, 200 kg | VILLUMINATIONS",
-        "Stepper portable en ABS moulé d'une pièce, hauteur réglable, base "
-        "antidérapante, charge admise de 200 kg."),
+        "Stepper portable en ABS moulé d'une pièce, trois hauteurs, surface "
+        "alvéolée antidérapante, charge de 200 kg. Deux rehausses incluses."),
 },
 "8-16-pcs-foam-fitness-non-slip-yoga-mat-fitness-floor-tile-protection-pad-fitness-equipment-mat-suitable-for-indoor-fitness": {
  "en": ("Foam Floor Tiles for Home Gyms | VILLUMINATIONS",
-        "Interlocking foam tiles, 30 × 30 × 1 cm, anti-slip. They protect "
-        "the floor and cushion your joints."),
+        "Interlocking foam floor tiles, 30 × 30 × 1 cm, anti-slip, edge trim "
+        "included. They protect the floor and cushion knees and elbows."),
  "fr": ("Dalles de sol en mousse | VILLUMINATIONS",
         "Dalles emboîtables en mousse de 30 × 30 × 1 cm, antidérapantes. "
         "Protègent le sol, amortissent les articulations."),
 },
 "universal-olympic-trap-shrug-bar-500-lb-acity": {
  "en": ("Olympic Trap-Shrug Bar, 500 lb | VILLUMINATIONS",
-        "Hex bar in tubular steel for deadlifts and shrugs. Rated for 500 "
-        "pounds, compact in a home gym."),
+        "Hex bar in tubular steel with neutral grips and raised sleeves, for "
+        "deadlifts and shrugs. Rated for 500 pounds, stores on its side."),
  "fr": ("Barre hexagonale olympique, 227 kg | VILLUMINATIONS",
-        "Barre hexagonale en acier tubulaire pour soulevé de terre et "
-        "shrugs. Capacité de 500 livres, peu encombrante."),
+        "Barre hexagonale en acier tubulaire, poignées neutres et manchons "
+        "surélevés, pour soulevé de terre et shrugs. Capacité de 500 livres."),
 },
 "power-rack-phone-mount-hook-on-smartphone-holder-for-2-2-3-3-squat-rack-upright-tool-free-installation-vertical-horizontal-viewing-fits-phones-up-to-3-22-wide": {
  "en": ("Power Rack Phone Mount | VILLUMINATIONS",
-        "Hooks onto the rack upright with no tools. Vertical or landscape "
-        "view, fits phones up to 8 cm wide."),
+        "Hooks onto the rack upright with no tools, for 2×2 and 3×3 profiles. "
+        "Vertical or landscape, fits phones up to 8.2 cm wide."),
  "fr": ("Support de téléphone pour cage à squat | VILLUMINATIONS",
-        "S'accroche au montant de la cage sans outils. Vue verticale ou "
-        "horizontale, téléphones jusqu'à 8 cm de large."),
+        "S'accroche au montant de la cage sans outils, profils 2×2 et 3×3. Vue "
+        "verticale ou horizontale, téléphones jusqu'à 8,2 cm."),
 },
 "portable-breathing-trainer-with-adjustable-resistance-settings": {
  "en": ("Portable Breathing Trainer | VILLUMINATIONS",
-        "Portable breathing trainer with adjustable resistance settings. "
-        "It fits in a pocket."),
+        "Portable breathing trainer with adjustable resistance on the inhale and "
+        "the exhale. Non-toxic plastic, and it fits in a pocket."),
  "fr": ("Entraîneur respiratoire portable | VILLUMINATIONS",
-        "Entraîneur respiratoire portable à résistance réglable. Tient "
-        "dans une poche."),
+        "Entraîneur respiratoire portable, résistance réglable à l'inspiration "
+        "comme à l'expiration. Plastique non toxique, tient dans une poche."),
 },
 "ankle-resistance-bands-with-cuffs-for-women-men-3-level-adjustable-leg-glute-workout-equipment-portable-home-gym-exercise-bands-for-kickbacks-hip-thrusts-yoga-strength-training": {
  "en": ("Ankle Resistance Bands with Cuffs | VILLUMINATIONS",
-        "TPE bands with padded ankle cuffs and three resistance levels. "
-        "Kickbacks, hip thrusts and abductions."),
+        "TPE resistance bands with padded velcro ankle cuffs and three levels. "
+        "Kickbacks, hip thrusts, abductions and leg extensions."),
  "fr": ("Bandes de résistance avec chevillères | VILLUMINATIONS",
-        "Bandes en TPE avec chevillères rembourrées, trois niveaux. "
-        "Extensions, ponts et abductions de hanche."),
+        "Bandes en TPE avec chevillères rembourrées à velcro, trois niveaux. "
+        "Extensions de fessier, ponts, abductions et extensions de jambe."),
 },
 "yoga-shorts-cross-border-honey-buttocks-buttocks-sports-high-waist-abdomen-stretch-tight-fitting-anti-glare-quick-drying-fitness": {
  "en": ("High-Waist Yoga Shorts | VILLUMINATIONS",
         "High-waist sport shorts in polyester, spandex and nylon. Stretchy, "
-        "quick-drying and squat-proof."),
+        "quick-drying and squat-proof, 85 g a pair, in sizes M and L."),
  "fr": ("Short de yoga taille haute | VILLUMINATIONS",
         "Short de sport taille haute en polyester, élasthanne et nylon. "
-        "Extensible, séchage rapide, opaque."),
+        "Extensible, séchage rapide, opaque. 85 g la pièce, tailles M et L."),
 },
 "yoga-shorts-women-fitness-elastic-running-workout-short-leggings-for-ladies-gym-sport-shorts-fitness-sportwear": {
  "en": ("Seamless Sport Shorts for Women | VILLUMINATIONS",
-        "Nylon shorts in seamless four-way stretch fabric. Compressive "
-        "waist, light, breathable and quick-drying."),
+        "Seamless nylon shorts with four-way stretch and a compressive "
+        "waistband. Light, breathable and quick-drying, in sizes S, M and L."),
  "fr": ("Short de sport sans coutures | VILLUMINATIONS",
-        "Short en nylon sans coutures, extensible dans les quatre sens. "
-        "Taille compressive, léger et respirant."),
+        "Short en nylon sans coutures, extensible dans les quatre sens, taille "
+        "compressive. Léger et respirant. Tailles S, M et L."),
 },
 "dryblend®-t-shirt": {
  "en": ("DryBlend T-Shirt, Cotton-Polyester | VILLUMINATIONS",
         "Classic-fit tee in DryBlend moisture-management fabric. Half "
         "cotton, half polyester, taped neck and shoulders."),
  "fr": ("T-shirt DryBlend coton-polyester | VILLUMINATIONS",
-        "T-shirt de coupe classique en tissu DryBlend qui évacue "
-        "l'humidité. Moitié coton, moitié polyester."),
+        "T-shirt de coupe classique en tissu DryBlend de 186 g/m², moitié coton, "
+        "moitié polyester. Col côtelé et épaules renforcées."),
 },
 "unisex-sports-jersey": {
  "en": ("Unisex Sports Jersey in Mesh | VILLUMINATIONS",
-        "Unisex jersey in breathable polyester mesh. Relaxed fit, extended "
-        "length and a bound collar."),
+        "Unisex jersey in 140 g/m² breathable polyester mesh, relaxed fit and "
+        "extended length. Short raglan sleeve and a bound collar."),
  "fr": ("Maillot de sport unisexe en mesh | VILLUMINATIONS",
-        "Maillot unisexe en mesh de polyester respirant. Coupe ample, "
-        "longueur étendue, col bordé."),
+        "Maillot unisexe en mesh de polyester de 140 g/m², coupe ample et "
+        "longueur étendue. Manche raglan courte et col bordé."),
 },
 "charcoal-soap": {
  "en": ("Handmade Activated Charcoal Soap | VILLUMINATIONS",
-        "Handmade bar soap with activated charcoal, for face and body. "
-        "Bar format, no plastic packaging."),
+        "Handmade 113 g bar with activated charcoal, peppermint and tea tree "
+        "oil, for face and body. No plastic packaging, fair-trade oils."),
  "fr": ("Savon artisanal au charbon actif | VILLUMINATIONS",
-        "Savon artisanal au charbon actif, pour le visage et le corps. En "
-        "pain, sans emballage plastique."),
+        "Savon artisanal de 113 g au charbon actif, menthe et arbre à thé, "
+        "visage et corps. Sans emballage plastique, huiles équitables."),
 },
 "rich-sandalwood-soap": {
  "en": ("Handmade Rich Sandalwood Soap | VILLUMINATIONS",
-        "Handmade sandalwood soap with a woody scent. Suitable for all "
-        "skin types, including sensitive skin."),
+        "Handmade 113 g sandalwood soap with shea butter among its saponified "
+        "oils. Woody scent, suitable for all skin types."),
  "fr": ("Savon artisanal au santal | VILLUMINATIONS",
-        "Savon artisanal au santal, au parfum boisé. Convient à tous les "
-        "types de peau, même sensible."),
+        "Savon artisanal de santal de 113 g, au beurre de karité parmi ses "
+        "huiles saponifiées. Parfum boisé, convient à toutes les peaux."),
 },
 }
 

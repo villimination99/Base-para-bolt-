@@ -444,8 +444,8 @@ perder tiempo:</p>
         "etiquetas": ["suplementos", "evidencia", "referencia"],
         "meta": (
             "Qué suplementos tienen evidencia | VILLUMINATIONS",
-            "Creatina, cafeína, proteína y los que no llegan. Cómo se regulan de "
-            "verdad y qué sello mirar si compites.",
+            "Creatina, cafeína, proteína y los que no llegan a demostrarlo. Cómo "
+            "se regulan de verdad los suplementos y qué sello mirar si compites.",
         ),
         "cuerpo": """
 <p>Antes de la lista, el dato que reordena todo lo demás.</p>
