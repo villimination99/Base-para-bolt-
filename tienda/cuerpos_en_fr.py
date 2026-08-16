@@ -1136,6 +1136,20 @@ __(h, art_fr(
 del _, __, h
 
 
+# ---------------------------------------------------------------------------
+# El pie de lecturas
+# ---------------------------------------------------------------------------
+# El mismo que en castellano, y hoy no escribe nada: el Diario está solo en
+# castellano y `lecturas.disponibles()` devuelve el conjunto vacío para estas
+# dos lenguas. Queda enchufado a propósito. El día que exista
+# `articulos_en_fr.py`, estos cincuenta y ocho cuerpos empiezan a enlazar sin
+# que haya que volver aquí.
+import lecturas                                            # noqa: E402
+
+CUERPOS_EN = lecturas.pegar(CUERPOS_EN, "en")
+CUERPOS_FR = lecturas.pegar(CUERPOS_FR, "fr")
+
+
 if __name__ == "__main__":
     malos, pendientes = comprobar(), faltan()
     print(f"\n  {len(CUERPOS_EN)} de 29 cuerpos en inglés y francés · "

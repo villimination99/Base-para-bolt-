@@ -820,6 +820,18 @@ CUERPOS.update({
 
 
 # ---------------------------------------------------------------------------
+# El pie de lecturas
+# ---------------------------------------------------------------------------
+# Cada ficha termina ofreciendo el artículo del Diario que le viene a cuento.
+# El mapa está en lecturas.py; aquí solo se pega, para que el texto viva en un
+# sitio y salga en cuarenta. A los dos jabones no les toca ninguno, y ese
+# hueco es una decisión, no un olvido: lecturas.py lo dice al ejecutarlo.
+import lecturas                                            # noqa: E402
+
+CUERPOS = lecturas.pegar(CUERPOS, "es")
+
+
+# ---------------------------------------------------------------------------
 # Títulos en las tres lenguas: (es, en, fr)
 # ---------------------------------------------------------------------------
 # Los títulos del proveedor venían en inglés y con defectos a la vista:

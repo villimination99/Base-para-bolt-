@@ -740,3 +740,14 @@ travail propre.</p>
 }
 
 NUEVOS = [MESA, CARGA, DESCANSO, VOLUNTAD, ARCANOS, SI_MISMO]
+
+
+# ---------------------------------------------------------------------------
+# El pie de lecturas — véase lecturas.py
+# ---------------------------------------------------------------------------
+import lecturas                                            # noqa: E402
+
+for _ficha in NUEVOS:
+    for _lengua in ("es", "en", "fr"):
+        _ficha[_lengua] += lecturas.bloque(_ficha["handle"], _lengua)
+del _ficha, _lengua

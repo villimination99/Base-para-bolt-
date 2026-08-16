@@ -600,3 +600,18 @@ le cadrage, les huit planches et les exercices de relevé sont un travail propre
 
 FICHAS = [BASICO, PRO, ELITE, ZODIACAL, INVOCACIONES]
 IDIOMAS = ("es", "en", "fr")
+
+
+# ---------------------------------------------------------------------------
+# El pie de lecturas
+# ---------------------------------------------------------------------------
+# Igual que en catalogo.py: cada ficha termina ofreciendo el artículo del
+# Diario que le viene a cuento. En inglés y en francés no sale nada todavía
+# porque el Diario está en castellano, y mandar a un comprador inglés a una
+# página que no puede leer es peor que no enlazar. lecturas.py lo comprueba.
+import lecturas                                            # noqa: E402
+
+for _ficha in FICHAS:
+    for _lengua in IDIOMAS:
+        _ficha[_lengua] += lecturas.bloque(_ficha["handle"], _lengua)
+del _ficha, _lengua
