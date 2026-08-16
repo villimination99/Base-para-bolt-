@@ -70,7 +70,16 @@ def recoger() -> tuple:
         for lengua, (titulo, descripcion) in lenguas.items():
             metas.append(("producto", handle, lengua, titulo, descripcion))
     for handle, cuerpo in catalogo.CUERPOS.items():
-        cuerpos[f"producto:{handle}"] = cuerpo
+        cuerpos[f"producto:{handle}:es"] = cuerpo
+
+    # Los cuerpos traducidos son los que llevan los enlaces con prefijo de
+    # idioma. Sin ellos, la auditoría daba por huérfano todo el Diario inglés
+    # y francés: no veía quién lo enlazaba porque no le habían dado a mirar.
+    import cuerpos_en_fr
+    for lengua, mapa in (("en", cuerpos_en_fr.CUERPOS_EN),
+                         ("fr", cuerpos_en_fr.CUERPOS_FR)):
+        for handle, cuerpo in mapa.items():
+            cuerpos[f"producto:{handle}:{lengua}"] = cuerpo
     for handle, datos in catalogo.COLECCIONES.items():
         metas.append(("colección", handle, "es", datos[0], datos[1]))
 
@@ -82,13 +91,25 @@ def recoger() -> tuple:
     import descripciones
     import fichas_libros
     for f in list(descripciones.FICHAS) + list(fichas_libros.NUEVOS):
-        cuerpos[f"producto propio:{f['handle']}"] = f["es"]
+        for lengua in ("es", "en", "fr"):
+            cuerpos[f"producto propio:{f['handle']}:{lengua}"] = f[lengua]
 
     import articulos
     for a in articulos.ARTICULOS:
         titulo, descripcion = a["meta"]
         metas.append(("artículo", a["handle"], "es", titulo, descripcion))
         cuerpos[f"artículo:{a['handle']}"] = a["cuerpo"]
+
+    # El Diario traducido entró después que esta auditoría y se quedó fuera:
+    # dieciocho pares de título y descripción que nadie estaba cruzando con
+    # nada. Los cuerpos entran también, para que sus enlaces cuenten.
+    import articulos_en_fr
+    for handle, lenguas in articulos_en_fr.CUERPOS.items():
+        for lengua, a in lenguas.items():
+            titulo, descripcion = a["meta"]
+            metas.append(("artículo", handle, lengua, titulo, descripcion))
+            cuerpos[f"artículo:{handle}:{lengua}"] = articulos_en_fr.cuerpo(
+                handle, lengua)
     metas.append(("blog", articulos.BLOG["handle"], "es",
                   articulos.BLOG["meta_titulo"],
                   articulos.BLOG["meta_descripcion"]))
@@ -149,20 +170,31 @@ def auditar() -> dict:
             hallazgos["handles compartidos"].append(
                 f"{handle[:50]} · {', '.join(sorted(set(superficies)))}")
 
-    # --- enlaces internos
-    articulos_ = {c.split(":", 1)[1] for c in cuerpos if c.startswith("artículo:")}
+    # --- enlaces internos, lengua por lengua
+    #
+    # Un artículo es huérfano *en su lengua*: que la ficha castellana enlace
+    # «cuánta proteína» no sirve de nada al comprador inglés. Así que tanto
+    # los artículos como los enlaces se cuentan como (handle, lengua), y el
+    # prefijo de idioma de la URL —/en/blogs/…— es justo el dato que lo dice.
+    articulos_ = set()
+    for clave in cuerpos:
+        if not clave.startswith("artículo:"):
+            continue
+        partes = clave.split(":")
+        articulos_.add((partes[1], partes[2] if len(partes) > 2 else "es"))
+
     apuntados = set()
     salidas = defaultdict(set)
     for clave, html in cuerpos.items():
         for destino in enlaces(html):
             salidas[clave].add(destino)
-            m = re.match(r"/blogs/[^/]+/([^/]+)", destino)
+            m = re.match(r"(?:/(en|fr))?/blogs/[^/]+/([^/]+)", destino)
             if m:
-                apuntados.add(m.group(1))
+                apuntados.add((m.group(2), m.group(1) or "es"))
 
-    for handle in sorted(articulos_ - apuntados):
+    for handle, lengua in sorted(articulos_ - apuntados):
         hallazgos["artículos huérfanos"].append(
-            f"{handle} · no lo enlaza ninguna ficha ni colección")
+            f"[{lengua}] {handle} · no lo enlaza ninguna ficha ni colección")
 
     for linea in precios_incoherentes():
         hallazgos["precios de las láminas"].append(linea)

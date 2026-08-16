@@ -1056,7 +1056,8 @@ CUERPOS["como-se-lee-una-etiqueta-nutricional"] = {
         "meta": (
             "How to read a nutrition label | VILLUMINATIONS",
             "The 5 and 20 rule, the percent daily value, the legal tolerance "
-            "and why «0 g trans fat» may not be zero."),
+            "on every printed figure, and why «0 g trans fat» may not be "
+            "zero."),
         "cuerpo": """
 <p>A nutrition label is not written so you can understand it at a glance: it is
 written to comply with a regulation. That makes it reliable and opaque at the
@@ -1757,8 +1758,9 @@ CUERPOS["que-es-un-decanato"] = {
             "themselves in the general description of their sign."),
         "meta": (
             "What a decan is | VILLUMINATIONS",
-            "The thirty-six decans, the two systems of rulership and why the "
-            "general description of a sign fails so often."),
+            "The thirty-six decans, the two classical systems of rulership and "
+            "why the general description of a sign fails for so many "
+            "people."),
         "cuerpo": """
 <p>Almost everyone who has read the description of their sign has had the same
 feeling: it is half right. There is a structural reason for that, and it is
