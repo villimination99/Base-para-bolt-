@@ -1293,6 +1293,245 @@ vraiment ce qui est démontré et ce qui ne l'est pas.</p>
 }
 
 
+CUERPOS["cuantas-horas-hay-que-dormir"] = {
+    "en": {
+        "titulo": "How many hours you need to sleep",
+        "resumen": (
+            "The figure by age, what a short week does and does not give "
+            "back, the countdown of the last few hours, and the sign that the "
+            "problem is no longer one of sleep hygiene."),
+        "meta": (
+            "How many hours you need to sleep | VILLUMINATIONS",
+            "The hours recommended by age, sleep debt, caffeine and alcohol "
+            "with their timings, and when to stop reading advice."),
+        "cuerpo": """
+<p>The short answer has been published for years and still surprises people by
+how inflexible it is.</p>
+
+<h2>The figure, by age</h2>
+
+<table>
+  <thead><tr><th>Age</th><th>Hours per night</th></tr></thead>
+  <tbody>
+    <tr><td>13 to 18 years</td><td>8 to 10</td></tr>
+    <tr><td>18 to 60 years</td><td>7 or more</td></tr>
+    <tr><td>61 to 64 years</td><td>7 to 9</td></tr>
+    <tr><td>65 years and over</td><td>7 to 8</td></tr>
+  </tbody>
+</table>
+
+<p>Notice that the recommendation for adults is a <strong>floor</strong>, not a
+target: seven or more. The belief that someone &laquo;only needs five
+hours&raquo; almost never describes a person who functions on five hours; it
+describes a person who has been tired for so long that they have forgotten what
+not being tired feels like.</p>
+
+<h2>The debt: what comes back and what does not</h2>
+
+<p>Sleeping little from Monday to Friday and stretching out at the weekend
+recovers <strong>part</strong> of what was lost, not all of it, and it has a
+price: sleeping three extra hours on Saturday pushes the internal clock back
+and means sleep does not come on Sunday night. Saturday is paid for with
+Monday.</p>
+
+<p>What recovers worst is what is noticed worst: sustained attention degrades
+progressively and the perception of being degraded <strong>does not</strong>
+keep pace with it. Someone a week into six-hour nights performs a good deal
+worse than they think.</p>
+
+<h2>The countdown of the last few hours</h2>
+
+<p>Three substances with three different timings, and they are worth treating
+separately:</p>
+
+<ul>
+  <li><strong>Caffeine.</strong> It takes on the order of five hours to clear
+  half the dose, which means a four o'clock coffee still has a quarter in
+  circulation at midnight. Sensitivity varies a great deal from person to
+  person; a margin of six to eight hours before bed is the one that works for
+  most people.</li>
+  <li><strong>Alcohol.</strong> It is the most deceptive, because it helps you
+  fall asleep and ruins what comes after: it <strong>fragments the second half
+  of the night</strong>, exactly where the restorative sleep is. Falling asleep
+  sooner and resting worse.</li>
+  <li><strong>Nicotine.</strong> It is a stimulant and, on top of that,
+  overnight withdrawal wakes you.</li>
+</ul>
+
+<h2>The room: three figures and no more</h2>
+
+<p>Of everything said about the bedroom, what is actually measured comes down
+to three things: <strong>cool, dark and quiet</strong>. Temperature below
+daytime comfort; light as little as possible, phone included; and constant
+noise disturbs less than intermittent noise.</p>
+
+<p>The rest — pillows, scents, apps — you may like, but it is not on the same
+level of evidence and it does not make up for an irregular schedule.</p>
+
+<h2>The intervention that pays most is the dullest</h2>
+
+<p>Above everything above: <strong>a fixed time to get up, every day, weekend
+included</strong>. The internal clock anchors to the waking hour and to morning
+light, not to bedtime. It is free, it requires buying nothing, and it beats any
+supplement.</p>
+
+<h3>The nap, done properly</h3>
+
+<p>Ten to twenty minutes, and early. Longer than that enters deep sleep and you
+wake up worse than before; later than that, it steals sleep pressure from the
+night.</p>
+
+<h2>When to stop reading advice</h2>
+
+<p>All of the above is <strong>sleep hygiene for healthy people</strong>. There
+are two situations where it does not apply and where carrying on reading
+articles is wasting time:</p>
+
+<ul>
+  <li>You have been sleeping badly most nights for <strong>more than three
+  months</strong>, with consequences during the day. That has a clinical name
+  and a treatment, and the treatment that works is not advice from a blog.</li>
+  <li>Someone has told you that <strong>you stop breathing while you
+  sleep</strong>, or you snore and wake up tired with no explanation. That gets
+  investigated, not corrected with the room temperature.</li>
+</ul>
+
+<p>In both cases, the next step is a doctor.</p>
+""",
+        "fuentes": (
+            "<li><strong>CDC</strong> — Recommended sleep hours by age "
+            "group.</li>\n"
+            "<li><strong>NHLBI · NIH</strong> — Sleep debt, circadian "
+            "rhythm and sleep hygiene.</li>\n"
+            "<li><strong>NIOSH</strong> — Shift work and sleep.</li>\n"),
+        "base": "federal",
+        "libro": "codice-del-descanso",
+        "frase": ("The architecture of a night phase by phase, what to do "
+                  "when sleep does not come and in what order to try it, and "
+                  "shifts and travel when the schedule is not yours to "
+                  "choose, are worked through separately."),
+    },
+    "fr": {
+        "titulo": "Combien d'heures faut-il dormir",
+        "resumen": (
+            "Le chiffre par âge, ce qu'une semaine courte rend et ce qu'elle "
+            "ne rend pas, le compte à rebours des dernières heures et le "
+            "signe que le problème n'est plus d'hygiène du sommeil."),
+        "meta": (
+            "Combien d'heures faut-il dormir | VILLUMINATIONS",
+            "Les heures recommandées par âge, la dette de sommeil, la caféine "
+            "et l'alcool avec leurs délais, et quand cesser de lire des "
+            "conseils."),
+        "cuerpo": """
+<p>La réponse courte est publiée depuis des années et continue de surprendre
+par le peu de souplesse qu'elle laisse.</p>
+
+<h2>Le chiffre, par âge</h2>
+
+<table>
+  <thead><tr><th>Âge</th><th>Heures par nuit</th></tr></thead>
+  <tbody>
+    <tr><td>13 à 18 ans</td><td>De 8 à 10</td></tr>
+    <tr><td>18 à 60 ans</td><td>7 ou plus</td></tr>
+    <tr><td>61 à 64 ans</td><td>De 7 à 9</td></tr>
+    <tr><td>65 ans et plus</td><td>De 7 à 8</td></tr>
+  </tbody>
+</table>
+
+<p>Remarquez que la recommandation pour les adultes est un
+<strong>plancher</strong>, non un objectif : sept ou plus. La croyance selon
+laquelle on « n'a besoin que de cinq heures » ne décrit presque jamais quelqu'un
+qui fonctionne avec cinq heures ; elle décrit quelqu'un qui est fatigué depuis
+si longtemps qu'il a oublié ce que c'est que de ne pas l'être.</p>
+
+<h2>La dette : ce qui se rattrape et ce qui ne se rattrape pas</h2>
+
+<p>Dormir peu du lundi au vendredi et s'étirer le week-end récupère une
+<strong>partie</strong> de ce qui a été perdu, pas tout, et cela a un prix :
+dormir trois heures de plus le samedi retarde l'horloge interne et fait que le
+sommeil ne vient pas le dimanche soir. On paie le samedi avec le lundi.</p>
+
+<p>Ce qui se récupère le plus mal est ce qui se remarque le plus mal :
+l'attention soutenue se dégrade progressivement et la perception d'être dégradé
+<strong>ne</strong> suit <strong>pas</strong>. Qui dort six heures depuis une
+semaine rend nettement moins bien qu'il ne le croit.</p>
+
+<h2>Le compte à rebours des dernières heures</h2>
+
+<p>Trois substances avec trois délais différents, et il vaut mieux les traiter
+séparément :</p>
+
+<ul>
+  <li><strong>Caféine.</strong> Il faut de l'ordre de cinq heures pour éliminer
+  la moitié de la dose, ce qui veut dire qu'un café de seize heures a encore un
+  quart en circulation à minuit. La sensibilité varie beaucoup d'une personne à
+  l'autre ; la marge de six à huit heures avant le coucher est celle qui
+  fonctionne pour la plupart.</li>
+  <li><strong>Alcool.</strong> C'est le plus trompeur, parce qu'il aide à
+  s'endormir et abîme ce qui vient après : il <strong>fragmente la seconde
+  moitié de la nuit</strong>, précisément là où se trouve le sommeil qui
+  restaure. S'endormir plus tôt et se reposer moins bien.</li>
+  <li><strong>Nicotine.</strong> C'est un stimulant et, de plus, le sevrage
+  nocturne réveille.</li>
+</ul>
+
+<h2>La chambre : trois chiffres et pas un de plus</h2>
+
+<p>De tout ce qui se dit sur la chambre, ce qui est mesuré se réduit à trois
+choses : <strong>fraîche, sombre et silencieuse</strong>. La température sous
+celle du confort diurne ; la lumière le moins possible, celle du téléphone
+comprise ; et le bruit constant gêne moins que le bruit intermittent.</p>
+
+<p>Le reste — oreillers, parfums, applications — peut vous plaire, mais n'est
+pas au même niveau de preuve et ne compense pas un horaire irrégulier.</p>
+
+<h2>L'intervention qui rend le plus est la plus ennuyeuse</h2>
+
+<p>Au-dessus de tout ce qui précède : <strong>une heure fixe de lever, tous les
+jours, week-end compris</strong>. L'horloge interne s'ancre sur l'heure du
+réveil et sur la lumière du matin, pas sur l'heure du coucher. C'est gratuit,
+cela n'oblige à rien acheter et cela bat n'importe quel complément.</p>
+
+<h3>La sieste, si elle est bien faite</h3>
+
+<p>De dix à vingt minutes, et tôt. Plus longue, elle entre dans le sommeil
+profond et l'on se réveille moins bien qu'avant ; plus tard, elle vole de la
+pression de sommeil à la nuit.</p>
+
+<h2>Quand cesser de lire des conseils</h2>
+
+<p>Tout ce qui précède est de l'<strong>hygiène du sommeil pour personnes en
+bonne santé</strong>. Il y a deux situations où cela ne s'applique pas et où
+continuer à lire des articles est une perte de temps :</p>
+
+<ul>
+  <li>Vous dormez mal la plupart des nuits depuis <strong>plus de trois
+  mois</strong>, avec des conséquences dans la journée. Cela porte déjà un nom
+  clinique et a un traitement, et le traitement qui marche n'est pas un conseil
+  de blog.</li>
+  <li>On vous a dit que <strong>vous cessez de respirer pendant votre
+  sommeil</strong>, ou vous ronflez et vous levez fatigué sans explication. Cela
+  s'explore, cela ne se corrige pas avec la température de la pièce.</li>
+</ul>
+
+<p>Dans les deux cas, l'étape suivante est un médecin.</p>
+""",
+        "fuentes": (
+            "<li><strong>CDC</strong> — Heures de sommeil recommandées par "
+            "groupe d'âge.</li>\n"
+            "<li><strong>NHLBI · NIH</strong> — Dette de sommeil, rythme "
+            "circadien et hygiène du sommeil.</li>\n"
+            "<li><strong>NIOSH</strong> — Travail posté et sommeil.</li>\n"),
+        "base": "federal",
+        "libro": "codice-del-descanso",
+        "frase": ("L'architecture d'une nuit phase par phase, quoi faire "
+                  "quand le sommeil ne vient pas et dans quel ordre "
+                  "l'essayer, et les quarts et les voyages quand l'horaire ne "
+                  "se choisit pas, y sont développés à part."),
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
