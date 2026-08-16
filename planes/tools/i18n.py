@@ -67,6 +67,14 @@ ATRIBUTOS = ("alt", "title", "aria-label", "data-etiqueta")
 _ETIQUETA = re.compile(r"<(/?)([a-zA-Z][\w:-]*)((?:\s[^<>]*?)?)(/?)>", re.S)
 _SOLO_MARCA = re.compile(r"^(?:\s|&[a-z]+;|&#\d+;|<[^>]+>|[·—–…|/\\+×°%$€£0-9.,:;()\[\]{}«»\"'@#*_-])*$")
 
+# Un precio sí se traduce, aunque no lleve una sola letra. «9,99 $» en inglés
+# se escribe «$9.99»: cambia el separador decimal y cambia de lado el símbolo.
+# La regla de las dos letras dejaba fuera exactamente esto, y la escalera de
+# precios salía en formato español dentro de la edición inglesa, tres líneas
+# por debajo de la insignia que sí estaba traducida. La cobertura no lo veía
+# porque el segmento nunca llegó a contarse.
+_PRECIO = re.compile(r"(?:[$€£]\s*\d|\d+(?:[.,]\d{2})?\s*[$€£])")
+
 
 def clave(texto: str) -> str:
     """Identificador estable de un segmento: hash de su forma normalizada."""
@@ -80,13 +88,19 @@ def traducible(contenido: str) -> bool:
     Descarta lo que es solo marcado, cifras, símbolos o entidades: un «10» o
     un «·» no se traduce, y meterlo en el catálogo solo añade ruido que luego
     baja la cobertura sin motivo.
+
+    La excepción es el precio. No lleva letras y aun así cambia de una lengua a
+    otra —«9,99 $» es «$9.99» en inglés—, así que entra aunque la regla de las
+    dos letras lo rechace.
     """
     if not contenido.strip():
         return False
+    plano = re.sub(r"<[^>]+>", "", contenido)
+    if _PRECIO.search(plano):
+        return True
     if _SOLO_MARCA.match(contenido):
         return False
     # tiene que quedar alguna letra tras quitar el marcado
-    plano = re.sub(r"<[^>]+>", "", contenido)
     return bool(re.search(r"[a-zA-ZáéíóúüñÁÉÍÓÚÜÑçÇàèùâêîôûëïœ]{2,}", plano))
 
 
