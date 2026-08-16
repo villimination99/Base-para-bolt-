@@ -51,6 +51,7 @@ nada roto.
 """
 
 import re
+from pathlib import Path
 
 TOPE_TITULO = 60
 TOPE_DESCRIPCION = 155
@@ -113,18 +114,39 @@ ETIQUETA = {
            '{paginas} pages en espagnol, anglais et français.</p>'),
 }
 
+# El nombre del libro en cada lengua, y de qué PDF sale su número de páginas.
+#
+# Las páginas NO se escriben aquí. Se escribieron a mano una vez y salieron
+# mal cuatro de cinco —la Carga con 74 en vez de 70, el Descanso con 71 en vez
+# de 53, el Zodiacal con 96 en vez de 144—, y esas cifras iban a publicarse en
+# inglés y en francés al lado de las castellanas, que sí eran correctas. Ahora
+# se cuentan del propio PDF y `comprobar()` las coteja además con lo que dice
+# el artículo castellano. Una cifra que se puede contar no se teclea.
 LIBRO = {
     "codice-de-la-mesa": {"en": "the Codex of the Table",
-                          "fr": "le Codex de la Table", "paginas": 78},
+                          "fr": "le Codex de la Table", "pdf": "codice-mesa"},
     "codice-de-la-carga": {"en": "the Codex of the Load",
-                           "fr": "le Codex de la Charge", "paginas": 74},
+                           "fr": "le Codex de la Charge", "pdf": "codice-carga"},
     "codice-del-descanso": {"en": "the Codex of Rest",
-                            "fr": "le Codex du Repos", "paginas": 71},
+                            "fr": "le Codex du Repos", "pdf": "codice-descanso"},
     "codice-zodiacal": {"en": "the Zodiacal Codex",
-                        "fr": "le Codex Zodiacal", "paginas": 96},
+                        "fr": "le Codex Zodiacal", "pdf": "codice-zodiacal"},
     "codice-de-los-arcanos": {"en": "the Codex of the Arcana",
-                              "fr": "le Codex des Arcanes", "paginas": 82},
+                              "fr": "le Codex des Arcanes",
+                              "pdf": "codice-arcanos"},
 }
+
+DIST = Path(__file__).resolve().parent.parent / "libros" / "dist"
+
+
+def paginas(handle: str) -> int:
+    """Cuántas páginas tiene el PDF de ese libro, contadas del fichero."""
+    pdf = DIST / f"{LIBRO[handle]['pdf']}.pdf"
+    if not pdf.exists():
+        raise FileNotFoundError(
+            f"No está {pdf}. El número de páginas se cuenta del PDF, no se "
+            f"escribe: reconstrúyelo con python3 libros/build.py")
+    return len(re.findall(rb"/Type\s*/Page[^s]", pdf.read_bytes()))
 
 # Handle traducido de cada colección en la tienda. No consta en el
 # repositorio: hasta que se pueda preguntar, la frase sale sin enlace.
@@ -142,10 +164,9 @@ def fuentes(filas: str, lengua: str, base: str) -> str:
 
 
 def etiqueta(handle: str, lengua: str, frase: str) -> str:
-    libro = LIBRO[handle]
     return ETIQUETA[lengua].format(frase=frase, handle=handle,
-                                   libro=libro[lengua],
-                                   paginas=libro["paginas"])
+                                   libro=LIBRO[handle][lengua],
+                                   paginas=paginas(handle))
 
 
 # ---------------------------------------------------------------------------
@@ -943,8 +964,19 @@ def comprobar() -> list:
             if ("libro" in a) == ("cierre" in a):
                 malos.append(f"{handle} [{lengua}] · o remata con un libro o "
                              f"con su propio cierre, no las dos ni ninguna")
-            elif "libro" in a and a["libro"] not in LIBRO:
-                malos.append(f"{handle} [{lengua}] · libro desconocido")
+            elif "libro" in a:
+                if a["libro"] not in LIBRO:
+                    malos.append(f"{handle} [{lengua}] · libro desconocido")
+                else:
+                    # ¿coincide con lo que dice el castellano publicado?
+                    original = next(x["cuerpo"] for x in articulos.ARTICULOS
+                                    if x["handle"] == handle)
+                    dice = re.search(r"PDF de (\d+) páginas", original)
+                    real = paginas(a["libro"])
+                    if dice and int(dice.group(1)) != real:
+                        malos.append(
+                            f"{handle} [{lengua}] · el castellano dice "
+                            f"{dice.group(1)} páginas y el PDF tiene {real}")
             # el cuerpo compuesto no puede llevar enlaces sin prefijo de
             # idioma: mandarían al comprador a la versión castellana
             texto = cuerpo(handle, lengua)
