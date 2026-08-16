@@ -834,6 +834,218 @@ reste un problème en soi.</p>
 }
 
 
+CUERPOS["gimnasio-en-casa-que-comprar-primero"] = {
+    "en": {
+        "titulo": "Home gym: what to buy first",
+        "resumen": (
+            "The order in which the money is best spent, what each piece "
+            "solves, and the three purchases almost everyone makes too "
+            "early."),
+        "meta": (
+            "Home gym: what to buy first | VILLUMINATIONS",
+            "The order to spend in: floor, bench, bar, bands. What each piece "
+            "solves and the three purchases made far too early."),
+        "cuerpo": """
+<p>Setting up a home gym goes wrong almost always for the same reason: things
+get bought out of enthusiasm rather than in order. This is the order that
+holds, with the reasoning behind each step.</p>
+
+<h2>Before buying anything: how much training is needed</h2>
+
+<p>The public physical activity recommendation for adults is <strong>150
+minutes a week</strong> of moderate aerobic activity — or 75 of high intensity
+— plus <strong>two days of strength work</strong> involving the major muscle
+groups.</p>
+
+<p>That defines what to buy. Two strength sessions a week do not call for a
+whole room: they call for being able to load the basic patterns — push, pull,
+hinge at the hip and bend at the knee — with a progression that is actually
+possible.</p>
+
+<h2>1. The floor, before the iron</h2>
+
+<p>It is the least exciting purchase and the one you are most grateful for.
+Interlocking tiles do three things: they protect the house floor, they cushion
+your joints and they mark out a space your head recognises as &laquo;this is
+where training happens&raquo;. The third is not mystical: it lowers the
+friction of starting, which is where people give up.</p>
+
+<h2>2. An adjustable bench</h2>
+
+<p>It is the piece that unlocks the most exercises per dollar spent. With a
+bench that inclines, declines and lies flat you get pressing at three angles,
+supported rows, back extensions and all the seated arm work. Without one, half
+the exercise list does not exist.</p>
+
+<p>When comparing benches, look at the load capacity the manufacturer states
+and the actual number of backrest positions. A three-position bench and a
+seven-position bench are not the same piece of furniture.</p>
+
+<h2>3. Load that progresses</h2>
+
+<p>Strength depends on being able to <strong>raise the load little by
+little</strong>. That is the criterion for choosing between a bar with plates,
+a set of adjustable dumbbells or a plate-loaded machine: the question is not
+how much it lifts today, but in how many steps it can go up.</p>
+
+<p>A hex bar is, for home, the most rewarding: it allows deadlifting with the
+back in a better position than a straight bar, and it also serves for shrugs
+and lunges.</p>
+
+<h2>4. Bands and vest, once there is a routine</h2>
+
+<p>Bands solve what free weight does worst — abductions, glute activation,
+accessory work — and they fit in a drawer. A weighted vest turns something you
+already did, walking, into training. Neither is a first purchase; both are
+excellent fourth ones.</p>
+
+<h2>The three premature purchases</h2>
+
+<ul>
+  <li><strong>A large single-exercise machine.</strong> It takes up what a
+  bench and a bar take up together and does one thing. It makes sense when that
+  particular exercise is the axis of your programme, not before.</li>
+  <li><strong>Fixed dumbbells in pairs.</strong> They fall short within two
+  months and there is no next step up.</li>
+  <li><strong>Accessories before load.</strong> Rollers, small pulleys, grips.
+  All useful, none of them moves the needle if you still cannot progress on the
+  basics.</li>
+</ul>
+
+<h2>The short list</h2>
+
+<ul>
+  <li>Tiles for two square metres.</li>
+  <li>An adjustable bench.</li>
+  <li>A bar and plates, or equivalent adjustable load.</li>
+  <li>A set of bands.</li>
+</ul>
+
+<p>That covers the two strength days of the public recommendation for years.
+Everything else is fine-tuning, and gets bought when the programme asks for
+it.</p>
+""",
+        "fuentes": (
+            "<li>The 150 weekly minutes and the two strength days are the "
+            "physical activity recommendation published by the United States "
+            "Government.</li>\n"
+            "<li>The load capacities and measurements of each piece come from "
+            "the manufacturer's documentation, and are only published when "
+            "that documentation does not contradict itself.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-carga",
+        "frase": ("The week-by-week load progression, the basic patterns and "
+                  "how a session is ordered with this equipment are worked "
+                  "through in full."),
+    },
+    "fr": {
+        "titulo": "Salle à la maison : quoi acheter en premier",
+        "resumen": (
+            "L'ordre dans lequel il vaut mieux dépenser, ce que règle chaque "
+            "pièce et les trois achats que presque tout le monde fait trop "
+            "tôt."),
+        "meta": (
+            "Salle à la maison : quoi acheter d'abord | VILLUMINATIONS",
+            "L'ordre pour dépenser : sol, banc, barre, élastiques. Ce que "
+            "règle chaque pièce et les trois achats faits bien trop tôt."),
+        "cuerpo": """
+<p>Monter une salle à la maison rate presque toujours pour la même raison : on
+achète par enthousiasme et non dans l'ordre. Voici l'ordre qui tient, avec le
+raisonnement derrière chaque étape.</p>
+
+<h2>Avant d'acheter quoi que ce soit : combien faut-il s'entraîner</h2>
+
+<p>La recommandation publique d'activité physique pour les personnes adultes,
+c'est <strong>150 minutes par semaine</strong> d'activité aérobie modérée — ou
+75 d'intensité élevée — plus <strong>deux jours de travail de force</strong>
+sollicitant les grands groupes musculaires.</p>
+
+<p>Cela définit ce qu'il faut acheter. Deux séances de force par semaine ne
+réclament pas une salle entière : elles réclament de pouvoir charger les
+schémas de base — pousser, tirer, fléchir la hanche et le genou — avec une
+progression réellement possible.</p>
+
+<h2>1. Le sol, avant la fonte</h2>
+
+<p>C'est l'achat le moins excitant et celui qu'on remercie le plus. Des dalles
+emboîtables font trois choses : elles protègent le sol de la maison, elles
+amortissent les articulations et elles délimitent un espace que votre tête
+reconnaît comme &laquo; ici on s'entraîne &raquo;. Le troisième point n'a rien
+de mystique : il réduit la friction du démarrage, et c'est là qu'on
+abandonne.</p>
+
+<h2>2. Un banc réglable</h2>
+
+<p>C'est la pièce qui débloque le plus d'exercices par dollar dépensé. Avec un
+banc qui s'incline, se décline et se met à plat, vous avez le développé sous
+trois angles, le rowing en appui, les extensions lombaires et tout le travail
+de bras assis. Sans lui, la moitié de la liste d'exercices n'existe pas.</p>
+
+<p>En comparant des bancs, regardez la charge admise que déclare le fabricant
+et le nombre réel de positions de dossier. Un banc à trois positions et un banc
+à sept ne sont pas le même meuble.</p>
+
+<h2>3. Une charge qui progresse</h2>
+
+<p>La force dépend de pouvoir <strong>monter la charge petit à petit</strong>.
+C'est le critère pour choisir entre une barre à disques, un jeu d'haltères
+réglables ou une machine à charge de disques : la question n'est pas combien
+elle soulève aujourd'hui, mais en combien de paliers elle peut monter.</p>
+
+<p>Une barre hexagonale est, à la maison, la plus reconnaissante : elle permet
+le soulevé de terre avec le dos en meilleure position qu'une barre droite, et
+elle sert aussi pour les shrugs et les fentes.</p>
+
+<h2>4. Élastiques et gilet, quand la routine est là</h2>
+
+<p>Les élastiques règlent ce que le poids libre fait le moins bien —
+abductions, activation du fessier, travail accessoire — et tiennent dans un
+tiroir. Le gilet lesté transforme en entraînement quelque chose que vous
+faisiez déjà : marcher. Aucun des deux n'est un premier achat ; les deux sont
+d'excellents quatrièmes.</p>
+
+<h2>Les trois achats prématurés</h2>
+
+<ul>
+  <li><strong>Une grande machine à un seul exercice.</strong> Elle occupe ce
+  qu'occupent un banc et une barre réunis et fait une seule chose. Elle a du
+  sens quand cet exercice précis est l'axe de votre programme, pas avant.</li>
+  <li><strong>Des haltères fixes par paires.</strong> Ils deviennent trop
+  légers en deux mois et il n'y a pas de palier suivant.</li>
+  <li><strong>Des accessoires avant la charge.</strong> Rouleaux, petites
+  poulies, poignées. Tous utiles, aucun ne change les choses si vous ne pouvez
+  pas encore progresser sur les bases.</li>
+</ul>
+
+<h2>La liste courte</h2>
+
+<ul>
+  <li>Des dalles pour deux mètres carrés.</li>
+  <li>Un banc réglable.</li>
+  <li>Une barre et des disques, ou une charge réglable équivalente.</li>
+  <li>Un jeu d'élastiques.</li>
+</ul>
+
+<p>Cela couvre les deux jours de force de la recommandation publique pendant
+des années. Tout le reste est du réglage fin, et s'achète quand le programme le
+demande.</p>
+""",
+        "fuentes": (
+            "<li>Les 150 minutes hebdomadaires et les deux jours de force sont "
+            "la recommandation d'activité physique publiée par le Gouvernement "
+            "des États-Unis.</li>\n"
+            "<li>Les charges admises et les dimensions de chaque pièce "
+            "proviennent de la documentation du fabricant, et ne sont publiées "
+            "que lorsque cette documentation ne se contredit pas.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-carga",
+        "frase": ("La progression des charges semaine après semaine, les "
+                  "schémas de base et la façon d'ordonner une séance avec ce "
+                  "matériel y sont développées en entier."),
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
