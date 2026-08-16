@@ -195,13 +195,19 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 2. **El nombre de la tienda sigue siendo «VIllumination».** Sale en la pestaña
    del navegador, en el checkout y en cada correo. No se puede cambiar por API:
    es Ajustes → Detalles de la tienda.
-3. **El Diario va por 2 de 9 artículos traducidos.** Los 29 de proveedor ya
-   están enteros en tres lenguas —título, metaetiquetas y cuerpo— y los 11
-   propios también. Lo que queda es el blog: `articulos_en_fr.py` tiene los dos
-   de proteína y `faltan()` enumera los siete restantes. Al traducir, **no se
-   copia el texto del proveedor como versión inglesa**: viene lleno de
-   declaraciones de salud y las devolvería por la puerta de atrás. Se traduce
-   lo que hay escrito aquí.
+3. **El Diario ya está entero en tres lenguas** en el repositorio: los nueve
+   artículos, con sus metaetiquetas y sus cuerpos. Lo que falta es registrarlo
+   en la tienda —van 2 de 9 publicados— con `traducir_blog.py`. Los 29 de
+   proveedor y los 11 propios ya estaban. Al traducir, **no se copia el texto
+   del proveedor como versión inglesa**: viene lleno de declaraciones de salud
+   y las devolvería por la puerta de atrás. Se traduce lo que hay escrito aquí.
+
+   Tres cosas que `articulos_en_fr.py` admite porque los artículos no son
+   todos iguales: `cierre` en vez de `libro` cuando el remate son párrafos
+   propios; `firma` propia para los dos esotéricos, que advierten de que el
+   tarot y la astrología no son ciencia predictiva en vez de hablar de
+   atención sanitaria; y `base="tradicion"` para esos mismos, que es la mezcla
+   que una vez se publicó mal.
 4. **Las políticas de la tienda están mal y no se arreglan por API.** Escriben
    la marca como «VIllumination», están redactadas en inglés bajo títulos
    franceses, y las condiciones del servicio llevan a la vista literales sin

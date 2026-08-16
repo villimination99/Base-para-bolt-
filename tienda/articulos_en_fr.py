@@ -1532,6 +1532,446 @@ continuer à lire des articles est une perte de temps :</p>
 }
 
 
+# Los dos artículos esotéricos firman distinto: no advierten sobre atención
+# sanitaria sino sobre lo que el tarot es y lo que no es.
+FIRMA_TAROT = {
+    "en": ('<p><em>Published by VILLUMINATIONS. The tarot practised here is a '
+           'symbolic language, not a predictive science: nothing said in it '
+           'announces future events or replaces the care of a health '
+           'professional.</em></p>'),
+    "fr": ('<p><em>Publié par VILLUMINATIONS. Le tarot pratiqué ici est un '
+           'langage symbolique, non une science prédictive : rien de ce qui '
+           's\'y dit n\'annonce des faits futurs ni ne remplace le suivi d\'un '
+           'professionnel de santé.</em></p>'),
+}
+
+CUERPOS["que-es-un-arcano-mayor"] = {
+    "en": {
+        "titulo": "What a major arcanum is",
+        "resumen": (
+            "The twenty-two, why the Fool carries a zero, how they differ "
+            "from the minors and what it really means for a card to come out "
+            "reversed."),
+        "meta": (
+            "What a major arcanum is | VILLUMINATIONS",
+            "The twenty-two major arcana, why the Fool carries a zero, the "
+            "difference from the minors and what a reversed card means."),
+        "cuerpo": """
+<p>&laquo;Arcanum&raquo; simply means <em>secret</em>, and in the deck it names
+the cards that belong to no suit. There are twenty-two of them and they form a
+closed sequence handed down in writing for centuries.</p>
+
+<h2>Twenty-two cards, and two decks inside one</h2>
+
+<p>A complete deck has seventy-eight cards split into two very different
+blocks:</p>
+
+<ul>
+  <li>The <strong>minor arcana</strong>, fifty-six cards in four suits with
+  their court figures. They are the structure the ordinary playing deck
+  inherited.</li>
+  <li>The <strong>major arcana</strong>, twenty-two loose cards, numbered and
+  each with a name of its own.</li>
+</ul>
+
+<p>The minors speak of circumstances; the majors, of processes. That is the
+functional difference, and it explains why a major &laquo;weighs&raquo; more in
+a reading: it does not describe an episode, it describes the current the
+episode happens in.</p>
+
+<h2>Why the Fool carries a zero</h2>
+
+<p>It is the system's most famous oddity and it is not a whim. Twenty-one cards
+are numbered from I to XXI; the Fool falls outside that count and is therefore
+given the <strong>zero</strong>, a number that simply did not exist in the old
+decks.</p>
+
+<p>The consequence is that the Fool has no fixed place. It can be read at the
+beginning — what has not yet started — or at the end — what returns to the
+world having travelled through it — and both placements have tradition behind
+them. A system that leaves one piece without a fixed position is saying
+something about itself: the sequence is a journey, not a staircase.</p>
+
+<h2>The sequence as a journey</h2>
+
+<p>Read in order, the twenty-one numbered cards describe a recognisable route:
+first the figures of authority and learning, then the trials and the reversals,
+and at the end the large cards of dissolution and recomposition. You do not
+have to believe anything to see the pattern; it is the same frame that journey
+stories have had since long before the deck existed.</p>
+
+<p>From there comes the habit of grouping them into <strong>three stretches of
+seven</strong>. It is a late reading and not the only one, but it orders the
+memory well.</p>
+
+<h2>What a reversed card means</h2>
+
+<p>A card coming out upside down does not invert its meaning like a minus sign.
+In the tradition it is read as the same content at another intensity or in
+another direction: blocked, still interior, excessive, or already spent.</p>
+
+<p>There are whole schools that use no reversals and read all seventy-eight
+upright. Neither position is the correct one: they are reading conventions, and
+what matters is not mixing them halfway through a spread.</p>
+
+<h2>What this is not</h2>
+
+<p>It is worth saying plainly. The arcana are a <strong>symbolic
+language</strong> in the public domain: a heavily worked vocabulary for naming
+states and processes. They do not announce future events, they diagnose
+nothing, and they do not replace a doctor or a licensed psychologist.</p>
+
+<p>Used as a mirror they work; used as a forecast, they do not. Anyone selling
+you the second is selling you something else.</p>
+""",
+        "fuentes": (
+            "<li>The sequence of the twenty-two arcana, their numbering and "
+            "the reading conventions have been handed down in writing for "
+            "centuries in works in the <strong>public domain</strong>, and "
+            "belong to no one.</li>\n"
+            "<li>The writing, the selection and the order of this article are "
+            "our own work.</li>\n"),
+        "base": "tradicion",
+        "libro": "codice-de-los-arcanos",
+        "frase": ("The twenty-two one by one, with their plate, their "
+                  "classical correspondences and the two opposing reversal "
+                  "conventions, do not fit in an article."),
+        "firma": FIRMA_TAROT,
+    },
+    "fr": {
+        "titulo": "Qu'est-ce qu'un arcane majeur",
+        "resumen": (
+            "Les vingt-deux, pourquoi le Mat porte un zéro, en quoi ils "
+            "diffèrent des mineurs et ce que signifie vraiment qu'une carte "
+            "sorte à l'envers."),
+        "meta": (
+            "Qu'est-ce qu'un arcane majeur | VILLUMINATIONS",
+            "Les vingt-deux arcanes majeurs, pourquoi le Mat porte un zéro, la "
+            "différence avec les mineurs et ce que signifie une carte "
+            "inversée."),
+        "cuerpo": """
+<p>&laquo; Arcane &raquo; signifie simplement <em>secret</em>, et dans le jeu il
+désigne les cartes qui n'appartiennent à aucune couleur. Elles sont vingt-deux
+et forment une séquence fermée transmise par écrit depuis des siècles.</p>
+
+<h2>Vingt-deux cartes et deux jeux dans un seul</h2>
+
+<p>Un jeu complet compte soixante-dix-huit cartes réparties en deux blocs très
+différents :</p>
+
+<ul>
+  <li>Les <strong>arcanes mineurs</strong>, cinquante-six cartes en quatre
+  couleurs avec leurs figures. C'est la structure dont a hérité le jeu de
+  cartes ordinaire.</li>
+  <li>Les <strong>arcanes majeurs</strong>, vingt-deux cartes isolées,
+  numérotées et portant chacune un nom propre.</li>
+</ul>
+
+<p>Les mineurs parlent de circonstances ; les majeurs, de processus. C'est la
+différence fonctionnelle, et elle explique pourquoi un majeur &laquo; pèse
+&raquo; davantage dans un tirage : il ne décrit pas un épisode, il décrit le
+courant dans lequel il se produit.</p>
+
+<h2>Pourquoi le Mat porte un zéro</h2>
+
+<p>C'est la bizarrerie la plus célèbre du système et ce n'est pas un caprice.
+Vingt et une cartes sont numérotées de I à XXI ; le Mat reste hors de ce compte
+et reçoit donc le <strong>zéro</strong>, un nombre qui, dans les jeux anciens,
+n'existait tout simplement pas.</p>
+
+<p>La conséquence est que le Mat n'a pas de place fixe. Il peut se lire au début
+— ce qui n'a pas encore commencé — ou à la fin — ce qui revient au monde après
+l'avoir parcouru — et les deux placements ont de la tradition derrière eux. Un
+système qui laisse une pièce sans position fixe dit quelque chose sur lui-même :
+la séquence est un parcours, pas un escalier.</p>
+
+<h2>La séquence comme parcours</h2>
+
+<p>Lus dans l'ordre, les vingt et un numérotés décrivent un trajet
+reconnaissable : d'abord les figures d'autorité et d'apprentissage, ensuite les
+épreuves et les renversements, et à la fin les grandes cartes de dissolution et
+de recomposition. Il n'est pas nécessaire de croire quoi que ce soit pour voir
+le motif ; c'est la même armature que celle des récits de voyage bien avant que
+le jeu n'existe.</p>
+
+<p>De là vient l'habitude de les grouper en <strong>trois tronçons de
+sept</strong>. C'est une lecture tardive et non la seule, mais elle ordonne bien
+la mémoire.</p>
+
+<h2>Ce que signifie une carte inversée</h2>
+
+<p>Qu'une carte sorte à l'envers n'inverse pas son sens comme un signe moins.
+Dans la tradition, elle se lit comme le même contenu à une autre intensité ou
+dans une autre direction : bloqué, encore intérieur, excessif ou déjà épuisé.</p>
+
+<p>Des écoles entières n'utilisent pas les inversions et lisent les
+soixante-dix-huit toujours à l'endroit. Aucune des deux positions n'est la
+bonne : ce sont des conventions de lecture, et ce qui compte est de ne pas les
+mélanger au milieu d'un tirage.</p>
+
+<h2>Ce que ceci n'est pas</h2>
+
+<p>Autant le dire clairement. Les arcanes sont un <strong>langage
+symbolique</strong> du domaine public : un vocabulaire très travaillé pour
+nommer des états et des processus. Ils n'annoncent pas de faits futurs, ne
+diagnostiquent rien et ne remplacent ni un médecin ni un psychologue agréé.</p>
+
+<p>Utilisés comme miroir, ils fonctionnent ; utilisés comme pronostic, non. Qui
+vous vend le second vous vend autre chose.</p>
+""",
+        "fuentes": (
+            "<li>La séquence des vingt-deux arcanes, leur numérotation et les "
+            "conventions de lecture se transmettent par écrit depuis des "
+            "siècles dans des œuvres du <strong>domaine public</strong>, et "
+            "n'appartiennent à personne.</li>\n"
+            "<li>La rédaction, la sélection et l'ordre de cet article sont un "
+            "travail propre.</li>\n"),
+        "base": "tradicion",
+        "libro": "codice-de-los-arcanos",
+        "frase": ("Les vingt-deux un par un, avec leur planche, leurs "
+                  "correspondances classiques et les deux conventions "
+                  "d'inversion opposées, ne tiennent pas dans un article."),
+        "firma": FIRMA_TAROT,
+    },
+}
+
+
+# La firma del zodiacal dice «astrología» donde la del tarot dice «tarot».
+FIRMA_ASTRO = {
+    "en": ('<p><em>Published by VILLUMINATIONS. The astrology practised here '
+           'is a symbolic language, not a predictive science: nothing said in '
+           'it announces future events or replaces the care of a health '
+           'professional.</em></p>'),
+    "fr": ('<p><em>Publié par VILLUMINATIONS. L\'astrologie pratiquée ici est '
+           'un langage symbolique, non une science prédictive : rien de ce '
+           'qui s\'y dit n\'annonce des faits futurs ni ne remplace le suivi '
+           'd\'un professionnel de santé.</em></p>'),
+}
+
+CUERPOS["que-es-un-decanato"] = {
+    "en": {
+        "titulo": "What a decan is, and why your sign does not describe you",
+        "resumen": (
+            "The thirty degrees of each sign divide into three. That "
+            "ten-degree division explains why so many people do not recognise "
+            "themselves in the general description of their sign."),
+        "meta": (
+            "What a decan is | VILLUMINATIONS",
+            "The thirty-six decans, the two systems of rulership and why the "
+            "general description of a sign fails so often."),
+        "cuerpo": """
+<p>Almost everyone who has read the description of their sign has had the same
+feeling: it is half right. There is a structural reason for that, and it is
+more than two thousand years old.</p>
+
+<h2>Thirty degrees divided into three</h2>
+
+<p>The zodiac circle has 360 degrees shared between twelve signs, so each sign
+occupies <strong>thirty degrees</strong>. Those thirty degrees are not treated
+as one homogeneous block: they divide into three stretches of ten, and each
+stretch is called a <strong>decan</strong>.</p>
+
+<ul>
+  <li>First decan: degrees 0 to 10 of the sign</li>
+  <li>Second decan: degrees 10 to 20</li>
+  <li>Third decan: degrees 20 to 30</li>
+</ul>
+
+<p>Twelve signs times three stretches give <strong>thirty-six decans</strong>.
+And that is the first answer to why the general description fails: someone born
+in the first decan of a sign and someone born in the third share a label and
+little else. Between the two there are twenty degrees, which is more than
+separates many neighbouring signs.</p>
+
+<h2>Each stretch has its ruler</h2>
+
+<p>What turns this into a system rather than a mere division is that each decan
+carries an associated ruling planet. There are <strong>two classical ways of
+assigning it</strong>, and it is worth knowing both exist because sources mix
+one with the other without warning:</p>
+
+<ul>
+  <li><strong>The Chaldean sequence.</strong> The seven traditional planets are
+  run through in a fixed order, decan after decan, all the way round the
+  zodiac. It is a purely sequential mechanism.</li>
+  <li><strong>By triplicity.</strong> The three decans of a sign are shared
+  among the rulers of the three signs of its own element. So the first decan is
+  ruled by the sign itself and the other two by its siblings in element.</li>
+</ul>
+
+<p>The two systems give different results for the same degree. It is nobody's
+mistake: they are different traditions that survived in parallel. What is a
+mistake is using one and citing the authority of the other.</p>
+
+<h2>And there is a finer division still</h2>
+
+<p>Below the decan are the <strong>terms</strong>, sometimes called bounds: a
+division of each sign into five <em>unequal</em> stretches, also assigned to
+planets. It is the finest and most forgotten table of the classical system, and
+the one that appears least on popular astrology sites, precisely because it
+does not reduce to a single sentence.</p>
+
+<p>That the stretches are unequal is the interesting part: it indicates the
+table did not come from a tidy geometric split but from a tradition handed down
+by copying over centuries.</p>
+
+<h2>Why this is not a predictive science</h2>
+
+<p>It is worth saying without hedging, because it changes how everything above
+gets used. Signs, decans and terms are a <strong>symbolic language</strong>: an
+ancient and very finely tuned way of naming temperaments, tensions and cycles.
+They are useful as a vocabulary for looking at yourself, as any well-built
+typology is.</p>
+
+<p>They do not announce future events, they diagnose nothing and they do not
+replace a doctor or a psychologist. Anyone selling you the opposite is selling
+you something else.</p>
+
+<h2>The other reason your sign fails</h2>
+
+<p>Besides the decan there is a second cause, and it is simpler: the popular
+description of a sign refers only to the position of the Sun. That is one datum
+among several. Reducing a whole chart to that single element is like describing
+a book by its first word.</p>
+
+<h3>A note on the ages</h3>
+
+<p>Because the Earth's axis wobbles very slowly, the reference point shifts by
+about one degree every seventy-two years. That is where the so-called
+&laquo;ages&raquo; come from, and where the periodic argument about whether the
+signs &laquo;have moved&raquo; comes from too. The answer depends on which
+zodiac is being used, and both positions are internally consistent.</p>
+""",
+        "fuentes": (
+            "<li>The sequence of the decans, the dignities and the Egyptian "
+            "terms have been handed down in writing for more than two "
+            "millennia in works in the <strong>public domain</strong>, and "
+            "belong to no one.</li>\n"
+            "<li>The precession figures are astronomical and "
+            "verifiable.</li>\n"),
+        "base": "tradicion",
+        "libro": "codice-zodiacal",
+        "frase": ("The complete table of the thirty-six decans with their "
+                  "ruler, the four essential dignities with the exact degree "
+                  "of each exaltation and the sixty Egyptian terms do not fit "
+                  "in an article."),
+        "firma": FIRMA_ASTRO,
+    },
+    "fr": {
+        "titulo": "Qu'est-ce qu'un décan, et pourquoi votre signe ne vous dit pas",
+        "resumen": (
+            "Les trente degrés de chaque signe se divisent en trois. Cette "
+            "division de dix degrés explique pourquoi tant de gens ne se "
+            "reconnaissent pas dans la description générale de leur signe."),
+        "meta": (
+            "Qu'est-ce qu'un décan | VILLUMINATIONS",
+            "Les trente-six décans, les deux systèmes de maîtrise et pourquoi "
+            "la description générale d'un signe échoue si souvent."),
+        "cuerpo": """
+<p>Presque tous ceux qui ont lu la description de leur signe ont eu la même
+impression : elle tombe juste à moitié. Il y a une raison structurelle à cela,
+et elle a plus de deux mille ans.</p>
+
+<h2>Trente degrés divisés en trois</h2>
+
+<p>Le cercle du zodiaque compte 360 degrés répartis entre douze signes, donc
+chaque signe occupe <strong>trente degrés</strong>. Ces trente degrés ne sont
+pas traités comme un bloc homogène : ils se divisent en trois tronçons de dix,
+et chaque tronçon s'appelle un <strong>décan</strong>.</p>
+
+<ul>
+  <li>Premier décan : degrés 0 à 10 du signe</li>
+  <li>Deuxième décan : degrés 10 à 20</li>
+  <li>Troisième décan : degrés 20 à 30</li>
+</ul>
+
+<p>Douze signes par trois tronçons donnent <strong>trente-six décans</strong>.
+Et voilà la première réponse à la question de savoir pourquoi la description
+générale échoue : quelqu'un né dans le premier décan d'un signe et quelqu'un né
+dans le troisième partagent une étiquette et pas grand-chose d'autre. Entre les
+deux il y a vingt degrés, soit plus que ce qui sépare bien des signes
+voisins.</p>
+
+<h2>Chaque tronçon a son maître</h2>
+
+<p>Ce qui fait de cela un système et non une simple division, c'est que chaque
+décan est associé à une planète maîtresse. Il existe <strong>deux façons
+classiques de l'attribuer</strong>, et il vaut mieux savoir que les deux
+existent car les sources mélangent l'une et l'autre sans prévenir :</p>
+
+<ul>
+  <li><strong>La séquence chaldéenne.</strong> Les sept planètes
+  traditionnelles sont parcourues dans un ordre fixe, décan après décan, sur
+  tout le tour du zodiaque. C'est un mécanisme purement séquentiel.</li>
+  <li><strong>Par triplicité.</strong> Les trois décans d'un signe se
+  répartissent entre les maîtres des trois signes de son propre élément. Ainsi
+  le premier décan est régi par le signe lui-même et les deux autres par ses
+  frères d'élément.</li>
+</ul>
+
+<p>Les deux systèmes donnent des résultats différents pour le même degré. Ce
+n'est l'erreur de personne : ce sont des traditions différentes qui ont survécu
+en parallèle. Ce qui est une erreur, c'est d'employer l'un et de citer
+l'autorité de l'autre.</p>
+
+<h2>Et il y a une division plus fine encore</h2>
+
+<p>Sous le décan se trouvent les <strong>termes</strong>, parfois appelés
+bornes : une division de chaque signe en cinq tronçons <em>inégaux</em>,
+attribués eux aussi à des planètes. C'est la table la plus fine et la plus
+oubliée du système classique, et celle qui apparaît le moins sur les sites
+d'astrologie populaire, précisément parce qu'elle ne se résume pas en une
+phrase.</p>
+
+<p>Que les tronçons soient inégaux est ce qu'il y a d'intéressant : cela indique
+que la table n'est pas sortie d'un partage géométrique élégant, mais d'une
+tradition transmise par copie pendant des siècles.</p>
+
+<h2>Pourquoi ce n'est pas une science prédictive</h2>
+
+<p>Autant le dire sans détour, car cela change la façon d'utiliser tout ce qui
+précède. Les signes, les décans et les termes sont un <strong>langage
+symbolique</strong> : une manière ancienne et très affinée de nommer des
+tempéraments, des tensions et des cycles. Ils sont utiles comme vocabulaire
+pour se regarder, comme l'est toute typologie bien construite.</p>
+
+<p>Ils n'annoncent pas de faits futurs, ne diagnostiquent rien et ne remplacent
+ni un médecin ni un psychologue. Qui vous vend le contraire vous vend autre
+chose.</p>
+
+<h2>L'autre raison pour laquelle votre signe échoue</h2>
+
+<p>Outre le décan il y a une seconde cause, plus simple : la description
+populaire d'un signe ne renvoie qu'à la position du Soleil. C'est une donnée
+parmi plusieurs. Réduire un thème entier à ce seul élément revient à décrire un
+livre par son premier mot.</p>
+
+<h3>Une note sur les ères</h3>
+
+<p>Comme l'axe de la Terre oscille très lentement, le point de référence se
+déplace d'environ un degré tous les soixante-douze ans. De là viennent les
+&laquo; ères &raquo;, et de là vient aussi la discussion périodique sur le fait
+de savoir si les signes &laquo; ont bougé &raquo;. La réponse dépend du zodiaque
+employé, et les deux positions sont cohérentes avec elles-mêmes.</p>
+""",
+        "fuentes": (
+            "<li>La séquence des décans, les dignités et les termes égyptiens "
+            "se transmettent par écrit depuis plus de deux millénaires dans "
+            "des œuvres du <strong>domaine public</strong>, et n'appartiennent "
+            "à personne.</li>\n"
+            "<li>Les chiffres de précession sont astronomiques et "
+            "vérifiables.</li>\n"),
+        "base": "tradicion",
+        "libro": "codice-zodiacal",
+        "frase": ("La table complète des trente-six décans avec leur maître, "
+                  "les quatre dignités essentielles avec le degré exact de "
+                  "chaque exaltation et les soixante termes égyptiens ne "
+                  "tiennent pas dans un article."),
+        "firma": FIRMA_ASTRO,
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
@@ -1822,9 +2262,14 @@ def cuerpo(handle: str, lengua: str) -> str:
         remate = a["cierre"]
     else:
         remate = etiqueta(a["libro"], lengua, a["frase"])
+    # La firma normal advierte de que el texto no sustituye a un profesional
+    # sanitario. Los artículos esotéricos firman otra cosa —que el tarot es un
+    # lenguaje simbólico y no una ciencia predictiva— porque prometer lo
+    # segundo es exactamente lo que no se hace aquí.
+    firma = a.get("firma", FIRMA)[lengua] if "firma" in a else FIRMA[lengua]
     compuesto = (a["cuerpo"].strip() + "\n\n"
                  + fuentes(a["fuentes"], lengua, a["base"])
-                 + remate + FIRMA[lengua])
+                 + remate + firma)
     return _descolgar(compuesto, lengua)
 
 
