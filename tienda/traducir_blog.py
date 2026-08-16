@@ -81,12 +81,18 @@ def pedir(consulta: str, variables: dict) -> dict:
     return datos["data"]
 
 
+# `blogByHandle` ya no existe en la API 2025-01: se quitó del QueryRoot y
+# devuelve «Field 'blogByHandle' doesn't exist». Se busca con `blogs(query:)`,
+# que es lo que queda. Se descubrió ejecutándolo, no leyendo la referencia.
 ARTICULOS = """
 query($handle: String!, $cursor: String) {
-  blogByHandle(handle: $handle) {
-    articles(first: 250, after: $cursor) {
-      nodes { id handle }
-      pageInfo { hasNextPage endCursor }
+  blogs(first: 1, query: $handle) {
+    nodes {
+      handle
+      articles(first: 250, after: $cursor) {
+        nodes { id handle }
+        pageInfo { hasNextPage endCursor }
+      }
     }
   }
 }"""
@@ -110,10 +116,11 @@ def por_handle() -> dict:
     """handle del artículo -> gid."""
     mapa, cursor = {}, None
     while True:
-        blog = pedir(ARTICULOS, {"handle": BLOG, "cursor": cursor})
-        if not blog.get("blogByHandle"):
+        blog = pedir(ARTICULOS, {"handle": f"handle:{BLOG}", "cursor": cursor})
+        nodos = blog.get("blogs", {}).get("nodes") or []
+        if not nodos:
             raise SystemExit(f"  No existe el blog /{BLOG} en la tienda.")
-        d = blog["blogByHandle"]["articles"]
+        d = nodos[0]["articles"]
         mapa.update({n["handle"]: n["id"] for n in d["nodes"]})
         if not d["pageInfo"]["hasNextPage"]:
             return mapa

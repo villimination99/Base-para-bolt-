@@ -54,6 +54,7 @@ PAGINA = {
     "data-sharing-opt-out": "gid://shopify/Page/93968793649",
     "vi-p": "gid://shopify/Page/94354800689",
     "como-se-hace": "gid://shopify/Page/94564122673",
+    "preguntas": "gid://shopify/Page/94635687985",
 }
 BLOG_DIARIO = "gid://shopify/Blog/82382913585"
 POLITICA = {
@@ -97,6 +98,9 @@ MENUS = {
         "titulo": "Menú del pie de página",
         "entradas": [
             ("Cómo se hace lo que vendemos", "PAGE", PAGINA["como-se-hace"], []),
+            # La FAQ contesta antes de comprar, que es más barato que
+            # devolver después. Sin entrada de menú no la encuentra nadie.
+            ("Preguntas frecuentes", "PAGE", PAGINA["preguntas"], []),
             ("Diario", "BLOG", BLOG_DIARIO, []),
             ("Contacto", "PAGE", PAGINA["contact"], []),
             ("Buscar", "SEARCH", None, []),
@@ -128,6 +132,8 @@ TRADUCCION = {
     "Cómo se hace lo que vendemos": (
         "How we make what we sell",
         "Comment nous fabriquons ce que nous vendons"),
+    "Preguntas frecuentes": ("Frequently asked questions",
+                             "Questions fréquentes"),
     "Contacto": ("Contact", "Contact"),
     "Buscar": ("Search", "Recherche"),
     "Política de privacidad": ("Privacy policy", "Politique de confidentialité"),

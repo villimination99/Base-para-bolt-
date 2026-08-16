@@ -57,6 +57,7 @@ python3 tienda/lecturas.py   # qué ficha ofrece qué artículo del Diario
 python3 tienda/correos.py    # los cinco correos automáticos
 python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
+python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 python3 auditar.py           # lo que solo se ve mirando todas las superficies juntas
@@ -168,6 +169,19 @@ Lo que costó descubrir y no está en ningún sitio evidente:
   handle traducido de cada una no consta en el repositorio**: hay que
   preguntárselo a la tienda antes de escribir un enlace a una colección desde
   un texto traducido. `articulos_en_fr.COLECCION` los tiene a `None` por eso.
+- **`blogByHandle` ya no existe** en el QueryRoot de 2025-01: devuelve «Field
+  'blogByHandle' doesn't exist». Se busca con `blogs(first: 1, query:
+  "handle:diario")`. Estaba escrito en `traducir_blog.py` y habría fallado en
+  la primera pasada real.
+- **Reescribir un menú vuelve a crear sus enlaces con identificadores nuevos**,
+  y las traducciones se quedan colgando de los viejos. Hay que volver a pedir
+  los `LINK` y registrarlas después de cada `menuUpdate`. Se comprobó: tras
+  añadir la FAQ al pie, los once enlaces del pie salían con
+  `translations: []`.
+- **El cuerpo de una página no se puede actualizar por el conector si es
+  grande.** `pageUpdate` exige mandar el cuerpo entero, y el de VI.P son
+  437 KB: no caben en una llamada. Se arregla desde el panel o con acceso
+  directo a la API.
 - Las claves traducibles de un artículo (`title`, `body_html`, `summary_html`,
   `meta_title`, `meta_description`) **las dice la tienda** en
   `translatableContent`. `traducir_blog.py` pide la lista y solo manda las que
