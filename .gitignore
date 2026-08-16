@@ -30,3 +30,7 @@ graphify-out/
 # `python3 ropa/tools/empaquetar.py`. Los SVG sí viajan: son el original.
 ropa/dist/png/
 ropa/dist/*.zip
+
+# Dependencias de Node. package.json sí viaja; los 12 MB de node_modules se
+# reinstalan con `npm install` y no aportan historia.
+node_modules/
