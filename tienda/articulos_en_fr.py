@@ -1046,6 +1046,253 @@ demande.</p>
 }
 
 
+CUERPOS["como-se-lee-una-etiqueta-nutricional"] = {
+    "en": {
+        "titulo": "How to read a nutrition label",
+        "resumen": (
+            "The percentage almost nobody knows how to read, the 5 and 20 "
+            "rule, the legal tolerance that lets the figure be inexact, and "
+            "the three commonest tricks."),
+        "meta": (
+            "How to read a nutrition label | VILLUMINATIONS",
+            "The 5 and 20 rule, the percent daily value, the legal tolerance "
+            "and why «0 g trans fat» may not be zero."),
+        "cuerpo": """
+<p>A nutrition label is not written so you can understand it at a glance: it is
+written to comply with a regulation. That makes it reliable and opaque at the
+same time. These are the four things you need in order to read one in ten
+seconds.</p>
+
+<h2>1. The serving rules over everything else</h2>
+
+<p>Every figure on the panel refers to <strong>one serving</strong>, not to the
+package. It is the commonest mistake and the most expensive: a bag that looks
+like a single portion can declare two and a half servings, and then the
+calories you just read have to be multiplied by two and a half.</p>
+
+<p>Before looking at anything else, read two lines: <em>serving size</em> and
+<em>servings per container</em>. If they do not match what you are about to
+eat, the rest of the panel does not say what you think it says.</p>
+
+<h2>2. The percentage refers to a person who is not you</h2>
+
+<p>The <strong>percent daily value</strong> is calculated against a reference
+diet of <strong>2,000 kcal</strong>. It is not your diet: it is a convention so
+that labels can be compared with one another. If you eat 2,600 kcal, all those
+percentages run high for you; if you eat 1,600, they run short.</p>
+
+<p>It is for comparing two products, not for planning your day.</p>
+
+<h2>3. The 5 and 20 rule</h2>
+
+<p>It is the shortcut published by the labelling authority itself, and it works
+without a calculator:</p>
+
+<ul>
+  <li><strong>5 % or less</strong> of the daily value in a nutrient: that
+  product is <em>low</em> in it.</li>
+  <li><strong>20 % or more</strong>: it is <em>high</em> in it.</li>
+</ul>
+
+<p>What makes it useful is applying it in both directions. You want 20 % or
+more in fibre, calcium, iron or potassium. You want 5 % or less in saturated
+fat, sodium and added sugars. With two products in your hands, that comparison
+takes five seconds and is right almost every time.</p>
+
+<h2>4. The printed figure has legal leeway</h2>
+
+<p>Here is what almost nobody knows. The figure on the label <strong>is not
+exact, and it does not have to be</strong>: the regulation allows a tolerance,
+and it allows it in two different directions depending on the nutrient.</p>
+
+<ul>
+  <li>For nutrients you want to get — added vitamins and minerals, protein,
+  fibre — the product must contain <strong>at least</strong> what is declared.
+  It may have more.</li>
+  <li>For those you want to limit — calories, sugars, total fat, saturated fat,
+  sodium — the product <strong>may not exceed</strong> what is declared beyond
+  a margin. It may have less.</li>
+</ul>
+
+<p>In other words: the manufacturer has an incentive to declare protein on the
+low side and sodium on the high side, because that way it complies comfortably
+in both directions. The label is honest and is still giving you the scenario
+that suits it best.</p>
+
+<h3>The rounding trick</h3>
+
+<p>When an amount falls below a certain threshold, the regulation allows it to
+be declared as zero. That is why products exist that advertise <strong>&laquo;0 g
+trans fat&raquo;</strong> and carry partially hydrogenated oil in the ingredient
+list. Each serving has little; three servings no longer do.</p>
+
+<p>The practical rule: <strong>when the panel says zero and the ingredient list
+says otherwise, the ingredient list wins.</strong></p>
+
+<h2>The ingredient list, in order of weight</h2>
+
+<p>Ingredients are ordered from most to least by amount. That turns the list
+into a bar chart without bars: if sugar appears third, there is more sugar than
+everything that comes after it put together.</p>
+
+<p>The trick to distrust is <strong>splitting the sugar</strong>: a product
+carrying glucose syrup, brown sugar, dextrose and juice concentrate spreads the
+same thing across four names, so none of them climbs to the top places. Added
+together they would be first.</p>
+
+<h2>What a claim can and cannot say</h2>
+
+<p>&laquo;No added sugar&raquo; does not mean no sugar: apple juice has no added
+sugar and is loaded with its own. &laquo;Light&raquo; may refer to the colour.
+&laquo;Natural&raquo; has, in practice, no definition that obliges anything.</p>
+
+<p>The claims that are regulated — those linking a nutrient to a function of the
+body — have a public register where you can look up which were approved and,
+more interestingly, <strong>which were applied for and rejected</strong>. That
+second list is the one that really shows what is demonstrated and what is
+not.</p>
+""",
+        "fuentes": (
+            "<li><strong>FDA</strong> — Nutrition facts panel, the 5 and "
+            "20 rule, tolerances and rounding rules.</li>\n"
+            "<li><strong>ODS · NIH</strong> — Dietary reference "
+            "intakes.</li>\n"
+            "<li><strong>European register of nutrition and health "
+            "claims</strong> — approved and rejected.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-mesa",
+        "frase": ("The detail — the fine print of the reference tables, the "
+                  "nineteen micronutrients with their recommendation and "
+                  "upper limit, and the approved claims in their official "
+                  "wording — needs more room."),
+    },
+    "fr": {
+        "titulo": "Comment lire une étiquette nutritionnelle",
+        "resumen": (
+            "Le pourcentage que presque personne ne sait interpréter, la règle "
+            "du 5 et du 20, la tolérance légale qui permet au chiffre de ne "
+            "pas être exact et les trois pièges les plus fréquents."),
+        "meta": (
+            "Comment lire une étiquette nutritionnelle | VILLUMINATIONS",
+            "La règle du 5 et du 20, le pourcentage de valeur quotidienne, la "
+            "tolérance légale et pourquoi « 0 g de gras trans » peut ne pas "
+            "être zéro."),
+        "cuerpo": """
+<p>Une étiquette nutritionnelle n'est pas écrite pour être comprise d'un coup
+d'œil : elle est écrite pour respecter une norme. Cela la rend fiable et opaque
+à la fois. Voici les quatre choses à savoir pour la lire en dix secondes.</p>
+
+<h2>1. La portion commande sur tout le reste</h2>
+
+<p>Tous les chiffres du panneau se rapportent à <strong>une portion</strong>,
+non à l'emballage. C'est l'erreur la plus courante et la plus coûteuse : un
+sachet qui semble individuel peut déclarer deux portions et demie, et alors les
+calories que vous venez de lire doivent être multipliées par deux et demi.</p>
+
+<p>Avant de regarder quoi que ce soit, lisez deux lignes : <em>taille de la
+portion</em> et <em>portions par emballage</em>. Si elles ne correspondent pas à
+ce que vous allez manger, le reste du panneau ne dit pas ce que vous croyez.</p>
+
+<h2>2. Le pourcentage se rapporte à une personne qui n'est pas vous</h2>
+
+<p>Le <strong>pourcentage de valeur quotidienne</strong> est calculé sur un
+régime de référence de <strong>2 000 kcal</strong>. Ce n'est pas votre régime :
+c'est une convention pour que les étiquettes puissent être comparées entre
+elles. Si vous mangez 2 600 kcal, tous ces pourcentages sont trop hauts pour
+vous ; si vous mangez 1 600, trop bas.</p>
+
+<p>Cela sert à comparer deux produits, pas à planifier votre journée.</p>
+
+<h2>3. La règle du 5 et du 20</h2>
+
+<p>C'est le raccourci que publie l'autorité d'étiquetage elle-même, et il
+fonctionne sans calculatrice :</p>
+
+<ul>
+  <li><strong>5 % ou moins</strong> de la valeur quotidienne pour un nutriment :
+  ce produit en est <em>pauvre</em>.</li>
+  <li><strong>20 % ou plus</strong> : il en est <em>riche</em>.</li>
+</ul>
+
+<p>L'utile est de l'appliquer dans les deux sens. Vous voulez 20 % ou plus en
+fibres, calcium, fer ou potassium. Vous voulez 5 % ou moins en gras saturés,
+sodium et sucres ajoutés. Avec deux produits en main, cette comparaison se fait
+en cinq secondes et tombe juste presque à tous les coups.</p>
+
+<h2>4. Le chiffre imprimé a une marge légale</h2>
+
+<p>Voici ce que presque personne ne sait. Le chiffre de l'étiquette <strong>n'est
+pas exact, et il n'a pas à l'être</strong> : la norme admet une tolérance, et
+elle l'admet dans deux directions distinctes selon le nutriment.</p>
+
+<ul>
+  <li>Pour les nutriments qu'il vaut mieux avoir — vitamines et minéraux
+  ajoutés, protéines, fibres — le produit doit contenir <strong>au
+  moins</strong> ce qui est déclaré. Il peut en avoir davantage.</li>
+  <li>Pour ceux qu'il vaut mieux limiter — calories, sucres, matières grasses
+  totales, gras saturés, sodium — le produit <strong>ne peut pas
+  dépasser</strong> ce qui est déclaré au-delà d'une marge. Il peut en avoir
+  moins.</li>
+</ul>
+
+<p>Autrement dit : le fabricant a intérêt à déclarer les protéines par le bas et
+le sodium par le haut, car il respecte ainsi la norme avec de la marge dans les
+deux sens. L'étiquette est honnête et vous donne quand même le scénario qui
+l'arrange le plus.</p>
+
+<h3>Le piège de l'arrondi</h3>
+
+<p>Quand une quantité passe sous un certain seuil, la norme permet de la
+déclarer à zéro. C'est pourquoi il existe des produits qui annoncent
+<strong>« 0 g de gras trans »</strong> et portent de l'huile partiellement
+hydrogénée dans la liste des ingrédients. Chaque portion en a peu ; trois
+portions, non.</p>
+
+<p>La règle pratique : <strong>quand le panneau dit zéro et que la liste des
+ingrédients dit le contraire, c'est la liste des ingrédients qui gagne.</strong></p>
+
+<h2>La liste des ingrédients, par ordre de poids</h2>
+
+<p>Les ingrédients sont classés du plus au moins abondant. Cela transforme la
+liste en graphique à barres sans barres : si le sucre apparaît en troisième
+position, il y a plus de sucre que tout ce qui vient après réuni.</p>
+
+<p>L'astuce dont il faut se méfier est la <strong>division du sucre</strong> :
+un produit contenant sirop de glucose, sucre brun, dextrose et concentré de jus
+répartit la même chose entre quatre noms, et ainsi aucun ne monte aux premières
+places. Additionnés, ils seraient premiers.</p>
+
+<h2>Ce qu'une allégation peut dire et ne peut pas dire</h2>
+
+<p>« Sans sucre ajouté » ne veut pas dire sans sucre : un jus de pomme n'a pas
+de sucre ajouté et est chargé du sien. « Léger » peut se rapporter à la
+couleur. « Naturel » n'a, en pratique, aucune définition qui oblige à quoi que
+ce soit.</p>
+
+<p>Les allégations qui, elles, sont encadrées — celles qui relient un nutriment
+à une fonction de l'organisme — disposent d'un registre public où l'on peut
+consulter lesquelles ont été approuvées et, plus intéressant, <strong>lesquelles
+ont été demandées et rejetées</strong>. Cette seconde liste est celle qui montre
+vraiment ce qui est démontré et ce qui ne l'est pas.</p>
+""",
+        "fuentes": (
+            "<li><strong>FDA</strong> — Panneau d'information "
+            "nutritionnelle, règle du 5 et du 20, tolérances et règles "
+            "d'arrondi.</li>\n"
+            "<li><strong>ODS · NIH</strong> — Apports diététiques de "
+            "référence.</li>\n"
+            "<li><strong>Registre européen des allégations nutritionnelles et "
+            "de santé</strong> — approuvées et rejetées.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-mesa",
+        "frase": ("Le détail — les petits caractères des tables de référence, "
+                  "les dix-neuf micronutriments avec leur recommandation et "
+                  "leur limite supérieure, et les allégations approuvées dans "
+                  "leur rédaction officielle — demande plus de place."),
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
