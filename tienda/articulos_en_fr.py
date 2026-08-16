@@ -628,14 +628,278 @@ def _descolgar(texto: str, lengua: str) -> str:
         return dentro
     return _ENLACE_DIARIO.sub(uno, texto)
 
+CUERPOS["que-suplementos-tienen-evidencia"] = {
+    "en": {
+        "titulo": "Which supplements have evidence and which do not",
+        "resumen": (
+            "The few that have passed the test, the many that have not, and "
+            "the fact about how they are regulated that changes how you buy "
+            "them."),
+        "meta": (
+            "Which supplements have evidence | VILLUMINATIONS",
+            "Creatine, caffeine, protein and the ones that fall short. How "
+            "supplements are really regulated and what seal to look for if "
+            "you compete."),
+        "cuerpo": """
+<p>Before the list, the fact that reorders everything else.</p>
+
+<h2>A supplement is not approved before it goes on sale</h2>
+
+<p>Unlike a medicine, a food supplement <strong>does not go through a prior
+authorisation</strong> that verifies it does what it says. The manufacturer is
+responsible for the product being safe and for the label not misleading, and
+the authority acts mostly <em>afterwards</em>, if something goes wrong.</p>
+
+<p>That does not mean supplements are useless or dangerous. It means the phrase
+&laquo;it is on sale&raquo; carries no information about whether it works. The
+evidence has to be looked at separately, product by product.</p>
+
+<h2>The ones that have passed the test</h2>
+
+<h3>Creatine monohydrate</h3>
+<p>It is the most studied sports supplement there is, by a wide margin and by
+many years. It is researched in the range of <strong>3 to 5 grams a
+day</strong>. It is also one of the cheapest, which says a fair amount about
+the relationship between price and evidence in this market.</p>
+
+<h3>Caffeine</h3>
+<p>A recognised ergogenic aid, usually studied in the range of <strong>3 to
+6 mg per kilo of body weight</strong> taken between half an hour and an hour
+before. Going above that does not improve the effect and does worsen that
+night's sleep — which, if you have read the article on rest, is paying on one
+side what you gain on the other.</p>
+
+<h3>Protein powder</h3>
+<p>Here it is worth being exact: protein powder <strong>is not an active
+compound, it is convenient food</strong>. What has evidence is reaching the
+day's total protein; the powder is a practical way of getting there, not a
+different route. If you already get there by eating, it adds nothing.</p>
+
+<h3>Beta-alanine and citrulline malate</h3>
+<p>Real but modest effects, and in fairly specific kinds of effort. They are
+not at the level of the three above and they are not the first place to
+spend.</p>
+
+<h2>The ones that fall short</h2>
+
+<p>This list is longer than the previous one. The usual case is not that a
+supplement has been <em>refuted</em>, but that the studies supporting it are
+small, in animals, or at doses nothing like the ones in the tub.</p>
+
+<p>Three signs you are looking at one of those:</p>
+
+<ul>
+  <li><strong>The dose in the tub is not the dose in the study.</strong> It is
+  the commonest trick. Serious research is cited, done with an amount the
+  product does not come close to carrying.</li>
+  <li><strong>A proprietary blend with no amounts.</strong> If the label says
+  &laquo;patented complex&raquo; and lists twelve ingredients without saying
+  how much of each, it cannot be compared with anything. That is the
+  point.</li>
+  <li><strong>It promises several things at once.</strong> Energy, focus, fat
+  burning and better sleep are not the same mechanism.</li>
+</ul>
+
+<h3>The case of BCAAs</h3>
+<p>They deserve a separate mention because they sell a lot. If your protein
+intake for the day is already adequate, branched-chain amino acids on their
+own add little: you are already taking them inside the complete protein.</p>
+
+<h2>The hierarchy, and this is the important part</h2>
+
+<p>The order in which things move the result, from most to least:</p>
+
+<ol>
+  <li>Total calories and the day's protein.</li>
+  <li>Consistent training, with progression.</li>
+  <li>Enough sleep.</li>
+  <li><strong>And then, a long way after, supplements.</strong></li>
+</ol>
+
+<p>A supplement on top of a broken base fixes nothing. The honest way to put it
+is that supplements are the final one per cent, and they only make sense once
+the other ninety-nine is already in place.</p>
+
+<h2>If you compete, check the seal</h2>
+
+<p>A product can be contaminated with undeclared substances without the
+manufacturer intending it. For anyone subject to anti-doping controls, the only
+practical protection is a <strong>third-party verification</strong> programme
+that tests batch by batch. The seal goes on the packaging and can be checked
+against the programme's register.</p>
+
+<p>And a general warning: <strong>if you take medication, are pregnant or have
+a medical condition, ask first</strong>. Interactions exist and some of them
+are serious.</p>
+""",
+        "fuentes": (
+            "<li><strong>ODS \u00b7 NIH</strong> \u2014 Fact sheets on dietary "
+            "supplements and their regulatory framework.</li>\n"
+            "<li><strong>FDA</strong> \u2014 The regime for food supplements: "
+            "manufacturer responsibility and the absence of prior "
+            "authorisation.</li>\n"
+            "<li><strong>European register of health claims</strong> \u2014 what "
+            "was approved and what was rejected.</li>\n"),
+        "base": "federal",
+        "cierre": (
+            "<p><strong>What we sell and what we say.</strong> This shop sells "
+            "supplements, so it is worth being clear: this article describes "
+            "what the public evidence says about certain substances, not what "
+            "any particular tub does. Our product pages promise no health "
+            "effects, and that is not modesty.</p>\n"
+            "<p>The <a href=\"/en/products/pro-definicion-volumen\">supplement "
+            "guide in the Pro tier</a> works this through with the full "
+            "hierarchy, the meta-analysis dose criterion and a monthly budget "
+            "by level.</p>"),
+    },
+    "fr": {
+        "titulo": "Quels compl\u00e9ments ont des preuves et lesquels non",
+        "resumen": (
+            "Les quelques-uns qui ont pass\u00e9 l'\u00e9preuve, les nombreux qui ne "
+            "l'ont pas pass\u00e9e, et le fait sur leur encadrement qui change la "
+            "fa\u00e7on de les acheter."),
+        "meta": (
+            "Quels compl\u00e9ments ont des preuves | VILLUMINATIONS",
+            "Cr\u00e9atine, caf\u00e9ine, prot\u00e9ines et ceux qui ne suivent pas. Comment "
+            "les compl\u00e9ments sont vraiment encadr\u00e9s et quel sceau regarder si "
+            "vous concourez."),
+        "cuerpo": """
+<p>Avant la liste, le fait qui remet tout le reste en ordre.</p>
+
+<h2>Un compl\u00e9ment n'est pas approuv\u00e9 avant d'\u00eatre vendu</h2>
+
+<p>Contrairement \u00e0 un m\u00e9dicament, un compl\u00e9ment alimentaire <strong>ne passe
+pas par une autorisation pr\u00e9alable</strong> v\u00e9rifiant qu'il fait ce qu'il
+annonce. Le fabricant est responsable de la s\u00e9curit\u00e9 de son produit et de
+l'honn\u00eatet\u00e9 de l'\u00e9tiquette, et l'autorit\u00e9 intervient surtout <em>apr\u00e8s</em>,
+si quelque chose tourne mal.</p>
+
+<p>Cela ne veut pas dire qu'ils sont inutiles ni dangereux. Cela veut dire que
+la phrase &laquo; c'est en vente &raquo; n'apporte aucune information sur son
+efficacit\u00e9. Il faut regarder les preuves s\u00e9par\u00e9ment, produit par produit.</p>
+
+<h2>Ceux qui ont pass\u00e9 l'\u00e9preuve</h2>
+
+<h3>Cr\u00e9atine monohydrate</h3>
+<p>C'est le compl\u00e9ment sportif le plus \u00e9tudi\u00e9 qui existe, de loin et avec
+beaucoup d'ann\u00e9es d'avance. Il est \u00e9tudi\u00e9 dans une fourchette de <strong>3 \u00e0
+5 grammes par jour</strong>. C'est aussi l'un des moins chers, ce qui en dit
+long sur le rapport entre le prix et les preuves sur ce march\u00e9.</p>
+
+<h3>Caf\u00e9ine</h3>
+<p>Aide ergog\u00e9nique reconnue, \u00e9tudi\u00e9e habituellement dans une fourchette de
+<strong>3 \u00e0 6 mg par kilo de poids</strong>, prise entre une demi-heure et une
+heure avant. Monter au-dessus n'am\u00e9liore pas l'effet et d\u00e9grade le sommeil de
+la nuit \u2014 ce qui, si vous avez lu l'article sur le repos, revient \u00e0 payer d'un
+c\u00f4t\u00e9 ce que l'on gagne de l'autre.</p>
+
+<h3>Prot\u00e9ines en poudre</h3>
+<p>Ici il faut \u00eatre exact : la prot\u00e9ine en poudre <strong>n'est pas un compos\u00e9
+actif, c'est de la nourriture commode</strong>. Ce qui a des preuves, c'est
+d'atteindre le total de prot\u00e9ines de la journ\u00e9e ; la poudre est une fa\u00e7on
+pratique d'y arriver, pas une autre voie. Si vous y arrivez d\u00e9j\u00e0 en mangeant,
+elle n'ajoute rien.</p>
+
+<h3>B\u00eata-alanine et citrulline malate</h3>
+<p>Des effets r\u00e9els mais modestes, et sur des types d'effort assez pr\u00e9cis. Ils
+ne sont pas au niveau des trois pr\u00e9c\u00e9dents et ce n'est pas le premier endroit
+o\u00f9 d\u00e9penser.</p>
+
+<h2>Ceux qui ne suivent pas</h2>
+
+<p>La liste est plus longue que la pr\u00e9c\u00e9dente. Le cas habituel n'est pas qu'un
+compl\u00e9ment soit <em>r\u00e9fut\u00e9</em>, mais que les \u00e9tudes qui le soutiennent soient
+petites, faites sur des animaux, ou \u00e0 des doses qui ne ressemblent pas \u00e0
+celles du pot.</p>
+
+<p>Trois signes que vous \u00eates devant l'un de ceux-l\u00e0 :</p>
+
+<ul>
+  <li><strong>La dose du pot n'est pas celle de l'\u00e9tude.</strong> C'est le
+  pi\u00e8ge le plus courant. On cite une recherche s\u00e9rieuse men\u00e9e avec une
+  quantit\u00e9 que le produit est loin de contenir.</li>
+  <li><strong>M\u00e9lange maison sans quantit\u00e9s.</strong> Si l'\u00e9tiquette annonce
+  un &laquo; complexe brevet\u00e9 &raquo; et liste douze ingr\u00e9dients sans dire
+  combien il y a de chacun, il ne peut \u00eatre compar\u00e9 \u00e0 rien. C'est le
+  but.</li>
+  <li><strong>Il promet plusieurs choses \u00e0 la fois.</strong> \u00c9nergie,
+  concentration, perte de gras et meilleur sommeil ne sont pas le m\u00eame
+  m\u00e9canisme.</li>
+</ul>
+
+<h3>Le cas des BCAA</h3>
+<p>Ils m\u00e9ritent une mention \u00e0 part parce qu'ils se vendent beaucoup. Si votre
+apport en prot\u00e9ines de la journ\u00e9e est d\u00e9j\u00e0 suffisant, les acides amin\u00e9s
+ramifi\u00e9s pris \u00e0 part ajoutent peu : vous les prenez d\u00e9j\u00e0 dans la prot\u00e9ine
+compl\u00e8te.</p>
+
+<h2>La hi\u00e9rarchie, et c'est l\u00e0 l'essentiel</h2>
+
+<p>L'ordre dans lequel les choses changent le r\u00e9sultat, du plus au moins :</p>
+
+<ol>
+  <li>Calories totales et prot\u00e9ines de la journ\u00e9e.</li>
+  <li>Entra\u00eenement constant, avec progression.</li>
+  <li>Sommeil suffisant.</li>
+  <li><strong>Et ensuite, bien apr\u00e8s, les compl\u00e9ments.</strong></li>
+</ol>
+
+<p>Un compl\u00e9ment pos\u00e9 sur une base cass\u00e9e ne r\u00e9pare rien. La formule honn\u00eate
+est que les compl\u00e9ments sont le dernier un pour cent, et qu'ils n'ont de sens
+que lorsque les quatre-vingt-dix-neuf autres sont d\u00e9j\u00e0 en place.</p>
+
+<h2>Si vous concourez, regardez le sceau</h2>
+
+<p>Un produit peut \u00eatre contamin\u00e9 par des substances non d\u00e9clar\u00e9es sans que le
+fabricant le veuille. Pour qui passe des contr\u00f4les antidopage, la seule
+protection pratique tient aux programmes de <strong>v\u00e9rification par un
+tiers</strong> qui analysent lot par lot. Le sceau figure sur l'emballage et se
+v\u00e9rifie dans le registre du programme.</p>
+
+<p>Et un avertissement g\u00e9n\u00e9ral : <strong>si vous prenez un m\u00e9dicament, si vous
+\u00eates enceinte ou si vous avez une pathologie, demandez avant</strong>. Les
+interactions existent et certaines sont s\u00e9rieuses.</p>
+""",
+        "fuentes": (
+            "<li><strong>ODS \u00b7 NIH</strong> \u2014 Fiches de donn\u00e9es sur les "
+            "compl\u00e9ments alimentaires et leur cadre r\u00e9glementaire.</li>\n"
+            "<li><strong>FDA</strong> \u2014 R\u00e9gime des compl\u00e9ments alimentaires : "
+            "responsabilit\u00e9 du fabricant et absence d'autorisation "
+            "pr\u00e9alable.</li>\n"
+            "<li><strong>Registre europ\u00e9en des all\u00e9gations de sant\u00e9</strong> "
+            "\u2014 ce qui a \u00e9t\u00e9 approuv\u00e9 et ce qui a \u00e9t\u00e9 rejet\u00e9.</li>\n"),
+        "base": "federal",
+        "cierre": (
+            "<p><strong>Ce que nous vendons et ce que nous disons.</strong> "
+            "Cette boutique vend des compl\u00e9ments, alors autant \u00eatre clair : cet "
+            "article d\u00e9crit ce que dit la preuve publique sur certaines "
+            "substances, pas ce que fait un pot en particulier. Les fiches de "
+            "nos produits ne promettent aucun effet sur la sant\u00e9, et ce n'est "
+            "pas par modestie.</p>\n"
+            "<p>Le <a href=\"/fr/products/pro-definicion-volumen\">guide de "
+            "suppl\u00e9mentation de la formule Pro</a> d\u00e9veloppe cela avec la "
+            "hi\u00e9rarchie compl\u00e8te, le crit\u00e8re de la dose des m\u00e9ta-analyses et "
+            "un budget mensuel par niveau.</p>"),
+    },
+}
+
 
 def cuerpo(handle: str, lengua: str) -> str:
-    """El cuerpo completo, con su pie de fuentes, su etiqueta y su firma."""
+    """El cuerpo completo, con su pie de fuentes, su remate y su firma.
+
+    El remate normal es la etiqueta que señala el libro que desarrolla el
+    tema. Algunos artículos cierran con sus propios párrafos —el de la
+    evidencia dice de frente qué vende esta tienda y qué no promete— y esos
+    traen `cierre` en vez de `libro`. Uno u otro, no los dos.
+    """
     a = CUERPOS[handle][lengua]
+    if "cierre" in a:
+        remate = a["cierre"]
+    else:
+        remate = etiqueta(a["libro"], lengua, a["frase"])
     compuesto = (a["cuerpo"].strip() + "\n\n"
                  + fuentes(a["fuentes"], lengua, a["base"])
-                 + etiqueta(a["libro"], lengua, a["frase"])
-                 + FIRMA[lengua])
+                 + remate + FIRMA[lengua])
     return _descolgar(compuesto, lengua)
 
 
@@ -676,7 +940,10 @@ def comprobar() -> list:
             if a["base"] not in CIERRE[lengua]:
                 malos.append(f"{handle} [{lengua}] · base legal "
                              f"desconocida: {a['base']}")
-            if a["libro"] not in LIBRO:
+            if ("libro" in a) == ("cierre" in a):
+                malos.append(f"{handle} [{lengua}] · o remata con un libro o "
+                             f"con su propio cierre, no las dos ni ninguna")
+            elif "libro" in a and a["libro"] not in LIBRO:
                 malos.append(f"{handle} [{lengua}] · libro desconocido")
             # el cuerpo compuesto no puede llevar enlaces sin prefijo de
             # idioma: mandarían al comprador a la versión castellana
