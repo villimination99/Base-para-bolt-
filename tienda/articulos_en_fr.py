@@ -628,6 +628,212 @@ ingrédients sur la fiche, ce qu'il faut pour faire ce calcul.</p>
 }
 
 
+CUERPOS["cuanta-actividad-fisica-hace-falta"] = {
+    "en": {
+        "titulo": "How much physical activity you actually need",
+        "resumen": (
+            "There is a dose, it is written down, and it is not the one "
+            "repeated in the gym. How many minutes, of what kind, and why the "
+            "first stretch is worth more than all the rest."),
+        "meta": (
+            "How much physical activity you need | VILLUMINATIONS",
+            "The weekly dose the public guidelines recommend, the 2-for-1 "
+            "exchange between moderate and vigorous, and the real shape of "
+            "the curve."),
+        "cuerpo": """
+<p>The question has a published answer, and it is more specific than most
+people imagine. It is not &laquo;move more&raquo;: it is an amount, with
+units.</p>
+
+<h2>The dose, in one line</h2>
+
+<p>For a healthy adult, the public physical activity guidelines recommend, per
+week:</p>
+
+<ul>
+  <li><strong>150 to 300 minutes</strong> of <em>moderate</em> intensity
+  aerobic activity, or</li>
+  <li><strong>75 to 150 minutes</strong> of <em>vigorous</em> intensity, or any
+  equivalent combination of the two, and</li>
+  <li><strong>two days or more</strong> of strength work involving all the
+  major muscle groups.</li>
+</ul>
+
+<p>The exchange between the two is <strong>two for one</strong>: one vigorous
+minute counts as two moderate ones. That way you can split it without odd
+arithmetic.</p>
+
+<h3>Where the line between moderate and vigorous falls</h3>
+
+<p>Without a heart rate monitor, use the talk test: at <strong>moderate</strong>
+intensity you can talk but not sing. At <strong>vigorous</strong> you cannot
+say more than a few words in a row without stopping to breathe.</p>
+
+<h2>The curve is not a straight line</h2>
+
+<p>This is what changes how you approach the whole thing. The benefit does not
+grow in proportion to the effort: <strong>by far the stretch that pays most is
+the one from nothing to a little</strong>. Someone who does nothing and starts
+moving gains vastly more than someone who already meets the dose and
+doubles it.</p>
+
+<p>Two practical consequences, and both go against what you usually hear:</p>
+
+<ul>
+  <li>If you do nothing, <strong>you do not have to reach 150 minutes for it to
+  be worth it</strong>. Twenty minutes of walking three times a week is already
+  buying the expensive stretch of the curve.</li>
+  <li>If you already meet it, <strong>doubling the volume pays little</strong>.
+  There the margin is in quality, strength and rest, not in more minutes.</li>
+</ul>
+
+<h2>The ten-minute minimum is gone</h2>
+
+<p>For years it was repeated that a session had to last at least ten minutes to
+count. <strong>That condition was removed</strong> in the revision of the
+guidelines: everything counts. Climbing stairs, carrying the shopping, three
+minutes of brisk walking. Activity accumulates; it does not need permission to
+be long enough.</p>
+
+<h2>Strength is not optional</h2>
+
+<p>The two days a week of muscle work are in the recommendation with the same
+standing as the aerobic part, and they are the part most people skip. No gym is
+needed: body weight counts, so do bands and the loads of daily life, as long as
+the muscle reaches a point where repeating is hard.</p>
+
+<p>And from sixty-five onwards a third leg is added that almost nobody
+mentions: <strong>balance training</strong>. It is the one that prevents the
+fall, which in that age bracket does more damage than almost anything else.</p>
+
+<h2>Sitting counts separately</h2>
+
+<p>The other half of the message: <strong>moving more and sitting less are two
+different recommendations</strong>, not the same one said twice. You can meet
+the weekly dose and spend the rest of the day sitting, and that is still a
+problem in its own right.</p>
+""",
+        "fuentes": (
+            "<li><strong>health.gov</strong> — Physical Activity "
+            "Guidelines, second edition: weekly dose, the 2-for-1 exchange, "
+            "removal of the ten-minute minimum, balance from 65 onwards.</li>\n"
+            "<li><strong>FM 7-22</strong> — Physical readiness doctrine: "
+            "movement patterns and programming.</li>\n"
+            "<li><strong>CDC / NIOSH</strong> — Criteria for manual "
+            "handling of loads.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-carga",
+        "frase": ("The eight movement patterns, the six variables a week is "
+                  "programmed with and the lifting equation with its factors "
+                  "worked through one by one take up a good deal more."),
+    },
+    "fr": {
+        "titulo": "Combien d'activité physique il faut vraiment",
+        "resumen": (
+            "Il existe une dose, elle est écrite et ce n'est pas celle que "
+            "l'on répète à la salle. Combien de minutes, de quelle sorte, et "
+            "pourquoi le premier palier vaut plus que tous les autres."),
+        "meta": (
+            "Combien d'activité physique il faut | VILLUMINATIONS",
+            "La dose hebdomadaire que recommandent les guides publics, "
+            "l'échange 2 pour 1 entre modérée et vigoureuse, et la vraie forme "
+            "de la courbe."),
+        "cuerpo": """
+<p>La question a une réponse publiée, et elle est plus précise que la plupart
+ne l'imaginent. Ce n'est pas &laquo; bougez plus &raquo; : c'est une quantité,
+avec des unités.</p>
+
+<h2>La dose, en une ligne</h2>
+
+<p>Pour une personne adulte en bonne santé, les guides publics d'activité
+physique recommandent, par semaine :</p>
+
+<ul>
+  <li><strong>De 150 à 300 minutes</strong> d'activité aérobie d'intensité
+  <em>modérée</em>, ou</li>
+  <li><strong>de 75 à 150 minutes</strong> d'intensité <em>vigoureuse</em>, ou
+  toute combinaison équivalente des deux, et</li>
+  <li><strong>deux jours ou plus</strong> de travail de force sollicitant tous
+  les grands groupes musculaires.</li>
+</ul>
+
+<p>L'échange entre les deux se fait <strong>deux pour un</strong> : une minute
+vigoureuse compte pour deux modérées. On peut ainsi répartir sans calculs
+bizarres.</p>
+
+<h3>Où passe la frontière entre modérée et vigoureuse</h3>
+
+<p>Sans cardiofréquencemètre, avec le test de la conversation : en activité
+<strong>modérée</strong> vous pouvez parler mais pas chanter. En
+<strong>vigoureuse</strong> vous ne pouvez pas dire plus de quelques mots
+d'affilée sans vous arrêter pour respirer.</p>
+
+<h2>La courbe n'est pas une droite</h2>
+
+<p>C'est ce qui change la façon d'aborder la chose. Le bénéfice ne croît pas
+proportionnellement à l'effort : <strong>le palier qui rend le plus, et de
+loin, est celui qui va de rien à un peu</strong>. Quelqu'un qui ne fait rien et
+se met à bouger gagne infiniment plus que quelqu'un qui remplit déjà la dose
+et la double.</p>
+
+<p>Deux conséquences pratiques, et les deux vont à l'encontre de ce qu'on
+entend d'habitude :</p>
+
+<ul>
+  <li>Si vous ne faites rien, <strong>inutile d'atteindre les 150 minutes pour
+  que ça vaille la peine</strong>. Vingt minutes de marche trois fois par
+  semaine achètent déjà le palier cher de la courbe.</li>
+  <li>Si vous remplissez déjà la dose, <strong>doubler le volume rend
+  peu</strong>. Là, la marge est dans la qualité, la force et le repos, pas
+  dans plus de minutes.</li>
+</ul>
+
+<h2>Le minimum de dix minutes n'existe plus</h2>
+
+<p>Pendant des années on a répété qu'une séance devait durer au moins dix
+minutes pour compter. <strong>Cette condition a été supprimée</strong> lors de
+la révision des guides : tout compte. Monter les escaliers, porter les courses,
+trois minutes de marche rapide. L'activité s'accumule, elle n'a pas besoin
+d'une autorisation de durée.</p>
+
+<h2>La force n'est pas facultative</h2>
+
+<p>Les deux jours de travail musculaire par semaine figurent dans la
+recommandation au même titre que la partie aérobie, et c'est la partie que le
+plus de gens sautent. Pas besoin de salle : le poids du corps compte, les
+élastiques aussi, et les charges de la vie quotidienne, pourvu que le muscle
+atteigne un point où répéter coûte.</p>
+
+<p>Et à partir de soixante-cinq ans s'ajoute un troisième pied dont on ne parle
+presque jamais : <strong>l'entraînement de l'équilibre</strong>. C'est celui
+qui prévient la chute, laquelle à cet âge fait plus de dégâts que presque tout
+le reste.</p>
+
+<h2>Rester assis compte à part</h2>
+
+<p>L'autre moitié du message : <strong>bouger plus et rester assis moins sont
+deux recommandations distinctes</strong>, pas la même dite deux fois. On peut
+remplir la dose hebdomadaire et passer le reste de la journée assis, et cela
+reste un problème en soi.</p>
+""",
+        "fuentes": (
+            "<li><strong>health.gov</strong> — Guides d'activité physique, "
+            "deuxième édition : dose hebdomadaire, échange 2 pour 1, retrait du "
+            "minimum de dix minutes, équilibre à partir de 65 ans.</li>\n"
+            "<li><strong>FM 7-22</strong> — Doctrine de préparation "
+            "physique : schémas de mouvement et programmation.</li>\n"
+            "<li><strong>CDC / NIOSH</strong> — Critères de manutention "
+            "manuelle de charges.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-carga",
+        "frase": ("Les huit schémas de mouvement, les six variables avec "
+                  "lesquelles se programme une semaine et l'équation de "
+                  "levage avec ses facteurs développés un à un occupent "
+                  "bien davantage."),
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
