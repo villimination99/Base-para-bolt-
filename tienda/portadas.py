@@ -54,7 +54,7 @@ NIVELES = [
      "nivel": "Pro", "titulo": "Definición + Volumen",
      "docs": ["01-basico", "02-pro", "03-pro", "04-pro", "05-pro"]},
     {"archivo": "plan-elite", "acento": "#00ff88", "acento2": "#ff6600",
-     "nivel": "Elite", "titulo": "Todo Incluido + Coaching",
+     "nivel": "Elite", "titulo": "Todo Incluido",
      "docs": ["01-basico", "02-pro", "03-pro", "04-pro", "05-pro", "06-elite",
               "07-elite", "08-elite", "09-elite", "10-elite", "11-elite"]},
 ]

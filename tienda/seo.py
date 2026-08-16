@@ -62,18 +62,18 @@ META = {
                "progression. En trois langues."),
     },
     "elite-todo-incluido-coaching": {
-        "es": ("Elite · Todo Incluido + Coaching — 11 PDF | VILLUMINATIONS",
+        "es": ("Elite · Todo Incluido — 11 PDF | VILLUMINATIONS",
                "Los once documentos del catálogo: alimentación, entrenamiento, "
-               "HIIT, sueño, meditación y coaching semanal. Treinta y tres PDF "
+               "HIIT, sueño, meditación y el cuaderno de coaching. 106 páginas "
                "en español, inglés y francés."),
         "en": ("Elite · Everything Included — 11 PDFs | VILLUMINATIONS",
                "All eleven documents: food, training, HIIT, sleep, meditation "
-               "and weekly coaching. Thirty-three PDFs in English, Spanish and "
+               "and the coaching workbook. 106 pages in English, Spanish and "
                "French."),
-        "fr": ("Elite · Tout inclus + Coaching — 11 PDF | VILLUMINATIONS",
+        "fr": ("Elite · Tout inclus — 11 PDF | VILLUMINATIONS",
                "Les onze documents : alimentation, entraînement, HIIT, "
-               "sommeil, méditation et coaching hebdomadaire. Trente-trois PDF "
-               "en français, espagnol et anglais."),
+               "sommeil, méditation et le cahier de coaching. 106 pages en "
+               "français, espagnol et anglais."),
     },
     "codice-zodiacal": {
         "es": ("Códice Zodiacal — los doce signos en PDF | VILLUMINATIONS",
@@ -201,9 +201,9 @@ ALT = {
         "fr": "Couverture du plan Pro · Sèche + Prise de masse de VILLUMINATIONS",
     },
     "elite-todo-incluido-coaching": {
-        "es": "Portada del plan Elite · Todo Incluido + Coaching de VILLUMINATIONS",
-        "en": "Cover of the Elite · Everything Included + Coaching plan by VILLUMINATIONS",
-        "fr": "Couverture du plan Elite · Tout inclus + Coaching de VILLUMINATIONS",
+        "es": "Portada del plan Elite · Todo Incluido de VILLUMINATIONS",
+        "en": "Cover of the Elite · Everything Included plan by VILLUMINATIONS",
+        "fr": "Couverture du plan Elite · Tout inclus de VILLUMINATIONS",
     },
     "codice-zodiacal": {
         "es": "Cubierta del Códice Zodiacal, libro en PDF de VILLUMINATIONS",

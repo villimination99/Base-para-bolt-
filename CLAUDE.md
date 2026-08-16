@@ -99,6 +99,32 @@ una vez y se coló un «veintivún» que no estaba en el original; encontrarlo
 costó cotejar ocho artículos carácter a carácter. `traducir.py` pide los
 digests y manda el texto sin que pase por ningún teclado.
 
+**El precio vive en dos sitios y uno de ellos no se puede corregir a
+posteriori.** Las once láminas de planes llevan impresa la escalera de los tres
+niveles: eso son 66 PDF, en tres lenguas y dos ediciones, y los que ya se han
+descargado siguen diciendo lo que decían. Si el precio cambia en Shopify, hay
+que reconstruirlos. `auditar.py` imprime la tabla de lo que dicen las láminas
+para poder cotejarla con la tienda de un vistazo, y aborta si dos láminas no
+coinciden. Está decidido y escrito: **suscripción mensual, en dólares
+canadienses**, con la moneda en la insignia («9,99 $ CAD/mes»), la
+periodicidad en cada escalón y una línea bajo la escalera que lo dice entero.
+
+**Un precio también es un segmento traducible.** `traducible()` de
+`planes/tools/i18n.py` exigía dos letras, así que «9,99 $» nunca entró en el
+catálogo y salía con coma española dentro de la edición inglesa, tres líneas
+por debajo de la insignia que sí estaba traducida. La cobertura al 100 % no lo
+veía: no había un hueco, había un segmento que no existía. Ahora un precio
+entra aunque no lleve ni una letra.
+
+**El Elite no incluye sesiones de coaching.** La lámina 11 es el cuaderno con
+el que se prepara una sesión —cuatro focos, banco de preguntas, plan de
+acción—, no la sesión. El título decía «Todo Incluido + Coaching» y la escalera
+«+ coaching 1 a 1»: las dos cosas prometían un servicio que no se entrega y las
+dos están corregidas. El **handle no se tocó** (`elite-todo-incluido-coaching`)
+porque la URL está indexada. Si algún día se dan sesiones de verdad, lo que
+hace falta antes es lo operativo: cuántas, de cuánto, por qué canal y cómo se
+reservan.
+
 **Las dos bases legales tampoco se mezclan en el blog.** `_fuentes()` de
 `tienda/articulos.py` pide `base="federal"` o `base="tradicion"` y no tiene
 valor por defecto que sirva para las dos: antes firmaba siempre con el
@@ -169,7 +195,12 @@ Lo que costó descubrir y no está en ningún sitio evidente:
    Aparte de eso, la política de reembolso niega remedio incluso para producto
    defectuoso o no entregado, lo que en Quebec es dudoso que se sostenga y
    además invita a la contracargo. Es cosa de mirarlo con calma en el panel.
-5. Precio provisional de 9,99 CAD en los seis libros nuevos.
+5. Precio provisional de 9,99 CAD en los seis libros nuevos. Los **planes**
+   sí están decididos: 9,99 / 19,99 / 34,99 CAD **al mes**, y así lo dicen las
+   66 láminas. Falta comprobar que Shopify cobre exactamente eso y que haya app
+   de suscripciones; un cobro único de lo que el documento anuncia como
+   mensualidad es una discrepancia de precio, y en Quebec invita a la
+   contracargo.
 6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
    corregidas; solo falta decidir si se venden. Piden envío y no llevan control
    de existencias, así que activarlos significa poder vender sin stock.

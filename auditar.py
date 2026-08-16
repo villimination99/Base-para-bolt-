@@ -189,24 +189,32 @@ def precios_declarados() -> dict:
     return tabla
 
 
+_PERIODO = re.compile(r"\s*/\s*\w+\s*$")
+_MONEDA = re.compile(r"\s*\b(CAD|CA|USD)\b")
+
+
 def precios_incoherentes() -> list:
-    """Un nivel que dice dos precios distintos, o dos periodicidades."""
+    """Tres cosas: que la cifra sea la misma, que todas digan si es al mes, y
+    que la moneda se declare en alguna parte.
+
+    Comparar las cadenas tal cual no vale: «9,99 $ CAD/mes» y «9,99 $/mes» son
+    el mismo precio, uno con la moneda dicha y otro sin ella. Se compara la
+    cifra desnuda y se miran aparte el periodo y la moneda.
+    """
     fuera = []
     for nivel, precios in sorted(precios_declarados().items()):
-        # «9,99 $/mes» y «9,99 $» son la misma cifra dicha de dos maneras: la
-        # insignia declara mensualidad y la escalera no. Eso no es un error de
-        # cifra, pero sí deja al comprador sin saber si Pro son 19,99 una vez o
-        # al mes, así que se dice.
-        cifras = {re.sub(r"\s*/\s*\w+$", "", p).strip() for p in precios}
-        if len(cifras) > 1:
-            fuera.append(f"{nivel} · dice {len(cifras)} precios distintos: "
-                         f"{', '.join(sorted(cifras))}")
+        desnuda = {_MONEDA.sub("", _PERIODO.sub("", p)).strip() for p in precios}
+        if len(desnuda) > 1:
+            fuera.append(f"{nivel} · dice {len(desnuda)} cifras distintas: "
+                         f"{', '.join(sorted(desnuda))}")
             continue
-        periodos = {bool(re.search(r"/\s*\w+$", p)) for p in precios}
-        if len(periodos) > 1:
-            sin = sorted(p for p in precios if not re.search(r"/\s*\w+$", p))
-            fuera.append(f"{nivel} · {list(cifras)[0]} aparece con y sin "
-                         f"periodicidad ({', '.join(sin)} no dice si es al mes)")
+        sin_periodo = sorted(p for p in precios if not _PERIODO.search(p))
+        if sin_periodo:
+            fuera.append(f"{nivel} · no dice si es al mes en "
+                         f"{', '.join(sin_periodo)}")
+        if not any(_MONEDA.search(p) for p in precios):
+            fuera.append(f"{nivel} · el símbolo va suelto y no se dice la "
+                         f"moneda en ninguna parte")
     return fuera
 
 

@@ -239,9 +239,9 @@ ELITE = {
     "coleccion": "planes",
     "gid": "gid://shopify/Product/7141932204081",
     "titulo": {
-        "es": "Elite · Todo Incluido + Coaching",
-        "en": "Elite · Everything Included + Coaching",
-        "fr": "Elite · Tout inclus + Coaching",
+        "es": "Elite · Todo Incluido",
+        "en": "Elite · Everything Included",
+        "fr": "Elite · Tout inclus",
     },
     "es": """
 <p><strong>Los once documentos del catálogo de planes, completos.</strong> Alimentación,
