@@ -58,6 +58,7 @@ python3 tienda/correos.py    # los cinco correos automáticos
 python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
+python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 python3 auditar.py           # lo que solo se ve mirando todas las superficies juntas
@@ -224,7 +225,16 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
    corregidas; solo falta decidir si se venden. Piden envío y no llevan control
    de existencias, así que activarlos significa poder vender sin stock.
-7. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
+7. **Dos locales publicados sin una sola traducción: `de` y `ja`.** Shopify
+   emite hreflang apuntando a `/de/…` y `/ja/…` y sirve castellano, así que
+   para el buscador son copias del mismo contenido bajo URL distintas. O se
+   traducen o se despublican; dejarlos así reparte la fuerza entre cinco
+   direcciones que dicen lo mismo. Lo cuenta `tienda/visibilidad.py`.
+8. **El CRM está escrito y sin enchufar.** Las cinco secuencias de
+   `correos.py` no tienen a quién escribir: no hay punto de captura de correo
+   en la tienda. Tampoco hay píxel de Meta ni etiqueta de Google, así que
+   correr anuncios hoy sería pagar sin poder medir cuál vende.
+9. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
    apunta a él, y aun así `/blogs/suplementos` es una página indexable sin
    contenido. O se llena o se borra desde el panel; no se ha tocado porque
    borrar no se deshace.

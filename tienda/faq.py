@@ -315,8 +315,20 @@ def comprobar() -> list:
     return malos
 
 
-def cuerpo(lengua: str) -> str:
-    """El HTML de la página, en la lengua que toque."""
+def cuerpo(lengua: str, con_esquema: bool = True) -> str:
+    """El HTML de la página, en la lengua que toque.
+
+    Lleva pegado su JSON-LD, que es lo que permite que el buscador enseñe las
+    preguntas desplegadas debajo del resultado. Va dentro del cuerpo y no en
+    el tema porque **Shopify sí conserva `<script>` en el cuerpo de una
+    página**: la prueba es VI.P, cuyo cuerpo lleva 337 KB de JavaScript
+    publicado por la misma vía. Aquí se creyó lo contrario y por eso el
+    esquema estuvo escrito sin usarse.
+
+    Ponerlo en el cuerpo tiene además una ventaja: viaja con la traducción.
+    El esquema francés se registra como parte del `body_html` francés, sin
+    tocar el tema ni depender de que alguien se acuerde.
+    """
     intro = {
         "es": "<p>Lo que más se pregunta antes de comprar. Si tu duda no está, "
               "escríbenos: contestar antes es más barato que devolver "
@@ -332,15 +344,19 @@ def cuerpo(lengua: str) -> str:
     for _, versiones in PREGUNTAS:
         pregunta, respuesta = versiones[lengua]
         trozos.append(f"<h2>{pregunta}</h2>\n<p>{respuesta}</p>")
+    if con_esquema:
+        trozos.append(esquema(lengua))
     return "\n\n".join(trozos)
 
 
 def esquema(lengua: str = "es") -> str:
     """El JSON-LD de tipo FAQPage.
 
-    Es lo que permite que el buscador enseñe las preguntas desplegadas debajo
-    del resultado. Se pega en el tema, dentro de la plantilla de la página:
-    Shopify no deja inyectar JSON-LD por API.
+    Solo cuenta lo que se publica: si una pregunta está en `PENDIENTES`
+    —porque hoy no se puede contestar sin prometer algo que no ocurre— no
+    entra aquí tampoco. Un FAQPage que anuncia una respuesta que la página no
+    tiene es marcado que no coincide con el contenido, y eso Google lo trata
+    como spam de datos estructurados.
     """
     import re
     limpiar = lambda h: re.sub(r"<[^>]+>", "", h)
