@@ -52,12 +52,20 @@ python3 tienda/seo.py        # medidas de título y descripción de los 11 propi
 python3 tienda/catalogo.py   # ídem de los 29 de proveedor
 python3 tienda/articulos.py  # ídem de los artículos del Diario
 python3 tienda/cuerpos_en_fr.py   # cuerpos traducidos: medidas y promesas de salud
+python3 tienda/articulos_en_fr.py # el Diario en inglés y francés: cobertura y medidas
+python3 tienda/lecturas.py   # qué ficha ofrece qué artículo del Diario
 python3 tienda/correos.py    # los cinco correos automáticos
 python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
+python3 auditar.py           # lo que solo se ve mirando todas las superficies juntas
 ```
+
+`auditar.py` es el único que cruza ficheros. Cada módulo se mide a sí mismo y
+ninguno puede ver un título repetido entre dos superficies, una descripción que
+desperdicia el fragmento del buscador o un artículo al que no apunta nadie. Las
+tres cosas estaban ahí y ninguna comprobación existente las veía.
 
 Para llevarlo a la tienda hacen falta `SHOPIFY_TIENDA` y `SHOPIFY_TOKEN`:
 
@@ -65,6 +73,7 @@ Para llevarlo a la tienda hacen falta `SHOPIFY_TIENDA` y `SHOPIFY_TOKEN`:
 python3 tienda/traducir.py --ensayo   # qué traducciones se registrarían
 python3 tienda/traducir.py            # las registra
 python3 tienda/blog.py --ensayo       # ídem con los artículos
+python3 tienda/traducir_blog.py --ensayo   # el Diario en inglés y francés
 python3 tienda/despegue.py            # ¿puede cobrar, enviar y entregar?
 ```
 
@@ -94,7 +103,22 @@ digests y manda el texto sin que pase por ningún teclado.
 `tienda/articulos.py` pide `base="federal"` o `base="tradicion"` y no tiene
 valor por defecto que sirva para las dos: antes firmaba siempre con el
 17 U.S.C. § 105 y el artículo del decanato salió publicado invocando una ley
-que no le tocaba.
+que no le tocaba. `articulos_en_fr.py` repite la misma exigencia en inglés y en
+francés, con las dos entradas y sin valor por defecto.
+
+**El handle de un artículo del Diario no se traduce.** Shopify deja hacerlo y
+crea la URL localizada, como en las colecciones; aquí no, porque `lecturas.py`
+escribe los enlaces de las cuarenta fichas como
+`/en/blogs/diario/<handle-castellano>` y traducirlo los convertiría todos en un
+404 de golpe. Está en `PROHIBIDAS` de `traducir_blog.py`. Si algún día se
+decide traducirlos, se cambian las dos cosas a la vez.
+
+**No se enlaza a lo que no está traducido.** El Diario está en castellano y se
+va traduciendo artículo a artículo. Dos guardas lo sostienen solo:
+`lecturas.disponibles()` no ofrece desde una ficha inglesa un artículo que no
+existe en inglés, y `_descolgar()` de `articulos_en_fr.py` le quita el ancla a
+las citas entre artículos cuyo destino aún no está. Ninguna de las dos hay que
+acordarse de mantener: el enlace aparece solo el día que el destino existe.
 
 ## La API de Shopify, en corto
 
@@ -114,7 +138,15 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 - **`shopPolicyUpdate` está fuera de alcance**: pide `write_legal_policies`, un
   permiso que esta app no tiene. Las políticas solo se tocan desde el panel.
 - Traducir el `handle` de una colección crea su URL localizada
-  (`/en/collections/supplements`). Está hecho en las seis.
+  (`/en/collections/supplements`). Está hecho en las seis, pero **cuál es el
+  handle traducido de cada una no consta en el repositorio**: hay que
+  preguntárselo a la tienda antes de escribir un enlace a una colección desde
+  un texto traducido. `articulos_en_fr.COLECCION` los tiene a `None` por eso.
+- Las claves traducibles de un artículo (`title`, `body_html`, `summary_html`,
+  `meta_title`, `meta_description`) **las dice la tienda** en
+  `translatableContent`. `traducir_blog.py` pide la lista y solo manda las que
+  existen, en vez de escribirlas de memoria: `blog.py` se hizo a ciegas con la
+  referencia delante y hubo que corregirlo.
 
 ## Lo que sigue pendiente
 
@@ -123,9 +155,10 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 2. **El nombre de la tienda sigue siendo «VIllumination».** Sale en la pestaña
    del navegador, en el checkout y en cada correo. No se puede cambiar por API:
    es Ajustes → Detalles de la tienda.
-3. **De los 29 ya van en tres lenguas el título y las metaetiquetas; los
-   cuerpos no.** Los cuerpos en castellano de `tienda/catalogo.py` (`CUERPOS`)
-   y los artículos del Diario están solo en español. Al traducirlos, **no se
+3. **El Diario va por 2 de 9 artículos traducidos.** Los 29 de proveedor ya
+   están enteros en tres lenguas —título, metaetiquetas y cuerpo— y los 11
+   propios también. Lo que queda es el blog: `articulos_en_fr.py` tiene los dos
+   de proteína y `faltan()` enumera los siete restantes. Al traducir, **no se
    copia el texto del proveedor como versión inglesa**: viene lleno de
    declaraciones de salud y las devolvería por la puerta de atrás. Se traduce
    lo que hay escrito aquí.
