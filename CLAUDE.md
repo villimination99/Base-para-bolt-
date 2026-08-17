@@ -173,10 +173,21 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 - **`shopPolicyUpdate` está fuera de alcance**: pide `write_legal_policies`, un
   permiso que esta app no tiene. Las políticas solo se tocan desde el panel.
 - Traducir el `handle` de una colección crea su URL localizada
-  (`/en/collections/supplements`). Está hecho en las seis, pero **cuál es el
-  handle traducido de cada una no consta en el repositorio**: hay que
-  preguntárselo a la tienda antes de escribir un enlace a una colección desde
-  un texto traducido. `articulos_en_fr.COLECCION` los tiene a `None` por eso.
+  (`/en/collections/supplements`). Está hecho en las seis, y ya consta cuál es
+  cada uno —preguntado a la tienda, no deducido—:
+
+  | castellano | en | fr |
+  |---|---|---|
+  | `suplementos` | `supplements` | `complements` |
+  | `ropa` | `apparel` | `vetements` |
+  | `equipo` | `equipment` | `equipement` |
+  | `conocimiento` | `knowledge` | `connaissance` |
+  | `planes` | `training-plans` | `plans-d-entrainement` |
+  | `cuidado-personal` | `personal-care` | `soins-du-corps` |
+
+  `articulos_en_fr.COLECCION` sigue con `None`: rellenarlo cambia los enlaces
+  que salen en los cuerpos, y eso obliga a registrar de nuevo los nueve
+  artículos. Es una decisión, no un descuido.
 - **`blogByHandle` ya no existe** en el QueryRoot de 2025-01: devuelve «Field
   'blogByHandle' doesn't exist». Se busca con `blogs(first: 1, query:
   "handle:diario")`. Estaba escrito en `traducir_blog.py` y habría fallado en
