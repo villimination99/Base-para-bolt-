@@ -148,6 +148,13 @@ existe en inglés, y `_descolgar()` de `articulos_en_fr.py` le quita el ancla a
 las citas entre artículos cuyo destino aún no está. Ninguna de las dos hay que
 acordarse de mantener: el enlace aparece solo el día que el destino existe.
 
+El precio de esa comodidad es que **traducir un artículo caduca la traducción
+ya registrada de los que lo citan**: su cuerpo se compone distinto en cuanto el
+destino existe. Los dos que estaban publicados desde antes tenían guardada la
+cita sin ancla, y desde la tienda no se nota —el texto se lee bien— así que hay
+que acordarse. Al traducir uno nuevo se vuelven a registrar los que lo enlazan;
+registrar los nueve de golpe sale más barato que averiguar cuáles son.
+
 ## La API de Shopify, en corto
 
 Lo que costó descubrir y no está en ningún sitio evidente:
@@ -188,6 +195,20 @@ Lo que costó descubrir y no está en ningún sitio evidente:
   `translatableContent`. `traducir_blog.py` pide la lista y solo manda las que
   existen, en vez de escribirlas de memoria: `blog.py` se hizo a ciegas con la
   referencia delante y hubo que corregirlo.
+- **El `digest` de `translatableContent` es el SHA-256 del valor**, tal cual.
+  Comprobado con el cuerpo de la FAQ: `sha256(fichero)` da exactamente el
+  digest que devuelve la tienda. Sirve para cotejar un original contra el
+  repositorio **sin descargarlo**, que es la comprobación barata que faltaba.
+  Las traducciones no llevan digest; esas hay que pedirlas.
+- **`Translation.outdated` dice si el original cambió después de la
+  traducción.** Es un booleano por clave y por lengua, así que se piden las
+  cien de una vez y se ve de un vistazo si algún digest iba caducado. Es lo
+  más barato que hay para saber que un registro entró contra el texto vivo.
+- El `handle` de una **página** sí se traduce y crea su URL localizada
+  (`/en/pages/faq`, `/fr/pages/questions`). Es lo contrario que en los
+  artículos del Diario, donde traducirlo rompería los cuarenta enlaces de
+  `lecturas.py`. Que sean recursos parecidos no quiere decir que se traten
+  igual.
 
 ## Lo que sigue pendiente
 
@@ -196,9 +217,9 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 2. **El nombre de la tienda sigue siendo «VIllumination».** Sale en la pestaña
    del navegador, en el checkout y en cada correo. No se puede cambiar por API:
    es Ajustes → Detalles de la tienda.
-3. **El Diario ya está entero en tres lenguas** en el repositorio: los nueve
-   artículos, con sus metaetiquetas y sus cuerpos. Lo que falta es registrarlo
-   en la tienda —van 2 de 9 publicados— con `traducir_blog.py`. Los 29 de
+3. **El Diario está entero en tres lenguas**, en el repositorio y en la
+   tienda: los nueve artículos quedaron registrados en inglés y en francés
+   —cuerpo, título, resumen y las dos metaetiquetas, 9 de 9—. Los 29 de
    proveedor y los 11 propios ya estaban. Al traducir, **no se copia el texto
    del proveedor como versión inglesa**: viene lleno de declaraciones de salud
    y las devolvería por la puerta de atrás. Se traduce lo que hay escrito aquí.
