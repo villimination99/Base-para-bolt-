@@ -1,14 +1,15 @@
-# Dependencies (Shopify theme-check tooling used for auditing)
-node_modules/
-package.json
-package-lock.json
-
-# Local scratch / audit artifacts
-_extract/
-tcrun*.mjs
-*.log
-.DS_Store
 
 # Built theme package (generated from theme/, incluidas las versionadas)
-villumination-3d-theme.zip
+# Dependencies (Shopify theme-check tooling used for auditing)
+# Herramientas de auditoría instaladas localmente
+# Local scratch / audit artifacts
+*.log
+.DS_Store
+_extract/
+node_modules/
+package-lock.json
+package.json
+tcrun*.mjs
+tcrun.mjs
 villumination-3d-theme-*.zip
+villumination-3d-theme.zip

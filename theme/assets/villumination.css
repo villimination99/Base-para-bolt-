@@ -423,3 +423,19 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .article-related{margin-top:3.5rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.1)}
 .article-related .section-title{font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:1.4rem}
 .article-back{display:inline-block;margin-top:2rem}
+/* ============ Hero shader (fondo WebGL reactivo al scroll) ============ */
+.hero-shader{position:relative;min-height:var(--hs-min,82svh);display:flex;align-items:center;justify-content:center;overflow:hidden;isolation:isolate;padding:4rem 1.25rem}
+/* Degradado de respaldo: es lo que se ve si no hay WebGL, si el visitante pide
+   movimiento reducido o si tiene activado el ahorro de datos. Nunca hay hueco. */
+.hero-shader-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(120% 90% at 50% 45%,color-mix(in srgb,var(--hs-c2,#00d4ff) 16%,transparent) 0%,var(--hs-bg,#03030c) 62%,var(--hs-bg,#03030c) 100%)}
+.hero-shader-canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .9s ease}
+.hero-shader-canvas.is-live{opacity:1}
+.hero-shader-shade{position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 50%,transparent 20%,#000 100%);pointer-events:none}
+.hero-shader-content{position:relative;z-index:1;text-align:center;max-width:min(48rem,92vw);margin:0 auto}
+.hero-shader-content .hero-title{margin:.4rem 0 .8rem}
+.hero-shader-content .hero-subtitle{margin:0 auto 1.6rem;max-width:44ch}
+.hero-shader .hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}
+.hero-shader-hint{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:1;color:var(--hs-c2,#00d4ff);opacity:.65;animation:hsHint 2.2s ease-in-out infinite;pointer-events:none}
+.hero-shader-hint svg{width:26px;height:26px}
+@keyframes hsHint{0%,100%{transform:translateX(-50%) translateY(0);opacity:.4}50%{transform:translateX(-50%) translateY(7px);opacity:.9}}
+@media (prefers-reduced-motion:reduce){.hero-shader-hint{animation:none}}
