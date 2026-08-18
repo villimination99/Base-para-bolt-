@@ -19,6 +19,10 @@
 (function () {
   'use strict';
 
+  // Registro de instancias vivas: permite soltarlas cuando el editor de temas
+  // reemplaza la seccion y su lienzo desaparece de la pagina.
+  var live = [];
+
   var VERT = 'attribute vec2 a_position;void main(){gl_Position=vec4(a_position,0.0,1.0);}';
 
   var FRAG = [
@@ -89,7 +93,11 @@
 
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var saveData = !!(navigator.connection && navigator.connection.saveData);
+    // host = la capa del fondo (para medir), root = la seccion entera.
+    // --hs-scroll tiene que vivir en la seccion: si se escribe en la capa
+    // del fondo, el contenido del hero es su hermano y no la hereda.
     var host = canvas.parentNode;
+    var root = (canvas.closest && canvas.closest('.hero-shader')) || host;
 
     // Sin WebGL, con movimiento reducido o con ahorro de datos, el degradado
     // CSS del contenedor se queda como fondo: nunca hay un hueco vacio.
@@ -142,9 +150,19 @@
 
     var raf = 0, visible = true, inView = true, disposed = false;
     var start = performance.now();
-    var scroll = 0, targetScroll = 0, lastNow = null;
+    var scroll = 0, targetScroll = 0, lastNow = null, lastVar = null;
+    var needsResize = true, offs = [];
+
+    // Cada escuchador se apunta para poder soltarlo: en el editor de temas la
+    // seccion se recarga muchas veces y, sin esto, cada recarga dejaba una
+    // instancia viva escuchando scroll y resize para siempre.
+    function on(target, type, fn, opts) {
+      target.addEventListener(type, fn, opts);
+      offs.push(function () { target.removeEventListener(type, fn, opts); });
+    }
 
     function resize() {
+      needsResize = false;
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
       var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
@@ -156,9 +174,12 @@
       }
     }
 
+    // Medir el hero obliga al navegador a recalcular la maqueta. Por eso se
+    // hace dentro del fotograma y no en el escuchador de scroll: asi se paga
+    // una vez por fotograma en lugar de una vez por evento.
     function readScroll() {
-      if (!scrollOn || !host) return;
-      var r = host.getBoundingClientRect();
+      if (!scrollOn || !root) return;
+      var r = root.getBoundingClientRect();
       if (r.height <= 0) return;
       var t = -r.top / r.height;
       targetScroll = t < 0 ? 0 : (t > 1 ? 1 : t);
@@ -171,8 +192,17 @@
       if (disposed || !visible || !inView) return;
       var dt = lastNow === null ? 0 : Math.min((now - lastNow) / 1000, 0.1);
       lastNow = now;
+      if (needsResize) resize();
+      readScroll();
       scroll += (targetScroll - scroll) * (1 - Math.exp(-8 * dt));
-      resize();
+
+      // El mismo valor se publica como variable CSS para que el contenido del
+      // hero reaccione al scroll sin necesidad de otro escuchador. Solo se
+      // escribe cuando cambia de verdad: escribirla cada fotograma obligaba a
+      // recalcular estilos aun con la pagina quieta.
+      var vs = scroll.toFixed(3);
+      if (vs !== lastVar && root && root.style) { lastVar = vs; root.style.setProperty('--hs-scroll', vs); }
+
       var t = reduce ? 0 : ((now - start) / 1000) * timeScale;
       gl.uniform4f(uScene, canvas.width, canvas.height, t, 4);
       gl.uniform4f(uExtra, scroll, 1.005, 1.0, 0.0);
@@ -183,28 +213,62 @@
       else lastNow = null;
     }
 
-    window.addEventListener('scroll', function () { readScroll(); request(); }, { passive: true });
-    window.addEventListener('resize', function () { resize(); readScroll(); request(); });
-    document.addEventListener('visibilitychange', function () {
+    function pause() { if (raf) { cancelAnimationFrame(raf); raf = 0; } lastNow = null; }
+
+    on(window, 'scroll', request, { passive: true });
+    on(window, 'resize', function () { needsResize = true; request(); });
+    on(document, 'visibilitychange', function () {
       visible = document.visibilityState === 'visible';
-      if (visible) request(); else if (raf) { cancelAnimationFrame(raf); raf = 0; lastNow = null; }
+      if (visible) request(); else pause();
     });
+
+    var io = null, ro = null;
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) {
+      io = new IntersectionObserver(function (en) {
         inView = en[0] ? en[0].isIntersecting : true;
-        if (inView) request(); else if (raf) { cancelAnimationFrame(raf); raf = 0; lastNow = null; }
-      }, { threshold: 0 }).observe(canvas);
+        if (inView) request(); else pause();
+      }, { threshold: 0 });
+      io.observe(canvas);
     }
+    // El hero cambia de alto al girar el movil o al abrir la barra del
+    // navegador sin que llegue un evento resize: ResizeObserver si lo ve.
+    if ('ResizeObserver' in window) {
+      ro = new ResizeObserver(function () { needsResize = true; request(); });
+      ro.observe(canvas);
+    }
+
+    function dispose() {
+      if (disposed) return;
+      disposed = true;
+      pause();
+      for (var i = 0; i < offs.length; i++) offs[i]();
+      offs = [];
+      if (io) { io.disconnect(); io = null; }
+      if (ro) { ro.disconnect(); ro = null; }
+      var lose = gl.getExtension('WEBGL_lose_context');
+      if (lose) lose.loseContext();
+      var at = live.indexOf(entry);
+      if (at !== -1) live.splice(at, 1);
+    }
+
+    var entry = { canvas: canvas, dispose: dispose };
+    live.push(entry);
 
     canvas.classList.add('is-live');
     resize(); readScroll(); request();
   }
 
   function boot() {
+    // Antes de arrancar nada se sueltan las instancias cuyo lienzo ya no esta
+    // en la pagina: el editor de temas reemplaza el HTML de la seccion entera.
+    for (var j = live.length - 1; j >= 0; j--) {
+      if (!document.contains(live[j].canvas)) live[j].dispose();
+    }
     var list = document.querySelectorAll('[data-hero-shader]');
     for (var i = 0; i < list.length; i++) init(list[i]);
   }
   boot();
   // El editor de temas sustituye el HTML de la seccion: hay que reenganchar.
   document.addEventListener('shopify:section:load', boot);
+  document.addEventListener('shopify:section:unload', boot);
 })();

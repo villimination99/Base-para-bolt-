@@ -36,26 +36,34 @@
     {%- endif -%}
   </div>
 
+  {%- comment -%}
+    Dos capas a proposito: la de fuera lleva la revelacion al entrar en pantalla
+    (data-reveal escribe transform y opacity) y la de dentro lleva el
+    desplazamiento del scroll. Si compartieran elemento, .reveal-init.is-visible
+    pondria transform:none y borraria el efecto de scroll.
+  {%- endcomment -%}
   <div class="hero-content hero-shader-content" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-    {%- if section.settings.eyebrow != blank -%}
-      <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
-    {%- endif -%}
-    {%- if section.settings.title != blank -%}
-      <h1 class="hero-title">{{ section.settings.title }}</h1>
-    {%- endif -%}
-    {%- if section.settings.subtitle != blank -%}
-      <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
-    {%- endif -%}
-    {%- if section.settings.button_label != blank -%}
-      <div class="hero-ctas">
-        <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
-          {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
-        </a>
-        {%- if section.settings.button2_label != blank -%}
-          <a href="{{ section.settings.button2_url | default: routes.root_url }}" class="btn btn-outline btn-lg">{{ section.settings.button2_label }}</a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    <div class="hero-shader-shift">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h1 class="hero-title">{{ section.settings.title }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <div class="hero-ctas">
+          <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+            {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
+          </a>
+          {%- if section.settings.button2_label != blank -%}
+            <a href="{{ section.settings.button2_url | default: routes.root_url }}" class="btn btn-outline btn-lg">{{ section.settings.button2_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 
   {%- if section.settings.show_hint -%}

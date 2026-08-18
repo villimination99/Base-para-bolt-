@@ -437,5 +437,11 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .hero-shader .hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}
 .hero-shader-hint{position:absolute;left:50%;bottom:1.4rem;transform:translateX(-50%);z-index:1;color:var(--hs-c2,#00d4ff);opacity:.65;animation:hsHint 2.2s ease-in-out infinite;pointer-events:none}
 .hero-shader-hint svg{width:26px;height:26px}
-@keyframes hsHint{0%,100%{transform:translateX(-50%) translateY(0);opacity:.4}50%{transform:translateX(-50%) translateY(7px);opacity:.9}}
+@keyframes hsHint{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
 @media (prefers-reduced-motion:reduce){.hero-shader-hint{animation:none}}
+/* El contenido del hero se eleva y se atenua a medida que se baja. El valor
+   --hs-scroll (0 a 1) lo publica hero-shader.js desde su propio bucle, asi que
+   no hace falta un segundo escuchador de scroll. */
+.hero-shader-shift{transform:translateY(calc(var(--hs-scroll,0) * -34px));opacity:calc(1 - var(--hs-scroll,0) * 0.55);will-change:transform,opacity}
+.hero-shader-hint{opacity:calc(0.7 - var(--hs-scroll,0) * 0.7);transition:opacity .3s linear}
+@media (prefers-reduced-motion:reduce){.hero-shader-shift{transform:none;opacity:1}}
