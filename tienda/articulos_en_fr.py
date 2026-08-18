@@ -1974,6 +1974,8 @@ employé, et les deux positions sont cohérentes avec elles-mêmes.</p>
 }
 
 
+_ENLACES = re.compile(r'href="(/[^"]*)"')
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
@@ -2329,13 +2331,18 @@ def comprobar() -> list:
                             f"{handle} [{lengua}] · el castellano dice "
                             f"{dice.group(1)} páginas y el PDF tiene {real}")
             # el cuerpo compuesto no puede llevar enlaces sin prefijo de
-            # idioma: mandarían al comprador a la versión castellana
+            # idioma: mandarían al comprador a la versión castellana.
+            # Esto enumeraba tres prefijos conocidos —products, blogs,
+            # collections— y por eso no veía `/pages/`. Por ahí se coló el
+            # enlace de contacto de la FAQ, que estuvo publicado en inglés
+            # y en francés apuntando a la página castellana. Enumerar los
+            # casos conocidos no es comprobar la regla: ahora vale
+            # cualquier ruta.
             texto = cuerpo(handle, lengua)
-            for trozo in ('href="/products/', 'href="/blogs/',
-                          'href="/collections/'):
-                if trozo in texto:
+            for destino in _ENLACES.findall(texto):
+                if not destino.startswith(f"/{lengua}/"):
                     malos.append(f"{handle} [{lengua}] · enlace sin prefijo "
-                                 f"de idioma: {trozo}")
+                                 f"de idioma: {destino}")
     return malos
 
 

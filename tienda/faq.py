@@ -25,6 +25,7 @@ y `comprobar()` no deja publicar ninguna hasta que su dato exista.
 
 import json
 import os
+import re
 import sys
 import urllib.request
 
@@ -237,13 +238,13 @@ PREGUNTAS = [
         "que buscas, pregunta antes de comprar; contestar eso es más barato "
         "para todos que una devolución."),
  "en": ("I have a question that is not here.",
-        "Write to us from <a href=\"/pages/contact\">Contact</a> or reply to "
-        "any of our emails: <strong>a person reads them</strong>. If it is "
-        "about a measurement, a size or whether a document covers what you are "
-        "after, ask before buying; answering that is cheaper for everyone than "
-        "a return."),
+        "Write to us from <a href=\"/en/pages/contact\">Contact</a> or reply "
+        "to any of our emails: <strong>a person reads them</strong>. If it "
+        "is about a measurement, a size or whether a document covers what "
+        "you are after, ask before buying; answering that is cheaper for "
+        "everyone than a return."),
  "fr": ("J'ai une question qui n'est pas ici.",
-        "Écrivez-nous depuis <a href=\"/pages/contact\">Contact</a> ou "
+        "Écrivez-nous depuis <a href=\"/fr/pages/contact\">Contact</a> ou "
         "répondez à l'un de nos courriels : <strong>une personne les "
         "lit</strong>. Si cela concerne une dimension, une taille ou si un "
         "document couvre ce que vous cherchez, demandez avant d'acheter ; y "
@@ -282,6 +283,9 @@ PROHIBIDAS = ("cura", "mejora tu salud", "quema grasa", "garantizado",
               "brûle les graisses", "garanti", "miracle")
 
 
+_ENLACES = re.compile(r'href="(/[^"]*)"')
+
+
 def comprobar() -> list:
     malos = []
     vistos = set()
@@ -306,6 +310,16 @@ def comprobar() -> list:
             for mal in ("VIllumination", "Villuminations"):
                 if mal in pregunta + respuesta:
                     malos.append(f"{clave}/{lengua} · marca mal escrita")
+            # Un enlace escrito sin prefijo de idioma manda al comprador a la
+            # versión castellana desde una página inglesa. Shopify no lo
+            # arregla: lo que va en el cuerpo sale tal cual. Pasó aquí.
+            for destino in _ENLACES.findall(pregunta + respuesta):
+                if lengua != "es" and not destino.startswith(f"/{lengua}/"):
+                    malos.append(f"{clave}/{lengua} · enlace sin prefijo de "
+                                 f"idioma: {destino}")
+                if lengua == "es" and destino.startswith(("/en/", "/fr/")):
+                    malos.append(f"{clave}/{lengua} · enlace a otra lengua: "
+                                 f"{destino}")
     for lengua in LENGUAS:
         t, d = META[lengua]
         if len(t) > 60:

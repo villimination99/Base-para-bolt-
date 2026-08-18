@@ -77,7 +77,14 @@ python3 tienda/traducir.py            # las registra
 python3 tienda/blog.py --ensayo       # ídem con los artículos
 python3 tienda/traducir_blog.py --ensayo   # el Diario en inglés y francés
 python3 tienda/despegue.py            # ¿puede cobrar, enviar y entregar?
+python3 tienda/cotejar.py             # ¿dice la tienda lo que dice el repositorio?
 ```
+
+`cotejar.py` es el que faltaba: `auditar.py` cruza ficheros del repositorio y
+ninguno cruzaba el repositorio con la tienda. Compara byte a byte las noventa
+traducciones del Diario y las de la FAQ, exige el prefijo de idioma en cada
+enlace de las cuatro superficies, mira `outdated` y avisa de lo que está
+traducido a una lengua y no a la otra. **Solo lee.**
 
 `despegue.py` **solo lee**: no tiene una sola mutación. Contesta de una vez las
 preguntas que no se deducen del repositorio —si hay pasarela, si hay zonas de
@@ -154,6 +161,24 @@ destino existe. Los dos que estaban publicados desde antes tenían guardada la
 cita sin ancla, y desde la tienda no se nota —el texto se lee bien— así que hay
 que acordarse. Al traducir uno nuevo se vuelven a registrar los que lo enlazan;
 registrar los nueve de golpe sale más barato que averiguar cuáles son.
+
+**Un enlace de un texto traducido lleva su prefijo de idioma.** Shopify no
+reescribe lo que va dentro de un cuerpo: `href="/pages/contact"` sale tal cual,
+así que desde una página inglesa manda al comprador a la castellana. La guarda
+existía en `articulos_en_fr.py`, pero enumeraba tres prefijos conocidos
+—`/products/`, `/blogs/`, `/collections/`— en vez de comprobar la regla, y por
+eso no veía `/pages/`. Estuvieron publicados así ocho enlaces: los dos de la
+FAQ, cuatro de «cómo se hace» y dos de la colección de suplementos. Ahora las
+dos guardas —`faq.comprobar()` y `articulos_en_fr.comprobar()`— valen para
+cualquier ruta, y las dos muerden también al revés: un `/en/` dentro del
+castellano. **Enumerar los casos conocidos no es comprobar la regla.**
+
+**Hay texto que solo vive en la tienda.** Los cuerpos traducidos de las seis
+colecciones y de las páginas «cómo se hace», VI.P y «tus opciones de
+privacidad» se escribieron directamente en el panel: no hay fuente aquí que los
+regenere ni comprobación que los mida, y por eso el fallo de los enlaces vivió
+en ellos sin que nadie lo viera. `cotejar.py` los enumera al final para que
+conste de qué no responde el repositorio.
 
 ## La API de Shopify, en corto
 
@@ -266,7 +291,14 @@ Lo que costó descubrir y no está en ningún sitio evidente:
    `correos.py` no tienen a quién escribir: no hay punto de captura de correo
    en la tienda. Tampoco hay píxel de Meta ni etiqueta de Google, así que
    correr anuncios hoy sería pagar sin poder medir cuál vende.
-9. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
+9. **Tres superficies a medio traducir**, que encontró `cotejar.py` y que
+   nada vigilaba: el artículo `creatina` tiene cuerpo, título y
+   metadescripción en inglés y nada en francés; el artículo `app`, solo el
+   título en inglés; y la página VI.P, cuerpo y título en inglés y nada en
+   francés. Ninguno de los tres tiene fuente en el repositorio, así que
+   completarlos es escribir texto, no ejecutar un script. Media traducción es
+   peor que ninguna: o se termina o se quita.
+10. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
    apunta a él, y aun así `/blogs/suplementos` es una página indexable sin
    contenido. O se llena o se borra desde el panel; no se ha tocado porque
    borrar no se deshace.
