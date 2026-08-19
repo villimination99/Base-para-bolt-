@@ -493,6 +493,138 @@ check('Nombres de panel y seccion', () => {
   return bad;
 });
 
+check('Reglas CSS pisadas por una animacion', () => {
+  /* Una @keyframes que anima una propiedad la impone por encima de cualquier
+     declaracion normal del mismo selector: esa declaracion queda muerta y el
+     efecto que promete no ocurre nunca. Fue el fallo de la flecha del hero,
+     cuya opacidad de scroll no se veia porque la animacion tambien la movia. */
+  const css = read(`${T}/assets/villumination.css`).replace(/\/\*[\s\S]*?\*\//g, '');
+  const kf = {};
+  for (const m of css.matchAll(/@keyframes\s+([\w-]+)\s*\{/g)) {
+    let depth = 0, end = m.index + m[0].length - 1;
+    for (let j = m.index + m[0].length - 1; j < css.length; j++) {
+      if (css[j] === '{') depth++;
+      else if (css[j] === '}') { depth--; if (depth === 0) { end = j; break; } }
+    }
+    const props = new Set();
+    for (const d of css.slice(m.index + m[0].length, end).matchAll(/(^|[{;\s])([a-z-]+)\s*:/g)) props.add(d[2]);
+    kf[m[1]] = props;
+  }
+  const bySel = {};
+  for (const m of css.matchAll(/([^{}@][^{}]*)\{([^{}]*)\}/g)) {
+    const decls = {};
+    for (const d of m[2].split(';')) { const k = d.indexOf(':'); if (k > 0) decls[d.slice(0, k).trim()] = d.slice(k + 1).trim(); }
+    for (const sel of m[1].split(',').map(x => x.trim()).filter(Boolean)) {
+      if (/^\d|^(from|to)$/.test(sel)) continue;
+      (bySel[sel] = bySel[sel] || []).push(decls);
+    }
+  }
+  const bad = [];
+  for (const [sel, list] of Object.entries(bySel)) {
+    const animated = new Set();
+    for (const d of list) {
+      const a = d.animation || d['animation-name'];
+      if (!a) continue;
+      for (const tok of a.split(/[\s,]+/)) if (kf[tok]) for (const p of kf[tok]) animated.add(p);
+    }
+    if (!animated.size) continue;
+    for (const d of list) {
+      if (d.animation || d['animation-name']) continue;
+      for (const p of Object.keys(d))
+        if (animated.has(p) && !/!important/.test(d[p]))
+          bad.push(`${sel} { ${p}: ${d[p].slice(0, 40)} } lo pisa su propia @keyframes`);
+    }
+  }
+  return bad;
+});
+
+check('Transform pisado por data-reveal', () => {
+  /* .reveal-init.is-visible aplica transform:none con especificidad 0-2-0.
+     Cualquier regla de igual o menor peso escrita antes queda anulada mientras
+     el elemento conserve reveal-init. Fue el fallo del contenido del hero. */
+  const css = read(`${T}/assets/villumination.css`).replace(/\/\*[\s\S]*?\*\//g, '');
+  const posReveal = css.indexOf('.reveal-init.is-visible{');
+  if (posReveal < 0) return [];
+  const spec = sel => (sel.match(/#[\w-]+/g) || []).length * 100
+    + (sel.match(/\.[\w-]+|\[[^\]]+\]|:[a-z-]+(?!\()/g) || []).length * 10;
+  const rules = [];
+  for (const m of css.matchAll(/([^{}@][^{}]*)\{([^{}]*)\}/g)) {
+    const decls = {};
+    for (const d of m[2].split(';')) { const k = d.indexOf(':'); if (k > 0) decls[d.slice(0, k).trim()] = d.slice(k + 1).trim(); }
+    for (const sel of m[1].split(',').map(x => x.trim()).filter(Boolean)) {
+      if (/^\d|^(from|to)$/.test(sel)) continue;
+      rules.push({ pos: m.index, sel, decls });
+    }
+  }
+  const clases = new Set();
+  for (const f of liquids())
+    for (const tag of read(f).matchAll(/<\w+\b[^>]*data-reveal[^>]*>/g)) {
+      const cm = tag[0].match(/class="([^"]*)"/);
+      if (cm) for (const c of cm[1].split(/\s+/)) if (/^[\w-]+$/.test(c)) clases.add(c);
+    }
+  const bad = [];
+  for (const c of clases)
+    for (const r of rules) {
+      if (!r.sel.startsWith('.' + c)) continue;
+      const rest = r.sel.slice(c.length + 1);
+      if (/^[\w-]/.test(rest) || /[\s>+~]/.test(rest)) continue;
+      for (const p of ['transform', 'opacity']) {
+        if (!r.decls[p] || /!important/.test(r.decls[p])) continue;
+        const sp = spec(r.sel);
+        if (sp < 20 || (sp === 20 && r.pos < posReveal))
+          bad.push(`${r.sel} { ${p} } lo anula .reveal-init.is-visible`);
+      }
+    }
+  return [...new Set(bad)];
+});
+
+check('Transform declarado dos veces en el mismo selector', () => {
+  /* Dos reglas con el MISMO selector que declaran transform: la primera no se
+     ve nunca. Suele ser un rediseno a medias que dejo viva la promesa de un
+     efecto que ya no ocurre (paso con .btn-primary:hover y .btn-outline:hover,
+     donde el scale(1.05) estaba muerto desde hacia rondas). */
+  const css = read(`${T}/assets/villumination.css`).replace(/\/\*[\s\S]*?\*\//g, '');
+  // Fuera los bloques @: @keyframes tiene pasos "50%" que no son selectores y
+  // @media es otro contexto, comparar entre contextos daria falsos positivos.
+  const top = [];
+  for (let i = 0; i < css.length;) {
+    while (i < css.length && /\s/.test(css[i])) i++; // sin esto, un @ precedido de un salto de linea se colaba como selector
+    if (css[i] === '@') {
+      const j = css.indexOf('{', i);
+      if (j < 0) break;
+      let d = 0, k = j;
+      for (; k < css.length; k++) {
+        if (css[k] === '{') d++;
+        else if (css[k] === '}') { d--; if (d === 0) break; }
+      }
+      i = k + 1; continue;
+    }
+    const j = css.indexOf('{', i);
+    if (j < 0) break;
+    const close = css.indexOf('}', i);
+    if (close >= 0 && close < j) { i = close + 1; continue; }
+    const k = css.indexOf('}', j);
+    if (k < 0) break;
+    top.push([css.slice(i, j), css.slice(j + 1, k)]);
+    i = k + 1;
+  }
+  const bySel = {};
+  for (const [group, body] of top) {
+    const m = body.match(/(^|;)\s*transform\s*:\s*([^;]+)/);
+    if (!m) continue;
+    for (const sel of group.split(',').map(x => x.trim()).filter(Boolean))
+      (bySel[sel] = bySel[sel] || []).push(m[2].trim());
+  }
+  const bad = [];
+  for (const [sel, vals] of Object.entries(bySel)) {
+    if (vals.length < 2) continue;
+    for (let i = 0; i < vals.length - 1; i++)
+      if (vals[i] !== vals[i + 1] && !/!important/.test(vals[i]))
+        bad.push(`${sel}: "${vals[i].slice(0, 38)}" no se ve, lo redefine "${vals[i + 1].slice(0, 38)}"`);
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

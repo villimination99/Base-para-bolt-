@@ -6,7 +6,8 @@
   a Google, cosa que la justicia europea considera incompatible con el RGPD.
 {%- endcomment -%}
 {%- if settings.use_display_font -%}
-  {{ 'orbitron-variable.woff2' | asset_url | preload_tag: as: 'font' }}
+  {%- comment -%} type: el navegador descarta el precargado si no soporta el formato. preload_tag ya pone crossorigin="anonymous" solo cuando as es font: anadirlo a mano lo duplicaria. {%- endcomment -%}
+  {{ 'orbitron-variable.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
   {%- style -%}
     @font-face {
       font-family: 'Orbitron';

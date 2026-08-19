@@ -37,13 +37,52 @@
   mod(function () {
     var els = $all('[data-reveal]').filter(function (e) { return once(e, 'reveal'); });
     if (!els.length) return;
-    function showAll() { els.forEach(function (el) { el.classList.add('is-visible'); el.classList.remove('reveal-init'); }); }
+
+    // Al terminar la transición se quita reveal-init. Antes se quedaba puesta
+    // para siempre en todo lo revelado al bajar, y con ella su
+    // "transform:none" y su "transition .7s", que podían anular el hover de la
+    // tarjeta y ralentizarlo. La clase solo debe vivir mientras dura la entrada.
+    function settle(el) {
+      if (!el.classList.contains('reveal-init')) return;
+      var done = false;
+      var clear = function () {
+        if (done) return;
+        done = true;
+        el.classList.remove('reveal-init');
+        el.style.transitionDelay = '';
+      };
+      el.addEventListener('transitionend', clear, { once: true });
+      setTimeout(clear, 1400); // red de seguridad si la transición no llega a lanzarse
+    }
+
+    // Escalonado independiente de quien revele. Todo lo que se destapa dentro
+    // del mismo fotograma entra en el mismo lote y recibe un retardo creciente,
+    // asi las tarjetas de una fila aparecen una detras de otra en vez de todas
+    // a la vez. El contador se reinicia solo al fotograma siguiente.
+    var STEP = 70, MAX = 420, lote = 0, loteRaf = 0;
+    function show(el) {
+      if (el.classList.contains('reveal-init')) {
+        if (lote > 0) el.style.transitionDelay = Math.min(lote * STEP, MAX) + 'ms';
+        lote++;
+        if (!loteRaf) loteRaf = requestAnimationFrame(function () { loteRaf = 0; lote = 0; });
+      }
+      el.classList.add('is-visible');
+      settle(el);
+    }
+    function showAll() { els.forEach(show); }
+
     // If reveal is off, reduced motion, or no observer support → just show everything.
     if (!settings.scrollReveal || reduce || !('IntersectionObserver' in window)) { showAll(); return; }
     var vh = window.innerHeight || 800;
+
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        show(e.target);
+        io.unobserve(e.target);
+      });
     }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+
     els.forEach(function (el) {
       var rect = el.getBoundingClientRect();
       // Never hide anything already on screen or taller than the viewport (that is
@@ -52,9 +91,69 @@
       el.classList.add('reveal-init');
       io.observe(el);
     });
-    // Absolute safety net — reveal any stragglers a moment after load.
-    setTimeout(showAll, 2500);
-    window.addEventListener('load', function () { setTimeout(showAll, 300); });
+
+    // Red de seguridad. Antes era un showAll() 300 ms despues de load, y eso
+    // revelaba TODA la pagina de golpe: el observador no llegaba a intervenir
+    // nunca y la animacion de entrada, en la practica, no existia. Ahora la
+    // red solo destapa lo que el visitante ya puede ver; lo que sigue mas
+    // abajo se queda para el observador, que es de quien es el trabajo.
+    // Como ademas se repasa al desplazar, si el observador fallara nada
+    // quedaria escondido: al llegar a la altura de un elemento, se muestra.
+    // El repaso va a paso lento a proposito (cada 400 ms como mucho). Es una
+    // red, no el mecanismo: si se ejecutara en cada fotograma le ganaria la
+    // carrera al observador, mediria el tamano de todo lo pendiente en cada
+    // desplazamiento y ademas revelaria filas enteras fuera de su lote.
+    var sweepT = 0;
+    function sweep() {
+      sweepT = 0;
+      var alto = window.innerHeight || 800;
+      for (var i = els.length - 1; i >= 0; i--) {
+        var el = els[i];
+        if (el.classList.contains('is-visible')) { els.splice(i, 1); continue; }
+        if (el.getBoundingClientRect().top < alto) show(el);
+      }
+      if (!els.length) window.removeEventListener('scroll', onScroll);
+    }
+    function onScroll() { if (!sweepT) sweepT = setTimeout(sweep, 400); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    setTimeout(sweep, 2500);
+    window.addEventListener('load', function () { setTimeout(sweep, 300); });
+  });
+
+  /* ============ 1b. Barra de progreso de lectura ============
+     Linea de neon arriba del todo que avanza segun se baja. Se inyecta desde
+     aqui a proposito: asi no hay que tocar theme.liquid, que es el archivo del
+     que depende que la tienda entera se pinte. No se apaga con movimiento
+     reducido porque no es decoracion: informa de cuanto queda de pagina.
+     Solo se mueve una vez por fotograma y solo escribe cuando el valor cambia. */
+  mod(function () {
+    if (!settings.scrollBar) return;
+    if (!once(document.body, 'progressbar')) return;
+    var bar = document.createElement('div');
+    bar.className = 'read-progress';
+    bar.setAttribute('role', 'presentation');
+    document.body.appendChild(bar);
+
+    var raf = 0, last = -1;
+    function paint() {
+      raf = 0;
+      var doc = document.documentElement;
+      // clientHeight y no innerHeight: innerHeight incluye la barra de
+      // desplazamiento horizontal, y entonces la barra no llegaba al final.
+      var max = doc.scrollHeight - doc.clientHeight;
+      // Paginas que no llegan a una pantalla: no hay nada que medir.
+      if (max <= 8) { if (last !== 0) { last = 0; bar.style.transform = 'scaleX(0)'; } return; }
+      var v = (window.scrollY || doc.scrollTop || 0) / max;
+      v = v < 0 ? 0 : (v > 1 ? 1 : v);
+      var r = Math.round(v * 1000) / 1000;
+      if (r === last) return;
+      last = r;
+      bar.style.transform = 'scaleX(' + r + ')';
+    }
+    function request() { if (!raf) raf = requestAnimationFrame(paint); }
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    paint();
   });
 
   /* ============ 2. Parallax ============ */
@@ -83,14 +182,101 @@
     if (!settings.cardTilt || reduce || window.matchMedia('(hover: none)').matches) return;
     $all('.js-tilt').forEach(function (card) {
       if (!once(card, 'tilt')) return;
-      card.addEventListener('pointermove', function (e) {
+      var raf = 0, cx = 0, cy = 0;
+      function paint() {
+        raf = 0;
+        // Medir aqui y no en el evento: el rectangulo cambia si la pagina se
+        // desplaza con el puntero encima, y asi se paga un solo recalculo de
+        // maqueta por fotograma en lugar de uno por evento.
         var r = card.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
+        if (!r.width || !r.height) return;
+        var px = (cx - r.left) / r.width - 0.5;
+        var py = (cy - r.top) / r.height - 0.5;
         card.style.transform = 'perspective(700px) rotateY(' + (px * 7).toFixed(2) + 'deg) rotateX(' + (-py * 7).toFixed(2) + 'deg) translateZ(0)';
+      }
+      card.addEventListener('pointermove', function (e) {
+        // pointermove llega cientos de veces por segundo; solo se anota la
+        // posicion y se pinta una vez por fotograma.
+        cx = e.clientX; cy = e.clientY;
+        if (!raf) raf = requestAnimationFrame(paint);
       });
-      card.addEventListener('pointerleave', function () { card.style.transform = ''; });
+      card.addEventListener('pointerleave', function () {
+        if (raf) { cancelAnimationFrame(raf); raf = 0; }
+        card.style.transform = '';
+      });
     });
+  });
+
+  /* ============ 3b. Botones magneticos ============
+     Los botones principales se inclinan hacia el cursor cuando esta cerca y
+     vuelven a su sitio al alejarse. Solo con raton, nunca con movimiento
+     reducido, y con un solo escuchador en el documento en lugar de uno por
+     boton. Se escribe en --mag-x/--mag-y, no en transform, para no borrar el
+     levantamiento del :hover que ya define la hoja de estilos. */
+  mod(function () {
+    if (reduce || !settings.cardTilt) return;
+    if (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) return;
+    if (!once(document.body, 'magnetic')) return;
+
+    var SEL = '.btn-primary, .btn-lg.btn-outline';
+    var RADIO = 78;    // px desde el borde del boton a los que empieza a notarse
+    var FUERZA = 0.26; // cuanto se deja arrastrar
+
+    // Las posiciones se miden UNA vez y se guardan en coordenadas de documento.
+    // Al desplazar la pagina solo cambia scrollY, que ya conocemos: asi no hay
+    // ni una sola lectura de maqueta dentro del bucle de movimiento.
+    var cache = [], caduca = true, raf = 0, mx = 0, my = 0, activos = [];
+    function medir() {
+      caduca = false;
+      var sx = window.scrollX || 0, sy = window.scrollY || 0;
+      cache = $all(SEL).map(function (el) {
+        var r = el.getBoundingClientRect();
+        return { el: el, x: r.left + sx + r.width / 2, y: r.top + sy + r.height / 2, w: r.width, h: r.height };
+      }).filter(function (o) { return o.w > 0; });
+    }
+    function invalidar() { caduca = true; request(); }
+
+    function paint() {
+      raf = 0;
+      if (caduca) medir();
+      var sx = window.scrollX || 0, sy = window.scrollY || 0;
+      var vh = window.innerHeight, vw = window.innerWidth;
+      var siguen = [];
+      for (var i = 0; i < cache.length; i++) {
+        var o = cache[i];
+        var cx = o.x - sx, cy = o.y - sy;
+        if (cy < -RADIO || cy > vh + RADIO || cx < -RADIO || cx > vw + RADIO) continue;
+        var dx = mx - cx, dy = my - cy;
+        // Distancia al borde, no al centro: el tiron no depende de lo ancho
+        // que sea el boton.
+        var ex = Math.max(0, Math.abs(dx) - o.w / 2);
+        var ey = Math.max(0, Math.abs(dy) - o.h / 2);
+        if (ex * ex + ey * ey > RADIO * RADIO) continue;
+        o.el.style.setProperty('--mag-x', (dx * FUERZA).toFixed(1) + 'px');
+        o.el.style.setProperty('--mag-y', (dy * FUERZA).toFixed(1) + 'px');
+        siguen.push(o.el);
+      }
+      for (var j = 0; j < activos.length; j++)
+        if (siguen.indexOf(activos[j]) === -1) soltar(activos[j]);
+      activos = siguen;
+    }
+    function soltar(el) { el.style.removeProperty('--mag-x'); el.style.removeProperty('--mag-y'); }
+    function request() { if (!raf) raf = requestAnimationFrame(paint); }
+
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      mx = e.clientX; my = e.clientY;
+      request();
+    }, { passive: true });
+    document.addEventListener('pointerleave', function () {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      activos.forEach(soltar);
+      activos = [];
+    });
+    window.addEventListener('resize', invalidar);
+    // El editor y el carrito lateral cambian el HTML: hay que volver a medir.
+    document.addEventListener('shopify:section:load', invalidar);
+    medir();
   });
 
   /* ============ 4. Seasonal floating effects ============ */

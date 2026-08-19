@@ -163,6 +163,7 @@
         locale: {{ request.locale.iso_code | json }},
         ambient: {{ settings.ambient_bg | default: 'full' | json }},
         cursorGlow: {{ settings.cursor_glow | default: false }},
+        scrollBar: {{ settings.scroll_progress | default: false }},
         moneyFormat: {{ shop.money_format | json }}
       },
       strings: {

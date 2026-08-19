@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.10.0",
+    "theme_version": "4.11.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -52,6 +52,7 @@
       { "type": "checkbox", "id": "enable_parallax", "label": "Parallax", "default": true },
       { "type": "checkbox", "id": "enable_card_tilt", "label": "Inclinación 3D de tarjetas", "default": true },
       { "type": "checkbox", "id": "cursor_glow", "label": "Luz de neón que sigue el cursor (PC)", "default": true, "info": "Se desactiva solo en móvil/táctil." },
+      { "type": "checkbox", "id": "scroll_progress", "label": "Barra de progreso de lectura", "default": true, "info": "Línea fina de neón arriba del todo que avanza según se baja por la página." },
       {
         "type": "select",
         "id": "ambient_bg",

@@ -71,9 +71,20 @@
   /* ---------- Navbar scroll ---------- */
   var navbar = $('.navbar');
   if (navbar) {
-    var onScroll = function () { navbar.classList.toggle('scrolled', window.scrollY > 40); };
+    // El evento scroll llega decenas de veces por segundo. Se apunta y se
+    // resuelve una vez por fotograma, y solo se toca el DOM si el estado
+    // cambia de verdad: tocar classList obliga a recalcular estilos.
+    var navRaf = 0, navOn = null;
+    var apply = function () {
+      navRaf = 0;
+      var want = window.scrollY > 40;
+      if (want === navOn) return;
+      navOn = want;
+      navbar.classList.toggle('scrolled', want);
+    };
+    var onScroll = function () { if (!navRaf) navRaf = requestAnimationFrame(apply); };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    apply();
   }
 
   /* ---------- Mobile menu ---------- */
