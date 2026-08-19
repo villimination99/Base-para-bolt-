@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.11.0",
+    "theme_version": "4.12.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -200,6 +200,7 @@
       { "type": "image_picker", "id": "logo", "label": "Logo" },
       { "type": "range", "id": "logo_height", "min": 24, "max": 90, "step": 2, "unit": "px", "label": "Altura del logo", "default": 44 },
       { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "Imagen cuadrada, mínimo 32×32 px. Aparece en la pestaña del navegador." },
+      { "type": "image_picker", "id": "share_image", "label": "Imagen para compartir", "info": "La que sale al pegar el enlace de la tienda en WhatsApp, Facebook, X o Discord. Usa 1200x630 px. Si la dejas vacía se usa el logo; si tampoco hay logo, la tarjeta sale sin imagen." },
       { "type": "text", "id": "brand_display_name", "label": "Nombre de marca (si no hay logo)", "default": "VILLUMINATION" },
       { "type": "text", "id": "brand_display_suffix", "label": "Sufijo del nombre" },
       { "type": "text", "id": "brand_tagline", "label": "Eslogan", "default": "Transforma tu cuerpo. Domina tu mente." }
@@ -242,7 +243,7 @@
       { "type": "checkbox", "id": "cart_cross_sell", "label": "Sugerir productos en el carrito", "default": true, "info": "Muestra hasta 2 productos de la misma colección con botón para añadirlos." },
       { "type": "text", "id": "cart_cross_sell_title", "label": "Título de las sugerencias", "default": "Completa tu compra" },
       { "type": "header", "content": "Barra de envío gratis" },
-      { "type": "number", "id": "cart_free_shipping_threshold", "label": "Umbral de envío gratis", "info": "Importe sin símbolo. Muestra una barra de progreso. Vacío o 0 = desactivado. Configura también el envío gratis real en Configuración → Envíos." }
+      { "type": "number", "id": "cart_free_shipping_threshold", "label": "Umbral de envío gratis", "info": "APAGADO por defecto: déjalo vacío y no se muestra nada. Si algún día quieres regalar el envío, escribe aquí el importe sin símbolo (ej. 75) y aparecerá una barra de progreso en el carrito y en el carrito lateral. Recuerda crear también la tarifa real en Configuración → Envíos: esta barra solo cuenta, no descuenta." }
     ]
   },
   {

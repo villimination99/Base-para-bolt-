@@ -74,16 +74,39 @@
     // El evento scroll llega decenas de veces por segundo. Se apunta y se
     // resuelve una vez por fotograma, y solo se toca el DOM si el estado
     // cambia de verdad: tocar classList obliga a recalcular estilos.
-    var navRaf = 0, navOn = null;
+    var navRaf = 0, navOn = null, annH = 0, navTop = null;
+
+    // Alto de la barra de anuncios. La barra de navegacion es fija en top:0 y
+    // tapaba el anuncio por completo: quien lo escribiera no lo veia nadie.
+    // Se mide aqui y se publica como --nav-top, que baja a 0 conforme se
+    // desplaza, asi el anuncio se lee arriba y la barra acaba pegada al borde.
+    var ann = $('.announcement-bar');
+    function medirAnn() {
+      annH = ann ? ann.getBoundingClientRect().height : 0;
+      navTop = null; // fuerza a reescribir la variable en el proximo fotograma
+    }
+    if (ann && 'ResizeObserver' in window) new ResizeObserver(medirAnn).observe(ann);
+
     var apply = function () {
       navRaf = 0;
-      var want = window.scrollY > 40;
-      if (want === navOn) return;
-      navOn = want;
-      navbar.classList.toggle('scrolled', want);
+      var y = window.scrollY || 0;
+      var want = y > 40;
+      if (want !== navOn) {
+        navOn = want;
+        navbar.classList.toggle('scrolled', want);
+      }
+      if (annH > 0) {
+        var t = Math.max(0, Math.round(annH - y));
+        if (t !== navTop) {
+          navTop = t;
+          document.documentElement.style.setProperty('--nav-top', t + 'px');
+        }
+      }
     };
     var onScroll = function () { if (!navRaf) navRaf = requestAnimationFrame(apply); };
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { medirAnn(); onScroll(); });
+    medirAnn();
     apply();
   }
 
@@ -1012,6 +1035,46 @@
       { name: 'model-viewer-ui', version: '1.0', onLoad: function (errors) { if (!errors) initModelViewers(); } },
       { name: 'shopify-xr', version: '1.0', onLoad: function (errors) { if (!errors) setupXR(); } }
     ]);
+  });
+
+  /* ---------- Recomendaciones de producto ----------
+     Las elige Shopify; aqui solo se piden. Se traen con la API de renderizado
+     de secciones y solo cuando el bloque esta a punto de entrar en pantalla,
+     asi la ficha de producto no espera por ellas. Si Shopify no devuelve nada
+     util, el contenedor se retira entero y no queda un hueco en la pagina. */
+  mod(function () {
+    $all('[data-recos]').forEach(function (host) {
+      if (!once(host, 'recos')) return;
+      var url = host.getAttribute('data-url');
+      if (!url) return;
+
+      function traer() {
+        fetch(url)
+          .then(function (r) { return r.ok ? r.text() : Promise.reject(r.status); })
+          .then(function (html) {
+            var caja = document.createElement('div');
+            caja.innerHTML = html;
+            var dentro = caja.querySelector('[data-recos]');
+            if (dentro && dentro.innerHTML.trim()) {
+              host.innerHTML = dentro.innerHTML;
+              // Las tarjetas recien llegadas necesitan que se les enganchen
+              // los efectos y el anadir-al-carrito, igual que a las demas.
+              document.dispatchEvent(new CustomEvent('shopify:section:load'));
+            } else {
+              host.remove();
+            }
+          })
+          .catch(function () { host.remove(); });
+      }
+
+      if (!('IntersectionObserver' in window)) { traer(); return; }
+      var io = new IntersectionObserver(function (en) {
+        if (!en[0] || !en[0].isIntersecting) return;
+        io.disconnect();
+        traer();
+      }, { rootMargin: '0px 0px 300px 0px' });
+      io.observe(host);
+    });
   });
 
   /* ---------- Recently viewed (localStorage, no server/app needed) ---------- */

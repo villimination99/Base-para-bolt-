@@ -75,6 +75,10 @@
       "example": "Producto de ejemplo",
       "reviews": "reseñas",
       "drag_to_rotate": "Arrastra para girar"
+    },
+    "recommendations": {
+      "related": "También te puede gustar",
+      "complementary": "Combínalo con"
     }
   },
   "collections": {

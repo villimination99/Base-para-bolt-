@@ -75,6 +75,10 @@
       "example": "Example product",
       "reviews": "reviews",
       "drag_to_rotate": "Drag to rotate"
+    },
+    "recommendations": {
+      "related": "You may also like",
+      "complementary": "Pair it with"
     }
   },
   "collections": {

@@ -1,0 +1,66 @@
+{%- comment -%}
+  Recomendaciones de producto servidas por el propio Shopify: no hace falta
+  ninguna aplicacion ni configurar nada a mano. Dos intenciones distintas,
+  segun lo que elija el comerciante:
+
+    related        "Tambien te puede gustar" — Shopify decide, a partir de lo
+                   que compran juntos los clientes y de lo que se parece.
+    complementary  "Combinalo con" — solo sale si en Shopify se han marcado
+                   productos complementarios para esta ficha.
+
+  El bloque se pide aparte con la API de renderizado de secciones y solo
+  cuando esta a punto de verse, para que no retrase la ficha de producto. Si
+  Shopify no devuelve nada, la seccion no ocupa sitio: no se pinta un hueco.
+{%- endcomment -%}
+{%- liquid
+  assign intencion = section.settings.intent | default: 'related'
+  assign cuantos = section.settings.limit | default: 4
+  assign ruta = routes.product_recommendations_url
+-%}
+<div class="product-recommendations section-padding"
+     data-recos
+     data-url="{{ ruta }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ cuantos }}&intent={{ intencion }}">
+  {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+    <div class="container">
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="section-title">
+          {%- if section.settings.title != blank -%}
+            {{ section.settings.title }}
+          {%- elsif recommendations.intent == 'complementary' -%}
+            {{ 'products.recommendations.complementary' | t }}
+          {%- else -%}
+            {{ 'products.recommendations.related' | t }}
+          {%- endif -%}
+        </h2>
+      </div>
+      <div class="product-grid">
+        {%- for product in recommendations.products -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Recomendaciones",
+  "tag": "section",
+  "settings": [
+    { "type": "paragraph", "content": "Las elige Shopify a partir del comportamiento de tus clientes. No hay nada que rellenar aquí." },
+    { "type": "select", "id": "intent", "label": "Qué mostrar", "default": "related",
+      "options": [
+        { "value": "related", "label": "También te puede gustar" },
+        { "value": "complementary", "label": "Combínalo con (productos complementarios)" }
+      ],
+      "info": "«Combínalo con» solo aparece si has marcado productos complementarios en Shopify." },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "title", "label": "Título", "info": "Vacío = se usa el título que corresponda a la opción de arriba." },
+    { "type": "range", "id": "limit", "min": 2, "max": 10, "step": 1, "label": "Cuántos productos", "default": 4 }
+  ],
+  "presets": [{ "name": "Recomendaciones" }]
+}
+{% endschema %}

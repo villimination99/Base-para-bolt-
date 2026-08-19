@@ -19,6 +19,13 @@
       assign og_image = collection.image
   endcase
 
+  # Orden de respaldo de la imagen social: la propia de la pagina, luego la
+  # imagen para compartir que elija el comerciante, y solo al final el logo.
+  # Un logo cuadrado recortado a 1200x630 se ve mal en Facebook y WhatsApp,
+  # asi que share_image existe justamente para no depender de el.
+  if og_image == null and settings.share_image != blank
+    assign og_image = settings.share_image
+  endif
   if og_image == null and settings.logo != blank
     assign og_image = settings.logo
   endif

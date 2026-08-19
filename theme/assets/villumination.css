@@ -440,6 +440,29 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .hero-shader-hint svg{width:26px;height:26px}
 @keyframes hsHint{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
 @media (prefers-reduced-motion:reduce){.hero-shader-hint{animation:none}}
+/* Legibilidad de los iconos de la barra sobre el heroe.
+
+   Con la barra en modo transparente solo .nav-link tenia sombra; el buscador y
+   el boton de menu se quedaban en gris liso, sin fondo ni borde, encima del
+   heroe. Sobre el fondo animado del shader el hamburguesa era practicamente
+   invisible, y solo "aparecia" al desplazarse, cuando la barra se vuelve
+   oscura. Ahora, mientras la barra esta transparente, los dos iconos llevan la
+   misma pastilla translucida que el carrito: se ven sobre cualquier heroe, sea
+   claro, oscuro o en movimiento. */
+.navbar.transparent-top:not(.scrolled) .nav-icon-btn,
+.navbar.transparent-top:not(.scrolled) .mobile-toggle{color:#eaf7ff;background:rgba(5,5,16,.42);border:1px solid rgba(0,212,255,.28);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 2px 14px rgba(0,0,0,.35)}
+.navbar.transparent-top:not(.scrolled) .nav-social a{color:#eaf7ff;filter:drop-shadow(0 1px 6px rgba(0,0,0,.6))}
+/* El boton de menu es el unico camino a la navegacion en movil: nunca debe
+   quedar por debajo del area tactil que recomienda Apple (44x44). */
+.mobile-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center;color:#dbe7f5}
+.mobile-toggle:focus-visible,.nav-icon-btn:focus-visible{outline:2px solid var(--neon-cyan);outline-offset:2px}
+
+/* La barra de navegacion es fija en top:0, asi que tapaba por completo la barra
+   de anuncios, que va en el flujo justo encima. --nav-top lo calcula base.js:
+   vale el alto del anuncio y baja a 0 segun se desplaza, de modo que el anuncio
+   se lee al principio y la barra acaba pegada arriba. */
+.navbar{top:var(--nav-top,0px)}
+
 /* Barra de progreso de lectura. z-index 9100: por encima de la barra de
    navegacion (9000) y por debajo del visor de imagenes (9990) y de la
    pantalla de entrada, para no taparlos. Se anima transform, no width, para
