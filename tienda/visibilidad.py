@@ -146,12 +146,15 @@ def crm() -> list:
     return [
         (f"{n or 5} secuencias de correo escritas en tres lenguas", True,
          "correos.py, con las mismas prohibiciones que las fichas"),
-        ("Ninguna está montada en la tienda", False,
+        ("Ninguna está montada todavía en la tienda", False,
          "las automatizaciones se crean en Marketing → Automatizaciones y "
          "el texto se pega allí; no hay API"),
-        ("No hay punto de captura de correo", False,
-         "sin formulario en la tienda, las cinco secuencias no tienen a "
-         "quién escribir. Es el primer eslabón y falta entero"),
+        ("Formulario de captura escrito, con consentimiento CASL", True,
+         "captura.py: texto en tres lenguas y el bloque Liquid listo. Falta "
+         "pegarlo en el tema, que es donde vive"),
+        ("Cada secuencia sabe ya con qué plantilla se monta", True,
+         "correos.AUTOMATIZACION: plantilla, disparador, espera y si se "
+         "puede activar hoy"),
         ("Sin píxel de Meta ni etiqueta de Google", False,
          "sin ellos no se puede medir qué anuncio vende, y correr anuncios "
          "sin medir es pagar por no enterarse"),

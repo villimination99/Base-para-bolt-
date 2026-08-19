@@ -53,6 +53,46 @@ CUANDO = {
     "resena": "14 días después de la compra",
 }
 
+# Cómo se monta cada una en Marketing → Automatizaciones. Sin esto había que
+# adivinar qué plantilla usar y con qué espera, y adivinar es como se acaba con
+# dos correos de carrito que salen a la vez.
+#
+# secuencia -> (plantilla de Shopify, disparador, espera, se puede activar hoy)
+AUTOMATIZACION = {
+    "bienvenida": (
+        "Suscriptor de correo electrónico",
+        "el cliente se suscribe desde el formulario de captura.py",
+        "inmediato",
+        True),
+    "carrito-1h": (
+        "Carrito abandonado",
+        "añade al carrito y no compra",
+        "1 hora",
+        True),
+    "carrito-24h": (
+        "Carrito abandonado",
+        "el mismo, con una segunda espera y condición «sigue sin comprar»",
+        "24 horas",
+        True),
+    "entrega": (
+        "Pedido pagado",
+        "compra de un documento",
+        "inmediato",
+        False),          # ← promete un archivo que hoy no llega
+    "resena": (
+        "Pedido cumplimentado",
+        "14 días después de entregar",
+        "14 días",
+        True),
+}
+
+# Por qué `entrega` no se puede activar todavía: manda el enlace de descarga y
+# no hay app de descargas instalada. Activarlo sería prometer por correo un
+# archivo que no existe, que es peor que no escribir.
+SIN_ACTIVAR = {
+    "entrega": "no hay app de descargas: el enlace que manda no lleva a nada",
+}
+
 CORREOS = {
 
 # ---------------------------------------------------------------------------
@@ -381,6 +421,26 @@ PROHIBIDAS = {
 LENGUAS = ("es", "en", "fr")
 
 
+def comprobar_montaje() -> list:
+    """Que cada secuencia sepa cómo se monta, y que lo que no se puede activar
+    lo diga en vez de quedarse a medias."""
+    malos = []
+    for nombre in CORREOS:
+        if nombre not in AUTOMATIZACION:
+            malos.append(f"{nombre} · no dice con qué plantilla se monta")
+            continue
+        _plantilla, _disparo, _espera, activable = AUTOMATIZACION[nombre]
+        if not activable and nombre not in SIN_ACTIVAR:
+            malos.append(f"{nombre} · no se puede activar y no dice por qué")
+        if activable and nombre in SIN_ACTIVAR:
+            malos.append(f"{nombre} · dice que no se activa y está marcado "
+                         f"como activable")
+    for nombre in AUTOMATIZACION:
+        if nombre not in CORREOS:
+            malos.append(f"AUTOMATIZACION · secuencia que no existe: {nombre}")
+    return malos
+
+
 def comprobar() -> list:
     """Medidas, lenguas que faltan, marca mal escrita y promesas de salud."""
     malos = []
@@ -433,7 +493,7 @@ def en_claro() -> str:
 
 if __name__ == "__main__":
     import sys
-    malos = comprobar()
+    malos = comprobar() + comprobar_montaje()
     print(f"\n  {len(CORREOS)} secuencias × {len(LENGUAS)} lenguas · "
           f"{len(malos)} problemas\n")
     for m in malos:

@@ -54,7 +54,8 @@ python3 tienda/articulos.py  # ídem de los artículos del Diario
 python3 tienda/cuerpos_en_fr.py   # cuerpos traducidos: medidas y promesas de salud
 python3 tienda/articulos_en_fr.py # el Diario en inglés y francés: cobertura y medidas
 python3 tienda/lecturas.py   # qué ficha ofrece qué artículo del Diario
-python3 tienda/correos.py    # los cinco correos automáticos
+python3 tienda/correos.py    # los cinco correos automáticos y cómo se montan
+python3 tienda/captura.py    # el formulario de captura y su consentimiento
 python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
@@ -287,10 +288,20 @@ Lo que costó descubrir y no está en ningún sitio evidente:
    para el buscador son copias del mismo contenido bajo URL distintas. O se
    traducen o se despublican; dejarlos así reparte la fuerza entre cinco
    direcciones que dicen lo mismo. Lo cuenta `tienda/visibilidad.py`.
-8. **El CRM está escrito y sin enchufar.** Las cinco secuencias de
-   `correos.py` no tienen a quién escribir: no hay punto de captura de correo
-   en la tienda. Tampoco hay píxel de Meta ni etiqueta de Google, así que
-   correr anuncios hoy sería pagar sin poder medir cuál vende.
+8. **El CRM está escrito y falta enchufarlo.** Ya está todo el texto: las
+   cinco secuencias de `correos.py`, con qué plantilla de Shopify se monta
+   cada una (`AUTOMATIZACION`), y el formulario de captura de `captura.py` en
+   tres lenguas con el consentimiento que piden la CASL y la Ley 25 de Quebec
+   —casilla sin marcar, quién lo pide, para qué y cómo darse de baja—.
+
+   Lo que falta es de panel y de tema: pegar el bloque de
+   `tienda/tema/captura-correo.liquid.txt` en el tema y crear las cuatro
+   automatizaciones activables. La quinta, `entrega`, **no se activa** hasta
+   que haya app de descargas: manda un enlace que hoy no lleva a nada, y
+   `SIN_ACTIVAR` lo dice.
+
+   Sigue sin haber píxel de Meta ni etiqueta de Google, así que correr
+   anuncios hoy sería pagar sin poder medir cuál vende.
 9. **Tres superficies a medio traducir**, que encontró `cotejar.py` y que
    nada vigilaba: el artículo `creatina` tiene cuerpo, título y
    metadescripción en inglés y nada en francés; el artículo `app`, solo el
