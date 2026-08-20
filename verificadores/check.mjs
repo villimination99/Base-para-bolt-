@@ -679,6 +679,16 @@ check('Esquemas que dejarian el editor en blanco', () => {
         else if (s.default === undefined) bad.push(`${donde}: range "${s.id}" sin default`);
         else if (s.default < mn || s.default > mx) bad.push(`${donde}: range "${s.id}" default fuera de rango`);
         else if ((mx - mn) / st > 100) bad.push(`${donde}: range "${s.id}" con mas de 101 pasos`);
+        else if (Math.abs(((s.default - mn) / st) % 1) > 1e-9) {
+          // Shopify exige que el default caiga EXACTAMENTE en un paso, no solo
+          // dentro del rango: "default doit etre une etape dans la plage".
+          // Si no, rechaza el archivo entero de la seccion sin avisar, y
+          // cualquier plantilla que la use se cae con ella. Asi es como la
+          // portada acabo sirviendo un 404: el hero tenia default 126 en un
+          // rango de 80 a 200 de cinco en cinco.
+          const cerca = mn + Math.round((s.default - mn) / st) * st;
+          bad.push(`${donde}: range "${s.id}" default ${s.default} no cae en un paso (min ${mn}, step ${st}) -> usa ${cerca}`);
+        }
       }
       if (t === 'select' || t === 'radio') {
         const vals = (s.options || []).map(o => o.value);
