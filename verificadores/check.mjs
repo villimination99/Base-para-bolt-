@@ -645,6 +645,98 @@ check('Clases usadas dentro de las traducciones', () => {
   return [...new Set(bad)];
 });
 
+check('Esquemas que dejarian el editor en blanco', () => {
+  /* Reglas que Shopify aplica en silencio: si alguna falla no da error, se
+     limita a no pintar el panel. Asi fue como "Parametros del tema" aparecio
+     entero en blanco durante varias rondas por una simple barra en un nombre.
+     Se revisan aqui los ajustes globales y los de las 44 secciones. */
+  const bad = [];
+  const RIESGO = /[/\\<>{}"\[\]\n\r\t]/g;
+  const VALIDOS = new Set(['text','textarea','number','range','checkbox','radio','select','color',
+    'color_background','font_picker','collection','collection_list','product','product_list','blog',
+    'page','link_list','url','video','video_url','richtext','inline_richtext','html','article',
+    'image_picker','liquid','header','paragraph','color_scheme','color_scheme_group','metaobject',
+    'text_alignment']);
+
+  const revisar = (lista, donde) => {
+    const vistos = new Set();
+    for (const s of lista || []) {
+      const t = s.type;
+      if (!VALIDOS.has(t)) bad.push(`${donde}: tipo desconocido "${t}"`);
+      if (t === 'header' || t === 'paragraph') {
+        if ('id' in s) bad.push(`${donde}: ${t} no debe llevar id`);
+        continue;
+      }
+      if (!s.id) { bad.push(`${donde}: ajuste ${t} sin id`); continue; }
+      if (!/^[a-z0-9_]+$/.test(s.id)) bad.push(`${donde}: id con formato invalido "${s.id}"`);
+      if (vistos.has(s.id)) bad.push(`${donde}: id repetido "${s.id}"`);
+      vistos.add(s.id);
+      if (t === 'range') {
+        const { min: mn, max: mx } = s, st = s.step === undefined ? 1 : s.step;
+        if (mn === undefined || mx === undefined) bad.push(`${donde}: range "${s.id}" sin min/max`);
+        else if (!(st > 0) || Math.abs(((mx - mn) / st) % 1) > 1e-6)
+          bad.push(`${donde}: range "${s.id}" (max-min)/step no es entero`);
+        else if (s.default === undefined) bad.push(`${donde}: range "${s.id}" sin default`);
+        else if (s.default < mn || s.default > mx) bad.push(`${donde}: range "${s.id}" default fuera de rango`);
+        else if ((mx - mn) / st > 100) bad.push(`${donde}: range "${s.id}" con mas de 101 pasos`);
+      }
+      if (t === 'select' || t === 'radio') {
+        const vals = (s.options || []).map(o => o.value);
+        if (!vals.length) bad.push(`${donde}: ${t} "${s.id}" sin opciones`);
+        else if ('default' in s && !vals.includes(s.default))
+          bad.push(`${donde}: ${t} "${s.id}" default fuera de las opciones`);
+      }
+    }
+    return vistos;
+  };
+
+  // --- ajustes globales ---
+  const glob = JSON.parse(read(`${T}/config/settings_schema.json`));
+  if (glob[0] && glob[0].name !== 'theme_info') bad.push('settings_schema: theme_info no es el primer panel');
+  const idsGlob = new Set(), nombres = new Set();
+  for (const p of glob) {
+    if (p.name === 'theme_info') continue;
+    if (!p.name) { bad.push('settings_schema: panel sin nombre'); continue; }
+    const m = p.name.match(RIESGO);
+    if (m) bad.push(`settings_schema: panel "${p.name}" contiene ${m.join(' ')}`);
+    if (nombres.has(p.name)) bad.push(`settings_schema: panel repetido "${p.name}"`);
+    nombres.add(p.name);
+    for (const id of revisar(p.settings, `panel "${p.name}"`)) {
+      // los ids globales tienen que ser unicos en TODO el archivo, no solo por panel
+      if (idsGlob.has(id)) bad.push(`settings_schema: id "${id}" repetido entre paneles`);
+      idsGlob.add(id);
+    }
+  }
+
+  // --- esquemas de seccion ---
+  for (const f of walk(`${T}/sections`, /\.liquid$/)) {
+    const m = read(f).match(/\{%-?\s*schema\s*-?%\}([\s\S]*?)\{%-?\s*endschema\s*-?%\}/);
+    if (!m) continue;
+    let j; try { j = JSON.parse(m[1]); } catch (e) { bad.push(`${f}: schema con JSON invalido`); continue; }
+    if (!j.name) bad.push(`${f}: seccion sin name`);
+    else {
+      if (j.name.length > 25) bad.push(`${f}: name de ${j.name.length} caracteres, Shopify corta en 25`);
+      const mm = j.name.match(RIESGO);
+      if (mm) bad.push(`${f}: name contiene ${mm.join(' ')}`);
+    }
+    revisar(j.settings, f);
+    const tipos = new Set();
+    for (const b of j.blocks || []) {
+      if (tipos.has(b.type)) bad.push(`${f}: tipo de bloque repetido "${b.type}"`);
+      tipos.add(b.type);
+      // @app y @theme son bloques especiales de Shopify: no llevan name ni settings
+      if (b.type !== '@app' && b.type !== '@theme') {
+        if (!b.name) bad.push(`${f}: bloque "${b.type}" sin name`);
+        revisar(b.settings, `${f} bloque ${b.type}`);
+      }
+    }
+    for (const pr of j.presets || [])
+      for (const pb of (Array.isArray(pr.blocks) ? pr.blocks : []))
+        if (pb.type && !tipos.has(pb.type)) bad.push(`${f}: preset usa el bloque inexistente "${pb.type}"`);
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
