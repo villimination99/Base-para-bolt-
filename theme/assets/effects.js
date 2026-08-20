@@ -120,39 +120,52 @@
     window.addEventListener('load', function () { setTimeout(sweep, 300); });
   });
 
-  /* ============ 1b. Barra de progreso de lectura ============
-     Linea de neon arriba del todo que avanza segun se baja. Se inyecta desde
-     aqui a proposito: asi no hay que tocar theme.liquid, que es el archivo del
-     que depende que la tienda entera se pinte. No se apaga con movimiento
-     reducido porque no es decoracion: informa de cuanto queda de pagina.
-     Solo se mueve una vez por fotograma y solo escribe cuando el valor cambia. */
+  /* ============ 1b. Progreso de lectura ============
+     Publica --scroll-y (0 a 1) para toda la pagina: es la idea del heroe
+     llevada al resto de la tienda, cualquier regla puede reaccionar al
+     desplazamiento sin montar su propio escuchador ni su propio bucle.
+     La linea de neon de arriba es la parte visible y es opcional; la variable
+     se publica siempre, porque de ella dependen efectos del resto de la
+     pagina y no tendria sentido que se apagaran al ocultar una decoracion.
+     No se apaga con movimiento reducido: informa, no adorna. Se resuelve una
+     vez por fotograma y solo escribe cuando el valor cambia de verdad. */
   mod(function () {
-    if (!settings.scrollBar) return;
     if (!once(document.body, 'progressbar')) return;
-    var bar = document.createElement('div');
-    bar.className = 'read-progress';
-    bar.setAttribute('role', 'presentation');
-    document.body.appendChild(bar);
+    var bar = null;
+    if (settings.scrollBar) {
+      bar = document.createElement('div');
+      bar.className = 'read-progress';
+      bar.setAttribute('role', 'presentation');
+      document.body.appendChild(bar);
+    }
 
-    var raf = 0, last = -1;
+    var praf = 0, last = -1;
+    function pintar(v) {
+      if (bar) bar.style.transform = 'scaleX(' + v + ')';
+      document.documentElement.style.setProperty('--scroll-y', v);
+    }
     function paint() {
-      raf = 0;
+      praf = 0;
       var doc = document.documentElement;
-      // clientHeight y no innerHeight: innerHeight incluye la barra de
-      // desplazamiento horizontal, y entonces la barra no llegaba al final.
-      var max = doc.scrollHeight - doc.clientHeight;
-      // Paginas que no llegan a una pantalla: no hay nada que medir.
-      if (max <= 8) { if (last !== 0) { last = 0; bar.style.transform = 'scaleX(0)'; } return; }
+      var bd = document.body;
+      // El alto real hay que sacarlo del mayor de los dos: segun como crezca
+      // el documento, a veces es <html> quien lleva la cuenta y a veces
+      // <body>, y quedarse con uno solo daba max=0 en paginas que si se
+      // desplazan, dejando la barra clavada en cero. La resta usa
+      // innerHeight, que es siempre el alto visible de verdad.
+      var alto = Math.max(doc.scrollHeight || 0, bd ? bd.scrollHeight || 0 : 0);
+      var max = alto - (window.innerHeight || doc.clientHeight || 0);
+      if (max <= 8) { if (last !== 0) { last = 0; pintar(0); } return; }
       var v = (window.scrollY || doc.scrollTop || 0) / max;
       v = v < 0 ? 0 : (v > 1 ? 1 : v);
       var r = Math.round(v * 1000) / 1000;
       if (r === last) return;
       last = r;
-      bar.style.transform = 'scaleX(' + r + ')';
+      pintar(r);
     }
-    function request() { if (!raf) raf = requestAnimationFrame(paint); }
-    window.addEventListener('scroll', request, { passive: true });
-    window.addEventListener('resize', request);
+    function pedir() { if (!praf) praf = requestAnimationFrame(paint); }
+    window.addEventListener('scroll', pedir, { passive: true });
+    window.addEventListener('resize', pedir);
     paint();
   });
 

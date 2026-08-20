@@ -159,6 +159,10 @@
 .product-related{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(0,212,255,.12)}
 .product-related .product-grid{margin-top:1.4rem}
 /* v26 — free-shipping bar + vertical gallery thumbs + image lightbox */
+/* Resalta el importe dentro del mensaje de envio gratis. La clase no vive en
+   ningun .liquid: viene dentro del propio texto traducido de locales/, por eso
+   un barrido de clases que solo mire los .liquid la da por muerta. */
+.cart-ship-hl{color:var(--neon-cyan);font-weight:800;font-family:var(--font-heading);letter-spacing:.04em}
 .cart-ship{padding:.85rem 1rem;margin:0 0 .6rem;border-radius:.8rem;background:linear-gradient(160deg,color-mix(in srgb,var(--neon-cyan) 10%,transparent),rgba(6,6,18,.5));border:1px solid color-mix(in srgb,var(--neon-cyan) 25%,transparent)}
 .cart-ship.is-unlocked{background:linear-gradient(160deg,color-mix(in srgb,var(--neon-green) 14%,transparent),rgba(6,6,18,.5));border-color:color-mix(in srgb,var(--neon-green) 45%,transparent)}
 .cart-ship-msg{display:flex;align-items:center;gap:.4rem;margin:0 0 .55rem;font-size:.86rem;color:#dbeaf5}
@@ -462,6 +466,20 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
    vale el alto del anuncio y baja a 0 segun se desplaza, de modo que el anuncio
    se lee al principio y la barra acaba pegada arriba. */
 .navbar{top:var(--nav-top,0px)}
+
+/* --scroll-y (0 a 1) lo publica effects.js desde el mismo bucle que la barra
+   de progreso. Es la idea del heroe extendida a toda la tienda: el brillo de
+   la marca se intensifica conforme se baja, sin un segundo escuchador de
+   scroll y sin tocar la maqueta, solo color y sombra, que el navegador
+   resuelve en la GPU. Con movimiento reducido se queda quieto. */
+.navbar.scrolled{box-shadow:0 1px 0 0 color-mix(in srgb,var(--neon-cyan,#00d4ff) calc(12% + var(--scroll-y,0) * 26%),transparent),0 8px 30px rgba(0,0,0,calc(0.25 + var(--scroll-y,0) * 0.2))}
+.nav-brand-grad{filter:saturate(calc(1 + var(--scroll-y,0) * 0.5)) drop-shadow(0 0 calc(var(--scroll-y,0) * 10px) color-mix(in srgb,var(--neon-cyan,#00d4ff) 60%,transparent))}
+.read-progress{opacity:calc(0.35 + var(--scroll-y,0) * 0.65)}
+@media (prefers-reduced-motion:reduce){
+  .navbar.scrolled{box-shadow:0 1px 0 0 rgba(0,212,255,.14)}
+  .nav-brand-grad{filter:none}
+  .read-progress{opacity:1}
+}
 
 /* Barra de progreso de lectura. z-index 9100: por encima de la barra de
    navegacion (9000) y por debajo del visor de imagenes (9990) y de la

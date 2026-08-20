@@ -625,6 +625,26 @@ check('Transform declarado dos veces en el mismo selector', () => {
   return bad;
 });
 
+check('Clases usadas dentro de las traducciones', () => {
+  /* Los textos de locales/ pueden traer HTML con clases propias (por ejemplo
+     el resalte del mensaje de envio gratis). Como esas clases no aparecen en
+     ningun .liquid, un barrido de clases huerfanas las da por muertas y se
+     borran sin querer: paso de verdad con .cart-ship-hl. Aqui se comprueba al
+     reves — que toda clase citada en una traduccion siga teniendo estilo. */
+  const css = read(`${T}/assets/villumination.css`);
+  const bad = [];
+  for (const f of walk(`${T}/locales`, /\.json$/)) {
+    const crudo = read(f);
+    for (const m of crudo.matchAll(/class=\\?"([^"\\]+)\\?"/g))
+      for (const c of m[1].trim().split(/\s+/)) {
+        if (!/^[A-Za-z][\w-]*$/.test(c)) continue;
+        if (!new RegExp(`\\.${c}(?![\\w-])`).test(css))
+          bad.push(`${f}: la traduccion usa .${c} y el CSS no la define`);
+      }
+  }
+  return [...new Set(bad)];
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
