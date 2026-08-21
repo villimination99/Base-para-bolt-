@@ -102,51 +102,74 @@
     // Sin WebGL, con movimiento reducido o con ahorro de datos, el degradado
     // CSS del contenedor se queda como fondo: nunca hay un hueco vacio.
     if (saveData) return;
-    var gl = null;
-    try { gl = canvas.getContext('webgl', { antialias: false, alpha: false }); } catch (e) { return; }
-    if (!gl) return;
+    if (!window.WebGLRenderingContext) return;
 
-    function compile(type, src) {
-      var s = gl.createShader(type);
-      gl.shaderSource(s, src); gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
-      return s;
-    }
-    var vs = compile(gl.VERTEX_SHADER, VERT);
-    var fs = compile(gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return;
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-    gl.deleteShader(vs); gl.deleteShader(fs);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-    gl.useProgram(prog);
-
-    var buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    var loc = gl.getAttribLocation(prog, 'a_position');
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-    var uColors = gl.getUniformLocation(prog, 'u_colors');
-    var uScene = gl.getUniformLocation(prog, 'u_scene');
-    var uShape = gl.getUniformLocation(prog, 'u_shape');
-    var uExtra = gl.getUniformLocation(prog, 'u_extra');
-
+    // Los parametros se leen una sola vez y viven fuera del contexto: si el
+    // navegador tira el contexto y hay que reconstruirlo, no se vuelven a
+    // parsear ni se pierden.
     var d = canvas.dataset;
     var bg = hexToRgb(d.bg, [0.02, 0.027, 0.051]);
     var c1 = hexToRgb(d.c1, [0.071, 0.380, 0.627]);
     var c2 = hexToRgb(d.c2, [0.208, 0.769, 0.910]);
     var c3 = hexToRgb(d.c3, [0.949, 0.984, 1.0]);
-    gl.uniform3fv(uColors, new Float32Array([].concat(bg, c1, c2, c3)));
-
     var scale = parseFloat(d.scale) || 1.26;
     var intensity = parseFloat(d.intensity); if (isNaN(intensity)) intensity = 0.35;
     var thickness = parseFloat(d.thickness); if (isNaN(thickness)) thickness = 0.28;
     var grain = parseFloat(d.grain); if (isNaN(grain)) grain = 0.042;
     var timeScale = parseFloat(d.speed); if (isNaN(timeScale)) timeScale = 0.575;
     var scrollOn = d.scroll !== 'false';
-    gl.uniform4f(uShape, scale, intensity, thickness, grain);
+
+    var gl = null, prog = null, buf = null;
+    var uColors, uScene, uShape, uExtra;
+
+    /* Todo el montaje de WebGL en una funcion, para poder repetirlo.
+       El navegador puede retirar el contexto cuando le convenga: al pasar de
+       un grafico a otro, bajo presion de memoria, o cuando hay demasiados
+       lienzos vivos. En el editor de temas pasa de verdad, porque cada
+       recarga de la seccion crea uno nuevo, y desplazandose rapido se
+       encadenan varias. Sin esto el hero se quedaba muerto para siempre. */
+    function construirGL() {
+      if (!gl) {
+        try {
+          gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' })
+            || canvas.getContext('experimental-webgl', { antialias: false, alpha: false });
+        } catch (e) { return false; }
+      }
+      if (!gl || gl.isContextLost()) return false;
+
+      function compile(type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src); gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+        return s;
+      }
+      var vs = compile(gl.VERTEX_SHADER, VERT);
+      var fs = compile(gl.FRAGMENT_SHADER, FRAG);
+      if (!vs || !fs) return false;
+      prog = gl.createProgram();
+      gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+      gl.deleteShader(vs); gl.deleteShader(fs);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+      gl.useProgram(prog);
+
+      buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      var loc = gl.getAttribLocation(prog, 'a_position');
+      gl.enableVertexAttribArray(loc);
+      gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+      uColors = gl.getUniformLocation(prog, 'u_colors');
+      uScene = gl.getUniformLocation(prog, 'u_scene');
+      uShape = gl.getUniformLocation(prog, 'u_shape');
+      uExtra = gl.getUniformLocation(prog, 'u_extra');
+
+      gl.uniform3fv(uColors, new Float32Array([].concat(bg, c1, c2, c3)));
+      gl.uniform4f(uShape, scale, intensity, thickness, grain);
+      return true;
+    }
+
+    if (!construirGL()) return;
 
     var raf = 0, visible = true, inView = true, disposed = false;
     var start = performance.now();
@@ -190,6 +213,9 @@
     function frame(now) {
       raf = 0;
       if (disposed || !visible || !inView) return;
+      // Dibujar sobre un contexto perdido no pinta nada y deja el hero en
+      // negro. Si se ha perdido, se espera a que el navegador lo devuelva.
+      if (!gl || gl.isContextLost()) return;
       var dt = lastNow === null ? 0 : Math.min((now - lastNow) / 1000, 0.1);
       lastNow = now;
       if (needsResize) resize();
@@ -222,6 +248,25 @@
       if (visible) request(); else pause();
     });
 
+    /* preventDefault en webglcontextlost es obligatorio: sin el, el navegador
+       no vuelve a emitir webglcontextrestored nunca y el lienzo queda muerto.
+       Con el, el hero se reconstruye solo y mientras tanto se ve el degradado
+       CSS de debajo, que nunca se retira. */
+    on(canvas, 'webglcontextlost', function (e) {
+      e.preventDefault();
+      pause();
+      canvas.classList.remove('is-live');
+    });
+    on(canvas, 'webglcontextrestored', function () {
+      if (disposed) return;
+      prog = null; buf = null;
+      if (!construirGL()) return;
+      needsResize = true;
+      lastNow = null;
+      canvas.classList.add('is-live');
+      request();
+    });
+
     var io = null, ro = null;
     if ('IntersectionObserver' in window) {
       io = new IntersectionObserver(function (en) {
@@ -245,8 +290,16 @@
       offs = [];
       if (io) { io.disconnect(); io = null; }
       if (ro) { ro.disconnect(); ro = null; }
-      var lose = gl.getExtension('WEBGL_lose_context');
-      if (lose) lose.loseContext();
+      // Soltar los recursos antes de tirar el contexto: en el editor, donde se
+      // crean y destruyen lienzos a cada recarga, ayuda al navegador a
+      // reciclar en vez de acumular hasta quedarse sin contextos.
+      if (gl && !gl.isContextLost()) {
+        if (buf) { gl.deleteBuffer(buf); buf = null; }
+        if (prog) { gl.deleteProgram(prog); prog = null; }
+        var lose = gl.getExtension('WEBGL_lose_context');
+        if (lose) lose.loseContext();
+      }
+      gl = null;
       var at = live.indexOf(entry);
       if (at !== -1) live.splice(at, 1);
     }
@@ -258,12 +311,22 @@
     resize(); readScroll(); request();
   }
 
+  // Cuantos lienzos WebGL puede haber vivos a la vez. Los navegadores tienen
+  // su propio tope (alrededor de 16 en Chrome) y, al pasarse, matan el mas
+  // antiguo sin avisar. En el editor, desplazandose rapido, cada recarga de la
+  // seccion crea uno nuevo y se pueden encadenar varios antes de que dé tiempo
+  // a limpiar. Con un tope propio y muy por debajo del suyo, el que se retira
+  // lo elegimos nosotros y de forma ordenada.
+  var MAX_VIVOS = 4;
+
   function boot() {
     // Antes de arrancar nada se sueltan las instancias cuyo lienzo ya no esta
     // en la pagina: el editor de temas reemplaza el HTML de la seccion entera.
     for (var j = live.length - 1; j >= 0; j--) {
       if (!document.contains(live[j].canvas)) live[j].dispose();
     }
+    // Y si aun asi quedan demasiadas, se retiran las mas antiguas.
+    while (live.length >= MAX_VIVOS) live[0].dispose();
     var list = document.querySelectorAll('[data-hero-shader]');
     for (var i = 0; i < list.length; i++) init(list[i]);
   }

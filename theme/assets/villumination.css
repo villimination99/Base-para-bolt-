@@ -444,6 +444,54 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .hero-shader-hint svg{width:26px;height:26px}
 @keyframes hsHint{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
 @media (prefers-reduced-motion:reduce){.hero-shader-hint{animation:none}}
+/* ---- Banner VIP: dos columnas en escritorio ----
+   Con ocho ventajas y cinco cifras apiladas en una sola columna centrada, la
+   seccion medía media pantalla de mas y se leia como una lista. Ahora el
+   argumento y la llamada a la accion van a la izquierda, y las ventajas a la
+   derecha en dos columnas compactas: mismo contenido, casi la mitad de alto.
+   Por debajo de 900 px vuelve a una columna, que en movil si tiene sentido. */
+.vip-banner-content{align-items:stretch;text-align:left}
+.vip-main{display:flex;flex-direction:column;align-items:flex-start;gap:.9rem;min-width:0}
+.vip-side{min-width:0}
+@media (min-width:900px){
+  .vip-banner-content{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:2.4rem;align-items:center}
+  .vip-tools{margin:0;max-width:none;grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* Ventaja compacta: icono a la izquierda, texto a la derecha. En columna
+   estrecha se lee mucho mejor que el bloque centrado de antes. */
+.vip-tool{flex-direction:row;align-items:flex-start;gap:.7rem;text-align:left;padding:.8rem .85rem}
+.vip-tool-icon{flex:0 0 auto;line-height:0;margin-top:.1rem}
+.vip-tool-body{display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.vip-tool-name{font-weight:800}
+.vip-tool-desc{opacity:.78;font-size:.85rem;line-height:1.35}
+/* Cifras en una tira, no en tarjetas sueltas: pesan menos y ordenan la vista. */
+.vip-stats{justify-content:flex-start;gap:0;margin-top:.5rem;border-radius:.9rem;overflow:hidden;border:1px solid rgba(255,42,109,.2);background:rgba(10,10,26,.5)}
+.vip-stat{min-width:0;flex:1 1 auto;border:none;border-radius:0;background:transparent;padding:.7rem .9rem;border-right:1px solid rgba(255,255,255,.07)}
+.vip-stat:last-child{border-right:none}
+.vip-ctas{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:.7rem 1rem}
+/* El titulo llegaba a 4rem y por si solo marcaba el alto minimo de toda la
+   seccion en escritorio. A 3rem sigue mandando y deja respirar al resto. */
+.vip-title{font-size:clamp(1.9rem,5vw,3rem)}
+/* La frase de apoyo de cada ventaja solo cabe bien a partir de 1024: por
+   debajo, en dos columnas estrechas, se partia en tres lineas y estiraba la
+   seccion mas de lo que aportaba. Sigue en el HTML, se lee en escritorio. */
+@media (max-width:1023px){
+  .vip-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vip-tool{padding:.6rem .7rem}
+  .vip-tool-desc{display:none}
+}
+@media (max-width:899px){
+  .vip-banner-content{text-align:center}
+  .vip-main{align-items:center}
+  .vip-ctas{justify-content:center}
+  .vip-stats{flex-wrap:nowrap}
+  .vip-stat{padding:.6rem .5rem}
+}
+/* El borde giratorio se aviva conforme se baja, igual que el hero: es la misma
+   variable --scroll-y y no cuesta ni un escuchador mas. */
+.vip-banner-border{opacity:calc(0.55 + var(--scroll-y,0) * 0.45)}
+@media (prefers-reduced-motion:reduce){.vip-banner-border{opacity:.7}}
+
 /* Legibilidad de los iconos de la barra sobre el heroe.
 
    Con la barra en modo transparente solo .nav-link tenia sombra; el buscador y

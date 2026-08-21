@@ -747,6 +747,40 @@ check('Esquemas que dejarian el editor en blanco', () => {
   return bad;
 });
 
+check('Verificacion de Google y SEO del layout', () => {
+  /* Piezas del layout de las que depende que Google reconozca el sitio. Han
+     desaparecido mas de una vez al reescribir theme.liquid, y cuando eso pasa
+     no se nota: la tienda sigue funcionando y solo deja de estar verificada. */
+  const bad = [];
+  const layout = read(`${T}/layout/theme.liquid`);
+  const datos = JSON.parse(read(`${T}/config/settings_data.json`).replace(/^\s*\/\*[\s\S]*?\*\//, '')).current || {};
+
+  if (!/google-site-verification/.test(layout))
+    bad.push('layout/theme.liquid: falta la etiqueta google-site-verification');
+  if (!datos.seo_google_verification)
+    bad.push('settings_data.json: seo_google_verification esta vacio, la etiqueta saldria sin contenido');
+  if (!/rel=["']canonical["']/.test(layout))
+    bad.push('layout/theme.liquid: falta el enlace canonical');
+  if (!/\{\{\s*content_for_header\s*\}\}/.test(layout))
+    bad.push('layout/theme.liquid: falta content_for_header, sin el no hay analitica ni apps');
+  if (!/\{\{\s*content_for_layout\s*\}\}/.test(layout))
+    bad.push('layout/theme.liquid: falta content_for_layout, no se pintaria ninguna pagina');
+  if (!/<html[^>]*\slang=/.test(layout))
+    bad.push('layout/theme.liquid: <html> sin atributo lang');
+
+  // Las piezas de SEO viven en snippets: hay que comprobar que se rendericen.
+  for (const nombre of ['meta-tags', 'structured-data', 'seo-robots']) {
+    if (!fs.existsSync(`${T}/snippets/${nombre}.liquid`))
+      bad.push(`falta snippets/${nombre}.liquid`);
+    else if (!new RegExp(`render\\s+'${nombre}'`).test(layout))
+      bad.push(`layout/theme.liquid no renderiza '${nombre}'`);
+  }
+  // hreflang: sin el, las cinco versiones de idioma compiten como duplicados.
+  if (!/hreflang/.test(read(`${T}/snippets/meta-tags.liquid`)))
+    bad.push('snippets/meta-tags.liquid: sin hreflang, los idiomas compiten entre si');
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

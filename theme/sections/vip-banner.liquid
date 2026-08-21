@@ -15,47 +15,61 @@
                alt="" width="1600" height="{{ 1600 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
           <div class="vip-banner-shade" aria-hidden="true"></div>
         {%- endif -%}
+        {%- comment -%}
+          Dos columnas en escritorio: el argumento a la izquierda y las
+          ventajas con las cifras a la derecha. Antes iba todo apilado en una
+          sola columna centrada —insignia, titulo, subtitulo, texto, ocho
+          herramientas, cinco cifras, boton y nota—, y con ese contenido la
+          seccion se hacia larguisima. En movil vuelve a una columna, que es
+          donde apilar si tiene sentido.
+        {%- endcomment -%}
         <div class="vip-banner-content">
-          {%- if section.settings.badge != blank -%}
-            <span class="vip-badge">{%- render 'icon', name: 'bolt' -%}{{ section.settings.badge }}</span>
-          {%- endif -%}
-          <h2 class="vip-title">{{ section.settings.title }}</h2>
-          {%- if section.settings.subtitle != blank -%}<p class="vip-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
-          {%- if section.settings.text != blank -%}<p class="vip-text">{{ section.settings.text }}</p>{%- endif -%}
+          <div class="vip-main">
+            {%- if section.settings.badge != blank -%}
+              <span class="vip-badge">{%- render 'icon', name: 'bolt' -%}{{ section.settings.badge }}</span>
+            {%- endif -%}
+            <h2 class="vip-title">{{ section.settings.title }}</h2>
+            {%- if section.settings.subtitle != blank -%}<p class="vip-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+            {%- if section.settings.text != blank -%}<p class="vip-text">{{ section.settings.text }}</p>{%- endif -%}
+
+            <div class="vip-ctas">
+              <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
+                {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
+              </a>
+              {%- if section.settings.note != blank -%}
+                <span class="vip-note">{{ section.settings.note }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+            {%- if stat_blocks.size > 0 -%}
+              <div class="vip-stats">
+                {%- for block in stat_blocks -%}
+                  <div class="vip-stat" {{ block.shopify_attributes }}>
+                    <strong>{{ block.settings.number }}</strong>
+                    <span>{{ block.settings.label }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
 
           {%- assign tool_blocks = section.blocks | where: 'type', 'tool' -%}
           {%- if tool_blocks.size > 0 -%}
-            <div class="vip-tools">
-              {%- for block in tool_blocks -%}
-                <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-                  <span class="vip-tool-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
-                  <span class="vip-tool-name">{{ block.settings.title }}</span>
-                  {%- if block.settings.text != blank -%}<span class="vip-tool-desc">{{ block.settings.text }}</span>{%- endif -%}
-                </div>
-              {%- endfor -%}
+            <div class="vip-side">
+              <div class="vip-tools">
+                {%- for block in tool_blocks -%}
+                  <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+                    <span class="vip-tool-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+                    <span class="vip-tool-body">
+                      <span class="vip-tool-name">{{ block.settings.title }}</span>
+                      {%- if block.settings.text != blank -%}<span class="vip-tool-desc">{{ block.settings.text }}</span>{%- endif -%}
+                    </span>
+                  </div>
+                {%- endfor -%}
+              </div>
             </div>
           {%- endif -%}
-
-          {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
-          {%- if stat_blocks.size > 0 -%}
-            <div class="vip-stats">
-              {%- for block in stat_blocks -%}
-                <div class="vip-stat" {{ block.shopify_attributes }}>
-                  <strong>{{ block.settings.number }}</strong>
-                  <span>{{ block.settings.label }}</span>
-                </div>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
-
-          <div class="vip-ctas">
-            <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
-              {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
-            </a>
-            {%- if section.settings.note != blank -%}
-              <span class="vip-note">{{ section.settings.note }}</span>
-            {%- endif -%}
-          </div>
         </div>
       </div>
     </div>
