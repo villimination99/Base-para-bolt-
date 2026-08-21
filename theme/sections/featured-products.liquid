@@ -10,7 +10,18 @@
       {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
     </div>
 
+    {%- comment -%}
+      Sin coleccion elegida se usa el catalogo entero, igual que hacen
+      "Mas vendidos" y los dos carruseles 3D. Antes esta seccion era la unica
+      que pintaba cuatro tarjetas de "Producto de ejemplo": en una tienda en
+      vivo con productos reales, eso salia publicado tal cual. Las tarjetas de
+      ejemplo se reservan para el unico caso en que tienen sentido, que es una
+      tienda que todavia no ha creado ningun producto.
+    {%- endcomment -%}
     {%- assign coll = section.settings.collection -%}
+    {%- if coll == blank or coll.products_count == 0 -%}
+      {%- assign coll = collections.all -%}
+    {%- endif -%}
     {%- capture product_cards -%}
       {%- if coll != blank and coll.products_count > 0 -%}
         {%- for product in coll.products limit: section.settings.limit -%}

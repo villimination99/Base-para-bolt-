@@ -32,14 +32,24 @@
     endif
   endfor
 
+  # Si ningun item del menu coincide con lo escrito en el ajuste, se elige solo.
+  # Antes se quedaba con el PRIMER item que tuviera hijos, y eso acertaba poco:
+  # en un menu con "Libros y planes" (2 hijos) antes que "Colecciones" (5), el
+  # mega-menu se enganchaba al pequeno y las colecciones de verdad no salian.
+  # Ahora gana el que mas hijos tiene, que es el que casi siempre es el catalogo.
   unless any_match
+    assign mejor_key = ''
+    assign mejor_n = 0
     for link in section.settings.menu.links
-      if link.links.size > 0 and any_match == false
-        assign auto_key = link.title | handle
-        assign trigger_keys = trigger_keys | append: auto_key | append: ','
-        assign any_match = true
+      if link.links.size > mejor_n
+        assign mejor_n = link.links.size
+        assign mejor_key = link.title | handle
       endif
     endfor
+    if mejor_n > 0
+      assign trigger_keys = trigger_keys | append: mejor_key | append: ','
+      assign any_match = true
+    endif
   endunless
 -%}
 {%- style -%}

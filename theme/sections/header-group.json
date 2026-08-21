@@ -2,18 +2,59 @@
   "type": "header",
   "name": "Grupo de encabezado",
   "sections": {
-    "announcement": { "type": "announcement-bar", "settings": {} },
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
     "header": {
       "type": "header",
       "blocks": {
-        "m1": { "type": "mega_link", "settings": { "collection": "ropa", "icon": "shirt", "subtitle": "Estilo que entrena contigo" } },
-        "m2": { "type": "mega_link", "settings": { "collection": "equipo", "icon": "dumbbell", "subtitle": "Herramientas de poder" } },
-        "m3": { "type": "mega_link", "settings": { "collection": "suplementos", "icon": "supplement", "subtitle": "Combustible de élite" } },
-        "m4": { "type": "mega_link", "settings": { "collection": "conocimiento", "icon": "book", "subtitle": "Entrena tu mente" } }
+        "m1": {
+          "type": "mega_link",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "subtitle": "Estilo que entrena contigo"
+          }
+        },
+        "m2": {
+          "type": "mega_link",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "subtitle": "Herramientas de poder"
+          }
+        },
+        "m3": {
+          "type": "mega_link",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "subtitle": "Combustible de élite"
+          }
+        },
+        "m4": {
+          "type": "mega_link",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "subtitle": "Entrena tu mente"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3", "m4"],
-      "settings": { "collections_trigger": "Catálogo" }
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "settings": {
+        "collections_trigger": "Colecciones, Catálogo, Collectiones, Collections"
+      }
     }
   },
-  "order": ["announcement", "header"]
+  "order": [
+    "announcement",
+    "header"
+  ]
 }
