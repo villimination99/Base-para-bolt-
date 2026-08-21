@@ -462,12 +462,19 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .vip-tool{flex-direction:row;align-items:flex-start;gap:.7rem;text-align:left;padding:.8rem .85rem}
 .vip-tool-icon{flex:0 0 auto;line-height:0;margin-top:.1rem}
 .vip-tool-body{display:flex;flex-direction:column;gap:.15rem;min-width:0}
-.vip-tool-name{font-weight:800}
+/* Sin esto, "Entrenamiento" pedia 92 px, la caja daba 60 y la palabra se
+   cortaba a la mitad en vez de partirse. */
+.vip-tool-name{font-weight:800;overflow-wrap:break-word;hyphens:auto}
+.vip-tool,.vip-tools,.vip-side,.vip-main{min-width:0;max-width:100%}
 .vip-tool-desc{opacity:.78;font-size:.85rem;line-height:1.35}
 /* Cifras en una tira, no en tarjetas sueltas: pesan menos y ordenan la vista. */
-.vip-stats{justify-content:flex-start;gap:0;margin-top:.5rem;border-radius:.9rem;overflow:hidden;border:1px solid rgba(255,42,109,.2);background:rgba(10,10,26,.5)}
-.vip-stat{min-width:0;flex:1 1 auto;border:none;border-radius:0;background:transparent;padding:.7rem .9rem;border-right:1px solid rgba(255,255,255,.07)}
-.vip-stat:last-child{border-right:none}
+/* Rejilla y no flex: con cinco cifras en un movil, un flex sin envolver
+   empujaba la tira 34 px fuera del marco por cada lado y se comian las
+   palabras de los extremos. auto-fit reparte lo que quepa y baja de fila. */
+.vip-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(84px,1fr));gap:1px;margin-top:.5rem;border-radius:.9rem;overflow:hidden;border:1px solid rgba(255,42,109,.2);background:rgba(255,255,255,.06);width:100%;max-width:100%}
+.vip-stat{min-width:0;border:none;border-radius:0;background:rgba(10,10,26,.92);padding:.7rem .5rem;text-align:center}
+.vip-stat strong{display:block}
+.vip-stat span{display:block;overflow-wrap:break-word;hyphens:auto}
 .vip-ctas{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:.7rem 1rem}
 /* El titulo llegaba a 4rem y por si solo marcaba el alto minimo de toda la
    seccion en escritorio. A 3rem sigue mandando y deja respirar al resto. */
@@ -477,14 +484,24 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
    seccion mas de lo que aportaba. Sigue en el HTML, se lee en escritorio. */
 @media (max-width:1023px){
   .vip-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .vip-tool{padding:.6rem .7rem}
+  /* El icono sube encima del texto: en dos columnas estrechas, tenerlo al
+     lado dejaba unos 60 px para el nombre y no cabia ninguno de los largos. */
+  .vip-tool{padding:.65rem .55rem;flex-direction:column;align-items:center;text-align:center;gap:.4rem}
+  .vip-tool-icon{margin-top:0}
+  .vip-tool-body{align-items:center;width:100%}
   .vip-tool-desc{display:none}
+}
+/* En movil, dos columnas: a tres, "FRECUENCIAS" no cabia y se partia a media
+   palabra. Y como son cinco cifras, la ultima ocupa las dos casillas de su
+   fila; si no, quedaba un hueco vacio con borde, que parecia un fallo. */
+@media (max-width:560px){
+  .vip-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vip-stat:last-child:nth-child(odd){grid-column:span 2}
 }
 @media (max-width:899px){
   .vip-banner-content{text-align:center}
   .vip-main{align-items:center}
   .vip-ctas{justify-content:center}
-  .vip-stats{flex-wrap:nowrap}
   .vip-stat{padding:.6rem .5rem}
 }
 /* El borde giratorio se aviva conforme se baja, igual que el hero: es la misma
