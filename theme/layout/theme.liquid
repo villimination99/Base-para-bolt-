@@ -82,7 +82,6 @@
       --dark-950: {{ settings.color_bg }};
       --dark-900: {{ settings.color_surface }};
       --font-body: {{ body_font.family }}, {{ body_font.fallback_families }};
-      --font-body-weight: {{ body_font.weight }};
       --font-heading: {% if settings.use_display_font %}'Orbitron', {% endif %}{{ heading_font.family }}, {{ heading_font.fallback_families }};
       /* Diseño configurable desde el editor */
       --page-width: {{ settings.page_width | default: 1280 }}px;
