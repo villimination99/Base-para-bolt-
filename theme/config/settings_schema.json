@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.17.0",
+    "theme_version": "4.18.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -266,6 +266,11 @@
     "settings": [
       { "type": "paragraph", "content": "Datos que Google usa para las insignias de envio y devoluciones en los resultados de compra. Dejalos vacios si no estas seguro: declarar algo que no cumples es peor que no declarar nada." },
       { "type": "text", "id": "seo_google_verification", "label": "Codigo de verificacion de Google Search Console", "info": "Solo el valor del atributo content, sin la etiqueta meta entera. Se puede borrar una vez Google haya verificado el sitio, pero se recomienda dejarlo.", "default": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE" },
+      { "type": "header", "content": "Datos de contacto públicos" },
+      { "type": "paragraph", "content": "Se publican en los datos estructurados que leen Google y los asistentes de IA para responder «cómo contactar con esta tienda». Déjalos vacíos y no se publica nada: no se usa tu correo de administración por su cuenta." },
+      { "type": "text", "id": "seo_contact_email", "label": "Correo de atención al cliente", "info": "Uno público, no el de tu cuenta de Shopify: aquí queda a la vista de cualquiera." },
+      { "type": "text", "id": "seo_contact_phone", "label": "Teléfono de atención", "info": "Con prefijo internacional, por ejemplo +1 514 555 0134. Opcional." },
+      { "type": "header", "content": "Insignias de envio y devolucion en Google" },
       { "type": "text", "id": "seo_ship_country", "label": "Pais principal de envio (codigo ISO)", "info": "Dos letras, por ejemplo FR, ES o US. Vacio = no se declara nada de envio." },
       { "type": "range", "id": "seo_return_days", "min": 0, "max": 90, "step": 5, "label": "Plazo de devolucion (dias)", "info": "0 = no declarar. Debe coincidir con tu politica real.", "default": 0 },
       { "type": "checkbox", "id": "seo_return_free", "label": "La devolucion es gratuita para el cliente", "default": false }

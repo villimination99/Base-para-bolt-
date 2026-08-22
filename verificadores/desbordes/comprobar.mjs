@@ -6,7 +6,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
-const PAGINAS = ['componentes.html', 'vip.html'];
+const PAGINAS = ['componentes.html', 'vip.html', 'secciones.html'];
 const ANCHOS = [320, 375, 390, 900, 1440];
 
 const navegador = await chromium.launch({
