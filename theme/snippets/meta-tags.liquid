@@ -32,6 +32,16 @@
 -%}
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:locale" content="{{ request.locale.iso_code }}">
+{%- comment -%}
+  og:locale:alternate declara los demas idiomas de la tienda. hreflang se lo
+  dice a los buscadores; esto se lo dice a Facebook, LinkedIn, WhatsApp y a los
+  rastreadores de IA, que no leen hreflang.
+{%- endcomment -%}
+{%- for lang in localization.available_languages -%}
+  {%- unless lang.iso_code == request.locale.iso_code -%}
+    <meta property="og:locale:alternate" content="{{ lang.iso_code }}">
+  {%- endunless -%}
+{%- endfor -%}
 <meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">

@@ -23,3 +23,26 @@
 {%- else -%}
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 {%- endif -%}
+
+{%- comment -%}
+  Verificacion de propiedad en el resto de buscadores. La de Google va en el
+  layout desde hace rondas y ahi se queda; estas viven aqui porque el layout lo
+  carga la tienda entera y cuanto menos crezca, mejor.
+
+  No es cosmetico: hasta que no verificas el dominio, ni Bing ni Yandex ni
+  Pinterest te dejan enviar el mapa del sitio ni ver por que consultas
+  apareces. Y Bing no es solo Bing: de ahi beben DuckDuckGo, Ecosia y la
+  busqueda que usa ChatGPT. Vacios = no se pinta nada.
+{%- endcomment -%}
+{%- if settings.seo_bing_verification != blank -%}
+  <meta name="msvalidate.01" content="{{ settings.seo_bing_verification | escape }}">
+{%- endif -%}
+{%- if settings.seo_yandex_verification != blank -%}
+  <meta name="yandex-verification" content="{{ settings.seo_yandex_verification | escape }}">
+{%- endif -%}
+{%- if settings.seo_pinterest_verification != blank -%}
+  <meta name="p:domain_verify" content="{{ settings.seo_pinterest_verification | escape }}">
+{%- endif -%}
+{%- if settings.seo_facebook_domain != blank -%}
+  <meta name="facebook-domain-verification" content="{{ settings.seo_facebook_domain | escape }}">
+{%- endif -%}

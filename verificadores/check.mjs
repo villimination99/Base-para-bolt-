@@ -778,6 +778,26 @@ check('Verificacion de Google y SEO del layout', () => {
   // hreflang: sin el, las cinco versiones de idioma compiten como duplicados.
   if (!/hreflang/.test(read(`${T}/snippets/meta-tags.liquid`)))
     bad.push('snippets/meta-tags.liquid: sin hreflang, los idiomas compiten entre si');
+
+  /* Los nombres de las etiquetas de verificacion tienen que ser EXACTOS. Una
+     letra cambiada no da error en ningun sitio: el buscador simplemente no
+     encuentra la etiqueta y el dominio se queda sin verificar para siempre.
+     Estos son los nombres oficiales de cada uno. */
+  const robots = read(`${T}/snippets/seo-robots.liquid`);
+  const oficiales = {
+    seo_bing_verification: 'msvalidate.01',
+    seo_yandex_verification: 'yandex-verification',
+    seo_pinterest_verification: 'p:domain_verify',
+    seo_facebook_domain: 'facebook-domain-verification',
+  };
+  const esquema = read(`${T}/config/settings_schema.json`);
+  for (const [ajuste, etiqueta] of Object.entries(oficiales)) {
+    if (!esquema.includes(`"${ajuste}"`)) { bad.push(`falta el ajuste ${ajuste}`); continue; }
+    if (!robots.includes(`name="${etiqueta}"`))
+      bad.push(`seo-robots.liquid: ${ajuste} deberia emitir name="${etiqueta}"`);
+    if (!robots.includes(`settings.${ajuste}`))
+      bad.push(`seo-robots.liquid: no usa settings.${ajuste}`);
+  }
   return bad;
 });
 

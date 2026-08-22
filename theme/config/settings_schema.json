@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.19.0",
+    "theme_version": "4.20.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -266,6 +266,10 @@
     "settings": [
       { "type": "paragraph", "content": "Datos que Google usa para las insignias de envio y devoluciones en los resultados de compra. Dejalos vacios si no estas seguro: declarar algo que no cumples es peor que no declarar nada." },
       { "type": "text", "id": "seo_google_verification", "label": "Codigo de verificacion de Google Search Console", "info": "Solo el valor del atributo content, sin la etiqueta meta entera. Se puede borrar una vez Google haya verificado el sitio, pero se recomienda dejarlo.", "default": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE" },
+      { "type": "text", "id": "seo_bing_verification", "label": "Bing Webmaster Tools", "info": "Solo el valor de content. Bing alimenta ademas a DuckDuckGo, Ecosia y la busqueda de ChatGPT: es la puerta mas importante despues de Google." },
+      { "type": "text", "id": "seo_yandex_verification", "label": "Yandex Webmaster", "info": "Solo el valor de content. Util si te interesa el mercado ruso y de Europa del Este." },
+      { "type": "text", "id": "seo_pinterest_verification", "label": "Pinterest", "info": "Solo el valor de content. Pinterest funciona como buscador visual y manda mucho trafico en fitness y bienestar." },
+      { "type": "text", "id": "seo_facebook_domain", "label": "Verificacion de dominio de Meta", "info": "Solo el valor de content. Hace falta para anunciar y para que Facebook e Instagram muestren bien tus fichas." },
       { "type": "header", "content": "Datos de contacto públicos" },
       { "type": "paragraph", "content": "Se publican en los datos estructurados que leen Google y los asistentes de IA para responder «cómo contactar con esta tienda». Déjalos vacíos y no se publica nada: no se usa tu correo de administración por su cuenta." },
       { "type": "text", "id": "seo_contact_email", "label": "Correo de atención al cliente", "info": "Uno público, no el de tu cuenta de Shopify: aquí queda a la vista de cualquiera." },
