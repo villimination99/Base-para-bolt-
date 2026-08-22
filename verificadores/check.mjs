@@ -781,6 +781,58 @@ check('Verificacion de Google y SEO del layout', () => {
   return bad;
 });
 
+check('Clases construidas con una variable', () => {
+  /* Una clase escrita como "reveal-{{ anim }}" o "ntile-{{ i }}" no aparece
+     literal en ningun sitio, asi que un barrido de clases huerfanas la da por
+     muerta y se borra sin querer. Ya paso dos veces: .cart-ship-hl, que vivia
+     dentro de una traduccion, y las tres direcciones de entrada
+     (.reveal-left/right/zoom), que salen de un select del editor y se
+     quedaron sin CSS, de modo que elegir "Desde la izquierda" no hacia nada.
+     Aqui se hace al reves: se cogen los prefijos que se construyen con una
+     variable, se buscan los valores posibles en los select del esquema, y se
+     comprueba que cada combinacion tenga estilo. */
+  const css = read(`${T}/assets/villumination.css`);
+  const bad = [];
+  // prefijo -> de que ajuste sale la variable
+  const prefijos = new Map();
+  for (const f of liquids()) {
+    const src = read(f);
+    for (const m of src.matchAll(/class="[^"]*?([a-z][\w-]*-)\{\{\s*([\w.]+)\s*\}\}/g))
+      prefijos.set(m[1], { archivo: f, variable: m[2].split('.').pop() });
+    // la forma indirecta: {% render 'x', anim: ... %} dentro de un class
+    for (const m of src.matchAll(/\{%-?\s*render\s+'([\w-]+)'[^%]*?\banim:/g))
+      if (!prefijos.has('reveal-')) prefijos.set('reveal-', { archivo: f, variable: 'animation' });
+  }
+  // valores posibles de cada select del tema
+  const valores = new Map();
+  const recoger = lista => {
+    for (const s of lista || []) {
+      if (s.type !== 'select' && s.type !== 'radio') continue;
+      const v = (s.options || []).map(o => o.value).filter(x => /^[\w-]+$/.test(x));
+      if (v.length) valores.set(s.id, [...new Set([...(valores.get(s.id) || []), ...v])]);
+    }
+  };
+  for (const p of JSON.parse(read(`${T}/config/settings_schema.json`))) recoger(p.settings);
+  for (const f of walk(`${T}/sections`, /\.liquid$/)) {
+    const m = read(f).match(/\{%-?\s*schema\s*-?%\}([\s\S]*?)\{%-?\s*endschema\s*-?%\}/);
+    if (!m) continue;
+    let j; try { j = JSON.parse(m[1]); } catch { continue; }
+    recoger(j.settings);
+    for (const b of j.blocks || []) recoger(b.settings);
+  }
+
+  for (const [pref, info] of prefijos) {
+    const posibles = valores.get(info.variable);
+    if (!posibles) continue; // no sale de un select: no se puede saber los valores
+    for (const v of posibles) {
+      if (v === 'none' || /^\d+$/.test(v)) continue; // "none" y los indices no llevan clase propia
+      if (!new RegExp(`\\.${pref}${v}(?![\\w-])`).test(css))
+        bad.push(`${info.archivo}: la opcion "${v}" genera .${pref}${v} y el CSS no la define`);
+    }
+  }
+  return [...new Set(bad)];
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
