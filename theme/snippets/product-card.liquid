@@ -1,7 +1,12 @@
 {%- comment -%}
   Product card. Usage: {% render 'product-card', product: product %}
 {%- endcomment -%}
-<div class="product-card shine-effect{% if settings.enable_card_tilt %} js-tilt{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+{%- comment -%}
+  Los ocho Codices llevan el color de su cubierta. Si el producto no es uno de
+  ellos, acento sale vacio y la tarjeta se queda con el cian de la marca.
+{%- endcomment -%}
+{%- capture acento -%}{%- render 'acento-libro', product: product -%}{%- endcapture -%}
+<div class="product-card shine-effect{% if acento != blank %} tiene-acento{% endif %}{% if settings.enable_card_tilt %} js-tilt{% endif %}"{% if acento != blank %} style="--acento:{{ acento }};"{% endif %} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
   <a href="{{ product.url }}" class="product-card-image" aria-label="{{ product.title | escape }}">
     {%- if product.featured_media -%}
       <img src="{{ product.featured_media | image_url: width: 500 }}"

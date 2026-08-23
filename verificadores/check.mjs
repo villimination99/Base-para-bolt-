@@ -853,6 +853,56 @@ check('Clases construidas con una variable', () => {
   return [...new Set(bad)];
 });
 
+check('Prefijos que Safari necesita', () => {
+  /* Safari pidio -webkit- para varias de estas hasta hace muy poco, y en los
+     iPhone que no se actualizan sigue haciendolo. Sin el prefijo no da error:
+     simplemente no aplica el efecto. Un panel translucido se queda sin
+     desenfoque y el texto de detras lo atraviesa; un titulo con degradado se
+     ve como un bloque de color solido. Se detecto asi que el menu desplegable
+     no se desenfocaba en iPhone. */
+  const css = read(`${T}/assets/villumination.css`).replace(/\/\*[\s\S]*?\*\//g, '');
+  const props = ['backdrop-filter', 'background-clip', 'line-clamp', 'user-select', 'mask-image', 'box-decoration-break'];
+  const bad = [];
+  for (const m of css.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+    const sel = m[1].trim().split(',')[0].slice(0, 48), cuerpo = m[2];
+    for (const p of props) {
+      const sin = new RegExp(`(?<!-webkit-)\\b${p}\\s*:`).test(cuerpo);
+      const con = new RegExp(`-webkit-${p}\\s*:`).test(cuerpo);
+      // background-clip solo necesita prefijo cuando el valor es text
+      if (p === 'background-clip' && !/background-clip\s*:\s*text/.test(cuerpo)) continue;
+      if (sin && !con) bad.push(`${sel}: ${p} sin -webkit-, en Safari no se aplica`);
+    }
+  }
+  return bad;
+});
+
+check('color-mix con respaldo', () => {
+  /* color-mix llego a Safari en la 16.2. Una regla que lo use en un iPhone mas
+     antiguo se descarta ENTERA, no solo esa propiedad. Donde eso deja algo
+     invisible —un color de texto o un fondo— hace falta declarar antes un
+     color plano que sirva de red. */
+  const css = read(`${T}/assets/villumination.css`).replace(/\/\*[\s\S]*?\*\//g, '');
+  /* Solo 'color'. Un fondo que no se pinta deja el tema oscuro tal cual y no
+     rompe nada; un texto sin color puede quedar ilegible. Exigir respaldo a
+     los cuarenta fondos engordaria la hoja sin arreglar nada real. */
+  const criticas = ['color'];
+  const bad = [];
+  for (const m of css.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+    const sel = m[1].trim().split(',')[0].slice(0, 46), cuerpo = m[2];
+    for (const d of cuerpo.split(';')) {
+      const i = d.indexOf(':');
+      if (i < 0) continue;
+      const prop = d.slice(0, i).trim(), valor = d.slice(i + 1);
+      if (!criticas.includes(prop) || !valor.includes('color-mix(')) continue;
+      // ¿hay una declaracion plana de la misma propiedad ANTES en la regla?
+      const antes = cuerpo.slice(0, cuerpo.indexOf(d));
+      if (!new RegExp(`(^|;)\\s*${prop}\\s*:\\s*(?!.*color-mix)`).test(antes))
+        bad.push(`${sel}: ${prop} solo con color-mix, sin color plano antes`);
+    }
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
