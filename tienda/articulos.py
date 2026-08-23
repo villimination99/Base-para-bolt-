@@ -1242,6 +1242,140 @@ suplementos tienen evidencia y cuáles no</a>.</p>
             "completa y un presupuesto mensual por niveles.</p>"
         ) + FIRMA,
     },
+
+    # ----------------------------------------------------------------- 11
+    {
+        "handle": "superalimentos-en-polvo-sustituyen-verdura",
+        "titulo": "Un superalimento en polvo no sustituye a la verdura",
+        "resumen": (
+            "La cuenta que lo resuelve en diez segundos está en la propia "
+            "etiqueta, y es la fibra. Qué llevan de verdad estos botes, para "
+            "qué sirven y por qué «equivale a N raciones» no significa nada."
+        ),
+        "etiquetas": ["nutrición", "suplementos", "etiquetado"],
+        "meta": (
+            "Superalimentos en polvo | VILLUMINATIONS",
+            "Por qué la fibra de la etiqueta desmonta el «equivale a N "
+            "raciones de verdura», qué llevan estos botes de verdad y para "
+            "qué sí sirven.",
+        ),
+        "cuerpo": """
+<p>Los botes de verde y de rojo prometen lo mismo con distinto color: que una
+cucharada resuelve lo que no se comió. La respuesta corta es que no, y lo
+bueno es que no hace falta creerse a nadie: <strong>la cuenta está impresa en
+el propio bote</strong>.</p>
+
+<h2>La cuenta de la fibra, que dura diez segundos</h2>
+
+<p>Una ración de verdura no es solo sus vitaminas: es sobre todo la matriz que
+las lleva, y de esa matriz la parte que se mide en la etiqueta es la
+<strong>fibra</strong>. El valor diario de referencia que la autoridad federal
+de alimentos usa para etiquetar es de 28 g al día.</p>
+
+<p>Ahora mira la casilla de fibra de tu bote de verdes. Suele poner entre 1 y
+3 g por toma. Un bote que dice equivaler a varias raciones de verdura y aporta
+2 g de fibra no está aportando varias raciones de verdura: está aportando el
+equivalente en fibra a un par de bocados.</p>
+
+<p>No es una trampa escondida, y ahí está lo interesante. La cifra que
+desmiente el eslogan la pone el propio fabricante, porque la ley le obliga a
+ponerla. Solo hay que mirarla. Si te suena a poco, en <a
+href="/blogs/diario/como-se-lee-una-etiqueta-nutricional">cómo se lee una
+etiqueta nutricional</a> está el resto del método.</p>
+
+<h2>Por qué las cantidades no dan</h2>
+
+<p>Deshidratar quita agua, no crea materia. Una toma típica de estos polvos
+pesa entre 5 y 10 g. Una ración de verdura fresca ronda los 80 g, de los que
+la mayor parte es agua: al secarla quedan unos pocos gramos de materia. Puesto
+así, la cuenta parece salir — y ahí está el truco. Lo que hay dentro de esos
+gramos no es verdura entera secada: son <strong>extractos</strong>, elegidos
+por concentrar unos compuestos y no otros, más rellenos y saborizantes que
+también pesan.</p>
+
+<p>De ahí que el eslogan hable de «equivalencia» y nunca diga en qué. La
+palabra <em>superalimento</em> tampoco ayuda a saberlo: <strong>no tiene
+ninguna definición legal</strong>. No es una categoría regulada, es una
+categoría de marketing, y por eso puede significar lo que haga falta.</p>
+
+<h2>La mezcla propietaria vuelve a aparecer</h2>
+
+<p>Casi todos estos botes agrupan sus ingredientes en una «mezcla de verdes» o
+una «mezcla de rojos» con <strong>un solo número al final</strong>. La lista
+está ordenada por peso, así que sabes cuál abunda más; lo que no sabes es
+cuánto. Una mezcla de 6 g con dieciocho ingredientes reparte, de media, 333 mg
+por ingrediente — y el reparto real no es la media: lo normal es que los dos
+primeros se lleven casi todo y los dieciséis restantes estén para que la lista
+sea larga.</p>
+
+<p>Cuando un ingrediente sí aparece con su cantidad propia fuera de la mezcla,
+esa cifra sirve. Es la única que sirve.</p>
+
+<h2>Para qué sí sirven</h2>
+
+<p>Decir que no sustituyen a la verdura no es decir que no valgan para nada.
+Son dos cosas distintas y conviene separarlas:</p>
+
+<ul>
+  <li><strong>Son cómodos.</strong> Un día de viaje, un turno largo o una
+  semana mala se resuelven antes con una cucharada que con nada. Eso tiene un
+  valor real y no hace falta inflarlo.</li>
+  <li><strong>Muchos llevan vitaminas y minerales añadidos</strong>, y esos sí
+  vienen con su cantidad y su porcentaje de valor diario. Si compras por eso,
+  compras algo comprobable.</li>
+  <li><strong>Aportan material vegetal</strong> que de otro modo no estaría en
+  la semana. Poco, pero no cero.</li>
+</ul>
+
+<p>Lo que no puede afirmarse es que hagan nada por una enfermedad, ni que
+«desintoxiquen»: eso último no describe ningún proceso reconocido, y ningún
+complemento alimenticio puede presentarse como remedio de nada. Los
+complementos <strong>no se aprueban antes de venderse</strong> como se aprueba
+un medicamento; el fabricante responde de que su producto sea seguro y de que
+la etiqueta diga la verdad, y la autoridad actúa después. Está desarrollado en
+<a href="/blogs/diario/que-suplementos-tienen-evidencia">qué suplementos
+tienen evidencia y cuáles no</a>.</p>
+
+<h2>La cuenta antes de comprar</h2>
+
+<p>Divide el precio del bote entre las tomas que declara. Ese número es el
+coste de una toma. Compáralo con lo que cuesta una bolsa de verdura congelada,
+que no pierde nutrientes por estar congelada y sí lleva su fibra entera.</p>
+
+<p>Si la cuenta te sale a favor del bote, cómpralo tranquilo: sabes lo que
+compras. Si te sale en contra, ya sabes en qué gastarlo. Lo único que no
+conviene es comprarlo <em>en lugar de</em> la verdura, porque esa sustitución
+es justamente la que no se sostiene.</p>
+
+<h2>Lo que no hace</h2>
+
+<ul>
+  <li>No cubre las raciones de fruta y verdura del día.</li>
+  <li>No aporta la fibra de esas raciones, y la etiqueta lo dice.</li>
+  <li>No compensa una semana de comida mala; ordena la comida y después,
+  si quieres, añade el bote.</li>
+</ul>
+""" + _fuentes(
+            "<li>El valor diario de referencia de 28 g de fibra y las reglas "
+            "de la etiqueta de información nutricional los publica la "
+            "autoridad federal de alimentos y medicamentos.</li>\n"
+            "<li>Las recomendaciones de consumo de fruta y verdura están en "
+            "las guías alimentarias federales, publicadas cada cinco "
+            "años.</li>\n"
+            "<li>El régimen de los complementos alimenticios —que no se "
+            "aprueban antes de venderse y que no pueden presentarse como "
+            "remedio de una enfermedad— es el de la misma autoridad "
+            "federal.</li>\n"
+            "<li>«Superalimento» no aparece definido en ninguna de esas "
+            "normas. Ese es el dato.</li>\n"
+        ) + ETIQUETA.format(
+            frase="Las raciones por grupo de alimento, los diecinueve "
+                  "micronutrientes con su recomendación y su límite superior, "
+                  "y cómo se monta una semana de compra sin contar calorías "
+                  "piden más sitio.",
+            handle="codice-de-la-mesa", libro="el Códice de la Mesa", paginas="78",
+        ) + FIRMA,
+    },
 ]
 
 TOPE_TITULO = 60

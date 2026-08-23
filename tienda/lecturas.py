@@ -75,10 +75,13 @@ MAPA = {
     "nitric-shock-pre-workout-powder-fruit-punch":
         ("que-lleva-un-preentreno",
          "que-suplementos-tienen-evidencia"),
-    "greens-superfood": ("como-se-lee-una-etiqueta-nutricional",
-                         "que-suplementos-tienen-evidencia"),
-    "reds-superfood": ("como-se-lee-una-etiqueta-nutricional",
-                       "que-suplementos-tienen-evidencia"),
+    # Los dos botes de polvo enlazan al artículo que contesta la pregunta que
+    # se hace de verdad antes de comprarlos. El de la etiqueta iba primero y
+    # respondía a otra cosa.
+    "greens-superfood": ("superalimentos-en-polvo-sustituyen-verdura",
+                         "como-se-lee-una-etiqueta-nutricional"),
+    "reds-superfood": ("superalimentos-en-polvo-sustituyen-verdura",
+                       "como-se-lee-una-etiqueta-nutricional"),
     "advanced-100-whey-protein-isolate-chocolate":
         ("como-elegir-una-proteina-en-polvo",
          "cuanta-proteina-hace-falta-al-dia"),

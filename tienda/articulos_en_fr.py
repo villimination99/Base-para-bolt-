@@ -2854,6 +2854,270 @@ def faltan() -> list:
     return sorted({a["handle"] for a in articulos.ARTICULOS} - set(CUERPOS))
 
 
+CUERPOS["superalimentos-en-polvo-sustituyen-verdura"] = {
+    "en": {
+        "titulo": "A greens powder does not replace vegetables",
+        "resumen": (
+            "The sum that settles it in ten seconds is printed on the tub "
+            "itself, and it is the fibre. What these blends actually contain, "
+            "what they are good for, and why «equals N servings» means "
+            "nothing."),
+        "meta": (
+            "Greens and reds powders | VILLUMINATIONS",
+            "Why the fibre line on the label dismantles «equals N servings of "
+            "vegetables», what is really in these tubs and what they are "
+            "genuinely good for."),
+        "cuerpo": """
+<p>The green tub and the red tub promise the same thing in different colours:
+that one scoop makes up for what you did not eat. The short answer is no, and
+the good part is that you do not have to take anyone's word for it — <strong>the
+sum is printed on the tub</strong>.</p>
+
+<h2>The fibre sum, which takes ten seconds</h2>
+
+<p>A serving of vegetables is not just its vitamins: it is above all the matrix
+carrying them, and the part of that matrix the label measures is
+<strong>fibre</strong>. The reference daily value the federal food authority
+uses for labelling is 28 g a day.</p>
+
+<p>Now look at the fibre line on your greens tub. It usually reads between 1
+and 3 g per serving. A tub claiming to equal several servings of vegetables
+while delivering 2 g of fibre is not delivering several servings of vegetables:
+it is delivering a couple of mouthfuls' worth of fibre.</p>
+
+<p>It is not a hidden trick, and that is the interesting part. The figure that
+contradicts the slogan is put there by the manufacturer, because the law
+requires it. You only have to look. If that seems thin, <a
+href="/en/blogs/diario/como-se-lee-una-etiqueta-nutricional">how to read a
+nutrition label</a> has the rest of the method.</p>
+
+<h2>Why the amounts do not add up</h2>
+
+<p>Dehydrating removes water; it does not create matter. A typical serving of
+these powders weighs between 5 and 10 g. A serving of fresh vegetables is
+around 80 g, most of it water: dry it and a few grams of matter remain. Put
+that way the sum looks like it works — and that is the sleight of hand. What is
+inside those grams is not whole dried vegetable: it is
+<strong>extracts</strong>, chosen to concentrate some compounds and not others,
+plus fillers and flavourings that also weigh something.</p>
+
+<p>Hence the slogan speaks of «equivalence» and never says equivalent in what.
+The word <em>superfood</em> is no help either: <strong>it has no legal
+definition</strong>. It is not a regulated category, it is a marketing one, and
+that is why it can mean whatever is needed.</p>
+
+<h2>The proprietary blend shows up again</h2>
+
+<p>Nearly all these tubs group their ingredients into a «greens blend» or a
+«reds blend» with <strong>a single number at the end</strong>. The list is
+ordered by weight, so you know which one is most abundant; what you do not know
+is how much. A 6 g blend with eighteen ingredients averages 333 mg per
+ingredient — and the real split is not the average: the usual case is that the
+first two take almost all of it and the remaining sixteen are there to make the
+list long.</p>
+
+<p>When an ingredient does appear with its own amount outside the blend, that
+figure is worth something. It is the only one that is.</p>
+
+<h2>What they are genuinely good for</h2>
+
+<p>Saying they do not replace vegetables is not saying they are worthless. They
+are two different statements and worth keeping apart:</p>
+
+<ul>
+  <li><strong>They are convenient.</strong> A day of travel, a long shift or a
+  bad week is settled faster with a scoop than with nothing. That has real
+  value and there is no need to inflate it.</li>
+  <li><strong>Many carry added vitamins and minerals</strong>, and those do
+  come with an amount and a percent daily value. If you buy for that, you are
+  buying something checkable.</li>
+  <li><strong>They add plant material</strong> that would otherwise not be in
+  the week. Not much, but not zero.</li>
+</ul>
+
+<p>What cannot be claimed is that they do anything about a disease, or that
+they «detox»: that last word describes no recognised process, and no dietary
+supplement may be presented as a remedy for anything. Supplements <strong>are
+not approved before being sold</strong> the way a medicine is; the manufacturer
+answers for the product being safe and the label being true, and the authority
+acts afterwards. It is worked out in <a
+href="/en/blogs/diario/que-suplementos-tienen-evidencia">which supplements have
+evidence and which do not</a>.</p>
+
+<h2>The sum before buying</h2>
+
+<p>Divide the price of the tub by the servings it declares. That number is the
+cost of one serving. Compare it with a bag of frozen vegetables, which loses no
+nutrients for being frozen and does carry its fibre whole.</p>
+
+<p>If the sum comes out in the tub's favour, buy it with a clear head: you know
+what you are buying. If it comes out against, you now know what to spend it on.
+The only thing not worth doing is buying it <em>instead of</em> the vegetables,
+because that substitution is precisely the one that does not hold.</p>
+
+<h2>What it does not do</h2>
+
+<ul>
+  <li>It does not cover the day's fruit and vegetable servings.</li>
+  <li>It does not supply the fibre of those servings, and the label says so.</li>
+  <li>It does not make up for a bad week of eating; sort the food out first
+  and then, if you want, add the tub.</li>
+</ul>
+""",
+        "fuentes": (
+            "<li>The 28 g reference daily value for fibre and the rules of the "
+            "nutrition facts label are published by the federal food and drug "
+            "authority.</li>\n"
+            "<li>The fruit and vegetable intake recommendations are in the "
+            "federal dietary guidelines, published every five years.</li>\n"
+            "<li>The regime for dietary supplements —not approved before being "
+            "sold, and not to be presented as a remedy for a disease— belongs "
+            "to that same federal authority.</li>\n"
+            "<li>«Superfood» appears defined in none of those rules. That is "
+            "the datum.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-mesa",
+        "frase": ("The servings by food group, the nineteen micronutrients "
+                  "with their recommendation and their upper limit, and how a "
+                  "week of shopping is built without counting calories need "
+                  "more room."),
+    },
+    "fr": {
+        "titulo": "Une poudre de super-aliments ne remplace pas les légumes",
+        "resumen": (
+            "Le calcul qui tranche en dix secondes est imprimé sur le pot "
+            "lui-même, et c'est la fibre. Ce que contiennent vraiment ces "
+            "mélanges, à quoi ils servent, et pourquoi « équivaut à N "
+            "portions » ne veut rien dire."),
+        "meta": (
+            "Poudres de super-aliments | VILLUMINATIONS",
+            "Pourquoi la ligne de fibres de l'étiquette démonte l'« équivaut à "
+            "N portions de légumes », ce qu'il y a vraiment dans ces pots et à "
+            "quoi ils servent."),
+        "cuerpo": """
+<p>Le pot vert et le pot rouge promettent la même chose en deux couleurs :
+qu'une cuillère répare ce qui n'a pas été mangé. La réponse courte est non, et
+le bon côté est qu'il n'y a personne à croire sur parole — <strong>le calcul
+est imprimé sur le pot</strong>.</p>
+
+<h2>Le calcul des fibres, qui prend dix secondes</h2>
+
+<p>Une portion de légumes, ce n'est pas seulement ses vitamines : c'est surtout
+la matrice qui les porte, et la part de cette matrice que l'étiquette mesure,
+ce sont les <strong>fibres</strong>. La valeur quotidienne de référence
+qu'emploie l'autorité fédérale des aliments pour l'étiquetage est de 28 g par
+jour.</p>
+
+<p>Regardez maintenant la ligne des fibres de votre pot de verts. Elle indique
+en général entre 1 et 3 g par prise. Un pot qui dit équivaloir à plusieurs
+portions de légumes en apportant 2 g de fibres n'apporte pas plusieurs portions
+de légumes : il apporte l'équivalent en fibres de deux bouchées.</p>
+
+<p>Ce n'est pas un piège caché, et c'est là l'intéressant. Le chiffre qui
+dément le slogan, c'est le fabricant lui-même qui le met, parce que la loi l'y
+oblige. Il suffit de le regarder. Si cela vous paraît maigre, <a
+href="/fr/blogs/diario/como-se-lee-una-etiqueta-nutricional">comment lire une
+étiquette nutritionnelle</a> contient le reste de la méthode.</p>
+
+<h2>Pourquoi les quantités ne suivent pas</h2>
+
+<p>Déshydrater retire de l'eau, cela ne crée pas de matière. Une prise typique
+de ces poudres pèse entre 5 et 10 g. Une portion de légumes frais tourne autour
+de 80 g, dont la majeure partie est de l'eau : une fois séchée, il reste
+quelques grammes de matière. Dit ainsi, le calcul semble tomber juste — et
+c'est là le tour de main. Ce qu'il y a dans ces grammes n'est pas du légume
+entier séché : ce sont des <strong>extraits</strong>, choisis pour concentrer
+certains composés et pas d'autres, plus des charges et des arômes qui pèsent
+aussi.</p>
+
+<p>D'où le fait que le slogan parle d'« équivalence » sans jamais dire
+équivalent en quoi. Le mot <em>super-aliment</em> n'aide pas davantage :
+<strong>il n'a aucune définition légale</strong>. Ce n'est pas une catégorie
+réglementée, c'est une catégorie de marketing, et c'est pour cela qu'il peut
+vouloir dire ce qu'il faut.</p>
+
+<h2>Le mélange propriétaire revient</h2>
+
+<p>Presque tous ces pots regroupent leurs ingrédients dans un « mélange de
+verts » ou un « mélange de rouges » avec <strong>un seul chiffre au bout</strong>.
+La liste est ordonnée par poids, vous savez donc lequel abonde le plus ; ce que
+vous ne savez pas, c'est combien. Un mélange de 6 g avec dix-huit ingrédients
+répartit en moyenne 333 mg par ingrédient — et la répartition réelle n'est pas
+la moyenne : l'ordinaire est que les deux premiers prennent presque tout et que
+les seize autres soient là pour que la liste soit longue.</p>
+
+<p>Quand un ingrédient figure bien avec sa quantité propre en dehors du
+mélange, ce chiffre-là sert. C'est le seul qui serve.</p>
+
+<h2>À quoi ils servent vraiment</h2>
+
+<p>Dire qu'ils ne remplacent pas les légumes n'est pas dire qu'ils ne valent
+rien. Ce sont deux affirmations différentes et il vaut mieux les séparer :</p>
+
+<ul>
+  <li><strong>Ils sont commodes.</strong> Un jour de voyage, un long poste ou
+  une mauvaise semaine se règlent plus vite avec une cuillère qu'avec rien.
+  Cela a une valeur réelle et il n'y a pas besoin de la gonfler.</li>
+  <li><strong>Beaucoup portent des vitamines et minéraux ajoutés</strong>, et
+  ceux-là viennent avec leur quantité et leur pourcentage de valeur
+  quotidienne. Si vous achetez pour cela, vous achetez du vérifiable.</li>
+  <li><strong>Ils apportent de la matière végétale</strong> qui autrement ne
+  serait pas dans la semaine. Peu, mais pas zéro.</li>
+</ul>
+
+<p>Ce qui ne peut pas être affirmé, c'est qu'ils fassent quoi que ce soit
+contre une maladie, ni qu'ils « détoxifient » : ce dernier mot ne décrit aucun
+processus reconnu, et aucun complément alimentaire ne peut se présenter comme
+remède de quoi que ce soit. Les compléments <strong>ne sont pas approuvés avant
+d'être vendus</strong> comme l'est un médicament ; le fabricant répond de la
+sûreté du produit et de la véracité de l'étiquette, et l'autorité intervient
+après. C'est développé dans <a
+href="/fr/blogs/diario/que-suplementos-tienen-evidencia">quels compléments ont
+des preuves et lesquels non</a>.</p>
+
+<h2>Le calcul avant d'acheter</h2>
+
+<p>Divisez le prix du pot par le nombre de prises qu'il déclare. Ce nombre est
+le coût d'une prise. Comparez-le à un sachet de légumes surgelés, qui ne perd
+pas de nutriments du fait d'être surgelé et porte ses fibres entières.</p>
+
+<p>Si le calcul penche pour le pot, achetez-le tranquillement : vous savez ce
+que vous achetez. S'il penche contre, vous savez désormais où mettre l'argent.
+La seule chose à ne pas faire est de l'acheter <em>à la place</em> des légumes,
+car c'est précisément cette substitution qui ne tient pas.</p>
+
+<h2>Ce qu'il ne fait pas</h2>
+
+<ul>
+  <li>Il ne couvre pas les portions de fruits et légumes de la journée.</li>
+  <li>Il n'apporte pas les fibres de ces portions, et l'étiquette le dit.</li>
+  <li>Il ne rattrape pas une mauvaise semaine ; remettez d'abord la nourriture
+  en ordre, puis ajoutez le pot si vous voulez.</li>
+</ul>
+""",
+        "fuentes": (
+            "<li>La valeur quotidienne de référence de 28 g de fibres et les "
+            "règles de l'étiquette d'information nutritionnelle sont publiées "
+            "par l'autorité fédérale des aliments et des médicaments.</li>\n"
+            "<li>Les recommandations de consommation de fruits et légumes "
+            "figurent dans les guides alimentaires fédéraux, publiés tous les "
+            "cinq ans.</li>\n"
+            "<li>Le régime des compléments alimentaires —non approuvés avant "
+            "d'être vendus, et ne pouvant se présenter comme remède d'une "
+            "maladie— relève de cette même autorité fédérale.</li>\n"
+            "<li>« Super-aliment » n'est défini dans aucune de ces normes. "
+            "C'est cela, la donnée.</li>\n"),
+        "base": "federal",
+        "libro": "codice-de-la-mesa",
+        "frase": ("Les portions par groupe d'aliments, les dix-neuf "
+                  "micronutriments avec leur recommandation et leur limite "
+                  "supérieure, et la façon de monter une semaine de courses "
+                  "sans compter les calories demandent plus de place."),
+    },
+}
+
+
+
 if __name__ == "__main__":
     import sys
     from pathlib import Path
