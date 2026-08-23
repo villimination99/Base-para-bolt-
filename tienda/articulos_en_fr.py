@@ -1976,6 +1976,231 @@ employé, et les deux positions sont cohérentes avec elles-mêmes.</p>
 
 _ENLACES = re.compile(r'href="(/[^"]*)"')
 
+# El castellano de este artículo NO vive aquí: lo escribió el dueño
+# directamente en la tienda. Se anota en SIN_FUENTE para que comprobar() no lo
+# rechace, y para que quede dicho de qué no responde el repositorio.
+#
+# Traducirlo desde aquí arregla dos cosas que cotejar.py encontró: el inglés
+# estaba caducado —el castellano cambió después de registrarlo— y no había
+# francés. Media traducción es peor que ninguna.
+SIN_FUENTE = {"creatina"}
+
+CUERPOS["creatina"] = {
+    "en": {
+        "titulo": "Creatine: how much, when, and why monohydrate",
+        "resumen": ("The dose, the timing and the usual doubts, answered in "
+                    "two minutes."),
+        "meta": (
+            "Creatine: how much, when and which one | VILLUMINATIONS",
+            "3 to 5 g a day, monohydrate, every day and at any hour. No "
+            "loading phase, no cycling, and what it will not do for you."),
+        "cuerpo": """
+<p><strong>The short answer:</strong> 3 to 5 grams a day, every day, at
+whatever hour you are most likely to remember. No loading phase is needed, no
+cycling is needed, and it does not matter whether it is before or after
+training.</p>
+
+<p>Now the long version, because there is a lot of myth going around.</p>
+
+<h2>What exactly does creatine do?</h2>
+
+<p>Your muscles use a molecule called ATP to contract. In very short, intense
+efforts — a set of squats, a sprint, one last push — ATP runs out in seconds.
+Creatine helps regenerate it faster.</p>
+
+<p>In practice that translates into something modest but real: one or two more
+repetitions on the hard sets. Repeated over months, that is more training
+volume, and more well-managed volume is more muscle.</p>
+
+<p>It is not magic. It is one of the few aids whose effect is well
+documented.</p>
+
+<h2>How much creatine should you take a day?</h2>
+
+<p><strong>3 to 5 grams a day.</strong> A level teaspoon.</p>
+
+<p>If you weigh a good deal more than 90 kg you can go to the top of the
+range. Below that, 3 grams is enough. Taking more speeds nothing up: the
+excess is excreted.</p>
+
+<h2>Is a loading phase necessary?</h2>
+
+<p>No. The loading phase — 20 g a day for a week — only serves to fill the
+muscle stores faster: in a few days instead of three or four weeks.</p>
+
+<p>The destination is the same. If you are not in a hurry, skip it — and you
+also avoid the digestive discomfort that loading causes a fair number of
+people.</p>
+
+<h2>What time do you take it?</h2>
+
+<p>Whenever you remember. Creatine works <strong>by saturation</strong>: what
+matters is that your stores are full, and that depends on taking it every day,
+not on the particular hour.</p>
+
+<p>The best moment is the one that stops you forgetting. Next to the
+toothbrush works better than any complicated protocol.</p>
+
+<h2>Do you need to take breaks or cycle it?</h2>
+
+<p>No need. It creates no dependence and the body does not
+&laquo;get used to it&raquo;.</p>
+
+<h2>Does it retain water? Does it make you fat?</h2>
+
+<p>It does retain some water, but <strong>inside the muscle</strong>, not
+under the skin. The scale may go up a kilo or two in the first weeks. That is
+not fat: it is intramuscular water, and visually the effect is more volume,
+not less definition.</p>
+
+<h2>Which type should you buy?</h2>
+
+<p><strong>Monohydrate.</strong> It is the most studied, the cheapest and the
+one that works. The &laquo;advanced&raquo; versions — HCL, ethyl ester,
+buffered — cost more and have not been shown to be better.</p>
+
+<p>Look for the Creapure® seal if you want an extra guarantee of purity.</p>
+
+<h2>What it will not do for you</h2>
+
+<ul>
+  <li>
+<strong>It does not damage the kidneys if you are healthy.</strong> If you have
+a pre-existing kidney condition, ask first.</li>
+  <li>
+<strong>It is not a steroid</strong> and has nothing to do with one.</li>
+  <li>
+<strong>It does nothing on its own.</strong> Without training and without
+eating enough, creatine builds nothing.</li>
+</ul>
+
+<h2>In short</h2>
+
+<p>3–5 g a day, monohydrate, every day, at any hour. No loading, no cycles, no
+complicating it.</p>
+
+<p>It is the supplement with the best ratio between what it costs, what is
+known about it and what it does.</p>
+
+<p>If you want the full picture — which other supplements have evidence, which
+do not and how they are really regulated — it is in
+<a href="/en/blogs/diario/que-suplementos-tienen-evidencia">Which supplements
+have evidence and which do not</a>.</p>
+""",
+        "firma": FIRMA,
+    },
+    "fr": {
+        "titulo": "Créatine : combien, quand, et pourquoi le monohydrate",
+        "resumen": ("La dose, le moment et les doutes habituels, en deux "
+                    "minutes."),
+        "meta": (
+            "Créatine : combien, quand et laquelle | VILLUMINATIONS",
+            "3 à 5 g par jour, monohydrate, tous les jours et à n'importe "
+            "quelle heure. Sans phase de charge, sans cycles, et ce qu'elle "
+            "ne fera pas."),
+        "cuerpo": """
+<p><strong>La réponse courte :</strong> de 3 à 5 grammes par jour, tous les
+jours, à l'heure à laquelle vous y penserez le mieux. Pas besoin de phase de
+charge, pas besoin de cycles, et peu importe que ce soit avant ou après
+l'entraînement.</p>
+
+<p>Maintenant la version longue, parce qu'il circule beaucoup de mythes.</p>
+
+<h2>Que fait exactement la créatine ?</h2>
+
+<p>Vos muscles utilisent une molécule appelée ATP pour se contracter. Dans les
+efforts très courts et intenses — une série de squats, un sprint, une dernière
+poussée — l'ATP s'épuise en quelques secondes. La créatine aide à le régénérer
+plus vite.</p>
+
+<p>En pratique cela se traduit par quelque chose de modeste mais réel : une ou
+deux répétitions de plus sur les séries dures. Répété pendant des mois, cela
+fait plus de volume d'entraînement, et plus de volume bien géré fait plus de
+muscle.</p>
+
+<p>Ce n'est pas magique. C'est l'une des rares aides dont l'effet est bien
+documenté.</p>
+
+<h2>Combien de créatine faut-il prendre par jour ?</h2>
+
+<p><strong>3 à 5 grammes par jour.</strong> Une cuillère à café rase.</p>
+
+<p>Si vous pesez nettement plus de 90 kg, vous pouvez aller vers le haut de la
+fourchette. En dessous, 3 grammes suffisent. En prendre plus n'accélère rien :
+l'excédent est éliminé.</p>
+
+<h2>Faut-il une phase de charge ?</h2>
+
+<p>Non. La phase de charge — 20 g par jour pendant une semaine — ne sert qu'à
+remplir les réserves musculaires plus vite : en quelques jours au lieu de trois
+ou quatre semaines.</p>
+
+<p>La destination est la même. Si vous n'êtes pas pressé, sautez-la — et vous
+évitez au passage les désagréments digestifs que la charge provoque chez pas
+mal de gens.</p>
+
+<h2>À quelle heure la prendre ?</h2>
+
+<p>À celle dont vous vous souviendrez. La créatine agit <strong>par
+saturation</strong> : ce qui compte, c'est que vos réserves soient pleines, et
+cela dépend de la prendre tous les jours, non de l'heure précise.</p>
+
+<p>Le meilleur moment est celui qui vous évite de l'oublier. À côté de la
+brosse à dents, cela marche mieux que n'importe quel protocole compliqué.</p>
+
+<h2>Faut-il faire des pauses ou la cycler ?</h2>
+
+<p>Ce n'est pas nécessaire. Elle ne crée pas de dépendance et le corps ne
+&laquo; s'y habitue &raquo; pas.</p>
+
+<h2>Retient-elle de l'eau ? Fait-elle grossir ?</h2>
+
+<p>Elle retient un peu d'eau, mais <strong>à l'intérieur du muscle</strong>,
+pas sous la peau. La balance peut monter d'un ou deux kilos les premières
+semaines. Ce n'est pas de la graisse : c'est de l'eau intramusculaire, et
+visuellement l'effet est plus de volume, non moins de définition.</p>
+
+<h2>Quel type acheter ?</h2>
+
+<p><strong>Le monohydrate.</strong> C'est le plus étudié, le moins cher et
+celui qui fonctionne. Les versions &laquo; avancées &raquo; — HCL, ester
+éthylique, tamponnées — coûtent plus cher et n'ont pas démontré être
+meilleures.</p>
+
+<p>Cherchez le label Creapure® si vous voulez une garantie de pureté
+supplémentaire.</p>
+
+<h2>Ce qu'elle ne fera pas pour vous</h2>
+
+<ul>
+  <li>
+<strong>Elle n'abîme pas les reins si vous êtes en bonne santé.</strong> Si
+vous avez une atteinte rénale préexistante, demandez avant.</li>
+  <li>
+<strong>Ce n'est pas un stéroïde</strong> et cela n'a rien à voir.</li>
+  <li>
+<strong>Elle ne fait rien toute seule.</strong> Sans entraînement et sans
+manger assez, la créatine ne construit rien.</li>
+</ul>
+
+<h2>En résumé</h2>
+
+<p>3–5 g par jour, monohydrate, tous les jours, à n'importe quelle heure. Sans
+charge, sans cycles, sans se compliquer.</p>
+
+<p>C'est le complément avec le meilleur rapport entre ce qu'il coûte, ce que
+l'on sait de lui et ce qu'il fait.</p>
+
+<p>Si vous voulez le tableau complet — quels autres compléments ont des
+preuves, lesquels n'en ont pas et comment ils sont vraiment encadrés — c'est
+dans <a href="/fr/blogs/diario/que-suplementos-tienen-evidencia">Quels
+compléments ont des preuves et lesquels non</a>.</p>
+""",
+        "firma": FIRMA,
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
@@ -2262,6 +2487,15 @@ def cuerpo(handle: str, lengua: str) -> str:
     traen `cierre` en vez de `libro`. Uno u otro, no los dos.
     """
     a = CUERPOS[handle][lengua]
+
+    # Un artículo cuyo castellano vive solo en la tienda se compone tal cual:
+    # no lleva pie de fuentes ni remate de libro porque su original tampoco
+    # los lleva, y añadírselos sería escribir por encima del dueño.
+    if handle in SIN_FUENTE:
+        return _descolgar(
+            a["cuerpo"].strip() + "\n\n" + a.get("firma", FIRMA)[lengua],
+            lengua)
+
     if "cierre" in a:
         remate = a["cierre"]
     else:
@@ -2296,7 +2530,7 @@ def comprobar() -> list:
     malos = []
 
     for handle, lenguas in CUERPOS.items():
-        if handle not in en_castellano:
+        if handle not in en_castellano and handle not in SIN_FUENTE:
             malos.append(f"{handle} · no existe en castellano")
         for lengua, a in lenguas.items():
             if lengua not in LENGUAS:
@@ -2311,6 +2545,8 @@ def comprobar() -> list:
                              f"{len(descripcion)}/{TOPE_DESCRIPCION}")
             if "VILLUMINATIONS" not in titulo:
                 malos.append(f"{handle} [{lengua}] · el título no firma")
+            if handle in SIN_FUENTE:
+                continue          # ni base legal ni libro: no los tiene
             if a["base"] not in CIERRE[lengua]:
                 malos.append(f"{handle} [{lengua}] · base legal "
                              f"desconocida: {a['base']}")

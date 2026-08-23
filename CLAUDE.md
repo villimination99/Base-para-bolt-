@@ -302,13 +302,23 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 
    Sigue sin haber píxel de Meta ni etiqueta de Google, así que correr
    anuncios hoy sería pagar sin poder medir cuál vende.
-9. **Tres superficies a medio traducir**, que encontró `cotejar.py` y que
-   nada vigilaba: el artículo `creatina` tiene cuerpo, título y
-   metadescripción en inglés y nada en francés; el artículo `app`, solo el
-   título en inglés; y la página VI.P, cuerpo y título en inglés y nada en
-   francés. Ninguno de los tres tiene fuente en el repositorio, así que
-   completarlos es escribir texto, no ejecutar un script. Media traducción es
-   peor que ninguna: o se termina o se quita.
+9. **Las tres superficies a medio traducir, una resuelta y dos por decidir.**
+
+   `creatina` **ya está traducido entero** a inglés y francés en
+   `articulos_en_fr.py`, y falta registrarlo. Su castellano vive solo en la
+   tienda —lo escribió el dueño ahí—, así que entra por `SIN_FUENTE`: se
+   compone sin pie de fuentes ni remate de libro porque su original tampoco
+   los lleva. Sus tres traducciones inglesas estaban además **caducadas**
+   (`outdated: true`), o sea que el castellano cambió después de
+   registrarlas; al volver a registrar se arregla eso también.
+
+   `app` **está sin publicar y vacío**: sin resumen y sin cuerpo. Es el
+   borrador que Shopify deja por defecto. No es indexable, pero arrastra una
+   traducción de título huérfana. Lo limpio es borrarlo; no se ha hecho
+   porque borrar no se deshace.
+
+   La página **VI.P** sigue con cuerpo y título en inglés y nada en francés.
+   No tiene fuente aquí y son 437 KB, así que es trabajo de panel.
 10. **El blog «suplementos» está vacío.** Cero artículos, ninguna entrada de menú
    apunta a él, y aun así `/blogs/suplementos` es una página indexable sin
    contenido. O se llena o se borra desde el panel; no se ha tocado porque

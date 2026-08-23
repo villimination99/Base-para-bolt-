@@ -66,8 +66,10 @@ MAPA = {
             "como-se-lee-una-etiqueta-nutricional"),
     "methylene-blue-drops": ("que-suplementos-tienen-evidencia",
                              "como-se-lee-una-etiqueta-nutricional"),
-    "creatine-hydration-powder": ("que-suplementos-tienen-evidencia",
-                                  "como-se-lee-una-etiqueta-nutricional"),
+    # El bote de creatina enlaza al artículo de creatina. Estaba enlazando a
+    # la etiqueta nutricional, que le viene mucho menos a cuento.
+    "creatine-hydration-powder": ("creatina",
+                                  "que-suplementos-tienen-evidencia"),
     "nitric-shock-pre-workout-powder-fruit-punch":
         ("que-suplementos-tienen-evidencia",
          "como-se-lee-una-etiqueta-nutricional"),
@@ -166,7 +168,16 @@ MAPA = {
                                      "que-suplementos-tienen-evidencia"),
 }
 
+# Artículos cuyo castellano vive solo en la tienda: los escribió el dueño ahí
+# y el repositorio no los compone. El título se copia para poder enlazarlos, y
+# `cotejar.py` es quien avisa si allí cambia. Se dice de dónde sale, no se
+# finge que este fichero manda sobre ellos.
+EXTERNOS = {
+    "creatina": "Creatina: cuánta, cuándo y por qué el monohidrato",
+}
+
 TITULOS = {a["handle"]: a["titulo"] for a in articulos.ARTICULOS}
+TITULOS.update(EXTERNOS)
 
 
 def disponibles(lengua: str) -> set:
