@@ -63,6 +63,7 @@ python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
 python3 tablero.py           # rehace tablero/index.html con el estado del sistema
 python3 auditar.py           # lo que solo se ve mirando todas las superficies juntas
+python3 tienda/huellas.py --desde HEAD~1   # de lo tocado, qué hay que volver a registrar
 ```
 
 `auditar.py` es el único que cruza ficheros. Cada módulo se mide a sí mismo y
@@ -159,9 +160,18 @@ acordarse de mantener: el enlace aparece solo el día que el destino existe.
 El precio de esa comodidad es que **traducir un artículo caduca la traducción
 ya registrada de los que lo citan**: su cuerpo se compone distinto en cuanto el
 destino existe. Los dos que estaban publicados desde antes tenían guardada la
-cita sin ancla, y desde la tienda no se nota —el texto se lee bien— así que hay
-que acordarse. Al traducir uno nuevo se vuelven a registrar los que lo enlazan;
-registrar los nueve de golpe sale más barato que averiguar cuáles son.
+cita sin ancla, y desde la tienda no se nota —el texto se lee bien—, así que
+durante un tiempo esto se resolvió acordándose. Acordarse no es una
+comprobación.
+
+**`tienda/huellas.py` lo dice sin acordarse de nada.** Guarda el SHA-256 de
+cada valor que se manda a la tienda —que es exactamente el `digest` que
+devuelve `translatableContent`, no un número parecido— y contesta de dos
+maneras: contra el sello de lo que consta subido (`--sellar` lo pone, y se
+pone **después** de que la mutación haya terminado bien) o contra un commit
+(`--desde HEAD~1`), que no necesita que nadie haya sellado nada. Ve las
+cadenas: al aparecer un artículo nuevo salen también los cuerpos de las fichas
+que lo citaban.
 
 **Un enlace de un texto traducido lleva su prefijo de idioma.** Shopify no
 reescribe lo que va dentro de un cuerpo: `href="/pages/contact"` sale tal cual,
