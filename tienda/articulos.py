@@ -1110,6 +1110,138 @@ hace falta para hacer esta cuenta.</p>
             handle="codice-de-la-mesa", libro="el Códice de la Mesa", paginas="78",
         ) + FIRMA,
     },
+
+    # ----------------------------------------------------------------- 10
+    {
+        "handle": "que-lleva-un-preentreno",
+        "titulo": "Qué lleva un preentreno, y qué hace cada cosa",
+        "resumen": (
+            "Un preentreno no es un compuesto, es una mezcla de veinte cosas "
+            "de las que tres hacen casi todo el trabajo. Cuáles son, cuánta "
+            "cafeína llevas de verdad y qué está ahí solo para la etiqueta."
+        ),
+        "etiquetas": ["suplementos", "preentreno", "cafeína", "referencia"],
+        "meta": (
+            "Qué lleva un preentreno de verdad | VILLUMINATIONS",
+            "Las tres que hacen el trabajo, las que están para la etiqueta, "
+            "cuánta cafeína llevas de verdad y por qué pica la piel.",
+        ),
+        "cuerpo": """
+<p>Un preentreno no es una sustancia: es una <strong>mezcla</strong>. Y como
+casi todas las mezclas de este mercado, tiene tres ingredientes que hacen el
+trabajo y quince que están ahí para que la lista parezca larga.</p>
+
+<p>Esto no va de si tomarlo o no. Va de saber leer el bote antes de pagarlo.</p>
+
+<h2>Las tres que cargan con el peso</h2>
+
+<h3>Cafeína</h3>
+
+<p>Es el ingrediente activo de verdad, y de largo el mejor estudiado del
+grupo. La literatura de nutrición deportiva trabaja en el rango de <strong>3 a
+6 mg por kilo de peso</strong>, tomada entre media hora y una hora antes.</p>
+
+<p>Para setenta kilos son entre 210 y 420 mg. Un preentreno típico ronda los
+200 o 300 mg por toma, así que <strong>una dosis suele ser casi todo tu margen
+del día</strong>. Las autoridades de seguridad alimentaria publican como
+referencia unos 400 mg diarios para una persona adulta sana; el café de la
+mañana ya cuenta.</p>
+
+<h3>Beta-alanina</h3>
+
+<p>Efecto real pero modesto, y solo en esfuerzos de entre uno y cuatro
+minutos —series largas, intervalos—. No hace nada por un levantamiento de tres
+repeticiones.</p>
+
+<p>Y funciona <strong>por acumulación</strong>, como la creatina: lo que importa
+es tomarla todos los días durante semanas, no el bote de antes de entrenar. Un
+preentreno que solo se toma los días de gimnasio la está usando mal.</p>
+
+<h3>Citrulina y arginina</h3>
+
+<p>Es lo que produce el «bombeo». El efecto sobre el rendimiento es pequeño y
+depende bastante de la dosis, que en muchos botes está por debajo de la que se
+estudió. Aquí es donde más se nota la trampa de la dosis.</p>
+
+<h2>El picor no es la señal de que funciona</h2>
+
+<p>Ese hormigueo en la cara y en las manos tiene nombre —<strong>parestesia</strong>—
+y lo produce la beta-alanina. Es inofensivo y pasa en veinte o treinta
+minutos.</p>
+
+<p>Lo importante: <strong>no guarda relación con el efecto</strong>. Notar
+mucho picor no significa que la dosis sea buena, y no notarlo no significa que
+el bote no sirva. Es una sensación, no una medida. Algunas marcas lo suben a
+propósito precisamente porque se siente.</p>
+
+<h2>Lo que está ahí para la etiqueta</h2>
+
+<p>La lista de un preentreno corriente tiene veinte o treinta líneas. La
+mayoría son vitaminas del grupo B a dosis que no le faltan a nadie,
+aminoácidos sueltos y extractos vegetales en cantidades simbólicas.</p>
+
+<p>La señal de alarma es la <strong>mezcla patentada</strong>: ocho
+ingredientes bajo un nombre comercial y una sola cifra al final. Si no puedes
+saber cuánto hay de cada uno, no puedes comparar dos botes, y ese es
+exactamente el motivo por el que se presenta así. Está desarrollado en
+<a href="/blogs/diario/como-se-lee-una-etiqueta-nutricional">cómo se lee una
+etiqueta nutricional</a>.</p>
+
+<h2>La cuenta que hay que hacer antes de comprar</h2>
+
+<ol>
+  <li><strong>Cafeína por toma.</strong> Súmala a la del día. Si pasas de
+  cuatrocientos, el problema no es el preentreno.</li>
+  <li><strong>¿Aparece cada ingrediente con su cantidad?</strong> Si hay una
+  mezcla sin cifras, no se puede evaluar.</li>
+  <li><strong>¿La beta-alanina la vas a tomar a diario?</strong> Si no, no la
+  estás pagando bien.</li>
+  <li><strong>¿A qué hora entrenas?</strong> Esto es lo siguiente.</li>
+</ol>
+
+<h2>Cuándo no compensa</h2>
+
+<p>La cafeína tarda del orden de cinco horas en eliminar la mitad de la dosis.
+Un preentreno de las seis de la tarde todavía tiene una parte en circulación a
+medianoche, y el sueño perdido cuesta bastante más de lo que el preentreno
+aporta. Está contado en
+<a href="/blogs/diario/cuantas-horas-hay-que-dormir">cuántas horas hay que
+dormir</a>.</p>
+
+<p>Si entrenas por la tarde-noche, un preentreno sin cafeína —o un café más
+temprano— rinde más que el bote.</p>
+
+<h2>Lo que no hace</h2>
+
+<p>No sustituye haber dormido, no compensa comer poco y no arregla un programa
+mal ordenado. Es lo último de la lista, no lo primero: la jerarquía completa
+está en <a href="/blogs/diario/que-suplementos-tienen-evidencia">qué
+suplementos tienen evidencia y cuáles no</a>.</p>
+
+""" + _fuentes(
+            "<li>El rango de 3 a 6 mg de cafeína por kilo procede de la "
+            "literatura de nutrición deportiva y de las tomas de postura de "
+            "sociedades profesionales, no de una recomendación federal, y así "
+            "se dice en el texto.</li>\n"
+            "<li>La referencia de unos 400 mg diarios de cafeína para persona "
+            "adulta sana la publican las autoridades de seguridad "
+            "alimentaria.</li>\n"
+            "<li>Las reglas de la lista de ingredientes y el régimen de los "
+            "complementos alimenticios los publica la autoridad federal de "
+            "alimentos y medicamentos.</li>\n"
+        ) + (
+            "<p><strong>Lo que vendemos y lo que decimos.</strong> En esta "
+            "tienda hay preentrenos, y por eso conviene ser claro: este "
+            "artículo describe lo que dice la evidencia pública sobre unas "
+            "sustancias, no lo que hace ningún bote concreto. Las fichas de "
+            "nuestros productos declaran los miligramos por toma y la lista "
+            "completa, que es lo que hace falta para hacer la cuenta de "
+            "arriba.</p>\n"
+            "<p>La <a href=\"/products/pro-definicion-volumen\">guía de "
+            "suplementación del nivel Pro</a> ordena esto con la jerarquía "
+            "completa y un presupuesto mensual por niveles.</p>"
+        ) + FIRMA,
+    },
 ]
 
 TOPE_TITULO = 60

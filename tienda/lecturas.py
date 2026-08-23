@@ -70,9 +70,11 @@ MAPA = {
     # la etiqueta nutricional, que le viene mucho menos a cuento.
     "creatine-hydration-powder": ("creatina",
                                   "que-suplementos-tienen-evidencia"),
+    # El preentreno enlaza al artículo que desglosa un preentreno. Antes
+    # ofrecía el de evidencia general, que le queda ancho.
     "nitric-shock-pre-workout-powder-fruit-punch":
-        ("que-suplementos-tienen-evidencia",
-         "como-se-lee-una-etiqueta-nutricional"),
+        ("que-lleva-un-preentreno",
+         "que-suplementos-tienen-evidencia"),
     "greens-superfood": ("como-se-lee-una-etiqueta-nutricional",
                          "que-suplementos-tienen-evidencia"),
     "reds-superfood": ("como-se-lee-una-etiqueta-nutricional",

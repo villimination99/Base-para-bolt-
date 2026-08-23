@@ -2201,6 +2201,272 @@ compléments ont des preuves et lesquels non</a>.</p>
 }
 
 
+CUERPOS["que-lleva-un-preentreno"] = {
+    "en": {
+        "titulo": "What is in a pre-workout, and what each thing does",
+        "resumen": (
+            "A pre-workout is not a compound, it is a blend of twenty things "
+            "of which three do almost all the work. Which ones, how much "
+            "caffeine you are really taking, and what is there for the "
+            "label."),
+        "meta": (
+            "What is really in a pre-workout | VILLUMINATIONS",
+            "The three that do the work, the ones there for the label, how "
+            "much caffeine you actually take and why your skin tingles."),
+        "cuerpo": """
+<p>A pre-workout is not a substance: it is a <strong>blend</strong>. And like
+almost every blend in this market, it has three ingredients that do the work
+and fifteen that are there to make the list look long.</p>
+
+<p>This is not about whether to take one. It is about reading the tub before
+paying for it.</p>
+
+<h2>The three that carry the weight</h2>
+
+<h3>Caffeine</h3>
+
+<p>It is the real active ingredient, and by far the best studied of the group.
+The sports nutrition literature works in the range of <strong>3 to 6 mg per
+kilo of body weight</strong>, taken between half an hour and an hour
+before.</p>
+
+<p>For seventy kilos that is between 210 and 420 mg. A typical pre-workout
+runs to 200 or 300 mg a serving, so <strong>one dose is usually most of your
+margin for the day</strong>. Food safety authorities publish around 400 mg a
+day as a reference for a healthy adult; the morning coffee already counts.</p>
+
+<h3>Beta-alanine</h3>
+
+<p>A real but modest effect, and only in efforts of between one and four
+minutes — long sets, intervals. It does nothing for a three-repetition
+lift.</p>
+
+<p>And it works <strong>by accumulation</strong>, like creatine: what matters
+is taking it every day for weeks, not the scoop before training. A pre-workout
+taken only on gym days is using it wrong.</p>
+
+<h3>Citrulline and arginine</h3>
+
+<p>This is what produces the &laquo;pump&raquo;. The effect on performance is
+small and depends a good deal on the dose, which in many tubs is below the one
+that was studied. This is where the dose trick shows most.</p>
+
+<h2>The tingling is not the sign that it works</h2>
+
+<p>That prickling in the face and hands has a name —
+<strong>paraesthesia</strong> — and beta-alanine causes it. It is harmless and
+passes in twenty or thirty minutes.</p>
+
+<p>The important part: <strong>it bears no relation to the effect</strong>.
+Feeling a lot of tingling does not mean the dose is good, and feeling none does
+not mean the tub is useless. It is a sensation, not a measurement. Some brands
+raise it deliberately precisely because it is felt.</p>
+
+<h2>What is there for the label</h2>
+
+<p>The list on an ordinary pre-workout has twenty or thirty lines. Most of them
+are B vitamins at doses nobody is short of, free amino acids and plant extracts
+in token amounts.</p>
+
+<p>The warning sign is the <strong>proprietary blend</strong>: eight
+ingredients under a trade name and a single figure at the end. If you cannot
+know how much of each there is, you cannot compare two tubs, and that is
+exactly why it is presented that way. It is worked through in
+<a href="/en/blogs/diario/como-se-lee-una-etiqueta-nutricional">how to read a
+nutrition label</a>.</p>
+
+<h2>The arithmetic to do before buying</h2>
+
+<ol>
+  <li><strong>Caffeine per serving.</strong> Add it to the day's total. If you
+  go past four hundred, the pre-workout is not the problem.</li>
+  <li><strong>Does every ingredient appear with its amount?</strong> If there
+  is a blend with no figures, it cannot be evaluated.</li>
+  <li><strong>Are you going to take the beta-alanine daily?</strong> If not,
+  you are not paying for it well.</li>
+  <li><strong>What time do you train?</strong> That is the next one.</li>
+</ol>
+
+<h2>When it is not worth it</h2>
+
+<p>Caffeine takes on the order of five hours to clear half the dose. A
+six o'clock pre-workout still has a share in circulation at midnight, and the
+sleep lost costs a good deal more than the pre-workout gives. It is set out in
+<a href="/en/blogs/diario/cuantas-horas-hay-que-dormir">how many hours you need
+to sleep</a>.</p>
+
+<p>If you train in the late afternoon or evening, a caffeine-free pre-workout —
+or an earlier coffee — does more than the tub.</p>
+
+<h2>What it does not do</h2>
+
+<p>It does not replace having slept, it does not make up for eating too little
+and it does not fix a badly ordered programme. It is the last thing on the
+list, not the first: the full hierarchy is in
+<a href="/en/blogs/diario/que-suplementos-tienen-evidencia">which supplements
+have evidence and which do not</a>.</p>
+""",
+        "fuentes": (
+            "<li>The 3 to 6 mg of caffeine per kilo range comes from the "
+            "sports nutrition literature and from professional society "
+            "position stands, not from a federal recommendation, and the text "
+            "says so.</li>\n"
+            "<li>The reference of around 400 mg of caffeine a day for a "
+            "healthy adult is published by food safety authorities.</li>\n"
+            "<li>The rules for the ingredient list and the regime for food "
+            "supplements are published by the federal food and drug "
+            "authority.</li>\n"),
+        "base": "federal",
+        "cierre": (
+            "<p><strong>What we sell and what we say.</strong> This shop sells "
+            "pre-workouts, so it is worth being clear: this article describes "
+            "what the public evidence says about certain substances, not what "
+            "any particular tub does. Our product pages state the milligrams "
+            "per serving and the full list, which is what you need for the "
+            "arithmetic above.</p>\n"
+            "<p>The <a href=\"/en/products/pro-definicion-volumen\">supplement "
+            "guide in the Pro tier</a> orders this with the full hierarchy and "
+            "a monthly budget by level.</p>"),
+    },
+    "fr": {
+        "titulo": "Ce que contient un pré-entraînement, et ce que fait chaque chose",
+        "resumen": (
+            "Un pré-entraînement n'est pas un composé, c'est un mélange de "
+            "vingt choses dont trois font presque tout le travail. "
+            "Lesquelles, combien de caféine vous prenez vraiment, et ce qui "
+            "est là pour l'étiquette."),
+        "meta": (
+            "Ce que contient un pré-entraînement | VILLUMINATIONS",
+            "Les trois qui font le travail, celles qui sont là pour "
+            "l'étiquette, combien de caféine vous prenez et pourquoi la peau "
+            "picote."),
+        "cuerpo": """
+<p>Un pré-entraînement n'est pas une substance : c'est un
+<strong>mélange</strong>. Et comme presque tous les mélanges de ce marché, il a
+trois ingrédients qui font le travail et quinze qui sont là pour que la liste
+paraisse longue.</p>
+
+<p>Il ne s'agit pas de savoir s'il faut en prendre. Il s'agit de savoir lire le
+pot avant de le payer.</p>
+
+<h2>Les trois qui portent le poids</h2>
+
+<h3>Caféine</h3>
+
+<p>C'est le véritable ingrédient actif, et de loin le mieux étudié du groupe.
+La littérature de nutrition sportive travaille dans une fourchette de <strong>3
+à 6 mg par kilo de poids</strong>, prise entre une demi-heure et une heure
+avant.</p>
+
+<p>Pour soixante-dix kilos, cela fait entre 210 et 420 mg. Un pré-entraînement
+courant tourne autour de 200 ou 300 mg par prise : <strong>une dose représente
+donc souvent presque toute votre marge de la journée</strong>. Les autorités de
+sécurité alimentaire publient environ 400 mg par jour comme référence pour une
+personne adulte en bonne santé ; le café du matin compte déjà.</p>
+
+<h3>Bêta-alanine</h3>
+
+<p>Effet réel mais modeste, et uniquement sur des efforts d'une à quatre
+minutes — séries longues, intervalles. Elle ne fait rien pour un soulevé de
+trois répétitions.</p>
+
+<p>Et elle agit <strong>par accumulation</strong>, comme la créatine : ce qui
+compte, c'est d'en prendre tous les jours pendant des semaines, non la dose
+avant l'entraînement. Un pré-entraînement pris seulement les jours de salle
+l'utilise mal.</p>
+
+<h3>Citrulline et arginine</h3>
+
+<p>C'est ce qui produit la &laquo; congestion &raquo;. L'effet sur la
+performance est faible et dépend beaucoup de la dose, qui dans bien des pots
+est inférieure à celle qui a été étudiée. C'est là que le piège de la dose se
+voit le plus.</p>
+
+<h2>Le picotement n'est pas le signe que ça marche</h2>
+
+<p>Ce fourmillement au visage et aux mains porte un nom —
+<strong>paresthésie</strong> — et c'est la bêta-alanine qui le provoque. Il est
+inoffensif et passe en vingt ou trente minutes.</p>
+
+<p>L'important : <strong>il n'a aucun rapport avec l'effet</strong>. Ressentir
+beaucoup de picotement ne veut pas dire que la dose est bonne, et ne rien
+ressentir ne veut pas dire que le pot ne sert à rien. C'est une sensation, pas
+une mesure. Certaines marques l'augmentent exprès précisément parce qu'il se
+sent.</p>
+
+<h2>Ce qui est là pour l'étiquette</h2>
+
+<p>La liste d'un pré-entraînement ordinaire compte vingt ou trente lignes. La
+plupart sont des vitamines du groupe B à des doses qui ne manquent à personne,
+des acides aminés libres et des extraits végétaux en quantités symboliques.</p>
+
+<p>Le signal d'alarme est le <strong>mélange breveté</strong> : huit
+ingrédients sous un nom commercial et un seul chiffre à la fin. Si vous ne
+pouvez pas savoir combien il y a de chacun, vous ne pouvez pas comparer deux
+pots, et c'est exactement pour cela que c'est présenté ainsi. C'est développé
+dans <a href="/fr/blogs/diario/como-se-lee-una-etiqueta-nutricional">comment
+lire une étiquette nutritionnelle</a>.</p>
+
+<h2>Le calcul à faire avant d'acheter</h2>
+
+<ol>
+  <li><strong>Caféine par prise.</strong> Ajoutez-la à celle de la journée. Si
+  vous dépassez quatre cents, le problème n'est pas le pré-entraînement.</li>
+  <li><strong>Chaque ingrédient apparaît-il avec sa quantité ?</strong> S'il y
+  a un mélange sans chiffres, on ne peut pas l'évaluer.</li>
+  <li><strong>Allez-vous prendre la bêta-alanine tous les jours ?</strong> Si
+  non, vous la payez mal.</li>
+  <li><strong>À quelle heure vous entraînez-vous ?</strong> C'est la
+  suivante.</li>
+</ol>
+
+<h2>Quand cela ne vaut pas la peine</h2>
+
+<p>La caféine met de l'ordre de cinq heures à éliminer la moitié de la dose. Un
+pré-entraînement de dix-huit heures en a encore une part en circulation à
+minuit, et le sommeil perdu coûte bien plus que ce que le pré-entraînement
+apporte. C'est raconté dans
+<a href="/fr/blogs/diario/cuantas-horas-hay-que-dormir">combien d'heures
+faut-il dormir</a>.</p>
+
+<p>Si vous vous entraînez en fin de journée, un pré-entraînement sans caféine —
+ou un café plus tôt — rend davantage que le pot.</p>
+
+<h2>Ce qu'il ne fait pas</h2>
+
+<p>Il ne remplace pas d'avoir dormi, il ne compense pas de manger trop peu et
+il ne répare pas un programme mal ordonné. C'est la dernière chose de la liste,
+pas la première : la hiérarchie complète est dans
+<a href="/fr/blogs/diario/que-suplementos-tienen-evidencia">quels compléments
+ont des preuves et lesquels non</a>.</p>
+""",
+        "fuentes": (
+            "<li>La fourchette de 3 à 6 mg de caféine par kilo provient de la "
+            "littérature de nutrition sportive et des prises de position de "
+            "sociétés professionnelles, non d'une recommandation fédérale, et "
+            "le texte le dit.</li>\n"
+            "<li>La référence d'environ 400 mg de caféine par jour pour une "
+            "personne adulte en bonne santé est publiée par les autorités de "
+            "sécurité alimentaire.</li>\n"
+            "<li>Les règles de la liste des ingrédients et le régime des "
+            "compléments alimentaires sont publiés par l'autorité fédérale des "
+            "aliments et des médicaments.</li>\n"),
+        "base": "federal",
+        "cierre": (
+            "<p><strong>Ce que nous vendons et ce que nous disons.</strong> "
+            "Cette boutique vend des pré-entraînements, alors autant être "
+            "clair : cet article décrit ce que dit la preuve publique sur "
+            "certaines substances, pas ce que fait un pot en particulier. Les "
+            "fiches de nos produits déclarent les milligrammes par prise et la "
+            "liste complète, ce qu'il faut pour faire le calcul "
+            "ci-dessus.</p>\n"
+            "<p>Le <a href=\"/fr/products/pro-definicion-volumen\">guide de "
+            "supplémentation de la formule Pro</a> ordonne cela avec la "
+            "hiérarchie complète et un budget mensuel par niveau.</p>"),
+    },
+}
+
+
 _ENLACE_DIARIO = re.compile(
     r'<a href="/(en|fr)/blogs/diario/([^"]+)">(.*?)</a>', re.S)
 
