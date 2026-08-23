@@ -40,6 +40,24 @@ verdad al acabar de escribir: «de lo que acabo de tocar, ¿qué hay que volver 
 registrar?». `--desde HEAD~1` lo dice, y ve las cadenas: al aparecer un
 artículo nuevo salen también los cuerpos de los que lo citaban.
 
+Lo que el digest NO puede cotejar
+---------------------------------
+**Shopify reescribe el HTML que recibe.** Comprobado al crear los dos
+artículos de agosto: `<li><strong>` vuelve como `<li>\n<strong>`, y un salto
+de línea dentro de una etiqueta (`<a\nhref=`) vuelve colapsado. El texto es el
+mismo y se lee igual, pero el SHA-256 ya no coincide.
+
+O sea que el digest sirve para cotejar **títulos, resúmenes y metaetiquetas**
+contra la tienda sin descargarlas, y **no sirve para `body_html`**. No se
+intenta arreglar enumerando las reglas del normalizador: enumerar los casos
+conocidos no es comprobar la regla, y ese error ya se cometió una vez con los
+prefijos de idioma.
+
+Para lo que sí sirve, sirve mucho. Al crear esos dos artículos el cotejo
+encontró **dos derivas de transcripción** —un resumen y una metadescripción
+retecleados a mano en la mutación en vez de mandados desde el repositorio—.
+Es el fallo del «veintivún» otra vez, y esta vez saltó en el acto.
+
 Lo que no hace
 --------------
 No registra nada ni lee la tienda. `--sellar` solo dice «esto ya está

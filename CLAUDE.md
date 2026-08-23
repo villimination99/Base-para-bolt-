@@ -265,6 +265,18 @@ Lo que costó descubrir y no está en ningún sitio evidente:
   digest que devuelve la tienda. Sirve para cotejar un original contra el
   repositorio **sin descargarlo**, que es la comprobación barata que faltaba.
   Las traducciones no llevan digest; esas hay que pedirlas.
+- **Pero Shopify reescribe el HTML que recibe**, así que el digest no cuadra
+  nunca con el `body_html` del repositorio: `<li><strong>` vuelve como
+  `<li>\n<strong>` y un salto de línea dentro de una etiqueta vuelve
+  colapsado. Sirve para títulos, resúmenes y metaetiquetas; para cuerpos no.
+  No se arregla enumerando las reglas del normalizador — enumerar los casos
+  conocidos no es comprobar la regla.
+- **Y para lo que sirve, coge lo que hay que coger.** Al crear los dos
+  artículos de agosto encontró en el acto dos derivas de transcripción: un
+  resumen y una metadescripción retecleados dentro de la mutación en vez de
+  mandados desde el repositorio. El fallo del «veintivún», otra vez. Por eso
+  el payload se genera con un script y se cotejan los digests **después** de
+  registrar.
 - **`Translation.outdated` dice si el original cambió después de la
   traducción.** Es un booleano por clave y por lengua, así que se piden las
   cien de una vez y se ve de un vistazo si algún digest iba caducado. Es lo
