@@ -1,269 +1,180 @@
 #!/usr/bin/env python3
 """
-VILLUMINATIONS — Portadas de producto para la tienda
------------------------------------------------------
-Genera la imagen de cada ficha: cuadrada, 1600×1600, con la paleta de la marca.
-Los tres niveles de planes no tenían imagen ninguna —la ficha salía con el
-hueco gris del tema— y los libros mostraban una foto que no era su cubierta.
+VILLUMINATIONS — Las portadas de colección que faltaban
+=======================================================
 
-Dos maneras de componer, según lo que el producto sea:
+    python3 tienda/portadas.py           # rehace tienda/portadas/*.png
 
-· Un libro tiene cubierta de verdad, así que la portada del producto la
-  enseña. Se rasteriza la primera página del PDF ya auditado y se monta sobre
-  el fondo de marca. Lo que ve el comprador es exactamente lo que se descarga,
-  que es la única promesa que una portada debería hacer.
+De las seis colecciones, cuatro tenían foto y **dos estaban sin imagen**:
+`planes` y `cuidado-personal`. Una colección sin imagen sale como un hueco en
+la rejilla del tema, en el resultado del buscador y en cualquier enlace que se
+comparta. Es de los defectos que solo se ven preguntándole a la tienda: ningún
+comprobador del repositorio podía saberlo.
 
-· Un nivel de planes no es un documento sino un paquete de varios, y no hay
-  una cubierta que lo represente sin mentir. Se compone una tarjeta
-  tipográfica con el acento del nivel —cian el básico, magenta el pro, verde
-  el elite, los mismos que ya usan los PDF por dentro— y la cuenta de lo que
-  lleva. Nada de imágenes de archivo ni de fotos de gimnasio: el producto es
-  un documento y la portada lo dice.
+Se dibuja con lo nuestro
+------------------------
+La tarjeta se compone con `vi-sigilo`, que es de `ropa/partials/marca.svg` y es
+propiedad entera. No hace falta banco de imágenes ni encargo fuera, que es la
+misma ventaja que aprovecha `tienda/ropa.py`.
 
-Las cifras no se escriben a mano. El número de páginas sale de contar el PDF y
-el de documentos de contar los ficheros; si mañana un libro crece, la portada
-crece con él en cuanto se relance esto.
+Dos cosas aprendidas al mirarlas renderizadas
+---------------------------------------------
+· **Los emblemas de `planes/partials/` no valen aquí.** Están dibujados en
+  tinta oscura para página blanca, así que sobre el fondo negro de la tarjeta
+  desaparecen; y llevan texto castellano incrustado —«4 semanas»,
+  «MEDITERRÁNEA»— que no sirve en una portada que se ve en tres lenguas.
+· **`r-ojo` tampoco.** Extraer un `<symbol>` de su fichero deja fuera los
+  degradados y las máscaras a las que apunta, y lo que sale son cuatro puntos.
+  Una lámina no es portátil solo por estar en un `<symbol>`.
 
-Uso:  python3 tienda/portadas.py            escribe tienda/portadas/*.png
-      python3 tienda/portadas.py --html     deja también el HTML, para mirarlo
+Por eso aquí solo entran láminas **autocontenidas y ya pensadas para fondo
+oscuro**, que son las de `ropa/partials/`.
+
+Cuál falta y por qué
+--------------------
+`cuidado-personal` sigue sin portada **a propósito**: sus dos jabones están en
+UNLISTED, así que en la tienda esa colección está vacía. Ponerle portada sería
+adornar un escaparate sin género. El día que se publiquen, se añade aquí.
+
+Subirla a la tienda
+-------------------
+No hay mutación que acepte un fichero local. Son tres pasos:
+`stagedUploadsCreate` con `resource: COLLECTION_IMAGE`, un POST multipart al
+destino que devuelve —con **todos** sus parámetros, en orden— y después
+`collectionUpdate` con `image.src` apuntando al `resourceUrl`. Y con
+`altText`, que es lo que lee quien no ve la imagen.
 """
 
-import base64
-import json
 import re
 import subprocess
 import sys
 from pathlib import Path
 
-import pypdfium2 as pdfium
+RAIZ = Path(__file__).resolve().parent.parent
+DESTINO = RAIZ / "tienda" / "portadas"
 
-ROOT = Path(__file__).resolve().parent.parent
-SALIDA = Path(__file__).resolve().parent / "portadas"
-ASSETS = ROOT / "planes" / "assets"
-NODE = "/opt/node22/bin/node"
+# Solo láminas autocontenidas y pensadas para fondo oscuro. Véase la cabecera.
+LAMINAS = ("ropa/partials/marca.svg",)
 
-LADO = 1600          # Shopify recorta a cuadrado en la rejilla; se le da cuadrado
-ESCALA = 4           # rasterizado de la cubierta: 4× sobre 148 mm da holgura de sobra
-
-# Los tres niveles, con el acento que ya llevan por dentro sus PDF.
-NIVELES = [
-    {"archivo": "plan-basico", "acento": "#00f0ff", "acento2": "#0066ff",
-     "nivel": "Básico", "titulo": "Volumen Limpio",
-     "docs": ["01-basico"]},
-    {"archivo": "plan-pro", "acento": "#ff00e5", "acento2": "#7b2fff",
-     "nivel": "Pro", "titulo": "Definición + Volumen",
-     "docs": ["01-basico", "02-pro", "03-pro", "04-pro", "05-pro"]},
-    {"archivo": "plan-elite", "acento": "#00ff88", "acento2": "#ff6600",
-     "nivel": "Elite", "titulo": "Todo Incluido",
-     "docs": ["01-basico", "02-pro", "03-pro", "04-pro", "05-pro", "06-elite",
-              "07-elite", "08-elite", "09-elite", "10-elite", "11-elite"]},
-]
-
-CSS_COMUN = """
-@font-face{font-family:'Orbitron';font-weight:700;src:url(FUENTES/orbitron-700.ttf)}
-@font-face{font-family:'Orbitron';font-weight:900;src:url(FUENTES/orbitron-900.ttf)}
-@font-face{font-family:'Rajdhani';font-weight:400;src:url(FUENTES/rajdhani-400.ttf)}
-@font-face{font-family:'Rajdhani';font-weight:600;src:url(FUENTES/rajdhani-600.ttf)}
-@font-face{font-family:'Rajdhani';font-weight:700;src:url(FUENTES/rajdhani-700.ttf)}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:LADOpx;height:LADOpx}
-body{
-  font-family:'Rajdhani',system-ui,sans-serif;color:#eef2ff;
-  display:flex;align-items:center;justify-content:center;
-  background:
-    radial-gradient(115% 78% at 50% -8%, rgba(RGB1,.16) 0%, transparent 56%),
-    radial-gradient(88% 58% at 108% 106%, rgba(RGB2,.13) 0%, transparent 62%),
-    #050510;
+PORTADAS = {
+    "planes": {
+        "gid": "gid://shopify/Collection/276253900849",
+        "nombre": "Planes de entrenamiento",
+        "sub": "Tres niveles · español, inglés y francés · PDF",
+        "lamina": ("vi-sigilo", "0 0 600 600", 520),
+        "acento": "#c9a227",
+        "alt": ("Sigilo VILLUMINATIONS sobre fondo negro, con el nombre de "
+                "la colección Planes de entrenamiento"),
+    },
 }
-/* Retícula tenue: da profundidad sin competir con el texto. */
-.malla{position:absolute;inset:0;opacity:.055;
-  background-image:linear-gradient(#fff 1px,transparent 1px),
-                   linear-gradient(90deg,#fff 1px,transparent 1px);
-  background-size:80px 80px}
-.marca{position:absolute;left:0;right:0;bottom:74px;text-align:center;
-  font-family:'Orbitron';font-weight:700;font-size:26px;letter-spacing:.34em;
-  color:#8b95b5}
-.filete{position:absolute;left:50%;transform:translateX(-50%);bottom:130px;
-  width:190px;height:2px;
-  background:linear-gradient(90deg,transparent,var(--a),transparent)}
-"""
 
-LIBRO_HTML = """<!doctype html><meta charset="utf-8"><style>
-{css}
-:root{{--a:{acento}}}
-.centro{{position:relative;display:flex;flex-direction:column;align-items:center;
-  gap:44px}}
-.cubierta{{width:790px;border-radius:10px;display:block;
-  box-shadow:0 40px 90px rgba(0,0,0,.62),
-             0 0 0 1px rgba(255,255,255,.10),
-             0 0 78px rgba({rgb1},.30)}}
-.datos{{display:flex;gap:30px;align-items:center;
-  font-weight:600;font-size:29px;letter-spacing:.05em;color:#c3cbe4}}
-.datos b{{color:var(--a);font-weight:700}}
-.punto{{width:6px;height:6px;border-radius:50%;background:#3a4166}}
-.idiomas{{font-family:'Orbitron';font-weight:700;font-size:22px;
-  letter-spacing:.26em;color:var(--a);opacity:.92}}
-</style>
-<div class="malla"></div>
-<div class="centro">
-  <img class="cubierta" src="data:image/png;base64,{cubierta}">
-  <div class="idiomas">ES · EN · FR</div>
-  <div class="datos">
-    <span><b>{paginas}</b> páginas</span><i class="punto"></i>
-    <span><b>{capitulos}</b> capítulos</span><i class="punto"></i>
-    <span><b>{laminas}</b> láminas</span>
-  </div>
-</div>
-<div class="filete"></div>
-<div class="marca">VILLUMINATIONS</div>
-"""
+# Las que no se hacen, y por qué. Está escrito para que no se rehaga la
+# pregunta dentro de tres meses.
+SIN_PORTADA = {
+    "cuidado-personal": ("los dos jabones están en UNLISTED, así que la "
+                         "colección está vacía en la tienda"),
+}
 
-NIVEL_HTML = """<!doctype html><meta charset="utf-8"><style>
-{css}
-:root{{--a:{acento};--a2:{acento2}}}
-.centro{{position:relative;width:100%;padding:0 130px;text-align:center}}
-.nivel{{font-family:'Orbitron';font-weight:900;font-size:150px;line-height:1;
-  letter-spacing:.02em;
-  background:linear-gradient(115deg,var(--a) 34%,var(--a2) 118%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 40px rgba({rgb1},.42))}}
-.titulo{{margin-top:34px;font-weight:700;font-size:64px;line-height:1.12;
-  letter-spacing:.005em;color:#eef2ff}}
-.regla{{margin:52px auto 0;width:300px;height:3px;
-  background:linear-gradient(90deg,transparent,var(--a),transparent)}}
-.cuenta{{margin-top:52px;display:flex;justify-content:center;gap:34px;
-  align-items:center;font-weight:600;font-size:33px;letter-spacing:.05em;
-  color:#c3cbe4}}
-.cuenta b{{color:var(--a);font-weight:700}}
-.punto{{width:7px;height:7px;border-radius:50%;background:#3a4166}}
-.idiomas{{margin-top:44px;font-family:'Orbitron';font-weight:700;font-size:24px;
-  letter-spacing:.26em;color:var(--a);opacity:.92}}
-</style>
-<div class="malla"></div>
-<div class="centro">
-  <div class="nivel">{nivel}</div>
-  <div class="titulo">{titulo}</div>
-  <div class="regla"></div>
-  <div class="cuenta">
-    <span><b>{docs}</b> {palabra}</span><i class="punto"></i>
-    <span><b>{paginas}</b> páginas</span>
-  </div>
-  <div class="idiomas">ES · EN · FR</div>
-</div>
-<div class="marca">VILLUMINATIONS</div>
-"""
-
-DISPARO = """
-import pkg from '/opt/node22/lib/node_modules/playwright/index.js';
-const { chromium } = pkg;
-const [html, png] = process.argv.slice(2);
-const navegador = await chromium.launch();
-const pagina = await navegador.newPage({
-  viewport: { width: LADO, height: LADO }, deviceScaleFactor: 1 });
-await pagina.goto('file://' + html, { waitUntil: 'networkidle' });
-await pagina.evaluate(() => document.fonts.ready);
-await pagina.screenshot({ path: png });
-await navegador.close();
-"""
+ANCHO, ALTO = 1600, 1000
 
 
-ACENTOS_CSS = ROOT / "libros" / "assets" / "libro.css"
-_ACENTO = re.compile(
-    r"\.acento-(\w+)\s*\{[^}]*--acento:\s*(#[0-9a-fA-F]{6})[^}]*"
-    r"--acento-2:\s*(#[0-9a-fA-F]{6})")
+def simbolos() -> str:
+    fuera = []
+    for r in LAMINAS:
+        t = (RAIZ / r).read_text(encoding="utf-8")
+        fuera += re.findall(r"<symbol\b.*?</symbol>", t, re.S)
+    return "\n".join(fuera)
 
 
-def acentos() -> dict[str, tuple[str, str]]:
-    """El mapa de acentos, leído de la hoja de estilo de los libros.
-
-    No se copia aquí: cada libro declara su acento por nombre en su JSON y el
-    color de ese nombre vive en libro.css. Duplicarlo significaría que un día
-    la portada del producto y la cubierta del libro dejarían de ser del mismo
-    color sin que nadie lo hubiera decidido.
-    """
-    mapa = {n: (a, b) for n, a, b
-            in _ACENTO.findall(ACENTOS_CSS.read_text())}
-    if not mapa:
-        raise SystemExit(f"  Sin acentos en {ACENTOS_CSS}: ¿cambió el formato?")
-    return mapa
-
-
-def rgb(hexa: str) -> str:
-    h = hexa.lstrip("#")
-    return ",".join(str(int(h[i:i + 2], 16)) for i in (0, 2, 4))
-
-
-def css(acento: str, acento2: str) -> str:
-    return (CSS_COMUN
-            .replace("FUENTES", str(ASSETS / "fonts"))
-            .replace("LADO", str(LADO))
-            .replace("RGB1", rgb(acento))
-            .replace("RGB2", rgb(acento2)))
-
-
-def cubierta_png(pdf: Path) -> str:
-    """La primera página del PDF, en base64 y a resolución de sobra."""
-    pagina = pdfium.PdfDocument(str(pdf))[0]
-    imagen = pagina.render(scale=ESCALA).to_pil()
-    tmp = SALIDA / "_tmp.png"
-    imagen.save(tmp)
-    dato = base64.b64encode(tmp.read_bytes()).decode()
-    tmp.unlink()
-    return dato
+def tarjeta(p: dict) -> str:
+    sid, vb, ancho = p["lamina"]
+    a = p["acento"]
+    return f"""<!doctype html><meta charset=utf-8><style>
+*{{margin:0;padding:0;box-sizing:border-box}}
+body{{width:{ANCHO}px;height:{ALTO}px;background:#0a0a0c;overflow:hidden;
+ font-family:Georgia,'Times New Roman',serif;color:#f2f0ea;position:relative}}
+.velo{{position:absolute;inset:0;background:
+ radial-gradient(1100px 700px at 50% 38%, {a}22, transparent 68%)}}
+.arte{{position:absolute;inset:0;display:flex;align-items:center;
+ justify-content:center}}
+.arte svg{{filter:drop-shadow(0 0 34px {a}55)}}
+.pie{{position:absolute;left:0;right:0;bottom:96px;text-align:center}}
+h1{{font-weight:400;font-size:70px;letter-spacing:.16em}}
+p{{margin-top:20px;font-size:25px;letter-spacing:.05em;opacity:.66}}
+.marca{{position:absolute;top:64px;left:0;right:0;text-align:center;
+ font-size:19px;letter-spacing:.62em;opacity:.5}}
+.regla{{position:absolute;left:50%;transform:translateX(-50%);bottom:74px;
+ width:190px;height:2px;background:{a};opacity:.8}}
+</style><svg width="0" height="0" style="position:absolute">{simbolos()}</svg>
+<div class=velo></div>
+<div class=arte><svg viewBox="{vb}" width="{ancho}"><use href="#{sid}"/></svg></div>
+<div class=marca>VILLUMINATIONS</div>
+<div class=pie><h1>{p['nombre']}</h1><p>{p['sub']}</p></div>
+<div class=regla></div>"""
 
 
-def disparar(html: str, png: Path, guardar_html: bool) -> None:
-    ruta = SALIDA / (png.stem + ".html")
-    ruta.write_text(html)
-    guion = SALIDA / "_disparo.mjs"
-    guion.write_text(DISPARO.replace("LADO", str(LADO)))
-    subprocess.run([NODE, str(guion), str(ruta), str(png)], check=True)
-    guion.unlink()
-    if not guardar_html:
-        ruta.unlink()
+def comprobar() -> list:
+    """Lo que impide dar una portada por buena."""
+    malos = []
+    disponibles = set()
+    for r in LAMINAS:
+        disponibles |= set(re.findall(r'<symbol[^>]*\bid="([^"]+)"',
+                                      (RAIZ / r).read_text(encoding="utf-8")))
+    for mango, p in PORTADAS.items():
+        if p["lamina"][0] not in disponibles:
+            malos.append(f"{mango} · la lámina «{p['lamina'][0]}» no está en "
+                         f"ninguna de {LAMINAS}")
+        if not p.get("alt"):
+            malos.append(f"{mango} · sin texto alternativo: quien no ve la "
+                         f"imagen no se entera de nada")
+        elif len(p["alt"]) > 125:
+            malos.append(f"{mango} · alt de {len(p['alt'])}/125")
+    return malos
 
 
-def main() -> None:
-    guardar_html = "--html" in sys.argv[1:]
-    SALIDA.mkdir(exist_ok=True)
+def main() -> int:
+    malos = comprobar()
+    print(f"\n  {len(PORTADAS)} portadas · {len(malos)} problemas\n")
+    for m in malos:
+        print(f"    {m}")
+    if malos:
+        return 1
 
-    mapa = acentos()
-    print(f"\n  Portadas de producto · {LADO}×{LADO}\n")
+    DESTINO.mkdir(parents=True, exist_ok=True)
+    guion = DESTINO / "_render.mjs"
+    tareas = []
+    for mango, p in PORTADAS.items():
+        (DESTINO / f"{mango}.html").write_text(tarjeta(p), encoding="utf-8")
+        tareas.append((str(DESTINO / f"{mango}.html"),
+                       str(DESTINO / f"{mango}.png")))
 
-    for src in sorted((ROOT / "libros" / "src").glob("*.json")):
-        libro = json.loads(src.read_text())
-        pdf = ROOT / "libros" / "dist" / f"{libro['id']}.pdf"
-        laminas = {b["x"] for c in libro["capitulos"]
-                   for b in c["bloques"] if b.get("t") == "figura"}
-        # Se cuenta el archivo entero, cubierta incluida, que es lo que el
-        # comprador ve al abrirlo y la cifra que da la ficha de la tienda.
-        paginas = len(pdfium.PdfDocument(str(pdf)))
-        acento, acento2 = mapa[libro["acento"]]
-        html = LIBRO_HTML.format(
-            css=css(acento, acento2), acento=acento, rgb1=rgb(acento),
-            cubierta=cubierta_png(pdf), paginas=paginas,
-            capitulos=len(libro["capitulos"]), laminas=len(laminas))
-        png = SALIDA / f"{libro['id']}.png"
-        disparar(html, png, guardar_html)
-        print(f"    {png.name:30} {paginas:3} pág · "
-              f"{len(libro['capitulos']):2} cap · {len(laminas)} lám  {acento}")
+    guion.write_text(
+        "import { chromium } from "
+        "'/opt/node22/lib/node_modules/playwright/index.mjs';\n"
+        "const b = await chromium.launch("
+        "{executablePath:'/opt/pw-browsers/chromium'});\n"
+        + "".join(
+            f"{{const p = await b.newPage({{viewport:{{width:{ANCHO},"
+            f"height:{ALTO}}}}});"
+            f"await p.goto('file://{h}');"
+            f"await p.screenshot({{path:'{o}'}});}}\n"
+            for h, o in tareas)
+        + "await b.close();\n", encoding="utf-8")
 
-    for n in NIVELES:
-        pdfs = [p for p in sorted((ROOT / "planes" / "dist").glob("*.pdf"))
-                if any(p.name.startswith(d) for d in n["docs"])]
-        paginas = sum(len(pdfium.PdfDocument(str(p))) for p in pdfs)
-        html = NIVEL_HTML.format(
-            css=css(n["acento"], n["acento2"]),
-            acento=n["acento"], acento2=n["acento2"], rgb1=rgb(n["acento"]),
-            nivel=n["nivel"].upper(), titulo=n["titulo"],
-            docs=len(pdfs), palabra="documento" if len(pdfs) == 1 else "documentos",
-            paginas=paginas)
-        png = SALIDA / f"{n['archivo']}.png"
-        disparar(html, png, guardar_html)
-        print(f"    {png.name:30} {len(pdfs):3} doc · {paginas} pág")
+    r = subprocess.run(["node", str(guion)], capture_output=True, text=True)
+    if r.returncode:
+        print(f"    no se pudo renderizar:\n{r.stderr}")
+        return 1
 
+    for mango in PORTADAS:
+        png = DESTINO / f"{mango}.png"
+        print(f"    {png.relative_to(RAIZ)}  {png.stat().st_size // 1024} KB")
     print()
+    for mango, razon in SIN_PORTADA.items():
+        print(f"    sin portada a propósito · {mango}: {razon}")
+    print()
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
