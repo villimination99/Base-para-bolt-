@@ -58,6 +58,8 @@ python3 tienda/correos.py    # los cinco correos automáticos y cómo se montan
 python3 tienda/captura.py    # el formulario de captura y su consentimiento
 python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
+python3 tienda/calendario.py # los doce lanzamientos y sus fechas
+python3 ropa/tools/generar.py # rehace las doce láminas de espalda
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -99,11 +101,27 @@ automatizaciones se montan en Marketing → Automatizaciones y el texto se pega
 allí. `--texto` los saca en claro.
 
 **Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
-publica si no señala su lámina dentro del repositorio: hay **95 láminas
-propias** en `libros/partials/` y `planes/partials/`, vectoriales y de
-propiedad entera, y no hace falta buscar dibujos fuera. Faltan por rellenar la
-hoja del proveedor de estampación y qué lámina va en qué prenda; ninguna de las
-dos se puede inventar.
+publica si no señala su lámina dentro del repositorio: hay **110 láminas
+propias** en `libros/partials/`, `planes/partials/` y `ropa/partials/`,
+vectoriales y de propiedad entera, y no hace falta buscar dibujos fuera.
+Faltan por rellenar la hoja del proveedor de estampación y qué lámina va en qué
+prenda; ninguna de las dos se puede inventar.
+
+**El calendario no va por meses, va por la rueda.** `tienda/calendario.py`
+tiene doce lanzamientos y cada uno abre el día que abre su temporada: Aries el
+21 de marzo porque ese día empieza Aries. Doce colores repartidos por los meses
+los monta cualquiera; esto no, porque pide tener los doce signos dibujados, un
+libro sobre ellos y un artículo sobre los decanos. Las láminas las genera
+`ropa/tools/generar.py` y **no se editan a mano**, como los libros y los planes.
+
+El elemento no cambia solo el color: cambia el dibujo —fuego veintiuna
+costillas, tierra doce, aire veintitrés, agua dieciséis—. Y las cifras del
+texto **las comprueba `calendario.comprobar()` contra lo que el generador
+dibuja**, que es la guarda de `comprobar_laminas()` traída aquí: allí la prosa
+prometió siete láminas y había seis, en tres idiomas. Mordió a la primera. Las
+otras tres guardas: cada lanzamiento señala una lámina que existe, las doce
+temporadas embaldosan el año sin huecos ni solapes, y tres signos por elemento
+o los tonos de acento se repetirían.
 
 **Las traducciones no se copian a mano dentro de una mutación.** Se hizo así
 una vez y se coló un «veintivún» que no estaba en el original; encontrarlo
