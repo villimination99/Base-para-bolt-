@@ -903,6 +903,41 @@ check('color-mix con respaldo', () => {
   return bad;
 });
 
+check('Acento de los ocho Codices', () => {
+  /* Del mapa del sistema: "Cada libro tiene su color de acento, y ese color no
+     se elige dos veces: sale de libros/assets/libro.css, asi que la cubierta
+     del PDF y la portada de la tienda no pueden separarse nunca."
+     Aqui se comprueba que la tabla del snippet no se desvie de esos colores.
+     Si algun dia existe el metafield villumination.acento, esta tabla sobra y
+     esta comprobacion con ella. */
+  const oficiales = {
+    'codice-de-la-mesa': '#00ff88',
+    'codice-de-la-carga': '#ff7a3c',
+    'codice-del-descanso': '#00e5c0',
+    'codice-de-la-voluntad': '#ff4fd8',
+    'codice-de-los-arcanos': '#ff5c8a',
+    'codice-del-si-mismo': '#a97bff',
+    'codice-zodiacal': '#00f0ff',
+    'codice-de-las-invocaciones': '#ffd75c',
+  };
+  const ruta = `${T}/snippets/acento-libro.liquid`;
+  if (!fs.existsSync(ruta)) return ['falta snippets/acento-libro.liquid'];
+  const src = read(ruta);
+  const bad = [];
+  for (const [handle, color] of Object.entries(oficiales)) {
+    const m = src.match(new RegExp(`when\\s+'${handle}'\\s*\\n\\s*echo\\s+'([^']+)'`));
+    if (!m) bad.push(`acento-libro: falta el caso "${handle}"`);
+    else if (m[1].toLowerCase() !== color) bad.push(`acento-libro: ${handle} vale ${m[1]} y deberia ser ${color}`);
+  }
+  // el metafield tiene que consultarse ANTES que la tabla, si no la fuente unica se rompe
+  if (src.indexOf('metafields.villumination.acento') > src.indexOf("when 'codice"))
+    bad.push('acento-libro: la tabla se consulta antes que el metafield');
+  // y la tarjeta tiene que usarlo
+  if (!read(`${T}/snippets/product-card.liquid`).includes("render 'acento-libro'"))
+    bad.push('product-card no llama a acento-libro');
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
