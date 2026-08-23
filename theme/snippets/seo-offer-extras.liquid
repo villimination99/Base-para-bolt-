@@ -12,10 +12,31 @@
 
   Se renderiza DENTRO del objeto "offers", así que empieza siempre por coma.
 {%- endcomment -%}
+{%- comment -%}
+  Un producto descargable NO se envia ni se devuelve por correo. Declararle un
+  destino de envio y una devolucion por mensajeria es informacion falsa: Google
+  puede retirar el resultado enriquecido entero por desajuste, y con once PDF
+  en el catalogo eso son once fichas afectadas. Aqui se comprueba antes.
+
+  requires_shipping vive en la variante, no en el producto. Se mira la
+  seleccionada y, si por lo que sea no hay, la primera: basta una que no se
+  envie para tratar la ficha como digital.
+{%- endcomment -%}
 {%- liquid
+  assign v = product.selected_or_first_available_variant | default: product.variants.first
+  assign se_envia = true
+  if v and v.requires_shipping == false
+    assign se_envia = false
+  endif
+
   assign ship_country = settings.seo_ship_country | strip
   assign free_from = settings.cart_free_shipping_threshold | default: 0
   assign return_days = settings.seo_return_days | default: 0
+
+  unless se_envia
+    assign ship_country = ''
+    assign return_days = 0
+  endunless
 -%}
 
 {%- if ship_country != blank -%},

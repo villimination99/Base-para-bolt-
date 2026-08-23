@@ -938,6 +938,27 @@ check('Acento de los ocho Codices', () => {
   return bad;
 });
 
+check('Envio declarado solo a lo que se envia', () => {
+  /* Once de los cuarenta productos de la tienda son PDF descargables. Un
+     descargable no se envia ni se devuelve por mensajeria, y declararselo a
+     Google es un desajuste que puede costar el resultado enriquecido de esas
+     once fichas. El snippet tiene que mirar requires_shipping antes de emitir
+     nada de envio o devolucion. */
+  const ruta = `${T}/snippets/seo-offer-extras.liquid`;
+  if (!fs.existsSync(ruta)) return ['falta snippets/seo-offer-extras.liquid'];
+  const src = read(ruta);
+  const bad = [];
+  if (!/requires_shipping/.test(src))
+    bad.push('seo-offer-extras: no comprueba requires_shipping, declara envio tambien a los descargables');
+  // la comprobacion tiene que ir ANTES de emitir shippingDetails
+  const iChk = src.indexOf('requires_shipping'), iEnv = src.indexOf('shippingDetails');
+  if (iChk >= 0 && iEnv >= 0 && iChk > iEnv)
+    bad.push('seo-offer-extras: requires_shipping se mira despues de emitir shippingDetails');
+  if (!/hasMerchantReturnPolicy/.test(src))
+    bad.push('seo-offer-extras: sin politica de devolucion, se pierde la insignia de Google');
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
