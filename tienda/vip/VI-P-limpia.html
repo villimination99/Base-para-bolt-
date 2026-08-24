@@ -166,6 +166,11 @@
     }
     @media (max-width: 640px) { #muscle-canvas { height: 440px; } }
     #muscle-canvas:active { cursor: grabbing; }
+    /* El lienzo ahora se alcanza con el tabulador —flechas para recorrer los
+       músculos, Enter para abrir sus ejercicios—, así que el foco tiene que
+       verse. El resto de la página marca el foco con este mismo cian, pero
+       con `border-color`, que en un lienzo sin borde no se aprecia. */
+    #muscle-canvas:focus-visible { outline: 2px solid #05D9E8; outline-offset: 3px; }
     #mm-selected-label {
       text-align: center; margin-top: 12px; min-height: 26px;
       font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.95rem;
@@ -928,10 +933,10 @@
   <p class="section-sub" data-i18n="sub.map">Anatomía esculpida como una sola superficie continua, con surcos de definición tallados entre músculos. Toca una zona: se ilumina en rojo sobre el propio cuerpo.</p>
   <div class="card">
     <div style="position:relative">
-      <canvas id="muscle-canvas"></canvas>
+      <canvas id="muscle-canvas" tabindex="0" aria-label="Mapa muscular en tres dimensiones. Usa las flechas para recorrer los grupos musculares y Enter para abrir sus ejercicios."></canvas>
       <div id="mm-loading">Esculpiendo anatomía 3D…</div>
     </div>
-    <div id="mm-selected-label"></div>
+    <div id="mm-selected-label" aria-live="polite"></div>
     <div id="mm-fallback" class="module-error" style="display:none">
       ⚠️ WebGL no disponible. Usa los botones para explorar grupos musculares.
     </div>
@@ -4605,6 +4610,7 @@ try {
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+  pmrem.dispose();   // ya está horneado: el generador no hace falta más
 
   /* ---- Luces de estudio con rim azul ---- */
   scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.35));
@@ -4834,6 +4840,10 @@ try {
   const NAME2ID = {};
   ZONES.forEach(function(z) { NAME2ID[z.name] = z.id; });
   const CAN_HOVER = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  // El CSS de esta página ya respeta prefers-reduced-motion en tres sitios; el
+  // 3D giraba igual. Ahora también se está quieto si se pide.
+  const REDUCIDO = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let vposCache = null, vertCount = 0;
   function paintWeight(attrName, zoneName) {
     if (!vposCache) return;
@@ -4969,9 +4979,14 @@ try {
   /* ---- Selección / hover: el rojo se pinta EN la superficie ---- */
   let activeGroup = null;
   let hoverGroup = null;
+  // El hover repintaba TODOS los vértices en cada mousemove, aunque el músculo
+  // señalado fuera el mismo. Ahora el ratón solo apunta y el repintado ocurre
+  // una vez por fotograma, y solo si la zona ha cambiado de verdad.
+  let ratonX = 0, ratonY = 0, hoverPend = false, ultimoHover;
   const LABELS = { Gluteos: 'Glúteos', Biceps: 'Bíceps', Triceps: 'Tríceps', Cuadriceps: 'Cuádriceps' };
   window.selectMuscle3D = function(name, openInfo) {
     activeGroup = name;
+    ultimoHover = undefined; hoverPend = true;
     paintWeight('selW', name);
     document.getElementById('mm-selected-label').textContent = name ? '● ' + (LABELS[name] || name) : '';
     document.getElementById('mm-selected-label').style.display = '';
@@ -4981,7 +4996,9 @@ try {
     if (openInfo && window.showMuscleModal) window.showMuscleModal(name);
     controls.autoRotate = false;
     clearTimeout(window.selectMuscle3D._t);
-    window.selectMuscle3D._t = setTimeout(function() { controls.autoRotate = true; }, 4000);
+    window.selectMuscle3D._t = setTimeout(function() {
+      controls.autoRotate = !REDUCIDO;
+    }, 4000);
   };
 
   const controls = new OrbitControls(camera, renderer.domElement);
@@ -4991,7 +5008,7 @@ try {
   controls.maxDistance = 7.0;
   controls.maxPolarAngle = Math.PI * 0.62;
   controls.target.set(0, 1.0, 0);
-  controls.autoRotate = true;
+  controls.autoRotate = !REDUCIDO;
   controls.autoRotateSpeed = 0.9;
 
   const raycaster = new THREE.Raycaster();
@@ -5015,33 +5032,93 @@ try {
     }
   }, { passive: true });
   canvas.addEventListener('mousemove', function(e) {
-    const name = pick(e.clientX, e.clientY);
+    ratonX = e.clientX; ratonY = e.clientY; hoverPend = true;
+  });
+  function aplicarHover() {
+    hoverPend = false;
+    const name = pick(ratonX, ratonY);
     canvas.style.cursor = name ? 'pointer' : 'grab';
     hoverGroup = name;
-    if (CAN_HOVER) paintWeight('hovW', (name && name !== activeGroup) ? name : null);
+    const quiere = (name && name !== activeGroup) ? name : null;
+    if (quiere === ultimoHover) return;   // nada que repintar
+    ultimoHover = quiere;
+    if (CAN_HOVER) paintWeight('hovW', quiere);
+  }
+
+  /* ---- Teclado: el lienzo no era alcanzable sin ratón ---- */
+  canvas.addEventListener('keydown', function(e) {
+    const nombres = ZONES.map(function(z) { return z.name; });
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      const i = nombres.indexOf(activeGroup);
+      const paso = e.key === 'ArrowRight' ? 1 : -1;
+      const siguiente = i < 0
+        ? (paso > 0 ? nombres[0] : nombres[nombres.length - 1])
+        : nombres[(i + paso + nombres.length) % nombres.length];
+      window.selectMuscle3D(siguiente, false);
+      e.preventDefault();
+    } else if ((e.key === 'Enter' || e.key === ' ') && activeGroup) {
+      window.selectMuscle3D(activeGroup, true);
+      e.preventDefault();
+    } else if (e.key === 'Escape' && window.mmClearSelection3D) {
+      window.mmClearSelection3D();
+      document.getElementById('mm-selected-label').textContent = '';
+      e.preventDefault();
+    }
   });
 
-  /* ---- Animación ---- */
-  let time = 0;
+  /* ---- Animación: solo mientras se ve ----
+     El bucle corría siempre, también con la pestaña en segundo plano o esta
+     sección fuera de la pantalla. En una página con cuatro lienzos eso es
+     batería y GPU gastadas en algo que nadie está mirando. Ahora se detiene
+     y se reanuda solo. El tiempo va por reloj y no por «0.016 por
+     fotograma», así que la respiración va igual de lenta a 60 que a 144 Hz. */
+  const reloj = new THREE.Clock();
+  let time = 0, rafId = 0, enPantalla = true;
+  function visible() { return enPantalla && !document.hidden; }
   function animate() {
-    requestAnimationFrame(animate);
-    time += 0.016;
-    const breathe = 1 + Math.sin(time * 1.3) * 0.004;
-    bodyRoot.scale.set(breathe, 1, breathe);
+    rafId = requestAnimationFrame(animate);
+    time += Math.min(reloj.getDelta(), 0.05);
+    if (!REDUCIDO) {
+      const breathe = 1 + Math.sin(time * 1.3) * 0.004;
+      bodyRoot.scale.set(breathe, 1, breathe);
+      ring.material.opacity = 0.16 + Math.sin(time * 2) * 0.08;
+      particles.rotation.y += 0.0006;
+    }
     uPulse.value = activeGroup ? (0.62 + Math.sin(time * 5) * 0.22) : 0;
-    ring.material.opacity = 0.16 + Math.sin(time * 2) * 0.08;
-    particles.rotation.y += 0.0006;
+    if (hoverPend) aplicarHover();
     controls.update();
     renderer.render(scene, camera);
+    if (!visible()) { cancelAnimationFrame(rafId); rafId = 0; }
   }
-  animate();
+  function arrancar() {
+    if (rafId || !visible()) return;
+    reloj.getDelta();          // tira el salto acumulado mientras estuvo parado
+    animate();
+  }
+  document.addEventListener('visibilitychange', arrancar);
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function(entradas) {
+      enPantalla = entradas[0].isIntersecting;
+      arrancar();
+    }, { rootMargin: '200px' }).observe(canvas);
+  }
+  arrancar();
 
-  window.addEventListener('resize', function() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    camera.aspect = w / h;
+  /* ---- Tamaño: el lienzo lo dimensiona el CSS ----
+     Solo se escuchaba `resize` de la ventana, así que un cambio del contenedor
+     —abrir un panel, girar el móvil dentro de una columna— dejaba el dibujo
+     estirado hasta que alguien tocaba la ventana. */
+  function ajustar() {
+    const w = canvas.clientWidth, hh = canvas.clientHeight;
+    if (!w || !hh) return;
+    camera.aspect = w / hh;
     camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-  });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(w, hh, false);   // false: el tamaño en pantalla es del CSS
+    if (!rafId) renderer.render(scene, camera);
+  }
+  window.addEventListener('resize', ajustar);
+  if ('ResizeObserver' in window) new ResizeObserver(ajustar).observe(canvas);
 
 } catch (err) {
   console.warn('Muscle Map 3D error:', err);
