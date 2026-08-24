@@ -26,6 +26,11 @@ libros/i18n/catalogo.json
 # Grafo de conocimiento: se regenera, no se versiona
 graphify-out/
 
+# El guion que portadas.py escribe para pilotar el navegador. Lleva dentro
+# rutas absolutas de la máquina donde se ejecutó, así que versionarlo solo
+# sirve para que `git status` salga sucio después de cada portada.
+tienda/portadas/_render.mjs
+
 # Los PNG a 300 ppp y el ZIP de estampación se rehacen con
 # `python3 ropa/tools/empaquetar.py`. Los SVG sí viajan: son el original.
 ropa/dist/png/
