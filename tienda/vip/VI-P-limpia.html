@@ -4731,10 +4731,11 @@ try {
 
   const bodyRoot = new THREE.Group();
   scene.add(bodyRoot);
-  // Se expone el grupo del cuerpo para poder girarlo desde fuera: es lo que
-  // permite renderizar la espalda en una prueba sin depender de los controles.
-  // Solo es una referencia de lectura; nada de la página escribe en ella.
-  window.__mmEscena = bodyRoot;
+  /* Un solo asidero para poder mirar esto desde fuera: girar el cuerpo y
+     mover la cámara en una prueba, que es como se comprobó la espalda y la
+     cabeza sin depender de los controles del ratón. Son referencias de
+     lectura; la página no escribe en ellas. */
+  window.__mm = { cuerpo: bodyRoot, camara: camera };
 
   /* ---- SDF helpers ---- */
   function clamp01(t) { return t < 0 ? 0 : (t > 1 ? 1 : t); }
@@ -4802,23 +4803,25 @@ try {
     d = smin(d, sdEll(px, py, pz, 0, 1.080, 0.082, 0.086, 0.170, 0.038), 0.05);
     // Cuello (más fino) + cabeza + mandíbula
     d = smin(d, sdCap(px, py, pz, 0, 1.480, 0.004, 0, 1.575, 0.010, 0.050), 0.045);
-    let hd = sdEll(px, py, pz, 0, 1.700, 0.010, 0.104, 0.132, 0.112);
-    hd = smin(hd, sdEll(px, py, pz, 0, 1.615, 0.042, 0.074, 0.056, 0.078), 0.04);
-    // Arco de las cejas
-    hd = smin(hd, sdCap(px, py, pz, -0.052, 1.726, 0.086, 0.052, 1.726, 0.086, 0.020), 0.030);
-    // Nariz: caballete y punta
-    hd = smin(hd, sdCap(px, py, pz, 0, 1.712, 0.098, 0, 1.664, 0.112, 0.013), 0.022);
-    // Pómulos
-    hd = smin(hd, sdEll(ax, py, pz, 0.054, 1.664, 0.078, 0.028, 0.024, 0.030), 0.030);
-    // Mentón
-    hd = smin(hd, sdEll(px, py, pz, 0, 1.588, 0.062, 0.030, 0.026, 0.030), 0.028);
-    // Orejas
-    hd = smin(hd, sdEll(ax, py, pz, 0.100, 1.696, -0.002, 0.014, 0.032, 0.022), 0.018);
-    // Cuencas de los ojos, hundidas
-    hd = smax(hd, -sdEll(ax, py, pz, 0.040, 1.702, 0.104, 0.023, 0.014, 0.016), 0.020);
-    // La boca, apenas una línea
-    hd = smax(hd, -sdCap(px, py, pz, -0.022, 1.622, 0.104, 0.022, 1.622, 0.104, 0.006), 0.012);
-    d = smin(d, hd, 0.04);
+    /* Cabeza de maniquí anatómico. Llevaba cuencas de ojos y boca hundidas y
+       a tamaño real salían como ranuras oscuras: inquietante y peor que nada.
+       Una cara a medio esculpir se lee peor que ninguna, y las figuras de
+       anatomía —y la referencia de la que sale esto— usan cabeza lisa. Se
+       conservan cráneo, mandíbula y nariz, que son los que dan orientación. */
+    let hd = sdEll(px, py, pz, 0, 1.702, 0.006, 0.098, 0.128, 0.108);
+    // Occipital: sin él el cráneo es un huevo
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.688, -0.038, 0.090, 0.098, 0.074), 0.05);
+    // Mandíbula y mentón
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.618, 0.038, 0.080, 0.058, 0.084), 0.05);
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.586, 0.070, 0.032, 0.028, 0.030), 0.032);
+    // Arco superciliar, apenas insinuado
+    hd = smin(hd, sdCap(px, py, pz, -0.048, 1.730, 0.092, 0.048, 1.730, 0.092, 0.017), 0.034);
+    // Nariz. Con una cápsula fina salía una cresta que parecía una cicatriz;
+    // un bulto redondeado se funde con la cara y basta para dar orientación.
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.686, 0.112, 0.019, 0.032, 0.026), 0.030);
+    // Orejas, pegadas al cráneo
+    hd = smin(hd, sdEll(ax, py, pz, 0.094, 1.694, -0.010, 0.013, 0.032, 0.021), 0.022);
+    d = smin(d, hd, 0.045);
     // Esternón: hunde el centro del pecho para que los pectorales no se fundan en una teta única
     d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.104, 0, 1.362, 0.098, 0.013), 0.045);
 
@@ -5162,6 +5165,7 @@ try {
   controls.target.set(0, 0.94, 0);
   controls.autoRotate = !REDUCIDO;
   controls.autoRotateSpeed = 0.9;
+  window.__mm.controles = controls;
 
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2();
