@@ -931,7 +931,7 @@
 <div data-section id="muscle-map">
 <section>
   <h2 class="section-title">Mapa Muscular 3D</h2>
-  <p class="section-sub" data-i18n="sub.map">Anatomía esculpida como una sola superficie continua, con surcos de definición tallados entre músculos. Toca una zona: se ilumina en rojo sobre el propio cuerpo.</p>
+  <p class="section-sub" data-i18n="sub.map">Anatomía esculpida como una sola superficie continua, con surcos de definición tallados entre músculos. Cada grupo lleva su color; toca uno y los demás se apagan.</p>
   <div class="card">
     <div style="position:relative">
       <canvas id="muscle-canvas" tabindex="0" aria-label="Mapa muscular en tres dimensiones. Usa las flechas para recorrer los grupos musculares y Enter para abrir sus ejercicios."></canvas>
@@ -3048,7 +3048,7 @@
       idxSub: '12 tools wired together: what you train feeds your level, what you eat feeds your charts. Tap any to jump straight in.',
       idx: { 'muscle-map': ['3D Muscle Map', 'Tap a muscle: see its exercises and add them'], 'planner': ['Training', 'Log kg and sets — every kilo counts'], 'nutrition': ['Nutrition', 'Scan your plate with AI and track macros'], 'goal': ['Calorie Goal', 'Get your TDEE and set a real target'], 'diet-plans': ['Diet Plans', '4 plans · Mon–Sun menus all year'], 'botanica': ['Nutritional Botany', '55 foods and their real properties'], 'meditation': ['Meditation', 'Guided breathing + 21-day program'], 'frequencies': ['Frequencies', 'Solfeggio, binaural and dual pulses'], 'level': ['Athlete Level', 'From Beginner to Predator'], 'progress': ['Progress', 'Your whole health in charts'], 'sleep': ['Sleep', 'Do you rest as much as you train?'], 'challenges': ['Challenges', 'Compete on the leaderboard'] },
       t: {
-        'sub.map': 'Anatomy sculpted as one continuous surface, with definition grooves carved between muscles. Tap a zone: it lights up red on the body itself.',
+        'sub.map': 'Anatomy sculpted as one continuous surface, with definition grooves carved between muscles. Every group carries its own colour; tap one and the rest dim.',
         'sub.planner': 'Your routine for today: enter the weight, hit ✓ and every kilo feeds your athlete level, your PRs and the health panel. Pick exercises from the gallery below.',
         'sub.library': '27 exercises with real calories. Filter by muscle, swipe the gallery, enter the weight you used and hit ✓ to log the set — without leaving this page. Tap any ❓ card to see the correct technique.',
         'sub.nutrition': 'Track your macros and log food with the camera: local AI analyses the photo and suggests candidates for you to confirm.',
@@ -3171,7 +3171,7 @@
       idxSub: '12 outils reliés entre eux : ce que tu t’entraînes nourrit ton niveau, ce que tu manges nourrit tes graphiques. Touche pour y aller direct.',
       idx: { 'muscle-map': ['Carte musculaire 3D', 'Touche un muscle : vois ses exercices'], 'planner': ['Entraînement', 'Enregistre kg et séries — chaque kilo compte'], 'nutrition': ['Nutrition', 'Scanne ton assiette avec l’IA, suis tes macros'], 'goal': ['Objectif calorique', 'Calcule ton TDEE et fixe ta vraie cible'], 'diet-plans': ['Plans diététiques', '4 plans · menus lun–dim toute l’année'], 'botanica': ['Botanique nutritionnelle', '55 aliments et leurs vraies propriétés'], 'meditation': ['Méditation', 'Respiration guidée + programme 21 jours'], 'frequencies': ['Fréquences', 'Solfeggio, binaurales et pulsations duales'], 'level': ['Niveau d’athlète', 'De Débutant à Predator'], 'progress': ['Progrès', 'Toute ta santé en graphiques'], 'sleep': ['Sommeil', 'Récupères-tu autant que tu t’entraînes ?'], 'challenges': ['Défis', 'Affronte le classement'] },
       t: {
-        'sub.map': 'Anatomie sculptée en une seule surface continue, avec des sillons de définition entre les muscles. Touche une zone : elle s’illumine en rouge sur le corps.',
+        'sub.map': 'Anatomie sculptée en une seule surface continue, avec des sillons de définition entre les muscles. Chaque groupe a sa couleur ; touches-en un et les autres s’estompent.',
         'sub.planner': 'Ta routine du jour : saisis le poids, appuie sur ✓ et chaque kilo nourrit ton niveau d’athlète, tes RP et le panneau santé. Choisis les exercices dans la galerie ci-dessous.',
         'sub.library': '27 exercices aux calories réelles. Filtre par muscle, fais défiler la galerie, saisis le poids utilisé et appuie sur ✓ pour enregistrer la série — sans quitter la page. Touche une carte ❓ pour voir la technique correcte.',
         'sub.nutrition': 'Suis tes macros et enregistre tes repas avec la caméra : une IA locale analyse la photo et te propose des candidats à confirmer.',
@@ -4718,13 +4718,13 @@ try {
   clayMat.onBeforeCompile = function(shader) {
     shader.uniforms.uPulse = uPulse;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute float selW;\nattribute float hovW;\nattribute float clothId;\nattribute float aoV;\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvSelW = selW;\nvHovW = hovW;\nvCloth = clothId;\nvAO = aoV;\nvMundo = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      .replace('#include <common>', '#include <common>\nattribute float selW;\nattribute float hovW;\nattribute float clothId;\nattribute float aoV;\nattribute float zoneId;\nattribute float zoneW;\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;\nvarying vec3 vTinte;\nvarying float vZonaOn;\nvec3 colorDeZona(float z) {\n  if (z < 1.5) return vec3(0.88, 0.18, 0.20);\n  if (z < 2.5) return vec3(0.45, 0.24, 0.90);\n  if (z < 3.5) return vec3(0.96, 0.52, 0.08);\n  if (z < 4.5) return vec3(0.05, 0.62, 0.92);\n  if (z < 5.5) return vec3(0.02, 0.70, 0.58);\n  if (z < 6.5) return vec3(0.24, 0.76, 0.20);\n  if (z < 7.5) return vec3(0.16, 0.38, 0.95);\n  if (z < 8.5) return vec3(0.88, 0.20, 0.60);\n  return vec3(0.62, 0.76, 0.10);\n}')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvSelW = selW;\nvHovW = hovW;\nvCloth = clothId;\nvAO = aoV;\nvMundo = (modelMatrix * vec4(transformed, 1.0)).xyz;\nvZonaOn = zoneW;\nvTinte = colorDeZona(zoneId);');
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;\nuniform float uPulse;')
+      .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;\nvarying vec3 vTinte;\nvarying float vZonaOn;\nuniform float uPulse;')
       .replace('#include <aomap_fragment>', 'float oclusion = clamp(vAO, 0.0, 1.0);\nreflectedLight.indirectDiffuse *= oclusion;\nreflectedLight.indirectSpecular *= mix(1.0, oclusion, 0.55);\nreflectedLight.directDiffuse *= mix(1.0, oclusion, 0.45);')
-      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.55, 0.30, 0.26), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.10, 0.12), sel * 0.88);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);\n}')
-      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vec3(1.0, 0.10, 0.05) * (sel * (0.20 + 0.18 * uPulse) + edge * 0.35);\n  totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;\n  float borde = 1.0 - abs(dot(normalize(normal), normalize(vViewPosition)));\n  borde = pow(clamp(borde, 0.0, 1.0), 2.6);\n  totalEmissiveRadiance += vec3(0.95, 0.42, 0.30) * borde * 0.30 * clamp(vAO, 0.0, 1.0);\n}')
+      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.55, 0.30, 0.26), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float haySel = step(0.01, uPulse);\n  float atenua = mix(1.0, 0.22, haySel * (1.0 - sel));\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte, vZonaOn * 0.80 * atenua);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.30, sel * 0.80);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.15, hov * 0.35);\n}')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vTinte * (sel * (0.30 + 0.26 * uPulse) + edge * 0.45);\n  totalEmissiveRadiance += vTinte * hov * 0.16;\n  float borde = 1.0 - abs(dot(normalize(normal), normalize(vViewPosition)));\n  borde = pow(clamp(borde, 0.0, 1.0), 2.6);\n  totalEmissiveRadiance += vec3(0.95, 0.42, 0.30) * borde * 0.30 * clamp(vAO, 0.0, 1.0);\n}')
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));\n{\n  float grano = sin(vMundo.x * 421.0) * sin(vMundo.y * 397.0) * sin(vMundo.z * 383.0);\n  roughnessFactor = clamp(roughnessFactor + grano * 0.09, 0.05, 1.0);\n}')
       .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{\n  vec3 rel = vec3(\n    sin(vMundo.y * 183.0) + sin(vMundo.z * 149.0),\n    sin(vMundo.z * 171.0) + sin(vMundo.x * 157.0),\n    sin(vMundo.x * 165.0) + sin(vMundo.y * 141.0));\n  vec3 fino = vec3(\n    sin(vMundo.y * 620.0), sin(vMundo.z * 587.0), sin(vMundo.x * 601.0));\n  normal = normalize(normal + rel * 0.010 + fino * 0.004);\n}');
   };
@@ -4893,6 +4893,8 @@ try {
   // Oclusión ambiental por vértice. Es lo que faltaba para que esto deje de
   // parecer plástico: sin ella, el hueco entre dos músculos recibe la misma
   // luz indirecta que una superficie abierta, y por eso todo salía plano.
+  const zwArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('zoneW', new THREE.BufferAttribute(zwArr, 1));
   const aoArr = new Float32Array(MAXPOLY * 3);
   for (let i = 0; i < aoArr.length; i++) aoArr[i] = 1;
   mc.geometry.setAttribute('aoV', new THREE.BufferAttribute(aoArr, 1));
@@ -4991,6 +4993,33 @@ try {
     });
   });
 
+  /* El grupo al que pertenece un punto y **cuánto**. Antes solo devolvía el
+     identificador, sí o no, y por eso el color del grupo salía recortado a
+     cuchillo mientras que la selección —que sí desvanece— salía suave. */
+  const _zr = [0, 0];
+  function zonaDe(wx, wy, wz) {
+    const axp = Math.abs(wx);
+    let mejorId = 0, mejorND = 1e9;
+    for (let zi = 0; zi < ZONES.length; zi++) {
+      const z = ZONES[zi];
+      for (let li = 0; li < z.list.length; li++) {
+        const e = z.list[li];
+        const ex = e[6] ? axp : wx;
+        const dx = (ex - e[0]) / e[3];
+        const dy = (wy - e[1]) / e[4];
+        const dz = (wz - e[2]) / e[5];
+        const nd = dx * dx + dy * dy + dz * dz;
+        if (nd < mejorND) { mejorND = nd; mejorId = z.id; }
+      }
+    }
+    const peso = mejorND <= 1
+      ? 1
+      : Math.max(0, 1 - (Math.sqrt(mejorND) - 1) / 0.16);
+    _zr[0] = peso > 0 ? mejorId : 0;
+    _zr[1] = peso;
+    return _zr;
+  }
+
   function zoneOfPoint(wx, wy, wz) {
     const axp = Math.abs(wx);
     for (let zi = 0; zi < ZONES.length; zi++) {
@@ -5040,13 +5069,16 @@ try {
         const n = Math.min(mc.geometry.drawRange.count, posAttr.count);
         const cAttr = mc.geometry.getAttribute('clothId');
         const aAttr = mc.geometry.getAttribute('aoV');
+        const wAttr = mc.geometry.getAttribute('zoneW');
         const nAttr = mc.geometry.getAttribute('normal');
         vposCache = new Float32Array(n * 3);
         vertCount = n;
         for (let i = 0; i < n; i++) {
           const vx = posAttr.getX(i), vy = posAttr.getY(i) + 0.95, vz = posAttr.getZ(i);
           vposCache[i * 3] = vx; vposCache[i * 3 + 1] = vy; vposCache[i * 3 + 2] = vz;
-          zAttr.array[i] = zoneOfPoint(vx, vy, vz);
+          const zr = zonaDe(vx, vy, vz);
+          zAttr.array[i] = zr[0];
+          wAttr.array[i] = zr[1];
           // El short: antes una banda recta de 0.610 a 0.852 que cortaba en
           // seco a los lados y se comía el surco del cuádriceps. Ahora sube a
           // la cintura, acorta por delante y el dobladillo cae un poco hacia
@@ -5064,6 +5096,7 @@ try {
         zAttr.needsUpdate = true;
         cAttr.needsUpdate = true;
         aAttr.needsUpdate = true;
+        wAttr.needsUpdate = true;
         if (activeGroup) paintWeight('selW', activeGroup);
         if (loading) loading.style.display = 'none';
         window.__mm3dReady = true;
