@@ -4614,9 +4614,9 @@ try {
   pmrem.dispose();   // ya está horneado: el generador no hace falta más
 
   /* ---- Luces de estudio con rim azul ---- */
-  scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.22));
-  const keyLight = new THREE.DirectionalLight(0xfff2e2, 1.55);
-  keyLight.position.set(2.4, 3.4, 3.2);
+  scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.12));
+  const keyLight = new THREE.DirectionalLight(0xfff2e2, 2.60);
+  keyLight.position.set(2.9, 3.2, 2.4);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(2048, 2048);
   keyLight.shadow.camera.near = 1.0; keyLight.shadow.camera.far = 9;
@@ -4711,20 +4711,22 @@ try {
      ===================================================================== */
   const uPulse = { value: 0 };
   const clayMat = new THREE.MeshPhysicalMaterial({
-    color: 0xc2a893, roughness: 0.52, metalness: 0.0,
-    clearcoat: 0.16, clearcoatRoughness: 0.62, envMapIntensity: 0.95,
+    color: 0xcf9b7d, roughness: 0.52, metalness: 0.0,
+    clearcoat: 0.14, clearcoatRoughness: 0.60, envMapIntensity: 0.50,
     sheen: 0.35, sheenRoughness: 0.75, sheenColor: new THREE.Color(0xffd9c0)
   });
   clayMat.onBeforeCompile = function(shader) {
     shader.uniforms.uPulse = uPulse;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nattribute float selW;\nattribute float hovW;\nattribute float clothId;\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvSelW = selW;\nvHovW = hovW;\nvCloth = clothId;');
+      .replace('#include <common>', '#include <common>\nattribute float selW;\nattribute float hovW;\nattribute float clothId;\nattribute float aoV;\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvSelW = selW;\nvHovW = hovW;\nvCloth = clothId;\nvAO = aoV;\nvMundo = (modelMatrix * vec4(transformed, 1.0)).xyz;');
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nuniform float uPulse;')
-      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.10, 0.12), sel * 0.88);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);\n}')
-      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vec3(1.0, 0.10, 0.05) * (sel * (0.20 + 0.18 * uPulse) + edge * 0.35);\n  totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;\n}')
-      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));');
+      .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;\nuniform float uPulse;')
+      .replace('#include <aomap_fragment>', 'float oclusion = clamp(vAO, 0.0, 1.0);\nreflectedLight.indirectDiffuse *= oclusion;\nreflectedLight.indirectSpecular *= mix(1.0, oclusion, 0.55);\nreflectedLight.directDiffuse *= mix(1.0, oclusion, 0.45);')
+      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.55, 0.30, 0.26), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.10, 0.12), sel * 0.88);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);\n}')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vec3(1.0, 0.10, 0.05) * (sel * (0.20 + 0.18 * uPulse) + edge * 0.35);\n  totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;\n  float borde = 1.0 - abs(dot(normalize(normal), normalize(vViewPosition)));\n  borde = pow(clamp(borde, 0.0, 1.0), 2.6);\n  totalEmissiveRadiance += vec3(0.95, 0.42, 0.30) * borde * 0.30 * clamp(vAO, 0.0, 1.0);\n}')
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));\n{\n  float grano = sin(vMundo.x * 421.0) * sin(vMundo.y * 397.0) * sin(vMundo.z * 383.0);\n  roughnessFactor = clamp(roughnessFactor + grano * 0.09, 0.05, 1.0);\n}')
+      .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{\n  vec3 rel = vec3(\n    sin(vMundo.y * 183.0) + sin(vMundo.z * 149.0),\n    sin(vMundo.z * 171.0) + sin(vMundo.x * 157.0),\n    sin(vMundo.x * 165.0) + sin(vMundo.y * 141.0));\n  vec3 fino = vec3(\n    sin(vMundo.y * 620.0), sin(vMundo.z * 587.0), sin(vMundo.x * 601.0));\n  normal = normalize(normal + rel * 0.010 + fino * 0.004);\n}');
   };
 
   const bodyRoot = new THREE.Group();
@@ -4888,6 +4890,31 @@ try {
   mc.geometry.setAttribute('selW', new THREE.BufferAttribute(selWArr, 1));
   const hovWArr = new Float32Array(MAXPOLY * 3);
   mc.geometry.setAttribute('hovW', new THREE.BufferAttribute(hovWArr, 1));
+  // Oclusión ambiental por vértice. Es lo que faltaba para que esto deje de
+  // parecer plástico: sin ella, el hueco entre dos músculos recibe la misma
+  // luz indirecta que una superficie abierta, y por eso todo salía plano.
+  const aoArr = new Float32Array(MAXPOLY * 3);
+  for (let i = 0; i < aoArr.length; i++) aoArr[i] = 1;
+  mc.geometry.setAttribute('aoV', new THREE.BufferAttribute(aoArr, 1));
+
+  /* Oclusión por marcha corta a lo largo de la normal: en cada paso se
+     compara cuánto se ha avanzado con lo que el SDF dice que hay libre. Si
+     hay menos hueco del que se ha recorrido, es que algo tapa. */
+  function ocluir(px, py, pz, nx, ny, nz) {
+    let oc = 0, peso = 1;
+    for (let k = 1; k <= 6; k++) {
+      const paso = 0.012 * k * k;      // de 1,2 cm a 43: axila, entrepierna,
+      const libre = bodySDF(px + nx * paso,   // bajo el pectoral, bajo el mentón
+                            py + ny * paso, pz + nz * paso);
+      oc += (paso - libre) * peso;
+      peso *= 0.80;
+    }
+    // Medido: una superficie abierta da oc≈0,018 y la entrepierna 0,106. Con
+    // un factor plano el rango salía de 0,96 a 0,77 —invisible—. Se descuenta
+    // el suelo de 0,02 y se expande lo que queda.
+    const v = 1 - 6.5 * (oc > 0.02 ? oc - 0.02 : 0);
+    return v < 0.12 ? 0.12 : (v > 1 ? 1 : v);
+  }
 
   const half = RES / 2;
   const size2 = RES * RES;
@@ -5012,6 +5039,8 @@ try {
         const zAttr = mc.geometry.getAttribute('zoneId');
         const n = Math.min(mc.geometry.drawRange.count, posAttr.count);
         const cAttr = mc.geometry.getAttribute('clothId');
+        const aAttr = mc.geometry.getAttribute('aoV');
+        const nAttr = mc.geometry.getAttribute('normal');
         vposCache = new Float32Array(n * 3);
         vertCount = n;
         for (let i = 0; i < n; i++) {
@@ -5029,9 +5058,12 @@ try {
             cw = Math.max(0, Math.min(1, ft));
           }
           cAttr.array[i] = cw;
+          aAttr.array[i] = ocluir(vx, vy, vz,
+                                  nAttr.getX(i), nAttr.getY(i), nAttr.getZ(i));
         }
         zAttr.needsUpdate = true;
         cAttr.needsUpdate = true;
+        aAttr.needsUpdate = true;
         if (activeGroup) paintWeight('selW', activeGroup);
         if (loading) loading.style.display = 'none';
         window.__mm3dReady = true;
