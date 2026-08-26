@@ -159,12 +159,13 @@
     @media (prefers-reduced-motion: reduce) { .hero-aurora, .hero-scroll { animation: none; } }
 
     /* ===== MUSCLE MAP ===== */
-    #muscle-canvas {
-      width: 100%; height: 540px; border-radius: 16px; display: block; cursor: grab;
+    #vill-hub #muscle-canvas {
+      width: 100%; max-width: 720px; margin: 0 auto; height: 660px;
+      border-radius: 16px; display: block; cursor: grab;
       box-shadow: 0 0 60px rgba(30,80,255,0.10), inset 0 0 120px rgba(10,20,60,0.4);
       background: radial-gradient(ellipse at 50% 35%, #101a3a 0%, #070812 65%, #05060d 100%);
     }
-    @media (max-width: 640px) { #muscle-canvas { height: 440px; } }
+    @media (max-width: 640px) { #muscle-canvas { height: 520px; } }
     #muscle-canvas:active { cursor: grabbing; }
     /* El lienzo ahora se alcanza con el tabulador —flechas para recorrer los
        músculos, Enter para abrir sus ejercicios—, así que el foco tiene que
@@ -4594,9 +4595,9 @@ try {
   const loading = document.getElementById('mm-loading');
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0b0d16, 0.10);
-  const camera = new THREE.PerspectiveCamera(33, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.set(0.5, 1.2, 3.7);
+  scene.fog = new THREE.FogExp2(0x080a12, 0.16);
+  const camera = new THREE.PerspectiveCamera(30, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.set(0.80, 1.16, 4.00);
 
   const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -4605,7 +4606,7 @@ try {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 0.82;
   window.__mm3dStarted = true;
 
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -4613,19 +4614,21 @@ try {
   pmrem.dispose();   // ya está horneado: el generador no hace falta más
 
   /* ---- Luces de estudio con rim azul ---- */
-  scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.35));
-  const keyLight = new THREE.DirectionalLight(0xfff4e8, 1.05);
+  scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.22));
+  const keyLight = new THREE.DirectionalLight(0xfff2e2, 1.55);
   keyLight.position.set(2.4, 3.4, 3.2);
   keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(1024, 1024);
-  keyLight.shadow.camera.near = 0.5; keyLight.shadow.camera.far = 12;
-  keyLight.shadow.camera.left = -2; keyLight.shadow.camera.right = 2;
-  keyLight.shadow.camera.top = 3.2; keyLight.shadow.camera.bottom = -1;
+  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.camera.near = 1.0; keyLight.shadow.camera.far = 9;
+  keyLight.shadow.camera.left = -0.9; keyLight.shadow.camera.right = 0.9;
+  keyLight.shadow.camera.top = 2.1; keyLight.shadow.camera.bottom = -0.2;
+  keyLight.shadow.bias = -0.0006;
+  keyLight.shadow.normalBias = 0.012;
   scene.add(keyLight);
-  const rimL = new THREE.DirectionalLight(0x2f6bff, 1.9);
+  const rimL = new THREE.DirectionalLight(0x4d8bff, 2.6);
   rimL.position.set(-3.4, 1.7, -2.0);
   scene.add(rimL);
-  const rimR = new THREE.DirectionalLight(0x1e4dff, 1.3);
+  const rimR = new THREE.DirectionalLight(0x2f5cff, 1.9);
   rimR.position.set(3.2, 0.9, -2.6);
   scene.add(rimR);
   const fillCyan = new THREE.PointLight(0x05D9E8, 0.3, 8);
@@ -4633,13 +4636,54 @@ try {
   scene.add(fillCyan);
 
   /* ---- Suelo + anillo + partículas ---- */
+  const lSuelo = document.createElement('canvas');
+  lSuelo.width = lSuelo.height = 512;
+  const gs = lSuelo.getContext('2d');
+  const gg = gs.createRadialGradient(256, 256, 10, 256, 256, 254);
+  gg.addColorStop(0.00, '#232b45');
+  gg.addColorStop(0.45, '#121829');
+  gg.addColorStop(1.00, '#05070f');
+  gs.fillStyle = gg; gs.fillRect(0, 0, 512, 512);
+  const texSuelo = new THREE.CanvasTexture(lSuelo);
+  texSuelo.colorSpace = THREE.SRGBColorSpace;
   const ground = new THREE.Mesh(
-    new THREE.CircleGeometry(1.7, 48),
-    new THREE.MeshStandardMaterial({ color: 0x0b0f22, roughness: 0.9, metalness: 0.1 })
+    new THREE.CircleGeometry(2.4, 96),
+    new THREE.MeshStandardMaterial({ map: texSuelo, roughness: 0.72, metalness: 0.14 })
   );
   ground.rotation.x = -Math.PI / 2;
   ground.receiveShadow = true;
   scene.add(ground);
+
+  /* Sombra de contacto. La sombra proyectada sola no bastaba —el cuerpo
+     parecía flotar— así que debajo de los pies va una mancha pintada, que es
+     lo que de verdad asienta una figura sobre el suelo. */
+  const cLienzo = document.createElement('canvas');
+  cLienzo.width = cLienzo.height = 256;
+  const cx2 = cLienzo.getContext('2d');
+  // Charco ancho y suave, y debajo de cada pie una mancha corta y densa:
+  // sin la segunda, la figura seguía sin apoyar.
+  const ancho = cx2.createRadialGradient(128, 128, 6, 128, 128, 126);
+  ancho.addColorStop(0.00, 'rgba(0,0,0,0.62)');
+  ancho.addColorStop(0.40, 'rgba(0,0,0,0.30)');
+  ancho.addColorStop(1.00, 'rgba(0,0,0,0)');
+  cx2.fillStyle = ancho; cx2.fillRect(0, 0, 256, 256);
+  [98, 158].forEach(function(px) {
+    const g2 = cx2.createRadialGradient(px, 132, 2, px, 132, 40);
+    g2.addColorStop(0.00, 'rgba(0,0,0,0.92)');
+    g2.addColorStop(0.55, 'rgba(0,0,0,0.45)');
+    g2.addColorStop(1.00, 'rgba(0,0,0,0)');
+    cx2.fillStyle = g2; cx2.fillRect(px - 44, 88, 88, 88);
+  });
+  const contacto = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.02, 0.70),
+    new THREE.MeshBasicMaterial({
+      map: new THREE.CanvasTexture(cLienzo), transparent: true,
+      depthWrite: false, opacity: 0.95
+    })
+  );
+  contacto.rotation.x = -Math.PI / 2;
+  contacto.position.set(0, 0.005, 0.030);
+  scene.add(contacto);
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(1.05, 1.09, 64),
     new THREE.MeshBasicMaterial({ color: 0x05D9E8, transparent: true, opacity: 0.22, side: THREE.DoubleSide })
@@ -4667,8 +4711,9 @@ try {
      ===================================================================== */
   const uPulse = { value: 0 };
   const clayMat = new THREE.MeshPhysicalMaterial({
-    color: 0xc9ced8, roughness: 0.30, metalness: 0.03,
-    clearcoat: 0.42, clearcoatRoughness: 0.42, envMapIntensity: 0.8
+    color: 0xc2a893, roughness: 0.52, metalness: 0.0,
+    clearcoat: 0.16, clearcoatRoughness: 0.62, envMapIntensity: 0.95,
+    sheen: 0.35, sheenRoughness: 0.75, sheenColor: new THREE.Color(0xffd9c0)
   });
   clayMat.onBeforeCompile = function(shader) {
     shader.uniforms.uPulse = uPulse;
@@ -4677,7 +4722,7 @@ try {
       .replace('#include <begin_vertex>', '#include <begin_vertex>\nvSelW = selW;\nvHovW = hovW;\nvCloth = clothId;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nuniform float uPulse;')
-      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.078, 0.078, 0.095), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.10, 0.12), sel * 0.88);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);\n}')
+      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.92, 0.10, 0.12), sel * 0.88);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);\n}')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vec3(1.0, 0.10, 0.05) * (sel * (0.20 + 0.18 * uPulse) + edge * 0.35);\n  totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;\n}')
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));');
   };
@@ -4734,7 +4779,7 @@ try {
     { a: [0.188,  1.372, 0.052], b: [0.222, 1.334, 0.038], r: 0.0080, m: 1 }, // surco deltoides-brazo
     { a: [0.096,  1.000, 0.098], b: [0.126, 1.090, 0.056], r: 0.0080, m: 1 }, // V del oblicuo
     { a: [0,      1.030, -0.108], b: [0,    1.370, -0.104], r: 0.0090, m: 0 }, // surco espinal
-    { a: [0.092,  0.552, 0.088], b: [0.092, 0.716, 0.082], r: 0.0080, m: 1 }, // línea del cuádriceps
+    { a: [0.092,  0.520, 0.090], b: [0.092, 0.672, 0.084], r: 0.0080, m: 1 }, // línea del cuádriceps
     { a: [0.244,  1.258, 0.006], b: [0.256, 1.348, 0.002], r: 0.0075, m: 1 }  // separación bíceps-tríceps
   ];
 
@@ -4753,6 +4798,20 @@ try {
     d = smin(d, sdCap(px, py, pz, 0, 1.480, 0.004, 0, 1.575, 0.010, 0.050), 0.045);
     let hd = sdEll(px, py, pz, 0, 1.700, 0.010, 0.104, 0.132, 0.112);
     hd = smin(hd, sdEll(px, py, pz, 0, 1.615, 0.042, 0.074, 0.056, 0.078), 0.04);
+    // Arco de las cejas
+    hd = smin(hd, sdCap(px, py, pz, -0.052, 1.726, 0.086, 0.052, 1.726, 0.086, 0.020), 0.030);
+    // Nariz: caballete y punta
+    hd = smin(hd, sdCap(px, py, pz, 0, 1.712, 0.098, 0, 1.664, 0.112, 0.013), 0.022);
+    // Pómulos
+    hd = smin(hd, sdEll(ax, py, pz, 0.054, 1.664, 0.078, 0.028, 0.024, 0.030), 0.030);
+    // Mentón
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.588, 0.062, 0.030, 0.026, 0.030), 0.028);
+    // Orejas
+    hd = smin(hd, sdEll(ax, py, pz, 0.100, 1.696, -0.002, 0.014, 0.032, 0.022), 0.018);
+    // Cuencas de los ojos, hundidas
+    hd = smax(hd, -sdEll(ax, py, pz, 0.040, 1.702, 0.104, 0.023, 0.014, 0.016), 0.020);
+    // La boca, apenas una línea
+    hd = smax(hd, -sdCap(px, py, pz, -0.022, 1.622, 0.104, 0.022, 1.622, 0.104, 0.006), 0.012);
     d = smin(d, hd, 0.04);
     // Esternón: hunde el centro del pecho para que los pectorales no se fundan en una teta única
     d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.104, 0, 1.362, 0.098, 0.013), 0.045);
@@ -4767,7 +4826,10 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.264, 1.168, 0.008, 0.040, 0.044, 0.040), 0.05);  // codo
     d = smin(d, sdRC(ax, py, pz, 0.264, 1.158, 0.012, 0.272, 0.940, 0.044, 0.044, 0.036), 0.045);
     d = smin(d, sdEll(ax, py, pz, 0.266, 1.088, 0.034, 0.031, 0.062, 0.030), 0.03);  // extensores
-    d = smin(d, sdEll(ax, py, pz, 0.274, 0.872, 0.060, 0.034, 0.064, 0.046), 0.04);  // mano
+    // Mano: palma aplanada (fina de lado, ancha de frente) y pulgar
+    d = smin(d, sdEll(ax, py, pz, 0.276, 0.884, 0.052, 0.022, 0.058, 0.040), 0.035);
+    d = smin(d, sdEll(ax, py, pz, 0.276, 0.826, 0.048, 0.019, 0.030, 0.032), 0.028); // dedos
+    d = smin(d, sdEll(ax, py, pz, 0.252, 0.878, 0.062, 0.014, 0.026, 0.018), 0.024); // pulgar
 
     // Dorsal (ala), PECTORAL alto y plano (ya no cuelga), oblicuo discreto
     d = smin(d, sdEll(ax, py, pz, 0.118, 1.238, -0.048, 0.062, 0.132, 0.052), 0.06);
@@ -4784,7 +4846,12 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.478, 0.014, 0.046, 0.052, 0.046), 0.038);  // rodilla
     d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
     d = smin(d, sdEll(ax, py, pz, 0.099, 0.368, -0.030, 0.040, 0.086, 0.037), 0.03);  // gemelo
-    d = smin(d, sdEll(ax, py, pz, 0.100, 0.047, 0.062, 0.045, 0.044, 0.112), 0.04);  // pie
+    // Pie: tobillo estrecho, talón detrás, planta plana y empeine hacia delante.
+    // Antes era un único elipsoide y el gemelo se fundía con él en forma de gota.
+    d = smin(d, sdEll(ax, py, pz, 0.098, 0.108, -0.004, 0.030, 0.034, 0.032), 0.030); // tobillo
+    d = smin(d, sdEll(ax, py, pz, 0.098, 0.044, -0.036, 0.034, 0.040, 0.036), 0.030); // talón
+    d = smin(d, sdEll(ax, py, pz, 0.101, 0.034, 0.038, 0.038, 0.030, 0.088), 0.028); // planta
+    d = smin(d, sdEll(ax, py, pz, 0.101, 0.026, 0.104, 0.034, 0.020, 0.040), 0.024); // dedos
 
     // Entrepierna: sustraer una cuña vertical para separar los muslos limpiamente
     d = smax(d, -sdCap(px, py, pz, 0, 0.560, -0.030, 0, 0.760, -0.010, 0.030), 0.05);
@@ -4801,8 +4868,10 @@ try {
 
   /* ---- Voxelizar + triangulizar (resolución alta para que los surcos se vean) ---- */
   const isMobile = Math.min(window.innerWidth, window.innerHeight) < 700;
-  const RES = isMobile ? 96 : 128;
-  const MAXPOLY = isMobile ? 250000 : 400000;
+  // 160 daba una malla algo más fina y costaba casi el doble de espera: el
+  // detalle que se gana no compensa diez segundos mirando un cartel.
+  const RES = isMobile ? 100 : 144;
+  const MAXPOLY = isMobile ? 280000 : 520000;
   const mc = new MarchingCubes(RES, clayMat, false, false, MAXPOLY);
   mc.isolation = 0;
   mc.position.set(0, 0.95, 0);
@@ -4949,9 +5018,14 @@ try {
           const vx = posAttr.getX(i), vy = posAttr.getY(i) + 0.95, vz = posAttr.getZ(i);
           vposCache[i * 3] = vx; vposCache[i * 3 + 1] = vy; vposCache[i * 3 + 2] = vz;
           zAttr.array[i] = zoneOfPoint(vx, vy, vz);
+          // El short: antes una banda recta de 0.610 a 0.852 que cortaba en
+          // seco a los lados y se comía el surco del cuádriceps. Ahora sube a
+          // la cintura, acorta por delante y el dobladillo cae un poco hacia
+          // fuera, como cae una prenda de verdad.
           let cw = 0;
-          if (Math.abs(vx) < 0.21) {
-            const ft = Math.min((vy - 0.610) / 0.014, (0.852 - vy) / 0.014);
+          if (Math.abs(vx) < 0.20) {
+            const dobladillo = 0.694 + Math.abs(vx) * 0.16 - Math.max(0, vz) * 0.05;
+            const ft = Math.min((vy - dobladillo) / 0.012, (0.868 - vy) / 0.010);
             cw = Math.max(0, Math.min(1, ft));
           }
           cAttr.array[i] = cw;
@@ -5004,10 +5078,10 @@ try {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.06;
-  controls.minDistance = 2.0;
-  controls.maxDistance = 7.0;
+  controls.minDistance = 1.4;
+  controls.maxDistance = 5.2;
   controls.maxPolarAngle = Math.PI * 0.62;
-  controls.target.set(0, 1.0, 0);
+  controls.target.set(0, 0.94, 0);
   controls.autoRotate = !REDUCIDO;
   controls.autoRotateSpeed = 0.9;
 
