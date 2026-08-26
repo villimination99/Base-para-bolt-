@@ -4723,7 +4723,7 @@ try {
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', '#include <common>\nvarying float vSelW;\nvarying float vHovW;\nvarying float vCloth;\nvarying float vAO;\nvarying vec3 vMundo;\nvarying vec3 vTinte;\nvarying float vZonaOn;\nuniform float uPulse;')
       .replace('#include <aomap_fragment>', 'float oclusion = clamp(vAO, 0.0, 1.0);\nreflectedLight.indirectDiffuse *= oclusion;\nreflectedLight.indirectSpecular *= mix(1.0, oclusion, 0.55);\nreflectedLight.directDiffuse *= mix(1.0, oclusion, 0.45);')
-      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.55, 0.30, 0.26), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float haySel = step(0.01, uPulse);\n  float atenua = mix(1.0, 0.22, haySel * (1.0 - sel));\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte, vZonaOn * 0.80 * atenua);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.30, sel * 0.80);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.15, hov * 0.35);\n}')
+      .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.55, 0.30, 0.26), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.043, 0.048, 0.068), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float haySel = step(0.01, uPulse);\n  float atenua = mix(1.0, 0.22, haySel * (1.0 - sel));\n  float bajoTela = 1.0 - clamp(vCloth, 0.0, 1.0) * 0.62;\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte, vZonaOn * 0.80 * atenua * bajoTela);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.30, sel * 0.80);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.15, hov * 0.35);\n}')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vTinte * (sel * (0.30 + 0.26 * uPulse) + edge * 0.45);\n  totalEmissiveRadiance += vTinte * hov * 0.16;\n  float borde = 1.0 - abs(dot(normalize(normal), normalize(vViewPosition)));\n  borde = pow(clamp(borde, 0.0, 1.0), 2.6);\n  totalEmissiveRadiance += vec3(0.95, 0.42, 0.30) * borde * 0.30 * clamp(vAO, 0.0, 1.0);\n}')
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));\n{\n  float grano = sin(vMundo.x * 421.0) * sin(vMundo.y * 397.0) * sin(vMundo.z * 383.0);\n  roughnessFactor = clamp(roughnessFactor + grano * 0.09, 0.05, 1.0);\n}')
       .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{\n  vec3 rel = vec3(\n    sin(vMundo.y * 183.0) + sin(vMundo.z * 149.0),\n    sin(vMundo.z * 171.0) + sin(vMundo.x * 157.0),\n    sin(vMundo.x * 165.0) + sin(vMundo.y * 141.0));\n  vec3 fino = vec3(\n    sin(vMundo.y * 620.0), sin(vMundo.z * 587.0), sin(vMundo.x * 601.0));\n  normal = normalize(normal + rel * 0.010 + fino * 0.004);\n}');
@@ -4731,6 +4731,10 @@ try {
 
   const bodyRoot = new THREE.Group();
   scene.add(bodyRoot);
+  // Se expone el grupo del cuerpo para poder girarlo desde fuera: es lo que
+  // permite renderizar la espalda en una prueba sin depender de los controles.
+  // Solo es una referencia de lectura; nada de la página escribe en ella.
+  window.__mmEscena = bodyRoot;
 
   /* ---- SDF helpers ---- */
   function clamp01(t) { return t < 0 ? 0 : (t > 1 ? 1 : t); }
@@ -4924,16 +4928,25 @@ try {
   field.fill(-1000);
 
   /* ---- ZONAS MUSCULARES (id 1..9): picking invisible + pintado por vértice ---- */
+  /* Cada grupo se describe con uno o varios elipsoides. Antes casi todos
+     eran uno solo, y por eso salían como pegatinas: la espalda era un disco
+     perfecto y el deltoides se cortaba en recto a media altura del brazo.
+     Ahora se encadenan lóbulos que siguen la forma del músculo. */
   const ZONES = [
-    { id: 1, name: 'Pecho',       list: [[ 0.082, 1.318,  0.092, 0.092, 0.070, 0.045, 1]] },
-    { id: 2, name: 'Espalda',     list: [[ 0,     1.300, -0.088, 0.160, 0.160, 0.045, 0], [0.118, 1.238, -0.058, 0.070, 0.140, 0.040, 1]] },
-    { id: 3, name: 'Hombros',     list: [[ 0.232, 1.418,  0,     0.082, 0.086, 0.082, 1]] },
-    { id: 4, name: 'Biceps',      list: [[ 0.248, 1.322,  0.042, 0.044, 0.080, 0.042, 1]] },
-    { id: 5, name: 'Triceps',     list: [[ 0.254, 1.305, -0.044, 0.044, 0.090, 0.044, 1]] },
+    { id: 1, name: 'Pecho',       list: [[ 0.078, 1.320,  0.094, 0.098, 0.072, 0.048, 1],
+                                         [ 0.136, 1.344,  0.060, 0.050, 0.052, 0.046, 1]] },
+    { id: 2, name: 'Espalda',     list: [[ 0,     1.404, -0.062, 0.128, 0.070, 0.052, 0],   // trapecio
+                                         [ 0.106, 1.276, -0.062, 0.078, 0.126, 0.050, 1],  // dorsal, ancho arriba
+                                         [ 0.070, 1.150, -0.062, 0.058, 0.082, 0.046, 1],  // y afilado abajo
+                                         [ 0,     1.150, -0.086, 0.052, 0.118, 0.044, 0]] },// lumbares
+    { id: 3, name: 'Hombros',     list: [[ 0.232, 1.418,  0,     0.084, 0.084, 0.084, 1],
+                                         [ 0.252, 1.366, -0.002, 0.050, 0.044, 0.050, 1]] },
+    { id: 4, name: 'Biceps',      list: [[ 0.250, 1.286,  0.048, 0.050, 0.104, 0.048, 1]] },
+    { id: 5, name: 'Triceps',     list: [[ 0.258, 1.274, -0.044, 0.052, 0.112, 0.050, 1]] },
     { id: 6, name: 'Abdominales', list: [[ 0,     1.080,  0.086, 0.094, 0.175, 0.042, 0]] },
-    { id: 7, name: 'Cuadriceps',  list: [[ 0.092, 0.662,  0.048, 0.060, 0.110, 0.044, 1]] },
+    { id: 7, name: 'Cuadriceps',  list: [[ 0.092, 0.640,  0.048, 0.064, 0.132, 0.048, 1]] },
     { id: 8, name: 'Gluteos',     list: [[ 0.074, 0.798, -0.080, 0.082, 0.084, 0.070, 1]] },
-    { id: 9, name: 'Gemelos',     list: [[ 0.098, 0.360, -0.028, 0.052, 0.112, 0.048, 1]] }
+    { id: 9, name: 'Gemelos',     list: [[ 0.099, 0.352, -0.022, 0.056, 0.124, 0.052, 1]] }
   ];
   const NAME2ID = {};
   ZONES.forEach(function(z) { NAME2ID[z.name] = z.id; });
