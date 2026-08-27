@@ -4790,7 +4790,12 @@ try {
     { a: [0.088,  1.286, -0.078], b: [0.104, 1.166, -0.070], r: 0.0070, m: 1 }, // borde del dorsal
     { a: [0.058,  0.856, -0.078], b: [0.104, 0.826, -0.060], r: 0.0070, m: 1 }, // pliegue del glúteo
     { a: [0.092,  0.520, 0.090], b: [0.092, 0.672, 0.084], r: 0.0080, m: 1 }, // línea del cuádriceps
-    { a: [0.244,  1.258, 0.006], b: [0.256, 1.348, 0.002], r: 0.0075, m: 1 }  // separación bíceps-tríceps
+    { a: [0.244,  1.258, 0.006], b: [0.256, 1.348, 0.002], r: 0.0075, m: 1 }, // separación bíceps-tríceps
+    { a: [0.024,  0.876, 0.096], b: [0.104, 0.928, 0.048], r: 0.0075, m: 1 }, // línea inguinal, la «V»
+    { a: [0.020,  1.146, 0.116], b: [0.098, 1.192, 0.078], r: 0.0065, m: 1 }, // reborde costal
+    { a: [0.098,  0.196, -0.036], b: [0.098, 0.100, -0.032], r: 0.0070, m: 1 }, // tendón de Aquiles
+    { a: [0.268,  0.948, 0.052], b: [0.284, 0.944, 0.044], r: 0.0055, m: 1 }, // muñeca
+    { a: [0.020,  1.430, 0.088], b: [0.150, 1.424, 0.036], r: 0.0042, m: 1 }  // bajo la clavícula
   ];
 
   /* ---- ANATOMÍA v5 (proporciones corregidas; pies en y=0, altura ~1.83) ---- */
@@ -4806,6 +4811,12 @@ try {
     d = smin(d, sdEll(px, py, pz, 0, 1.080, 0.082, 0.086, 0.170, 0.038), 0.05);
     // Cuello (más fino) + cabeza + mandíbula
     d = smin(d, sdCap(px, py, pz, 0, 1.480, 0.004, 0, 1.575, 0.010, 0.050), 0.045);
+    // Clavículas. No existían, y son de lo primero que lee el ojo en un torso.
+    d = smin(d, sdCap(ax, py, pz, 0.012, 1.454, 0.082, 0.170, 1.448, 0.028, 0.016), 0.030);
+    // Esternocleidomastoideo: la cuerda que baja de la oreja al esternón
+    d = smin(d, sdCap(ax, py, pz, 0.058, 1.606, -0.016, 0.020, 1.470, 0.058, 0.016), 0.028);
+    // Trapecio en el cuello, detrás
+    d = smin(d, sdEll(px, py, pz, 0, 1.540, -0.052, 0.058, 0.052, 0.028), 0.040);
     /* Cabeza de maniquí anatómico. Llevaba cuencas de ojos y boca hundidas y
        a tamaño real salían como ranuras oscuras: inquietante y peor que nada.
        Una cara a medio esculpir se lee peor que ninguna, y las figuras de
@@ -4861,7 +4872,13 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.270, 1.246,  0.004, 0.022, 0.046, 0.030), 0.030);
     d = smin(d, sdEll(ax, py, pz, 0.264, 1.168, 0.008, 0.040, 0.044, 0.040), 0.05);  // codo
     d = smin(d, sdRC(ax, py, pz, 0.264, 1.158, 0.012, 0.272, 0.940, 0.044, 0.044, 0.036), 0.045);
-    d = smin(d, sdEll(ax, py, pz, 0.266, 1.088, 0.034, 0.031, 0.062, 0.030), 0.03);  // extensores
+    // Antebrazo. Era un cono liso: ahora braquiorradial, extensores y
+    // flexores, que es lo que le da el vientre alto y la muñeca fina.
+    d = smin(d, sdCap(ax, py, pz, 0.262, 1.148, 0.038, 0.278, 1.006, 0.056, 0.024), 0.030);
+    d = smin(d, sdEll(ax, py, pz, 0.286, 1.076, 0.016, 0.024, 0.072, 0.032), 0.028); // extensores
+    d = smin(d, sdEll(ax, py, pz, 0.250, 1.062, 0.048, 0.023, 0.070, 0.028), 0.028); // flexores
+    // Nudillos
+    d = smin(d, sdCap(ax, py, pz, 0.262, 0.848, 0.060, 0.292, 0.846, 0.050, 0.013), 0.020);
     // Mano: palma aplanada (fina de lado, ancha de frente) y pulgar
     d = smin(d, sdEll(ax, py, pz, 0.276, 0.884, 0.052, 0.022, 0.058, 0.040), 0.035);
     d = smin(d, sdEll(ax, py, pz, 0.276, 0.826, 0.048, 0.019, 0.030, 0.032), 0.028); // dedos
@@ -4903,11 +4920,18 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.066, 0.640, -0.048, 0.026, 0.100, 0.032), 0.036);
     d = smin(d, sdEll(ax, py, pz, 0.116, 0.640, -0.044, 0.028, 0.098, 0.032), 0.036);
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.478, 0.014, 0.046, 0.052, 0.046), 0.038);  // rodilla
+    // Rótula
+    d = smin(d, sdEll(ax, py, pz, 0.096, 0.474, 0.050, 0.028, 0.032, 0.018), 0.026);
+    // Aductores: el muslo por dentro también era liso
+    d = smin(d, sdEll(ax, py, pz, 0.044, 0.686, 0.006, 0.030, 0.098, 0.044), 0.038);
     d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
     // Gemelos: dos cabezas, la interna más baja, y el sóleo debajo
     d = smin(d, sdEll(ax, py, pz, 0.082, 0.382, -0.032, 0.026, 0.072, 0.032), 0.024);
     d = smin(d, sdEll(ax, py, pz, 0.116, 0.396, -0.030, 0.026, 0.064, 0.030), 0.024);
     d = smin(d, sdEll(ax, py, pz, 0.099, 0.300, -0.026, 0.036, 0.062, 0.032), 0.032);
+    // Tibial anterior, y la cresta de la tibia a su lado
+    d = smin(d, sdEll(ax, py, pz, 0.082, 0.352, 0.028, 0.020, 0.098, 0.026), 0.026);
+    d = smin(d, sdCap(ax, py, pz, 0.104, 0.424, 0.036, 0.100, 0.180, 0.028, 0.009), 0.022);
     // Pie: tobillo estrecho, talón detrás, planta plana y empeine hacia delante.
     // Antes era un único elipsoide y el gemelo se fundía con él en forma de gota.
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.108, -0.004, 0.030, 0.034, 0.032), 0.030); // tobillo
@@ -4932,8 +4956,10 @@ try {
   const isMobile = Math.min(window.innerWidth, window.innerHeight) < 700;
   // 160 daba una malla algo más fina y costaba casi el doble de espera: el
   // detalle que se gana no compensa diez segundos mirando un cartel.
-  const RES = isMobile ? 100 : 144;
-  const MAXPOLY = isMobile ? 280000 : 520000;
+  // Al esculpir los vientres musculares las formas se hicieron más finas y a
+  // 144 se veían las facetas en antebrazo y oblicuos. 168 las cierra.
+  const RES = isMobile ? 112 : 168;
+  const MAXPOLY = isMobile ? 330000 : 700000;
   const mc = new MarchingCubes(RES, clayMat, false, false, MAXPOLY);
   mc.isolation = 0;
   mc.position.set(0, 0.95, 0);
