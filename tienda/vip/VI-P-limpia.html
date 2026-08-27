@@ -4786,6 +4786,9 @@ try {
     { a: [0.188,  1.372, 0.052], b: [0.222, 1.334, 0.038], r: 0.0080, m: 1 }, // surco deltoides-brazo
     { a: [0.096,  1.000, 0.098], b: [0.126, 1.090, 0.056], r: 0.0080, m: 1 }, // V del oblicuo
     { a: [0,      1.030, -0.108], b: [0,    1.370, -0.104], r: 0.0090, m: 0 }, // surco espinal
+    { a: [0.058,  1.392, -0.082], b: [0.156, 1.352, -0.052], r: 0.0075, m: 1 }, // espina de la escápula
+    { a: [0.088,  1.286, -0.078], b: [0.104, 1.166, -0.070], r: 0.0070, m: 1 }, // borde del dorsal
+    { a: [0.058,  0.856, -0.078], b: [0.104, 0.826, -0.060], r: 0.0070, m: 1 }, // pliegue del glúteo
     { a: [0.092,  0.520, 0.090], b: [0.092, 0.672, 0.084], r: 0.0080, m: 1 }, // línea del cuádriceps
     { a: [0.244,  1.258, 0.006], b: [0.256, 1.348, 0.002], r: 0.0075, m: 1 }  // separación bíceps-tríceps
   ];
@@ -4828,6 +4831,13 @@ try {
     // Trapecio (bajo, en pendiente) y deltoides (compacto, encaja en el hombro)
     // Trapecio superior, en pendiente del cuello al acromion
     d = smin(d, sdCap(ax, py, pz, 0.035, 1.490, -0.010, 0.148, 1.438, -0.006, 0.032), 0.055);
+    // Trapecio medio e inferior: el rombo que baja entre las escápulas. La
+    // espalda era lisa porque solo existía la porción alta.
+    d = smin(d, sdEll(px, py, pz, 0, 1.386, -0.086, 0.116, 0.056, 0.034), 0.040);
+    d = smin(d, sdEll(px, py, pz, 0, 1.286, -0.092, 0.062, 0.078, 0.030), 0.045);
+    // Infraespinoso y redondo mayor, sobre la escápula
+    d = smin(d, sdEll(ax, py, pz, 0.124, 1.356, -0.070, 0.052, 0.048, 0.030), 0.032);
+    d = smin(d, sdEll(ax, py, pz, 0.150, 1.300, -0.058, 0.038, 0.034, 0.030), 0.028);
     // Deltoides: tres cabezas, no una bola. Se mezclan poco entre sí para que
     // el hombro tenga las tres facetas que se ven en una figura de anatomía.
     // Las tres juntas tienen que dar la misma anchura de hombro que daba la
@@ -4858,8 +4868,12 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.252, 0.878, 0.062, 0.014, 0.026, 0.018), 0.024); // pulgar
 
     // Dorsal (ala), PECTORAL alto y plano (ya no cuelga), oblicuo discreto
-    // Dorsal ancho: el ala que va de la axila a la cintura
-    d = smin(d, sdEll(ax, py, pz, 0.118, 1.238, -0.048, 0.062, 0.132, 0.052), 0.055);
+    // Dorsal ancho: el ala de la axila a la cintura. Con mezcla ceñida el
+    // borde exterior se marca en vez de fundirse con el costado.
+    d = smin(d, sdEll(ax, py, pz, 0.122, 1.256, -0.050, 0.058, 0.122, 0.050), 0.034);
+    d = smin(d, sdEll(ax, py, pz, 0.086, 1.126, -0.070, 0.044, 0.070, 0.038), 0.038);
+    // Erectores espinales: las dos columnas a los lados del surco
+    d = smin(d, sdEll(ax, py, pz, 0.034, 1.120, -0.088, 0.026, 0.104, 0.030), 0.030);
     // Pectoral en dos porciones: la clavicular arriba y la esternal, más
     // gruesa, debajo. Antes era un solo elipsoide plano.
     d = smin(d, sdEll(ax, py, pz, 0.074, 1.352,  0.084, 0.074, 0.034, 0.030), 0.040);
@@ -4876,7 +4890,9 @@ try {
     // Pelvis estrecha (nada de bulto): la cadera se estrecha antes del muslo
     d = smin(d, sdEll(px, py, pz, 0, 0.800, -0.006, 0.118, 0.070, 0.086), 0.06);
     // Glúteo y pierna: muslo → rodilla → gemelo → pie
-    d = smin(d, sdEll(ax, py, pz, 0.074, 0.798, -0.078, 0.072, 0.078, 0.062), 0.05);
+    // Glúteo mayor, con el medio arriba y afuera: era un solo bulto plano
+    d = smin(d, sdEll(ax, py, pz, 0.072, 0.788, -0.082, 0.070, 0.074, 0.062), 0.038);
+    d = smin(d, sdEll(ax, py, pz, 0.106, 0.848, -0.052, 0.040, 0.044, 0.044), 0.036);
     d = smin(d, sdRC(ax, py, pz, 0.088, 0.790, 0, 0.098, 0.492, 0.008, 0.084, 0.062), 0.06);
     // Cuádriceps en tres: recto anterior en el centro, vasto externo alto y
     // vasto interno bajando hasta la rodilla, que es su forma de lágrima.
@@ -4975,10 +4991,14 @@ try {
   const ZONES = [
     { id: 1, name: 'Pecho',       list: [[ 0.078, 1.320,  0.094, 0.098, 0.072, 0.048, 1],
                                          [ 0.136, 1.344,  0.060, 0.050, 0.052, 0.046, 1]] },
-    { id: 2, name: 'Espalda',     list: [[ 0,     1.404, -0.062, 0.128, 0.070, 0.052, 0],   // trapecio
-                                         [ 0.106, 1.276, -0.062, 0.078, 0.126, 0.050, 1],  // dorsal, ancho arriba
-                                         [ 0.070, 1.150, -0.062, 0.058, 0.082, 0.046, 1],  // y afilado abajo
-                                         [ 0,     1.150, -0.086, 0.052, 0.118, 0.044, 0]] },// lumbares
+    /* La espalda es un solo grupo, así que sus lóbulos tienen que solaparse:
+       con los bordes justos, entre uno y otro asomaba piel y el color salía
+       a manchas. */
+    { id: 2, name: 'Espalda',     list: [[ 0,     1.392, -0.070, 0.146, 0.090, 0.062, 0],   // trapecio
+                                         [ 0,     1.272, -0.088, 0.086, 0.126, 0.054, 0],  // entre escápulas
+                                         [ 0.104, 1.282, -0.066, 0.096, 0.142, 0.060, 1],  // dorsal, ancho arriba
+                                         [ 0.064, 1.140, -0.072, 0.076, 0.104, 0.054, 1],  // y afilado abajo
+                                         [ 0,     1.128, -0.092, 0.066, 0.124, 0.050, 0]] },// lumbares
     { id: 3, name: 'Hombros',     list: [[ 0.230, 1.416,  0,     0.096, 0.092, 0.092, 1],
                                          [ 0.256, 1.362, -0.002, 0.054, 0.048, 0.054, 1]] },
     { id: 4, name: 'Biceps',      list: [[ 0.250, 1.286,  0.048, 0.050, 0.104, 0.048, 1]] },
