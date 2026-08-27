@@ -4782,7 +4782,7 @@ try {
     { a: [-0.062, 1.168, 0.116], b: [0.062, 1.168, 0.116], r: 0.0080, m: 0 }, // cortes del six-pack
     { a: [-0.062, 1.088, 0.116], b: [0.062, 1.088, 0.116], r: 0.0080, m: 0 },
     { a: [-0.058, 1.008, 0.114], b: [0.058, 1.008, 0.114], r: 0.0080, m: 0 },
-    { a: [0.030,  1.268, 0.104], b: [0.128, 1.288, 0.070], r: 0.0080, m: 1 }, // pliegue bajo el pectoral
+    { a: [0.034,  1.256, 0.108], b: [0.132, 1.276, 0.066], r: 0.0060, m: 1 }, // pliegue bajo el pectoral
     { a: [0.188,  1.372, 0.052], b: [0.222, 1.334, 0.038], r: 0.0080, m: 1 }, // surco deltoides-brazo
     { a: [0.096,  1.000, 0.098], b: [0.126, 1.090, 0.056], r: 0.0080, m: 1 }, // V del oblicuo
     { a: [0,      1.030, -0.108], b: [0,    1.370, -0.104], r: 0.0090, m: 0 }, // surco espinal
@@ -4826,12 +4826,29 @@ try {
     d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.104, 0, 1.362, 0.098, 0.013), 0.045);
 
     // Trapecio (bajo, en pendiente) y deltoides (compacto, encaja en el hombro)
-    d = smin(d, sdCap(ax, py, pz, 0.035, 1.490, -0.010, 0.148, 1.438, -0.006, 0.032), 0.06);
-    d = smin(d, sdEll(ax, py, pz, 0.232, 1.418, -0.002, 0.072, 0.078, 0.072), 0.065);
+    // Trapecio superior, en pendiente del cuello al acromion
+    d = smin(d, sdCap(ax, py, pz, 0.035, 1.490, -0.010, 0.148, 1.438, -0.006, 0.032), 0.055);
+    // Deltoides: tres cabezas, no una bola. Se mezclan poco entre sí para que
+    // el hombro tenga las tres facetas que se ven en una figura de anatomía.
+    // Las tres juntas tienen que dar la misma anchura de hombro que daba la
+    // bola única que sustituyen (borde exterior en 0,304), o la silueta se
+    // estrecha y el cuerpo pierde porte.
+    // Ceñir la mezcla adelgaza: la unión deja de abultar, así que con el mismo
+    // radio el hombro sale más estrecho que con la bola única de antes. Se
+    // compensa agrandando, y se conservan las tres facetas.
+    d = smin(d, sdEll(ax, py, pz, 0.206, 1.408,  0.054, 0.068, 0.074, 0.050), 0.038); // anterior
+    d = smin(d, sdEll(ax, py, pz, 0.246, 1.416,  0.000, 0.068, 0.086, 0.068), 0.038); // lateral
+    d = smin(d, sdEll(ax, py, pz, 0.210, 1.402, -0.056, 0.066, 0.072, 0.050), 0.038); // posterior
     // Brazo pegado al torso, húmero afinado hacia el codo
     d = smin(d, sdRC(ax, py, pz, 0.228, 1.398, 0, 0.262, 1.178, 0.010, 0.054, 0.047), 0.06);
-    d = smin(d, sdEll(ax, py, pz, 0.248, 1.322, 0.040, 0.036, 0.070, 0.034), 0.032); // bíceps
-    d = smin(d, sdEll(ax, py, pz, 0.254, 1.305, -0.042, 0.036, 0.080, 0.036), 0.032); // tríceps
+    // Bíceps: vientre corto y grueso, con el pico hacia el codo
+    d = smin(d, sdEll(ax, py, pz, 0.246, 1.316,  0.046, 0.034, 0.062, 0.032), 0.026);
+    d = smin(d, sdEll(ax, py, pz, 0.250, 1.252,  0.040, 0.026, 0.044, 0.026), 0.026);
+    // Tríceps: cabeza larga arriba y herradura hacia el codo
+    d = smin(d, sdEll(ax, py, pz, 0.252, 1.330, -0.048, 0.032, 0.066, 0.032), 0.026);
+    d = smin(d, sdEll(ax, py, pz, 0.256, 1.246, -0.044, 0.034, 0.048, 0.032), 0.026);
+    // Braquial, que asoma entre bíceps y tríceps
+    d = smin(d, sdEll(ax, py, pz, 0.270, 1.246,  0.004, 0.022, 0.046, 0.030), 0.030);
     d = smin(d, sdEll(ax, py, pz, 0.264, 1.168, 0.008, 0.040, 0.044, 0.040), 0.05);  // codo
     d = smin(d, sdRC(ax, py, pz, 0.264, 1.158, 0.012, 0.272, 0.940, 0.044, 0.044, 0.036), 0.045);
     d = smin(d, sdEll(ax, py, pz, 0.266, 1.088, 0.034, 0.031, 0.062, 0.030), 0.03);  // extensores
@@ -4841,20 +4858,40 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.252, 0.878, 0.062, 0.014, 0.026, 0.018), 0.024); // pulgar
 
     // Dorsal (ala), PECTORAL alto y plano (ya no cuelga), oblicuo discreto
-    d = smin(d, sdEll(ax, py, pz, 0.118, 1.238, -0.048, 0.062, 0.132, 0.052), 0.06);
-    d = smin(d, sdEll(ax, py, pz, 0.082, 1.318, 0.088, 0.080, 0.058, 0.030), 0.045);
-    d = smin(d, sdEll(ax, py, pz, 0.108, 1.052, 0.040, 0.024, 0.072, 0.024), 0.055);
+    // Dorsal ancho: el ala que va de la axila a la cintura
+    d = smin(d, sdEll(ax, py, pz, 0.118, 1.238, -0.048, 0.062, 0.132, 0.052), 0.055);
+    // Pectoral en dos porciones: la clavicular arriba y la esternal, más
+    // gruesa, debajo. Antes era un solo elipsoide plano.
+    d = smin(d, sdEll(ax, py, pz, 0.074, 1.352,  0.084, 0.074, 0.034, 0.030), 0.040);
+    d = smin(d, sdEll(ax, py, pz, 0.084, 1.302,  0.088, 0.082, 0.050, 0.034), 0.042);
+    d = smin(d, sdEll(ax, py, pz, 0.128, 1.322,  0.058, 0.044, 0.048, 0.034), 0.045);
+    // Serrato: tres digitaciones bajo la axila, que es lo que más delata a
+    // una figura anatómica de verdad
+    d = smin(d, sdEll(ax, py, pz, 0.132, 1.240,  0.058, 0.020, 0.016, 0.026), 0.022);
+    d = smin(d, sdEll(ax, py, pz, 0.136, 1.196,  0.056, 0.020, 0.016, 0.026), 0.022);
+    d = smin(d, sdEll(ax, py, pz, 0.134, 1.152,  0.050, 0.019, 0.015, 0.024), 0.022);
+    // Oblicuo externo, en cuña hacia la cadera
+    d = smin(d, sdEll(ax, py, pz, 0.110, 1.048,  0.044, 0.028, 0.078, 0.030), 0.040);
 
     // Pelvis estrecha (nada de bulto): la cadera se estrecha antes del muslo
     d = smin(d, sdEll(px, py, pz, 0, 0.800, -0.006, 0.118, 0.070, 0.086), 0.06);
     // Glúteo y pierna: muslo → rodilla → gemelo → pie
     d = smin(d, sdEll(ax, py, pz, 0.074, 0.798, -0.078, 0.072, 0.078, 0.062), 0.05);
     d = smin(d, sdRC(ax, py, pz, 0.088, 0.790, 0, 0.098, 0.492, 0.008, 0.084, 0.062), 0.06);
-    d = smin(d, sdEll(ax, py, pz, 0.092, 0.650, 0.046, 0.050, 0.112, 0.036), 0.04);   // cuádriceps
-    d = smin(d, sdEll(ax, py, pz, 0.092, 0.640, -0.042, 0.048, 0.106, 0.038), 0.045); // femoral
+    // Cuádriceps en tres: recto anterior en el centro, vasto externo alto y
+    // vasto interno bajando hasta la rodilla, que es su forma de lágrima.
+    d = smin(d, sdEll(ax, py, pz, 0.086, 0.660,  0.056, 0.030, 0.104, 0.032), 0.028);
+    d = smin(d, sdEll(ax, py, pz, 0.126, 0.678,  0.026, 0.030, 0.092, 0.036), 0.030);
+    d = smin(d, sdEll(ax, py, pz, 0.062, 0.560,  0.046, 0.026, 0.052, 0.030), 0.028);
+    // Isquiotibiales, en dos cuerdas
+    d = smin(d, sdEll(ax, py, pz, 0.066, 0.640, -0.048, 0.026, 0.100, 0.032), 0.036);
+    d = smin(d, sdEll(ax, py, pz, 0.116, 0.640, -0.044, 0.028, 0.098, 0.032), 0.036);
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.478, 0.014, 0.046, 0.052, 0.046), 0.038);  // rodilla
     d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
-    d = smin(d, sdEll(ax, py, pz, 0.099, 0.368, -0.030, 0.040, 0.086, 0.037), 0.03);  // gemelo
+    // Gemelos: dos cabezas, la interna más baja, y el sóleo debajo
+    d = smin(d, sdEll(ax, py, pz, 0.082, 0.382, -0.032, 0.026, 0.072, 0.032), 0.024);
+    d = smin(d, sdEll(ax, py, pz, 0.116, 0.396, -0.030, 0.026, 0.064, 0.030), 0.024);
+    d = smin(d, sdEll(ax, py, pz, 0.099, 0.300, -0.026, 0.036, 0.062, 0.032), 0.032);
     // Pie: tobillo estrecho, talón detrás, planta plana y empeine hacia delante.
     // Antes era un único elipsoide y el gemelo se fundía con él en forma de gota.
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.108, -0.004, 0.030, 0.034, 0.032), 0.030); // tobillo
@@ -4942,8 +4979,8 @@ try {
                                          [ 0.106, 1.276, -0.062, 0.078, 0.126, 0.050, 1],  // dorsal, ancho arriba
                                          [ 0.070, 1.150, -0.062, 0.058, 0.082, 0.046, 1],  // y afilado abajo
                                          [ 0,     1.150, -0.086, 0.052, 0.118, 0.044, 0]] },// lumbares
-    { id: 3, name: 'Hombros',     list: [[ 0.232, 1.418,  0,     0.084, 0.084, 0.084, 1],
-                                         [ 0.252, 1.366, -0.002, 0.050, 0.044, 0.050, 1]] },
+    { id: 3, name: 'Hombros',     list: [[ 0.230, 1.416,  0,     0.096, 0.092, 0.092, 1],
+                                         [ 0.256, 1.362, -0.002, 0.054, 0.048, 0.054, 1]] },
     { id: 4, name: 'Biceps',      list: [[ 0.250, 1.286,  0.048, 0.050, 0.104, 0.048, 1]] },
     { id: 5, name: 'Triceps',     list: [[ 0.258, 1.274, -0.044, 0.052, 0.112, 0.050, 1]] },
     { id: 6, name: 'Abdominales', list: [[ 0,     1.080,  0.086, 0.094, 0.175, 0.042, 0]] },
