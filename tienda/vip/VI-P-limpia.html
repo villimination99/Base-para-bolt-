@@ -4589,6 +4589,11 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { MarchingCubes } from 'three/addons/objects/MarchingCubes.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 
 try {
   const canvas = document.getElementById('muscle-canvas');
@@ -4596,6 +4601,22 @@ try {
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.FogExp2(0x080a12, 0.16);
+  /* El azul del fondo venía del `background` CSS del lienzo y se veía porque
+     el WebGL se dibujaba transparente. En cuanto hay post-proceso la salida
+     es opaca y lo tapa, así que el degradado entra en la escena, que además
+     es donde debe estar: así responde a la niebla y al acabado como todo lo
+     demás. El CSS se queda como respaldo mientras carga. */
+  const lFondo = document.createElement('canvas');
+  lFondo.width = 32; lFondo.height = 512;
+  const gf = lFondo.getContext('2d');
+  const gradF = gf.createLinearGradient(0, 0, 0, 512);
+  gradF.addColorStop(0.00, '#0f1938');
+  gradF.addColorStop(0.42, '#0a0f22');
+  gradF.addColorStop(1.00, '#05060d');
+  gf.fillStyle = gradF; gf.fillRect(0, 0, 32, 512);
+  const texFondo = new THREE.CanvasTexture(lFondo);
+  texFondo.colorSpace = THREE.SRGBColorSpace;
+  scene.background = texFondo;
   const camera = new THREE.PerspectiveCamera(30, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
   camera.position.set(0.80, 1.16, 4.00);
 
@@ -4828,11 +4849,14 @@ try {
     // Mandíbula y mentón
     hd = smin(hd, sdEll(px, py, pz, 0, 1.618, 0.038, 0.080, 0.058, 0.084), 0.05);
     hd = smin(hd, sdEll(px, py, pz, 0, 1.586, 0.070, 0.032, 0.028, 0.030), 0.032);
-    // Arco superciliar, apenas insinuado
-    hd = smin(hd, sdCap(px, py, pz, -0.048, 1.730, 0.092, 0.048, 1.730, 0.092, 0.017), 0.034);
-    // Nariz. Con una cápsula fina salía una cresta que parecía una cicatriz;
-    // un bulto redondeado se funde con la cara y basta para dar orientación.
-    hd = smin(hd, sdEll(px, py, pz, 0, 1.686, 0.112, 0.019, 0.032, 0.026), 0.030);
+    /* Ni arco superciliar ni nariz saliente. Los dos estaban a 9 cm uno de
+       otro y el smin los fundía en una sola cuña: de frente salía un pico, y
+       los costados sombreados de ese pico se leían como cuencas de ojos. O
+       sea que la cara que se había quitado a propósito volvía hecha de
+       sombra, que es justo lo que el comentario de arriba quería evitar.
+       Queda un caballete mínimo, hundido contra el cráneo: da orientación de
+       frente/espalda y no proyecta sombra que el ojo pueda leer como cara. */
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.678, 0.096, 0.013, 0.024, 0.012), 0.038);
     // Orejas, pegadas al cráneo
     hd = smin(hd, sdEll(ax, py, pz, 0.094, 1.694, -0.010, 0.013, 0.032, 0.021), 0.022);
     d = smin(d, hd, 0.045);
@@ -5305,6 +5329,71 @@ try {
     }
   });
 
+  /* ---- Acabado de imagen ----
+     Lo último que separa un render de una foto no es la geometría: es el
+     acabado. Un velo de luz en los brillos, la viñeta que cierra el encuadre
+     y un grano finísimo que rompe la perfección digital del degradado.
+
+     Va aparte y con su propia red: si el navegador no puede con la cadena de
+     post-proceso, `compositor` se queda en nulo y se dibuja como siempre. El
+     mapa nunca depende de esto para funcionar. En móvil ni se intenta. */
+  const Acabado = {
+    uniforms: {
+      tDiffuse: { value: null },
+      uGrano:   { value: 0.024 },
+      uVineta:  { value: 0.40 },
+      uSemilla: { value: 0 }
+    },
+    vertexShader: [
+      'varying vec2 vUv;',
+      'void main() {',
+      '  vUv = uv;',
+      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+      '}'
+    ].join('\n'),
+    fragmentShader: [
+      'uniform sampler2D tDiffuse;',
+      'uniform float uGrano;',
+      'uniform float uVineta;',
+      'uniform float uSemilla;',
+      'varying vec2 vUv;',
+      'void main() {',
+      '  vec4 c = texture2D(tDiffuse, vUv);',
+      '  vec2 p = vUv - 0.5;',
+      '  float v = smoothstep(0.98, 0.30, length(p));',
+      '  c.rgb *= mix(1.0, v, uVineta);',
+      '  float g = fract(sin(dot(vUv * 997.0 + uSemilla, vec2(12.9898, 78.233)))',
+      '                  * 43758.5453);',
+      '  c.rgb += (g - 0.5) * uGrano;',
+      '  gl_FragColor = c;',
+      '}'
+    ].join('\n')
+  };
+
+  let compositor = null, pasoAcabado = null;
+  if (!isMobile) {
+    try {
+      compositor = new EffectComposer(renderer);
+      compositor.addPass(new RenderPass(scene, camera));
+      /* Umbral por encima de los colores de zona. A 0.86 el amarillo del
+         deltoides ya lo cruzaba y los dos hombros salían brillando como
+         focos: un músculo señalado no emite luz. El umbral tiene que ir por
+         encima del más claro de la paleta, no del gris medio de la piel. */
+      compositor.addPass(new UnrealBloomPass(
+        new THREE.Vector2(canvas.clientWidth, canvas.clientHeight),
+        0.22, 0.55, 0.97));
+      compositor.addPass(new OutputPass());
+      pasoAcabado = new ShaderPass(Acabado);
+      compositor.addPass(pasoAcabado);
+      compositor.setSize(canvas.clientWidth, canvas.clientHeight);
+      compositor.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    } catch (ePost) {
+      console.warn('Post-proceso no disponible:', ePost);
+      compositor = null;
+    }
+  }
+  window.__mm.compositor = compositor;
+
   /* ---- Animación: solo mientras se ve ----
      El bucle corría siempre, también con la pestaña en segundo plano o esta
      sección fuera de la pantalla. En una página con cuatro lienzos eso es
@@ -5326,7 +5415,8 @@ try {
     uPulse.value = activeGroup ? (0.62 + Math.sin(time * 5) * 0.22) : 0;
     if (hoverPend) aplicarHover();
     controls.update();
-    renderer.render(scene, camera);
+    if (pasoAcabado) pasoAcabado.uniforms.uSemilla.value = time * 12.0;
+    if (compositor) compositor.render(); else renderer.render(scene, camera);
     if (!visible()) { cancelAnimationFrame(rafId); rafId = 0; }
   }
   function arrancar() {
@@ -5354,7 +5444,13 @@ try {
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(w, hh, false);   // false: el tamaño en pantalla es del CSS
-    if (!rafId) renderer.render(scene, camera);
+    if (compositor) {
+      compositor.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      compositor.setSize(w, hh);
+    }
+    if (!rafId) {
+      if (compositor) compositor.render(); else renderer.render(scene, camera);
+    }
   }
   window.addEventListener('resize', ajustar);
   if ('ResizeObserver' in window) new ResizeObserver(ajustar).observe(canvas);
