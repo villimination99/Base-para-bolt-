@@ -5123,7 +5123,12 @@ try {
   // detalle que se gana no compensa diez segundos mirando un cartel.
   // Al esculpir los vientres musculares las formas se hicieron más finas y a
   // 144 se veían las facetas en antebrazo y oblicuos. 168 las cierra.
-  const RES = isMobile ? 112 : 168;
+  /* 168 → 200. Medido en el banco: 9,3 s de construcción a 168, 11,1 s a
+     200 y 23,5 s a 232. O sea que 200 cuesta 1,8 s más y da un 42 % más de
+     superficie (los triángulos van con RES²), mientras que 232 más que
+     duplica la espera. El vóxel baja de 12 a 10 mm, que es lo que permite
+     que el sartorio y la cintilla se lean como cuerdas y no como manchas. */
+  const RES = isMobile ? 112 : 200;
   const MAXPOLY = isMobile ? 330000 : 700000;
   const mc = new MarchingCubes(RES, clayMat, false, false, MAXPOLY);
   mc.isolation = 0;
