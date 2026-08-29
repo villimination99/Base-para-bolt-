@@ -4823,7 +4823,7 @@ try {
     { a: [-0.062, 1.168, 0.116], b: [0.062, 1.168, 0.116], r: 0.0080, m: 0 }, // cortes del six-pack
     { a: [-0.062, 1.088, 0.116], b: [0.062, 1.088, 0.116], r: 0.0080, m: 0 },
     { a: [-0.058, 1.008, 0.114], b: [0.058, 1.008, 0.114], r: 0.0080, m: 0 },
-    { a: [0.034,  1.256, 0.108], b: [0.132, 1.276, 0.066], r: 0.0060, m: 1 }, // pliegue bajo el pectoral
+    { a: [0.034,  1.254, 0.124], b: [0.132, 1.276, 0.074], r: 0.0060, m: 1 }, // pliegue bajo el pectoral
     { a: [0.188,  1.372, 0.052], b: [0.222, 1.334, 0.038], r: 0.0080, m: 1 }, // surco deltoides-brazo
     { a: [0.096,  1.000, 0.098], b: [0.126, 1.090, 0.056], r: 0.0080, m: 1 }, // V del oblicuo
     /* Aquí iba el surco espinal, y ya no va ninguno. Sacarlo a la altura de
@@ -4899,7 +4899,10 @@ try {
     hd = smin(hd, sdEll(ax, py, pz, 0.094, 1.694, -0.010, 0.013, 0.032, 0.021), 0.022);
     d = smin(d, hd, 0.045);
     // Esternón: hunde el centro del pecho para que los pectorales no se fundan en una teta única
-    d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.104, 0, 1.362, 0.098, 0.013), 0.045);
+    /* El corte del esternón se adelanta con el pecho. Si se queda donde
+       estaba, los dos pectorales lo rebasan y vuelven a fundirse en una
+       sola masa, que es justo lo que este corte existe para evitar. */
+    d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.120, 0, 1.362, 0.112, 0.014), 0.045);
 
     // Trapecio (bajo, en pendiente) y deltoides (compacto, encaja en el hombro)
     // Trapecio superior, en pendiente del cuello al acromion
@@ -4991,9 +4994,14 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.036, 1.010, -0.088, 0.030, 0.078, 0.033), 0.028);
     // Pectoral en dos porciones: la clavicular arriba y la esternal, más
     // gruesa, debajo. Antes era un solo elipsoide plano.
-    d = smin(d, sdEll(ax, py, pz, 0.074, 1.352,  0.084, 0.074, 0.034, 0.030), 0.040);
-    d = smin(d, sdEll(ax, py, pz, 0.084, 1.302,  0.088, 0.082, 0.050, 0.034), 0.042);
-    d = smin(d, sdEll(ax, py, pz, 0.128, 1.322,  0.058, 0.044, 0.048, 0.034), 0.045);
+    /* De perfil el abdomen sobresalía MÁS que el pecho, que es al revés de
+       como está hecho un torso: la placa abdominal llegaba a z=0.120 y el
+       pectoral a 0.118. De frente no se notaba nada; de lado el cuerpo salía
+       plano por delante y por eso parecía una tabla. El pecho pasa a 0.138,
+       unos 18 mm por delante de la pared abdominal. */
+    d = smin(d, sdEll(ax, py, pz, 0.074, 1.352,  0.094, 0.074, 0.034, 0.032), 0.040);
+    d = smin(d, sdEll(ax, py, pz, 0.084, 1.302,  0.100, 0.082, 0.050, 0.038), 0.042);
+    d = smin(d, sdEll(ax, py, pz, 0.128, 1.322,  0.066, 0.044, 0.048, 0.036), 0.045);
     // Serrato: tres digitaciones bajo la axila, que es lo que más delata a
     // una figura anatómica de verdad
     d = smin(d, sdEll(ax, py, pz, 0.132, 1.240,  0.058, 0.020, 0.016, 0.026), 0.022);
@@ -5170,6 +5178,37 @@ try {
                                          [ 0.116, 0.404, -0.030, 0.042, 0.084, 0.044, 1],  // externo, más alto
                                          [ 0.100, 0.286, -0.028, 0.046, 0.078, 0.046, 1]] }// sóleo
   ];
+  /* Ancho de la caída del peso de zona, en fracción del radio del lóbulo.
+     Estaba en 0.16: un borde casi duro. */
+  const CAIDA = 0.22;
+  /* Peso de un lóbulo suelto. */
+  function pesoLobulo(e, x, y, z) {
+    const px = e[6] ? Math.abs(x) : x;
+    const dx = (px - e[0]) / e[3], dy = (y - e[1]) / e[4], dz = (z - e[2]) / e[5];
+    const nd = dx * dx + dy * dy + dz * dz;
+    if (nd <= 1) return 1;
+    const w = 1 - (Math.sqrt(nd) - 1) / CAIDA;
+    return w > 0 ? w : 0;
+  }
+  /* Unión suave de los lóbulos de un grupo: 1 - Π(1 - wj).
+     Antes se cogía el lóbulo MÁS CERCANO y se usaba solo su peso. Con eso el
+     borde del grupo es, por construcción, la unión de los contornos de cada
+     elipsoide: donde dos se cruzan queda un pico, y a contraluz el gemelo y
+     el cuádriceps salían como una ristra de bollos. Combinando los pesos en
+     vez de elegir uno, dos lóbulos que se solapan a medias suman en lugar de
+     competir, y el contorno del grupo se redondea solo. */
+  function pesoGrupo(L, x, y, z) {
+    let fuera = 1;
+    for (let j = 0; j < L.length; j++) {
+      const w = pesoLobulo(L[j], x, y, z);
+      if (w > 0) {
+        fuera *= (1 - w);
+        if (fuera <= 0.0001) return 1;
+      }
+    }
+    return 1 - fuera;
+  }
+
   const NAME2ID = {};
   ZONES.forEach(function(z) { NAME2ID[z.name] = z.id; });
   const CAN_HOVER = window.matchMedia && window.matchMedia('(hover: hover)').matches;
@@ -5190,16 +5229,7 @@ try {
     }
     const L = zone.list;
     for (let i = 0; i < vertCount; i++) {
-      const x = vposCache[i * 3], y = vposCache[i * 3 + 1], z = vposCache[i * 3 + 2];
-      let best = 1e9;
-      for (let j = 0; j < L.length; j++) {
-        const e = L[j];
-        const px = e[6] ? Math.abs(x) : x;
-        const dx = (px - e[0]) / e[3], dy = (y - e[1]) / e[4], dz = (z - e[2]) / e[5];
-        const nd = dx * dx + dy * dy + dz * dz;
-        if (nd < best) best = nd;
-      }
-      arr[i] = best <= 1.0 ? 1.0 : Math.max(0, 1 - (Math.sqrt(best) - 1) / 0.16);
+      arr[i] = pesoGrupo(L, vposCache[i * 3], vposCache[i * 3 + 1], vposCache[i * 3 + 2]);
     }
     attr.needsUpdate = true;
   }
@@ -5247,9 +5277,14 @@ try {
         if (nd < mejorND) { mejorND = nd; mejorId = z.id; }
       }
     }
-    const peso = mejorND <= 1
-      ? 1
-      : Math.max(0, 1 - (Math.sqrt(mejorND) - 1) / 0.16);
+    /* Qué grupo, lo decide el lóbulo más cercano. Cuánto pesa, el grupo
+       entero: si se usara solo el lóbulo ganador volvería el festoneado. */
+    let peso = 0;
+    if (mejorId) {
+      for (let zi = 0; zi < ZONES.length; zi++) {
+        if (ZONES[zi].id === mejorId) { peso = pesoGrupo(ZONES[zi].list, wx, wy, wz); break; }
+      }
+    }
     _zr[0] = peso > 0 ? mejorId : 0;
     _zr[1] = peso;
     return _zr;
