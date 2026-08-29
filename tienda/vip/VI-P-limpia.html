@@ -4954,6 +4954,10 @@ try {
     // Antebrazo. Era un cono liso: ahora braquiorradial, extensores y
     // flexores, que es lo que le da el vientre alto y la muñeca fina.
     d = smin(d, sdCap(ax, py, pz, 0.207, 1.148, 0.038, 0.223, 1.006, 0.056, 0.024), 0.030);
+    /* Braquiorradial: el vientre largo del lado del pulgar que arranca por
+       encima del codo y baja a la muñeca. En las referencias es el músculo
+       que le da forma al antebrazo; sin él era un cono con dos bultos. */
+    d = smin(d, sdCap(ax, py, pz, 0.222, 1.132, 0.042, 0.230, 1.020, 0.050, 0.016), 0.024);
     d = smin(d, sdEll(ax, py, pz, 0.231, 1.076, 0.016, 0.024, 0.072, 0.032), 0.028); // extensores
     d = smin(d, sdEll(ax, py, pz, 0.195, 1.062, 0.048, 0.023, 0.070, 0.028), 0.028); // flexores
     /* Mano. Salía como una paleta lisa, y lo primero fue medir por qué: la
@@ -5050,6 +5054,19 @@ try {
     d = smin(d, sdEll(ax, py, pz, 0.096, 0.474, 0.050, 0.028, 0.032, 0.018), 0.026);
     // Aductores: el muslo por dentro también era liso
     d = smin(d, sdEll(ax, py, pz, 0.044, 0.686, 0.006, 0.030, 0.098, 0.044), 0.038);
+    /* Sartorio. Es la cinta diagonal que baja de la cresta ilíaca al lado de
+       dentro de la rodilla cruzando todo el muslo, y sale en las cuatro
+       referencias porque es lo que más delata a una figura de anatomía: sin
+       ella el muslo es un cilindro con vetas. Va en tres tramos para que
+       describa la curva, con mezcla ceñida (0.016) para que quede como una
+       cuerda por encima del cuádriceps y no se funda con él. */
+    d = smin(d, sdCap(ax, py, pz, 0.108, 0.792, 0.058, 0.086, 0.700, 0.066, 0.015), 0.011);
+    d = smin(d, sdCap(ax, py, pz, 0.086, 0.700, 0.066, 0.062, 0.610, 0.062, 0.015), 0.011);
+    d = smin(d, sdCap(ax, py, pz, 0.062, 0.610, 0.062, 0.046, 0.524, 0.044, 0.013), 0.011);
+    /* Cintilla iliotibial y el tensor que la tensa: la banda plana del lado
+       de fuera del muslo, la otra línea larga que se ve en las referencias. */
+    d = smin(d, sdEll(ax, py, pz, 0.130, 0.760, 0.020, 0.020, 0.052, 0.030), 0.026);
+    d = smin(d, sdCap(ax, py, pz, 0.132, 0.716, 0.014, 0.124, 0.530, 0.004, 0.013), 0.022);
     d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
     // Gemelos: dos cabezas, la interna más baja, y el sóleo debajo
     d = smin(d, sdEll(ax, py, pz, 0.082, 0.382, -0.032, 0.026, 0.072, 0.032), 0.024);
