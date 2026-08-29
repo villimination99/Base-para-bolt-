@@ -861,6 +861,26 @@
       .breath-circle { transition: none !important; }
       html { scroll-behavior: auto; }
     }
+
+    /* ---- Foco visible, una vez y para todo ----
+       Diez reglas ponían `outline: none` y solo seis lo reponían, con un
+       cambio de color de borde de 1 px. Las otras cuatro —el conmutador de
+       unidades, TODOS los deslizadores, el select de respiración y el del
+       temporizador— se quedaban sin ninguna señal: con el tabulador no se
+       veía dónde estabas. Iba a mano, regla por regla, y por eso cuatro se
+       quedaron fuera; enumerar los casos conocidos no es comprobar la regla.
+       Esta va al final del bloque a propósito: empata en especificidad con
+       `#vill-hub input[type="range"]` y gana por orden de aparición.
+       Con `:focus-visible` el anillo sale con el teclado y no al pulsar. */
+    #vill-hub a:focus-visible,
+    #vill-hub button:focus-visible,
+    #vill-hub input:focus-visible,
+    #vill-hub select:focus-visible,
+    #vill-hub textarea:focus-visible,
+    #vill-hub [tabindex]:focus-visible {
+      outline: 2px solid #05D9E8;
+      outline-offset: 2px;
+    }
   </style>
 
 <div id="vill-hub">
@@ -1710,15 +1730,15 @@
     <div class="profile-sub">Regístrate o inicia sesión para guardar tu progreso y personalizar las calorías con tu peso.</div>
     <div id="profile-form">
       <div class="profile-field">
-        <label>Email</label>
-        <input type="email" id="login-email" placeholder="tu@email.com" value="">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="tu@email.com" value="" autocomplete="email">
       </div>
       <div class="profile-field">
-        <label>Contraseña</label>
-        <input type="password" id="login-password" placeholder="••••••••" value="">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" value="" autocomplete="current-password">
       </div>
       <div class="profile-field">
-        <label>Peso corporal (kg) — para calcular tus calorías</label>
+        <label for="login-weight">Peso corporal (kg) — para calcular tus calorías</label>
         <input type="number" id="login-weight" placeholder="75" min="30" max="250" value="">
       </div>
       <div class="profile-actions">
@@ -5556,5 +5576,55 @@ try {
   const f = document.getElementById('mm-fallback');
   if (f) f.style.display = 'block';
 }
+</script>
+
+<script>
+/* ---- Estado de los grupos de selección, para quien no ve el color ----
+   Idioma, pestañas de dieta, patrones de respiración, tipos de frecuencia,
+   periodo del historial, calidad del sueño, categorías del buscador,
+   filtros de la biblioteca y los músculos del mapa: en los nueve, el
+   elegido se marcaba SOLO con la clase `active`, que es un color. Quien no
+   distingue el color —o escucha la página— no sabía cuál estaba puesto.
+
+   No se tocan los ocho sitios de marcado ni los nueve de JavaScript: varios
+   de esos botones se generan con plantillas y volverían a nacer sin el
+   atributo, y cualquier grupo nuevo nacería igual. Se implementa la regla:
+   un botón pertenece a un grupo de selección si alguno de sus hermanos
+   lleva `active`. Eso vale para los nueve de hoy y para el que se añada
+   mañana sin que haya que acordarse de nada.
+
+   El observador filtra por `class` a propósito: si mirase todos los
+   atributos, escribir `aria-pressed` lo volvería a disparar. */
+(function () {
+  var hub = document.getElementById('vill-hub');
+  if (!hub || !window.MutationObserver) return;
+  var pendiente = 0;
+
+  function sincronizar() {
+    pendiente = 0;
+    var grupos = new Set();
+    hub.querySelectorAll('button.active').forEach(function (b) {
+      if (b.parentElement) grupos.add(b.parentElement);
+    });
+    grupos.forEach(function (g) {
+      var hijos = g.children;
+      for (var i = 0; i < hijos.length; i++) {
+        if (hijos[i].tagName === 'BUTTON') {
+          hijos[i].setAttribute('aria-pressed',
+            hijos[i].classList.contains('active') ? 'true' : 'false');
+        }
+      }
+    });
+  }
+  function pedir() {
+    if (!pendiente) pendiente = requestAnimationFrame(sincronizar);
+  }
+
+  sincronizar();
+  new MutationObserver(pedir).observe(hub, {
+    subtree: true, childList: true,
+    attributes: true, attributeFilter: ['class']
+  });
+})();
 </script>
 </div>
