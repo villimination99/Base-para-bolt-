@@ -4781,7 +4781,7 @@ try {
       .replace('#include <color_fragment>', '#include <color_fragment>\n{\n  float oc = clamp(vAO, 0.0, 1.0);\n  diffuseColor.rgb *= mix(vec3(0.50, 0.30, 0.28), vec3(1.0), oc);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.088, 0.096, 0.114), clamp(vCloth, 0.0, 1.0));\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float haySel = step(0.01, uPulse);\n  float atenua = mix(1.0, 0.22, haySel * (1.0 - sel));\n  float bajoTela = 1.0 - clamp(vCloth, 0.0, 1.0) * 0.62;\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte, vZonaOn * 0.92 * atenua * bajoTela);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.30, sel * 0.80);\n  diffuseColor.rgb = mix(diffuseColor.rgb, vTinte * 1.15, hov * 0.35);\n}')
       .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{\n  float sel = clamp(vSelW, 0.0, 1.0);\n  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);\n  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));\n  totalEmissiveRadiance += vTinte * (sel * (0.30 + 0.26 * uPulse) + edge * 0.45);\n  totalEmissiveRadiance += vTinte * hov * 0.16;\n  float borde = 1.0 - abs(dot(normalize(normal), normalize(vViewPosition)));\n  borde = pow(clamp(borde, 0.0, 1.0), 2.6);\n  totalEmissiveRadiance += vec3(0.72, 0.60, 0.55) * borde * 0.16 * clamp(vAO, 0.0, 1.0);\n}')
       .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, 0.9, clamp(vCloth, 0.0, 1.0));\n{\n  float grano = ruido(vMundo * 310.0) - 0.5;\n  roughnessFactor = clamp(roughnessFactor + grano * 0.17, 0.05, 1.0);\n}')
-      .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{\n  vec3 p1 = vMundo * 150.0;\n  vec3 p2 = vMundo * 470.0;\n  vec3 rel  = vec3(ruido(p1), ruido(p1 + 19.7), ruido(p1 + 43.3)) - 0.5;\n  vec3 fino = vec3(ruido(p2), ruido(p2 + 11.3), ruido(p2 + 71.9)) - 0.5;\n  normal = normalize(normal + rel * 0.022 + fino * 0.010);\n}');
+      .replace('#include <normal_fragment_maps>', '#include <normal_fragment_maps>\n{\n  vec3 p1 = vMundo * 150.0;\n  vec3 p2 = vMundo * 470.0;\n  vec3 rel  = vec3(ruido(p1), ruido(p1 + 19.7), ruido(p1 + 43.3)) - 0.5;\n  vec3 fino = vec3(ruido(p2), ruido(p2 + 11.3), ruido(p2 + 71.9)) - 0.5;\n  normal = normalize(normal + rel * 0.022 + fino * 0.010);\n  /* Fibra. Es lo que separa una figura de anatomia de un maniqui liso:\n     en las referencias cada vientre muscular ensena su estriado. Se hace\n     con el mismo ruido pero MUY estirado en Y (26 frente a 300 en X y Z),\n     que da vetas verticales largas en vez de grumos, y se empuja la\n     normal casi solo de lado para que salgan crestas y no bultos.\n     Solo donde hay musculo: `vZonaOn` deja fuera cabeza, manos y pies,\n     que en las cuatro referencias van lisos y sin pintar. */\n  float esMusculo = clamp(vZonaOn, 0.0, 1.0);\n  if (esMusculo > 0.01) {\n    vec3 pf = vec3(vMundo.x * 390.0, vMundo.y * 30.0, vMundo.z * 390.0);\n    float fib = ruido(pf) - 0.5;\n    vec3 pf2 = vec3(vMundo.x * 790.0, vMundo.y * 62.0, vMundo.z * 790.0);\n    float fib2 = ruido(pf2) - 0.5;\n    float f = fib * 0.046 + fib2 * 0.019;\n    normal = normalize(normal + vec3(f, f * 0.12, f) * esMusculo);\n  }\n}');
   };
 
   const bodyRoot = new THREE.Group();
@@ -4916,7 +4916,7 @@ try {
     /* El corte del esternón se adelanta con el pecho. Si se queda donde
        estaba, los dos pectorales lo rebasan y vuelven a fundirse en una
        sola masa, que es justo lo que este corte existe para evitar. */
-    d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.120, 0, 1.362, 0.112, 0.014), 0.045);
+    d = smax(d, -sdCap(px, py, pz, 0, 1.268, 0.112, 0, 1.366, 0.104, 0.010), 0.040);
 
     // Trapecio (bajo, en pendiente) y deltoides (compacto, encaja en el hombro)
     // Trapecio superior, en pendiente del cuello al acromion
@@ -5013,9 +5013,15 @@ try {
        pectoral a 0.118. De frente no se notaba nada; de lado el cuerpo salía
        plano por delante y por eso parecía una tabla. El pecho pasa a 0.138,
        unos 18 mm por delante de la pared abdominal. */
-    d = smin(d, sdEll(ax, py, pz, 0.074, 1.352,  0.094, 0.074, 0.034, 0.032), 0.040);
-    d = smin(d, sdEll(ax, py, pz, 0.084, 1.302,  0.100, 0.082, 0.050, 0.038), 0.042);
-    d = smin(d, sdEll(ax, py, pz, 0.128, 1.322,  0.066, 0.044, 0.048, 0.036), 0.045);
+    /* Pectoral en losa, no en bola. Al adelantar el pecho se quedó con el
+       semieje en Z casi igual que en Y (0.038 contra 0.050) y con el vientre
+       bajo, así que salían dos esferas colgando con un surco hondo: leía
+       como pecho de mujer, no como pectoral. En las cuatro referencias el
+       pectoral es ancho, plano y con el borde de abajo casi horizontal.
+       Se aplasta en Z, se ensancha en X y se sube el centro. */
+    d = smin(d, sdEll(ax, py, pz, 0.078, 1.356,  0.090, 0.082, 0.030, 0.026), 0.038);
+    d = smin(d, sdEll(ax, py, pz, 0.088, 1.314,  0.094, 0.092, 0.042, 0.028), 0.040);
+    d = smin(d, sdEll(ax, py, pz, 0.132, 1.330,  0.064, 0.046, 0.044, 0.030), 0.042);
     // Serrato: tres digitaciones bajo la axila, que es lo que más delata a
     // una figura anatómica de verdad
     d = smin(d, sdEll(ax, py, pz, 0.132, 1.240,  0.058, 0.020, 0.016, 0.026), 0.022);
@@ -5199,8 +5205,14 @@ try {
                                          [ 0.100, 0.256, -0.024, 0.072, 0.066, 0.074, 1]] }
   ];
   /* Ancho de la caída del peso de zona, en fracción del radio del lóbulo.
-     Estaba en 0.16: un borde casi duro. */
-  const CAIDA = 0.22;
+     Empezó en 0.16 y pasó a 0.22; con eso el borde seguía saliendo dentado
+     en escalera. La razón es la malla: el peso se calcula por VÉRTICE y se
+     interpola, y con vóxel de 12 mm un corte casi duro cae en uno o dos
+     vértices, así que dibuja el contorno de los triángulos en vez del del
+     músculo. Un borde duro y limpio como el de las referencias pediría
+     resolverlo por píxel en el fragmento, que es otra obra; con esta malla
+     la opción honesta es una transición ancha, que esconde la topología. */
+  const CAIDA = 0.42;
   /* Peso de un lóbulo suelto. */
   function pesoLobulo(e, x, y, z) {
     const px = e[6] ? Math.abs(x) : x;
