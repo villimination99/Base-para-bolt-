@@ -8,7 +8,9 @@
 (function () {
   'use strict';
 
-  var DURACION = 14;           // segundos
+  // 16 s y no 14: el cierre (logo, dominio y llamada a la accion) es el
+  // momento de conversion y con 2,5 s apenas daba tiempo a leerlo.
+  var DURACION = 16;
   var C = document.getElementById('lienzo');
   var g = C.getContext('2d');
 
@@ -87,6 +89,17 @@
     }
     g.restore();
 
+    // Vineta. Los haces suben por el centro justo donde va el texto, y sin
+    // esto las letras compiten con la luz. Oscurece los bordes y el centro
+    // alto, que es donde cae la tipografia grande.
+    var vin = g.createRadialGradient(W * 0.5, H * 0.46, Math.min(W, H) * 0.1,
+                                     W * 0.5, H * 0.46, Math.max(W, H) * 0.72);
+    vin.addColorStop(0, 'rgba(5,6,10,0.55)');
+    vin.addColorStop(0.45, 'rgba(5,6,10,0.30)');
+    vin.addColorStop(1, 'rgba(5,6,10,0.92)');
+    g.fillStyle = vin;
+    g.fillRect(0, 0, W, H);
+
     // Barrido horizontal, una sola pasada por escena
     var barr = (t * 0.34) % 1;
     var yB = barr * H;
@@ -161,9 +174,11 @@
     capas.c4.style.opacity = o4;
     cifraEl.textContent = Math.round(37 * salida((t - 9.4) / 1.3));
 
-    // 5. Cierre (11.7 - 14.0): el anillo gira, sin desvanecer al final para
-    //    que el bucle enganche con el primer fotograma en negro.
-    var o5 = ventana(t, 11.7, 14.2, 0.55, 0.9);
+    // 5. Cierre (11.7 - 16.0): cuatro segundos y pico para leer el dominio y
+    //    ver el boton. Se desvanece POR COMPLETO antes del final: con la
+    //    ventana anterior el ultimo fotograma aun tenia opacidad 0.11 y el
+    //    bucle daba un salto visible al volver al negro del principio.
+    var o5 = ventana(t, 11.7, 15.9, 0.6, 1.6);
     capas.c5.style.opacity = o5;
     anillo.style.transformOrigin = '50% 50%';
     anillo.style.transform = 'rotate(' + (t * 26).toFixed(1) + 'deg)';

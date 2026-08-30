@@ -329,7 +329,10 @@
   </script>
 {%- endif -%}
 
-<script src="{{ 'video3d.js' | asset_url }}" defer></script>
+{%- comment -%}
+  Igual que la secuencia: el script llega cuando la seccion se acerca.
+{%- endcomment -%}
+{%- render 'cargar-al-ver', archivo: 'video3d.js', ancla: '[data-video-3d]' -%}
 
 {% schema %}
 {

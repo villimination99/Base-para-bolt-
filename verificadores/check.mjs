@@ -1026,7 +1026,8 @@ check('Video 3D: piezas completas', () => {
   if (!fs.existsSync(sec)) return ['falta sections/video-3d.liquid'];
   const src = read(sec);
   if (!fs.existsSync(`${T}/assets/video3d.js`)) bad.push('falta assets/video3d.js');
-  if (!src.includes("'video3d.js' | asset_url")) bad.push('la seccion no carga video3d.js');
+  if (!/cargar-al-ver'[^%]*archivo:\s*'video3d\.js'[^%]*ancla:\s*'\[data-video-3d\]'/.test(src))
+    bad.push('la seccion no carga video3d.js con cargar-al-ver apuntando a [data-video-3d]');
   const css = read(`${T}/assets/villumination.css`);
   for (const c of ['video3d-marco', 'video3d-halo', 'video3d-pantalla', 'video3d-play', 'video3d-esquina', 'video3d-suelo'])
     if (!css.includes('.' + c)) bad.push(`falta el estilo .${c}`);
@@ -1087,7 +1088,8 @@ check('Secuencia de marca: piezas completas', () => {
   const src = read(sec);
   const bad = [];
   if (!fs.existsSync(`${T}/assets/secuencia.js`)) bad.push('falta assets/secuencia.js');
-  if (!src.includes("'secuencia.js' | asset_url")) bad.push('la seccion no carga secuencia.js');
+  if (!/cargar-al-ver'[^%]*archivo:\s*'secuencia\.js'[^%]*ancla:\s*'\[data-secuencia\]'/.test(src))
+    bad.push('la seccion no carga secuencia.js con cargar-al-ver apuntando a [data-secuencia]');
   if (!src.includes('data-sec-escena')) bad.push('las escenas no llevan data-sec-escena');
   // Los textos tienen que salir del esquema, en nodos del documento
   for (const t of ['secuencia-marca', 'secuencia-lema', 'secuencia-pilares', 'secuencia-cifra'])
@@ -1182,6 +1184,38 @@ check('Plantillas y grupos contra sus esquemas', () => {
     const conMenu = bloques.find(b => b.type === 'menu');
     if (conMenu && !conMenu.settings.menu)
       bad.push('footer-group.json: el bloque de menu del pie no apunta a ningun menu');
+  }
+  return bad;
+});
+
+check('Scripts que se cargan al acercarse', () => {
+  /* cargar-al-ver descarga el script solo cuando su seccion se aproxima a la
+     pantalla. Si el ancla que se le pasa no existe en el marcado de esa
+     seccion, el observador nunca se dispara y el script no llega NUNCA: la
+     seccion se queda muerta sin dar ningun error. Por eso se comprueba que
+     cada ancla exista de verdad donde se usa. */
+  const bad = [];
+  const snip = `${T}/snippets/cargar-al-ver.liquid`;
+  if (!fs.existsSync(snip)) return ['falta snippets/cargar-al-ver.liquid'];
+  const cuerpo = read(snip);
+  // Los tres respaldos tienen que estar: sin ellos, un navegador viejo se
+  // quedaria sin el script para siempre.
+  for (const r of ['IntersectionObserver', 'requestIdleCallback', "addEventListener('load'"])
+    if (!cuerpo.includes(r)) bad.push(`cargar-al-ver: falta el respaldo ${r}`);
+
+  for (const f of liquids()) {
+    const src = read(f);
+    const re = /render\s+'cargar-al-ver'\s*,\s*archivo:\s*'([^']+)'\s*,\s*ancla:\s*'([^']+)'/g;
+    let m;
+    while ((m = re.exec(src))) {
+      const [, archivo, ancla] = m;
+      if (!fs.existsSync(`${T}/assets/${archivo}`))
+        bad.push(`${f}: carga "${archivo}" y ese asset no existe`);
+      // El ancla es un selector de atributo: se comprueba el atributo a pelo
+      const attr = ancla.replace(/^\[|\]$/g, '').split('=')[0];
+      if (!src.includes(attr))
+        bad.push(`${f}: el ancla "${ancla}" no aparece en el marcado, el script no se cargaria nunca`);
+    }
   }
   return bad;
 });

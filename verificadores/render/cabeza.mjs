@@ -31,7 +31,7 @@ for (const [k,f] of Object.entries(F)) e.registerFilter(k,f);
 e.registerTag('style',{parse(tk,rem){while(rem.length){const t=rem.shift(); if(t.name==='endstyle')return;}},render(){return '';}});
 e.registerTag('schema',{parse(tk,rem){while(rem.length){const t=rem.shift(); if(t.name==='endschema')return;}},render(){return '';}});
 const img={src:'//cdn.shopify.com/logo.png',width:1600,height:400,aspect_ratio:4,alt:'VILLUMINATION'};
-const ctx={ settings:{
+const ctxBase={ settings:{
    seo_google_verification:'ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE',
    seo_bing_verification:'BING-CODIGO', seo_yandex_verification:'YANDEX-CODIGO',
    seo_pinterest_verification:'PINTEREST-CODIGO', seo_facebook_domain:'META-CODIGO',
@@ -42,7 +42,6 @@ const ctx={ settings:{
  shop:{name:'VIllumination',url:'https://villuminations.com',description:'Fitness sin limites.',money_format:'{{amount}}'},
  canonical_url:'https://villuminations.com/products/proteina', page_title:'Proteína | VILLUMINATIONS',
  page_description:'Proteína de suero aislada.',
- request:{page_type:'product',path:'/products/proteina',locale:{iso_code:'es',root_url:'/'},design_mode:false},
  localization:{available_languages:[{iso_code:'es',primary:true,root_url:'/'},{iso_code:'en',root_url:'/en'},
    {iso_code:'fr',root_url:'/fr'},{iso_code:'de',root_url:'/de'},{iso_code:'ja',root_url:'/ja'}]},
  product:{title:'Proteína',id:1,url:'/p',handle:'proteina',description:'d',vendor:'V',type:'T',price:12990,
@@ -53,17 +52,63 @@ const ctx={ settings:{
  routes:new Proxy({},{get:()=>'/'}), template:{name:'product'}, content_for_header:'<!-- shopify -->' };
 const layout = (await import('fs')).readFileSync(T+'/layout/theme.liquid','utf8');
 const head = layout.slice(0, layout.indexOf('</head>'));
-e.options.globals = ctx;
-const out = await e.parseAndRender(head, ctx);
-const etiquetas = out.split('\n').map(l=>l.trim()).filter(l=>/^<(meta|link|title|script)/.test(l));
-console.log(`--- ${etiquetas.length} etiquetas en el <head> ---\n`);
-etiquetas.forEach(l=>console.log('  '+l.slice(0,150)));
+
 const debe = {'google':'google-site-verification','bing':'msvalidate.01','yandex':'yandex-verification',
   'pinterest':'p:domain_verify','meta':'facebook-domain-verification','canonical':'rel="canonical"',
   'robots':'name="robots"','og:title':'og:title','og:image':'og:image','twitter':'twitter:card','hreflang':'hreflang'};
-console.log('\n--- comprobacion ---');
-let faltan=0;
-for (const [n,pat] of Object.entries(debe)) { const ok=out.includes(pat); if(!ok) faltan++;
-  console.log(`  ${ok?'OK ':'FALTA'}  ${n.padEnd(12)} ${pat}`); }
-console.log(faltan? `\n${faltan} FALTAN` : '\nEstan las once etiquetas.');
-process.exit(faltan ? 1 : 0);
+
+/* Se recorren los NUEVE tipos de pagina, no solo la ficha de producto. Una
+   etiqueta de verificacion que solo salga en algunas paginas puede hacer que
+   Google o Bing den la propiedad por no verificada, segun por donde entre su
+   rastreador. Y una etiqueta duplicada tambien da problemas, asi que se
+   cuenta cuantas veces aparece cada una. */
+const PAGINAS = [
+  {tipo:'index',            ruta:'/'},
+  {tipo:'product',          ruta:'/products/proteina'},
+  {tipo:'collection',       ruta:'/collections/suplementos'},
+  {tipo:'article',          ruta:'/blogs/diario/entrada'},
+  {tipo:'blog',             ruta:'/blogs/diario'},
+  {tipo:'page',             ruta:'/pages/como-se-hace'},
+  {tipo:'search',           ruta:'/search'},
+  {tipo:'404',              ruta:'/404'},
+  {tipo:'cart',             ruta:'/cart'},
+];
+
+let fallos = 0;
+console.log('');
+for (const PAGINA of PAGINAS) {
+  // Copia superficial, NO JSON.parse(JSON.stringify(...)): esa via se come
+  // todo lo que no sea JSON puro (funciones, undefined) y dejaba el contexto
+  // a medias, con lo que faltaban seis etiquetas en las nueve paginas. El
+  // verificador acusaba al tema de un fallo que era mio.
+  const ctxP = Object.assign({}, ctxBase, {
+    request: { page_type: PAGINA.tipo, path: PAGINA.ruta,
+               locale: { iso_code: 'es', root_url: '/' }, design_mode: false },
+  });
+  // En liquidjs, {% render %} aisla el ambito: el snippet NO ve el contexto
+  // de quien lo llama, aunque en Shopify los objetos globales si llegan. Sin
+  // esta linea el verificador dice que faltan seis etiquetas que si estan.
+  // Lo advierte la cabecera de este archivo y aun asi la borre al reescribir
+  // el final; el propio verificador lo caza.
+  e.options.globals = ctxP;
+  let out;
+  try { out = await e.parseAndRender(head, ctxP); }
+  catch (err) { console.log(`FALLA  ${PAGINA.tipo}: la cabeza no renderiza (${err.message})`); fallos++; continue; }
+  const faltan = [], repes = [];
+  for (const [nombre, aguja] of Object.entries(debe)) {
+    const n = out.split(aguja).length - 1;
+    if (n === 0) faltan.push(nombre);
+    // hreflang y og aparecen varias veces a proposito; el resto, una sola
+    else if (n > 1 && !['hreflang','og:title','og:image','twitter'].includes(nombre)) repes.push(`${nombre} x${n}`);
+  }
+  const ok = !faltan.length && !repes.length;
+  if (!ok) fallos++;
+  console.log(`${ok ? ' OK  ' : 'FALLA'}  ${PAGINA.tipo.padEnd(11)} ${Object.keys(debe).length - faltan.length}/${Object.keys(debe).length} etiquetas` +
+    (faltan.length ? `  FALTAN: ${faltan.join(', ')}` : '') +
+    (repes.length ? `  DUPLICADAS: ${repes.join(', ')}` : ''));
+}
+console.log('');
+console.log(fallos === 0
+  ? `Las once etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados.`
+  : `${fallos} tipo(s) de pagina con problemas.`);
+process.exit(fallos ? 1 : 0);

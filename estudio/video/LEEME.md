@@ -8,7 +8,9 @@ node estudio/video/renderizar.mjs                 # 1080x1920 a 30 fps
 node estudio/video/renderizar.mjs --ancho 720     # más ligero
 ```
 
-Sale `estudio/video/villumination-marca.webm`.
+Sale `estudio/video/villumination-marca.webm`: **16 s, 1080×1920, 2,4 MB**.
+Esa es la resolución exacta de Reels, Shorts y TikTok, así que sirve igual
+para la tienda que para redes. Tarda unos 90 segundos.
 
 ## Por qué WebM y no MP4
 
@@ -56,7 +58,7 @@ La tipografía Orbitron va incrustada en `fuente.b64` porque este entorno no
 llega a Google Fonts y el video tiene que salir con la letra de la tienda, no
 con una sustituta del sistema.
 
-## Las cinco escenas (14 s)
+## Las cinco escenas (16 s)
 
 | Desde | Hasta | Qué pasa |
 |------:|------:|----------|
@@ -64,7 +66,12 @@ con una sustituta del sistema.
 | 3,0 s | 5,6 s | **NO TE CONFORMES** |
 | 5,7 s | 9,2 s | Los tres pilares entran en cascada: fuerza, nutrición, constancia |
 | 9,3 s | 11,6 s | La cifra sube hasta **37**, los productos que hay activos en la tienda |
-| 11,7 s | 14,0 s | Cierre: el logo VI, el dominio y la llamada a la acción |
+| 11,7 s | 15,9 s | Cierre: el logo VI, el dominio y la llamada a la acción |
+
+El cierre se lleva cuatro segundos largos a propósito: es el momento en que
+alguien decide entrar, y con dos y medio no daba tiempo a leer el dominio.
+Se desvanece **por completo** antes del segundo 16, para que al reiniciarse
+el bucle enganche con el negro del primer fotograma en vez de dar un salto.
 
 El fondo son los mismos haces y el mismo marco pulsante que el hero de la
 tienda: quien vea el video en Instagram y luego entre en la web reconoce la

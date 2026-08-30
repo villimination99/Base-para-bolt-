@@ -52,19 +52,7 @@
   {%- endif -%}
 </section>
 
-<script>
-  (function () {
-    var src = "{{ 'haces.js' | asset_url }}";
-    if (document.querySelector('script[data-haces-src]')) return;
-    function cargar() {
-      var s = document.createElement('script');
-      s.src = src; s.defer = true; s.setAttribute('data-haces-src', '1');
-      document.body.appendChild(s);
-    }
-    if ('requestIdleCallback' in window) requestIdleCallback(cargar, { timeout: 1500 });
-    else window.addEventListener('load', function () { setTimeout(cargar, 150); });
-  })();
-</script>
+{%- render 'cargar-al-ver', archivo: 'haces.js', ancla: '[data-haces]' -%}
 
 {% schema %}
 {

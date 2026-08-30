@@ -108,7 +108,12 @@
   </div>
 </section>
 
-<script src="{{ 'secuencia.js' | asset_url }}" defer></script>
+{%- comment -%}
+  El script llega cuando la seccion se acerca, no durante la carga inicial:
+  en la portada esta por debajo del pliegue y un <script defer> se descargaba
+  igual aunque el visitante no bajara nunca.
+{%- endcomment -%}
+{%- render 'cargar-al-ver', archivo: 'secuencia.js', ancla: '[data-secuencia]' -%}
 
 {% schema %}
 {
