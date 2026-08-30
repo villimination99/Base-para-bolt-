@@ -54,7 +54,8 @@
     "copy_hint": "タップしてコピー",
     "copied": "コピーしました",
     "video_placeholder": "テーマエディタで動画を選んでください。",
-    "play_video": "動画を再生"
+    "play_video": "動画を再生",
+    "sequence_hint": "アニメーションの上で動かしてみて"
   },
   "accessibility": {
     "skip_to_content": "本文へスキップ",

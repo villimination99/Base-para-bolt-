@@ -25,7 +25,7 @@ const CABEZA = `<!doctype html><html lang="es"><head><meta charset="utf-8">
 .relleno{height:120vh}</style></head><body>`;
 
 const PAGINA = CABEZA + `
-<section class="hero-shader"><canvas data-hero-shader data-scale="125" data-thickness="30" data-grain="40"></canvas></section>
+<section class="hero-shader"><canvas data-hero-shader data-scale="1.25" data-thickness="0.30" data-grain="0.40"></canvas></section>
 <div class="relleno"></div>
 <section class="haces"><canvas data-haces class="haces-lienzo"></canvas></section>
 <div class="relleno"></div>
@@ -154,6 +154,71 @@ for (const reducido of [false, true]) {
     `El lienzo se reduce en equipos flojos (8 nucleos: ${medidas[8].w}x${medidas[8].h} · 4 nucleos: ${medidas[4].w}x${medidas[4].h})`);
   decir(medidas[8].w <= 390 * 1.01,
     `En un equipo capaz no se pasa de 1x pese a un devicePixelRatio de 3 (${medidas[8].w} px)`);
+}
+
+/* 4 — El marco del hero se cierra en CUALQUIER formato de pantalla.
+   La caja estaba fija en 0.82 x 0.47 sobre un espacio normalizado por el lado
+   corto: en vertical el eje X solo llegaba a ±0.62, asi que los dos lados
+   quedaban fuera de pantalla y el visitante veia una sola barra horizontal en
+   vez de un marco. Pasaba en iPhone y en iPad. Se mide sobre la captura, no
+   con readPixels: sin preserveDrawingBuffer el buffer se vacia al componer y
+   readPixels devuelve ceros (primera version de esta prueba, que mintio). */
+{
+  const analizar = async (p) => {
+    const b64 = (await p.locator('.hero-shader').screenshot()).toString('base64');
+    return p.evaluate(async (s) => {
+      const img = new Image(); img.src = 'data:image/png;base64,' + s; await img.decode();
+      const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+      const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+      const d = g.getImageData(0, 0, img.width, img.height).data;
+      const W = img.width, H = img.height;
+      const br = (x, y) => { const i = (y * W + x) * 4; return d[i] + d[i + 1] + d[i + 2]; };
+      // El hero lleva grano fuerte. Ni el maximo ni la media de una columna
+      // sirven: con el maximo, un solo pixel de ruido ya pasaba la prueba
+      // aunque el marco estuviera roto; con la media, la linea de 3 px se
+      // pierde entre 844 px de ruido. Se promedia en bloques de 8x8, que
+      // deja el ruido en una constante y conserva la linea.
+      const B = 8, w = Math.floor(W / B), h = Math.floor(H / B);
+      const mapa = new Float32Array(w * h);
+      for (let by = 0; by < h; by++) for (let bx = 0; bx < w; bx++) {
+        let s2 = 0;
+        for (let y = 0; y < B; y++) for (let x = 0; x < B; x++) s2 += br(bx * B + x, by * B + y);
+        mapa[by * w + bx] = s2 / (B * B);
+      }
+      const colMax = fx => { const bx = Math.round(w * fx); let m = 0;
+        for (let by = 0; by < h; by++) m = Math.max(m, mapa[by * w + bx]); return m; };
+      const filMax = fy => { const by = Math.round(h * fy); let m = 0;
+        for (let bx = 0; bx < w; bx++) m = Math.max(m, mapa[by * w + bx]); return m; };
+      // Control: el centro del cuadro, por dentro del marco, donde no hay linea
+      let ctrl = 0, nc = 0;
+      for (let by = Math.round(h * 0.42); by < Math.round(h * 0.58); by++)
+        for (let bx = Math.round(w * 0.42); bx < Math.round(w * 0.58); bx++) { ctrl += mapa[by * w + bx]; nc++; }
+      return { izq: colMax(0.10), der: colMax(0.90), arr: filMax(0.10), aba: filMax(0.90), ctrl: ctrl / nc };
+    }, b64);
+  };
+  for (const [n, w, h] of [['movil vertical', 390, 844], ['tableta vertical', 820, 1180], ['escritorio', 1440, 800]]) {
+    const ctx = await navegador.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, hasTouch: w < 500 });
+    const p = await ctx.newPage();
+    await p.goto(URL_PRUEBA);
+    await p.addScriptTag({ path: path.join(ASSETS, 'hero-shader.js') });
+    await p.waitForTimeout(1600);
+    const r = await analizar(p);
+    // Un carril tenue siempre encendido: sin el, palette(0) devuelve el propio
+    // color de fondo y el marco se lee como roto donde no pasa el pulso.
+    // El criterio es RELATIVO: los cuatro lados tienen que brillar
+    // claramente mas que el interior. Un umbral absoluto lo cumplia el grano.
+    const ctrl = Math.max(r.ctrl, 1);
+    const lados = [r.izq, r.der, r.arr, r.aba];
+    const peor = Math.min.apply(null, lados) / ctrl;
+    // Umbral calibrado midiendo el shader ANTIGUO, no elegido a ojo:
+    // con la caja fija daba entre 1.25 y 1.45 (solo se veia una barra);
+    // con la caja adaptada da entre 2.08 y 6.67. 1.70 separa los dos casos
+    // con margen por los dos lados.
+    const cerrado = peor > 1.70;
+    const f = v => v.toFixed(0);
+    decir(cerrado, `El marco del hero se cierra en ${n} (lados ${lados.map(f).join('/')} contra ${f(ctrl)} de control = x${peor.toFixed(2)})`);
+    await ctx.close();
+  }
 }
 
 await navegador.close();

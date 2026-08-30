@@ -1,0 +1,171 @@
+{%- comment -%}
+  Secuencia de marca: una animacion que se reproduce sola, en bucle, con el
+  lenguaje visual de la tienda (haces de luz y marco de neon pulsante, los
+  mismos del hero). Cada bloque es una escena y el tiempo se reparte entre
+  las que haya.
+
+  Es la alternativa en vivo a un archivo de video, y para una tienda es mejor:
+  el texto es texto de verdad (Google lo indexa y un lector de pantalla lo
+  lee), pesa unos 9 KB en vez de varios megabytes, se ve nitida en cualquier
+  pantalla y reacciona al dedo o al raton.
+{%- endcomment -%}
+
+{%- liquid
+  assign alto = section.settings.alto
+  assign alto_movil = alto | times: 78 | divided_by: 100
+  assign n = section.blocks | size
+-%}
+
+<section class="secuencia-sec{% if section.settings.compacta %} is-compacta{% endif %}"
+         style="--sec-acento:{{ section.settings.acento }};--sec-fondo:{{ section.settings.fondo }};--sec-alto:{{ alto }}px;--sec-alto-movil:{{ alto_movil }}px;">
+  <div class="container">
+    <div class="secuencia"
+         data-secuencia
+         data-sec-duracion="{{ section.settings.duracion }}"
+         data-sec-fondo="{{ section.settings.fondo }}"
+         {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+
+      <canvas class="secuencia-lienzo" data-sec-lienzo aria-hidden="true"></canvas>
+
+      {%- comment -%}
+        Las escenas son texto real, no fotogramas. Van todas en el documento
+        y se muestran por turnos; asi el buscador y el lector de pantalla ven
+        el mensaje completo aunque nadie espere los catorce segundos.
+      {%- endcomment -%}
+      <div class="secuencia-escenas">
+        {%- for block in section.blocks -%}
+          <div class="secuencia-escena secuencia-escena--{{ block.type }}"
+               data-sec-escena {{ block.shopify_attributes }}>
+            {%- case block.type -%}
+
+              {%- when 'marca' -%}
+                <p class="secuencia-marca">{{ block.settings.texto }}</p>
+
+              {%- when 'lema' -%}
+                <p class="secuencia-lema">
+                  {{ block.settings.linea1 }}
+                  {%- if block.settings.linea2 != blank -%}
+                    <br><em>{{ block.settings.linea2 }}</em>
+                  {%- endif -%}
+                </p>
+
+              {%- when 'pilares' -%}
+                <ul class="secuencia-pilares" role="list">
+                  {%- for i in (1..3) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign ico = block.settings.icono1
+                          assign tit = block.settings.titulo1
+                          assign sub = block.settings.sub1
+                        when 2
+                          assign ico = block.settings.icono2
+                          assign tit = block.settings.titulo2
+                          assign sub = block.settings.sub2
+                        else
+                          assign ico = block.settings.icono3
+                          assign tit = block.settings.titulo3
+                          assign sub = block.settings.sub3
+                      endcase
+                    -%}
+                    {%- if tit != blank -%}
+                      <li class="secuencia-pilar">
+                        <span class="secuencia-pilar-ico" aria-hidden="true">{%- render 'icon', name: ico -%}</span>
+                        <span class="secuencia-pilar-txt">
+                          <strong>{{ tit }}</strong>
+                          {%- if sub != blank -%}<span>{{ sub }}</span>{%- endif -%}
+                        </span>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+
+              {%- when 'cifra' -%}
+                <p class="secuencia-cifra">{{ block.settings.numero }}</p>
+                {%- if block.settings.pie != blank -%}
+                  <p class="secuencia-cifra-pie">{{ block.settings.pie }}</p>
+                {%- endif -%}
+
+              {%- when 'cierre' -%}
+                {%- if block.settings.titulo != blank -%}
+                  <p class="secuencia-cierre-tit">{{ block.settings.titulo }}</p>
+                {%- endif -%}
+                {%- if block.settings.boton != blank and block.settings.enlace != blank -%}
+                  <a class="btn btn-primary btn-lg secuencia-cta" href="{{ block.settings.enlace }}">
+                    {{ block.settings.boton }}
+                  </a>
+                {%- endif -%}
+
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if n > 0 -%}
+        <span class="secuencia-pista" aria-hidden="true">{{ 'general.sequence_hint' | t }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<script src="{{ 'secuencia.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Secuencia de marca",
+  "tag": "section",
+  "class": "shopify-section--secuencia",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "color", "id": "acento", "label": "Color de acento", "default": "#00f0ff" },
+    { "type": "color", "id": "fondo", "label": "Color de fondo", "default": "#05060a" },
+    { "type": "range", "id": "alto", "min": 380, "max": 760, "step": 20, "unit": "px", "label": "Alto", "default": 560 },
+    { "type": "range", "id": "duracion", "min": 8, "max": 24, "step": 2, "unit": "s", "label": "Duración del ciclo", "default": 14, "info": "El tiempo se reparte entre las escenas que tengas." },
+    { "type": "checkbox", "id": "compacta", "label": "Menos espacio arriba y abajo", "default": false }
+  ],
+  "blocks": [
+    { "type": "marca", "name": "Nombre de marca", "limit": 1,
+      "settings": [ { "type": "text", "id": "texto", "label": "Texto", "default": "VILLUMINATION" } ] },
+    { "type": "lema", "name": "Lema", "limit": 2,
+      "settings": [
+        { "type": "text", "id": "linea1", "label": "Primera línea", "default": "NO TE" },
+        { "type": "text", "id": "linea2", "label": "Segunda línea (en color)", "default": "CONFORMES" } ] },
+    { "type": "pilares", "name": "Tres pilares", "limit": 1,
+      "settings": [
+        { "type": "select", "id": "icono1", "label": "Icono 1", "default": "dumbbell", "options": [
+          { "value": "dumbbell", "label": "Mancuerna" }, { "value": "supplement", "label": "Suplemento" },
+          { "value": "shirt", "label": "Camiseta" }, { "value": "trophy", "label": "Trofeo" },
+          { "value": "brain", "label": "Mente" }, { "value": "book", "label": "Libro" },
+          { "value": "bolt", "label": "Rayo" }, { "value": "body3d", "label": "Cuerpo" } ] },
+        { "type": "text", "id": "titulo1", "label": "Título 1", "default": "FUERZA" },
+        { "type": "text", "id": "sub1", "label": "Subtítulo 1", "default": "EQUIPO Y ACCESORIOS" },
+        { "type": "select", "id": "icono2", "label": "Icono 2", "default": "supplement", "options": [
+          { "value": "dumbbell", "label": "Mancuerna" }, { "value": "supplement", "label": "Suplemento" },
+          { "value": "shirt", "label": "Camiseta" }, { "value": "trophy", "label": "Trofeo" },
+          { "value": "brain", "label": "Mente" }, { "value": "book", "label": "Libro" },
+          { "value": "bolt", "label": "Rayo" }, { "value": "body3d", "label": "Cuerpo" } ] },
+        { "type": "text", "id": "titulo2", "label": "Título 2", "default": "NUTRICIÓN" },
+        { "type": "text", "id": "sub2", "label": "Subtítulo 2", "default": "SUPLEMENTOS" },
+        { "type": "select", "id": "icono3", "label": "Icono 3", "default": "book", "options": [
+          { "value": "dumbbell", "label": "Mancuerna" }, { "value": "supplement", "label": "Suplemento" },
+          { "value": "shirt", "label": "Camiseta" }, { "value": "trophy", "label": "Trofeo" },
+          { "value": "brain", "label": "Mente" }, { "value": "book", "label": "Libro" },
+          { "value": "bolt", "label": "Rayo" }, { "value": "body3d", "label": "Cuerpo" } ] },
+        { "type": "text", "id": "titulo3", "label": "Título 3", "default": "CONSTANCIA" },
+        { "type": "text", "id": "sub3", "label": "Subtítulo 3", "default": "PLANES Y CÓDICES" } ] },
+    { "type": "cifra", "name": "Cifra", "limit": 1,
+      "settings": [
+        { "type": "text", "id": "numero", "label": "Número", "default": "37" },
+        { "type": "text", "id": "pie", "label": "Texto debajo", "default": "PRODUCTOS · UNA SOLA META" } ] },
+    { "type": "cierre", "name": "Cierre", "limit": 1,
+      "settings": [
+        { "type": "text", "id": "titulo", "label": "Título", "default": "VILLUMINATIONS.COM" },
+        { "type": "text", "id": "boton", "label": "Texto del botón", "default": "VER CATÁLOGO" },
+        { "type": "url", "id": "enlace", "label": "Enlace del botón" } ] }
+  ],
+  "presets": [
+    { "name": "Secuencia de marca",
+      "blocks": [ { "type": "marca" }, { "type": "lema" }, { "type": "pilares" }, { "type": "cifra" }, { "type": "cierre" } ] }
+  ]
+}
+{% endschema %}

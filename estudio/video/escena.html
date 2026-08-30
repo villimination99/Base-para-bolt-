@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Villumination · secuencia</title>
+<style>
+  /* La fuente se inyecta desde el guion: el contenedor no llega a Google
+     Fonts y el video tiene que salir con la letra de la tienda. */
+  :root{
+    --cyan:#00f0ff; --morado:#8b5cf6; --rosa:#ff2ecb; --fondo:#05060a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;height:100%;background:var(--fondo);overflow:hidden}
+  body{font-family:Orbitron,"Arial Black",system-ui,sans-serif;color:#fff;
+       -webkit-font-smoothing:antialiased}
+  #lienzo{position:absolute;inset:0;width:100%;height:100%}
+  .capa{position:absolute;inset:0;display:grid;place-items:center;
+        text-align:center;padding:0 8%;opacity:0}
+
+  .marca{font-weight:900;font-size:5.2vw;letter-spacing:.6em;
+         background:linear-gradient(100deg,var(--cyan),var(--morado) 45%,var(--rosa));
+         -webkit-background-clip:text;background-clip:text;
+         -webkit-text-fill-color:transparent;color:transparent}
+  .lema{font-weight:900;font-size:11vw;line-height:.98;letter-spacing:-.01em;
+        text-shadow:0 0 40px rgba(0,240,255,.45)}
+  .lema em{font-style:normal;
+    background:linear-gradient(100deg,var(--cyan),var(--rosa));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent}
+
+  .pilares{display:flex;flex-direction:column;gap:7vw;width:100%}
+  .pilar{display:flex;align-items:center;gap:5vw;opacity:0;
+         transform:translateX(-6vw)}
+  .pilar svg{width:11vw;height:11vw;stroke:var(--cyan);flex:0 0 auto;
+             filter:drop-shadow(0 0 14px rgba(0,240,255,.55))}
+  .pilar b{font-weight:900;font-size:7.4vw;letter-spacing:.02em;text-align:left}
+  .pilar i{display:block;font-style:normal;font-family:system-ui,sans-serif;
+           font-weight:400;font-size:3.1vw;letter-spacing:.18em;
+           color:rgba(255,255,255,.5);margin-top:.6vw}
+
+  .cifra{font-weight:900;font-size:26vw;line-height:.86;
+    background:linear-gradient(160deg,#fff,var(--cyan) 60%,var(--morado));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    filter:drop-shadow(0 0 30px rgba(0,240,255,.35))}
+  .cifra-pie{font-family:system-ui,sans-serif;font-weight:600;font-size:4.4vw;
+             letter-spacing:.22em;color:rgba(255,255,255,.78);margin-top:2vw}
+
+  .cierre-vi{width:26vw;height:26vw;border-radius:50%;position:relative;
+             display:grid;place-items:center;margin:0 auto}
+  .cierre-vi svg{position:absolute;inset:0;width:100%;height:100%}
+  .cierre-vi span{font-weight:900;font-size:9.4vw;letter-spacing:.06em;
+    background:linear-gradient(120deg,var(--cyan),var(--rosa));
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent}
+  .dominio{font-family:system-ui,sans-serif;font-weight:700;font-size:4.6vw;
+           letter-spacing:.16em;margin-top:4vw;color:#fff}
+  .cta{margin-top:5vw;display:inline-block;padding:2.4vw 7vw;border-radius:2.4vw;
+       font-family:system-ui,sans-serif;font-weight:800;font-size:3.9vw;
+       letter-spacing:.14em;color:#04121a;
+       background:linear-gradient(100deg,var(--cyan),#4aa8ff);
+       box-shadow:0 0 40px rgba(0,240,255,.45)}
+</style></head>
+<body>
+  <canvas id="lienzo"></canvas>
+
+  <div class="capa" id="c1"><div><div class="marca">VILLUMINATION</div></div></div>
+
+  <div class="capa" id="c2"><div class="lema" id="lema"></div></div>
+
+  <div class="capa" id="c3"><div class="pilares" id="pilares"></div></div>
+
+  <div class="capa" id="c4"><div>
+    <div class="cifra" id="cifra">0</div>
+    <div class="cifra-pie">PRODUCTOS · UNA SOLA META</div>
+  </div></div>
+
+  <div class="capa" id="c5"><div>
+    <div class="cierre-vi">
+      <svg viewBox="0 0 200 200" fill="none">
+        <defs><linearGradient id="anillo" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#00f0ff"/><stop offset="33%" stop-color="#8b5cf6"/>
+          <stop offset="66%" stop-color="#ff2ecb"/><stop offset="100%" stop-color="#00f0ff"/>
+        </linearGradient></defs>
+        <circle id="anilloTrazo" cx="100" cy="100" r="94" stroke="url(#anillo)"
+                stroke-width="4" stroke-dasharray="10 7" stroke-linecap="round" opacity=".85"/>
+      </svg>
+      <span>VI</span>
+    </div>
+    <div class="dominio">VILLUMINATIONS.COM</div>
+    <div><span class="cta">VER CATÁLOGO</span></div>
+  </div></div>
+
+<script src="guion.js"></script>
+</body></html>

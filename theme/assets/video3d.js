@@ -17,6 +17,8 @@
 (function () {
   'use strict';
 
+  function on(el, ev, fn) { el.addEventListener(ev, fn, false); }
+
   var reduce = false;
   try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
 
@@ -99,7 +101,31 @@
       }
     }
 
-    /* ---------- 2. Reproduccion ---------- */
+    /* ---------- 2. Portada: cadena de respaldos ----------
+       YouTube no genera todas las miniaturas para todos los videos.
+       oardefault (proporcion original, la buena para un Short vertical) y
+       maxresdefault (1280 px) faltan a menudo; hqdefault existe siempre pero
+       es 480x360 y en un marco vertical sale recortada y borrosa. Se pide la
+       mejor primero y se va bajando. Cuando YouTube no tiene la miniatura
+       devuelve una imagen gris de 120x90, no un error, asi que tambien hay
+       que descartarla por tamano. */
+    if (portada) {
+      var respaldos = [];
+      if (portada.dataset.v3dAlt1) respaldos.push(portada.dataset.v3dAlt1);
+      if (portada.dataset.v3dAlt2) respaldos.push(portada.dataset.v3dAlt2);
+      var siguiente = function () {
+        var url = respaldos.shift();
+        if (url) portada.src = url;
+      };
+      on(portada, 'error', siguiente);
+      on(portada, 'load', function () {
+        // 120x90 es la imagen de relleno que devuelve YouTube cuando la
+        // miniatura pedida no existe. Vale como "no la tengo".
+        if (portada.naturalWidth <= 120 && portada.naturalHeight <= 90) siguiente();
+      });
+    }
+
+    /* ---------- 3. Reproduccion ---------- */
     var boton = root.querySelector('[data-v3d-play]');
 
     function abrirIncrustado() {
@@ -135,7 +161,7 @@
       });
     }
 
-    /* ---------- 3. Halo de color tomado del propio video ----------
+    /* ---------- 4. Halo de color tomado del propio video ----------
        El fondo de la seccion recoge los colores que hay en pantalla en ese
        momento, asi el video deja de parecer un rectangulo pegado encima del
        negro y pasa a formar parte de la pagina. Se pinta en un lienzo
@@ -168,7 +194,7 @@
       }
     }
 
-    /* ---------- 4. Solo trabaja cuando se ve ---------- */
+    /* ---------- 5. Solo trabaja cuando se ve ---------- */
     function aplicar() {
       if (!video) return;
       if (aLaVista && !document.hidden) {

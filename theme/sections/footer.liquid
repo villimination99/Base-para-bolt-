@@ -79,6 +79,53 @@
       </div>
     {%- endif -%}
 
+    {%- comment -%}
+      Franja de garantias. Es de los elementos que mas reducen el abandono en
+      el ultimo tramo: el visitante confirma envio, pago y devoluciones sin
+      salir de la pagina. Se construye con bloques para que el texto lo
+      controle la tienda; NO trae ninguna promesa de envio gratis, que sigue
+      desactivado a peticion expresa.
+    {%- endcomment -%}
+    {%- assign garantias = section.blocks | where: 'type', 'garantia' -%}
+    {%- if garantias.size > 0 -%}
+      <ul class="footer-trust" role="list" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- for block in garantias -%}
+          <li class="footer-trust-item" {{ block.shopify_attributes }}>
+            <span class="footer-trust-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icono -%}</span>
+            <span class="footer-trust-txt">
+              <strong>{{ block.settings.titulo }}</strong>
+              {%- if block.settings.texto != blank -%}<span>{{ block.settings.texto }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- comment -%}
+      Contacto. Ademas de dar confianza, es la senal que Google y las IA usan
+      para saber que detras de la tienda hay alguien real. Todo opcional: si
+      no se rellena, no se imprime nada.
+    {%- endcomment -%}
+    {%- if section.settings.contacto_email != blank or section.settings.contacto_tel != blank or section.settings.contacto_horario != blank -%}
+      <div class="footer-contacto">
+        {%- if section.settings.contacto_email != blank -%}
+          <a class="footer-contacto-item" href="mailto:{{ section.settings.contacto_email }}">
+            {%- render 'icon', name: 'mail' -%}<span>{{ section.settings.contacto_email }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_tel != blank -%}
+          <a class="footer-contacto-item" href="tel:{{ section.settings.contacto_tel | remove: ' ' | remove: '-' }}">
+            {%- render 'icon', name: 'chat' -%}<span>{{ section.settings.contacto_tel }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_horario != blank -%}
+          <span class="footer-contacto-item is-plain">
+            {%- render 'icon', name: 'calendar' -%}<span>{{ section.settings.contacto_horario }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
     {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
       <div class="footer-payments" role="list" aria-label="{{ section.settings.payment_label | escape }}">
         {%- for type in shop.enabled_payment_types -%}
@@ -122,6 +169,28 @@
       "default": "Pago 100% seguro y cifrado"
     },
     {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contacto_email",
+      "label": "Correo de contacto",
+      "info": "Opcional. Se muestra en el pie y da confianza. Usa una dirección de atención al cliente, no una personal."
+    },
+    {
+      "type": "text",
+      "id": "contacto_tel",
+      "label": "Teléfono",
+      "info": "Opcional. Se convierte en un enlace que marca desde el móvil."
+    },
+    {
+      "type": "text",
+      "id": "contacto_horario",
+      "label": "Horario de atención",
+      "info": "Opcional. Por ejemplo: Lunes a viernes, 9:00 a 18:00 (hora del Este)."
+    },
+    {
       "type": "textarea",
       "id": "quotes",
       "label": "Frases motivacionales (una por línea)",
@@ -146,23 +215,113 @@
       "type": "menu",
       "name": "Columna de menú",
       "settings": [
-        { "type": "text", "id": "title", "label": "Título", "default": "Tienda" },
-        { "type": "link_list", "id": "menu", "label": "Menú" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Tienda"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
       ]
     },
     {
       "type": "text",
       "name": "Columna de texto",
       "settings": [
-        { "type": "text", "id": "title", "label": "Título", "default": "Contacto" },
-        { "type": "richtext", "id": "text", "label": "Texto" }
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Contacto"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    },
+    {
+      "type": "garantia",
+      "name": "Garantía",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "default": "truck",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Camión (envío)"
+            },
+            {
+              "value": "shield",
+              "label": "Escudo (seguridad)"
+            },
+            {
+              "value": "lock",
+              "label": "Candado (pago seguro)"
+            },
+            {
+              "value": "return",
+              "label": "Flecha (devoluciones)"
+            },
+            {
+              "value": "chat",
+              "label": "Mensaje (soporte)"
+            },
+            {
+              "value": "check",
+              "label": "Marca de verificación"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "globe",
+              "label": "Globo (internacional)"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo (calidad)"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "Envío con seguimiento"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "default": "Recibes el número de rastreo en cuanto sale."
+        }
       ]
     }
   ],
   "default": {
     "blocks": [
-      { "type": "menu", "settings": { "title": "Tienda" } },
-      { "type": "text", "settings": { "title": "Contenido" } }
+      {
+        "type": "menu",
+        "settings": {
+          "title": "Tienda"
+        }
+      },
+      {
+        "type": "text",
+        "settings": {
+          "title": "Contenido"
+        }
+      }
     ]
   }
 }

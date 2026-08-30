@@ -54,7 +54,8 @@
     "copy_hint": "Zum Kopieren tippen",
     "copied": "Kopiert!",
     "video_placeholder": "Wähle im Theme-Editor ein Video aus.",
-    "play_video": "Video abspielen"
+    "play_video": "Video abspielen",
+    "sequence_hint": "Bewege dich über die Animation"
   },
   "accessibility": {
     "skip_to_content": "Zum Inhalt springen",

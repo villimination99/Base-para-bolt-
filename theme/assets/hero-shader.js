@@ -59,10 +59,19 @@
     '}',
     'void main(){',
     '  vec2 screenUv=gl_FragCoord.xy/u_resolution.xy;',
-    '  vec2 p=(gl_FragCoord.xy-0.5*u_resolution.xy)/min(u_resolution.x,u_resolution.y);',
+    '  float lado=min(u_resolution.x,u_resolution.y);',
+    '  vec2 p=(gl_FragCoord.xy-0.5*u_resolution.xy)/lado;',
     // el scroll acerca el marco y aviva el pulso
-    '  p*=u_scale*(1.0-u_scroll*0.28);',
-    '  vec2 box=vec2(0.82,0.47);',
+    '  float zoom=u_scale*(1.0-u_scroll*0.28);',
+    '  p*=zoom;',
+    // El marco se deduce de lo que DE VERDAD se ve. Con la caja fija de
+    // 0.82 x 0.47, en un movil vertical el eje X solo llegaba a ±0.62: los
+    // dos lados quedaban fuera de pantalla y el visitante veia una unica
+    // barra horizontal en vez de un marco. Pasaba en iPhone y en iPad; solo
+    // en escritorio se veia entero. Ahora la caja ocupa el 80 % de la mitad
+    // visible en cada eje, asi que el marco se cierra en cualquier formato.
+    '  vec2 mitad=0.5*u_resolution.xy/lado*zoom;',
+    '  vec2 box=mitad*0.80;',
     '  vec2 d=abs(p)-box;',
     '  float outside=length(max(d,0.0))+min(max(d.x,d.y),0.0);',
     '  float thickness=mix(0.018,0.11,u_paramA)*(1.0+u_scroll*0.9);',
@@ -72,8 +81,24 @@
     '  float inten=u_intensity+u_scroll*0.45;',
     '  float pulse=0.5+0.5*sin(perimeter*(5.0+inten*9.0)-u_time*speed);',
     '  float trail=pow(pulse,mix(7.0,2.0,clamp(inten,0.0,1.0)));',
+    // Segundo pulso, mas lento y en sentido contrario. Dos luces que se
+    // cruzan leen como energia; una sola lee como un led parpadeando.
+    '  float pulso2=0.5+0.5*sin(perimeter*(3.0+inten*5.0)+u_time*speed*0.62+2.1);',
+    '  trail=max(trail,pow(pulso2,mix(9.0,3.0,clamp(inten,0.0,1.0)))*0.55);',
+    // Esquinas marcadas, como el visor de la seccion de video: da familia a
+    // las dos secciones. Solo brilla donde ya hay borde, no inventa luz.
+    '  float dEsq=length(abs(p)-box);',
+    '  float esquina=exp(-dEsq*dEsq*70.0);',
     '  float innerGlow=exp(-abs(outside)*24.0)*(0.32+u_scroll*0.30);',
-    '  vec3 col=mix(u_colors[0],palette(trail),clamp(edge+innerGlow,0.0,1.0));',
+    // Carril tenue SIEMPRE visible y el pulso encima. Sin el, palette(0)
+    // devuelve el propio color de fondo, asi que el tramo sin luz se borraba
+    // y el marco se leia como roto en vez de como una luz que recorre un
+    // carril. Se vio en una captura del movil, no en el codigo.
+    '  vec3 carril=palette(0.20);',
+    '  vec3 luz=palette(trail);',
+    '  vec3 col=u_colors[0];',
+    '  col=mix(col,carril,edge*0.42);',
+    '  col=mix(col,luz,clamp(edge*trail+innerGlow+esquina*edge*0.75,0.0,1.0));',
     '  col=(col-0.5)*u_contrast+0.5;',
     '  if(u_grain>0.0001) col+=(grainHash(gl_FragCoord.xy+vec2(u_seed*17.0,u_seed*31.0))-0.5)*u_grain;',
     '  gl_FragColor=vec4(clamp(col,0.0,1.0),1.0);',

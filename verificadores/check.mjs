@@ -1040,6 +1040,77 @@ check('Video 3D: piezas completas', () => {
   return bad;
 });
 
+check('Pie: garantias y contacto', () => {
+  /* La franja de garantias es de lo que mas reduce el abandono en el ultimo
+     tramo, pero solo si dice la verdad. La tienda tiene el envio gratis
+     DESACTIVADO a peticion expresa del usuario, asi que ningun texto por
+     defecto puede prometerlo: seria una promesa que la tienda no cumple. */
+  const ruta = `${T}/sections/footer.liquid`;
+  const src = read(ruta);
+  const bad = [];
+  const esquema = JSON.parse(src.match(/\{%\s*schema\s*%\}([\s\S]*?)\{%\s*endschema\s*%\}/)[1]);
+  const garantia = (esquema.blocks || []).find(b => b.type === 'garantia');
+  if (!garantia) return ['el pie no tiene bloque de garantia'];
+
+  for (const st of garantia.settings) {
+    const d = String(st.default || '').toLowerCase();
+    if (/gratis|gratuito|free ship/.test(d))
+      bad.push(`footer: el bloque de garantia promete envio gratis por defecto ("${st.default}") y el envio gratis esta apagado`);
+  }
+  // El icono elegido tiene que existir de verdad en el snippet
+  const iconos = read(`${T}/snippets/icon.liquid`);
+  const sel = garantia.settings.find(x => x.id === 'icono');
+  for (const o of (sel ? sel.options : []))
+    if (!iconos.includes(`when '${o.value}'`))
+      bad.push(`footer: el icono "${o.value}" se ofrece en el selector pero no existe en icon.liquid`);
+  // El contacto es opcional y NO debe traer ningun valor por defecto: el
+  // correo de administracion del usuario no puede acabar publicado.
+  for (const id of ['contacto_email', 'contacto_tel', 'contacto_horario']) {
+    const st = esquema.settings.find(x => x.id === id);
+    if (!st) { bad.push(`footer: falta el ajuste ${id}`); continue; }
+    if ('default' in st) bad.push(`footer: ${id} trae un valor por defecto y deberia salir vacio`);
+  }
+  // Y los estilos tienen que existir
+  const css = read(`${T}/assets/villumination.css`);
+  for (const c of ['footer-trust', 'footer-trust-icon', 'footer-contacto'])
+    if (!css.includes('.' + c)) bad.push(`falta el estilo .${c}`);
+  return bad;
+});
+
+check('Secuencia de marca: piezas completas', () => {
+  /* La animacion existe para sustituir a un archivo de video, y su ventaja
+     depende de una cosa: que el texto sea TEXTO del documento y no pixeles.
+     Si alguien lo moviera al lienzo, Google dejaria de indexarlo y un lector
+     de pantalla dejaria de leerlo, que es justo lo que se queria evitar. */
+  const sec = `${T}/sections/secuencia.liquid`;
+  if (!fs.existsSync(sec)) return ['falta sections/secuencia.liquid'];
+  const src = read(sec);
+  const bad = [];
+  if (!fs.existsSync(`${T}/assets/secuencia.js`)) bad.push('falta assets/secuencia.js');
+  if (!src.includes("'secuencia.js' | asset_url")) bad.push('la seccion no carga secuencia.js');
+  if (!src.includes('data-sec-escena')) bad.push('las escenas no llevan data-sec-escena');
+  // Los textos tienen que salir del esquema, en nodos del documento
+  for (const t of ['secuencia-marca', 'secuencia-lema', 'secuencia-pilares', 'secuencia-cifra'])
+    if (!src.includes(t)) bad.push(`falta la escena ${t} en el marcado`);
+  const css = read(`${T}/assets/villumination.css`);
+  for (const c of ['secuencia-lienzo', 'secuencia-escena', 'secuencia-marca', 'secuencia-cifra', 'secuencia-pilar-ico'])
+    if (!css.includes('.' + c)) bad.push(`falta el estilo .${c}`);
+  // Movimiento reducido: tiene que quedar el fotograma con la llamada a la accion
+  const js = read(`${T}/assets/secuencia.js`);
+  if (!/reduce[\s\S]{0,400}pintar\(/.test(js))
+    bad.push('con movimiento reducido la secuencia no pinta ningun fotograma');
+  // Los iconos ofrecidos tienen que existir
+  const iconos = read(`${T}/snippets/icon.liquid`);
+  const esquema = JSON.parse(src.match(/\{%\s*schema\s*%\}([\s\S]*?)\{%\s*endschema\s*%\}/)[1]);
+  const pil = (esquema.blocks || []).find(b => b.type === 'pilares');
+  for (const st of (pil ? pil.settings : []))
+    if (st.type === 'select')
+      for (const o of st.options)
+        if (!iconos.includes(`when '${o.value}'`))
+          bad.push(`secuencia: el icono "${o.value}" no existe en icon.liquid`);
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

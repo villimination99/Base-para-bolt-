@@ -547,11 +547,73 @@
     "haces": {
       "type": "haces",
       "settings": {}
+    },
+    "secuencia": {
+      "type": "secuencia",
+      "blocks": {
+        "b1": {
+          "type": "marca",
+          "settings": {
+            "texto": "VILLUMINATION"
+          }
+        },
+        "b2": {
+          "type": "lema",
+          "settings": {
+            "linea1": "NO TE",
+            "linea2": "CONFORMES"
+          }
+        },
+        "b3": {
+          "type": "pilares",
+          "settings": {
+            "icono1": "dumbbell",
+            "titulo1": "FUERZA",
+            "sub1": "EQUIPO Y ACCESORIOS",
+            "icono2": "supplement",
+            "titulo2": "NUTRICIÓN",
+            "sub2": "SUPLEMENTOS",
+            "icono3": "book",
+            "titulo3": "CONSTANCIA",
+            "sub3": "PLANES Y CÓDICES"
+          }
+        },
+        "b4": {
+          "type": "cifra",
+          "settings": {
+            "numero": "37",
+            "pie": "PRODUCTOS · UNA SOLA META"
+          }
+        },
+        "b5": {
+          "type": "cierre",
+          "settings": {
+            "titulo": "VILLUMINATIONS.COM",
+            "boton": "VER CATÁLOGO",
+            "enlace": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {
+        "acento": "#00f0ff",
+        "fondo": "#05060a",
+        "alto": 560,
+        "duracion": 14,
+        "compacta": false
+      }
     }
   },
   "order": [
     "heroshader",
     "marquee",
+    "secuencia",
     "products",
     "caticons",
     "flowingmenu",
