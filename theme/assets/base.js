@@ -875,6 +875,49 @@
     }
     toggle.addEventListener('click', function () { panel.hidden ? open() : close(); });
     if (closeBtn) closeBtn.addEventListener('click', close);
+
+    /* ---- Dictado por voz ----
+       El navegador escribe en el mismo campo, asi que la busqueda predictiva
+       que ya existe se dispara sola: no hay una segunda ruta que mantener.
+       El boton solo se destapa si el reconocimiento existe de verdad. */
+    (function () {
+      var btnVoz = $('[data-search-voice]', panel);
+      var Reco = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!btnVoz || !Reco) return;
+      btnVoz.hidden = false;
+
+      var reco = null;
+      function parar() {
+        if (reco) { try { reco.stop(); } catch (e) {} reco = null; }
+        btnVoz.classList.remove('is-listening');
+        btnVoz.setAttribute('aria-pressed', 'false');
+      }
+      btnVoz.addEventListener('click', function () {
+        if (reco) { parar(); return; }
+        reco = new Reco();
+        // El idioma sale del <html lang>, asi que dicta en el idioma que el
+        // visitante esta viendo y no siempre en el principal de la tienda.
+        reco.lang = document.documentElement.lang || 'es';
+        reco.interimResults = true;
+        reco.continuous = false;
+        btnVoz.classList.add('is-listening');
+        btnVoz.setAttribute('aria-pressed', 'true');
+        reco.onresult = function (ev) {
+          var texto = '';
+          for (var i = 0; i < ev.results.length; i++) texto += ev.results[i][0].transcript;
+          if (!input) return;
+          input.value = texto;
+          // El evento input es lo que despierta a la busqueda predictiva.
+          input.dispatchEvent(new Event('input', { bubbles: true }));
+        };
+        reco.onerror = parar;
+        reco.onend = function () { parar(); if (input) input.focus(); };
+        try { reco.start(); } catch (e) { parar(); }
+      });
+      // Si se cierra el panel mientras escucha, se corta el microfono.
+      if (closeBtn) closeBtn.addEventListener('click', parar);
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') parar(); });
+    })();
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { close(); toggle.focus(); } });
 
     var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };

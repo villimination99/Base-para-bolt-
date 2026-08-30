@@ -194,6 +194,15 @@
              placeholder="{{ 'general.search.placeholder' | t }}"
              aria-label="{{ 'general.search.title' | t }}"
              role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+      {%- comment -%}
+        Dictado por voz. Nace con hidden y solo lo destapa base.js cuando el
+        navegador trae reconocimiento de voz: ensenar un microfono que al
+        pulsarlo no hace nada es peor que no ensenarlo.
+      {%- endcomment -%}
+      <button type="button" class="search-panel-voice" data-search-voice hidden
+              aria-label="{{ 'general.search.voice' | t }}" title="{{ 'general.search.voice' | t }}">
+        {%- render 'icon', name: 'mic' -%}
+      </button>
       <button type="button" class="search-panel-close" data-search-close aria-label="{{ 'accessibility.close' | t }}">
         {%- render 'icon', name: 'close' -%}
       </button>

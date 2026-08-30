@@ -21,7 +21,9 @@
       "no_results": "「{{ terms }}」に一致する結果はありません。",
       "no_results_short": "結果なし：",
       "view_all": "すべての結果を見る",
-      "error": "ただいま検索できません。検索ページからお試しください。"
+      "error": "ただいま検索できません。検索ページからお試しください。",
+      "voice": "音声で検索",
+      "listening": "聞いています…"
     },
     "cart": {
       "title": "カート"
@@ -50,7 +52,9 @@
       "seconds": "秒"
     },
     "copy_hint": "タップしてコピー",
-    "copied": "コピーしました"
+    "copied": "コピーしました",
+    "video_placeholder": "テーマエディタで動画を選んでください。",
+    "play_video": "動画を再生"
   },
   "accessibility": {
     "skip_to_content": "本文へスキップ",

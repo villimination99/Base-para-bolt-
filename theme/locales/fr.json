@@ -21,7 +21,9 @@
       "no_results": "Aucun résultat pour « {{ terms }} ».",
       "no_results_short": "Aucun résultat pour",
       "view_all": "Voir tous les résultats",
-      "error": "La recherche est indisponible pour le moment. Essayez la page de recherche complète."
+      "error": "La recherche est indisponible pour le moment. Essayez la page de recherche complète.",
+      "voice": "Recherche vocale",
+      "listening": "Jécoute…"
     },
     "cart": {
       "title": "Panier"
@@ -50,7 +52,9 @@
       "seconds": "s"
     },
     "copy_hint": "Touchez pour copier",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "video_placeholder": "Choisis une vidéo dans l’éditeur du thème.",
+    "play_video": "Lire la vidéo"
   },
   "accessibility": {
     "skip_to_content": "Aller au contenu",

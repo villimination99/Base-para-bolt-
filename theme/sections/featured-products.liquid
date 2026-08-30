@@ -22,8 +22,18 @@
     {%- if coll == blank or coll.products_count == 0 -%}
       {%- assign coll = collections.all -%}
     {%- endif -%}
+    {%- comment -%}
+      El if va anidado a proposito. Liquid evalua de derecha a izquierda, asi
+      que "coll != blank and coll.products_count > 0" haria la comparacion
+      ANTES de comprobar que coll existe, y nil > 0 es un error de Liquid que
+      sale impreso en la tienda. Anidando, la guarda se cumple de verdad.
+    {%- endcomment -%}
+    {%- assign hay_productos = false -%}
+    {%- if coll != blank -%}
+      {%- if coll.products_count > 0 -%}{%- assign hay_productos = true -%}{%- endif -%}
+    {%- endif -%}
     {%- capture product_cards -%}
-      {%- if coll != blank and coll.products_count > 0 -%}
+      {%- if hay_productos -%}
         {%- for product in coll.products limit: section.settings.limit -%}
           {%- if section.settings.layout == 'carousel' -%}<div class="carousel-slide">{%- endif -%}
           {%- render 'product-card', product: product -%}

@@ -959,6 +959,87 @@ check('Envio declarado solo a lo que se envia', () => {
   return bad;
 });
 
+check('Condiciones Liquid que mezclan and con or', () => {
+  /* Liquid NO tiene precedencia de operadores: evalua de derecha a izquierda.
+     "a and b or c" no significa "(a and b) or c" sino "a and (b or c)", que
+     casi nunca es lo que uno escribio. Escribi una asi en el JSON-LD del
+     video 3D y decidia justo lo contrario de lo que pretendia. La regla es
+     resolverlo antes con un booleano en un bloque {% liquid %}. */
+  const bad = [];
+  for (const f of liquids()) {
+    const src = stripBlocks(read(f));
+    const re = /\{%-?\s*(?:els)?if\s+([^%]+?)-?%\}/g;
+    let m;
+    while ((m = re.exec(src))) {
+      const cond = m[1];
+      if (/\band\b/.test(cond) && /\bor\b/.test(cond))
+        bad.push(`${f}:${line(src, m.index)} mezcla and con or: "${cond.trim().slice(0, 70)}"`);
+    }
+  }
+  return bad;
+});
+
+check('Comparaciones que podrian tocar nil', () => {
+  /* "vid != blank and vid.duration > 0" parece defensivo, pero como Liquid
+     evalua de derecha a izquierda la comparacion se hace PRIMERO, con vid
+     todavia sin comprobar: nil > 0 revienta el renderizado de la seccion y
+     Shopify se la traga entera. Hay que anidar los if, no encadenarlos. */
+  const bad = [];
+  for (const f of liquids()) {
+    const src = stripBlocks(read(f));
+    const re = /\{%-?\s*(?:els)?if\s+([^%]+?)-?%\}/g;
+    let m;
+    while ((m = re.exec(src))) {
+      const cond = m[1];
+      const guarda = cond.match(/(\w[\w.]*)\s*!=\s*blank\s+and\s+/);
+      if (!guarda) continue;
+      const obj = guarda[1];
+      const resto = cond.slice(guarda.index + guarda[0].length);
+      if (new RegExp(`\\b${obj.replace('.', '\\.')}\\.[\\w.]+\\s*[<>]`).test(resto))
+        bad.push(`${f}:${line(src, m.index)} compara ${obj}.algo con < o > en la misma condicion que lo protege: "${cond.trim().slice(0, 70)}"`);
+    }
+  }
+  return bad;
+});
+
+check('Parametros con guion en filtros Liquid', () => {
+  /* Los filtros de Shopify toman parametros con nombre, y ese nombre no
+     admite guiones: "video_tag: data-x: algo" es un error de sintaxis y
+     Shopify descarta el archivo sin decir nada. Los atributos con guion van
+     en el HTML de alrededor, no dentro del filtro. */
+  const bad = [];
+  for (const f of liquids()) {
+    const src = stripBlocks(read(f));
+    const re = /\{\{-?[^}]*?\|\s*\w+:[^}]*?\bdata-[\w-]+\s*:/g;
+    let m;
+    while ((m = re.exec(src)))
+      bad.push(`${f}:${line(src, m.index)} pasa un parametro con guion a un filtro`);
+  }
+  return bad;
+});
+
+check('Video 3D: piezas completas', () => {
+  /* La seccion depende de tres archivos que tienen que ir juntos. Si falta
+     uno, la seccion se ve rota pero el editor no avisa. */
+  const bad = [];
+  const sec = `${T}/sections/video-3d.liquid`;
+  if (!fs.existsSync(sec)) return ['falta sections/video-3d.liquid'];
+  const src = read(sec);
+  if (!fs.existsSync(`${T}/assets/video3d.js`)) bad.push('falta assets/video3d.js');
+  if (!src.includes("'video3d.js' | asset_url")) bad.push('la seccion no carga video3d.js');
+  const css = read(`${T}/assets/villumination.css`);
+  for (const c of ['video3d-marco', 'video3d-halo', 'video3d-pantalla', 'video3d-play', 'video3d-esquina', 'video3d-suelo'])
+    if (!css.includes('.' + c)) bad.push(`falta el estilo .${c}`);
+  // El iframe de terceros NO puede estar en el HTML: solo se inserta al pulsar play
+  if (/<iframe/i.test(src)) bad.push('la seccion trae un iframe en el HTML: cargaria YouTube en la primera visita');
+  // El halo se lee del video, asi que el lienzo tiene que existir con video subido
+  if (!src.includes('data-v3d-halo')) bad.push('sin data-v3d-halo el video no tine el fondo y queda pegado sobre el negro');
+  // Movimiento reducido: el CSS tiene que dejar el marco recto
+  if (!/prefers-reduced-motion[\s\S]{0,600}\.video3d-marco\{transform:none\}/.test(css))
+    bad.push('con movimiento reducido el marco 3D deberia quedar recto');
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

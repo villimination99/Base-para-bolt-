@@ -21,7 +21,9 @@
       "no_results": "No se encontraron resultados para \"{{ terms }}\".",
       "no_results_short": "Sin resultados para",
       "view_all": "Ver todos los resultados",
-      "error": "No se pudo buscar ahora mismo. Prueba la página de búsqueda completa."
+      "error": "No se pudo buscar ahora mismo. Prueba la página de búsqueda completa.",
+      "voice": "Buscar por voz",
+      "listening": "Escuchando…"
     },
     "cart": {
       "title": "Carrito"
@@ -50,7 +52,9 @@
       "seconds": "seg"
     },
     "copy_hint": "Toca para copiar",
-    "copied": "¡Copiado!"
+    "copied": "¡Copiado!",
+    "video_placeholder": "Elige un video en el editor del tema.",
+    "play_video": "Reproducir el video"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",

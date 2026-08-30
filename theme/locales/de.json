@@ -21,7 +21,9 @@
       "no_results": "Keine Ergebnisse für „{{ terms }}“.",
       "no_results_short": "Keine Ergebnisse für",
       "view_all": "Alle Ergebnisse ansehen",
-      "error": "Die Suche ist gerade nicht verfügbar. Versuchen Sie die vollständige Suchseite."
+      "error": "Die Suche ist gerade nicht verfügbar. Versuchen Sie die vollständige Suchseite.",
+      "voice": "Sprachsuche",
+      "listening": "Ich höre zu…"
     },
     "cart": {
       "title": "Warenkorb"
@@ -50,7 +52,9 @@
       "seconds": "Sek."
     },
     "copy_hint": "Zum Kopieren tippen",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "video_placeholder": "Wähle im Theme-Editor ein Video aus.",
+    "play_video": "Video abspielen"
   },
   "accessibility": {
     "skip_to_content": "Zum Inhalt springen",

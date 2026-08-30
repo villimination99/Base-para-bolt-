@@ -13,3 +13,8 @@ tcrun*.mjs
 tcrun.mjs
 villumination-3d-theme-*.zip
 villumination-3d-theme.zip
+
+# Skills instaladas en el contenedor (no forman parte del tema)
+.agents/
+.claude/
+skills-lock.json

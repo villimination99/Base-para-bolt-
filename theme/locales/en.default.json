@@ -21,7 +21,9 @@
       "no_results": "No results found for \"{{ terms }}\".",
       "no_results_short": "No results for",
       "view_all": "View all results",
-      "error": "We couldn't search right now. Try the full search page."
+      "error": "We couldn't search right now. Try the full search page.",
+      "voice": "Search by voice",
+      "listening": "Listening…"
     },
     "cart": {
       "title": "Cart"
@@ -50,7 +52,9 @@
       "seconds": "sec"
     },
     "copy_hint": "Tap to copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "video_placeholder": "Pick a video in the theme editor.",
+    "play_video": "Play the video"
   },
   "accessibility": {
     "skip_to_content": "Skip to content",
