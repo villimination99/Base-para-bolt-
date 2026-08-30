@@ -65,45 +65,48 @@ const duracion = await p.evaluate(() => window.__duracion);
 const total = Math.round(duracion * FPS);
 console.log(`  ${duracion} s = ${total} fotogramas`);
 
-// ffmpeg lee JPEG por tuberia. El build solo trae el demuxer image2pipe y el
-// decodificador mjpeg: no sabe leer PNG, y el protocolo "-" tampoco esta
-// compilado, hay que decir pipe:0.
-const ff = spawn(FFMPEG, [
-  '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-i', 'pipe:0',
-  '-c:v', 'libvpx', '-b:v', '4000k', '-crf', '20', '-deadline', 'good',
-  '-auto-alt-ref', '0', SALIDA,
-], { stdio: ['pipe', 'ignore', 'pipe'] });
-let ffErr = '';
-ff.stderr.on('data', d => { ffErr += d.toString(); });
-
-const escribir = (buf) => new Promise((res, rej) => {
-  if (ff.stdin.write(buf)) return res();
-  ff.stdin.once('drain', res);
-  ff.stdin.once('error', rej);
-});
+// Los fotogramas se acumulan en un archivo y ffmpeg lo lee DESPUES.
+// La primera version se los pasaba por una tuberia y se bloqueaba: navegador,
+// node y ffmpeg quedaban los tres al 0 % de CPU esperandose entre ellos. Un
+// archivo intermedio de veinte megas es un precio ridiculo por no tener que
+// razonar sobre contrapresion entre tres procesos.
+//
+// El build de ffmpeg solo trae el demuxer image2pipe y el decodificador
+// mjpeg: no sabe leer PNG, por eso los fotogramas son JPEG.
+const CRUDO = path.join(AQUI, '.fotogramas.jpg');
+const flujo = fs.createWriteStream(CRUDO);
+const escribir = (buf) => new Promise((res, rej) =>
+  flujo.write(buf, err => err ? rej(err) : res()));
 
 const t0 = Date.now();
 for (let i = 0; i < total; i++) {
   await p.evaluate(t => window.__pintar(t), i / FPS);
   await escribir(await p.screenshot({ type: 'jpeg', quality: 92 }));
-  if (i % 60 === 0 || i === total - 1) {
-    const pct = Math.round((i + 1) / total * 100);
-    process.stdout.write(`\r  fotograma ${i + 1}/${total}  ${pct} %   `);
-  }
+  if (i % 24 === 0 || i === total - 1)
+    console.log(`  fotograma ${i + 1}/${total}  ${Math.round((i + 1) / total * 100)} %`);
 }
-process.stdout.write('\n');
-
-ff.stdin.end();
-const codigo = await new Promise(res => ff.on('close', res));
+await new Promise(res => flujo.end(res));
 await navegador.close();
+
+if (errores.length) {
+  console.error('  errores de JavaScript en la escena: ' + errores.join(' | '));
+  process.exit(1);
+}
+
+console.log(`  codificando ${(fs.statSync(CRUDO).size / 1048576).toFixed(1)} MB de fotogramas`);
+const ff = spawn(FFMPEG, [
+  '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-i', CRUDO,
+  '-c:v', 'libvpx', '-b:v', '3000k', '-crf', '22',
+  '-deadline', 'good', '-auto-alt-ref', '0', SALIDA,
+], { stdio: ['ignore', 'ignore', 'pipe'] });
+let ffErr = '';
+ff.stderr.on('data', d => { ffErr += d.toString(); });
+const codigo = await new Promise(res => ff.on('close', res));
+try { fs.unlinkSync(CRUDO); } catch (e) {}
 
 if (codigo !== 0) {
   console.error('  ffmpeg fallo:\n' + ffErr.split('\n').slice(-12).join('\n'));
   process.exit(1);
 }
-if (errores.length) {
-  console.error('  errores de JavaScript en la escena: ' + errores.join(' | '));
-  process.exit(1);
-}
-const kb = fs.statSync(SALIDA).size / 1024;
-console.log(`  Listo: ${path.relative(RAIZ, SALIDA)}  ${(kb / 1024).toFixed(2)} MB  en ${((Date.now() - t0) / 1000).toFixed(0)} s`);
+const mb = fs.statSync(SALIDA).size / 1048576;
+console.log(`  Listo: ${path.relative(RAIZ, SALIDA)}  ${mb.toFixed(2)} MB  en ${((Date.now() - t0) / 1000).toFixed(0)} s`);

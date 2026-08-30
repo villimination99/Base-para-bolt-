@@ -1111,6 +1111,81 @@ check('Secuencia de marca: piezas completas', () => {
   return bad;
 });
 
+check('Plantillas y grupos contra sus esquemas', () => {
+  /* Nacio de un agujero que llevaba versiones ahi sin que nadie lo viera:
+     footer-group.json tenia el pie SIN bloques, asi que los once enlaces del
+     menu de pie de la tienda (politicas, preguntas, contacto) no salian en
+     ninguna pagina. Un preset no coloca nada; solo hace que la seccion
+     aparezca en "Anadir seccion". Lo que se ve es lo que esta escrito en la
+     plantilla o en el grupo.
+     Comprueba tambien los limites de Shopify, que si se pasan hacen que la
+     plantilla se descarte entera y sin aviso. */
+  const bad = [];
+  const esquemaDe = t => {
+    const p = `${T}/sections/${t}.liquid`;
+    if (!fs.existsSync(p)) return null;
+    const m = read(p).match(/\{%\s*schema\s*%\}([\s\S]*?)\{%\s*endschema\s*%\}/);
+    if (!m) return null;
+    try { return JSON.parse(m[1]); } catch (e) { return null; }
+  };
+  const archivos = walk(`${T}/templates`, /\.json$/)
+    .concat(walk(`${T}/sections`, /-group\.json$/));
+
+  for (const f of archivos) {
+    let d;
+    try { d = JSON.parse(read(f)); } catch (e) { continue; }
+    const secs = d.sections || {};
+    if (Object.keys(secs).length > 25)
+      bad.push(`${f}: ${Object.keys(secs).length} secciones y el limite de Shopify son 25`);
+    for (const [sid, s] of Object.entries(secs)) {
+      const e = esquemaDe(s.type);
+      if (!e) { bad.push(`${f}: "${sid}" es de tipo "${s.type}" y no existe o su esquema no es JSON valido`); continue; }
+      const ids = new Set((e.settings || []).filter(x => x.id).map(x => x.id));
+      for (const k of Object.keys(s.settings || {}))
+        if (!ids.has(k)) bad.push(`${f}: ${sid} (${s.type}) guarda el ajuste "${k}" que el esquema ya no tiene`);
+      const tipos = new Set((e.blocks || []).map(b => b.type));
+      const bl = s.blocks || {};
+      if (Object.keys(bl).length > 50)
+        bad.push(`${f}: ${sid} tiene ${Object.keys(bl).length} bloques y el limite son 50`);
+      if (e.max_blocks && Object.keys(bl).length > e.max_blocks)
+        bad.push(`${f}: ${sid} tiene ${Object.keys(bl).length} bloques y su esquema permite ${e.max_blocks}`);
+      for (const be of (e.blocks || [])) {
+        if (!be.limit) continue;
+        const n = Object.values(bl).filter(b => b.type === be.type).length;
+        if (n > be.limit) bad.push(`${f}: ${sid} tiene ${n} bloques "${be.type}" y el limite es ${be.limit}`);
+      }
+      for (const [bid, b] of Object.entries(bl)) {
+        if (!tipos.has(b.type)) { bad.push(`${f}: ${sid}/${bid} usa el bloque "${b.type}" que no existe en ${s.type}`); continue; }
+        const be = (e.blocks || []).find(x => x.type === b.type);
+        const bids = new Set((be.settings || []).filter(x => x.id).map(x => x.id));
+        for (const k of Object.keys(b.settings || {}))
+          if (!bids.has(k)) bad.push(`${f}: ${sid}/${bid} (${b.type}) guarda "${k}", que no esta en el esquema del bloque`);
+      }
+      const orden = s.block_order;
+      if (orden && orden.slice().sort().join() !== Object.keys(bl).sort().join())
+        bad.push(`${f}: ${sid} tiene block_order y bloques que no coinciden`);
+    }
+    if (d.order && d.order.slice().sort().join() !== Object.keys(secs).sort().join())
+      bad.push(`${f}: order y sections no coinciden`);
+  }
+
+  /* El pie tiene que llevar de verdad un bloque de menu: su ajuste link_list
+     no tiene valor por defecto, asi que sin bloque el pie sale sin un solo
+     enlace y se pierden las politicas en todas las paginas. */
+  const grupo = `${T}/sections/footer-group.json`;
+  if (fs.existsSync(grupo)) {
+    const g = JSON.parse(read(grupo));
+    const pie = Object.values(g.sections || {}).find(x => x.type === 'footer');
+    const bloques = pie ? Object.values(pie.blocks || {}) : [];
+    if (!bloques.some(b => b.type === 'menu'))
+      bad.push('footer-group.json: el pie no lleva ningun bloque de menu, asi que sale sin enlaces');
+    const conMenu = bloques.find(b => b.type === 'menu');
+    if (conMenu && !conMenu.settings.menu)
+      bad.push('footer-group.json: el bloque de menu del pie no apunta a ningun menu');
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

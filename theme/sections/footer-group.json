@@ -2,7 +2,60 @@
   "type": "footer",
   "name": "Grupo de pie de página",
   "sections": {
-    "footer": { "type": "footer", "settings": {} }
+    "footer": {
+      "type": "footer",
+      "settings": {},
+      "blocks": {
+        "menu": {
+          "type": "menu",
+          "settings": {
+            "title": "Información",
+            "menu": "footer"
+          }
+        },
+        "g1": {
+          "type": "garantia",
+          "settings": {
+            "icono": "truck",
+            "titulo": "Envío con seguimiento",
+            "texto": "Recibes el número de rastreo en cuanto tu pedido sale."
+          }
+        },
+        "g2": {
+          "type": "garantia",
+          "settings": {
+            "icono": "lock",
+            "titulo": "Pago cifrado",
+            "texto": "Lo procesa Shopify: tus datos de tarjeta no pasan por nosotros."
+          }
+        },
+        "g3": {
+          "type": "garantia",
+          "settings": {
+            "icono": "return",
+            "titulo": "Devoluciones",
+            "texto": "Consulta la política de reembolso antes de comprar."
+          }
+        },
+        "g4": {
+          "type": "garantia",
+          "settings": {
+            "icono": "chat",
+            "titulo": "Atención en español",
+            "texto": "Escríbenos y te responde una persona, no un robot."
+          }
+        }
+      },
+      "block_order": [
+        "menu",
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ]
+    }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
