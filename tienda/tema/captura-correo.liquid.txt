@@ -1,0 +1,86 @@
+{%- comment -%}
+  VILLUMINATIONS · captura de correo
+  Pegar como sección o fragmento del tema. Usa el formulario nativo de
+  Shopify, así que el contacto entra en Clientes con su consentimiento
+  registrado y las automatizaciones de Marketing pueden dispararse solas.
+
+  La casilla NO va marcada de antemano: con la CASL delante, el
+  consentimiento tiene que ser un acto de la persona.
+{%- endcomment -%}
+
+<div class="vi-captura">
+  <h2 class="vi-captura__titulo">{{ 'vi.captura.titulo' | t }}</h2>
+  <p class="vi-captura__sub">{{ 'vi.captura.sub' | t }}</p>
+
+  {%- form 'customer', class: 'vi-captura__form' -%}
+    <input type="hidden" name="contact[tags]" value="boletin,diario">
+    <input type="hidden" name="contact[accepts_marketing]" value="true">
+
+    <label class="visually-hidden" for="vi-correo">
+      {{ 'vi.captura.marcador' | t }}
+    </label>
+    <input id="vi-correo" type="email" name="contact[email]" required
+           autocomplete="email"
+           placeholder="{{ 'vi.captura.marcador' | t }}">
+
+    <label class="vi-captura__consent">
+      <input type="checkbox" name="contact[note][consentimiento]"
+             value="expreso" required>
+      <span>{{ 'vi.captura.consentimiento' | t }}</span>
+    </label>
+
+    <button type="submit">{{ 'vi.captura.boton' | t }}</button>
+
+    {%- if form.posted_successfully? -%}
+      <p class="vi-captura__ok" role="status">{{ 'vi.captura.exito' | t }}</p>
+    {%- elsif form.errors -%}
+      <p class="vi-captura__mal" role="alert">{{ 'vi.captura.error' | t }}</p>
+    {%- endif -%}
+  {%- endform -%}
+</div>
+
+
+// locales/*.json
+
+--- es.json ---
+{
+  "vi": {
+    "captura": {
+      "titulo": "El Diario, en tu correo",
+      "sub": "Cada artículo dice de dónde sale cada cifra. Sin promesas de salud y sin nada que no se pueda comprobar.",
+      "marcador": "tu@correo.com",
+      "boton": "Suscribirme",
+      "exito": "Hecho. Te llega un correo para confirmar; hasta que lo confirmes no te escribimos.",
+      "error": "Ese correo no parece válido. Míralo y vuelve a probar.",
+      "consentimiento": "Quiero recibir de <strong>VILLUMINATIONS</strong> el Diario y el aviso de cuándo se publica un documento nuevo. Entiendo que puedo darme de baja en cualquier momento desde el enlace de cada correo o escribiendo a villumination@outlook.com."
+    }
+  }
+}
+--- en.json ---
+{
+  "vi": {
+    "captura": {
+      "titulo": "The Journal, in your inbox",
+      "sub": "Every article says where each figure comes from. No health promises and nothing that cannot be checked.",
+      "marcador": "you@email.com",
+      "boton": "Subscribe",
+      "exito": "Done. You will get an email to confirm; we write nothing until you do.",
+      "error": "That email does not look valid. Check it and try again.",
+      "consentimiento": "I want to receive the Journal from <strong>VILLUMINATIONS</strong> and notice of when a new document is published. I understand I can unsubscribe at any time from the link in every email or by writing to villumination@outlook.com."
+    }
+  }
+}
+--- fr.json ---
+{
+  "vi": {
+    "captura": {
+      "titulo": "Le Journal, dans votre boîte",
+      "sub": "Chaque article dit d'où vient chaque chiffre. Sans promesses de santé et sans rien qui ne puisse être vérifié.",
+      "marcador": "vous@courriel.com",
+      "boton": "M'abonner",
+      "exito": "C'est fait. Vous recevrez un courriel de confirmation ; nous n'écrivons rien avant.",
+      "error": "Ce courriel ne semble pas valide. Vérifiez et réessayez.",
+      "consentimiento": "Je souhaite recevoir de <strong>VILLUMINATIONS</strong> le Journal et l'avis de publication d'un nouveau document. Je comprends que je peux me désabonner à tout moment depuis le lien de chaque courriel ou en écrivant à villumination@outlook.com."
+    }
+  }
+}
