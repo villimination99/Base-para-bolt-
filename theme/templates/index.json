@@ -518,6 +518,35 @@
         "card_size": "medium",
         "hint": "Arrastra o desliza"
       }
+    },
+    "video3d": {
+      "type": "video-3d",
+      "settings": {
+        "video_url": "https://www.youtube.com/watch?v=B6f4OevcqJg",
+        "formato": "vertical",
+        "eyebrow": "EN MOVIMIENTO",
+        "title": "VIVE LA EXPERIENCIA",
+        "subtitle": "Muévete sobre el video: el marco te sigue.",
+        "caption": "",
+        "accent": "#00f0ff",
+        "bg": "#05060a",
+        "height": 560,
+        "tilt": 10,
+        "blend": 60,
+        "scanlines": true,
+        "compact": false,
+        "autoplay": true,
+        "loop": true,
+        "controls": false,
+        "seo_video": true,
+        "upload_date": "",
+        "button_label": "",
+        "button_url": ""
+      }
+    },
+    "haces": {
+      "type": "haces",
+      "settings": {}
     }
   },
   "order": [
@@ -530,11 +559,13 @@
     "vip",
     "showcase3d",
     "productcarousel3d",
+    "video3d",
     "videos",
     "bestsellers",
     "plans",
     "testimonials",
     "motivation",
+    "haces",
     "faq",
     "newsletter"
   ]

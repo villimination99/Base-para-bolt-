@@ -32,6 +32,23 @@
     assign portada = vid.preview_image
   endif
 
+  # Portada automatica de YouTube: sin esto la seccion recien anadida sale en
+  # negro hasta que alguien suba una imagen, y con ella no habria VideoObject.
+  # maxresdefault no existe en todos los videos; hqdefault si, siempre.
+  assign portada_url = ''
+  if portada != blank
+    assign portada_url = portada | image_url: width: 1280
+    unless portada_url contains 'http'
+      assign portada_url = portada_url | prepend: 'https:'
+    endunless
+  elsif enlace != blank and enlace.type == 'youtube'
+    assign portada_url = enlace.id | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg'
+  endif
+
+  # Proporcion del marco. Un Short vertical dentro de un marco apaisado se
+  # recorta por arriba y por abajo, que es justo donde esta la persona.
+  assign proporcion = section.settings.formato
+
   assign alto_pc = section.settings.height
   assign alto_movil = alto_pc | times: 62 | divided_by: 100
 -%}
@@ -53,6 +70,7 @@
     {%- endif -%}
 
     <div class="video3d"
+         data-formato="{{ proporcion }}"
          data-video-3d
          data-v3d-giro="{{ section.settings.tilt }}"
          {% if incrustar != blank %}data-v3d-embed="{{ incrustar }}"{% endif %}
@@ -71,6 +89,9 @@
       {%- elsif portada != blank -%}
         <span class="video3d-halo video3d-halo--fijo is-on" aria-hidden="true"
               style="background-image:url({{ portada | image_url: width: 80 }})"></span>
+      {%- elsif portada_url != blank -%}
+        <span class="video3d-halo video3d-halo--fijo is-on" aria-hidden="true"
+              style="background-image:url({{ portada_url }})"></span>
       {%- endif -%}
       <span class="video3d-aura" aria-hidden="true"></span>
       <span class="video3d-suelo" aria-hidden="true"></span>
@@ -100,6 +121,18 @@
                    alt="{{ titulo | default: shop.name | escape }}"
                    width="1200"
                    height="{{ 1200 | divided_by: portada.aspect_ratio | round }}"
+                   loading="lazy" decoding="async">
+            {%- elsif portada_url != blank -%}
+              {%- comment -%}
+                Miniatura de YouTube. Sale de i.ytimg.com, no del CDN de
+                Shopify, asi que theme-check avisa de RemoteAsset: es
+                inevitable y ya pasa con el carrusel de videos.
+              {%- endcomment -%}
+              <img class="video3d-portada"
+                   data-v3d-portada
+                   src="{{ portada_url }}"
+                   alt="{{ titulo | default: shop.name | escape }}"
+                   width="480" height="360"
                    loading="lazy" decoding="async">
             {%- endif -%}
           {%- else -%}
@@ -158,7 +191,7 @@
 {%- endcomment -%}
 {%- liquid
   assign declarar_video = false
-  if section.settings.seo_video and titulo != blank and portada != blank
+  if section.settings.seo_video and titulo != blank and portada_url != blank
     if vid != blank
       assign declarar_video = true
     elsif incrustar != blank
@@ -169,11 +202,7 @@
 {%- if declarar_video -%}
   {%- liquid
     assign descripcion = section.settings.subtitle | default: section.settings.caption | default: titulo
-    assign miniatura = portada | image_url: width: 1280
-    assign miniatura_abs = miniatura
-    unless miniatura contains 'http'
-      assign miniatura_abs = miniatura | prepend: 'https:'
-    endunless
+    assign miniatura_abs = portada_url
     assign subida = section.settings.upload_date
     if subida == blank
       assign subida = shop.published_at | date: '%Y-%m-%d'
@@ -234,7 +263,7 @@
     { "type": "header", "content": "Video" },
     { "type": "video", "id": "video", "label": "Video subido a Shopify", "info": "La mejor opción: sin cookies de terceros y con duración real para Google." },
     { "type": "video_url", "id": "video_url", "label": "O un enlace de YouTube / Vimeo", "accept": ["youtube", "vimeo"], "info": "Solo se usa si no has subido un video arriba. El reproductor no se carga hasta que alguien pulsa play." },
-    { "type": "image_picker", "id": "poster", "label": "Portada", "info": "Obligatoria para el enlace de YouTube/Vimeo. Para un video subido, se usa su primer fotograma si la dejas vacía." },
+    { "type": "image_picker", "id": "poster", "label": "Portada", "info": "Opcional. Si la dejas vacía se usa el primer fotograma del video subido, o la miniatura de YouTube." },
     { "type": "checkbox", "id": "autoplay", "label": "Reproducir solo al entrar en pantalla", "default": true, "info": "Siempre sin sonido, como exigen los navegadores. Se pausa al salir de la vista." },
     { "type": "checkbox", "id": "loop", "label": "Repetir en bucle", "default": true },
     { "type": "checkbox", "id": "controls", "label": "Mostrar los controles del reproductor", "default": false },
@@ -248,7 +277,14 @@
     { "type": "header", "content": "Presentación" },
     { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00f0ff" },
     { "type": "color", "id": "bg", "label": "Color de fondo", "default": "#05060a" },
-    { "type": "range", "id": "height", "min": 320, "max": 780, "step": 20, "unit": "px", "label": "Alto del marco", "default": 560 },
+    { "type": "select", "id": "formato", "label": "Formato del video",
+      "options": [
+        { "value": "ancho", "label": "Apaisado 16:9 (video normal)" },
+        { "value": "vertical", "label": "Vertical 9:16 (Reels y Shorts)" },
+        { "value": "cuadrado", "label": "Cuadrado 1:1" }
+      ], "default": "ancho",
+      "info": "Un Short vertical dentro de un marco apaisado se recorta justo por donde está la persona. Elige el formato que tenga tu video." },
+    { "type": "range", "id": "height", "min": 320, "max": 780, "step": 20, "unit": "px", "label": "Alto máximo del marco", "default": 560, "info": "Solo afecta al formato apaisado; los verticales y cuadrados se ajustan solos." },
     { "type": "range", "id": "tilt", "min": 0, "max": 16, "step": 2, "unit": "°", "label": "Inclinación 3D", "default": 10, "info": "0 lo deja plano." },
     { "type": "range", "id": "blend", "min": 0, "max": 100, "step": 10, "unit": "%", "label": "Fundido con el fondo", "default": 60, "info": "Difumina los bordes del video hacia el fondo y le da el tono del acento. 0 lo deja recortado en seco." },
     { "type": "checkbox", "id": "scanlines", "label": "Líneas de escaneo", "default": true },

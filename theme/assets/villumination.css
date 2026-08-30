@@ -709,10 +709,24 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 }
 .video3d.is-tilt .video3d-borde{opacity:1}
 
+/* La proporcion manda sobre la altura. Un Short vertical metido en un marco
+   16:9 se recorta justo por donde esta la persona, asi que cada formato
+   decide su propia caja y el ajuste de altura solo limita al apaisado. */
 .video3d-pantalla{position:relative;border-radius:20px;overflow:hidden;
-  height:var(--v3d-alto,560px);background:#000;
+  width:100%;aspect-ratio:16/9;max-height:var(--v3d-alto,560px);
+  background:#000;
   display:flex;align-items:center;justify-content:center;
   transform:translateZ(0)}
+.video3d[data-formato="vertical"]{max-width:min(400px,100%)}
+.video3d[data-formato="vertical"] .video3d-pantalla{aspect-ratio:9/16;max-height:none}
+.video3d[data-formato="cuadrado"]{max-width:min(660px,100%)}
+.video3d[data-formato="cuadrado"] .video3d-pantalla{aspect-ratio:1;max-height:none}
+/* Sin aspect-ratio (navegadores anteriores a 2021) se vuelve a la altura fija,
+   que es exactamente el comportamiento que tenia antes: nada se rompe. */
+@supports not (aspect-ratio:1){
+  .video3d-pantalla{height:var(--v3d-alto,560px)}
+  .video3d[data-formato="vertical"] .video3d-pantalla{height:calc(var(--v3d-alto,560px) * 1.2)}
+}
 /* Vineta interior: los bordes del video se apagan hacia el fondo de la
    pagina en vez de cortarse en seco contra el negro. */
 .video3d-pantalla::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
@@ -789,7 +803,11 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
   font-size:.92rem;max-width:56ch}
 
 @media (max-width:900px){
-  .video3d-pantalla{height:var(--v3d-alto-movil,340px)}
+  .video3d-pantalla{max-height:var(--v3d-alto-movil,340px)}
+  .video3d[data-formato="vertical"]{max-width:min(320px,86vw)}
+  .video3d[data-formato="vertical"] .video3d-pantalla,
+  .video3d[data-formato="cuadrado"] .video3d-pantalla{max-height:none}
+  @supports not (aspect-ratio:1){ .video3d-pantalla{height:var(--v3d-alto-movil,340px)} }
   .video3d-esquina{width:20px;height:20px}
   .video3d-play{width:64px;height:64px}
   .video3d-play svg{width:24px;height:24px}
