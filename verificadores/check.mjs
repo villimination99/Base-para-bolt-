@@ -1220,6 +1220,52 @@ check('Scripts que se cargan al acercarse', () => {
   return bad;
 });
 
+check('robots.txt no cierra la tienda', () => {
+  /* Es el archivo mas peligroso del tema: una linea de mas saca paginas del
+     indice sin avisar y sin dejar rastro visible en la tienda. Las reglas
+     por defecto de Shopify se actualizan solas, asi que hay que imprimirlas
+     tal cual y no sustituirlas por una lista escrita a mano. */
+  const ruta = `${T}/templates/robots.txt.liquid`;
+  if (!fs.existsSync(ruta)) return [];   // sin plantilla, Shopify sirve el suyo y esta bien
+  const src = read(ruta);
+  const bad = [];
+
+  if (!/robots\.default_groups/.test(src))
+    bad.push('robots.txt: no imprime robots.default_groups, se pierden las reglas que Shopify actualiza sola');
+  if (!/group\.sitemap/.test(src))
+    bad.push('robots.txt: no imprime group.sitemap, el sitemap dejaria de declararse');
+
+  /* Un "Disallow: /" escrito a mano cerraria el sitio entero. El que llega
+     desde group.rules es cosa de Shopify (bloquea a Nutch, por ejemplo) y
+     ese no se toca. */
+  const cuerpo = stripBlocks(src);
+  const lineas = cuerpo.split('\n');
+  lineas.forEach((l, i) => {
+    if (/^\s*Disallow:\s*\/\s*$/.test(l))
+      bad.push(`${ruta}:${i + 1} tiene un "Disallow: /" escrito a mano: cerraria la tienda entera`);
+  });
+
+  /* Las IA solo entran si se las nombra: varios servicios intermedios las
+     bloquean por defecto y algunas solo respetan un grupo con su nombre. */
+  for (const a of ['GPTBot', 'ClaudeBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended'])
+    if (!src.includes(a)) bad.push(`robots.txt: no nombra a ${a}, ese sistema de IA podria no entrar`);
+
+  /* Y cada rastreador nombrado tiene que heredar las exclusiones del grupo
+     general: con grupo propio deja de aplicarsele el grupo "*", asi que un
+     "Allow: /" a secas le abriria /checkout y /cart. */
+  if (!/exclusiones/.test(src))
+    bad.push('robots.txt: los grupos anadidos no copian las exclusiones del grupo general, quedarian con acceso a /checkout y /cart');
+
+  /* El ajuste del sitemap extra tiene que existir en el esquema. */
+  const usos = src.match(/settings\.([a-z0-9_]+)/g) || [];
+  const esquema = read(`${T}/config/settings_schema.json`);
+  for (const u of usos) {
+    const id = u.split('.')[1];
+    if (!esquema.includes(`"${id}"`)) bad.push(`robots.txt usa settings.${id}, que no existe en el esquema`);
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

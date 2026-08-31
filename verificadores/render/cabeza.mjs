@@ -55,7 +55,8 @@ const head = layout.slice(0, layout.indexOf('</head>'));
 
 const debe = {'google':'google-site-verification','bing':'msvalidate.01','yandex':'yandex-verification',
   'pinterest':'p:domain_verify','meta':'facebook-domain-verification','canonical':'rel="canonical"',
-  'robots':'name="robots"','og:title':'og:title','og:image':'og:image','twitter':'twitter:card','hreflang':'hreflang'};
+  'robots':'name="robots"','og:title':'og:title','og:image':'og:image','twitter':'twitter:card','hreflang':'hreflang',
+  'og:image:width':'og:image:width','og:type':'og:type','og:url':'og:url','og:site_name':'og:site_name'};
 
 /* Se recorren los NUEVE tipos de pagina, no solo la ficha de producto. Una
    etiqueta de verificacion que solo salga en algunas paginas puede hacer que
@@ -109,6 +110,6 @@ for (const PAGINA of PAGINAS) {
 }
 console.log('');
 console.log(fallos === 0
-  ? `Las once etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados.`
+  ? `Las ${Object.keys(debe).length} etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados.`
   : `${fallos} tipo(s) de pagina con problemas.`);
 process.exit(fallos ? 1 : 0);
