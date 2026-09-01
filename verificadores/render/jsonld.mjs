@@ -61,6 +61,10 @@ const ctx = {
     featured_media:{preview_image:img}, media:[{preview_image:img}], images:[img], featured_image:img,
     price:12990, price_min:12990, price_max:15990, available:true, selected_or_first_available_variant:{id:9,sku:'VP-001',barcode:'1234567890123',price:12990,available:true,title:'2 kg'},
     variants:[{id:9,sku:'VP-001',barcode:'1234567890123',price:12990,available:true,title:'2 kg'}],
+    // Se renderiza dos veces, con price_varies en false y en true: son dos
+    // ramas distintas del JSON-LD (Offer y AggregateOffer) y la segunda no se
+    // ejercitaba nunca, que es justo donde es mas facil colar una coma de mas.
+    price_varies: false, type:'Suplemento',
     metafields:{reviews:{rating:{value:{rating:4.8,scale_max:5}},rating_count:{value:128}}},
     tags:[], collections:[{title:'Suplementos',url:'/collections/suplementos'}] },
   collection: { title:'Suplementos', url:'/collections/suplementos', description:'Proteína y creatina.', products:[], all_products_count:10, image:img },
@@ -76,7 +80,14 @@ const ctx = {
 const objetivo = process.argv[2] || 'structured-data.liquid';
 const tipos = (process.argv[3] || 'index,product,collection,article,blog,page,search,404,cart').split(',');
 let totalMalos = 0;
-for (const tipo of tipos) {
+/* Cada tipo de pagina se renderiza dos veces: con un producto de precio unico
+   y con uno de precio variable. Son dos ramas distintas del JSON-LD (Offer y
+   AggregateOffer) y la segunda no se ejercitaba nunca, que es justo donde es
+   mas facil colar una coma de mas y romper el bloque entero. */
+for (const varia of [false, true]) {
+ ctx.product.price_varies = varia;
+ if (varia) console.log('\n  --- con precio variable (AggregateOffer) ---');
+ for (const tipo of tipos) {
   ctx.request.page_type = tipo;
   ctx.template.name = tipo;
   const salida = await engine.renderFile(objetivo, ctx);
@@ -90,6 +101,7 @@ for (const tipo of tipos) {
     } catch (e) { malos++; totalMalos++; resumen.push('INVALIDO: ' + e.message); }
   });
   console.log(`  ${tipo.padEnd(16)} ${String(salida.length).padStart(5)} car | ${bloques.length} bloques JSON-LD | ${resumen.join('  ·  ') || '(ninguno)'}`);
+ }
 }
 console.log(totalMalos ? `\n${totalMalos} bloques INVALIDOS` : '\nTodos los bloques JSON-LD son JSON valido.');
 process.exit(totalMalos ? 1 : 0);

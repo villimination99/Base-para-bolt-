@@ -111,9 +111,18 @@
 {
   "@context": "https://schema.org",
   "@type": "Product",
+  "@id": {{ shop.url | append: product.url | append: '#product' | json }},
   "name": {{ product.title | json }},
   "url": {{ shop.url | append: product.url | json }},
   "description": {{ p_desc | json }},
+  {%- comment -%}
+    category: el tipo de producto de Shopify. Es lo que usan Google Shopping y
+    los buscadores por respuesta para clasificar la ficha; sin el, el producto
+    queda en el saco de "sin categoria" y compite peor.
+  {%- endcomment -%}
+  {%- if product.type != blank -%}
+  "category": {{ product.type | json }},
+  {%- endif -%}
   {%- if product.images.size > 0 -%}
   "image": [
     {%- for image in product.images limit: 3 -%}
@@ -170,6 +179,8 @@
     "highPrice": {{ product.price_max | divided_by: 100.0 | json }},
     "offerCount": {{ product.variants.size }},
     "priceCurrency": {{ cart.currency.iso_code | json }},
+    {%- comment -%} Google avisa si falta; estaba solo en la oferta simple. {%- endcomment -%}
+    "priceValidUntil": {{ 'now' | date: '%s' | plus: 31536000 | date: '%Y-%m-%d' | json }},
     "availability": {% if product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
     "itemCondition": "https://schema.org/NewCondition",
     "seller": { "@id": {{ shop.url | append: '#organization' | json }} }
