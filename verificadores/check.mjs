@@ -1266,6 +1266,43 @@ check('robots.txt no cierra la tienda', () => {
   return bad;
 });
 
+check('Imagenes bien servidas', () => {
+  /* Dos trampas de metodo, las dos sufridas al escribir esto:
+     1. Quitar los comentarios ANTES de contar lineas hace que los numeros
+        que se reportan no coincidan con el archivo. Aqui se sustituyen por
+        espacios de la misma longitud.
+     2. Exigir srcset a todas las imagenes da falsos positivos: una miniatura
+        de 80 px servida a 160 esta bien, y srcset ahi solo anade peso al
+        HTML. El criterio es el ancho al que se MUESTRA. */
+  const bad = [];
+  const enBlanco = s => s.replace(
+    /\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g,
+    m => m.replace(/[^\n]/g, ' '));
+
+  for (const f of liquids()) {
+    const src = enBlanco(read(f));
+    for (const m of src.matchAll(/<img\b[^>]*>/g)) {
+      const t = m[0], ln = line(src, m.index);
+      if (!/loading=/.test(t))
+        bad.push(`${f}:${ln} <img> sin loading: el navegador decide por su cuenta si es prioritaria`);
+      if (!/\balt=/.test(t))
+        bad.push(`${f}:${ln} <img> SIN ALT`);
+      if (!/\bwidth=/.test(t) || !/\bheight=/.test(t))
+        bad.push(`${f}:${ln} <img> sin width/height: la pagina da un salto al cargar`);
+
+      const anchos = [...t.matchAll(/image_url:\s*width:\s*(\d+)/g)].map(x => +x[1]);
+      const pedido = anchos.length ? Math.max(...anchos) : null;
+      const wm = t.match(/\bwidth="(\d+)"/);
+      const mostrado = wm ? +wm[1] : null;
+      if (!/srcset/.test(t) && pedido && mostrado && mostrado >= 200)
+        bad.push(`${f}:${ln} <img> de ${mostrado}px sin srcset: el movil descarga el mismo archivo que un monitor`);
+      if (pedido && mostrado && pedido > mostrado * 3)
+        bad.push(`${f}:${ln} <img> pide ${pedido}px para mostrar ${mostrado}px, mas del triple`);
+    }
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

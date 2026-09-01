@@ -64,8 +64,14 @@
     <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name | escape }}">
       {%- if settings.logo != blank -%}
         {%- assign logo_h = settings.logo_height | default: 44 -%}
+        {%- comment -%}
+          eager y fetchpriority alto: en movil el logo del encabezado suele
+          ser el elemento mas grande que se pinta primero, y el navegador por
+          su cuenta le da prioridad baja por ser pequeno en el marcado.
+        {%- endcomment -%}
         <img src="{{ settings.logo | image_url: width: 240 }}"
              alt="{{ shop.name | escape }}"
+             loading="eager" fetchpriority="high" decoding="async"
              width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
              style="height:{{ logo_h }}px;width:auto;object-fit:contain;">
       {%- else -%}

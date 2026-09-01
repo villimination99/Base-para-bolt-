@@ -115,8 +115,20 @@
     var toggle = $('.mobile-toggle');
     var menu = $('#mobile-menu');
     if (!toggle || !menu) return;
-    function open() { menu.classList.add('open'); document.body.style.overflow = 'hidden'; toggle.setAttribute('aria-expanded', 'true'); }
-    function close() { menu.classList.remove('open'); document.body.style.overflow = ''; toggle.setAttribute('aria-expanded', 'false'); }
+    var foco = panelAccesible(menu);
+    function open() {
+      menu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      toggle.setAttribute('aria-expanded', 'true');
+      foco.entrar();
+    }
+    function close() {
+      var estaba = menu.classList.contains('open');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
+      toggle.setAttribute('aria-expanded', 'false');
+      if (estaba) foco.salir();
+    }
     // El botón solo abría: al volver a pulsarlo no pasaba nada y había que
     // buscar la X o el fondo para cerrar.
     toggle.addEventListener('click', function () {
@@ -138,8 +150,76 @@
 
   /* ---------- Cart drawer ---------- */
   var drawer = $('#cart-drawer');
-  function openDrawer() { if (!drawer) return; drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
-  function closeDrawer() { if (!drawer) return; drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  /* ---------- Panel accesible con teclado ----------
+     Un panel que tapa la pagina tiene que hacer tres cosas, y el menu movil
+     y el carrito no hacian ninguna (el visor de zoom si, de ahi salio el
+     patron):
+       1. Llevar el foco dentro al abrirse. Si no, quien navega con teclado o
+          lector de pantalla no se entera de que ha pasado algo.
+       2. Atrapar el foco mientras esta abierto. Sin esto, a las cuatro
+          tabulaciones el foco se escapaba al contenido de detras y el
+          visitante iba recorriendo enlaces que no puede ver. Medido.
+       3. Devolver el foco a donde estaba al cerrarse, para no perder el
+          sitio en la pagina.
+     inert seria mas limpio que un capturador de Tab, pero no llega a Safari
+     16 y en esta tienda pesan mucho los iPhone; el capturador funciona en
+     todas partes. */
+  var FOCO_SEL = 'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+  function panelAccesible(panel) {
+    var previo = null;
+    function visibles() {
+      return $all(FOCO_SEL, panel).filter(function (e) {
+        return e.offsetWidth > 0 || e.offsetHeight > 0 || e.getClientRects().length;
+      });
+    }
+    function alTabular(e) {
+      if (e.key !== 'Tab') return;
+      var f = visibles();
+      if (!f.length) { e.preventDefault(); return; }
+      var primero = f[0], ultimo = f[f.length - 1];
+      // Si el foco se ha ido fuera del panel (por ejemplo tras cargar
+      // contenido nuevo), se trae de vuelta.
+      if (!panel.contains(document.activeElement)) { e.preventDefault(); primero.focus(); return; }
+      if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+      else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+    }
+    return {
+      entrar: function () {
+        previo = document.activeElement;
+        document.addEventListener('keydown', alTabular, true);
+        // Un fotograma de margen: el panel se abre con una transicion y
+        // enfocar un elemento aun oculto no hace nada.
+        requestAnimationFrame(function () {
+          var f = visibles();
+          if (f.length) f[0].focus();
+        });
+      },
+      salir: function () {
+        document.removeEventListener('keydown', alTabular, true);
+        if (previo && previo.focus && document.documentElement.contains(previo)) previo.focus();
+        previo = null;
+      }
+    };
+  }
+
+  var focoCarrito = null;
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (!focoCarrito) focoCarrito = panelAccesible(drawer);
+    focoCarrito.entrar();
+  }
+  function closeDrawer() {
+    if (!drawer) return;
+    var estaba = drawer.classList.contains('open');
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (estaba && focoCarrito) focoCarrito.salir();
+  }
 
   function updateCartCount(n) {
     $all('[data-cart-count]').forEach(function (el) {

@@ -27,7 +27,7 @@
       </span>
       <span class="splash-core">
         {%- if settings.logo != blank -%}
-          <img src="{{ settings.logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}" width="120" height="120">
+          <img src="{{ settings.logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}" width="120" height="120" loading="eager" decoding="async">
         {%- else -%}
           <span class="splash-mono">VI</span>
         {%- endif -%}

@@ -18,9 +18,24 @@
         <span class="product-media-tag">{%- render 'icon', name: 'cube' -%} 3D</span>
       {%- elsif product.featured_media -%}
         <div class="holo-obj">
+          {%- comment -%}
+            640 px fijos para una tarjeta que en movil mide unos 280: se
+            bajaba mas del doble de lo necesario. Con srcset cada pantalla
+            pide su ancho.
+            El reflejo lleva EL MISMO srcset y el mismo sizes a proposito: asi
+            el navegador reutiliza el archivo que ya descargo para la imagen
+            de arriba en vez de bajar un segundo.
+          {%- endcomment -%}
+          {%- assign holo_alto = 640 | divided_by: product.featured_media.aspect_ratio | round -%}
+          {%- capture holo_srcset -%}
+{{ product.featured_media | image_url: width: 320 }} 320w, {{ product.featured_media | image_url: width: 480 }} 480w, {{ product.featured_media | image_url: width: 640 }} 640w
+          {%- endcapture -%}
           <img class="holo-img" src="{{ product.featured_media | image_url: width: 640 }}"
-               alt="{{ product.title | escape }}" width="640" height="{{ 640 | divided_by: product.featured_media.aspect_ratio | round }}" loading="lazy">
-          <img class="holo-reflect" src="{{ product.featured_media | image_url: width: 640 }}" alt="" width="640" height="{{ 640 | divided_by: product.featured_media.aspect_ratio | round }}" loading="lazy" aria-hidden="true">
+               srcset="{{ holo_srcset }}" sizes="(min-width: 900px) 320px, 60vw"
+               alt="{{ product.title | escape }}" width="640" height="{{ holo_alto }}" loading="lazy" decoding="async">
+          <img class="holo-reflect" src="{{ product.featured_media | image_url: width: 640 }}"
+               srcset="{{ holo_srcset }}" sizes="(min-width: 900px) 320px, 60vw"
+               alt="" width="640" height="{{ holo_alto }}" loading="lazy" decoding="async" aria-hidden="true">
         </div>
       {%- else -%}
         <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>

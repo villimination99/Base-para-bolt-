@@ -11,7 +11,8 @@
       {%- comment -%}
         Imagen LCP de la portada: sin srcset el móvil bajaba 2400px siempre.
       {%- endcomment -%}
-      <img src="{{ section.settings.image | image_url: width: 2400 }}"
+      <img loading="eager" fetchpriority="high" decoding="async"
+           src="{{ section.settings.image | image_url: width: 2400 }}"
            srcset="{{ section.settings.image | image_url: width: 600 }} 600w,
                    {{ section.settings.image | image_url: width: 900 }} 900w,
                    {{ section.settings.image | image_url: width: 1200 }} 1200w,
