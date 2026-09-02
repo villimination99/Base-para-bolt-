@@ -34,15 +34,25 @@
   apareces. Y Bing no es solo Bing: de ahi beben DuckDuckGo, Ecosia y la
   busqueda que usa ChatGPT. Vacios = no se pinta nada.
 {%- endcomment -%}
-{%- if settings.seo_bing_verification != blank -%}
-  <meta name="msvalidate.01" content="{{ settings.seo_bing_verification | escape }}">
+{%- comment -%}
+  Cada codigo pasa por codigo-verificacion, que acepta tanto el codigo suelto
+  como la etiqueta <meta> entera: es lo que ensena cada buscador y lo natural
+  es copiar la linea completa. Pegada tal cual, antes salia una etiqueta rota
+  y la verificacion fallaba sin decir por que.
+{%- endcomment -%}
+{%- capture cod_bing -%}{%- render 'codigo-verificacion', valor: settings.seo_bing_verification -%}{%- endcapture -%}
+{%- if cod_bing != blank -%}
+  <meta name="msvalidate.01" content="{{ cod_bing | escape }}">
 {%- endif -%}
-{%- if settings.seo_yandex_verification != blank -%}
-  <meta name="yandex-verification" content="{{ settings.seo_yandex_verification | escape }}">
+{%- capture cod_yandex -%}{%- render 'codigo-verificacion', valor: settings.seo_yandex_verification -%}{%- endcapture -%}
+{%- if cod_yandex != blank -%}
+  <meta name="yandex-verification" content="{{ cod_yandex | escape }}">
 {%- endif -%}
-{%- if settings.seo_pinterest_verification != blank -%}
-  <meta name="p:domain_verify" content="{{ settings.seo_pinterest_verification | escape }}">
+{%- capture cod_pin -%}{%- render 'codigo-verificacion', valor: settings.seo_pinterest_verification -%}{%- endcapture -%}
+{%- if cod_pin != blank -%}
+  <meta name="p:domain_verify" content="{{ cod_pin | escape }}">
 {%- endif -%}
-{%- if settings.seo_facebook_domain != blank -%}
-  <meta name="facebook-domain-verification" content="{{ settings.seo_facebook_domain | escape }}">
+{%- capture cod_meta -%}{%- render 'codigo-verificacion', valor: settings.seo_facebook_domain -%}{%- endcapture -%}
+{%- if cod_meta != blank -%}
+  <meta name="facebook-domain-verification" content="{{ cod_meta | escape }}">
 {%- endif -%}

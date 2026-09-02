@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.34.0",
+    "theme_version": "4.35.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -823,35 +823,39 @@
         "content": "Datos que Google usa para las insignias de envio y devoluciones en los resultados de compra. Dejalos vacios si no estas seguro: declarar algo que no cumples es peor que no declarar nada."
       },
       {
+        "type": "paragraph",
+        "content": "Puedes pegar el código suelto o la etiqueta <meta> entera tal y como te la enseña cada buscador: el tema extrae el código solo. Cada uno de estos campos vacío significa que esa etiqueta no se imprime."
+      },
+      {
         "type": "text",
         "id": "seo_google_verification",
         "label": "Codigo de verificacion de Google Search Console",
-        "info": "Solo el valor del atributo content, sin la etiqueta meta entera. Se puede borrar una vez Google haya verificado el sitio, pero se recomienda dejarlo.",
+        "info": "Search Console → Añadir propiedad → Prefijo de URL → Etiqueta HTML. Puedes pegar el código suelto o la etiqueta <meta> entera: el tema extrae lo que necesita.",
         "default": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE"
       },
       {
         "type": "text",
         "id": "seo_bing_verification",
         "label": "Bing Webmaster Tools",
-        "info": "Solo el valor de content. Bing alimenta ademas a DuckDuckGo, Ecosia y la busqueda de ChatGPT: es la puerta mas importante despues de Google."
+        "info": "ATAJO: como Google ya está verificado, en Bing Webmaster Tools puedes elegir «Importar desde Google Search Console» y saltarte este campo. Si prefieres la etiqueta: Bing Webmaster Tools → Añadir sitio → Etiqueta meta. Bing alimenta también a DuckDuckGo, Ecosia y la búsqueda de ChatGPT."
       },
       {
         "type": "text",
         "id": "seo_yandex_verification",
         "label": "Yandex Webmaster",
-        "info": "Solo el valor de content. Util si te interesa el mercado ruso y de Europa del Este."
+        "info": "Yandex Webmaster → Añadir sitio → Etiqueta meta. Yandex es el buscador dominante en Europa del Este."
       },
       {
         "type": "text",
         "id": "seo_pinterest_verification",
         "label": "Pinterest",
-        "info": "Solo el valor de content. Pinterest funciona como buscador visual y manda mucho trafico en fitness y bienestar."
+        "info": "ATAJO: instalar el canal de Pinterest en Shopify reclama el dominio solo. Si prefieres la etiqueta: Pinterest Business → Ajustes → Cuentas reclamadas → Etiqueta HTML. Pinterest manda mucho tráfico a tiendas de fitness y ropa."
       },
       {
         "type": "text",
         "id": "seo_facebook_domain",
         "label": "Verificacion de dominio de Meta",
-        "info": "Solo el valor de content. Hace falta para anunciar y para que Facebook e Instagram muestren bien tus fichas."
+        "info": "ATAJO: instalar el canal de Facebook e Instagram en Shopify verifica el dominio solo. Si prefieres la etiqueta: Meta Business Suite → Seguridad de la marca → Dominios. Hace falta para anunciar y para etiquetar productos en Instagram."
       },
       {
         "type": "header",

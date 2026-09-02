@@ -8,8 +8,9 @@
   <link rel="canonical" href="{{ canonical_url }}">
 
   {%- comment -%} Verificacion de propiedad del sitio en Google Search Console {%- endcomment -%}
-  {%- if settings.seo_google_verification != blank -%}
-    <meta name="google-site-verification" content="{{ settings.seo_google_verification | escape }}">
+  {%- capture cod_google -%}{%- render 'codigo-verificacion', valor: settings.seo_google_verification -%}{%- endcapture -%}
+  {%- if cod_google != blank -%}
+    <meta name="google-site-verification" content="{{ cod_google | escape }}">
   {%- endif -%}
 
   {%- comment -%}
