@@ -18,7 +18,7 @@
            {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
           <span class="caticons-halo" aria-hidden="true"></span>
           <span class="caticons-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
-          <span class="caticons-title">{{ block.settings.title | default: coll.title }}</span>
+          <span class="caticons-title">{{ block.settings.title | default: coll.title | default: 'general.collections' | t }}</span>
           {%- if block.settings.text != blank -%}<span class="caticons-text">{{ block.settings.text }}</span>{%- endif -%}
         </a>
       {%- endfor -%}

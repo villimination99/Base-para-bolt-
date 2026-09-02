@@ -26,7 +26,7 @@
           <span class="catmosaic-shade" aria-hidden="true"></span>
           <span class="catmosaic-body">
             <span class="catmosaic-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
-            <span class="catmosaic-title">{{ block.settings.title | default: coll.title }}</span>
+            <span class="catmosaic-title">{{ block.settings.title | default: coll.title | default: 'general.collections' | t }}</span>
             {%- if block.settings.text != blank -%}<span class="catmosaic-text">{{ block.settings.text }}</span>{%- endif -%}
           </span>
         </a>

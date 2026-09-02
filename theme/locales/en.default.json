@@ -55,7 +55,8 @@
     "copied": "Copied!",
     "video_placeholder": "Pick a video in the theme editor.",
     "play_video": "Play the video",
-    "sequence_hint": "Move over the animation"
+    "sequence_hint": "Move over the animation",
+    "collections": "View collection"
   },
   "accessibility": {
     "skip_to_content": "Skip to content",
