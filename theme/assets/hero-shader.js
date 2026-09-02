@@ -71,11 +71,23 @@
     // en escritorio se veia entero. Ahora la caja ocupa el 80 % de la mitad
     // visible en cada eje, asi que el marco se cierra en cualquier formato.
     '  vec2 mitad=0.5*u_resolution.xy/lado*zoom;',
-    '  vec2 box=mitad*0.80;',
+    // En vertical el marco se acerca a los bordes: la pantalla es estrecha y
+    // el titulo necesita el ancho. Con el 0.80 fijo, en un iPhone el titulo
+    // se metia SIETE PIXELES dentro del neon por los dos lados (medido).
+    // En apaisado sobra sitio y un marco mas recogido se ve mejor.
+    '  float ar=u_resolution.x/u_resolution.y;',
+    '  float factor=mix(0.88,0.80,clamp((ar-0.6)/0.8,0.0,1.0));',
+    '  vec2 box=mitad*factor;',
     '  vec2 d=abs(p)-box;',
     '  float outside=length(max(d,0.0))+min(max(d.x,d.y),0.0);',
     '  float thickness=mix(0.018,0.11,u_paramA)*(1.0+u_scroll*0.9);',
-    '  float edge=1.0-smoothstep(thickness*0.35,thickness,abs(outside));',
+    // El neon de verdad es una linea FINA y muy brillante rodeada de un halo
+    // ancho que cae rapido. Un unico trazo grueso con desenfoque uniforme se
+    // lee como una mancha de luz, que es lo que se veia.
+    '  float dist=abs(outside);',
+    '  float nucleo=1.0-smoothstep(thickness*0.10,thickness*0.40,dist);',
+    '  float halo=exp(-dist/max(thickness*0.70,0.0005));',
+    '  float edge=clamp(nucleo+halo*0.55,0.0,1.0);',
     '  float perimeter=atan(p.y*box.x,p.x*box.y)/6.2831853+0.5;',
     '  float speed=1.8+u_scroll*3.4;',
     '  float inten=u_intensity+u_scroll*0.45;',
@@ -89,7 +101,24 @@
     // las dos secciones. Solo brilla donde ya hay borde, no inventa luz.
     '  float dEsq=length(abs(p)-box);',
     '  float esquina=exp(-dEsq*dEsq*70.0);',
-    '  float innerGlow=exp(-abs(outside)*24.0)*(0.32+u_scroll*0.30);',
+    '  float innerGlow=exp(-dist*24.0)*(0.32+u_scroll*0.30);',
+    // Rejilla en fuga bajo el horizonte. Da profundidad al interior, que
+    // antes era un rectangulo negro vacio, y es el mismo motivo que la
+    // seccion de video: las dos secciones se leen como familia.
+    '  float rejilla=0.0;',
+    // El horizonte va al 38 % por debajo del centro: mas arriba, las lineas
+    // caian justo detras del subtitulo y le robaban nitidez.
+    '  float horiz=-mitad.y*0.38;',
+    '  float bajo=horiz-p.y;',
+    '  if(bajo>0.004){',
+    '    float z=0.13/bajo;',
+    '    float lz=abs(fract(z-u_time*0.09)-0.5);',
+    '    float lx=abs(fract(p.x*z*0.85)-0.5);',
+    // Se apaga en los dos extremos: pegada al horizonte se amontona y abajo
+    // del todo compite con el borde del marco.
+    '    float caida=exp(-bajo*2.2)*smoothstep(0.0,0.10,bajo);',
+    '    rejilla=(smoothstep(0.050,0.0,lz)+smoothstep(0.035,0.0,lx))*caida*0.22;',
+    '  }',
     // Carril tenue SIEMPRE visible y el pulso encima. Sin el, palette(0)
     // devuelve el propio color de fondo, asi que el tramo sin luz se borraba
     // y el marco se leia como roto en vez de como una luz que recorre un
@@ -97,10 +126,14 @@
     '  vec3 carril=palette(0.20);',
     '  vec3 luz=palette(trail);',
     '  vec3 col=u_colors[0];',
-    '  col=mix(col,carril,edge*0.42);',
-    '  col=mix(col,luz,clamp(edge*trail+innerGlow+esquina*edge*0.75,0.0,1.0));',
+    '  col=mix(col,palette(0.45),rejilla);',
+    '  col=mix(col,carril,nucleo*0.50+halo*0.16);',
+    '  col=mix(col,luz,clamp(edge*trail+innerGlow+esquina*nucleo*0.85,0.0,1.0));',
     '  col=(col-0.5)*u_contrast+0.5;',
-    '  if(u_grain>0.0001) col+=(grainHash(gl_FragCoord.xy+vec2(u_seed*17.0,u_seed*31.0))-0.5)*u_grain;',
+    // El grano se aparta del centro: ahi va el titulo y el ruido le quitaba
+    // nitidez. En los bordes se mantiene, que es donde aporta textura.
+    '  float delCentro=clamp(length(p)/max(length(mitad),0.0001),0.0,1.0);',
+    '  if(u_grain>0.0001) col+=(grainHash(gl_FragCoord.xy+vec2(u_seed*17.0,u_seed*31.0))-0.5)*u_grain*(0.18+0.82*delCentro);',
     '  gl_FragColor=vec4(clamp(col,0.0,1.0),1.0);',
     '}'
   ].join('\n');

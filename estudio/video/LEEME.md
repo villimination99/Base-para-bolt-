@@ -8,7 +8,18 @@ node estudio/video/renderizar.mjs                 # 1080x1920 a 30 fps
 node estudio/video/renderizar.mjs --ancho 720     # más ligero
 ```
 
-Sale `estudio/video/villumination-marca.webm`: **16 s, 1080×1920, 2,4 MB**.
+Sale `estudio/video/villumination-marca.webm`: **22 s, 1080×1920**.
+
+Y la portada, extraída del mismo guion para que sea literalmente el mismo
+fotograma que el vídeo:
+
+```bash
+node estudio/video/portada.mjs 20.6      # el segundo que se quiera
+```
+
+Sin portada propia, la sección caía en la miniatura de YouTube: una imagen
+que ya no representa el vídeo, y que además se le declaraba a Google como
+`thumbnailUrl`. Datos y página en desacuerdo.
 Esa es la resolución exacta de Reels, Shorts y TikTok, así que sirve igual
 para la tienda que para redes. Tarda unos 90 segundos.
 
@@ -58,20 +69,28 @@ La tipografía Orbitron va incrustada en `fuente.b64` porque este entorno no
 llega a Google Fonts y el video tiene que salir con la letra de la tienda, no
 con una sustituta del sistema.
 
-## Las cinco escenas (16 s)
+## Las ocho escenas (22 s)
 
 | Desde | Hasta | Qué pasa |
 |------:|------:|----------|
-| 0,0 s | 2,9 s | El marco de neón se dibuja y **VILLUMINATION** cierra su interletrado |
-| 3,0 s | 5,6 s | **NO TE CONFORMES** |
-| 5,7 s | 9,2 s | Los tres pilares entran en cascada: fuerza, nutrición, constancia |
-| 9,3 s | 11,6 s | La cifra sube hasta **37**, los productos que hay activos en la tienda |
-| 11,7 s | 15,9 s | Cierre: el logo VI, el dominio y la llamada a la acción |
+| 0,5 s | 3,1 s | El marco de neón se dibuja y **VILLUMINATION** cierra su interletrado |
+| 3,2 s | 6,0 s | **NO TE CONFORMES** |
+| 6,1 s | 9,0 s | Fuerza y nutrición, en cascada |
+| 9,1 s | 12,0 s | Rendimiento y constancia |
+| 12,1 s | 14,8 s | La cifra sube hasta **37**, los productos activos |
+| 14,9 s | 17,4 s | **5** idiomas y **8** códices |
+| 17,5 s | 19,6 s | *Una tienda para quien no se rinde* |
+| 19,7 s | 21,9 s | Cierre: el logo VI, el dominio y la llamada a la acción |
 
-El cierre se lleva cuatro segundos largos a propósito: es el momento en que
-alguien decide entrar, y con dos y medio no daba tiempo a leer el dominio.
-Se desvanece **por completo** antes del segundo 16, para que al reiniciarse
-el bucle enganche con el negro del primer fotograma en vez de dar un salto.
+Las cuatro familias son las reales del catálogo y las tres cifras están
+verificadas contra la API de Shopify: 37 productos activos, 5 idiomas
+publicados y 8 Códices. Si el catálogo cambia, actualiza los números en
+`guion.js`: una cifra que no cuadra con lo que hay en la tienda resta
+credibilidad en vez de sumarla.
+
+El cierre se desvanece **por completo** antes del segundo 22, para que al
+reiniciarse el bucle enganche con el negro del primer fotograma en vez de dar
+un salto.
 
 El fondo son los mismos haces y el mismo marco pulsante que el hero de la
 tienda: quien vea el video en Instagram y luego entre en la web reconoce la
@@ -79,7 +98,7 @@ marca al instante.
 
 ## Cambiar el contenido
 
-Los textos están en `guion.js`, arriba del todo: la lista `PILARES`, el
-`lema` y el `37` de la cifra. Si cambia el catálogo, actualiza ese número —
-una cifra que no cuadra con lo que hay en la tienda resta credibilidad en vez
-de sumarla.
+Los textos están en `guion.js`, arriba del todo: las listas `PILARES` y
+`CIFRAS`, y el `lema`. Los tiempos de cada escena están en la tabla `GUION`,
+dentro de `pintar()`: cada fila es `[capa, entra, sale, margen de entrada,
+margen de salida]` en segundos.

@@ -454,7 +454,11 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
 .hero-shader-canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .9s ease}
 .hero-shader-canvas.is-live{opacity:1}
 .hero-shader-shade{position:absolute;inset:0;background:radial-gradient(90% 70% at 50% 50%,transparent 20%,#000 100%);pointer-events:none}
-.hero-shader-content{position:relative;z-index:1;text-align:center;max-width:min(48rem,92vw);margin:0 auto}
+.hero-shader-content{position:relative;z-index:1;text-align:center;max-width:min(48rem,78vw);margin:0 auto}
+/* 78vw y no 92vw: el marco del shader se dibuja al 88 % del ancho en vertical,
+   asi que con 92vw el titulo se metia siete pixeles DENTRO del neon por los dos
+   lados en un iPhone. Medido, no estimado. Con 78vw quedan unos 20 px de aire
+   a cada lado en cualquier telefono. */
 .hero-shader-content .hero-title{margin:.4rem 0 .8rem}
 .hero-shader-content .hero-subtitle{margin:0 auto 1.6rem;max-width:44ch}
 .hero-shader .hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}

@@ -8,9 +8,11 @@
 (function () {
   'use strict';
 
-  // 16 s y no 14: el cierre (logo, dominio y llamada a la accion) es el
-  // momento de conversion y con 2,5 s apenas daba tiempo a leerlo.
-  var DURACION = 16;
+  // 22 s: el video anterior tenia cinco escenas y se quedaba corto para
+  // contar QUE se vende. Ahora hay ocho, con las cuatro familias reales del
+  // catalogo, y el cierre sigue llevandose cuatro segundos largos porque es
+  // el momento en que alguien decide entrar.
+  var DURACION = 22;
   var C = document.getElementById('lienzo');
   var g = C.getContext('2d');
 
@@ -112,33 +114,62 @@
   }
 
   /* ---------- contenido ---------- */
+  // Las cuatro familias reales del catalogo, con los iconos del propio tema
+  // para que el video y la tienda hablen el mismo idioma visual.
   var PILARES = [
     ['FUERZA', 'EQUIPO Y ACCESORIOS',
      '<path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767 1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l1.767-1.768a2 2 0 1 1 2.829 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.829-2.829l2.829-2.829a2 2 0 1 1 2.829 2.829l1.767-1.768a2 2 0 1 1 2.829 2.829z"/>'],
     ['NUTRICIÓN', 'SUPLEMENTOS',
      '<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>'],
+    ['RENDIMIENTO', 'ROPA DEPORTIVA',
+     '<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23Z"/>'],
     ['CONSTANCIA', 'PLANES Y CÓDICES',
      '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>']
+  ];
+
+  // Tres cifras reales de la tienda, verificadas por la API de Shopify.
+  var CIFRAS = [
+    ['37', 'PRODUCTOS EN CATÁLOGO'],
+    ['5', 'IDIOMAS'],
+    ['8', 'CÓDICES DIGITALES']
   ];
 
   var lema = document.getElementById('lema');
   lema.innerHTML = 'NO TE<br><em>CONFORMES</em>';
 
-  var cont = document.getElementById('pilares');
-  PILARES.forEach(function (p) {
-    var d = document.createElement('div');
-    d.className = 'pilar';
-    d.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" ' +
+  function pilarHTML(p) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" ' +
       'stroke-linecap="round" stroke-linejoin="round">' + p[2] + '</svg>' +
       '<b>' + p[0] + '<i>' + p[1] + '</i></b>';
+  }
+
+  var cont = document.getElementById('pilares');
+  var cont2 = document.getElementById('pilares2');
+  PILARES.slice(2).forEach(function (p) {
+    var d = document.createElement('div');
+    d.className = 'pilar';
+    d.innerHTML = pilarHTML(p);
+    cont2.appendChild(d);
+  });
+
+  var contCifras = document.getElementById('cifras2');
+  CIFRAS.slice(1).forEach(function (c) {
+    var d = document.createElement('div');
+    d.innerHTML = '<b>' + c[0] + '</b><span>' + c[1] + '</span>';
+    contCifras.appendChild(d);
+  });
+
+  PILARES.slice(0, 2).forEach(function (p) {
+    var d = document.createElement('div');
+    d.className = 'pilar';
+    d.innerHTML = pilarHTML(p);
     cont.appendChild(d);
   });
 
-  var capas = {
-    c1: document.getElementById('c1'), c2: document.getElementById('c2'),
-    c3: document.getElementById('c3'), c4: document.getElementById('c4'),
-    c5: document.getElementById('c5')
-  };
+  var capas = {};
+  ['c1', 'c2', 'c3', 'c3b', 'c4', 'c4b', 'c4c', 'c5'].forEach(function (id) {
+    capas[id] = document.getElementById(id);
+  });
   var cifraEl = document.getElementById('cifra');
   var marcaEl = document.querySelector('.marca');
   var anillo = document.getElementById('anilloTrazo');
@@ -148,38 +179,55 @@
     var W = C.width, H = C.height;
     fondo(t, W, H);
 
-    // 1. Marca (0.6 - 2.9): el interletrado se cierra al entrar
-    var o1 = ventana(t, 0.6, 2.9, 0.7, 0.5);
-    capas.c1.style.opacity = o1;
-    marcaEl.style.letterSpacing = (0.60 - 0.30 * salida((t - 0.6) / 1.6)).toFixed(3) + 'em';
+    // El guion, escrito una sola vez y aplicado en bucle: con ocho escenas,
+    // repetir el bloque de opacidad y desplazamiento ocho veces era pedir un
+    // descuadre. Cada entrada es [capa, entra, sale, margen de entrada,
+    // margen de salida].
+    var GUION = [
+      ['c1',   0.5,  3.1, 0.70, 0.50],   // VILLUMINATION
+      ['c2',   3.2,  6.0, 0.55, 0.45],   // NO TE CONFORMES
+      ['c3',   6.1,  9.0, 0.50, 0.45],   // fuerza y nutricion
+      ['c3b',  9.1, 12.0, 0.50, 0.45],   // rendimiento y constancia
+      ['c4',  12.1, 14.8, 0.45, 0.45],   // 37 productos
+      ['c4b', 14.9, 17.4, 0.45, 0.45],   // 5 idiomas y 8 codices
+      ['c4c', 17.5, 19.6, 0.45, 0.45],   // frase de cierre
+      ['c5',  19.7, 21.9, 0.60, 1.60]    // logo, dominio y llamada a la accion
+    ];
 
-    // 2. Lema (3.0 - 5.6)
-    var o2 = ventana(t, 3.0, 5.6, 0.55, 0.45);
-    capas.c2.style.opacity = o2;
-    lema.style.transform = 'translateY(' + (1 - salida((t - 3.0) / 1.1)) * 4 + 'vw) scale(' +
-      (0.94 + 0.06 * salida((t - 3.0) / 1.1)).toFixed(4) + ')';
-
-    // 3. Pilares (5.7 - 9.2): entran en cascada
-    var o3 = ventana(t, 5.7, 9.2, 0.5, 0.5);
-    capas.c3.style.opacity = o3;
-    var items = cont.children;
-    for (var i = 0; i < items.length; i++) {
-      var e = salida((t - (5.9 + i * 0.42)) / 0.75);
-      items[i].style.opacity = e;
-      items[i].style.transform = 'translateX(' + ((1 - e) * -6).toFixed(2) + 'vw)';
+    for (var g = 0; g < GUION.length; g++) {
+      var e = GUION[g];
+      var o = ventana(t, e[1], e[2], e[3], e[4]);
+      capas[e[0]].style.opacity = o;
     }
 
-    // 4. La cifra (9.3 - 11.6): cuenta hasta el numero real de productos
-    var o4 = ventana(t, 9.3, 11.6, 0.45, 0.45);
-    capas.c4.style.opacity = o4;
-    cifraEl.textContent = Math.round(37 * salida((t - 9.4) / 1.3));
+    // Detalles que no son solo opacidad
+    // El interletrado de la marca se cierra al entrar
+    marcaEl.style.letterSpacing = (0.60 - 0.30 * salida((t - 0.5) / 1.6)).toFixed(3) + 'em';
 
-    // 5. Cierre (11.7 - 16.0): cuatro segundos y pico para leer el dominio y
-    //    ver el boton. Se desvanece POR COMPLETO antes del final: con la
-    //    ventana anterior el ultimo fotograma aun tenia opacidad 0.11 y el
-    //    bucle daba un salto visible al volver al negro del principio.
-    var o5 = ventana(t, 11.7, 15.9, 0.6, 1.6);
-    capas.c5.style.opacity = o5;
+    // El lema sube y crece un punto
+    lema.style.transform = 'translateY(' + (1 - salida((t - 3.2) / 1.1)) * 4 + 'vw) scale(' +
+      (0.94 + 0.06 * salida((t - 3.2) / 1.1)).toFixed(4) + ')';
+
+    // Los pilares entran en cascada, cada tanda desde su propio arranque
+    [[cont, 6.3], [cont2, 9.3]].forEach(function (par) {
+      var items = par[0].children;
+      for (var i = 0; i < items.length; i++) {
+        var ent = salida((t - (par[1] + i * 0.45)) / 0.75);
+        items[i].style.opacity = ent;
+        items[i].style.transform = 'translateX(' + ((1 - ent) * -6).toFixed(2) + 'vw)';
+      }
+    });
+
+    // La cifra grande cuenta hasta el numero real de productos
+    cifraEl.textContent = Math.round(37 * salida((t - 12.2) / 1.3));
+
+    // Las dos cifras pequenas entran una detras de otra
+    var cs = contCifras.children;
+    for (var k = 0; k < cs.length; k++) {
+      cs[k].style.opacity = salida((t - (15.1 + k * 0.5)) / 0.7);
+    }
+
+    // El anillo del cierre gira despacio
     anillo.style.transformOrigin = '50% 50%';
     anillo.style.transform = 'rotate(' + (t * 26).toFixed(1) + 'deg)';
   }

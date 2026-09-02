@@ -47,23 +47,19 @@
       assign portada_url = portada_url | prepend: 'https:'
     endunless
   elsif enlace != blank and enlace.type == 'youtube'
-    # hqdefault mide 480x360 (4:3). Metido en un marco vertical se recorta
-    # por los lados y ademas queda borroso, porque 480 px estirados a 320 CSS
-    # con pantalla de 3x es menos de la mitad de la resolucion que hace falta.
-    # oardefault conserva la proporcion original del video (9:16 en un Short)
-    # y maxresdefault da 1280 px. Ninguno de los dos existe para todos los
-    # videos, asi que se encadenan con onerror hasta hqdefault, que si existe
-    # siempre. El orden lo decide el formato elegido.
+    # Se piden SIEMPRE las miniaturas curadas, en orden de resolucion:
+    # maxresdefault (1280 px) y luego hqdefault (480 px), que existe siempre.
+    #
+    # oardefault, que conserva la proporcion original del video, se probo y se
+    # descarto: para los Shorts, YouTube la genera desde un FOTOGRAMA CRUDO en
+    # vez de desde la miniatura elegida, y en esta tienda salia un fotograma
+    # blanco y borroso donde antes se veia bien el video. La proporcion
+    # correcta no compensa una imagen mala; para eso esta el campo de portada,
+    # donde se sube la imagen que uno quiera.
     assign yt = enlace.id
-    if section.settings.formato == 'ancho'
-      assign portada_url = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/maxresdefault.jpg'
-      assign portada_alt1 = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg'
-      assign portada_alt2 = ''
-    else
-      assign portada_url = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/oardefault.jpg'
-      assign portada_alt1 = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/maxresdefault.jpg'
-      assign portada_alt2 = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg'
-    endif
+    assign portada_url = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/maxresdefault.jpg'
+    assign portada_alt1 = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg'
+    assign portada_alt2 = ''
   endif
 
   # Proporcion del marco. Un Short vertical dentro de un marco apaisado se
@@ -370,7 +366,7 @@
       "type": "image_picker",
       "id": "poster",
       "label": "Portada",
-      "info": "Opcional. Si la dejas vacía se usa el primer fotograma del video subido, o la miniatura de YouTube."
+      "info": "Recomendada para vídeos verticales. Si la dejas vacía se usa el primer fotograma del vídeo subido, o la miniatura de YouTube, que es apaisada y se recorta por los lados."
     },
     {
       "type": "checkbox",

@@ -522,11 +522,11 @@
     "video3d": {
       "type": "video-3d",
       "settings": {
-        "video_url": "https://www.youtube.com/watch?v=B6f4OevcqJg",
+        "video_url": "",
         "formato": "vertical",
         "eyebrow": "EN MOVIMIENTO",
         "title": "VIVE LA EXPERIENCIA",
-        "subtitle": "Muévete sobre el video: el marco te sigue.",
+        "subtitle": "Muévete sobre el vídeo: el marco te sigue.",
         "caption": "",
         "accent": "#00f0ff",
         "bg": "#05060a",
@@ -541,7 +541,9 @@
         "seo_video": true,
         "upload_date": "",
         "button_label": "",
-        "button_url": ""
+        "button_url": "",
+        "video_archivo": "https://cdn.shopify.com/s/files/1/0599/8467/4865/files/villumination-marca.webm?v=1788307726",
+        "poster": "shopify://shop_images/villumination-marca-portada.png"
       }
     },
     "haces": {
