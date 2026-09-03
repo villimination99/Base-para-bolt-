@@ -56,7 +56,8 @@
     "video_placeholder": "テーマエディタで動画を選んでください。",
     "play_video": "動画を再生",
     "sequence_hint": "アニメーションの上で動かしてみて",
-    "collections": "コレクションを見る"
+    "collections": "コレクションを見る",
+    "skip": "スキップ"
   },
   "accessibility": {
     "skip_to_content": "本文へスキップ",

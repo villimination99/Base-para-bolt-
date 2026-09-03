@@ -59,13 +59,27 @@
       splash.classList.add('dismissed');
       document.body.style.overflow = '';
       if (once) store.set('v99_intro_seen', '1', true);
+      // intro.js escucha esto para parar su bucle y soltar el lienzo. Sin el
+      // aviso, la secuencia seguiria pintando detras de la tienda: bateria
+      // gastada en algo que ya nadie ve.
+      try { splash.dispatchEvent(new CustomEvent('villu:intro-cerrada')); } catch (e) {}
       setTimeout(function () { splash.style.display = 'none'; }, 900);
     }
     if (enter) enter.addEventListener('click', dismiss);
+
+    // Saltar, disponible desde el primer fotograma. El boton grande de entrar
+    // solo aparece al terminar la secuencia; quien ya conoce la tienda no
+    // tiene por que esperar a nada para pasar.
+    var saltar = $('[data-splash-skip]', splash);
+    if (saltar) saltar.addEventListener('click', dismiss);
+
     // Fail-safes so the intro can never trap the page:
     splash.addEventListener('click', function (e) { if (e.target === splash || e.target.classList.contains('splash-bg')) dismiss(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dismiss(); });
-    setTimeout(dismiss, 16000);
+
+    // Doce segundos y no dieciseis: si alguien deja la pestana abierta, la
+    // intro no puede quedarse pintando indefinidamente delante de la tienda.
+    setTimeout(dismiss, 12000);
   })();
 
   /* ---------- Navbar scroll ---------- */

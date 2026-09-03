@@ -56,7 +56,8 @@
     "video_placeholder": "Wähle im Theme-Editor ein Video aus.",
     "play_video": "Video abspielen",
     "sequence_hint": "Bewege dich über die Animation",
-    "collections": "Kollektion ansehen"
+    "collections": "Kollektion ansehen",
+    "skip": "ÜBERSPRINGEN"
   },
   "accessibility": {
     "skip_to_content": "Zum Inhalt springen",

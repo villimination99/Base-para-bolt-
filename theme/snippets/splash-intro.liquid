@@ -1,8 +1,28 @@
 {%- comment -%}
-  3D interactive splash intro. Shown once per session (and, by default, only on
-  the homepage so it never covers a page the visitor navigates to).
-  - data-splash-3d → effects.js mounts the magnetic particle field on #splash-canvas.
-  - Falls back to CSS particles + respects prefers-reduced-motion.
+  Intro "Pulso". Se muestra una vez por sesión y, por defecto, solo en la
+  portada, para que nunca tape una página a la que el visitante ha ido a
+  propósito.
+
+  La secuencia la dibuja assets/intro.js en #splash-canvas, en cuatro tiempos
+  que duran 2,4 s en total:
+
+    1. El monitor se enciende: la línea base sale del centro hacia los bordes.
+    2. Un electrocardiograma de verdad (onda P, complejo QRS y onda T) cruza
+       la pantalla, y el cabezal frena a cámara lenta justo en el complejo QRS.
+    3. En el pico R la línea revienta: destello, dos ondas de choque y unos
+       arcos de carga que suben del pico al anillo del emblema.
+    4. Las partículas se reagrupan en el anillo, se enlazan entre vecinas y un
+       barrido cierra el círculo. Después se quedan respondiendo al dedo o al
+       ratón como imanes.
+
+  La línea base está colocada para que la punta del pico R quede justo debajo
+  del anillo: el estallido ocurre en la puerta del emblema y por eso las
+  partículas casi no tienen que viajar para formarlo.
+
+  Una intro es un peaje que el visitante paga antes de ver la tienda, así que
+  hay DOS formas de saltarla desde el primer fotograma: el enlace "saltar" de
+  la esquina, que no espera a ninguna animación, y la tecla Escape. El botón
+  grande de entrar aparece cuando la secuencia termina.
 {%- endcomment -%}
 <div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
   <div class="splash-bg"></div>
@@ -11,7 +31,7 @@
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
   </div>
-  <svg class="splash-bolt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+  <button class="splash-skip" type="button" data-splash-skip>{{ 'general.skip' | t }}</button>
 
   <div class="splash-content">
     <div class="splash-emblem">
@@ -48,3 +68,10 @@
     </button>
   </div>
 </div>
+
+{%- comment -%}
+  Sin defer: la intro es lo PRIMERO que se ve y su lienzo tiene que empezar a
+  pintar cuanto antes. Son doce kilobytes y solo se cargan cuando la intro
+  está activa, así que no compite con nada del resto de la tienda.
+{%- endcomment -%}
+<script src="{{ 'intro.js' | asset_url }}"></script>

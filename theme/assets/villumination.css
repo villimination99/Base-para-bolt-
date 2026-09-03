@@ -973,3 +973,65 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   .secuencia-lienzo{transition:none}
   .secuencia-pista{animation:none;opacity:0}
 }
+
+/* ================= Intro "Pulso": tiempos =================
+   Antes, cada pieza de la intro llevaba su retardo escrito a mano, y de tanto
+   afinar ronda tras ronda habia hasta TRES reglas peleandose por el mismo
+   selector: el boton de entrar tenia 4.3s en la forma corta, 2.6s en una
+   regla suelta y 4s en otra. Ganaba la ultima, asi que el unico boton visible
+   para entrar en la tienda tardaba cuatro segundos en aparecer. Cuatro
+   segundos de espera obligada en cada primera visita son ventas perdidas.
+
+   Ahora hay UNA sola fuente de verdad: assets/intro.js pone la clase
+   .intro-lista en el contenedor cuando la secuencia termina de verdad, y todo
+   lo demas cuelga de ahi. Si manana cambia la duracion de la secuencia, se
+   cambia en un sitio y el texto sigue sincronizado solo. */
+.splash-intro .splash-title,
+.splash-intro .splash-tagline,
+.splash-intro .splash-loader,
+.splash-intro .splash-enter-btn{
+  animation:none!important;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity .55s ease-out,transform .55s cubic-bezier(.22,1,.36,1)}
+
+.splash-intro.intro-lista .splash-title,
+.splash-intro.intro-lista .splash-tagline,
+.splash-intro.intro-lista .splash-loader,
+.splash-intro.intro-lista .splash-enter-btn{opacity:1;transform:none}
+.splash-intro.intro-lista .splash-tagline{transition-delay:.10s}
+.splash-intro.intro-lista .splash-loader{transition-delay:.18s}
+.splash-intro.intro-lista .splash-enter-btn{transition-delay:.26s}
+
+/* El emblema entra MIENTRAS las particulas viajan, no cuando ya han llegado.
+   Con la entrada a 1,55 s habia casi medio segundo con el centro de la pantalla
+   vacio -- el peor fotograma de toda la secuencia. Ahora empieza a los 1,05 s y
+   termina a la vez que la formacion, asi que el emblema se materializa dentro
+   del anillo de particulas en lugar de aparecer de golpe encima. */
+.splash-intro .splash-emblem{animation:logoAppear 1.25s cubic-bezier(.16,1,.3,1) 1.05s both}
+
+/* Saltar. Disponible desde el primer fotograma, sin esperar a ninguna
+   animacion: quien ya conoce la tienda no tiene por que ver la intro otra
+   vez. Discreto de color, pero con area tactil de sobra. */
+.splash-skip{position:absolute;top:max(1rem,env(safe-area-inset-top));
+  right:max(1rem,env(safe-area-inset-right));z-index:6;
+  min-height:44px;padding:.6rem 1.1rem;border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  color:rgba(255,255,255,.72);font-size:.78rem;letter-spacing:.16em;
+  font-weight:600;cursor:pointer;
+  transition:color .2s ease,border-color .2s ease,background .2s ease}
+.splash-skip:hover,.splash-skip:focus-visible{color:#fff;
+  border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.1)}
+.splash-skip:focus-visible{outline:2px solid var(--neon-cyan,#00d4ff);outline-offset:3px}
+
+/* Sin movimiento: no hay secuencia que esperar, asi que todo esta desde el
+   primer momento. El motor pinta el estado final del lienzo y pone la clase. */
+@media (prefers-reduced-motion:reduce){
+  .splash-intro .splash-title,
+  .splash-intro .splash-tagline,
+  .splash-intro .splash-loader,
+  .splash-intro .splash-enter-btn{opacity:1;transform:none;transition:none}
+  .splash-intro .splash-emblem{animation:none}
+  .splash-skip{transition:none}
+}

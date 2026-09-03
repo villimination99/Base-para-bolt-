@@ -56,7 +56,8 @@
     "video_placeholder": "Elige un video en el editor del tema.",
     "play_video": "Reproducir el video",
     "sequence_hint": "Muévete sobre la animación",
-    "collections": "Ver colección"
+    "collections": "Ver colección",
+    "skip": "SALTAR"
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",

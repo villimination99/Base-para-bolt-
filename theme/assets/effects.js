@@ -28,6 +28,37 @@
     MODS.forEach(function (f) { try { f(); } catch (e) {} });
   });
 
+  /* ============ 0. Compuerta de la intro ============
+     Mientras la intro tapa la pantalla no se ve NADA de lo que hay detras,
+     pero los lienzos decorativos seguian corriendo igual: los observadores de
+     interseccion ven esos elementos dentro del viewport, porque la intro esta
+     encima, no delante en el flujo. Medido en un movil de gama media (CPU x4):
+     la intro sola va a 60 fps y con los efectos del fondo corriendo detras se
+     quedaba en 30, justo en los dos segundos y medio de los que depende la
+     primera impresion. Ahora los bucles de fondo esperan a que la intro se
+     cierre. No es un apano de rendimiento: es que ese trabajo no servia para
+     nada, nadie lo estaba viendo. */
+  var introViva = !!document.querySelector('[data-splash]');
+  var enEspera = [];
+  function alCerrarIntro(fn) {
+    if (!introViva) { fn(); return; }
+    enEspera.push(fn);
+  }
+  if (introViva) {
+    var cajaIntro = document.querySelector('[data-splash]');
+    var abrirCompuerta = function () {
+      if (!introViva) return;
+      introViva = false;
+      var lista = enEspera; enEspera = [];
+      for (var i = 0; i < lista.length; i++) { try { lista[i](); } catch (e) {} }
+    };
+    cajaIntro.addEventListener('villu:intro-cerrada', abrirCompuerta);
+    // Red de seguridad. Si por lo que sea la intro no llegase a avisar, los
+    // efectos NO se pueden quedar apagados para siempre: peor que ir a 30 fps
+    // dos segundos es una tienda sin fondo animado durante toda la visita.
+    setTimeout(abrirCompuerta, 15000);
+  }
+
   var hex = function (c, fallback) { return (c && /^#/.test(c)) ? c : fallback; };
   var CYAN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan').trim(), '#00d4ff');
   var PINK = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim(), '#ff2ecb');
@@ -339,7 +370,7 @@
     window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(start, 200); });
     // Pause when tab hidden to save CPU
     document.addEventListener('visibilitychange', function () { if (document.hidden) { cancelAnimationFrame(raf); } else { draw(); } });
-    start();
+    alCerrarIntro(start);
   })();
 
   /* ============ 4b. Holo stage: 3D tilt (desktop) + drag-to-spin (touch) ============ */
@@ -505,85 +536,17 @@
       last = t;
       drawFrame(t);
     }
-    raf = requestAnimationFrame(loop);
+    alCerrarIntro(function () { raf = requestAnimationFrame(loop); });
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { cancelAnimationFrame(raf); } else { raf = requestAnimationFrame(loop); }
+      if (document.hidden) { cancelAnimationFrame(raf); } else if (!introViva) { raf = requestAnimationFrame(loop); }
     });
   })();
 
-  /* ============ 5. Interactive 3D splash (magnetic particle field) ============
-     Renders into #splash-canvas. Pointer / touch "pulls" the neon particles
-     like magnets. Pure 2D canvas — no WebGL library, ~2KB runtime. */
-  (function () {
-    var canvas = $('#splash-canvas');
-    var splash = $('[data-splash-3d]');
-    if (!canvas || !splash || reduce) return;
-    var ctx = canvas.getContext('2d');
-    var DPR = Math.min(window.devicePixelRatio || 1, 2);
-    var W, H, pts = [], pointer = { x: -9999, y: -9999, active: false };
-    var palette = [CYAN, PINK, GREEN];
-    var N = window.innerWidth < 700 ? 46 : 90;
-
-    function resize() { W = canvas.width = innerWidth * DPR; H = canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; }
-    function build() {
-      pts = [];
-      for (var i = 0; i < N; i++) {
-        pts.push({ x: Math.random() * W, y: Math.random() * H, hx: Math.random() * W, hy: Math.random() * H, vx: 0, vy: 0, r: (Math.random() * 2 + 1) * DPR, c: palette[i % palette.length] });
-      }
-    }
-    function move(e) {
-      var t = e.touches ? e.touches[0] : e;
-      pointer.x = t.clientX * DPR; pointer.y = t.clientY * DPR; pointer.active = true;
-    }
-    function leave() { pointer.active = false; pointer.x = -9999; pointer.y = -9999; }
-
-    var raf;
-    function frame() {
-      ctx.clearRect(0, 0, W, H);
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i];
-        // spring back to home
-        p.vx += (p.hx - p.x) * 0.005;
-        p.vy += (p.hy - p.y) * 0.005;
-        if (pointer.active) {
-          var dx = p.x - pointer.x, dy = p.y - pointer.y;
-          var d2 = dx * dx + dy * dy;
-          var radius = (170 * DPR) * (170 * DPR);
-          if (d2 < radius && d2 > 1) {
-            var f = (1 - d2 / radius) * 2.4; // magnetic pull toward pointer
-            p.vx -= (dx / Math.sqrt(d2)) * f;
-            p.vy -= (dy / Math.sqrt(d2)) * f;
-          }
-        }
-        p.vx *= 0.9; p.vy *= 0.9;
-        p.x += p.vx; p.y += p.vy;
-        // links
-        for (var j = i + 1; j < pts.length; j++) {
-          var q = pts[j], lx = p.x - q.x, ly = p.y - q.y, ld = lx * lx + ly * ly;
-          if (ld < (110 * DPR) * (110 * DPR)) {
-            ctx.strokeStyle = p.c; ctx.globalAlpha = 0.12 * (1 - ld / ((110 * DPR) * (110 * DPR)));
-            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-          }
-        }
-        ctx.globalAlpha = 0.9; ctx.fillStyle = p.c; ctx.shadowBlur = 6; ctx.shadowColor = p.c;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.28); ctx.fill(); ctx.shadowBlur = 0;
-      }
-      ctx.globalAlpha = 1;
-      raf = requestAnimationFrame(frame);
-    }
-    function init() { resize(); build(); cancelAnimationFrame(raf); frame(); }
-    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(init, 200); });
-    splash.addEventListener('pointermove', move);
-    splash.addEventListener('touchmove', move, { passive: true });
-    splash.addEventListener('pointerleave', leave);
-    splash.addEventListener('touchend', leave);
-    init();
-    // stop the loop once the splash is dismissed
-    var mo = new MutationObserver(function () {
-      if (splash.classList.contains('dismissed')) { cancelAnimationFrame(raf); mo.disconnect(); }
-    });
-    mo.observe(splash, { attributes: true, attributeFilter: ['class'] });
-  })();
+  /* El campo de particulas de la intro se mudo a assets/intro.js.
+     Alli vive la secuencia entera (trazo del latido, estallido y formacion) y
+     las particulas son el ultimo tiempo de esa secuencia, no un efecto
+     aparte. Tenerlo en dos archivos obligaba a sincronizar tiempos a mano
+     entre ellos, que es justo como se descuadran las cosas. */
 
   /* ---- Interactive cursor glow (desktop pointer, opt-in) -------------------- */
   (function () {
@@ -611,7 +574,7 @@
       if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
       else if (!raf) loop();
     });
-    loop();
+    alCerrarIntro(loop);
   })();
 
   /* ---- Curved infinite 3D carousel (coverflow ring) ------------------------- */
@@ -652,7 +615,7 @@
         if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
       }, true);
       var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { en.isIntersecting ? start() : stop(); });
+        entries.forEach(function (en) { en.isIntersecting ? alCerrarIntro(start) : stop(); });
       }, { threshold: 0 });
       io.observe(stage);
       render();
@@ -781,7 +744,7 @@
     }, { passive: true });
     window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(function () { resize(); build(); }, 200); });
     document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
-    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { x.isIntersecting ? start() : stop(); }); }, { threshold: 0 });
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { x.isIntersecting ? alCerrarIntro(start) : stop(); }); }, { threshold: 0 });
     resize(); build(); io.observe(canvas);
   });
 })();
