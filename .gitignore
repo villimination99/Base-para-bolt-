@@ -18,3 +18,10 @@ villumination-3d-theme.zip
 .agents/
 .claude/
 skills-lock.json
+
+# Temporales de las herramientas: el renderizador acumula los fotogramas en un
+# archivo antes de pasarlos a ffmpeg, y los verificadores escriben su pagina de
+# prueba en disco (addInitScript solo se aplica navegando a una URL, no con
+# setContent). Ninguno de los dos es parte del tema.
+estudio/video/.fotogramas.jpg
+verificadores/**/.pagina-de-prueba*.html

@@ -1,19 +1,21 @@
-/* Comprueba la intro "Pulso" en un navegador real.
+/* Comprueba la intro "Pulso / Malla" en un navegador real.
    ------------------------------------------------------------------
-   Nacio de tres fallos que leer el codigo no habria encontrado nunca:
+   Nacio de fallos que leer el codigo no habria encontrado nunca:
 
    1. El emblema pasa toda la secuencia congelado en el primer fotograma de
       logoAppear, que es scale(0.5). getBoundingClientRect devolvia por tanto
       LA MITAD del radio real, asi que las particulas formaban un anillo del
       tamano equivocado y la amplitud del latido se quedaba en un munon. Solo
       se ve midiendo geometria de verdad.
-   2. Habia un hueco de casi medio segundo, entre que el trazo se apagaba y el
-      emblema entraba, con la pantalla practicamente vacia. Solo se ve
-      contando pixeles encendidos fotograma a fotograma.
+   2. Habia un hueco con la pantalla practicamente vacia entre actos. Solo se
+      ve contando pixeles encendidos fotograma a fotograma.
    3. Los lienzos decorativos del fondo seguian corriendo DETRAS de la intro,
       que los tapa por completo: la pagina iba a 30 fps en vez de 60 justo en
-      los dos segundos de los que depende la primera impresion. Solo se ve
+      los segundos de los que depende la primera impresion. Solo se ve
       midiendo con el navegador estrangulado.
+   4. La secuencia tiene dos duraciones y dos puertas. Si la puerta de la
+      tienda se retrasara hasta el final, cada primera visita pagaria el peaje
+      entero. Aqui se vigila con un presupuesto en segundos.
 
    Uso:  node verificadores/intro/comprobar.mjs                             */
 import { chromium } from 'playwright';
@@ -26,19 +28,30 @@ const RAIZ = path.resolve(AQUI, '../..');
 const ASSETS = path.join(RAIZ, 'theme/assets');
 const CHROME = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
-/* El marcado es el del snippet real, con las clases que el CSS del tema
-   espera. Si el snippet cambia de estructura, esta prueba deja de reflejarlo,
-   asi que se comprueba aparte que las piezas que se usan aqui siguen ahi. */
+/* El marcado es el del snippet real. Si el snippet cambia de estructura, esta
+   prueba deja de reflejarlo, asi que se comprueba aparte que las piezas que
+   se usan aqui siguen estando alli. */
 const SNIPPET = fs.readFileSync(path.join(RAIZ, 'theme/snippets/splash-intro.liquid'), 'utf8');
-const PIEZAS = ['splash-canvas', 'splash-emblem', 'splash-enter-btn', 'data-splash-skip', 'intro.js'];
+const PIEZAS = ['splash-canvas', 'splash-emblem', 'splash-enter-btn', 'data-splash-skip',
+                'data-splash-frases', 'splash-logotipo', 'data-duracion', 'intro.js'];
 
-const PAGINA = `<!doctype html><html lang="es"><head><meta charset="utf-8">
+const AJUSTES = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_schema.json'), 'utf8'));
+const DATOS = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_data.json'), 'utf8')).current;
+
+const FRASES = String(DATOS.splash_frases || '').split('\n').map(s => s.trim()).filter(Boolean);
+
+function pagina(duracion) {
+  const trozos = FRASES.slice(0, 3).map((f, i) =>
+    `<p class="splash-frase" data-i="${i}">` +
+    f.split(/\s+/).map((w, j) => `<span class="splash-palabra"><i style="--r:${j}">${w}</i></span>`).join(' ') +
+    `</p>`).join('\n');
+  return `<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="file://${ASSETS}/villumination.css">
 <style>:root{--neon-cyan:#00d4ff;--neon-pink:#ff2ecb;--neon-green:#00e87b;--neon-purple:#7b2fff;
 --color-bg:#000;--font-heading:system-ui;--font-body:system-ui}
 body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><body>
-<div id="splash-intro" class="splash-intro" data-splash data-splash-3d role="dialog" aria-label="Villumination">
+<div id="splash-intro" class="splash-intro" data-splash data-duracion="${duracion}" data-splash-3d role="dialog" aria-label="Villumination">
   <div class="splash-bg"></div>
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
   <button class="splash-skip" type="button" data-splash-skip>SALTAR</button>
@@ -51,6 +64,9 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><b
     </div>
     <h1 class="splash-title">VILLUMINATION</h1>
     <p class="splash-tagline">TRANSFORMA TU CUERPO.</p>
+    <div class="splash-frases" data-splash-frases aria-hidden="true">
+${trozos}
+    </div>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
     <button id="splash-enter" class="splash-enter-btn" type="button"><span>ENTRAR</span></button>
   </div>
@@ -61,10 +77,14 @@ window.__t0=performance.now();</script>
 <script src="file://${ASSETS}/base.js"></script>
 <script src="file://${ASSETS}/effects.js"></script>
 </body></html>`;
+}
 
 const TMP = path.join(AQUI, '.pagina-de-prueba.html');
-fs.writeFileSync(TMP, PAGINA);
+const TMP_CORTA = path.join(AQUI, '.pagina-de-prueba-corta.html');
+fs.writeFileSync(TMP, pagina('completa'));
+fs.writeFileSync(TMP_CORTA, pagina('corta'));
 const URL_PRUEBA = 'file://' + TMP;
+const URL_CORTA = 'file://' + TMP_CORTA;
 
 const APARATOS = {
   'iPhone 12':  { viewport: { width: 390, height: 844 },  isMobile: true, hasTouch: true, deviceScaleFactor: 2 },
@@ -80,7 +100,7 @@ const decir = (ok, txt) => { if (!ok) fallos++; console.log(`${ok ? ' OK   ' : '
 
 /* Espera al instante EXACTO de la secuencia. Con waitForTimeout el coste de
    cada captura (300 ms largos) se acumulaba y las medidas salian medio
-   segundo tarde, que en una secuencia de dos segundos es otra escena. */
+   segundo tarde, que en una secuencia de tres segundos es otra escena. */
 const enElInstante = (p, ms) => p.evaluate(m => new Promise(r => {
   (function esperar() {
     if (performance.now() - window.__t0 >= m) r();
@@ -88,22 +108,55 @@ const enElInstante = (p, ms) => p.evaluate(m => new Promise(r => {
   })();
 }), ms);
 
-async function abrir(nombre, extra) {
+async function abrir(nombre, extra, url) {
   const ctx = await navegador.newContext(Object.assign({}, APARATOS[nombre], extra || {}));
   const p = await ctx.newPage();
   const errores = [];
   p.on('pageerror', e => errores.push(e.message));
-  await p.goto(URL_PRUEBA);
+  await p.goto(url || URL_PRUEBA);
   return { ctx, p, errores };
 }
 
-console.log('\n--- El snippet sigue teniendo las piezas que esta prueba usa ---');
+/* Zona del emblema: un cuadro de 3,2 radios centrado en el, remuestreado a
+   120x120, contando los pixeles cuya suma RGB pasa de 90. */
+async function encendido(p, ms) {
+  const g = await p.evaluate(() => {
+    const c = document.querySelector('[data-splash]');
+    const e = c.querySelector('.splash-emblem');
+    const r = e.getBoundingClientRect(), rc = c.getBoundingClientRect();
+    return { cx: r.left - rc.left + r.width / 2, cy: r.top - rc.top + r.height / 2,
+             R: (e.offsetWidth || r.width) / 2 };
+  });
+  await enElInstante(p, ms);
+  const foto = await p.screenshot();
+  return p.evaluate(async ([b64, g]) => {
+    const img = new Image();
+    img.src = 'data:image/png;base64,' + b64;
+    await img.decode();
+    const esc = img.width / document.documentElement.clientWidth;
+    const lado = g.R * 3.2 * esc;
+    const c = document.createElement('canvas');
+    c.width = c.height = 120;
+    const x = c.getContext('2d');
+    x.drawImage(img, (g.cx - g.R * 1.6) * esc, (g.cy - g.R * 1.6) * esc, lado, lado, 0, 0, 120, 120);
+    const d = x.getImageData(0, 0, 120, 120).data;
+    let n = 0;
+    for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] > 90) n++;
+    return n / (120 * 120);
+  }, [foto.toString('base64'), g]);
+}
+
+console.log('\n--- El snippet y los ajustes tienen las piezas que esto usa ---');
 for (const pieza of PIEZAS) decir(SNIPPET.includes(pieza), `el snippet declara "${pieza}"`);
+const ids = AJUSTES.flatMap(g => (g.settings || []).map(s => s.id));
+for (const id of ['splash_duracion', 'splash_frases'])
+  decir(ids.includes(id), `el editor de Shopify ofrece el ajuste "${id}"`);
+decir(FRASES.length >= 1 && FRASES.length <= 3,
+  `hay ${FRASES.length} frase(s) de motivacion configurada(s), y el marcado pinta como mucho 3`);
+decir(FRASES.every(f => f.length > 0 && f.length <= 60),
+  'ninguna frase esta vacia ni pasa de 60 caracteres (mas no cabe en un movil)');
 
 console.log('\n--- Composicion: el pico del latido cae bajo el anillo del emblema ---');
-/* La punta del complejo QRS tiene que quedar justo DEBAJO del anillo, no
-   atravesandolo por el medio: el estallido ocurre en la puerta del emblema y
-   por eso las particulas casi no tienen que viajar para formarlo. */
 for (const nombre of Object.keys(APARATOS)) {
   const { ctx, p } = await abrir(nombre);
   const g = await p.evaluate(() => {
@@ -115,7 +168,6 @@ for (const nombre of Object.keys(APARATOS)) {
              radio: (em.offsetWidth || r.width) / 2,
              escalado: Math.abs(r.width - em.offsetWidth) > 2 };
   });
-  // Mismo calculo que intro.js, en px CSS
   let alto = Math.min(g.H * 0.15, g.radio * 1.45, g.W * 0.30);
   let yBase = g.cy + g.radio * 1.10 + alto;
   if (yBase > g.H * 0.90) yBase = g.H * 0.90;
@@ -129,82 +181,65 @@ for (const nombre of Object.keys(APARATOS)) {
   await ctx.close();
 }
 
+/* ---- COMPROBACION RETIRADA: "la malla tiene perspectiva de verdad" ----
+   Se intento dos veces y las dos salieron mal. Queda escrito para que nadie
+   vuelva a intentarlo por el mismo camino.
+
+   INTENTO 1. Interceptar ctx.arc y mirar el rango de radios de los nodos.
+   Daba verde con un abanico de x56, pero ese 56 no era un nodo: era el
+   degradado radial del nucleo, que tambien se dibuja con arc. Habria pasado
+   igual con la perspectiva rota. Y filtrando por tamano tampoco vale: el
+   radio de cada nodo ya varia de por si, asi que un rango ancho no demuestra
+   nada.
+
+   INTENTO 2. Medir la silueta: en una esfera proyectada las aristas se
+   amontonan en el borde y se separan en el centro, asi que la densidad de
+   pixeles encendidos en el anillo 0,80-1,00 del radio deberia superar
+   claramente a la del disco central. Se calibro apagando la perspectiva
+   (k = 1 para todos los nodos), tres pasadas de cada version:
+
+       con perspectiva:  1,28   1,36   1,39
+       sin perspectiva:  1,29   1,35   1,35
+
+   Los dos grupos se solapan ENTEROS. La medida no distingue nada, asi que
+   cualquier umbral habria sido decorativo. Se retira: un control que no puede
+   fallar sobre la version rota es peor que no tener control, porque da
+   confianza falsa.
+
+   Lo que si queda cubierto, y con calibracion de verdad, es que la malla
+   ESTE: la comprobacion de "el centro nunca se apaga" de aqui abajo esta
+   calibrada precisamente contra la version con la malla apagada (11,5 %
+   contra 5,1 %). Si la malla desapareciera, eso se pone rojo. */
+
 console.log('\n--- La secuencia nunca se queda en blanco ---');
-/* El fallo que esto vigila: entre el trazo que se apagaba y el emblema que
-   entraba habia casi medio segundo con el CENTRO de la pantalla vacio.
+/* CALIBRADO CONTRA LA VERSION ROTA Y SOBRE ESTA MISMA PAGINA. Las dos cosas
+   importan: una calibracion hecha con otro marcado de prueba da numeros que
+   aqui no valen, y ya paso una vez -- el sabotaje pasaba el control. La
+   version rota es la misma secuencia con la malla apagada, que es la
+   regresion que de verdad importa: en ese tramo la malla es lo UNICO que hay
+   en el centro. Dos pasadas de cada version, en un iPhone 12:
 
-   SE MIDE LA ZONA DEL EMBLEMA, no la pantalla entera. Medir la pantalla
-   entera parecia lo obvio y no servia: el fondo, la rejilla y el boton de
-   saltar aportan luz constante, el estallido reparte particulas por todas
-   partes y el resultado tapaba justo el agujero que se buscaba. Con la
-   pantalla entera, la version ROTA daba 1,45 %, 1,56 % y 2,19 % en tres
-   pasadas contra un umbral de 1,7 %: habria dado verde a un fallo real una de
-   cada tres veces.
+       instante   rota          buena
+        1300 ms   3,4 / 3,5     11,6 / 11,7
+        1600 ms   3,5 / 3,4     11,9 / 12,0
+        1900 ms   3,4 / 3,2     11,4 / 11,2
 
-   CALIBRADO CONTRA LA VERSION ROTA Y SOBRE ESTA MISMA PAGINA. Las dos cosas
-   importan: la primera calibracion se hizo con otro marcado de prueba y sus
-   numeros no valian aqui, asi que el umbral quedo en el sitio equivocado y el
-   sabotaje pasaba. Se mide un cuadro de 3,2 radios centrado en el emblema,
-   remuestreado a 120x120, contando los pixeles cuya suma RGB pasa de 90. Dos
-   pasadas de cada version en un iPhone 12:
+   El peor de la buena es 11,2 % y el mejor de la rota 3,5 %: el umbral va en
+   el 8 %, con un 40 % de margen por arriba y mas del doble por abajo.
 
-       instante   rota          arreglada
-         900 ms   3,2 / 2,8     11,5 / 11,0
-        1000 ms   3,4 / 3,3     21,3 / 21,8
-        1100 ms   8,0 / 7,3     23,0 / 23,2
-
-   Y el peor valor de la ventana, tres pasadas seguidas de cada version, que
-   es lo que decide de verdad:
-
-       rota:       2,5 %   3,3 %   2,6 %      -> las tres en rojo
-       arreglada:  9,6 %   9,4 %   9,3 %      -> las tres en verde
-
-   Ahi esta el agujero: el nucleo que se carga en el lienzo entra a los 880 ms
-   y el emblema a 1,05 s, asi que en la version buena el centro ya tiene luz;
-   en la rota no llega nada hasta que aterrizan las particulas, pasados 1,2 s.
-   El umbral va en el 6 %: por encima queda el peor caso medido de la buena
-   (9,3 %) y por debajo el mejor de la rota (3,3 %), con margen de mas del
-   50 % por los dos lados y sin solaparse en ninguna pasada.
-
-   Fuera de esta ventana NO se exige nada, por razones medidas: a 700 ms las
-   dos versiones dan lo mismo (13-15 %) porque manda el estallido, y a partir
-   de 1200 ms tambien (16-24 %) porque las particulas ya han llegado y tapan
-   el agujero. Solo entre 900 y 1100 ms la diferencia es de verdad. */
+   La ventana se corta en 1900 ms y no mas tarde por un dato medido: a 2200 ms
+   la version rota dio 3,4 % en una pasada y 7,9 % en otra, porque ahi las
+   particulas ya empiezan a llegar al anillo y tapan el agujero. Con 2200
+   dentro, el margen se quedaba en un 20 % y el control se volvia inestable.
+   Y antes de 1300 ms tampoco: alli manda el estallido y las dos versiones dan
+   lo mismo (10-11 %). */
 {
   const { ctx, p, errores } = await abrir('iPhone 12');
-  const INSTANTES = [700, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 2000, 2400];
-  const VENTANA = [900, 1100];
-  const MINIMO = 0.06;
+  const INSTANTES = [900, 1100, 1300, 1600, 1900, 2200, 2500, 2800, 3100, 3400];
+  const VENTANA = [1300, 1900];
+  const MINIMO = 0.08;
   const medidas = [];
-  for (const ms of INSTANTES) {
-    const g = await p.evaluate(() => {
-      const c = document.querySelector('[data-splash]');
-      const e = c.querySelector('.splash-emblem');
-      const r = e.getBoundingClientRect(), rc = c.getBoundingClientRect();
-      return { cx: r.left - rc.left + r.width / 2, cy: r.top - rc.top + r.height / 2,
-               R: (e.offsetWidth || r.width) / 2 };
-    });
-    await enElInstante(p, ms);
-    const foto = await p.screenshot();
-    // Se leen los pixeles de verdad con el propio navegador: el tamano del PNG
-    // no dice nada sobre si hay algo en pantalla.
-    const v = await p.evaluate(async ([b64, g]) => {
-      const img = new Image();
-      img.src = 'data:image/png;base64,' + b64;
-      await img.decode();
-      const esc = img.width / document.documentElement.clientWidth; // px de foto por px CSS
-      const lado = g.R * 3.2 * esc;
-      const c = document.createElement('canvas');
-      c.width = c.height = 120;
-      const x = c.getContext('2d');
-      x.drawImage(img, (g.cx - g.R * 1.6) * esc, (g.cy - g.R * 1.6) * esc, lado, lado, 0, 0, 120, 120);
-      const d = x.getImageData(0, 0, 120, 120).data;
-      let n = 0;
-      for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] > 90) n++;
-      return n / (120 * 120);
-    }, [foto.toString('base64'), g]);
-    medidas.push([ms, v]);
-  }
+  for (const ms of INSTANTES) medidas.push([ms, await encendido(p, ms)]);
   const dentro = medidas.filter(m => m[0] >= VENTANA[0] && m[0] <= VENTANA[1]);
   const flojos = dentro.filter(m => m[1] < MINIMO);
   const peor = dentro.reduce((a, b) => b[1] < a[1] ? b : a);
@@ -220,11 +255,92 @@ console.log('\n--- La secuencia nunca se queda en blanco ---');
   await ctx.close();
 }
 
+console.log('\n--- Presupuesto de espera: las dos puertas ---');
+/* La de arriba abre la TIENDA y la de abajo cierra la secuencia. Si alguien
+   alarga la secuencia sin mover la primera, cada primera visita paga el peaje
+   entero, y eso son ventas perdidas. Por eso hay un techo en segundos. */
+for (const [modo, url, techoPuerta, techoFin] of [
+  ['completa', URL_PRUEBA, 2.6, 4.2],
+  ['corta', URL_CORTA, 2.6, 3.0],
+]) {
+  const { ctx, p, errores } = await abrir('iPhone 12', {}, url);
+  const r = await p.evaluate(() => new Promise(res => {
+    const c = document.querySelector('[data-splash]');
+    const t0 = window.__t0;
+    let tp = 0, tl = 0;
+    (function mirar() {
+      const t = (performance.now() - t0) / 1000;
+      if (!tp && c.classList.contains('intro-puerta')) tp = t;
+      if (!tl && c.classList.contains('intro-lista')) tl = t;
+      if ((tp && tl) || t > 6) res({ tp, tl });
+      else requestAnimationFrame(mirar);
+    })();
+  }));
+  decir(r.tp > 0 && r.tp <= techoPuerta,
+    `${modo.padEnd(9)} el boton de entrar se habilita a los ${r.tp.toFixed(2)} s (techo ${techoPuerta} s)`);
+  decir(r.tl > 0 && r.tl <= techoFin,
+    `${modo.padEnd(9)} la secuencia termina a los ${r.tl.toFixed(2)} s (techo ${techoFin} s)`);
+  decir(r.tp <= r.tl, `${modo.padEnd(9)} la puerta de la tienda no llega despues del final`);
+  decir(errores.length === 0, `${modo.padEnd(9)} sin errores de JavaScript`);
+  await ctx.close();
+}
+
+console.log('\n--- Las frases se ven y se leen ---');
+{
+  const { ctx, p, errores } = await abrir('iPhone 12');
+  // A media malla tiene que haber UNA frase visible, y solo una.
+  await enElInstante(p, 1900);
+  const r = await p.evaluate(() => {
+    const vis = Array.prototype.filter.call(
+      document.querySelectorAll('.splash-frase'),
+      e => +getComputedStyle(e).opacity > 0.5);
+    if (!vis.length) return { n: 0 };
+    const e = vis[0], b = e.getBoundingClientRect();
+    const cs = getComputedStyle(e);
+    // Palabras reveladas: si la mascara no se soltara, seguirian desplazadas
+    const i = e.querySelector('.splash-palabra > i');
+    const m = new DOMMatrixReadOnly(getComputedStyle(i).transform);
+    return { n: vis.length, texto: e.textContent.trim(), color: cs.color,
+             abajo: Math.round(b.bottom), alto: Math.round(b.height),
+             ancho: Math.round(b.width), desplazada: Math.abs(m.f) > 1,
+             vp: document.documentElement.clientWidth };
+  });
+  decir(r.n === 1, `a 1,9 s hay exactamente una frase visible (hay ${r.n})`);
+  if (r.n) {
+    decir(!r.desplazada, `las palabras han salido de su mascara: "${r.texto}"`);
+    decir(r.ancho <= r.vp, `la frase cabe de ancho (${r.ancho} px de ${r.vp} disponibles)`);
+    // La frase va sobre el fondo oscuro de la intro: se comprueba el contraste
+    // real del color de texto contra ese fondo, no contra un blanco supuesto.
+    const cont = await p.evaluate(col => {
+      const lum = c => {
+        const v = c.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number).map(n => {
+          n /= 255; return n <= 0.03928 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4);
+        });
+        return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2];
+      };
+      const a = lum(col), b = lum('rgb(5, 6, 12)');
+      return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    }, r.color);
+    decir(cont >= 4.5, `contraste de la frase sobre el fondo de la intro: ${cont.toFixed(1)}:1 (AA pide 4,5)`);
+  }
+  // No pueden solaparse con el boton de entrar
+  await enElInstante(p, 2500);
+  const solape = await p.evaluate(() => {
+    const f = document.querySelector('.splash-frase[data-i]');
+    const b = document.querySelector('.splash-enter-btn');
+    const rf = f.getBoundingClientRect(), rb = b.getBoundingClientRect();
+    return rf.bottom > rb.top ? Math.round(rf.bottom - rb.top) : 0;
+  });
+  decir(solape === 0, `las frases no se montan sobre el boton de entrar${solape ? ` (se solapan ${solape} px)` : ''}`);
+  decir(errores.length === 0, `sin errores de JavaScript (${errores.length})`);
+  await ctx.close();
+}
+
 console.log('\n--- La puerta de la tienda siempre aparece ---');
 for (const [nombre, extra, espera] of [
-  ['iPhone 12', {}, 3200],
+  ['iPhone 12', {}, 4400],
   ['iPhone 12', { reducedMotion: 'reduce' }, 600],
-  ['Escritorio', {}, 3200],
+  ['Escritorio', {}, 4400],
 ]) {
   const { ctx, p, errores } = await abrir(nombre, extra);
   await p.waitForTimeout(espera);
@@ -232,15 +348,21 @@ for (const [nombre, extra, espera] of [
     const c = document.querySelector('[data-splash]');
     const e = document.querySelector('.splash-enter-btn');
     const s = document.querySelector('.splash-skip');
-    return { listo: c.classList.contains('intro-lista'),
+    const f = document.querySelector('.splash-frases');
+    return { lista: c.classList.contains('intro-lista'),
              op: +getComputedStyle(e).opacity,
              alto: Math.round(s.getBoundingClientRect().height),
-             sop: +getComputedStyle(s).opacity };
+             sop: +getComputedStyle(s).opacity,
+             frasesVisibles: f ? getComputedStyle(f).display !== 'none' &&
+               Array.prototype.some.call(f.children, x => +getComputedStyle(x).opacity > 0.5) : false };
   });
-  const etiqueta = extra.reducedMotion ? `${nombre} (movimiento reducido)` : nombre;
-  decir(r.listo && r.op > 0.9, `${etiqueta.padEnd(28)} el boton de entrar esta visible (opacidad ${r.op.toFixed(2)})`);
-  decir(r.sop > 0.9 && r.alto >= 44, `${etiqueta.padEnd(28)} saltar es visible y tiene ${r.alto} px de area tactil`);
-  decir(errores.length === 0, `${etiqueta.padEnd(28)} sin errores de JavaScript`);
+  const etiqueta = extra.reducedMotion ? `${nombre} (mov. reducido)` : nombre;
+  decir(r.lista && r.op > 0.9, `${etiqueta.padEnd(26)} el boton de entrar esta visible (opacidad ${r.op.toFixed(2)})`);
+  decir(r.sop > 0.9 && r.alto >= 44, `${etiqueta.padEnd(26)} saltar es visible y tiene ${r.alto} px de area tactil`);
+  // En el fotograma FINAL las frases ya se han ido y manda el logotipo:
+  // mostrarlas ahi seria inventar un estado que la secuencia nunca tiene.
+  decir(!r.frasesVisibles, `${etiqueta.padEnd(26)} en el fotograma final no queda ninguna frase`);
+  decir(errores.length === 0, `${etiqueta.padEnd(26)} sin errores de JavaScript`);
   await ctx.close();
 }
 
@@ -295,7 +417,7 @@ for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 
     (function sonda(t) { if (prev) window.__f.push(t - prev); prev = t; requestAnimationFrame(sonda); })(performance.now());
   });
   await p.goto(URL_PRUEBA);
-  await p.waitForTimeout(3000);
+  await p.waitForTimeout(4200);
   const f = (await p.evaluate(() => window.__f.slice(0))).filter(x => x > 0.5).sort((a, b) => a - b);
   const mediana = f[f.length >> 1];
   decir(mediana <= 34,
@@ -304,8 +426,8 @@ for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 
 }
 
 await navegador.close();
-try { fs.unlinkSync(TMP); } catch (e) {}
+for (const f of [TMP, TMP_CORTA]) { try { fs.unlinkSync(f); } catch (e) {} }
 console.log(fallos === 0
-  ? '\nLa intro se ve, no se queda en blanco, se puede saltar y no roba fotogramas al fondo.\n'
+  ? '\nLa intro se ve, no se queda en blanco, se puede saltar, abre la tienda a tiempo y no roba fotogramas al fondo.\n'
   : `\n${fallos} comprobacion(es) en rojo.\n`);
 process.exit(fallos ? 1 : 0);

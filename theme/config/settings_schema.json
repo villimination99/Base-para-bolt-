@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.36.0",
+    "theme_version": "4.37.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -695,6 +695,30 @@
         "id": "splash_tagline",
         "label": "Eslogan",
         "default": "TRANSFORMA TU CUERPO. DOMINA TU MENTE."
+      },
+      {
+        "type": "select",
+        "id": "splash_duracion",
+        "label": "Duración de la secuencia",
+        "info": "La completa añade el núcleo de malla y las frases. La corta va directa al emblema. El botón de entrar aparece antes de que termine en las dos.",
+        "options": [
+          {
+            "value": "completa",
+            "label": "Completa (3,6 s) — con núcleo y frases"
+          },
+          {
+            "value": "corta",
+            "label": "Corta (2,4 s) — solo el latido"
+          }
+        ],
+        "default": "completa"
+      },
+      {
+        "type": "textarea",
+        "id": "splash_frases",
+        "label": "Frases de motivación",
+        "info": "Una por línea. Se muestran mientras gira el núcleo. Deja el campo vacío para no mostrar ninguna.",
+        "default": "EL LÍMITE LO PONES TÚ\nCADA REPETICIÓN CUENTA"
       }
     ]
   },

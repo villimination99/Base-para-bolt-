@@ -96,7 +96,12 @@ if (errores.length) {
 console.log(`  codificando ${(fs.statSync(CRUDO).size / 1048576).toFixed(1)} MB de fotogramas`);
 const ff = spawn(FFMPEG, [
   '-y', '-f', 'image2pipe', '-framerate', String(FPS), '-i', CRUDO,
-  '-c:v', 'libvpx', '-b:v', '3000k', '-crf', '22',
+  // La malla de luz son lineas finas y brillantes sobre negro, que es
+  // justo lo que peor comprime VP8: con el techo anterior de 3000k el video
+  // paso de 3,1 a 7,4 MB. Se baja el techo a 1800k. El video va detras de una
+  // portada y con preload="metadata", asi que solo se descarga si alguien le
+  // da al play, pero siete megas en datos moviles siguen siendo siete megas.
+  '-c:v', 'libvpx', '-b:v', '1800k', '-crf', '26',
   '-deadline', 'good', '-auto-alt-ref', '0', SALIDA,
 ], { stdio: ['ignore', 'ignore', 'pipe'] });
 let ffErr = '';

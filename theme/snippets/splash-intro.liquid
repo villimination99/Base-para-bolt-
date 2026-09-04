@@ -24,7 +24,7 @@
   la esquina, que no espera a ninguna animación, y la tecla Escape. El botón
   grande de entrar aparece cuando la secuencia termina.
 {%- endcomment -%}
-<div id="splash-intro" class="splash-intro" data-splash {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
+<div id="splash-intro" class="splash-intro" data-splash data-duracion="{{ settings.splash_duracion | default: 'completa' }}" {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
   <div class="splash-bg"></div>
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
   <div class="splash-particles" aria-hidden="true">
@@ -45,20 +45,58 @@
           <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="2" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.75"/>
         </svg>
       </span>
-      <span class="splash-core">
-        {%- if settings.logo != blank -%}
-          <img src="{{ settings.logo | image_url: width: 240 }}" alt="{{ shop.name | escape }}" width="120" height="120" loading="eager" decoding="async">
-        {%- else -%}
-          <span class="splash-mono">VI</span>
-        {%- endif -%}
-      </span>
+      {%- comment -%}
+        Dentro del círculo va SIEMPRE el monograma, nunca el logotipo. El
+        logotipo de la tienda es apaisado y, metido en un círculo con
+        object-fit:contain, salía diminuto: se quedaba con la altura que le
+        permitiera el ancho del círculo. El logotipo de verdad va abajo, a lo
+        ancho y a tamaño legible, que es donde se lee.
+      {%- endcomment -%}
+      <span class="splash-core"><span class="splash-mono">VI</span></span>
     </div>
 
-    {%- if settings.splash_title != blank -%}
+    {%- comment -%}
+      Un solo h1. Si hay logotipo, es la imagen (con el nombre de la tienda
+      como texto alternativo, así que para un lector de pantalla y para un
+      buscador dice exactamente lo mismo). Si no lo hay, el texto de siempre.
+    {%- endcomment -%}
+    {%- if settings.logo != blank -%}
+      <h1 class="splash-title splash-title--logo">
+        <img class="splash-logotipo"
+             src="{{ settings.logo | image_url: width: 900 }}"
+             srcset="{{ settings.logo | image_url: width: 450 }} 450w, {{ settings.logo | image_url: width: 900 }} 900w"
+             sizes="(max-width: 749px) 78vw, 420px"
+             width="{{ settings.logo.width | default: 900 }}"
+             height="{{ settings.logo.height | default: 200 }}"
+             alt="{{ shop.name | escape }}" loading="eager" decoding="async" fetchpriority="high">
+      </h1>
+    {%- elsif settings.splash_title != blank -%}
       <h1 class="splash-title">{{ settings.splash_title }}</h1>
     {%- endif -%}
     {%- if settings.splash_tagline != blank -%}
       <p class="splash-tagline">{{ settings.splash_tagline }}</p>
+    {%- endif -%}
+
+    {%- comment -%}
+      Frases de motivación. Van en HTML y no pintadas en el lienzo: así son
+      nítidas a cualquier resolución, se traducen, se seleccionan y las lee un
+      lector de pantalla. aria-hidden porque durante la secuencia son
+      decorativas: lo que importa anunciar es el título y el botón de entrar.
+      assets/intro.js va marcando cuál toca con data-frase.
+    {%- endcomment -%}
+    {%- assign frases = settings.splash_frases | newline_to_br | split: '<br />' -%}
+    {%- if settings.splash_frases != blank -%}
+      <div class="splash-frases" data-splash-frases aria-hidden="true">
+        {%- for f in frases limit: 3 -%}
+          {%- assign texto = f | strip -%}
+          {%- if texto != blank -%}
+            <p class="splash-frase" data-i="{{ forloop.index0 }}">
+              {%- assign palabras = texto | split: ' ' -%}
+              {%- for w in palabras -%}<span class="splash-palabra"><i style="--r:{{ forloop.index0 }}">{{ w }}</i></span> {% endfor -%}
+            </p>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
     {%- endif -%}
 
     <div class="splash-loader" aria-hidden="true"><div class="splash-loader-bar"></div></div>

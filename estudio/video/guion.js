@@ -29,6 +29,119 @@
     return Math.min(suave((t - de) / entra), suave((a - t) / sale));
   }
 
+  /* ---------- la malla de luz ----------
+     Es EL MISMO motivo que la intro de la tienda (assets/intro.js): una
+     esfera de nodos unidos por lineas que gira despacio. No es un adorno
+     repetido por pereza: el visitante ve la intro al entrar y este video en
+     la portada, y que los dos hablen el mismo idioma es lo que convierte dos
+     piezas sueltas en una marca.
+
+     Aqui TODO sale de t, sin acumular nada entre fotogramas. Un pulso que
+     avanzara sumando su velocidad daria un video distinto en cada captura y
+     dejaria de ser reproducible, que es la regla de este renderizador. */
+  var M_N = 170;
+  var M_NODOS = new Float32Array(M_N * 3);
+  (function () {
+    var phi = Math.PI * (3 - Math.sqrt(5));   // angulo aureo
+    for (var i = 0; i < M_N; i++) {
+      var y = 1 - (i / (M_N - 1)) * 2;
+      var r = Math.sqrt(Math.max(0, 1 - y * y));
+      var th = phi * i;
+      M_NODOS[i * 3] = Math.cos(th) * r;
+      M_NODOS[i * 3 + 1] = y;
+      M_NODOS[i * 3 + 2] = Math.sin(th) * r;
+    }
+  })();
+  // Aristas calculadas UNA vez: la esfera es rigida, su topologia no cambia.
+  var M_ARISTAS = (function () {
+    var K = 3, pares = [], vistos = {};
+    for (var a = 0; a < M_N; a++) {
+      var ax = M_NODOS[a * 3], ay = M_NODOS[a * 3 + 1], az = M_NODOS[a * 3 + 2];
+      var mej = [];
+      for (var b = 0; b < M_N; b++) {
+        if (b === a) continue;
+        var d = ax * M_NODOS[b * 3] + ay * M_NODOS[b * 3 + 1] + az * M_NODOS[b * 3 + 2];
+        if (mej.length < K) { mej.push([d, b]); mej.sort(function (u, v) { return u[0] - v[0]; }); }
+        else if (d > mej[0][0]) { mej[0] = [d, b]; mej.sort(function (u, v) { return u[0] - v[0]; }); }
+      }
+      for (var m = 0; m < mej.length; m++) {
+        var j = mej[m][1], lo = a < j ? a : j, hi = a < j ? j : a, cl = lo * M_N + hi;
+        if (!vistos[cl]) { vistos[cl] = 1; pares.push(lo, hi); }
+      }
+    }
+    return new Int32Array(pares);
+  })();
+  var M_X = new Float32Array(M_N), M_Y = new Float32Array(M_N), M_Z = new Float32Array(M_N);
+
+  var M_A_CUBO = [0.055, 0.115, 0.24], M_W_CUBO = [1.1, 1.7, 2.4];
+  function malla(t, W, H) {
+    // Entra tras el titulo y se condensa en el cierre, cuando manda el logo.
+    var op = ventana(t, 2.4, 21.4, 1.3, 1.0);
+    if (op <= 0.01) return;
+    var encoge = 1 - 0.42 * suave((t - 19.6) / 1.6);   // se condensa al cerrar
+    var cx = W * 0.5, cy = H * 0.40;
+    var R = Math.min(W * 0.40, H * 0.24) * encoge;
+    var FOCO = R * 2.6;
+    var giro = t * 0.34, inc = 0.34;
+    var ci = Math.cos(inc), si = Math.sin(inc);
+    var c = Math.cos(giro), sn = Math.sin(giro);
+    for (var i = 0; i < M_N; i++) {
+      var x = M_NODOS[i * 3], y = M_NODOS[i * 3 + 1], z = M_NODOS[i * 3 + 2];
+      var x2 = x * c - z * sn, za = x * sn + z * c;
+      var y2 = y * ci - za * si, z2 = y * si + za * ci;
+      var k = FOCO / (FOCO + z2 * R);
+      M_X[i] = cx + x2 * R * k; M_Y[i] = cy + y2 * R * k; M_Z[i] = z2;
+    }
+
+    g.globalCompositeOperation = 'screen';
+    g.lineCap = 'round';
+    var m = M_ARISTAS.length / 2;
+    // Tres cubos de profundidad: un trazado por cubo en lugar de uno por
+    // arista, y de paso la niebla que separa una esfera de un circulo de rayas.
+    for (var b = 0; b < 3; b++) {
+      g.beginPath();
+      var hay = false;
+      for (var e = 0; e < m; e++) {
+        var p = M_ARISTAS[e * 2], q = M_ARISTAS[e * 2 + 1];
+        var zm = (M_Z[p] + M_Z[q]) * 0.5;
+        var cubo = zm < -0.33 ? 2 : (zm < 0.33 ? 1 : 0);
+        if (cubo !== b) continue;
+        g.moveTo(M_X[p], M_Y[p]); g.lineTo(M_X[q], M_Y[q]);
+        hay = true;
+      }
+      if (!hay) continue;
+      g.strokeStyle = 'rgba(0,240,255,' + (M_A_CUBO[b] * op).toFixed(4) + ')';
+      g.lineWidth = M_W_CUBO[b] * (W / 1080);
+      g.stroke();
+    }
+    // Nodos
+    g.beginPath();
+    for (var n2 = 0; n2 < M_N; n2++) {
+      var rr = (1.4 + 1.8 * (1 - (M_Z[n2] + 1) * 0.5)) * (W / 1080) * 1.6;
+      g.moveTo(M_X[n2] + rr, M_Y[n2]);
+      g.arc(M_X[n2], M_Y[n2], rr, 0, 6.2832);
+    }
+    g.fillStyle = 'rgba(139,92,246,' + (0.30 * op).toFixed(4) + ')';
+    g.fill();
+    // Pulsos: la posicion sale de t, no de sumar velocidades, para que cada
+    // captura del video salga identica a la anterior.
+    g.beginPath();
+    for (var u = 0; u < 12; u++) {
+      var ei = (u * 37) % m;
+      var fase = (t * (0.34 + (u % 5) * 0.06) + u * 0.137) % 1;
+      var i1 = M_ARISTAS[ei * 2], i2 = M_ARISTAS[ei * 2 + 1];
+      if ((M_Z[i1] + M_Z[i2]) * 0.5 > 0.15) continue;
+      var dx = M_X[i2] - M_X[i1], dy = M_Y[i2] - M_Y[i1];
+      var f2 = fase, f1 = f2 - 0.26 < 0 ? 0 : f2 - 0.26;
+      g.moveTo(M_X[i1] + dx * f1, M_Y[i1] + dy * f1);
+      g.lineTo(M_X[i1] + dx * f2, M_Y[i1] + dy * f2);
+    }
+    g.strokeStyle = 'rgba(234,252,255,' + (0.55 * op).toFixed(4) + ')';
+    g.lineWidth = 2.4 * (W / 1080);
+    g.stroke();
+    g.globalCompositeOperation = 'source-over';
+  }
+
   /* ---------- fondo: haces + marco, la lengua visual de la tienda ---------- */
   function fondo(t, W, H) {
     g.fillStyle = '#05060a';
@@ -178,6 +291,7 @@
   function pintar(t) {
     var W = C.width, H = C.height;
     fondo(t, W, H);
+    malla(t, W, H);
 
     // El guion, escrito una sola vez y aplicado en bucle: con ocho escenas,
     // repetir el bloque de opacidad y desplazamiento ocho veces era pedir un

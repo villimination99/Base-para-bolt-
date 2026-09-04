@@ -79,6 +79,8 @@
     "seo_google_verification": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE",
     "logo": "shopify://shop_images/villumination-logo-ancho.png",
     "favicon": "shopify://shop_images/villumination-favicon-512.png",
-    "share_image": "shopify://shop_images/villumination-compartir.png"
+    "share_image": "shopify://shop_images/villumination-compartir.png",
+    "splash_duracion": "completa",
+    "splash_frases": "EL LÍMITE LO PONES TÚ\nCADA REPETICIÓN CUENTA"
   }
 }

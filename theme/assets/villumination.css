@@ -995,13 +995,56 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   transform:translateY(12px);
   transition:opacity .55s ease-out,transform .55s cubic-bezier(.22,1,.36,1)}
 
+/* DOS puertas, no una. La de arriba abre la TIENDA: el boton de entrar
+   aparece a 2,40 s, antes de que la secuencia acabe, para que nadie tenga que
+   esperar a ver el final. La de abajo marca el final de verdad y trae el
+   titulo y el eslogan. Con una sola clase, alargar la secuencia alargaba
+   tambien la espera obligada, y eso son ventas perdidas. */
+.splash-intro.intro-puerta .splash-enter-btn{opacity:1;transform:none}
 .splash-intro.intro-lista .splash-title,
 .splash-intro.intro-lista .splash-tagline,
-.splash-intro.intro-lista .splash-loader,
-.splash-intro.intro-lista .splash-enter-btn{opacity:1;transform:none}
+.splash-intro.intro-lista .splash-loader{opacity:1;transform:none}
 .splash-intro.intro-lista .splash-tagline{transition-delay:.10s}
 .splash-intro.intro-lista .splash-loader{transition-delay:.18s}
-.splash-intro.intro-lista .splash-enter-btn{transition-delay:.26s}
+
+/* ---- El logotipo de la marca ----
+   El logotipo de la tienda es apaisado. Metido dentro del nucleo circular del
+   emblema salia diminuto: se quedaba con la altura que le permitiera el ancho
+   del circulo. Aqui ocupa el sitio del titulo, a lo ancho y a tamano legible,
+   que es donde de verdad se lee. Dentro del circulo va el monograma. */
+.splash-title--logo{display:block;line-height:0}
+.splash-logotipo{display:block;width:min(78vw,420px);height:auto;max-height:92px;
+  object-fit:contain;filter:drop-shadow(0 0 22px rgba(0,212,255,.32))}
+/* Los atributos width/height del marcado llevan las medidas REALES del
+   logotipo, que es lo unico que necesita el navegador para reservar el hueco
+   antes de descargarlo. El tamano en pantalla lo sigue poniendo esta regla. */
+
+/* ---- Frases de motivacion ----
+   Se colocan justo debajo del emblema usando EL MISMO clamp que le da tamano,
+   asi que van pegadas a el en cualquier pantalla sin medir nada desde el JS.
+   Estan fuera del flujo para no mover el titulo, que ocupa su sitio despues.
+   La animacion solo toca transform y opacity: la compone la tarjeta grafica y
+   no le quita un fotograma a la secuencia del lienzo. */
+.splash-frases{position:absolute;left:0;right:0;
+  top:calc(clamp(160px,42vw,230px) / 2 + var(--esfera-r,120px) + 2.4rem);
+  display:grid;place-items:center;pointer-events:none;z-index:3}
+.splash-frase{grid-area:1/1;margin:0;max-width:min(90vw,32rem);
+  font-family:var(--font-heading);font-weight:800;
+  font-size:clamp(1rem,4.2vw,1.55rem);letter-spacing:.06em;line-height:1.28;
+  text-align:center;text-transform:uppercase;color:#f2f6ff;
+  text-shadow:0 2px 18px rgba(0,0,0,.85),0 0 34px rgba(0,212,255,.28);
+  opacity:0;transition:opacity .32s ease}
+.splash-palabra{display:inline-block;overflow:hidden;vertical-align:bottom}
+.splash-palabra>i{display:inline-block;font-style:normal;
+  transform:translateY(108%);
+  transition:transform .52s cubic-bezier(.16,1,.3,1);
+  transition-delay:calc(var(--r,0)*.055s)}
+.splash-frases[data-frase="0"] .splash-frase[data-i="0"],
+.splash-frases[data-frase="1"] .splash-frase[data-i="1"],
+.splash-frases[data-frase="2"] .splash-frase[data-i="2"]{opacity:1}
+.splash-frases[data-frase="0"] .splash-frase[data-i="0"] .splash-palabra>i,
+.splash-frases[data-frase="1"] .splash-frase[data-i="1"] .splash-palabra>i,
+.splash-frases[data-frase="2"] .splash-frase[data-i="2"] .splash-palabra>i{transform:none}
 
 /* El emblema entra MIENTRAS las particulas viajan, no cuando ya han llegado.
    Con la entrada a 1,55 s habia casi medio segundo con el centro de la pantalla
@@ -1009,6 +1052,13 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    termina a la vez que la formacion, asi que el emblema se materializa dentro
    del anillo de particulas en lugar de aparecer de golpe encima. */
 .splash-intro .splash-emblem{animation:logoAppear 1.25s cubic-bezier(.16,1,.3,1) 1.05s both}
+/* Con la secuencia completa el emblema NO puede entrar a 1,05 s: durante ese
+   tramo manda la malla, y el anillo de puntos y los halos del emblema se le
+   ponian por encima peleando por la misma zona. Entra con el colapso, que es
+   justo cuando la historia dice que la malla se convierte en la marca. En la
+   version corta no hay malla, asi que entra pronto como siempre. */
+.splash-intro[data-duracion="completa"] .splash-emblem{
+  animation:logoAppear .85s cubic-bezier(.16,1,.3,1) 2.85s both}
 
 /* Saltar. Disponible desde el primer fotograma, sin esperar a ninguna
    animacion: quien ya conoce la tienda no tiene por que ver la intro otra
@@ -1034,4 +1084,9 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   .splash-intro .splash-enter-btn{opacity:1;transform:none;transition:none}
   .splash-intro .splash-emblem{animation:none}
   .splash-skip{transition:none}
+  /* Sin secuencia se pinta el fotograma FINAL, y en el final las frases ya se
+     han ido y manda el logotipo. Mostrarlas aqui seria inventar un estado que
+     la secuencia nunca tiene. */
+  .splash-frases{display:none}
+  .splash-palabra>i{transform:none;transition:none}
 }
