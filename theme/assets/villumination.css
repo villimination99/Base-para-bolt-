@@ -988,7 +988,6 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    cambia en un sitio y el texto sigue sincronizado solo. */
 .splash-intro .splash-title,
 .splash-intro .splash-tagline,
-.splash-intro .splash-loader,
 .splash-intro .splash-enter-btn{
   animation:none!important;
   opacity:0;
@@ -1002,10 +1001,8 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    tambien la espera obligada, y eso son ventas perdidas. */
 .splash-intro.intro-puerta .splash-enter-btn{opacity:1;transform:none}
 .splash-intro.intro-lista .splash-title,
-.splash-intro.intro-lista .splash-tagline,
-.splash-intro.intro-lista .splash-loader{opacity:1;transform:none}
+.splash-intro.intro-lista .splash-tagline{opacity:1;transform:none}
 .splash-intro.intro-lista .splash-tagline{transition-delay:.10s}
-.splash-intro.intro-lista .splash-loader{transition-delay:.18s}
 
 /* ---- El logotipo de la marca ----
    El logotipo de la tienda es apaisado. Metido dentro del nucleo circular del
@@ -1082,7 +1079,6 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 @media (prefers-reduced-motion:reduce){
   .splash-intro .splash-title,
   .splash-intro .splash-tagline,
-  .splash-intro .splash-loader,
   .splash-intro .splash-enter-btn{opacity:1;transform:none;transition:none}
   .splash-intro .splash-emblem{animation:none}
   .splash-skip{transition:none}
@@ -1167,7 +1163,7 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   opacity:0;transition:opacity .9s ease-out;
   transform:scale(1.02);
   will-change:transform,opacity}
-.splash-escena-img.esta-lista{opacity:.62;
+.splash-escena-img.esta-lista{opacity:.54;
   /* La entrada del dron: un empuje hacia dentro, largo y sin final visible,
      porque la intro se cierra mucho antes de que termine. */
   animation:splashDron 12s cubic-bezier(.22,.61,.36,1) forwards}
@@ -1175,11 +1171,14 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   from{transform:scale(1.02) translate3d(0,0,0)}
   to{transform:scale(1.30) translate3d(0,-2.5%,0)}}
 
-/* Viñeta: oscurece bordes y centro para que el lienzo y el texto manden, y de
-   paso remata cualquier resto de marca que el recorte no se hubiera llevado. */
+/* Viñeta invertida. No es la de manual, que oscurece solo los bordes: aqui el
+   CENTRO tambien va oscuro, porque es donde caen el emblema, el logotipo y el
+   eslogan. Con el centro despejado, cualquier linea de la foto -- un tubo de
+   neon, el borde de una maquina -- cruzaba por encima de la marca. La sala se
+   ve en la corona intermedia, que es donde no hay nada escrito. */
 .splash-escena::after{content:'';position:absolute;inset:0;
   background:
-    radial-gradient(125% 82% at 50% 40%,rgba(3,4,10,0) 0%,rgba(3,4,10,.28) 62%,rgba(3,4,10,.84) 100%),
+    radial-gradient(120% 80% at 50% 40%,rgba(3,4,10,.62) 0%,rgba(3,4,10,.30) 34%,rgba(3,4,10,.22) 58%,rgba(3,4,10,.88) 100%),
     linear-gradient(to top,rgba(3,4,10,1) 0%,rgba(3,4,10,.86) 10%,rgba(3,4,10,0) 34%)}
 
 /* Sin movimiento: la sala se queda quieta, pero se ve. Quien pide menos

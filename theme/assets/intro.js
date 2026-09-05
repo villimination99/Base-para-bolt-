@@ -13,8 +13,8 @@
                    choque y unos arcos de carga que suben del pico al anillo
                    del emblema. La energia del latido ALIMENTA la marca.
      4. FORMACION  Las particulas se reagrupan en el anillo, se enlazan entre
-                   vecinas y un barrido de radar cierra el circulo. Luego se
-                   quedan vivas, respondiendo al dedo o al raton como imanes.
+                   en el anillo del emblema. Luego se quedan vivas,
+                   respondiendo al dedo o al raton como imanes.
 
    Decisiones que importan:
    - COMPOSICION. La linea base no esta a media altura por casualidad: se
@@ -218,11 +218,13 @@
       }
       // Destino: tres de cada cuatro en el anillo del emblema; el resto en
       // una nube exterior que da profundidad y evita el anillo de juguete.
-      var enAnillo = (i % 4) !== 3;
+      // TODAS al anillo. Antes una de cada cuatro se iba a una nube exterior
+      // que daba profundidad durante el estallido, pero al colapsar se quedaba
+      // como escombros flotando alrededor del logotipo justo en el momento en
+      // que la mirada tiene que ir a la marca.
+      var enAnillo = true;
       var ang = (i / N) * Math.PI * 2 + (Math.random() - 0.5) * 0.14;
-      var rr = enAnillo
-        ? radio * (1.00 + Math.random() * 0.14)
-        : radio * (1.32 + Math.random() * 0.72);
+      var rr = radio * (1.00 + Math.random() * 0.16);
       // Salida radial desde el pico: una explosion de verdad sale del centro,
       // no en direcciones al azar que se anulan entre si.
       var sa = Math.atan2(oy - pky, ox - pkx) + (Math.random() - 0.5) * 1.5;
@@ -490,8 +492,15 @@
     return [ejeX() + x * e, ejeY() + (alturaCam() - y) * e, e];
   }
 
-  function suelo(t, op) {
+  function suelo(t, op, rev) {
     if (op <= 0.01) return;
+    /* La sala se despliega desde el punto de fuga hacia el visitante, en vez
+       de aparecer con un fundido. Es la diferencia entre "aparece un fondo" y
+       "se abre una sala delante de mi": la mirada arranca en el emblema, que es
+       donde esta el punto de fuga, y el suelo viene hacia ella. Se hace sin
+       dibujar nada de mas, simplemente no pintando todavia las filas que aun no
+       han llegado. */
+    var zCorte = SUELO_FILAS - (SUELO_FILAS - Z_MIN) * frena(rev === undefined ? 1 : rev);
     var av = (t * VEL_CAM) % 1;
     var yH = ejeY(), xH = ejeX(), aC = alturaCam(), aS = anchoSuelo();
     ctx.beginPath();
@@ -499,14 +508,14 @@
     // da la sensacion de avanzar.
     for (var i = 0; i < SUELO_FILAS; i++) {
       var z = i + 1 - av;
-      if (z < Z_MIN) continue;
+      if (z < Z_MIN || z < zCorte) continue;
       var e = 1 / z, y = yH + aC * e;
       if (y > H + 6) continue;
       ctx.moveTo(xH - aS * e, y);
       ctx.lineTo(xH + aS * e, y);
     }
     // Longitudinales: todas mueren en el punto de fuga.
-    var zCerca = 1 - av < Z_MIN ? Z_MIN : 1 - av;
+    var zCerca = 1 - av < zCorte ? zCorte : 1 - av;
     var e0 = 1 / zCerca, eN = 1 / SUELO_FILAS;
     for (var j = -SUELO_CARRILES; j <= SUELO_CARRILES; j++) {
       var xm = j * (aS / SUELO_CARRILES);
@@ -557,11 +566,11 @@
     }
   }
 
-  function gimnasio(t, op) {
+  function gimnasio(t, op, rev) {
     if (op <= 0.01) return;
     // El suelo es UN trazado y es el que lleva casi toda la lectura de
     // "estoy dentro de un sitio", asi que nunca se recorta.
-    suelo(t, op);
+    suelo(t, op, rev);
     // Los racks son doce llamadas de dibujo y son un adorno: en un aparato que
     // no da la talla se van los primeros. Medido con la CPU a 1/6, con ellos
     // los fotogramas lentos pasaban de 4 a 13.
@@ -627,9 +636,9 @@
   var MALLA = (caja.getAttribute('data-duracion') || 'completa') !== 'corta';
   var T_ENCIENDE = 0.30;  // la linea base se despliega
   var T_TRAZO = 1.05;     // el cabezal termina el recorrido
-  var T_ESFERA = 1.60;    // las particulas ya han llegado a la esfera
-  var T_MALLA = 2.95;     // fin del giro, empieza el colapso
-  var T_FORMA = MALLA ? 3.60 : 2.40;   // las particulas ya estan en el anillo
+  var T_ESFERA = 1.75;    // las particulas ya han llegado a la esfera
+  var T_MALLA = 3.30;     // fin del giro, empieza el colapso
+  var T_FORMA = MALLA ? 4.20 : 2.40;   // las particulas ya estan en el anillo
   var T_PUERTA = MALLA ? 2.40 : T_FORMA;  // cuando se abre la puerta de la tienda
   var T_IMPACTO = T_ENCIENDE + tiempoDe(X_PICO) * (T_TRAZO - T_ENCIENDE);
 
@@ -782,9 +791,12 @@
        el colapso, cuando ya solo importa la marca. */
     moverCamara(t);
     if (MALLA) {
-      var opGim = suave((t - T_IMPACTO - 0.05) / 0.55);
+      // La sala tarda casi un segundo en abrirse del todo: es una transicion,
+      // no un fundido, y da tiempo a verla llegar.
+      var revGim = lim((t - T_IMPACTO - 0.05) / 0.95, 0, 1);
+      var opGim = suave((t - T_IMPACTO - 0.05) / 0.40);
       if (t > T_MALLA) opGim *= 1 - suave((t - T_MALLA) / (T_FORMA - T_MALLA));
-      gimnasio(t, opGim);
+      gimnasio(t, opGim, revGim);
     }
 
     // Sacudida de camara en el impacto. Muy corta y muy pequena: el objetivo
@@ -1059,40 +1071,12 @@
         ctx.fill();
       }
 
-      // Enlaces entre vecinas del anillo: el circulo se ve CONSTRUIRSE. Solo
-      // se compara cada una con la siguiente por angulo, asi que son N lineas
-      // y no N al cuadrado comparaciones.
-      if (CAL.enlaces && fGlobal > 0.55 && anillo.length > 2 && (!MALLA || t > T_MALLA)) {
-        var oe = suave((fGlobal - 0.55) / 0.45) * 0.5;
-        var maxd = radio * 0.42;
-        ctx.lineWidth = 1 * DPR;
-        ctx.beginPath();
-        for (var m = 0; m < anillo.length; m++) {
-          var A = anillo[m], B = anillo[(m + 1) % anillo.length];
-          var lx = B.x - A.x, ly = B.y - A.y;
-          if (lx * lx + ly * ly < maxd * maxd) { ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); }
-        }
-        ctx.strokeStyle = rgba(CIAN, oe);
-        ctx.stroke();
-      }
-
-      // Barrido de radar: cierra el circulo y da el "listo" visual.
-      if (fGlobal > 0.45 && fGlobal < 1 && (!MALLA || t > T_MALLA)) {
-        var fb = (fGlobal - 0.45) / 0.55;
-        var a0 = -Math.PI / 2;
-        var a1 = a0 + frena(fb) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.arc(cx, cy, radio * 1.07, a0, a1);
-        ctx.strokeStyle = rgba('#eafcff', (1 - fb * 0.55) * 0.55);
-        ctx.lineWidth = 1.6 * DPR;
-        ctx.lineCap = 'round';
-        ctx.stroke();
-        // Punta del barrido
-        ctx.fillStyle = rgba('#ffffff', (1 - fb) * 0.9);
-        ctx.beginPath();
-        ctx.arc(cx + Math.cos(a1) * radio * 1.07, cy + Math.sin(a1) * radio * 1.07, 2.6 * DPR, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      /* Se retiraron dos adornos de aqui: los enlaces entre particulas vecinas
+         del anillo y el barrido tipo radar. Los dos nacieron cuando el anillo
+         era el unico acto y habia que darle algo que mirar. Con la malla
+         delante sobran: se pisaban con ella, y en el colapso competian con el
+         logotipo justo cuando la mirada tiene que ir a la marca. Menos cosas y
+         cada una con su porque. */
     }
 
     if (sac) ctx.restore();
@@ -1142,19 +1126,10 @@
 
   /* ---------- estado final, sin secuencia ---------- */
   function estatico() {
+    // El mismo fotograma final que ve todo el mundo. Antes pintaba ademas los
+    // enlaces entre particulas vecinas, que se retiraron de la secuencia: quien
+    // pide menos movimiento no tiene por que ver una version distinta.
     ctx.clearRect(0, 0, W, H);
-    for (var m = 0; m < anillo.length; m++) {
-      var A = anillo[m], B = anillo[(m + 1) % anillo.length];
-      var lx = B.dx - A.dx, ly = B.dy - A.dy;
-      var maxd = radio * 0.42;
-      if (lx * lx + ly * ly < maxd * maxd) {
-        ctx.beginPath();
-        ctx.moveTo(A.dx, A.dy); ctx.lineTo(B.dx, B.dy);
-        ctx.strokeStyle = rgba(CIAN, 0.28);
-        ctx.lineWidth = 1 * DPR;
-        ctx.stroke();
-      }
-    }
     for (var k = 0; k < ps.length; k++) {
       var p = ps[k];
       ctx.beginPath();

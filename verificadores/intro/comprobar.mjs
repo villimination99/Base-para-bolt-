@@ -67,7 +67,6 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><b
     <div class="splash-frases" data-splash-frases aria-hidden="true">
 ${trozos}
     </div>
-    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
     <button id="splash-enter" class="splash-enter-btn" type="button"><span>ENTRAR</span></button>
   </div>
 </div>
@@ -220,16 +219,16 @@ console.log('\n--- La secuencia nunca se queda en blanco ---');
    en el centro. Dos pasadas de cada version, en un iPhone 12:
 
        instante   rota    buena
-        1300 ms   4,3     12,7
-        1600 ms   4,2     12,1
-        1900 ms   4,2     12,4
+        1300 ms   5,2     13,7
+        1600 ms   5,2     13,0
+        1900 ms   5,1     13,4
 
-   El peor de la buena es 12,1 % y el mejor de la rota 4,3 %: el umbral va en
-   el 8 %, con un 50 % de margen por arriba y casi el doble por abajo. Vuelto a
-   medir despues de meter el gimnasio, que tambien aporta luz a esa zona: la
-   separacion aguanta porque el suelo ilumina IGUAL a las dos versiones y lo
-   que de verdad se echa en falta cuando la malla no esta sigue siendo la
-   malla.
+   El peor de la buena es 13,0 % y el mejor de la rota 5,2 %: el umbral va en
+   el 8 %, a mitad de camino y con un 60 % de margen por los dos lados. Vuelto a
+   medir despues de meter el gimnasio y la foto de la sala, que tambien aportan
+   luz a esa zona: la separacion aguanta porque el suelo y la foto iluminan
+   IGUAL a las dos versiones, y lo que de verdad se echa en falta cuando la
+   malla no esta sigue siendo la malla.
 
    La ventana se corta en 1900 ms y no mas tarde por un dato medido: a 2200 ms
    la version rota dio 3,4 % en una pasada y 7,9 % en otra, porque ahi las
@@ -259,12 +258,28 @@ console.log('\n--- La secuencia nunca se queda en blanco ---');
   await ctx.close();
 }
 
+console.log('\n--- Alrededor del logotipo no hay ruido ---');
+/* Se retiraron cinco piezas que no cumplian ninguna funcion y competian con la
+   marca justo cuando aparece: la barra de progreso (fingia una carga que no
+   existe), el segundo halo, los dos anillos que latian, los enlaces entre
+   particulas vecinas y el barrido tipo radar. Esto vigila que no vuelvan por
+   inercia en una ronda futura. */
+for (const [pieza, donde] of [
+  ['splash-loader', 'la barra de progreso que no cargaba nada'],
+  ['splash-halo-2', 'el segundo halo'],
+  ['splash-pulse', 'los anillos que latian'],
+]) decir(!SNIPPET.includes(pieza), `el snippet ya no trae ${donde}`);
+{
+  const motor = fs.readFileSync(path.join(ASSETS, 'intro.js'), 'utf8');
+  decir(!/ctx\.arc\(cx, cy, radio \* 1\.07/.test(motor), 'el motor ya no pinta el barrido tipo radar');
+}
+
 console.log('\n--- Presupuesto de espera: las dos puertas ---');
 /* La de arriba abre la TIENDA y la de abajo cierra la secuencia. Si alguien
    alarga la secuencia sin mover la primera, cada primera visita paga el peaje
    entero, y eso son ventas perdidas. Por eso hay un techo en segundos. */
 for (const [modo, url, techoPuerta, techoFin] of [
-  ['completa', URL_PRUEBA, 2.6, 4.2],
+  ['completa', URL_PRUEBA, 2.6, 4.6],
   ['corta', URL_CORTA, 2.6, 3.0],
 ]) {
   const { ctx, p, errores } = await abrir('iPhone 12', {}, url);

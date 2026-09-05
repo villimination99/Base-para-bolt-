@@ -59,10 +59,14 @@
 
   <div class="splash-content">
     <div class="splash-emblem">
+      {%- comment -%}
+        UN halo y UN anillo. Antes habia cinco piezas concentricas -- dos
+        halos, dos anillos que latian y el anillo de trazos -- peleandose por
+        el mismo sitio justo cuando aparece el logotipo, que es el momento en
+        que la mirada tiene que ir a la marca y a nada mas. Tambien se quito la
+        barra de progreso: fingia que algo estaba cargando cuando no carga nada.
+      {%- endcomment -%}
       <span class="splash-halo splash-halo-1" aria-hidden="true"></span>
-      <span class="splash-halo splash-halo-2" aria-hidden="true"></span>
-      <span class="splash-pulse" aria-hidden="true"></span>
-      <span class="splash-pulse splash-pulse--2" aria-hidden="true"></span>
       <span class="splash-ring" aria-hidden="true">
         <svg viewBox="0 0 200 200" fill="none">
           <defs><linearGradient id="splash-rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="{{ settings.color_cyan }}"/><stop offset="33%" stop-color="{{ settings.color_purple }}"/><stop offset="66%" stop-color="{{ settings.color_pink }}"/><stop offset="100%" stop-color="{{ settings.color_cyan }}"/></linearGradient></defs>
@@ -123,7 +127,6 @@
       </div>
     {%- endif -%}
 
-    <div class="splash-loader" aria-hidden="true"><div class="splash-loader-bar"></div></div>
     <button id="splash-enter" class="splash-enter-btn" type="button">
       <span>{{ 'general.enter' | t }}</span>
       {%- render 'icon', name: 'arrow-right' -%}
