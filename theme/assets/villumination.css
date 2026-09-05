@@ -1121,6 +1121,22 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    no bloquea nadie, al reves que el dominio de las miniaturas de YouTube. */
 .video-card-fondo-img{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;opacity:.55;z-index:-1}
+
+/* Cortina inferior. Hace dos trabajos a la vez:
+   1. El titulo de la tarjeta se apoya abajo, y sobre una foto se leia regular.
+      Esto es el recurso de siempre para poner texto sobre imagen.
+   2. Tapa la esquina inferior derecha, que es donde los bancos de imagenes y
+      los generadores meten su marca de agua. El 12 % inferior es OPACO, no
+      translucido: probado con un bloque blanco puro ahi metido, la diferencia
+      contra no tenerlo baja a 0,1 sobre 255, o sea nada. Asi el comerciante
+      puede usar cualquier imagen sin recortarla antes.
+   Va con z-index -1, igual que la imagen, pero DESPUES en el documento: en la
+   misma capa gana el ultimo, asi que cae sobre la foto y por debajo del icono
+   y del texto, que van en el flujo normal. */
+.video-card-fondo::after{content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(to top,
+    rgba(6,7,14,1) 0%, rgba(6,7,14,1) 12%,
+    rgba(6,7,14,.72) 24%, rgba(6,7,14,0) 42%)}
 .video-card-thumb .video-card-fondo{justify-content:flex-end}
 .video-card-thumb .video-card-fondo>svg{display:none}
 

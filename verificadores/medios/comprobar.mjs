@@ -71,18 +71,24 @@ async function medir(p, sel) {
     const x = c.getContext('2d');
     x.drawImage(img, 0, 0, L, L);
     const d = x.getImageData(0, 0, L, L).data;
-    let vivos = 0, min = 999, max = -1, suma = 0, croma = 0, n = 0;
+    let vivos = 0, min = 999, max = -1, suma = 0, croma = 0, n = 0, cromaAlto = 0, nAlto = 0;
     for (let i = 0; i < d.length; i += 4) {
+      const px = (i / 4) % L, py = Math.floor((i / 4) / L);
       const r = d[i], g = d[i + 1], b = d[i + 2];
       const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      const c = Math.max(r, g, b) - Math.min(r, g, b);
       if (l > 46) vivos++;
       if (l < min) min = l;
       if (l > max) max = l;
       suma += l;
-      croma += Math.max(r, g, b) - Math.min(r, g, b);
+      croma += c;
       n++;
+      // La mitad SUPERIOR, que es donde vive el degradado de marca sin que la
+      // cortina inferior lo oscurezca.
+      if (py < L * 0.5) { cromaAlto += c; nAlto++; }
     }
-    return { luz: vivos / (L * L), rango: max - min, media: suma / n, croma: croma / n };
+    return { luz: vivos / (L * L), rango: max - min, media: suma / n,
+             croma: croma / n, cromaAlto: cromaAlto / Math.max(nAlto, 1) };
   }, foto.toString('base64'));
 }
 
@@ -100,7 +106,7 @@ for (const [nombre, ancho, alto] of [['movil', 390, 800], ['escritorio', 1280, 8
   const roto = await medir(p, '[data-control-roto] .video-card');
   const real = await medir(p, '[data-tarjeta-real] .video-card');
   const vacia = await medir(p, '[data-tarjeta-vacia] .video-card');
-  const f = (m) => `media ${m.media.toFixed(1)}  croma ${m.croma.toFixed(1)}`;
+  const f = (m) => `media ${m.media.toFixed(1)}  croma ${m.croma.toFixed(1)}  croma arriba ${m.cromaAlto.toFixed(1)}`;
   console.log(`        control roto : ${f(roto)}`);
   console.log(`        real         : ${f(real)}`);
   console.log(`        sin video    : ${f(vacia)}`);
@@ -138,14 +144,22 @@ for (const [nombre, ancho, alto] of [['movil', 390, 800], ['escritorio', 1280, 8
   }
 
   /* Y un refuerzo en pixeles, con el umbral sacado de medir, no inventado.
-     Se usa el CROMA (cuanto color hay) y no el brillo: medido en las dos
-     pantallas, la rota da 15,3-16,3 y las buenas 21,9-22,2. El brillo no
-     valia -- salia MAS ALTO en la rota, porque el circulo blanco de reproducir
-     es lo unico luminoso que le queda -- y el rango de luminancia tampoco,
-     porque ese mismo circulo lo satura a 250 en las dos. */
-  decir(real.croma > 19 && vacia.croma > 19,
-    `las tarjetas buenas tienen color de marca (croma ${real.croma.toFixed(1)} y ${vacia.croma.toFixed(1)}; la rota se queda en ${roto.croma.toFixed(1)})`);
-  decir(roto.croma < 19,
+     Tres medidas descartadas antes de dar con la buena, y quedan escritas para
+     que nadie repita el camino:
+       - El BRILLO no vale: salia MAS ALTO en la rota, porque el circulo blanco
+         de reproducir es lo unico luminoso que le queda.
+       - El RANGO de luminancia tampoco: ese mismo circulo lo satura a 250 en
+         las dos.
+       - El CROMA DE TODA LA TARJETA valia hasta que se anadio la cortina
+         inferior que tapa las marcas de agua: al oscurecer la parte baja, las
+         buenas cayeron de 22,2 a 17,3 y la rota se quedaba en 16,3. Un 6 % de
+         separacion no es un control, es un adorno.
+     La que si vale es el croma de la MITAD SUPERIOR, donde vive el degradado
+     de marca y la cortina no llega. Medido en las dos pantallas: la rota da
+     15,3-16,4 y las buenas 21,5-21,9. El umbral va en 19, en medio. */
+  decir(real.cromaAlto > 19 && vacia.cromaAlto > 19,
+    `las tarjetas buenas tienen color de marca arriba (${real.cromaAlto.toFixed(1)} y ${vacia.cromaAlto.toFixed(1)}; la rota se queda en ${roto.cromaAlto.toFixed(1)})`);
+  decir(roto.cromaAlto < 19,
     'el control roto sigue por debajo del umbral: la medida distingue de verdad');
 
   // El icono de imagen rota no puede quedarse asomando por detras del boton.
@@ -155,6 +169,72 @@ for (const [nombre, ancho, alto] of [['movil', 390, 800], ['escritorio', 1280, 8
 
   decir(errores.length === 0, `sin errores de JavaScript (${errores.length})`);
   await ctx.close();
+}
+
+console.log('\n--- La marca de agua de la imagen de respaldo queda tapada ---');
+/* Los bancos de imagenes y los generadores estampan su marca en la esquina
+   inferior derecha. El comerciante puede poner cualquier imagen de respaldo,
+   asi que la tarjeta lleva una cortina OPACA en el 12 % inferior: tapa la
+   esquina y de paso hace legible el titulo, que se apoya justo ahi.
+
+   Se comprueba por DIFERENCIA, que es la unica forma honesta de medirlo: la
+   misma tarjeta con una imagen que lleva un bloque blanco puro en esa esquina
+   y con la misma imagen sin el. Si la cortina hace su trabajo, las dos zonas
+   tienen que dar practicamente el mismo valor. Medir solo la version con marca
+   no valia: en esa franja tambien cae el titulo de la tarjeta, que es claro a
+   proposito, y contaminaba la medida.
+
+   Las imagenes se generan aqui como SVG en una URL de datos, para no meter
+   binarios en el repositorio. */
+{
+  const lienzo = (conMarca) =>
+    'data:image/svg+xml,' + encodeURIComponent(
+      "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 427'>" +
+      "<rect width='240' height='427' fill='#5a5f6e'/>" +
+      (conMarca ? "<rect x='130' y='396' width='110' height='31' fill='#ffffff'/>" : '') +
+      '</svg>');
+
+  const medida = {};
+  for (const [nombre, conMarca] of [['con marca', true], ['sin marca', false]]) {
+    const ctx = await navegador.newContext({ viewport: { width: 300, height: 480 }, deviceScaleFactor: 3 });
+    await ctx.route('**i.ytimg.com/**', r => r.abort());
+    const p = await ctx.newPage();
+    await p.goto(PAGINA);
+    // Se le mete la imagen de respaldo a la tarjeta real
+    await p.evaluate(src => {
+      const fondo = document.querySelector('[data-tarjeta-real] .video-card-fondo');
+      const img = document.createElement('img');
+      img.className = 'video-card-fondo-img';
+      img.alt = '';
+      img.src = src;
+      fondo.insertBefore(img, fondo.firstChild);
+    }, lienzo(conMarca));
+    await p.waitForTimeout(500);
+    const el = await p.$('[data-tarjeta-real] .video-card');
+    const foto = (await el.screenshot()).toString('base64');
+    medida[nombre] = await p.evaluate(async b64 => {
+      const img = new Image();
+      img.src = 'data:image/png;base64,' + b64;
+      await img.decode();
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      const x = c.getContext('2d');
+      x.drawImage(img, 0, 0);
+      const y0 = Math.floor(img.height * 0.935), x0 = Math.floor(img.width * 0.58);
+      const d = x.getImageData(x0, y0, img.width - x0, img.height - y0).data;
+      let suma = 0, n = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        suma += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+        n++;
+      }
+      return suma / n;
+    }, foto);
+    await ctx.close();
+  }
+  const dif = Math.abs(medida['con marca'] - medida['sin marca']);
+  decir(dif < 1.5,
+    `un bloque blanco puro en la esquina cambia el brillo en ${dif.toFixed(2)} sobre 255: la cortina lo tapa`);
+  console.log(`        con marca ${medida['con marca'].toFixed(1)}  |  sin marca ${medida['sin marca'].toFixed(1)}`);
 }
 
 console.log('\n--- Sin bloqueo, la miniatura manda ---');
