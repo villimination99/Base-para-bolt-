@@ -40,11 +40,40 @@ const DATOS = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_
 
 const FRASES = String(DATOS.splash_frases || '').split('\n').map(s => s.trim()).filter(Boolean);
 
+/* Una foto sintetica para la sala. No hace falta que sea la de la tienda: lo
+   que esta prueba mide de ella es su COSTE y su sitio en la pila de capas --
+   una imagen a pantalla completa, con su animacion de camara y su vineta
+   encima -- y eso no depende de lo que se vea en ella. Va como data URI para
+   que la bateria siga funcionando sin red y sin ficheros sueltos. */
+const FOTO_SALA = 'data:image/svg+xml,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1425">' +
+  '<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">' +
+  '<stop offset="0" stop-color="#12303f"/><stop offset="1" stop-color="#05070d"/>' +
+  '</linearGradient></defs><rect width="900" height="1425" fill="url(#g)"/>' +
+  '<g stroke="#2b6d86" stroke-width="6" opacity=".5">' +
+  '<path d="M60 1425V620h140v805M700 1425V620h140v805M0 900h900M0 1120h900"/></g></svg>');
+
+/* Y un logotipo apaisado con las proporciones del de verdad. */
+const LOGO = 'data:image/svg+xml,' + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="200">' +
+  '<rect width="900" height="200" fill="none"/>' +
+  '<text x="450" y="140" font-family="sans-serif" font-size="120" font-weight="700"' +
+  ' text-anchor="middle" fill="#eaf6ff">VILLUMINATION</text></svg>');
+
+/* EL BANCO DE PRUEBAS TIENE QUE SER EL SNIPPET, NO UNA VERSION SUYA DE HACE
+   TRES RONDAS. Esta pagina se escribe a mano porque aqui no hay motor de
+   Liquid, y eso la deja libre de separarse del snippet sin que nadie se
+   entere: durante un tiempo esta bateria midio una intro con dos halos y dos
+   anillos que ya no existian, y SIN la sala, sin las particulas de fondo y
+   sin el logotipo, que si existen. Se median los fotogramas de una escena
+   distinta de la que ve el cliente.
+
+   Debajo hay una comprobacion que compara las clases de los dos y falla si
+   aparece una que solo esta en uno de los dos lados. Mientras eso este en
+   verde, lo que se mide aqui es lo que se envia. */
 function pagina(duracion) {
-  const trozos = FRASES.slice(0, 3).map((f, i) =>
-    `<p class="splash-frase" data-i="${i}">` +
-    f.split(/\s+/).map((w, j) => `<span class="splash-palabra"><i style="--r:${j}">${w}</i></span>`).join(' ') +
-    `</p>`).join('\n');
+  const trozos = FRASES.slice(0, 3)
+    .map((f, i) => `<p class="splash-frase" data-i="${i}">${f}</p>`).join('\n');
   return `<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="file://${ASSETS}/villumination.css">
@@ -53,16 +82,33 @@ function pagina(duracion) {
 body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><body>
 <div id="splash-intro" class="splash-intro" data-splash data-duracion="${duracion}" data-splash-3d role="dialog" aria-label="Villumination">
   <div class="splash-bg"></div>
+  <div class="splash-escena" aria-hidden="true">
+    <img class="splash-escena-img" data-splash-escena src="${FOTO_SALA}"
+         width="900" height="1425" alt="" loading="eager" decoding="async">
+  </div>
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
+  <div class="splash-particles" aria-hidden="true">
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+  </div>
+  <span class="splash-grano" aria-hidden="true"></span>
+  <span class="splash-corte" aria-hidden="true"></span>
   <button class="splash-skip" type="button" data-splash-skip>SALTAR</button>
   <div class="splash-content">
     <div class="splash-emblem">
-      <span class="splash-halo splash-halo-1"></span><span class="splash-halo splash-halo-2"></span>
-      <span class="splash-pulse"></span><span class="splash-pulse splash-pulse--2"></span>
-      <span class="splash-ring"></span>
+      <span class="splash-halo splash-halo-1" aria-hidden="true"></span>
+      <span class="splash-ring" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <defs><linearGradient id="splash-rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d4ff"/><stop offset="33%" stop-color="#7b2fff"/><stop offset="66%" stop-color="#ff2ecb"/><stop offset="100%" stop-color="#00d4ff"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="2" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.75"/>
+        </svg>
+      </span>
       <span class="splash-core"><span class="splash-mono">VI</span></span>
     </div>
-    <h1 class="splash-title">VILLUMINATION</h1>
+    <h1 class="splash-title splash-title--logo">
+      <img class="splash-logotipo" src="${LOGO}" width="900" height="200"
+           alt="Villumination" loading="eager" decoding="async" fetchpriority="high">
+    </h1>
     <p class="splash-tagline">TRANSFORMA TU CUERPO.</p>
     <div class="splash-frases" data-splash-frases aria-hidden="true">
 ${trozos}
@@ -143,6 +189,36 @@ async function encendido(p, ms) {
     for (let i = 0; i < d.length; i += 4) if (d[i] + d[i + 1] + d[i + 2] > 90) n++;
     return n / (120 * 120);
   }, [foto.toString('base64'), g]);
+}
+
+console.log('\n--- El banco de pruebas es la intro que se envia ---');
+/* Compara las clases splash-* del snippet real con las de la pagina que mide
+   esta bateria. Si alguien anade una capa al snippet, o quita una de aqui, el
+   resto de la bateria pasaria a medir una escena que no existe -- y eso ya
+   paso: se estuvo midiendo con dos halos y dos anillos de sobra y sin la
+   sala, las particulas ni el logotipo. Con esto no puede volver a pasar en
+   silencio. */
+{
+  const clases = (txt) => {
+    const fuera = new Set();
+    const re = /class="([^"]+)"/g;
+    let m;
+    while ((m = re.exec(txt))) {
+      for (const c of m[1].split(/\s+/)) if (c.indexOf('splash-') === 0) fuera.add(c);
+    }
+    return fuera;
+  };
+  const sinComentarios = SNIPPET.replace(/\{%-?\s*comment[\s\S]*?endcomment\s*-?%\}/g, '');
+  const enSnippet = clases(sinComentarios);
+  const enBanco = clases(pagina('completa'));
+  const soloSnippet = [...enSnippet].filter((c) => !enBanco.has(c));
+  const soloBanco = [...enBanco].filter((c) => !enSnippet.has(c));
+  decir(soloSnippet.length === 0,
+    soloSnippet.length ? `el snippet trae capas que esta bateria NO mide: ${soloSnippet.join(', ')}`
+                       : `las ${enSnippet.size} capas del snippet estan todas en el banco de pruebas`);
+  decir(soloBanco.length === 0,
+    soloBanco.length ? `esta bateria mide capas que el snippet YA NO trae: ${soloBanco.join(', ')}`
+                     : 'el banco no mide ninguna capa que ya no exista');
 }
 
 console.log('\n--- El snippet y los ajustes tienen las piezas que esto usa ---');
@@ -307,8 +383,11 @@ for (const [modo, url, techoPuerta, techoFin] of [
 console.log('\n--- Las frases se ven y se leen ---');
 {
   const { ctx, p, errores } = await abrir('iPhone 12');
-  // A media malla tiene que haber UNA frase visible, y solo una.
-  await enElInstante(p, 1900);
+  /* Se muestrea a 2,5 s y no a 1,9 s por una razon medida: la frase entra a
+     los 1,45 s y su desplazamiento dura 0,8 s, asi que a 1,9 s TODAVIA esta
+     entrando. La comprobacion tenia razon y el que estaba mal era el instante
+     elegido. Aqui ya lleva un cuarto de segundo colocada. */
+  await enElInstante(p, 2500);
   const r = await p.evaluate(() => {
     const vis = Array.prototype.filter.call(
       document.querySelectorAll('.splash-frase'),
@@ -316,17 +395,19 @@ console.log('\n--- Las frases se ven y se leen ---');
     if (!vis.length) return { n: 0 };
     const e = vis[0], b = e.getBoundingClientRect();
     const cs = getComputedStyle(e);
-    // Palabras reveladas: si la mascara no se soltara, seguirian desplazadas
-    const i = e.querySelector('.splash-palabra > i');
-    const m = new DOMMatrixReadOnly(getComputedStyle(i).transform);
+    // El bloque tiene que haber terminado de entrar: ni desplazado ni borroso.
+    // Antes esto miraba las palabras una a una; ahora el revelado es de bloque,
+    // que en un fotograma congelado nunca parece texto roto.
+    const m = new DOMMatrixReadOnly(cs.transform);
     return { n: vis.length, texto: e.textContent.trim(), color: cs.color,
              abajo: Math.round(b.bottom), alto: Math.round(b.height),
-             ancho: Math.round(b.width), desplazada: Math.abs(m.f) > 1,
+             ancho: Math.round(b.width),
+             desplazada: Math.abs(m.f) > 1 || /blur\((?!0px)/.test(cs.filter || ''),
              vp: document.documentElement.clientWidth };
   });
-  decir(r.n === 1, `a 1,9 s hay exactamente una frase visible (hay ${r.n})`);
+  decir(r.n === 1, `a 2,5 s hay exactamente una frase visible (hay ${r.n})`);
   if (r.n) {
-    decir(!r.desplazada, `las palabras han salido de su mascara: "${r.texto}"`);
+    decir(!r.desplazada, `la frase ha terminado de entrar, sin desplazamiento ni desenfoque: "${r.texto}"`);
     decir(r.ancho <= r.vp, `la frase cabe de ancho (${r.ancho} px de ${r.vp} disponibles)`);
     // La frase va sobre el fondo oscuro de la intro: se comprueba el contraste
     // real del color de texto contra ese fondo, no contra un blanco supuesto.
@@ -382,6 +463,107 @@ for (const [nombre, extra, espera] of [
   // mostrarlas ahi seria inventar un estado que la secuencia nunca tiene.
   decir(!r.frasesVisibles, `${etiqueta.padEnd(26)} en el fotograma final no queda ninguna frase`);
   decir(errores.length === 0, `${etiqueta.padEnd(26)} sin errores de JavaScript`);
+  await ctx.close();
+}
+
+console.log('\n--- Nunca hay dos frases en pantalla a la vez ---');
+/* Salio en una captura del cliente: "CADA REPETICION" encima de "EL LIMITE LO
+   PONES TU". Las ventanas estaban escritas a mano con 0,10 s de hueco y el
+   fundido dura 0,45 s, asi que se superponian 0,22 s. Ahora se calculan, y
+   esto lo vigila muestreando la secuencia entera cada 100 ms en vez de mirar
+   dos instantes sueltos: un solape de dos decimas se cuela entre dos muestras
+   espaciadas, no entre cuarenta. */
+{
+  const { ctx, p, errores } = await abrir('iPhone 12');
+  const solapes = await p.evaluate(() => new Promise(res => {
+    const malos = [];
+    const t0 = window.__t0;
+    (function mirar() {
+      const t = (performance.now() - t0) / 1000;
+      const vis = Array.prototype.filter.call(
+        document.querySelectorAll('.splash-frase'),
+        e => +getComputedStyle(e).opacity > 0.08).length;
+      if (vis > 1) malos.push(+t.toFixed(2));
+      if (t > 4.6) res(malos);
+      else setTimeout(mirar, 100);
+    })();
+  }));
+  decir(solapes.length === 0,
+    `en ningun instante hay mas de una frase visible${solapes.length ? ' (se solapan en ' + solapes.slice(0, 6).join(', ') + ' s)' : ''}`);
+  decir(errores.length === 0, `sin errores de JavaScript (${errores.length})`);
+  await ctx.close();
+}
+
+console.log('\n--- La esfera nunca toca el borde ---');
+/* Reportado con captura: la malla salia cortada por la izquierda. El radio
+   proyectado maximo no es R sino 1,083 R, porque con perspectiva los nodos
+   inclinados hacia el visitante se separan mas del centro que la silueta.
+   Sumando el desvio de la camara, el latido y la anticipacion del colapso,
+   el tope de ancho tuvo que bajar de W*0.40 a W*0.319. Aqui se mide el pixel
+   encendido mas a la izquierda y mas a la derecha en el peor momento. */
+for (const nombre of Object.keys(APARATOS)) {
+  const { ctx, p } = await abrir(nombre);
+  let peor = 1e9, cuando = 0;
+  for (const ms of [1500, 1900, 2300, 2700, 3100, 3300]) {
+    await enElInstante(p, ms);
+    const foto = await p.screenshot();
+    const m = await p.evaluate(async b64 => {
+      const img = new Image();
+      img.src = 'data:image/png;base64,' + b64;
+      await img.decode();
+      const c = document.createElement('canvas');
+      c.width = img.width; c.height = img.height;
+      const x = c.getContext('2d');
+      x.drawImage(img, 0, 0);
+      const d = x.getImageData(0, 0, img.width, img.height).data;
+      let izq = img.width, der = -1;
+      // Solo la banda donde vive la malla, para no medir el suelo ni el boton.
+      const y0 = Math.floor(img.height * 0.14), y1 = Math.floor(img.height * 0.60);
+      for (let y = y0; y < y1; y += 2) {
+        for (let px = 0; px < img.width; px++) {
+          const k = (y * img.width + px) * 4;
+          if (d[k] + d[k + 1] + d[k + 2] > 200) {
+            if (px < izq) izq = px;
+            if (px > der) der = px;
+          }
+        }
+      }
+      const esc = img.width / document.documentElement.clientWidth;
+      return { izq: izq / esc, der: (img.width - der) / esc, ancho: document.documentElement.clientWidth };
+    }, foto.toString('base64'));
+    const margen = Math.min(m.izq, m.der);
+    if (margen < peor) { peor = margen; cuando = ms; }
+  }
+  decir(peor >= 8,
+    `${nombre.padEnd(11)} margen minimo al borde: ${peor.toFixed(0)} px (a ${cuando} ms)`);
+  await ctx.close();
+}
+
+console.log('\n--- Los simbolos de los lados no han vuelto ---');
+{
+  const motor = fs.readFileSync(path.join(ASSETS, 'intro.js'), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+  decir(!/function\s+rack\s*\(/.test(motor) && !/\brack\s*\(\s*-?1/.test(motor),
+    'el motor no dibuja siluetas laterales: eso es lo que el cliente veia como simbolos sueltos');
+}
+
+console.log('\n--- El cierre es un corte, no un desvanecido ---');
+{
+  const { ctx, p, errores } = await abrir('iPhone 12');
+  await enElInstante(p, 2600);
+  const t = await p.evaluate(() => new Promise(res => {
+    const c = document.querySelector('[data-splash]');
+    const t0 = performance.now();
+    document.querySelector('[data-splash-skip]').click();
+    (function mirar() {
+      const cs = getComputedStyle(c);
+      if (+cs.opacity < 0.02 || cs.display === 'none') res((performance.now() - t0) / 1000);
+      else if (performance.now() - t0 > 2000) res(99);
+      else requestAnimationFrame(mirar);
+    })();
+  }));
+  decir(t <= 0.45, `del dedo a la tienda pasan ${t.toFixed(2)} s (techo 0,45 s)`);
+  decir(errores.length === 0, `sin errores de JavaScript (${errores.length})`);
   await ctx.close();
 }
 

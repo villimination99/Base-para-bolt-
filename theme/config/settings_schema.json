@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.40.0",
+    "theme_version": "4.41.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -703,6 +703,12 @@
         "info": "Se ve detras de la animacion, oscurecida, con la camara entrando despacio. Vertical y oscura funciona mejor. Si la dejas vacia, la intro se queda solo con la animacion."
       },
       {
+        "type": "image_picker",
+        "id": "portada_sala",
+        "label": "Sala de fondo en la portada",
+        "info": "La misma sala de la intro, detras de la primera pantalla de la portada. Asi la entrada continua sin costura. Solo se carga en la portada: las paginas de producto siguen ligeras. Dejala vacia para no usarla."
+      },
+      {
         "type": "select",
         "id": "splash_duracion",
         "label": "Duración de la secuencia",
@@ -724,7 +730,7 @@
         "id": "splash_frases",
         "label": "Frases de motivación",
         "info": "Una por línea. Se muestran mientras gira el núcleo. Deja el campo vacío para no mostrar ninguna.",
-        "default": "EL LÍMITE LO PONES TÚ\nCADA REPETICIÓN CUENTA"
+        "default": "EL LÍMITE LO PONES TÚ"
       }
     ]
   },

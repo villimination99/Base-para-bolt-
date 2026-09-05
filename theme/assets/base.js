@@ -69,7 +69,10 @@
       // aviso, la secuencia seguiria pintando detras de la tienda: bateria
       // gastada en algo que ya nadie ve.
       try { splash.dispatchEvent(new CustomEvent('villu:intro-cerrada')); } catch (e) {}
-      setTimeout(function () { splash.style.display = 'none'; }, 900);
+      // 400 ms y no 900: el corte dura 0,30 s. Dejar la intro ocupando la
+      // pantalla medio segundo despues de que se haya ido es tiempo que el
+      // visitante pasa mirando algo que ya no le interesa.
+      setTimeout(function () { splash.style.display = 'none'; }, 400);
     }
     if (enter) enter.addEventListener('click', dismiss);
 

@@ -55,6 +55,9 @@
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
   </div>
+  {%- comment -%} Grano de pelicula y el destello del corte al salir. {%- endcomment -%}
+  <span class="splash-grano" aria-hidden="true"></span>
+  <span class="splash-corte" aria-hidden="true"></span>
   <button class="splash-skip" type="button" data-splash-skip>{{ 'general.skip' | t }}</button>
 
   <div class="splash-content">
@@ -118,10 +121,15 @@
         {%- for f in frases limit: 3 -%}
           {%- assign texto = f | strip -%}
           {%- if texto != blank -%}
-            <p class="splash-frase" data-i="{{ forloop.index0 }}">
-              {%- assign palabras = texto | split: ' ' -%}
-              {%- for w in palabras -%}<span class="splash-palabra"><i style="--r:{{ forloop.index0 }}">{{ w }}</i></span> {% endfor -%}
-            </p>
+            {%- comment -%}
+              El texto va entero, sin partirlo en palabras. Antes cada palabra
+              salia de su propia mascara con un retardo, y en movimiento estaba
+              bien, pero en cualquier fotograma congelado se veia texto a medio
+              salir y parecia roto. Ademas la mascara cortaba los acentos de las
+              mayusculas. Ahora entra el bloque completo, que es como aparece un
+              subtitulo en una pelicula.
+            {%- endcomment -%}
+            <p class="splash-frase" data-i="{{ forloop.index0 }}">{{ texto }}</p>
           {%- endif -%}
         {%- endfor -%}
       </div>

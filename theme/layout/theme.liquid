@@ -213,6 +213,28 @@
     {%- render 'splash-intro' -%}
   {%- endif -%}
 
+  {%- comment -%}
+    LA SALA, DETRAS DE LA PORTADA. La intro termina dentro de un gimnasio; la
+    portada ES ese gimnasio. Asi la entrada continua sin costura en vez de
+    cortarse en seco al llegar a la tienda.
+
+    Solo en la portada, a proposito. Ponerla en todas las paginas se ve muy
+    bien en una captura y penaliza cada ficha de producto -- mas peso que
+    descargar y menos contraste donde estan el precio y el boton de comprar --,
+    que es justo donde se vende. El resto del sitio se queda con el color.
+  {%- endcomment -%}
+  {%- if request.page_type == 'index' and settings.portada_sala != blank -%}
+    <div class="sala-portada" aria-hidden="true">
+      <img class="sala-portada-img"
+           src="{{ settings.portada_sala | image_url: width: 1200, height: 1900, crop: 'top' }}"
+           srcset="{{ settings.portada_sala | image_url: width: 750, height: 1188, crop: 'top' }} 750w,
+                   {{ settings.portada_sala | image_url: width: 1200, height: 1900, crop: 'top' }} 1200w,
+                   {{ settings.portada_sala | image_url: width: 1800, height: 2850, crop: 'top' }} 1800w"
+           sizes="100vw" width="1200" height="1900"
+           alt="" loading="lazy" decoding="async">
+    </div>
+  {%- endif -%}
+
   {% sections 'header-group' %}
 
   <main id="MainContent" role="main" tabindex="-1">

@@ -1,38 +1,48 @@
 /* Villumination - Intro "Pulso".
    ------------------------------------------------------------------
-   Una secuencia orquestada, no un monton de efectos sueltos a la vez.
-   Cuatro tiempos, 2,4 s en total:
+   Una entrada, no una animacion. El visitante ENTRA a un gimnasio y sale a la
+   tienda. 4,2 s en la version completa, 2,4 s en la corta.
 
-     1. ENCENDIDO  La linea base sale disparada del centro hacia los dos
-                   bordes, como un monitor de sala que arranca.
-     2. PULSO      Un electrocardiograma de verdad (onda P, complejo QRS,
-                   onda T) cruza la pantalla. El cabezal frena a camara lenta
-                   justo en el complejo QRS: ahi esta el drama, y verlo pasar
-                   a la misma velocidad que la parte plana lo desperdiciaba.
-     3. IMPACTO    En el pico R la linea revienta: destello, dos ondas de
-                   choque y unos arcos de carga que suben del pico al anillo
-                   del emblema. La energia del latido ALIMENTA la marca.
-     4. FORMACION  Las particulas se reagrupan en el anillo, se enlazan entre
-                   en el anillo del emblema. Luego se quedan vivas,
-                   respondiendo al dedo o al raton como imanes.
+     0,0-0,3  NEGRO. Ninguna pelicula empieza con imagen: empieza con negro.
+     0,3-1,0  PULSO. Un electrocardiograma de verdad (onda P, complejo QRS,
+              onda T) cruza la pantalla. El cabezal frena a camara lenta justo
+              en el QRS: ahi esta el drama, y pasarlo a velocidad constante lo
+              desperdiciaba.
+     0,7      IMPACTO. En el pico R la linea revienta -- destello, dos ondas de
+              choque, arcos de carga -- y la SALA se despliega desde el punto
+              de fuga hacia el visitante.
+     0,7-3,3  NUCLEO. Las particulas se organizan en una malla que gira y LATE,
+              con pulsos recorriendo sus conexiones. Debajo, una frase.
+     3,3-4,2  COLAPSO. La malla se contrae en el anillo del emblema y aparece
+              la marca.
 
-   Decisiones que importan:
-   - COMPOSICION. La linea base no esta a media altura por casualidad: se
-     coloca para que la punta del pico R quede justo debajo del anillo y el
-     estallido ocurra a la puerta del emblema. Antes el pico atravesaba el
-     anillo por el medio y parecia un accidente, no un diseno.
-   - El brillo se hace con tres pasadas de trazo (halo ancho y apagado, cuerpo
-     y nucleo blanco), no con shadowBlur sobre un camino de 200 puntos. Se ve
-     igual de bien y cuesta una fraccion.
-   - Un solo lienzo 2D. Ni WebGL ni librerias: esto se ve ANTES que la tienda
-     y no puede costar ni un kilobyte de mas ni fallar en un movil viejo.
-   - VIGILANTE DE FOTOGRAMAS. Si los primeros veinte fotogramas salen caros,
-     el motor se recorta solo (menos particulas, sin halo, sin enlaces). Mas
-     vale una intro sencilla que una pagina que se atasca.
-   - Con movimiento reducido no hay secuencia: se pinta el estado final. Quien
-     pide menos movimiento tambien tiene derecho a ver la marca.
-   - Al cerrarse se para todo y se suelta el lienzo. Un bucle que sigue
-     corriendo detras de la tienda es bateria robada.
+   Lo que sostiene que esto se lea como un plano y no como cinco efectos:
+
+   - UNA SOLA CAMARA, de principio a fin, por un trayecto con arranque y
+     frenada. El suelo, la malla y hasta el electrocardiograma se proyectan
+     desde ese mismo punto de vista, asi que el mundo se mueve junto. Termina
+     en cero justo cuando entra el emblema, que es un elemento de la pagina y
+     no se puede mover.
+   - LA PARTICULA i ES EL NODO i. No hay tres sistemas: hay uno recorriendo
+     tres formas -- pico, esfera, anillo -- asi que los cambios son
+     interpolaciones y no sustituciones. El anillo final es la esfera
+     aplastada, o sea que el colapso sale gratis.
+   - LAS ARISTAS SE CALCULAN UNA VEZ. La esfera es rigida y su topologia no
+     cambia nunca; por fotograma solo quedan las transformaciones.
+   - EL BRILLO son tres pasadas de trazo, no shadowBlur sobre un camino de
+     doscientos puntos. Se ve igual y cuesta una fraccion.
+   - NADA DE WebGL. hero-shader.js ya ocupa el unico contexto GL del tema, y
+     esto se carga sin defer porque es lo PRIMERO que se ve.
+   - EL MOTOR SE MIDE A SI MISMO. Con los primeros veinte fotogramas decide si
+     este aparato puede permitirse los extras; el grano de pelicula, por
+     ejemplo, solo se enciende si va sobrado. Ninguna decision de calidad se
+     toma por el modelo ni por el ancho de pantalla.
+   - DOS PUERTAS. El boton de entrar aparece a los 2,4 s, antes de que la
+     secuencia acabe: la espera obligada no crece aunque crezca el espectaculo.
+   - Con movimiento reducido no hay secuencia: se pinta el fotograma final, el
+     mismo que ve todo el mundo.
+   - Al cerrarse se para todo y se suelta el lienzo. Un bucle corriendo detras
+     de la tienda es bateria robada.
 */
 (function () {
   'use strict';
@@ -156,8 +166,11 @@
   }
   var X_PICO = 0.51;   // donde revienta
 
-  function ptX(x) { return X0 + x * XW; }
-  function ptY(x) { return yBase - latido(x) * alto; }
+  /* El trazo tambien viaja con la camara. Es un monitor DENTRO de la sala: si
+     la camara se mueve y el monitor no, se ve que son dos capas y no un
+     espacio. */
+  function ptX(x) { return X0 + x * XW + camDX; }
+  function ptY(x) { return yBase - latido(x) * alto + camDY; }
 
   /* ---------- ritmo del cabezal ----------
      La gracia esta aqui. Un barrido a velocidad constante desperdicia el
@@ -208,14 +221,14 @@
       // Dos tercios nacen EN el pico: son la explosion. El tercio restante
       // nace repartido por el trazo ya dibujado: son la linea deshaciendose.
       var deLinea = (i % 3) === 2;
-      var ox, oy;
-      if (deLinea) {
-        var tx = X_IZQ + Math.random() * (0.86 - X_IZQ);
-        ox = ptX(tx); oy = ptY(tx);
-      } else {
-        ox = pkx + (Math.random() - 0.5) * 10 * DPR;
-        oy = pky + (Math.random() - 0.5) * 18 * DPR;
-      }
+      /* Se guarda la coordenada de ONDA, no la de pantalla. La posicion en
+         pantalla depende de donde este la camara, y la camara se mueve entre
+         que se siembran las particulas y que revientan: guardando pixeles, el
+         estallido nacia quince pixeles por encima del trazo que se ve. */
+      var tx = deLinea ? X_IZQ + Math.random() * (0.86 - X_IZQ) : X_PICO;
+      var jx = deLinea ? 0 : (Math.random() - 0.5) * 10 * DPR;
+      var jy = deLinea ? 0 : (Math.random() - 0.5) * 18 * DPR;
+      var ox = ptX(tx) + jx, oy = ptY(tx) + jy;
       // Destino: tres de cada cuatro en el anillo del emblema; el resto en
       // una nube exterior que da profundidad y evita el anillo de juguete.
       // TODAS al anillo. Antes una de cada cuatro se iba a una nube exterior
@@ -231,7 +244,7 @@
       if (!deLinea) sa = Math.random() * Math.PI * 2;
       var vel = (14 + Math.random() * 30) * DPR;
       var p = {
-        ox: ox, oy: oy,
+        ox: ox, oy: oy, txw: tx, jx: jx, jy: jy,
         dx: cx + Math.cos(ang) * rr,
         dy: cy + Math.sin(ang) * rr,
         vx: Math.cos(sa) * vel,
@@ -285,7 +298,14 @@
   function medirEsfera() {
     // Mas grande que el anillo, para que el colapso final se note como una
     // contraccion de verdad y no como un encogimiento tibio.
-    R_ESF = Math.min(radio * 2.5, H * 0.22, W * 0.40);
+    /* El tope por ancho es W*0.319 y no W*0.40, y ese numero sale de medir.
+       El radio proyectado maximo NO es R: con perspectiva, los nodos inclinados
+       hacia el visitante se separan mas del centro que la propia silueta, y el
+       maximo real es 1,083 R. Sumandole el desvio de la camara, el latido y la
+       anticipacion del colapso, con 0.40 la esfera se salia 22 px por el borde
+       en un iPhone 12 y 17 en un SE -- reportado con captura. Con 0.319 quedan
+       16 px de margen en el peor caso de todos. */
+    R_ESF = Math.min(radio * 2.5, H * 0.22, W * 0.319);
     FOCO = R_ESF * 2.6;
     var inc = 0.34;                 // inclinacion fija: una esfera vista de
     INC_C = Math.cos(inc);          // frente y sin inclinar parece un circulo
@@ -384,7 +404,13 @@
   function dibujarMalla(op) {
     if (op <= 0.01 || !aristas) return;
     var m = aristas.length / 2;
-    ctx.lineCap = 'round';
+    /* Puntas planas, no redondas. Cada punta redonda es un circulo que el
+       rasterizador tiene que resolver aparte, y aqui hay seiscientas sesenta
+       por pasada: con lineas de uno a dos pixeles no se distingue una de otra
+       -- comparado con captura, sin diferencia visible -- y ademas los nodos
+       se pintan encima, que es lo que de verdad redondea los extremos. Los
+       pulsos SI las llevan, y se las ponen ellos. */
+    ctx.lineCap = 'butt';
     for (var b = 0; b < 3; b++) {
       ctx.beginPath();
       var hay = false;
@@ -469,14 +495,42 @@
      particulas aterrizarian al lado de la marca en vez de encima. Un plano de
      dron de verdad tambien termina encuadrando al protagonista. */
   var camDX = 0, camDY = 0;
+  /* La camara NO se para entre actos. Antes se quedaba quieta durante el
+     latido y solo se movia en la malla, y por eso se notaba la costura: la
+     secuencia parecia tres animaciones pegadas en vez de un plano.
+
+     Ahora hay UN trayecto de principio a fin, escrito como puntos por los que
+     la camara pasa -- (instante, desvio lateral, elevacion), los dos en
+     fracciones de pantalla -- y entre punto y punto se interpola con una curva
+     suave. Eso da lo que pide un plano de grua de verdad: arrancar despacio,
+     acelerar y frenar. Antes era un seno puro, o sea velocidad constante por
+     el centro, que es como no mueve la camara nadie.
+
+     Y termina en cero ANTES de que aparezca el emblema. No es un capricho: el
+     emblema es un elemento de la pagina y esta clavado en su sitio; si la
+     camara siguiera desviada, las particulas aterrizarian al lado de la marca
+     en vez de encima. Un plano de dron de verdad tambien acaba encuadrando al
+     protagonista. */
+  var RUTA = [
+    [0.00, -0.100,  0.055],   // fuera, bajo y a la izquierda
+    [0.28,  0.015,  0.012],   // cruza el centro justo con el impacto
+    [0.55,  0.085, -0.038],   // orbita a la derecha y sube
+    [0.80, -0.045, -0.018],   // vuelve
+    [1.00,  0.000,  0.000]    // se posa en la marca
+  ];
   function moverCamara(t) {
-    if (!MALLA || t <= T_IMPACTO) { camDX = 0; camDY = 0; return; }
-    var f = lim((t - T_IMPACTO) / (T_MALLA - T_IMPACTO), 0, 1);
-    // Una orbita completa: derecha, centro, izquierda y vuelta. Empieza y
-    // acaba en cero por construccion.
-    camDX = Math.sin(f * Math.PI * 2) * W * 0.075;
-    // Y una elevacion que sube y baja en el mismo tramo.
-    camDY = Math.sin(f * Math.PI) * H * 0.045;
+    if (!MALLA) { camDX = 0; camDY = 0; return; }
+    var u = lim(t / T_MALLA, 0, 1);
+    for (var i = 1; i < RUTA.length; i++) {
+      if (u <= RUTA[i][0]) {
+        var a = RUTA[i - 1], b = RUTA[i];
+        var k = suave((u - a[0]) / (b[0] - a[0]));
+        camDX = (a[1] + (b[1] - a[1]) * k) * W;
+        camDY = (a[2] + (b[2] - a[2]) * k) * H;
+        return;
+      }
+    }
+    camDX = 0; camDY = 0;
   }
 
   function ejeY() { return cy + camDY; }         // horizonte = el emblema
@@ -533,62 +587,48 @@
     ctx.stroke();
   }
 
-  /* Un rack: dos postes, dos soportes y una barra con sus discos. Es la
-     silueta que cualquiera reconoce sin pensarlo. */
-  function rack(lado, z, op) {
-    // MUY a los lados. La primera version los ponia a 0,52 del ancho del suelo
-    // y, al dividir por la profundidad, acababan amontonados cerca del punto
-    // de fuga: parecian escombros dentro de la esfera en vez de aparatos de la
-    // sala. A 1,25 pasan por los bordes, que es donde pasa el mobiliario
-    // cuando uno cruza un gimnasio.
-    var xBase = lado * anchoSuelo() * 1.25;
-    var alto = alturaCam() * 0.95, ancho = anchoSuelo() * 0.15;
-    var a = pz(xBase - ancho / 2, 0, z), b = pz(xBase - ancho / 2, alto, z);
-    var c = pz(xBase + ancho / 2, 0, z), d = pz(xBase + ancho / 2, alto, z);
-    var e = pz(xBase - ancho / 2, alto * 0.72, z), f = pz(xBase + ancho / 2, alto * 0.72, z);
-    ctx.beginPath();
-    ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]);           // poste izquierdo
-    ctx.moveTo(c[0], c[1]); ctx.lineTo(d[0], d[1]);           // poste derecho
-    ctx.moveTo(b[0], b[1]); ctx.lineTo(d[0], d[1]);           // travesano alto
-    ctx.moveTo(e[0], e[1]); ctx.lineTo(f[0], f[1]);           // la barra apoyada
-    ctx.strokeStyle = rgba(lado < 0 ? CIAN : ROSA, op);
-    ctx.lineWidth = 1.6 * DPR;
-    ctx.stroke();
-    // Los discos de la barra
-    var r = ancho * 0.30 * e[2];
-    if (r > 0.7) {
-      ctx.beginPath();
-      ctx.moveTo(e[0] + r, e[1]); ctx.arc(e[0], e[1], r, 0, Math.PI * 2);
-      ctx.moveTo(f[0] + r, f[1]); ctx.arc(f[0], f[1], r, 0, Math.PI * 2);
-      ctx.strokeStyle = rgba(lado < 0 ? CIAN : ROSA, op * 1.15);
-      ctx.lineWidth = 2.2 * DPR;
-      ctx.stroke();
-    }
-  }
+  /* SE RETIRARON LOS RACKS DE LOS LADOS. Eran siluetas en perspectiva que
+     pasaban de largo a izquierda y derecha para que se leyera "gimnasio".
+     Tenian sentido cuando el fondo era negro; desde que hay una foto de sala
+     de verdad detras, a ese tamano ya no se leen como aparatos sino como
+     simbolos sueltos cruzando la pantalla, que es exactamente como los
+     reporto el cliente. La sala la cuentan ahora el suelo y la foto. */
 
   function gimnasio(t, op, rev) {
     if (op <= 0.01) return;
-    // El suelo es UN trazado y es el que lleva casi toda la lectura de
-    // "estoy dentro de un sitio", asi que nunca se recorta.
+    // Solo el suelo. Es UN trazado y es el que lleva toda la lectura de "estoy
+    // dentro de un sitio"; ademas su punto de fuga esta en el emblema, asi que
+    // empuja la mirada hacia la marca.
     suelo(t, op, rev);
-    // Los racks son doce llamadas de dibujo y son un adorno: en un aparato que
-    // no da la talla se van los primeros. Medido con la CPU a 1/6, con ellos
-    // los fotogramas lentos pasaban de 4 a 13.
-    if (!CAL.arcos) return;
-    var av = (t * VEL_CAM) % 1;
-    // Un par de racks cada tres unidades de profundidad. Se apagan de lejos y
-    // tambien justo al pasar de largo, para que no crezcan hasta comerse la
-    // pantalla.
-    for (var k = 1; k <= 2; k++) {
-      var z = k * 2.5 - av * 2.5;
-      if (z < Z_MIN + 0.3) continue;
-      // Se apagan al acercarse (pasan de largo) y tambien al alejarse: los de
-      // muy al fondo se juntan en el horizonte y solo ensucian.
-      var oz = op * lim((z - 0.6) / 1.2, 0, 1) * (1 - lim((z - 3.6) / 2.6, 0, 1));
-      if (oz <= 0.02) continue;
-      rack(-1, z, oz * 0.5);
-      rack(1, z, oz * 0.5);
+  }
+
+  /* EL GRANO NO VA AQUI, VA EN CSS. La primera version lo pintaba en el
+     lienzo: un relleno de patron a pantalla completa en cada fotograma. Medido,
+     tumbo la secuencia de 60 fps a 30 con la CPU a 1/4 y a 20 con la CPU a 1/6.
+     Son 740.000 pixeles escritos por fotograma para un efecto que, por
+     definicion, tiene que ser casi imperceptible: la peor relacion posible
+     entre lo que cuesta y lo que aporta.
+
+     En CSS lo compone la tarjeta grafica y cuesta cero fotogramas. Esta en
+     .splash-grano. */
+
+  /* ---------- reparto de las frases ----------
+     Las ventanas se calculan, no se escriben a mano, y el hueco entre una
+     frase y la siguiente es MAYOR que el fundido. Escritas a mano habia 0,10 s
+     de hueco contra 0,32 s de fundido, asi que durante 0,22 s se veian las dos
+     frases superpuestas -- salio en una captura del cliente. Calculandolas, eso
+     no puede volver a pasar aunque manana se configuren tres. */
+  var F_HUECO = 0.55;                       // mayor que el fundido de 0,45 s
+  function faseFrase(t) {
+    if (!nFrases) return -1;
+    var ini = T_ESFERA - 0.30, fin = T_MALLA - 0.10;
+    var dur = ((fin - ini) - F_HUECO * (nFrases - 1)) / nFrases;
+    if (dur <= 0.35) return -1;             // no caben: mejor ninguna que a medias
+    for (var i = 0; i < nFrases; i++) {
+      var a = ini + i * (dur + F_HUECO);
+      if (t >= a && t < a + dur) return i;
     }
+    return -1;
   }
 
   /* ---------- interaccion, para despues de la secuencia ---------- */
@@ -750,15 +790,67 @@
   }
 
   /* ---------- vigilante de fotogramas ---------- */
-  var ventana = [], ultimoMs = 0, recortado = false;
+  var ventana = [], ultimoMs = 0;
+  var recortado = false, brilloRecortado = false, granoDecidido = false;
+
+  /* ---------- por que TODAS las decisiones se toman a partir de 1,30 s ----------
+     Las tres se tomaban antes en el fotograma veintiuno, y eso las tomaba
+     todas mal. Los veinte primeros fotogramas de esta secuencia son el telon
+     negro: la parte mas barata que existe aqui. Un aparato lento pasaba esa
+     medida sobrado, se quedaba con todos los adornos y despues se arrastraba
+     durante el resto de la pelicula.
+
+     A partir de 1,30 s ya estan en pantalla la sala en perspectiva, el
+     estallido y las particulas. Es el primer instante en el que la medida dice
+     algo. Y sigue siendo ANTES de que aparezca la malla, en 1,75 s, que es lo
+     que estos escalones recortan: se decide antes de gastar, no despues, y
+     nada desaparece a la vista.
+
+     El escalon de emergencia ademas queda ARMADO hasta el final del acto en
+     vez de dispararse una sola vez. Un aparato puede ir bien a los 1,30 s y
+     hundirse a los 2,5 -- otra pestana que despierta, una foto que termina de
+     decodificarse -- y antes de esto nadie lo recogia. */
+  var T_DECIDE = 1.30;
+
   function vigilar(ahora, t) {
     if (ultimoMs) {
       ventana.push(ahora - ultimoMs);
       if (ventana.length > 20) ventana.shift();
-      if (!recortado && ventana.length === 20 && t < T_FORMA) {
+
+      if (ventana.length === 20 && t > T_DECIDE && t < T_FORMA) {
         var suma = 0;
         for (var i = 0; i < 20; i++) suma += ventana[i];
-        if (suma / 20 > 45) {
+        var media = suma / 20;
+
+        /* EL GRANO SE GANA, NO SE REGALA. Empieza apagado y solo se enciende
+           si este aparato en concreto va sobrado. Medido, cuesta la mitad del
+           presupuesto en un aparato lento: 60 fps se quedaban en 30 con la CPU
+           a 1/6. Es una textura que tiene que ser casi imperceptible, asi que
+           pagar por ella medio ritmo de fotogramas es un mal trato. Y se mide
+           el aparato, no se adivina por el modelo ni por el ancho de pantalla:
+           dos telefonos iguales rinden distinto, y el mismo telefono rinde
+           distinto con veinte pestanas abiertas. Entra con un fundido para que
+           no se vea aparecer. */
+        if (!granoDecidido) {
+          granoDecidido = true;
+          if (media <= 20) caja.classList.add('con-grano');
+        }
+
+        /* Primer escalon, por encima de 26 ms de media -- o sea, este aparato
+           ya no sostiene 60 fps: se retira el brillo de la malla. Medido, es
+           la pasada mas cara de toda la secuencia (un trazo de 3,6 px sobre el
+           tercio delantero entero) y es lo unico que se puede quitar sin que
+           la escena cambie de forma: la malla sigue con sus tres
+           profundidades y su niebla, solo pierde el halo. */
+        if (!brilloRecortado && media > 26) {
+          brilloRecortado = true;
+          CAL.halo = false;
+        }
+
+        /* Segundo escalon, la emergencia: por encima de 45 ms se cae todo lo
+           accesorio y la mitad de las particulas. Prefiero una secuencia mas
+           sobria a 60 fps que la completa a saltos. */
+        if (!recortado && media > 45) {
           recortado = true;
           CAL.halo = false; CAL.enlaces = false; CAL.estelas = false; CAL.arcos = false;
           for (var j = ps.length - 1; j >= 0; j -= 2) ps.splice(j, 1);
@@ -967,8 +1059,11 @@
           // destino. Mezclar las dos da la sensacion de explosion que se
           // reordena, en vez de dos movimientos pegados uno tras otro.
           var salida = frena(lim(tp / 0.30, 0, 1));
-          var ex = p.ox + p.vx * salida * 7;
-          var ey = p.oy + p.vy * salida * 7;
+          // El origen se vuelve a calcular con la camara de ESTE fotograma,
+          // asi que el estallido sale siempre del trazo que se esta viendo.
+          var oxc = ptX(p.txw) + p.jx, oyc = ptY(p.txw) + p.jy;
+          var ex = oxc + p.vx * salida * 7;
+          var ey = oyc + p.vy * salida * 7;
           var g2 = frenaMas(f);
           // Un poco de giro al entrar: caer en linea recta al sitio parece
           // un iman; entrar en espiral parece que se estan colocando.
@@ -1085,9 +1180,7 @@
     // atributo sesenta veces por segundo para poner el mismo valor invalida
     // estilo en cada fotograma por nada.
     if (MALLA && cajaFrases) {
-      var cual = -1;
-      if (t > T_ESFERA - 0.30 && t < T_ESFERA + 0.52) cual = 0;
-      else if (t > T_ESFERA + 0.62 && t < T_MALLA - 0.05) cual = 1;
+      var cual = faseFrase(t);
       if (cual !== fraseActual) {
         fraseActual = cual;
         if (cual < 0) cajaFrases.removeAttribute('data-frase');
@@ -1118,6 +1211,15 @@
     // cuanto se toca cualquiera.
     if (!puerta && t >= T_PUERTA) { puerta = true; caja.classList.add('intro-puerta'); }
     if (!listo && t >= T_FORMA) { listo = true; caja.classList.add('intro-lista'); }
+
+    /* APERTURA EN NEGRO. Ninguna pelicula empieza con imagen: empieza con
+       negro. Doscientos milisegundos de negro absoluto y despues se levanta.
+       Va al FINAL del pintado, encima de todo lo demas, porque es un telon. */
+    if (t < 0.34) {
+      ctx.fillStyle = 'rgba(0,0,0,' + (1 - suave((t - 0.10) / 0.24)).toFixed(3) + ')';
+      ctx.fillRect(0, 0, W, H);
+    }
+
 
     pedir();
   }
