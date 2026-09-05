@@ -26,6 +26,30 @@
 {%- endcomment -%}
 <div id="splash-intro" class="splash-intro" data-splash data-duracion="{{ settings.splash_duracion | default: 'completa' }}" {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
   <div class="splash-bg"></div>
+  {%- if settings.splash_fondo != blank -%}
+    {%- comment -%}
+      La sala de verdad, detras de la animacion, con la camara entrando.
+
+      El recorte lo hace Shopify en su CDN, no el navegador: se le pide una
+      proporcion mas ancha que la del original anclada arriba, asi que se
+      queda con la parte de arriba y CORTA la franja de abajo, que es justo
+      donde los bancos de imagenes y los generadores estampan su marca. El
+      comerciante puede subir la foto tal cual, sin recortarla antes.
+
+      Se carga sin prioridad y la secuencia NO la espera: el lienzo empieza a
+      pintar igual desde el primer fotograma, y si la foto tarda o no llega,
+      la intro sigue siendo exactamente la de antes.
+    {%- endcomment -%}
+    <div class="splash-escena" aria-hidden="true">
+      <img class="splash-escena-img" data-splash-escena
+           src="{{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }}"
+           srcset="{{ settings.splash_fondo | image_url: width: 640, height: 1013, crop: 'top' }} 640w,
+                   {{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }} 900w,
+                   {{ settings.splash_fondo | image_url: width: 1400, height: 2217, crop: 'top' }} 1400w"
+           sizes="100vw" width="900" height="1425"
+           alt="" loading="eager" decoding="async">
+    </div>
+  {%- endif -%}
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
   <div class="splash-particles" aria-hidden="true">
     <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>

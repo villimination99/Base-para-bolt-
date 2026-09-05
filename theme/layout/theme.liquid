@@ -158,7 +158,14 @@
         scrollReveal: {{ settings.enable_scroll_reveal | default: false }},
         cardTilt: {{ settings.enable_card_tilt | default: false }},
         splash3d: {{ settings.splash_3d | default: false }},
-        splashOnce: {{ settings.splash_once_per_session | default: true }},
+        {%- comment -%}
+          En el editor de temas la intro se ve SIEMPRE. Con "una vez por
+          visita" activo, quien esta afinando la intro la ve una vez y despues
+          nunca mas, porque queda marcada en la sesion del navegador: se pasa
+          media tarde creyendo que los cambios no se aplican. Para el visitante
+          la regla no cambia.
+        {%- endcomment -%}
+        splashOnce: {% if request.design_mode %}false{% else %}{{ settings.splash_once_per_session | default: true }}{% endif %},
         autoLang: {{ settings.auto_language | default: false }},
         locale: {{ request.locale.iso_code | json }},
         ambient: {{ settings.ambient_bg | default: 'full' | json }},

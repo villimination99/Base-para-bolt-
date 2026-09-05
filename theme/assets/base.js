@@ -51,7 +51,13 @@
     if (!splash) return;
     var enter = $('#splash-enter');
     var once = settings.splashOnce;
-    if (once && store.get('v99_intro_seen', true)) { splash.style.display = 'none'; return; }
+    /* Valvula de escape para poder VER la intro cuando se esta afinando, sin
+       tener que abrir una ventana privada cada vez: cualquier direccion que
+       lleve ?intro=1 la fuerza. Es una comprobacion de una linea y ahorra la
+       confusion de creer que los cambios no se aplican. */
+    var forzar = false;
+    try { forzar = /[?&]intro=1\b/.test(window.location.search); } catch (e) {}
+    if (once && !forzar && store.get('v99_intro_seen', true)) { splash.style.display = 'none'; return; }
     document.body.style.overflow = 'hidden';
     var done = false;
     function dismiss() {

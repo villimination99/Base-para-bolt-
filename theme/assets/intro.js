@@ -583,6 +583,17 @@
   }
 
   /* ---------- interaccion, para despues de la secuencia ---------- */
+  /* La foto de la sala aparece cuando esta cargada, no antes. La secuencia no
+     la espera en ningun momento: si tarda, si falla o si el visitante tiene
+     bloqueadas las imagenes, la intro es exactamente la de siempre. */
+  (function () {
+    var escena = caja.querySelector('[data-splash-escena]');
+    if (!escena) return;
+    function lista() { escena.classList.add('esta-lista'); }
+    if (escena.complete && escena.naturalWidth > 0) lista();
+    else escena.addEventListener('load', lista);
+  })();
+
   var cajaFrases = caja.querySelector('[data-splash-frases]');
   var nFrases = cajaFrases ? cajaFrases.children.length : 0;
   if (!nFrases) cajaFrases = null;
