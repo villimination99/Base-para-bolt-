@@ -1,0 +1,533 @@
+{%- comment -%}
+  Video 3D interactivo.
+  Un solo video presentado dentro de un marco holografico que se inclina
+  siguiendo al puntero (o al dedo), con las luces del fondo moviendose a
+  distinta velocidad para dar profundidad real.
+
+  Acepta las dos formas de video que ofrece Shopify:
+   1. Video subido a Shopify (ajuste "video")  -> etiqueta <video> nativa,
+      sin terceros, con duracion real para el JSON-LD.
+   2. Enlace de YouTube o Vimeo (ajuste "video_url") -> la portada es una
+      imagen y el iframe solo se inserta al pulsar play, para no cargar
+      scripts ni cookies ajenas en la primera visita.
+{%- endcomment -%}
+
+{%- liquid
+  assign vid = section.settings.video
+  assign enlace = section.settings.video_url
+  assign portada = section.settings.poster
+  assign acento = section.settings.accent
+  assign titulo = section.settings.title
+
+  # URL directa a un archivo de video (mp4, webm, mov) subido a los Archivos
+  # de Shopify como archivo suelto. Shopify solo admite mp4 y mov en su
+  # selector de video, asi que esta es la via para un webm.
+  assign archivo = section.settings.video_archivo | strip
+
+  assign incrustar = ''
+  if enlace != blank
+    if enlace.type == 'youtube'
+      assign incrustar = enlace.id | prepend: 'https://www.youtube-nocookie.com/embed/'
+    elsif enlace.type == 'vimeo'
+      assign incrustar = enlace.id | prepend: 'https://player.vimeo.com/video/'
+    endif
+  endif
+
+  if portada == blank and vid != blank
+    assign portada = vid.preview_image
+  endif
+
+  # Portada automatica de YouTube: sin esto la seccion recien anadida sale en
+  # negro hasta que alguien suba una imagen, y con ella no habria VideoObject.
+  # maxresdefault no existe en todos los videos; hqdefault si, siempre.
+  assign portada_url = ''
+  if portada != blank
+    assign portada_url = portada | image_url: width: 1280
+    unless portada_url contains 'http'
+      assign portada_url = portada_url | prepend: 'https:'
+    endunless
+  elsif enlace != blank and enlace.type == 'youtube'
+    # Se piden SIEMPRE las miniaturas curadas, en orden de resolucion:
+    # maxresdefault (1280 px) y luego hqdefault (480 px), que existe siempre.
+    #
+    # oardefault, que conserva la proporcion original del video, se probo y se
+    # descarto: para los Shorts, YouTube la genera desde un FOTOGRAMA CRUDO en
+    # vez de desde la miniatura elegida, y en esta tienda salia un fotograma
+    # blanco y borroso donde antes se veia bien el video. La proporcion
+    # correcta no compensa una imagen mala; para eso esta el campo de portada,
+    # donde se sube la imagen que uno quiera.
+    assign yt = enlace.id
+    assign portada_url = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/maxresdefault.jpg'
+    assign portada_alt1 = yt | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg'
+    assign portada_alt2 = ''
+  endif
+
+  # Proporcion del marco. Un Short vertical dentro de un marco apaisado se
+  # recorta por arriba y por abajo, que es justo donde esta la persona.
+  assign proporcion = section.settings.formato
+
+  # Medidas nominales de la portada de YouTube. La imagen va posicionada en
+  # absoluto con object-fit:cover, asi que no manda en la maquetacion, pero
+  # el navegador necesita la proporcion para no dar un salto al cargar (y
+  # theme-check exige width y height en toda etiqueta img).
+  case proporcion
+    when 'vertical'
+      assign port_w = 720
+      assign port_h = 1280
+    when 'cuadrado'
+      assign port_w = 1080
+      assign port_h = 1080
+    else
+      assign port_w = 1280
+      assign port_h = 720
+  endcase
+
+  assign alto_pc = section.settings.height
+  assign alto_movil = alto_pc | times: 62 | divided_by: 100
+-%}
+
+<section class="video3d-sec section-padding{% if section.settings.compact %} is-compact{% endif %}"
+         id="video3d-{{ section.id }}"
+         style="--v3d-accent:{{ acento }};--v3d-bg:{{ section.settings.bg }};--v3d-alto:{{ alto_pc }}px;--v3d-alto-movil:{{ alto_movil }}px;--v3d-fundido:{{ section.settings.blend | divided_by: 100.0 }};">
+  <div class="container">
+    {%- if section.settings.eyebrow != blank or titulo != blank or section.settings.subtitle != blank -%}
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="section-eyebrow" style="color:{{ acento }};">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if titulo != blank -%}<h2 class="section-title">{{ titulo }}</h2>{%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="video3d"
+         data-formato="{{ proporcion }}"
+         data-video-3d
+         data-v3d-giro="{{ section.settings.tilt }}"
+         {% if incrustar != blank %}data-v3d-embed="{{ incrustar }}"{% endif %}
+         data-v3d-titulo="{{ titulo | default: shop.name | escape }}"
+         data-v3d-auto="{% if section.settings.autoplay %}1{% else %}0{% endif %}"
+         {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+
+      {%- comment -%}
+        El halo: con video alojado lo pinta video3d.js con los colores que
+        hay en pantalla en ese instante; con YouTube/Vimeo se usa la portada
+        difuminada. En ambos casos el fondo de la seccion recoge los colores
+        del video y deja de verse como un rectangulo pegado sobre el negro.
+      {%- endcomment -%}
+      {%- if vid != blank or archivo != blank -%}
+        <canvas class="video3d-halo" data-v3d-halo width="32" height="18" aria-hidden="true"></canvas>
+      {%- elsif portada != blank -%}
+        <span class="video3d-halo video3d-halo--fijo is-on" aria-hidden="true"
+              style="background-image:url({{ portada | image_url: width: 80 }})"></span>
+      {%- elsif portada_url != blank -%}
+        <span class="video3d-halo video3d-halo--fijo is-on" aria-hidden="true"
+              style="background-image:url({{ portada_url }})"></span>
+      {%- endif -%}
+      <span class="video3d-aura" aria-hidden="true"></span>
+      <span class="video3d-suelo" aria-hidden="true"></span>
+
+      <div class="video3d-marco" data-v3d-marco>
+        <span class="video3d-borde" aria-hidden="true"></span>
+
+        <div class="video3d-pantalla">
+          {%- if archivo != blank -%}
+            {%- comment -%}
+              Video servido desde una URL directa. Se escribe la etiqueta a
+              mano porque video_tag solo acepta un objeto de video de Shopify.
+              El tipo se deduce de la extension; si no se reconoce, el
+              navegador lo averigua solo.
+            {%- endcomment -%}
+            {%- liquid
+              assign tipo = ''
+              if archivo contains '.webm'
+                assign tipo = 'video/webm'
+              elsif archivo contains '.mp4'
+                assign tipo = 'video/mp4'
+              elsif archivo contains '.mov'
+                assign tipo = 'video/quicktime'
+              endif
+            -%}
+            <video class="video3d-media" playsinline muted preload="metadata"
+                   {% if section.settings.autoplay %}autoplay{% endif %}
+                   {% if section.settings.loop %}loop{% endif %}
+                   {% if section.settings.controls %}controls{% endif %}
+                   {% if portada != blank %}poster="{{ portada | image_url: width: 1200 }}"{% endif %}
+                   aria-label="{{ titulo | default: shop.name | escape }}">
+              <source src="{{ archivo }}"{% if tipo != blank %} type="{{ tipo }}"{% endif %}>
+            </video>
+          {%- elsif vid != blank -%}
+            {{ vid | video_tag:
+                 image_size: '1200x',
+                 autoplay: section.settings.autoplay,
+                 loop: section.settings.loop,
+                 muted: true,
+                 controls: section.settings.controls,
+                 playsinline: true,
+                 preload: 'metadata',
+                 class: 'video3d-media' }}
+          {%- elsif incrustar != blank -%}
+            <div class="video3d-hueco" data-v3d-hueco></div>
+            {%- if portada != blank -%}
+              <img class="video3d-portada"
+                   data-v3d-portada
+                   src="{{ portada | image_url: width: 1200 }}"
+                   srcset="{{ portada | image_url: width: 600 }} 600w, {{ portada | image_url: width: 1200 }} 1200w, {{ portada | image_url: width: 1800 }} 1800w"
+                   sizes="(max-width: 900px) 100vw, 1100px"
+                   alt="{{ titulo | default: shop.name | escape }}"
+                   width="1200"
+                   height="{{ 1200 | divided_by: portada.aspect_ratio | round }}"
+                   loading="lazy" decoding="async">
+            {%- elsif portada_url != blank -%}
+              {%- comment -%}
+                Miniatura de YouTube. Sale de i.ytimg.com, no del CDN de
+                Shopify, asi que theme-check avisa de RemoteAsset: es
+                inevitable y ya pasa con el carrusel de videos.
+                Los respaldos van en data-* y los encadena video3d.js: asi no
+                hay JavaScript suelto en el atributo onerror, que la politica
+                de seguridad de contenido de algunas tiendas bloquea.
+              {%- endcomment -%}
+              <img class="video3d-portada"
+                   data-v3d-portada
+                   src="{{ portada_url }}"
+                   {% if portada_alt1 != blank %}data-v3d-alt1="{{ portada_alt1 }}"{% endif %}
+                   {% if portada_alt2 != blank %}data-v3d-alt2="{{ portada_alt2 }}"{% endif %}
+                   alt="{{ titulo | default: shop.name | escape }}"
+                   width="{{ port_w }}" height="{{ port_h }}"
+                   loading="lazy" decoding="async">
+            {%- endif -%}
+          {%- else -%}
+            <div class="video3d-vacio">
+              {%- render 'icon', name: 'play' -%}
+              <p>{{ 'general.video_placeholder' | t }}</p>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.scanlines -%}
+            <span class="video3d-rayas" aria-hidden="true"></span>
+          {%- endif -%}
+          <span class="video3d-brillo" aria-hidden="true"></span>
+
+          {%- if vid != blank or incrustar != blank -%}
+            {%- unless section.settings.controls and vid != blank -%}
+              <button type="button" class="video3d-play" data-v3d-play
+                      aria-label="{{ 'general.play_video' | t }}">
+                <span class="video3d-play-anillo" aria-hidden="true"></span>
+                {%- render 'icon', name: 'play' -%}
+              </button>
+            {%- endunless -%}
+          {%- endif -%}
+        </div>
+
+        <span class="video3d-esquina video3d-esquina--tl" aria-hidden="true"></span>
+        <span class="video3d-esquina video3d-esquina--tr" aria-hidden="true"></span>
+        <span class="video3d-esquina video3d-esquina--bl" aria-hidden="true"></span>
+        <span class="video3d-esquina video3d-esquina--br" aria-hidden="true"></span>
+      </div>
+
+      {%- if section.settings.caption != blank -%}
+        <p class="video3d-pie">{{ section.settings.caption }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
+      <div class="section-cta">
+        <a href="{{ section.settings.button_url }}" class="btn btn-primary btn-lg">
+          {{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  VideoObject. Google indexa los videos en una pestana propia, asi que una
+  ficha correcta aqui es un canal de trafico extra. Solo se emite si hay
+  titulo y miniatura, que es lo que Google exige; sin ellos el dato seria
+  rechazado y ensuciaria el informe de datos estructurados.
+{%- endcomment -%}
+{%- comment -%}
+  Liquid evalua and/or de derecha a izquierda y sin precedencia, asi que una
+  condicion mixta aqui seria una trampa. Se decide antes, con un booleano.
+{%- endcomment -%}
+{%- liquid
+  assign declarar_video = false
+  if section.settings.seo_video and titulo != blank and portada_url != blank
+    if vid != blank
+      assign declarar_video = true
+    elsif archivo != blank
+      assign declarar_video = true
+    elsif incrustar != blank
+      assign declarar_video = true
+    endif
+  endif
+-%}
+{%- if declarar_video -%}
+  {%- liquid
+    assign descripcion = section.settings.subtitle | default: section.settings.caption | default: titulo
+    assign miniatura_abs = portada_url
+    assign subida = section.settings.upload_date
+    if subida == blank
+      assign subida = shop.published_at | date: '%Y-%m-%d'
+    endif
+
+    # Duracion y URL del archivo. Se calculan aqui con ifs anidados y NO en la
+    # condicion en linea: "vid != blank and vid.duration > 0" compararia nil
+    # con 0 cuando no hay video, y esa comparacion revienta en Liquid.
+    # La prioridad de la URL tiene que ser LA MISMA que la del marcado:
+    # archivo directo, luego video de Shopify, luego incrustado. Con un
+    # archivo y un enlace de YouTube a la vez, el visitante veia el archivo y
+    # Google leia el de YouTube: pagina y datos estructurados en desacuerdo.
+    assign duracion = ''
+    assign url_archivo = ''
+    if archivo != blank
+      assign url_archivo = archivo
+    elsif vid != blank
+      assign fuentes = vid.sources | size
+      if fuentes > 0
+        assign url_archivo = vid.sources.last.url
+      endif
+    endif
+    if vid != blank
+      if vid.duration > 0
+        # round obliga a un entero: sin el, un motor que divida en coma
+        # flotante emitiria PT42.5S y Google prefiere segundos enteros.
+        assign segundos = vid.duration | divided_by: 1000 | round
+        assign duracion = segundos | prepend: 'PT' | append: 'S'
+      endif
+    endif
+  -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": {{ titulo | json }},
+    "description": {{ descripcion | strip_html | truncate: 320 | json }},
+    "thumbnailUrl": [{{ miniatura_abs | json }}],
+    "uploadDate": {{ subida | json }},
+    {%- if duracion != blank -%}
+      "duration": {{ duracion | json }},
+    {%- endif -%}
+    {%- if url_archivo != blank -%}
+      "contentUrl": {{ url_archivo | json }},
+    {%- elsif incrustar != blank -%}
+      "embedUrl": {{ incrustar | json }},
+    {%- endif -%}
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    },
+    "isFamilyFriendly": true,
+    "inLanguage": {{ request.locale.iso_code | json }}
+  }
+  </script>
+{%- endif -%}
+
+{%- comment -%}
+  Igual que la secuencia: el script llega cuando la seccion se acerca.
+{%- endcomment -%}
+{%- render 'cargar-al-ver', archivo: 'video3d.js', ancla: '[data-video-3d]' -%}
+
+{% schema %}
+{
+  "name": "Video 3D interactivo",
+  "tag": "section",
+  "class": "shopify-section--video3d",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video subido a Shopify",
+      "info": "La mejor opción: sin cookies de terceros y con duración real para Google."
+    },
+    {
+      "type": "video_url",
+      "id": "video_url",
+      "label": "O un enlace de YouTube / Vimeo",
+      "accept": [
+        "youtube",
+        "vimeo"
+      ],
+      "info": "Solo se usa si no has subido un video arriba. El reproductor no se carga hasta que alguien pulsa play."
+    },
+    {
+      "type": "text",
+      "id": "video_archivo",
+      "label": "O la URL directa de un archivo de video",
+      "info": "Para un .webm o cualquier archivo que el selector de arriba no acepte: súbelo a Contenido → Archivos, copia su URL y pégala aquí. Tiene prioridad sobre las dos opciones anteriores."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster",
+      "label": "Portada",
+      "info": "Recomendada para vídeos verticales. Si la dejas vacía se usa el primer fotograma del vídeo subido, o la miniatura de YouTube, que es apaisada y se recorta por los lados."
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Reproducir solo al entrar en pantalla",
+      "default": true,
+      "info": "Siempre sin sonido, como exigen los navegadores. Se pausa al salir de la vista."
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Repetir en bucle",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "controls",
+      "label": "Mostrar los controles del reproductor",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta",
+      "default": "EN MOVIMIENTO"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "VIVE LA EXPERIENCIA"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Muévete sobre el video: el marco te sigue."
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Pie de video"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Enlace del botón"
+    },
+    {
+      "type": "header",
+      "content": "Presentación"
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Color de acento",
+      "default": "#00f0ff"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Color de fondo",
+      "default": "#05060a"
+    },
+    {
+      "type": "select",
+      "id": "formato",
+      "label": "Formato del video",
+      "options": [
+        {
+          "value": "ancho",
+          "label": "Apaisado 16:9 (video normal)"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical 9:16 (Reels y Shorts)"
+        },
+        {
+          "value": "cuadrado",
+          "label": "Cuadrado 1:1"
+        }
+      ],
+      "default": "ancho",
+      "info": "Un Short vertical dentro de un marco apaisado se recorta justo por donde está la persona. Elige el formato que tenga tu video."
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "min": 320,
+      "max": 780,
+      "step": 20,
+      "unit": "px",
+      "label": "Alto máximo del marco",
+      "default": 560,
+      "info": "Solo afecta al formato apaisado; los verticales y cuadrados se ajustan solos."
+    },
+    {
+      "type": "range",
+      "id": "tilt",
+      "min": 0,
+      "max": 16,
+      "step": 2,
+      "unit": "°",
+      "label": "Inclinación 3D",
+      "default": 10,
+      "info": "0 lo deja plano."
+    },
+    {
+      "type": "range",
+      "id": "blend",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "%",
+      "label": "Fundido con el fondo",
+      "default": 60,
+      "info": "Difumina los bordes del video hacia el fondo y le da el tono del acento. 0 lo deja recortado en seco."
+    },
+    {
+      "type": "checkbox",
+      "id": "scanlines",
+      "label": "Líneas de escaneo",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "compact",
+      "label": "Menos espacio arriba y abajo",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "SEO"
+    },
+    {
+      "type": "checkbox",
+      "id": "seo_video",
+      "label": "Declarar el video a Google (VideoObject)",
+      "default": true,
+      "info": "Necesita título y portada. Permite que el video salga en la pestaña Videos de Google."
+    },
+    {
+      "type": "text",
+      "id": "upload_date",
+      "label": "Fecha de publicación",
+      "info": "Formato AAAA-MM-DD. Si la dejas vacía se usa la fecha de la tienda."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video 3D interactivo"
+    }
+  ]
+}
+{% endschema %}

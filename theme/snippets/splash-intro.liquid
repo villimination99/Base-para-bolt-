@@ -1,0 +1,150 @@
+{%- comment -%}
+  Intro "Pulso". Se muestra una vez por sesión y, por defecto, solo en la
+  portada, para que nunca tape una página a la que el visitante ha ido a
+  propósito.
+
+  La secuencia la dibuja assets/intro.js en #splash-canvas, en cuatro tiempos
+  que duran 2,4 s en total:
+
+    1. El monitor se enciende: la línea base sale del centro hacia los bordes.
+    2. Un electrocardiograma de verdad (onda P, complejo QRS y onda T) cruza
+       la pantalla, y el cabezal frena a cámara lenta justo en el complejo QRS.
+    3. En el pico R la línea revienta: destello, dos ondas de choque y unos
+       arcos de carga que suben del pico al anillo del emblema.
+    4. Las partículas se reagrupan en el anillo, se enlazan entre vecinas y un
+       barrido cierra el círculo. Después se quedan respondiendo al dedo o al
+       ratón como imanes.
+
+  La línea base está colocada para que la punta del pico R quede justo debajo
+  del anillo: el estallido ocurre en la puerta del emblema y por eso las
+  partículas casi no tienen que viajar para formarlo.
+
+  Una intro es un peaje que el visitante paga antes de ver la tienda, así que
+  hay DOS formas de saltarla desde el primer fotograma: el enlace "saltar" de
+  la esquina, que no espera a ninguna animación, y la tecla Escape. El botón
+  grande de entrar aparece cuando la secuencia termina.
+{%- endcomment -%}
+<div id="splash-intro" class="splash-intro" data-splash data-duracion="{{ settings.splash_duracion | default: 'completa' }}" {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
+  <div class="splash-bg"></div>
+  {%- if settings.splash_fondo != blank -%}
+    {%- comment -%}
+      La sala de verdad, detras de la animacion, con la camara entrando.
+
+      El recorte lo hace Shopify en su CDN, no el navegador: se le pide una
+      proporcion mas ancha que la del original anclada arriba, asi que se
+      queda con la parte de arriba y CORTA la franja de abajo, que es justo
+      donde los bancos de imagenes y los generadores estampan su marca. El
+      comerciante puede subir la foto tal cual, sin recortarla antes.
+
+      Se carga sin prioridad y la secuencia NO la espera: el lienzo empieza a
+      pintar igual desde el primer fotograma, y si la foto tarda o no llega,
+      la intro sigue siendo exactamente la de antes.
+    {%- endcomment -%}
+    <div class="splash-escena" aria-hidden="true">
+      <img class="splash-escena-img" data-splash-escena
+           src="{{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }}"
+           srcset="{{ settings.splash_fondo | image_url: width: 640, height: 1013, crop: 'top' }} 640w,
+                   {{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }} 900w,
+                   {{ settings.splash_fondo | image_url: width: 1400, height: 2217, crop: 'top' }} 1400w"
+           sizes="100vw" width="900" height="1425"
+           alt="" loading="eager" decoding="async">
+    </div>
+  {%- endif -%}
+  <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>
+  <div class="splash-particles" aria-hidden="true">
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+    <div class="splash-particle"></div><div class="splash-particle"></div><div class="splash-particle"></div>
+  </div>
+  {%- comment -%} Grano de pelicula y el destello del corte al salir. {%- endcomment -%}
+  <span class="splash-grano" aria-hidden="true"></span>
+  <span class="splash-corte" aria-hidden="true"></span>
+  <button class="splash-skip" type="button" data-splash-skip>{{ 'general.skip' | t }}</button>
+
+  <div class="splash-content">
+    <div class="splash-emblem">
+      {%- comment -%}
+        UN halo y UN anillo. Antes habia cinco piezas concentricas -- dos
+        halos, dos anillos que latian y el anillo de trazos -- peleandose por
+        el mismo sitio justo cuando aparece el logotipo, que es el momento en
+        que la mirada tiene que ir a la marca y a nada mas. Tambien se quito la
+        barra de progreso: fingia que algo estaba cargando cuando no carga nada.
+      {%- endcomment -%}
+      <span class="splash-halo splash-halo-1" aria-hidden="true"></span>
+      <span class="splash-ring" aria-hidden="true">
+        <svg viewBox="0 0 200 200" fill="none">
+          <defs><linearGradient id="splash-rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="{{ settings.color_cyan }}"/><stop offset="33%" stop-color="{{ settings.color_purple }}"/><stop offset="66%" stop-color="{{ settings.color_pink }}"/><stop offset="100%" stop-color="{{ settings.color_cyan }}"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="96" stroke="url(#splash-rg)" stroke-width="2" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.75"/>
+        </svg>
+      </span>
+      {%- comment -%}
+        Dentro del círculo va SIEMPRE el monograma, nunca el logotipo. El
+        logotipo de la tienda es apaisado y, metido en un círculo con
+        object-fit:contain, salía diminuto: se quedaba con la altura que le
+        permitiera el ancho del círculo. El logotipo de verdad va abajo, a lo
+        ancho y a tamaño legible, que es donde se lee.
+      {%- endcomment -%}
+      <span class="splash-core"><span class="splash-mono">VI</span></span>
+    </div>
+
+    {%- comment -%}
+      Un solo h1. Si hay logotipo, es la imagen (con el nombre de la tienda
+      como texto alternativo, así que para un lector de pantalla y para un
+      buscador dice exactamente lo mismo). Si no lo hay, el texto de siempre.
+    {%- endcomment -%}
+    {%- if settings.logo != blank -%}
+      <h1 class="splash-title splash-title--logo">
+        <img class="splash-logotipo"
+             src="{{ settings.logo | image_url: width: 900 }}"
+             srcset="{{ settings.logo | image_url: width: 450 }} 450w, {{ settings.logo | image_url: width: 900 }} 900w"
+             sizes="(max-width: 749px) 78vw, 420px"
+             width="{{ settings.logo.width | default: 900 }}"
+             height="{{ settings.logo.height | default: 200 }}"
+             alt="{{ shop.name | escape }}" loading="eager" decoding="async" fetchpriority="high">
+      </h1>
+    {%- elsif settings.splash_title != blank -%}
+      <h1 class="splash-title">{{ settings.splash_title }}</h1>
+    {%- endif -%}
+    {%- if settings.splash_tagline != blank -%}
+      <p class="splash-tagline">{{ settings.splash_tagline }}</p>
+    {%- endif -%}
+
+    {%- comment -%}
+      Frases de motivación. Van en HTML y no pintadas en el lienzo: así son
+      nítidas a cualquier resolución, se traducen, se seleccionan y las lee un
+      lector de pantalla. aria-hidden porque durante la secuencia son
+      decorativas: lo que importa anunciar es el título y el botón de entrar.
+      assets/intro.js va marcando cuál toca con data-frase.
+    {%- endcomment -%}
+    {%- assign frases = settings.splash_frases | newline_to_br | split: '<br />' -%}
+    {%- if settings.splash_frases != blank -%}
+      <div class="splash-frases" data-splash-frases aria-hidden="true">
+        {%- for f in frases limit: 3 -%}
+          {%- assign texto = f | strip -%}
+          {%- if texto != blank -%}
+            {%- comment -%}
+              El texto va entero, sin partirlo en palabras. Antes cada palabra
+              salia de su propia mascara con un retardo, y en movimiento estaba
+              bien, pero en cualquier fotograma congelado se veia texto a medio
+              salir y parecia roto. Ademas la mascara cortaba los acentos de las
+              mayusculas. Ahora entra el bloque completo, que es como aparece un
+              subtitulo en una pelicula.
+            {%- endcomment -%}
+            <p class="splash-frase" data-i="{{ forloop.index0 }}">{{ texto }}</p>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <button id="splash-enter" class="splash-enter-btn" type="button">
+      <span>{{ 'general.enter' | t }}</span>
+      {%- render 'icon', name: 'arrow-right' -%}
+    </button>
+  </div>
+</div>
+
+{%- comment -%}
+  Sin defer: la intro es lo PRIMERO que se ve y su lienzo tiene que empezar a
+  pintar cuanto antes. Son doce kilobytes y solo se cargan cuando la intro
+  está activa, así que no compite con nada del resto de la tienda.
+{%- endcomment -%}
+<script src="{{ 'intro.js' | asset_url }}"></script>

@@ -1,0 +1,77 @@
+<section class="section-padding" id="plans">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-green">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="plans-grid">
+      {%- for block in section.blocks -%}
+        {%- assign accent = block.settings.accent -%}
+        <div class="plan-card{% if block.settings.featured %} plan-card--featured{% endif %}" style="--accent:{{ accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          {%- if block.settings.featured and block.settings.badge != blank -%}
+            <span class="plan-badge">{{ block.settings.badge }}</span>
+          {%- endif -%}
+          <div class="plan-head">
+            <h3 class="plan-name">{{ block.settings.name }}</h3>
+            {%- if block.settings.tagline != blank -%}<span class="plan-tagline">{{ block.settings.tagline }}</span>{%- endif -%}
+          </div>
+          <div class="plan-price">
+            <span class="plan-price-amount">{{ block.settings.price }}</span>
+            {%- if block.settings.period != blank -%}<span class="plan-price-period">{{ block.settings.period }}</span>{%- endif -%}
+          </div>
+          {%- if block.settings.features != blank -%}
+            {%- comment -%}
+              El ajuste es de tipo richtext, así que ya trae su propio <ul> o
+              sus <p>. Envolverlo en otro <ul> producía una lista dentro de una
+              lista sin <li> intermedio: HTML inválido que los lectores de
+              pantalla anuncian mal. El contenedor pasa a ser un <div>.
+            {%- endcomment -%}
+            <div class="plan-features rte">{{ block.settings.features }}</div>
+          {%- endif -%}
+          <a href="{{ block.settings.button_url | default: routes.all_products_collection_url }}" class="btn {% if block.settings.featured %}btn-primary{% else %}btn-outline{% endif %} btn-block">{{ block.settings.button_label | default: 'Suscribirme' }}</a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Planes de suscripción",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Membresía Mensual" },
+    { "type": "text", "id": "title", "label": "Título", "default": "PLANES DIETARIOS" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Suscríbete y obtén acceso inmediato a planes de nutrición personalizados." }
+  ],
+  "blocks": [
+    {
+      "type": "plan",
+      "name": "Plan",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Nombre", "default": "Básico" },
+        { "type": "text", "id": "tagline", "label": "Descripción corta", "default": "Volumen Limpio" },
+        { "type": "text", "id": "price", "label": "Precio", "default": "$9.99" },
+        { "type": "text", "id": "period", "label": "Periodo", "default": "/mes" },
+        { "type": "richtext", "id": "features", "label": "Características (lista)", "default": "<ul><li>Plan de volumen</li><li>Macros optimizados</li><li>Lista de compras semanal</li></ul>" },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00e87b" },
+        { "type": "checkbox", "id": "featured", "label": "Destacado", "default": false },
+        { "type": "text", "id": "badge", "label": "Etiqueta de destacado", "default": "Más Popular" },
+        { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "Suscribirme" },
+        { "type": "url", "id": "button_url", "label": "Enlace del botón" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Planes de suscripción",
+      "blocks": [
+        { "type": "plan", "settings": { "name": "Básico", "price": "$9.99", "accent": "#00e87b" } },
+        { "type": "plan", "settings": { "name": "Pro", "price": "$19.99", "accent": "#00d4ff", "featured": true } },
+        { "type": "plan", "settings": { "name": "Elite", "price": "$39.99", "accent": "#ff7700" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

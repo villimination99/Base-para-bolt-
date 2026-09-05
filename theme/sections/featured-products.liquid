@@ -1,0 +1,92 @@
+<section class="section-padding fp-section" id="products" style="--sec-neon:{{ section.settings.neon_color | default: '#00d4ff' }};">
+  <span class="fp-orb fp-orb--1" aria-hidden="true"></span>
+  <span class="fp-orb fp-orb--2" aria-hidden="true"></span>
+  <div class="container">
+    <div class="section-head section-head--fancy" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="fancy-eyebrow">{%- render 'icon', name: 'bolt' -%}{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="section-title neon-underline">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    {%- comment -%}
+      Sin coleccion elegida se usa el catalogo entero, igual que hacen
+      "Mas vendidos" y los dos carruseles 3D. Antes esta seccion era la unica
+      que pintaba cuatro tarjetas de "Producto de ejemplo": en una tienda en
+      vivo con productos reales, eso salia publicado tal cual. Las tarjetas de
+      ejemplo se reservan para el unico caso en que tienen sentido, que es una
+      tienda que todavia no ha creado ningun producto.
+    {%- endcomment -%}
+    {%- assign coll = section.settings.collection -%}
+    {%- if coll == blank or coll.products_count == 0 -%}
+      {%- assign coll = collections.all -%}
+    {%- endif -%}
+    {%- comment -%}
+      El if va anidado a proposito. Liquid evalua de derecha a izquierda, asi
+      que "coll != blank and coll.products_count > 0" haria la comparacion
+      ANTES de comprobar que coll existe, y nil > 0 es un error de Liquid que
+      sale impreso en la tienda. Anidando, la guarda se cumple de verdad.
+    {%- endcomment -%}
+    {%- assign hay_productos = false -%}
+    {%- if coll != blank -%}
+      {%- if coll.products_count > 0 -%}{%- assign hay_productos = true -%}{%- endif -%}
+    {%- endif -%}
+    {%- capture product_cards -%}
+      {%- if hay_productos -%}
+        {%- for product in coll.products limit: section.settings.limit -%}
+          {%- if section.settings.layout == 'carousel' -%}<div class="carousel-slide">{%- endif -%}
+          {%- render 'product-card', product: product -%}
+          {%- if section.settings.layout == 'carousel' -%}</div>{%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          {%- if section.settings.layout == 'carousel' -%}<div class="carousel-slide">{%- endif -%}
+          <div class="product-card">
+            <div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div>
+            <div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div>
+          </div>
+          {%- if section.settings.layout == 'carousel' -%}</div>{%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="fp-stage">
+        <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+          <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+          <div class="carousel-track" data-carousel-track style="--card-w:270px;">{{ product_cards }}</div>
+          <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="product-grid">{{ product_cards }}</div>
+    {%- endif -%}
+
+    {%- if section.settings.show_view_all and coll != blank -%}
+      <div class="section-cta">
+        <a href="{{ coll.url }}" class="btn btn-outline btn-lg">{{ section.settings.view_all_label }}{%- render 'icon', name: 'arrow-right' -%}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Productos destacados",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Nuestra Tienda" },
+    { "type": "text", "id": "title", "label": "Título", "default": "PRODUCTOS ELITE" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman." },
+    { "type": "collection", "id": "collection", "label": "Colección" },
+    { "type": "range", "id": "limit", "min": 2, "max": 12, "step": 1, "label": "Número de productos", "default": 8 },
+    { "type": "select", "id": "layout", "label": "Presentación", "options": [
+      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 0 },
+    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar botón 'ver todo'", "default": true },
+    { "type": "color", "id": "neon_color", "label": "Color del neón de la sección", "default": "#00d4ff" },
+    { "type": "text", "id": "view_all_label", "label": "Texto del botón", "default": "Ver toda la tienda" }
+  ],
+  "presets": [{ "name": "Productos destacados" }]
+}
+{% endschema %}

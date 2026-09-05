@@ -1,0 +1,165 @@
+<section class="section-padding article-main">
+  <div class="container container--narrow">
+    {%- comment -%}
+      Migas de pan visibles: además de orientar al lector, son la ruta que
+      Google muestra bajo el título en los resultados.
+    {%- endcomment -%}
+    <nav class="collection-crumbs article-crumbs" aria-label="breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+    </nav>
+
+    <article>
+      <header class="article-header" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <div class="article-meta">
+          <span class="article-card-date">{{ article.published_at | date: '%d %b, %Y' }}</span>
+          {%- comment -%}
+            Tiempo de lectura estimado a 200 palabras por minuto. Da al lector
+            una idea del compromiso antes de empezar, y reduce el rebote.
+          {%- endcomment -%}
+          {%- assign word_count = article.content | strip_html | split: ' ' | size -%}
+          {%- assign read_min = word_count | divided_by: 200 | plus: 1 -%}
+          <span class="article-readtime">{%- render 'icon', name: 'bolt' -%} {{ 'blogs.article.reading_time' | t: minutes: read_min }}</span>
+        </div>
+        <h1 class="section-title">{{ article.title }}</h1>
+        {%- if article.author != blank -%}<p class="article-author">{{ 'blogs.article.by' | t }} {{ article.author }}</p>{%- endif -%}
+      </header>
+      {%- if article.image -%}
+        <div class="article-hero-media">
+          {%- comment -%}
+            height="800" estaba fijo: con imágenes que no fueran 1400x800 el
+            navegador reservaba un alto equivocado y la página saltaba (CLS).
+          {%- endcomment -%}
+          <img src="{{ article.image | image_url: width: 1400 }}"
+               srcset="{{ article.image | image_url: width: 600 }} 600w,
+                       {{ article.image | image_url: width: 900 }} 900w,
+                       {{ article.image | image_url: width: 1400 }} 1400w"
+               sizes="(min-width: 1000px) 900px, 100vw"
+               alt="{{ article.title | escape }}"
+               width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}" loading="eager">
+        </div>
+      {%- endif -%}
+      <div class="rte article-content">{{ article.content }}</div>
+
+      {%- if article.tags.size > 0 -%}
+        <div class="article-tags">
+          <span class="article-tags-label">{{ 'blogs.article.tags' | t }}</span>
+          {%- for tag in article.tags -%}
+            <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-tag">{{ tag }}</a>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%}
+        Compartir sin scripts de terceros: son enlaces normales, así que no
+        cargan nada, no rastrean a nadie y funcionan sin JavaScript.
+      {%- endcomment -%}
+      {%- assign share_url = shop.url | append: article.url | url_encode -%}
+      {%- assign share_title = article.title | url_encode -%}
+      <div class="article-share">
+        <span class="article-share-label">{{ 'blogs.article.share' | t }}</span>
+        <a class="article-share-btn" href="https://wa.me/?text={{ share_title }}%20{{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_wa' | t }}">{%- render 'icon', name: 'whatsapp' -%}</a>
+        <a class="article-share-btn" href="https://x.com/intent/tweet?text={{ share_title }}&url={{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_x' | t }}">{%- render 'icon', name: 'x' -%}</a>
+        <a class="article-share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener nofollow" aria-label="{{ 'blogs.article.share_fb' | t }}">{%- render 'icon', name: 'facebook' -%}</a>
+        <button type="button" class="article-share-btn" data-copy-code data-code="{{ shop.url }}{{ article.url }}" aria-label="{{ 'blogs.article.copy_link' | t }}">
+          {%- render 'icon', name: 'link' -%}<span class="nl-code-hint visually-hidden">{{ 'blogs.article.copy_link' | t }}</span>
+        </button>
+      </div>
+    </article>
+
+    {%- if blog.comments_enabled? -%}
+      {%- comment -%}
+        El id "comments" es el ancla a la que Shopify devuelve al visitante
+        después de enviar un comentario.
+      {%- endcomment -%}
+      <div class="article-comments" id="comments">
+        {%- if article.comments_count > 0 -%}
+          <h2>{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+          {%- for comment in article.comments -%}
+            <div class="comment">
+              <p class="comment-body">{{ comment.content }}</p>
+              <span class="comment-author">— {{ comment.author }}</span>
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <p class="comment-none">{{ 'blogs.article.no_comments' | t }}</p>
+        {%- endif -%}
+
+        {%- comment -%}
+          Faltaba por completo el formulario: los comentarios se mostraban pero
+          nadie podía escribir ninguno, así que activar los comentarios en
+          Shopify no servía de nada.
+        {%- endcomment -%}
+        <h2 class="comment-form-title">{{ 'blogs.article.comment_title' | t }}</h2>
+        {%- form 'new_comment', article, class: 'customer-form comment-form' -%}
+          {%- if form.errors -%}
+            <div class="form-errors" role="alert">
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form-success" role="status">
+              {%- if blog.moderated? -%}
+                {{ 'blogs.article.comment_moderated' | t }}
+              {%- else -%}
+                {{ 'blogs.article.comment_success' | t }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+          <label for="CommentAuthor">{{ 'blogs.article.comment_name' | t }}</label>
+          <input type="text" name="comment[author]" id="CommentAuthor" autocomplete="name" required value="{{ form.author }}">
+          <label for="CommentEmail">{{ 'blogs.article.comment_email' | t }}</label>
+          <input type="email" name="comment[email]" id="CommentEmail" autocomplete="email" required value="{{ form.email }}">
+          <label for="CommentBody">{{ 'blogs.article.comment_message' | t }}</label>
+          <textarea name="comment[body]" id="CommentBody" rows="5" required>{{ form.body }}</textarea>
+          <button type="submit" class="btn btn-primary">{{ 'blogs.article.comment_submit' | t }}</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+    {%- comment -%}
+      Artículos relacionados: mantienen al lector dentro y crean enlaces
+      internos entre artículos, que es de lo que más ayuda a que Google entienda
+      la estructura del blog. Se excluye el artículo actual y se limita a 3.
+    {%- endcomment -%}
+    {%- assign related_shown = 0 -%}
+    {%- capture related_html -%}
+      {%- for art in blog.articles -%}
+        {%- if art.id != article.id and related_shown < 3 -%}
+          <a href="{{ art.url }}" class="article-card">
+            {%- if art.image -%}
+              <div class="article-card-media">
+                <img src="{{ art.image | image_url: width: 700, height: 450, crop: 'center' }}"
+                     srcset="{{ art.image | image_url: width: 300, height: 193, crop: 'center' }} 300w,
+                             {{ art.image | image_url: width: 700, height: 450, crop: 'center' }} 700w"
+                     sizes="(min-width: 861px) 33vw, 100vw"
+                     alt="{{ art.title | escape }}" width="700" height="450" loading="lazy">
+              </div>
+            {%- endif -%}
+            <div class="article-card-body">
+              <span class="article-card-date">{{ art.published_at | date: '%d %b, %Y' }}</span>
+              <h3 class="article-card-title">{{ art.title }}</h3>
+            </div>
+          </a>
+          {%- assign related_shown = related_shown | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- if related_shown > 0 -%}
+      <div class="article-related">
+        <h2 class="section-title">{{ 'blogs.article.related' | t }}</h2>
+        <div class="article-grid">{{ related_html }}</div>
+      </div>
+    {%- endif -%}
+
+    <a href="{{ blog.url }}" class="customer-link article-back">&larr; {{ 'blogs.article.back_to_blog' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Artículo", "settings": [] }
+{% endschema %}

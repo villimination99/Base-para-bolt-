@@ -1,0 +1,120 @@
+{%- comment -%} Rendered inside the cart drawer and re-fetched after AJAX cart updates. {%- endcomment -%}
+{%- if cart.item_count > 0 -%}
+  {%- render 'free-shipping-bar' -%}
+  <ul class="cart-drawer-items" role="list">
+    {%- for item in cart.items -%}
+      <li class="cart-drawer-item" data-key="{{ item.key }}">
+        <a href="{{ item.url }}" class="cart-drawer-item-media">
+          {%- if item.image -%}
+            <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="72" height="72" loading="lazy">
+          {%- else -%}
+            <span class="cart-drawer-item-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+          {%- endif -%}
+        </a>
+        <div class="cart-drawer-item-info">
+          <a href="{{ item.url }}" class="cart-drawer-item-title">{{ item.product.title }}</a>
+          {%- unless item.variant.title contains 'Default' -%}
+            <p class="cart-drawer-item-variant">{{ item.variant.title }}</p>
+          {%- endunless -%}
+          {%- comment -%} Propiedades personalizadas (grabado, talla a medida…) {%- endcomment -%}
+          {%- for prop in item.properties -%}
+            {%- unless prop.last == blank or prop.first[0] == '_' -%}
+              <p class="cart-item-prop">{{ prop.first }}: {{ prop.last }}</p>
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- comment -%} Descuentos aplicados a esta línea: sin esto el cupón era invisible {%- endcomment -%}
+          {%- for allocation in item.line_level_discount_allocations -%}
+            <p class="cart-item-discount">{%- render 'icon', name: 'bolt' -%} {{ allocation.discount_application.title }} (&minus;{{ allocation.amount | money }})</p>
+          {%- endfor -%}
+          <div class="cart-drawer-qty" data-qty>
+            <button type="button" data-qty-down aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
+            <input type="number" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.product.quantity' | t }}" data-qty-input data-key="{{ item.key }}">
+            <button type="button" data-qty-up aria-label="{{ 'products.product.increase' | t }}">&plus;</button>
+          </div>
+        </div>
+        <div class="cart-drawer-item-right">
+          <span class="cart-drawer-item-price">
+            {%- if item.original_line_price > item.final_line_price -%}
+              <s class="cart-price-was">{{ item.original_line_price | money }}</s>
+            {%- endif -%}
+            {{ item.final_line_price | money }}
+          </span>
+          <button type="button" class="cart-drawer-item-remove" data-key="{{ item.key }}" aria-label="{{ 'cart.general.remove' | t }}">
+            {%- render 'icon', name: 'trash' -%}
+          </button>
+        </div>
+      </li>
+    {%- endfor -%}
+  </ul>
+  {%- comment -%} Cross-sell: recomendaciones de la colección del primer artículo {%- endcomment -%}
+  {%- if settings.cart_cross_sell -%}
+    {%- assign xs_col = cart.items.first.product.collections.first -%}
+    {%- if xs_col and xs_col.products_count > 1 -%}
+      {%- assign xs_shown = 0 -%}
+      {%- capture xs_html -%}
+        {%- for xp in xs_col.products -%}
+          {%- if xs_shown < 2 -%}
+            {%- assign in_cart = false -%}
+            {%- for ci in cart.items -%}{%- if ci.product.id == xp.id -%}{%- assign in_cart = true -%}{%- endif -%}{%- endfor -%}
+            {%- if in_cart == false and xp.available -%}
+              <li class="xs-item">
+                <a href="{{ xp.url }}" class="xs-media">
+                  {%- if xp.featured_media -%}
+                    <img src="{{ xp.featured_media | image_url: width: 120 }}" alt="{{ xp.title | escape }}" width="52" height="52" loading="lazy">
+                  {%- endif -%}
+                </a>
+                <div class="xs-info">
+                  <a href="{{ xp.url }}" class="xs-title">{{ xp.title }}</a>
+                  <span class="xs-price">{{ xp.price | money }}</span>
+                </div>
+                <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" data-quick-add>
+                  <input type="hidden" name="id" value="{{ xp.selected_or_first_available_variant.id }}">
+                  <button type="submit" class="xs-add" aria-label="{{ 'products.product.add_to_cart' | t }}: {{ xp.title | escape }}">+</button>
+                </form>
+              </li>
+              {%- assign xs_shown = xs_shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- if xs_shown > 0 -%}
+        <div class="cart-xs">
+          <p class="cart-xs-head">{%- render 'icon', name: 'bolt' -%} {{ settings.cart_cross_sell_title | default: 'Completa tu compra' }}</p>
+          <ul class="cart-xs-list" role="list">{{ xs_html }}</ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  <div class="cart-drawer-foot">
+    {%- comment -%}
+      Descuentos de carrito completo. Antes solo se veía el total ya rebajado,
+      sin ninguna señal de que el cupón hubiera funcionado.
+    {%- endcomment -%}
+    {%- for discount in cart.cart_level_discount_applications -%}
+      <div class="cart-discount-row">
+        <span>{%- render 'icon', name: 'bolt' -%} {{ discount.title }}</span>
+        <span>&minus;{{ discount.total_allocated_amount | money }}</span>
+      </div>
+    {%- endfor -%}
+    <div class="cart-drawer-subtotal">
+      <span>{{ 'cart.general.subtotal' | t }}</span>
+      <span class="cart-drawer-subtotal-amount">
+        {%- if cart.original_total_price > cart.total_price -%}
+          <s class="cart-price-was">{{ cart.original_total_price | money }}</s>
+        {%- endif -%}
+        {{ cart.total_price | money }}
+      </span>
+    </div>
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn-primary btn-block">{{ 'cart.general.checkout' | t }}</button>
+    </form>
+    <a href="{{ routes.cart_url }}" class="cart-drawer-viewcart">{{ 'cart.general.view_cart' | t }}</a>
+  </div>
+{%- else -%}
+  <div class="cart-drawer-empty">
+    {%- render 'icon', name: 'cart' -%}
+    <p>{{ 'cart.general.empty' | t }}</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn-outline" data-cart-drawer-close>{{ 'general.shop' | t }}</a>
+  </div>
+{%- endif -%}

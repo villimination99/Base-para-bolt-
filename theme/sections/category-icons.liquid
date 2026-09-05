@@ -1,0 +1,65 @@
+{%- comment -%}
+  Categorías con iconos grandes sobre fondo degradado. Estático, ligero.
+{%- endcomment -%}
+<section class="section-padding" style="--sec-neon:{{ section.settings.neon_color }};">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        <h2 class="section-title {% if section.settings.neon_style != 'none' %}neon-underline{% endif %}">{{ section.settings.title }}</h2>
+      </div>
+    {%- endif -%}
+    <div class="caticons">
+      {%- for block in section.blocks -%}
+        {%- assign coll = block.settings.collection -%}
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}"
+           class="caticons-card {% if section.settings.neon_style == 'subtle' %}neon-soft{% endif %}"
+           style="--accent:{{ block.settings.accent }};" {{ block.shopify_attributes }}
+           {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <span class="caticons-halo" aria-hidden="true"></span>
+          <span class="caticons-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+          <span class="caticons-title">{{ block.settings.title | default: coll.title | default: 'general.collections' | t }}</span>
+          {%- if block.settings.text != blank -%}<span class="caticons-text">{{ block.settings.text }}</span>{%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorías con iconos",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Directo al grano" },
+    { "type": "text", "id": "title", "label": "Título", "default": "¿QUÉ BUSCAS HOY?" },
+    { "type": "select", "id": "neon_style", "label": "Efecto neón", "options": [
+      { "value": "none", "label": "Sin neón" }, { "value": "subtle", "label": "Sutil" } ], "default": "subtle" },
+    { "type": "color", "id": "neon_color", "label": "Color del neón", "default": "#00e87b" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" }, { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" }, { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "brain", "label": "Mente" }, { "value": "nutrition", "label": "Nutrición" },
+          { "value": "headphones", "label": "Audio" }, { "value": "trophy", "label": "Trofeo" } ], "default": "supplement" },
+        { "type": "text", "id": "title", "label": "Título (opcional)" },
+        { "type": "text", "id": "text", "label": "Texto corto" },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Categorías con iconos", "blocks": [
+      { "type": "category", "settings": { "icon": "shirt", "title": "Ropa", "text": "Viste el cambio", "accent": "#00d4ff" } },
+      { "type": "category", "settings": { "icon": "dumbbell", "title": "Equipo", "text": "Potencia real", "accent": "#ff2ecb" } },
+      { "type": "category", "settings": { "icon": "supplement", "title": "Suplementos", "text": "Rinde más", "accent": "#00e87b" } },
+      { "type": "category", "settings": { "icon": "book", "title": "Conocimiento", "text": "Mente de acero", "accent": "#ff7700" } }
+    ] }
+  ]
+}
+{% endschema %}

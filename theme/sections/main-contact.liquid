@@ -1,0 +1,29 @@
+<section class="section-padding contact-page">
+  <div class="container container--narrow">
+    <h1 class="section-title">{{ page.title }}</h1>
+    {%- if page.content != blank -%}<div class="rte page-content">{{ page.content }}</div>{%- endif -%}
+
+    {%- form 'contact', class: 'customer-form contact-form' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="form-success" role="status">{{ 'contact.form.post_success' | t }}</p>
+      {%- endif -%}
+      {{ form.errors | default_errors }}
+      {%- comment -%}
+        Los campos no conservaban lo escrito: si Shopify rechazaba el envío, el
+        visitante se encontraba el formulario en blanco y tenía que volver a
+        redactar todo el mensaje. Casi nadie lo hace dos veces.
+      {%- endcomment -%}
+      <label for="ContactName">{{ 'contact.form.name' | t }}</label>
+      <input type="text" id="ContactName" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+      <label for="ContactEmail">{{ 'contact.form.email' | t }}</label>
+      <input type="email" id="ContactEmail" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+      <label for="ContactBody">{{ 'contact.form.message' | t }}</label>
+      <textarea id="ContactBody" name="contact[body]" rows="5" required>{{ form.body }}</textarea>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'contact.form.send' | t }}</button>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Contacto", "settings": [] }
+{% endschema %}

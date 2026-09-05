@@ -1,0 +1,67 @@
+{%- comment -%}
+  Más vendidos: carrusel animado de productos top con insignias de ranking.
+  El orden lo da la colección elegida — usa la colección "all" (su orden por
+  defecto en Shopify es "Más vendidos") o cualquier colección ordenada por
+  "Más vendidos" en el admin.
+{%- endcomment -%}
+{%- liquid
+  assign src = collections.all
+  if section.settings.collection != blank
+    assign src = section.settings.collection
+  endif
+-%}
+<section class="section-padding" id="best-sellers">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title neon-underline" style="--sec-neon:{{ section.settings.neon_color }};">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="carousel card-carousel bestseller-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+      <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+      <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
+        {%- for product in src.products limit: section.settings.limit -%}
+          <div class="carousel-slide bestseller-slide">
+            <div class="bestseller-wrap">
+              {%- if section.settings.show_rank and forloop.index <= 3 -%}
+                <span class="bestseller-rank bestseller-rank--{{ forloop.index }}" aria-hidden="true">#{{ forloop.index }}</span>
+              {%- endif -%}
+              {%- render 'product-card', product: product -%}
+            </div>
+          </div>
+        {%- else -%}
+          {%- for i in (1..4) -%}
+            <div class="carousel-slide"><div class="product-card"><div class="product-card-image"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div><div class="product-card-body"><h3 class="product-card-title">{{ 'products.product.example' | t }}</h3></div></div></div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+      <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+    </div>
+
+    {%- if section.settings.show_view_all -%}
+      <div class="section-cta">
+        <a href="{{ src.url | default: routes.all_products_collection_url }}" class="btn btn-outline btn-lg">{{ 'general.view_all' | t }}{%- render 'icon', name: 'arrow-right' -%}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Más vendidos",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Lo más buscado" },
+    { "type": "text", "id": "title", "label": "Título", "default": "LOS MÁS VENDIDOS" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Lo que la comunidad no deja de comprar." },
+    { "type": "collection", "id": "collection", "label": "Colección", "info": "Déjalo vacío para usar todos los productos (orden 'Más vendidos' por defecto). Si eliges una, ponle orden 'Más vendidos' en el admin." },
+    { "type": "range", "id": "limit", "min": 4, "max": 12, "step": 1, "label": "Número de productos", "default": 8 },
+    { "type": "range", "id": "card_width", "min": 200, "max": 320, "step": 10, "unit": "px", "label": "Ancho de tarjeta", "default": 260 },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 4 },
+    { "type": "checkbox", "id": "show_rank", "label": "Insignias de ranking (#1 #2 #3)", "default": true },
+    { "type": "checkbox", "id": "show_view_all", "label": "Botón 'ver todo'", "default": true },
+    { "type": "color", "id": "neon_color", "label": "Color del neón del título", "default": "#ffd000" }
+  ],
+  "presets": [{ "name": "Más vendidos" }]
+}
+{% endschema %}

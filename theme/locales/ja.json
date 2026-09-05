@@ -1,0 +1,251 @@
+{
+  "general": {
+    "home": "ホーム",
+    "shop": "ショップ",
+    "enter": "入る",
+    "meta": {
+      "tags": "「{{ tags }}」のタグ",
+      "page": "{{ page }}ページ"
+    },
+    "404": {
+      "title": "ページが見つかりません",
+      "subtext": "お探しのページは存在しないか、移動されました。"
+    },
+    "pagination": {
+      "label": "ページ送り"
+    },
+    "search": {
+      "title": "検索",
+      "placeholder": "商品を検索…",
+      "results_with_count": "「{{ terms }}」の検索結果{{ count }}件",
+      "no_results": "「{{ terms }}」に一致する結果はありません。",
+      "no_results_short": "結果なし：",
+      "view_all": "すべての結果を見る",
+      "error": "ただいま検索できません。検索ページからお試しください。",
+      "voice": "音声で検索",
+      "listening": "聞いています…"
+    },
+    "cart": {
+      "title": "カート"
+    },
+    "newsletter": {
+      "email": "メールアドレス",
+      "submit": "登録する",
+      "success": "ご登録ありがとうございます。"
+    },
+    "footer": {
+      "rights": "All rights reserved."
+    },
+    "password_page": {
+      "password_label": "パスワード",
+      "admin_link_html": "ストアのオーナーですか？"
+    },
+    "view_all": "すべて見る",
+    "previous": "前へ",
+    "next": "次へ",
+    "language": "言語",
+    "explore": "見てみる",
+    "countdown": {
+      "days": "日",
+      "hours": "時間",
+      "minutes": "分",
+      "seconds": "秒"
+    },
+    "copy_hint": "タップしてコピー",
+    "copied": "コピーしました",
+    "video_placeholder": "テーマエディタで動画を選んでください。",
+    "play_video": "動画を再生",
+    "sequence_hint": "アニメーションの上で動かしてみて",
+    "collections": "コレクションを見る",
+    "skip": "スキップ"
+  },
+  "accessibility": {
+    "skip_to_content": "本文へスキップ",
+    "main_nav": "メインナビゲーション",
+    "menu": "メニュー",
+    "close": "閉じる",
+    "back_to_top": "トップへ戻る"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "カートに入れる",
+      "sold_out": "売り切れ",
+      "new": "新着",
+      "few_left": "残りわずか",
+      "unavailable": "取り扱いなし",
+      "quantity": "数量",
+      "increase": "数量を増やす",
+      "decrease": "数量を減らす",
+      "view_in_space": "自分の空間で見る（3D / AR）",
+      "media": "メディア",
+      "share": "シェア",
+      "example": "サンプル商品",
+      "reviews": "件のレビュー",
+      "drag_to_rotate": "ドラッグで回転"
+    },
+    "recommendations": {
+      "related": "こちらもおすすめ",
+      "complementary": "一緒に使うなら"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "コレクション",
+      "items_count": "{{ count }}点",
+      "no_matches": "商品が見つかりません",
+      "no_matches_filter": "条件に一致する商品はありません"
+    },
+    "sorting": {
+      "title": "並べ替え"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "カート",
+      "subtotal": "小計",
+      "taxes_and_shipping": "税と送料はお会計時に計算されます。",
+      "checkout": "レジに進む",
+      "update": "更新",
+      "view_cart": "カートをすべて見る",
+      "remove": "削除",
+      "empty": "カートは空です",
+      "note": "ご注文メモ"
+    },
+    "free_shipping": {
+      "remaining_html": "あと<b>{{ amount }}</b>で<span class=\"cart-ship-hl\">送料無料</span>",
+      "unlocked_html": "<b>送料無料になりました。</b>"
+    }
+  },
+  "blogs": {
+    "article": {
+      "by": "投稿者",
+      "comments": "コメント{{ count }}件",
+      "comment_title": "コメントを書く",
+      "comment_name": "お名前",
+      "comment_email": "メールアドレス",
+      "comment_message": "コメント",
+      "comment_submit": "コメントを投稿",
+      "comment_success": "コメントを公開しました。",
+      "comment_moderated": "ありがとうございます。承認され次第、公開されます。",
+      "no_comments": "まだコメントはありません。",
+      "reading_time": "読了{{ minutes }}分",
+      "tags": "タグ",
+      "share": "シェア",
+      "share_x": "Xでシェア",
+      "share_fb": "Facebookでシェア",
+      "share_wa": "WhatsAppでシェア",
+      "copy_link": "リンクをコピー",
+      "link_copied": "リンクをコピーしました",
+      "related": "続きを読む",
+      "back_to_blog": "記事一覧"
+    },
+    "general": {
+      "no_articles": "まだ記事がありません。",
+      "featured": "注目",
+      "filter_tag": "絞り込み：",
+      "clear_filter": "すべて見る"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "マイアカウント",
+      "details": "アカウント情報",
+      "view_addresses": "住所を見る",
+      "return": "アカウントに戻る",
+      "log_out": "ログアウト",
+      "no_address": "登録された住所はまだありません。"
+    },
+    "login": {
+      "title": "ログイン",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "sign_in": "ログイン",
+      "forgot_password": "パスワードをお忘れですか？",
+      "no_account": "初めてのお客様ですか？"
+    },
+    "orders": {
+      "title": "注文履歴",
+      "order_number": "注文",
+      "date": "日付",
+      "total": "合計",
+      "fulfillment_status": "状況",
+      "none": "ご注文はまだありません。"
+    },
+    "order": {
+      "title": "注文 {{ name }}",
+      "date": "{{ date }}に注文",
+      "product": "商品",
+      "quantity": "数量",
+      "total": "合計",
+      "subtotal": "小計",
+      "shipping": "送料",
+      "tax": "税",
+      "status": "状況",
+      "payment": "支払い",
+      "shipping_address": "お届け先"
+    },
+    "register": {
+      "title": "アカウント作成",
+      "first_name": "名",
+      "last_name": "姓",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "submit": "作成",
+      "has_account": "すでにアカウントをお持ちですか？"
+    },
+    "recover_password": {
+      "email": "メールアドレス",
+      "submit": "パスワードを再設定",
+      "success": "パスワード再設定用のリンクをメールでお送りしました。",
+      "title": "パスワードの再設定"
+    },
+    "reset_password": {
+      "title": "パスワードの再設定",
+      "password": "新しいパスワード",
+      "password_confirm": "パスワードの確認",
+      "submit": "再設定"
+    },
+    "activate_account": {
+      "title": "アカウントの有効化",
+      "password": "パスワード",
+      "password_confirm": "パスワードの確認",
+      "submit": "有効にする",
+      "decline": "辞退する"
+    },
+    "addresses": {
+      "title": "住所",
+      "add_new": "住所を追加",
+      "first_name": "名",
+      "last_name": "姓",
+      "address1": "住所",
+      "city": "市区町村",
+      "country": "国",
+      "province": "都道府県 / 地域",
+      "zip": "郵便番号",
+      "phone": "電話番号",
+      "add": "住所を追加",
+      "edit": "編集"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "ギフトカード",
+      "subtext": "ギフトカードをお届けします。",
+      "shop_link": "ショップへ",
+      "expired": "このギフトカードは有効期限が切れています。",
+      "expires_on": "有効期限 {{ date }}",
+      "disabled": "このギフトカードは現在ご利用いただけません。",
+      "remaining": "{{ initial }}のうち{{ balance }}が残っています",
+      "code_label": "カード番号"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "お名前",
+      "email": "メールアドレス",
+      "message": "メッセージ",
+      "send": "送信",
+      "post_success": "ありがとうございます。追ってご連絡します。"
+    }
+  }
+}

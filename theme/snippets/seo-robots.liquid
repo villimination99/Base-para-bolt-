@@ -1,0 +1,58 @@
+{%- comment -%}
+  Instrucciones para los buscadores.
+
+  Vive en un snippet y no en el layout a proposito: el layout lo carga TODA la
+  tienda, asi que cualquier problema alli deja el sitio entero sin renderizar y
+  el editor en blanco. Aqui el riesgo queda acotado.
+
+  - max-image-preview:large permite a Google mostrar la foto grande junto al
+    resultado en vez de una miniatura. Es de lo que mas sube la tasa de clic en
+    una tienda visual, y no viene activado por defecto.
+  - Las paginas sin valor de busqueda (resultados, carrito, cuenta) se marcan
+    como noindex pero siguen rastreables, para que no compitan con las fichas de
+    producto ni gasten presupuesto de rastreo.
+
+  La lista va delimitada por comas por los dos lados y el tipo de pagina se
+  envuelve igual antes de comparar: si no, password coincidiria por accidente
+  dentro de customers/reset_password.
+{%- endcomment -%}
+{%- assign thin_pages = ',search,cart,password,customers/account,customers/login,customers/register,customers/order,customers/addresses,customers/reset_password,customers/activate_account,' -%}
+{%- assign this_page = ',' | append: request.page_type | append: ',' -%}
+{%- if thin_pages contains this_page -%}
+  <meta name="robots" content="noindex, follow">
+{%- else -%}
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{%- endif -%}
+
+{%- comment -%}
+  Verificacion de propiedad en el resto de buscadores. La de Google va en el
+  layout desde hace rondas y ahi se queda; estas viven aqui porque el layout lo
+  carga la tienda entera y cuanto menos crezca, mejor.
+
+  No es cosmetico: hasta que no verificas el dominio, ni Bing ni Yandex ni
+  Pinterest te dejan enviar el mapa del sitio ni ver por que consultas
+  apareces. Y Bing no es solo Bing: de ahi beben DuckDuckGo, Ecosia y la
+  busqueda que usa ChatGPT. Vacios = no se pinta nada.
+{%- endcomment -%}
+{%- comment -%}
+  Cada codigo pasa por codigo-verificacion, que acepta tanto el codigo suelto
+  como la etiqueta <meta> entera: es lo que ensena cada buscador y lo natural
+  es copiar la linea completa. Pegada tal cual, antes salia una etiqueta rota
+  y la verificacion fallaba sin decir por que.
+{%- endcomment -%}
+{%- capture cod_bing -%}{%- render 'codigo-verificacion', valor: settings.seo_bing_verification -%}{%- endcapture -%}
+{%- if cod_bing != blank -%}
+  <meta name="msvalidate.01" content="{{ cod_bing | escape }}">
+{%- endif -%}
+{%- capture cod_yandex -%}{%- render 'codigo-verificacion', valor: settings.seo_yandex_verification -%}{%- endcapture -%}
+{%- if cod_yandex != blank -%}
+  <meta name="yandex-verification" content="{{ cod_yandex | escape }}">
+{%- endif -%}
+{%- capture cod_pin -%}{%- render 'codigo-verificacion', valor: settings.seo_pinterest_verification -%}{%- endcapture -%}
+{%- if cod_pin != blank -%}
+  <meta name="p:domain_verify" content="{{ cod_pin | escape }}">
+{%- endif -%}
+{%- capture cod_meta -%}{%- render 'codigo-verificacion', valor: settings.seo_facebook_domain -%}{%- endcapture -%}
+{%- if cod_meta != blank -%}
+  <meta name="facebook-domain-verification" content="{{ cod_meta | escape }}">
+{%- endif -%}

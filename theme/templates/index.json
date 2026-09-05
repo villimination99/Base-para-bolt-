@@ -1,0 +1,636 @@
+{
+  "sections": {
+    "heroshader": {
+      "type": "hero-shader",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "w1": {
+          "type": "word",
+          "settings": {
+            "text": "FUERZA"
+          }
+        },
+        "w2": {
+          "type": "word",
+          "settings": {
+            "text": "DISCIPLINA"
+          }
+        },
+        "w3": {
+          "type": "word",
+          "settings": {
+            "text": "PODER"
+          }
+        },
+        "w4": {
+          "type": "word",
+          "settings": {
+            "text": "SIN LÍMITES"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {}
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "icon": "cube",
+            "stat": "-40%",
+            "title": "Menos devoluciones",
+            "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar.",
+            "accent": "#00d4ff"
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "icon": "bolt",
+            "stat": "+94%",
+            "title": "Más conversiones",
+            "text": "La experiencia inmersiva multiplica las ventas.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "icon": "check",
+            "stat": "24/7",
+            "title": "Soporte real",
+            "text": "Estamos contigo en cada paso.",
+            "accent": "#00e87b"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {}
+    },
+    "vip": {
+      "type": "vip-banner",
+      "blocks": {
+        "t1": {
+          "type": "tool",
+          "settings": {
+            "title": "Mapa Muscular 3D",
+            "text": "Toca un músculo y ve sus ejercicios",
+            "icon": "body3d"
+          }
+        },
+        "t2": {
+          "type": "tool",
+          "settings": {
+            "title": "Entrenamiento",
+            "text": "27 ejercicios con calorías reales",
+            "icon": "dumbbell"
+          }
+        },
+        "t3": {
+          "type": "tool",
+          "settings": {
+            "title": "Nutrición IA",
+            "text": "Escanea tu plato con la cámara",
+            "icon": "camera"
+          }
+        },
+        "t4": {
+          "type": "tool",
+          "settings": {
+            "title": "Planes Dietarios",
+            "text": "4 planes · menús todo el año",
+            "icon": "calendar"
+          }
+        },
+        "t5": {
+          "type": "tool",
+          "settings": {
+            "title": "Meditación",
+            "text": "Respiración guiada + 21 días",
+            "icon": "meditation"
+          }
+        },
+        "t6": {
+          "type": "tool",
+          "settings": {
+            "title": "Frecuencias",
+            "text": "Solfeggio, binaurales y duales",
+            "icon": "headphones"
+          }
+        },
+        "t7": {
+          "type": "tool",
+          "settings": {
+            "title": "Nivel de Atleta",
+            "text": "De Principiante a Predator",
+            "icon": "trophy"
+          }
+        },
+        "t8": {
+          "type": "tool",
+          "settings": {
+            "title": "Progreso y Sueño",
+            "text": "Tu salud entera en gráficos",
+            "icon": "chart"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "27",
+            "label": "Ejercicios"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "17",
+            "label": "Frecuencias"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "9",
+            "label": "Zonas 3D"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "55",
+            "label": "Alimentos"
+          }
+        },
+        "s5": {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": "Niveles"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
+      "settings": {}
+    },
+    "videos": {
+      "type": "video-grid",
+      "blocks": {
+        "v1": {
+          "type": "video",
+          "settings": {
+            "video_id": "B6f4OevcqJg"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "video_id": "f7AvjOoxSPY"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "video_id": "PD0ode222Ps"
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "video_id": "1Rj5Q52xhx8"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {
+        "button_url": "https://www.youtube.com/@villumination99/shorts"
+      }
+    },
+    "plans": {
+      "type": "subscription-plans",
+      "blocks": {
+        "p1": {
+          "type": "plan",
+          "settings": {
+            "name": "Básico",
+            "tagline": "Volumen Limpio",
+            "price": "$9.99",
+            "accent": "#00e87b"
+          }
+        },
+        "p2": {
+          "type": "plan",
+          "settings": {
+            "name": "Pro",
+            "tagline": "Definición + Volumen",
+            "price": "$19.99",
+            "accent": "#00d4ff",
+            "featured": true
+          }
+        },
+        "p3": {
+          "type": "plan",
+          "settings": {
+            "name": "Elite",
+            "tagline": "Full Coaching",
+            "price": "$39.99",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "El mejor cambio que hice. Resultados en semanas.",
+            "name": "Alex R.",
+            "role": "Cliente verificado"
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Los planes de dieta son oro puro. Recomendado.",
+            "name": "María G.",
+            "role": "Miembro Pro"
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Calidad brutal y envío rapidísimo.",
+            "name": "Diego M.",
+            "role": "Cliente verificado"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Cuánto tarda el envío?",
+            "answer": "<p>Entre 3 y 7 días hábiles.</p>"
+          }
+        },
+        "f2": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Puedo cancelar mi suscripción?",
+            "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+          }
+        },
+        "f3": {
+          "type": "qa",
+          "settings": {
+            "question": "¿Los productos tienen garantía?",
+            "answer": "<p>Todos incluyen garantía de satisfacción.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "caticons": {
+      "type": "category-icons",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "Ropa",
+            "text": "Estilo que entrena contigo.",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "Equipo",
+            "text": "Herramientas de poder.",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "Suplementos",
+            "text": "Combustible de élite.",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "Conocimiento",
+            "text": "Entrena tu mente.",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "best-sellers",
+      "settings": {}
+    },
+    "showcase3d": {
+      "type": "product-showcase-3d",
+      "settings": {}
+    },
+    "flowingmenu": {
+      "type": "flowing-menu",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "Ropa",
+            "link": "shopify://collections/ropa"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "Equipo",
+            "link": "shopify://collections/equipo"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "Suplementos",
+            "link": "shopify://collections/suplementos"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "label": "Conocimiento",
+            "link": "shopify://collections/conocimiento"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "settings": {}
+    },
+    "productcarousel3d": {
+      "type": "product-carousel-3d",
+      "settings": {}
+    },
+    "motivation": {
+      "type": "curved-carousel",
+      "blocks": {
+        "m1": {
+          "type": "slide",
+          "settings": {
+            "title": "Sin excusas, solo resultados",
+            "caption": "VILLUMINATION"
+          }
+        },
+        "m2": {
+          "type": "slide",
+          "settings": {
+            "title": "Tu única competencia eres tú de ayer",
+            "caption": "MINDSET"
+          }
+        },
+        "m3": {
+          "type": "slide",
+          "settings": {
+            "title": "La disciplina vence al talento",
+            "caption": "FUERZA"
+          }
+        },
+        "m4": {
+          "type": "slide",
+          "settings": {
+            "title": "El dolor es temporal, la gloria eterna",
+            "caption": "PODER"
+          }
+        },
+        "m5": {
+          "type": "slide",
+          "settings": {
+            "title": "Domina tu mente, domina tu cuerpo",
+            "caption": "ENFOQUE"
+          }
+        },
+        "m6": {
+          "type": "slide",
+          "settings": {
+            "title": "Cada repetición te acerca",
+            "caption": "PROGRESO"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "eyebrow": "MOTIVACIÓN",
+        "heading": "Frases que te mueven",
+        "subheading": "Arrastra para girar el anillo",
+        "card_size": "medium",
+        "hint": "Arrastra o desliza"
+      }
+    },
+    "video3d": {
+      "type": "video-3d",
+      "settings": {
+        "video_url": "",
+        "formato": "vertical",
+        "eyebrow": "EN MOVIMIENTO",
+        "title": "VIVE LA EXPERIENCIA",
+        "subtitle": "Muévete sobre el vídeo: el marco te sigue.",
+        "caption": "",
+        "accent": "#00f0ff",
+        "bg": "#05060a",
+        "height": 560,
+        "tilt": 10,
+        "blend": 60,
+        "scanlines": true,
+        "compact": false,
+        "autoplay": true,
+        "loop": true,
+        "controls": false,
+        "seo_video": true,
+        "upload_date": "",
+        "button_label": "",
+        "button_url": "",
+        "video_archivo": "https://cdn.shopify.com/s/files/1/0599/8467/4865/files/villumination-marca-v2.webm?v=1788482106",
+        "poster": "shopify://shop_images/villumination-marca-portada-v2.png"
+      }
+    },
+    "haces": {
+      "type": "haces",
+      "settings": {}
+    },
+    "secuencia": {
+      "type": "secuencia",
+      "blocks": {
+        "b1": {
+          "type": "marca",
+          "settings": {
+            "texto": "VILLUMINATION"
+          }
+        },
+        "b2": {
+          "type": "lema",
+          "settings": {
+            "linea1": "NO TE",
+            "linea2": "CONFORMES"
+          }
+        },
+        "b3": {
+          "type": "pilares",
+          "settings": {
+            "icono1": "dumbbell",
+            "titulo1": "FUERZA",
+            "sub1": "EQUIPO Y ACCESORIOS",
+            "icono2": "supplement",
+            "titulo2": "NUTRICIÓN",
+            "sub2": "SUPLEMENTOS",
+            "icono3": "book",
+            "titulo3": "CONSTANCIA",
+            "sub3": "PLANES Y CÓDICES"
+          }
+        },
+        "b4": {
+          "type": "cifra",
+          "settings": {
+            "numero": "37",
+            "pie": "PRODUCTOS · UNA SOLA META"
+          }
+        },
+        "b5": {
+          "type": "cierre",
+          "settings": {
+            "titulo": "VILLUMINATIONS.COM",
+            "boton": "VER CATÁLOGO",
+            "enlace": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {
+        "acento": "#00f0ff",
+        "fondo": "#05060a",
+        "alto": 560,
+        "duracion": 14,
+        "compacta": false
+      }
+    }
+  },
+  "order": [
+    "heroshader",
+    "marquee",
+    "secuencia",
+    "products",
+    "caticons",
+    "flowingmenu",
+    "benefits",
+    "vip",
+    "showcase3d",
+    "productcarousel3d",
+    "video3d",
+    "videos",
+    "bestsellers",
+    "plans",
+    "testimonials",
+    "motivation",
+    "haces",
+    "faq",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,99 @@
+<section class="section-padding collection-page">
+  <div class="container">
+    {%- if section.settings.show_hero -%}
+      <div class="collection-hero ntile-{{ collection.id | modulo: 4 }}{% if collection.image %} has-img{% endif %}" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if collection.image -%}
+          <img class="collection-hero-bg" src="{{ collection.image | image_url: width: 1600, height: 500, crop: 'center' }}"
+               srcset="{{ collection.image | image_url: width: 600, height: 188, crop: 'center' }} 600w,
+                       {{ collection.image | image_url: width: 900, height: 281, crop: 'center' }} 900w,
+                       {{ collection.image | image_url: width: 1200, height: 375, crop: 'center' }} 1200w,
+                       {{ collection.image | image_url: width: 1600, height: 500, crop: 'center' }} 1600w"
+               sizes="100vw"
+               alt="" width="1600" height="500" loading="eager" fetchpriority="high" decoding="async">
+        {%- else -%}
+          <span class="collection-hero-fallback" aria-hidden="true"></span>
+        {%- endif -%}
+        <span class="collection-hero-overlay" aria-hidden="true"></span>
+        <div class="collection-hero-inner">
+          <nav class="collection-crumbs" aria-label="breadcrumb">
+            <a href="{{ routes.root_url }}">{{ 'general.home' | t | default: 'Inicio' }}</a>
+            <span aria-hidden="true">/</span>
+            <a href="{{ routes.collections_url }}">{{ 'collections.general.title' | t }}</a>
+          </nav>
+          <h1 class="collection-hero-title">{{ collection.title }}</h1>
+          {%- if collection.description != blank and section.settings.show_description -%}
+            <div class="collection-hero-desc rte">{{ collection.description }}</div>
+          {%- endif -%}
+          <span class="collection-hero-count">{%- render 'icon', name: 'bolt' -%} {{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
+        </div>
+      </div>
+    {%- else -%}
+      <div class="collection-header" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <h1 class="section-title">{{ collection.title }}</h1>
+        {%- if collection.description != blank and section.settings.show_description -%}
+          <div class="collection-description rte">{{ collection.description }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="collection-toolbar">
+      <span class="collection-count">{{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
+      {%- if section.settings.show_sorting -%}
+        <form class="collection-sort" data-collection-sort>
+          <label for="SortBy" class="visually-hidden">{{ 'collections.sorting.title' | t }}</label>
+          <select name="sort_by" id="SortBy">
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by section.settings.per_page -%}
+      {%- comment -%} Las tarjetas usan h3; este h2 evita el salto h1→h3 sin alterar el diseño. {%- endcomment -%}
+      <h2 class="visually-hidden">{{ collection.title }}</h2>
+      <div class="product-grid">
+        {%- for product in collection.products -%}
+          {%- render 'product-card', product: product -%}
+        {%- else -%}
+          <p class="collection-empty">{{ 'collections.general.no_matches' | t }}</p>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="pagination-btn">{%- render 'icon', name: 'chevron-up' -%}</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="pagination-num">{{ part.title }}</a>
+            {%- else -%}
+              <span class="pagination-num is-current">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="pagination-btn">{%- render 'icon', name: 'arrow-right' -%}</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="collection-app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Colección",
+  "settings": [
+    { "type": "checkbox", "id": "show_hero", "label": "Banner de portada premium", "default": true, "info": "Portada con imagen de la colección (o fondo neón si no tiene imagen), migas de pan y contador de productos." },
+    { "type": "checkbox", "id": "show_description", "label": "Mostrar descripción", "default": true },
+    { "type": "checkbox", "id": "show_sorting", "label": "Mostrar ordenar por", "default": true },
+    { "type": "range", "id": "per_page", "min": 8, "max": 48, "step": 4, "label": "Productos por página", "default": 16 }
+  ],
+  "blocks": [{ "type": "@app" }]
+}
+{% endschema %}

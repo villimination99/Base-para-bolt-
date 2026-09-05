@@ -1,0 +1,367 @@
+{%- comment -%}
+  El mega menú exigía que el nombre del enlace coincidiera EXACTAMENTE con el
+  ajuste (por defecto "Colecciones"). Con un menú en otro idioma o con acentos
+  ("Catálogo", "Boutique") nunca coincidía y el mega menú no aparecía jamás,
+  sin ningún aviso. Ahora:
+    1. Se comparan handles (catálogo y Catalogo dan el mismo), así que ni los
+       acentos ni las mayúsculas ni los espacios importan.
+    2. Se admiten varios nombres separados por comas.
+    3. Si aun así ninguno coincide, se usa automáticamente el primer elemento
+       del menú que tenga hijos, para que el mega menú funcione de salida.
+{%- endcomment -%}
+{%- liquid
+  assign yt = settings.social_youtube
+  assign ig = settings.social_instagram
+  assign dd_alpha = section.settings.menu_opacity | default: 85 | divided_by: 100.0
+
+  assign trigger_keys = ','
+  assign trigger_parts = section.settings.collections_trigger | split: ','
+  for t in trigger_parts
+    assign tk = t | strip | handle
+    if tk != blank
+      assign trigger_keys = trigger_keys | append: tk | append: ','
+    endif
+  endfor
+
+  assign any_match = false
+  for link in section.settings.menu.links
+    assign lk = link.title | handle
+    assign lk_wrapped = ',' | append: lk | append: ','
+    if trigger_keys contains lk_wrapped
+      assign any_match = true
+    endif
+  endfor
+
+  # Si ningun item del menu coincide con lo escrito en el ajuste, se elige solo.
+  # Antes se quedaba con el PRIMER item que tuviera hijos, y eso acertaba poco:
+  # en un menu con "Libros y planes" (2 hijos) antes que "Colecciones" (5), el
+  # mega-menu se enganchaba al pequeno y las colecciones de verdad no salian.
+  # Ahora gana el que mas hijos tiene, que es el que casi siempre es el catalogo.
+  unless any_match
+    assign mejor_key = ''
+    assign mejor_n = 0
+    for link in section.settings.menu.links
+      if link.links.size > mejor_n
+        assign mejor_n = link.links.size
+        assign mejor_key = link.title | handle
+      endif
+    endfor
+    if mejor_n > 0
+      assign trigger_keys = trigger_keys | append: mejor_key | append: ','
+      assign any_match = true
+    endif
+  endunless
+-%}
+{%- style -%}
+  #navbar, #mobile-menu { --dd-alpha: {{ dd_alpha }}; }
+{%- endstyle -%}
+{%- comment -%}
+  El ajuste "Encabezado fijo" existía en el editor pero no estaba conectado a
+  nada: la barra era siempre fija y desactivar la casilla no cambiaba nada.
+{%- endcomment -%}
+<nav class="navbar{% if section.settings.transparent_top %} transparent-top{% endif %}{% unless section.settings.sticky %} navbar--static{% endunless %}" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
+  <div class="navbar-inner">
+    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name | escape }}">
+      {%- if settings.logo != blank -%}
+        {%- assign logo_h = settings.logo_height | default: 44 -%}
+        {%- comment -%}
+          eager y fetchpriority alto: en movil el logo del encabezado suele
+          ser el elemento mas grande que se pinta primero, y el navegador por
+          su cuenta le da prioridad baja por ser pequeno en el marcado.
+        {%- endcomment -%}
+        <img src="{{ settings.logo | image_url: width: 240 }}"
+             alt="{{ shop.name | escape }}"
+             loading="eager" fetchpriority="high" decoding="async"
+             width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+             style="height:{{ logo_h }}px;width:auto;object-fit:contain;">
+      {%- else -%}
+        {%- render 'logo-mark' -%}
+        {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
+        <span class="nav-brand">
+          <span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}
+        </span>
+      {%- endif -%}
+    </a>
+
+    <div class="nav-links" id="nav-links">
+      {%- for link in section.settings.menu.links -%}
+        {%- assign link_key = link.title | handle -%}
+        {%- assign link_key_wrapped = ',' | append: link_key | append: ',' -%}
+        {%- assign is_coll_menu = false -%}
+        {%- if trigger_keys contains link_key_wrapped -%}{%- assign is_coll_menu = true -%}{%- endif -%}
+
+        {%- if is_coll_menu -%}
+          <div class="nav-item nav-item--mega">
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}" aria-haspopup="true">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <div class="nav-dropdown nav-mega">
+              {%- assign mega_blocks = section.blocks | where: 'type', 'mega_link' -%}
+              {%- if link.links.size > 0 -%}
+                {%- comment -%} Navegación anidada de Shopify: cada hijo es una columna con sus sub-colecciones (nietos) {%- endcomment -%}
+                <div class="nav-mega-cols">
+                  {%- for child in link.links -%}
+                    <div class="nav-mega-col">
+                      <a href="{{ child.url }}" class="nav-mega-col-title{% if child.active or child.child_active %} active{% endif %}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                      {%- if child.links.size > 0 -%}
+                        <ul class="nav-mega-sublist">
+                          {%- for gc in child.links -%}
+                            <li><a href="{{ gc.url }}"{% if gc.active %} class="active"{% endif %}{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a></li>
+                          {%- endfor -%}
+                        </ul>
+                      {%- endif -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- elsif mega_blocks.size > 0 -%}
+                <div class="nav-mega-grid">
+                  {%- for block in mega_blocks -%}
+                    {%- assign mc = block.settings.collection -%}
+                    <a href="{{ mc.url | default: routes.all_products_collection_url }}" class="nav-mega-card" {{ block.shopify_attributes }}>
+                      <span class="nav-mega-media nav-mega-media--icon">{%- render 'icon', name: block.settings.icon -%}</span>
+                      <span>
+                        <span class="nav-mega-title">{{ block.settings.title | default: mc.title }}</span>
+                        {%- if block.settings.subtitle != blank -%}<span class="nav-mega-sub">{{ block.settings.subtitle }}</span>{%- endif -%}
+                      </span>
+                    </a>
+                  {%- endfor -%}
+                </div>
+              {%- else -%}
+                <div class="nav-mega-grid">
+                  {%- for collection in collections limit: section.settings.collections_count -%}
+                    <a href="{{ collection.url }}" class="nav-mega-card">
+                      <span class="nav-mega-media">
+                        {%- if collection.featured_image -%}
+                          <img src="{{ collection.featured_image | image_url: width: 160 }}" alt="{{ collection.title | escape }}" width="56" height="56" loading="lazy">
+                        {%- else -%}{%- render 'icon', name: 'cube' -%}{%- endif -%}
+                      </span>
+                      <span class="nav-mega-title">{{ collection.title }}</span>
+                    </a>
+                  {%- else -%}
+                    <a href="{{ routes.all_products_collection_url }}" class="nav-mega-card"><span class="nav-mega-title">{{ 'general.shop' | t }}</span></a>
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+              <a href="{{ routes.all_products_collection_url }}" class="nav-mega-all">{{ 'general.view_all' | t }}{%- render 'icon', name: 'arrow-right' -%}</a>
+            </div>
+          </div>
+        {%- elsif link.links.size > 0 -%}
+          <div class="nav-item">
+            <a href="{{ link.url }}" class="nav-link{% if link.active or link.child_active %} active{% endif %}" aria-haspopup="true">{{ link.title }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></a>
+            <div class="nav-dropdown{% if link.links.first.links.size > 0 %} nav-dropdown--grouped{% endif %}">
+              {%- for child in link.links -%}
+                {%- if child.links.size > 0 -%}
+                  <div class="nav-dd-group">
+                    <a href="{{ child.url }}" class="nav-dd-head"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                    {%- for gc in child.links -%}
+                      <a href="{{ gc.url }}" class="nav-dd-sub"{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}" class="nav-link{% if link.active %} active{% endif %}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+        {%- endif -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="nav-link{% if template.name == 'index' %} active{% endif %}">{{ 'general.home' | t }}</a>
+        <a href="{{ routes.all_products_collection_url }}" class="nav-link{% if template.name == 'collection' or template.name == 'product' %} active{% endif %}">{{ 'general.shop' | t }}</a>
+      {%- endfor -%}
+    </div>
+
+    <div class="nav-actions">
+      <button type="button" class="nav-icon-btn" data-search-toggle title="{{ 'general.search.title' | t }}" aria-label="{{ 'general.search.title' | t }}" aria-expanded="false" aria-controls="search-panel">
+        {%- render 'icon', name: 'search' -%}
+      </button>
+
+      <div class="nav-social">
+        {%- if yt != blank -%}<a href="{{ yt }}" target="_blank" rel="noopener" class="youtube" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+        {%- if ig != blank -%}<a href="{{ ig }}" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+      </div>
+
+      <a href="{{ routes.cart_url }}" class="cart-btn" id="cart-btn-open" aria-label="{{ 'general.cart.title' | t }} ({{ cart.item_count }})"
+         {% if settings.cart_type == 'drawer' %}data-cart-drawer-open{% endif %}>
+        {%- render 'icon', name: 'cart' -%}
+        <span class="cart-count" data-cart-count aria-live="polite" aria-atomic="true" {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+
+      <button class="mobile-toggle" aria-label="{{ 'accessibility.menu' | t }}" aria-expanded="false" aria-controls="mobile-menu">
+        {%- render 'icon', name: 'menu' -%}
+      </button>
+    </div>
+  </div>
+
+  {%- comment -%} Búsqueda predictiva: resultados en vivo mientras se escribe {%- endcomment -%}
+  <div class="search-panel" id="search-panel" data-search-panel hidden>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-panel-form">
+      <span class="search-panel-icon">{%- render 'icon', name: 'search' -%}</span>
+      <input type="search" name="q" data-search-input autocomplete="off"
+             placeholder="{{ 'general.search.placeholder' | t }}"
+             aria-label="{{ 'general.search.title' | t }}"
+             role="combobox" aria-expanded="false" aria-controls="search-results" aria-autocomplete="list">
+      {%- comment -%}
+        Dictado por voz. Nace con hidden y solo lo destapa base.js cuando el
+        navegador trae reconocimiento de voz: ensenar un microfono que al
+        pulsarlo no hace nada es peor que no ensenarlo.
+      {%- endcomment -%}
+      <button type="button" class="search-panel-voice" data-search-voice hidden
+              aria-label="{{ 'general.search.voice' | t }}" title="{{ 'general.search.voice' | t }}">
+        {%- render 'icon', name: 'mic' -%}
+      </button>
+      <button type="button" class="search-panel-close" data-search-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    </form>
+    <div class="search-results" id="search-results" data-search-results role="listbox" aria-label="{{ 'general.search.title' | t }}"></div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-overlay" data-mobile-close></div>
+  <div class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="{{ 'accessibility.menu' | t }}">
+    <button class="mobile-menu-close" aria-label="{{ 'accessibility.close' | t }}" data-mobile-close>
+      {%- render 'icon', name: 'close' -%}
+    </button>
+    {%- for link in section.settings.menu.links -%}
+      {%- assign m_key = link.title | handle -%}
+      {%- assign m_key_wrapped = ',' | append: m_key | append: ',' -%}
+      {%- assign m_is_coll = false -%}
+      {%- if trigger_keys contains m_key_wrapped -%}{%- assign m_is_coll = true -%}{%- endif -%}
+
+      {%- if m_is_coll or link.links.size > 0 -%}
+        {%- comment -%} Parent with submenu: tap toggles it open/closed {%- endcomment -%}
+        <div class="mobile-item">
+          <button type="button" class="mobile-parent" data-mobile-toggle aria-expanded="false">
+            <span>{{ link.title }}</span><span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span>
+          </button>
+          <div class="mobile-submenu" hidden>
+            {%- comment -%}
+              El padre es un botón que solo abre el submenú, así que su propia
+              página (por ejemplo la colección "Vêtements") no se podía visitar
+              desde el móvil. Se añade como primera entrada.
+            {%- endcomment -%}
+            {%- if link.url != blank and link.url != '#' -%}
+              <a href="{{ link.url }}" class="mobile-subhead mobile-subparent"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+            {%- endif -%}
+            {%- if link.links.size > 0 -%}
+              {%- comment -%} Navegación anidada: cada hijo con sus sub-colecciones indentadas {%- endcomment -%}
+              {%- for child in link.links -%}
+                {%- if child.links.size > 0 -%}
+                  <a href="{{ child.url }}" class="mobile-subhead"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                  {%- for gc in child.links -%}
+                    <a href="{{ gc.url }}" class="mobile-subsub"{% if gc.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ gc.title }}</a>
+                  {%- endfor -%}
+                {%- else -%}
+                  <a href="{{ child.url }}"{% if child.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ child.title }}</a>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- elsif m_is_coll -%}
+              {%- assign m_mega = section.blocks | where: 'type', 'mega_link' -%}
+              {%- if m_mega.size > 0 -%}
+                {%- for block in m_mega -%}
+                  {%- assign mmc = block.settings.collection -%}
+                  <a href="{{ mmc.url | default: routes.all_products_collection_url }}">{%- render 'icon', name: block.settings.icon -%}{{ block.settings.title | default: mmc.title }}</a>
+                {%- endfor -%}
+              {%- else -%}
+                {%- for collection in collections limit: section.settings.collections_count -%}<a href="{{ collection.url }}">{{ collection.title }}</a>{%- endfor -%}
+              {%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- else -%}
+        <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {%- endif -%}
+    {%- else -%}
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+      <a href="{{ routes.all_products_collection_url }}">{{ 'general.shop' | t }}</a>
+    {%- endfor -%}
+    <div class="mobile-menu-social">
+      {%- if yt != blank -%}<a href="{{ yt }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+      {%- if ig != blank -%}<a href="{{ ig }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Encabezado",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menú de navegación",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Encabezado fijo al hacer scroll",
+      "default": true
+    },
+    { "type": "header", "content": "Estilo del menú" },
+    {
+      "type": "checkbox",
+      "id": "transparent_top",
+      "label": "Encabezado transparente arriba",
+      "default": true,
+      "info": "Transparente sobre el hero; se vuelve sólido al bajar."
+    },
+    {
+      "type": "range",
+      "id": "menu_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Opacidad del fondo de los menús",
+      "default": 70,
+      "info": "0% = totalmente transparente (efecto cristal). 100% = sólido."
+    },
+    { "type": "header", "content": "Mega menú de colecciones" },
+    {
+      "type": "text",
+      "id": "collections_trigger",
+      "label": "Ítem que abre las colecciones",
+      "default": "Colecciones",
+      "info": "Nombre del ítem del menú que abre el mega-menú (ej: Colecciones, Catálogo). Puedes poner varios separados por comas. No importan mayúsculas ni acentos. Si ninguno coincide, se usa automáticamente el primer ítem del menú que tenga sub-elementos. SUB-COLECCIONES: en Tienda online → Navegación, añade elementos hijos a ese ítem (ej. Ropa) y a su vez nietos (ej. Hombre, Mujer); el mega-menú los mostrará como columnas automáticamente."
+    },
+    {
+      "type": "range",
+      "id": "collections_count",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "label": "Colecciones a mostrar",
+      "default": 6
+    },
+    {
+      "type": "paragraph",
+      "content": "Añade bloques 'Entrada del mega menú' para elegir manualmente qué colecciones aparecen (con icono). Si no añades ninguno, se listan automáticamente."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "mega_link",
+      "name": "Entrada del mega menú",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" },
+          { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" },
+          { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "brain", "label": "Mente" },
+          { "value": "nutrition", "label": "Nutrición" },
+          { "value": "headphones", "label": "Audio" },
+          { "value": "trophy", "label": "Trofeo" },
+          { "value": "bolt", "label": "Rayo" },
+          { "value": "cube", "label": "Cubo 3D" }
+        ], "default": "shirt" },
+        { "type": "text", "id": "title", "label": "Título (opcional, usa el de la colección si va vacío)" },
+        { "type": "text", "id": "subtitle", "label": "Subtítulo corto (opcional)" }
+      ]
+    }
+  ]
+}
+{% endschema %}

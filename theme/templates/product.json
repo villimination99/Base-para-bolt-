@@ -1,0 +1,76 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "visible": true,
+            "icon": "bolt",
+            "text": "Envío rápido 3–7 días"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "visible": true,
+            "icon": "check",
+            "text": "Pago 100% seguro"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "visible": true,
+            "icon": "trophy",
+            "text": "Garantía de satisfacción"
+          }
+        },
+        "c1": {
+          "type": "collapsible",
+          "settings": {
+            "visible": true,
+            "title": "Envío y devoluciones",
+            "icon": "cube",
+            "content": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>"
+          }
+        },
+        "c2": {
+          "type": "collapsible",
+          "settings": {
+            "visible": false,
+            "title": "Cómo se usa",
+            "icon": "bolt",
+            "content": "<p>Describe aquí el modo de uso de tu producto para resolver dudas antes de comprar.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "c1",
+        "c2"
+      ],
+      "settings": {}
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {}
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "intent": "related",
+        "limit": 4,
+        "eyebrow": "Para ti"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations",
+    "recently_viewed"
+  ]
+}

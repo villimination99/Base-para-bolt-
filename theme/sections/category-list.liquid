@@ -1,0 +1,78 @@
+{%- comment -%}
+  Categorías en filas: imagen a un lado, texto al otro, alternando.
+  Estático (sin carrusel), con revelado suave al hacer scroll.
+{%- endcomment -%}
+<section class="section-padding" style="--sec-neon:{{ section.settings.neon_color }};">
+  <div class="container container--narrow">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title {% if section.settings.neon_style != 'none' %}neon-underline{% endif %}">{{ section.settings.title }}</h2>
+    </div>
+    <div class="catlist">
+      {%- for block in section.blocks -%}
+        {%- assign coll = block.settings.collection -%}
+        <a href="{{ coll.url | default: routes.all_products_collection_url }}"
+           class="catlist-row {% cycle '', 'is-reverse' %} {% if section.settings.neon_style == 'subtle' %}neon-soft{% endif %}"
+           style="--accent:{{ block.settings.accent }};" {{ block.shopify_attributes }}
+           {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+          <span class="catlist-media">
+            {%- assign img = block.settings.image | default: coll.featured_image -%}
+            {%- if img -%}
+              <img src="{{ img | image_url: width: 600, height: 420, crop: 'center' }}"
+                           srcset="{{ img | image_url: width: 300, height: 210, crop: 'center' }} 300w,
+                           {{ img | image_url: width: 450, height: 315, crop: 'center' }} 450w,
+                           {{ img | image_url: width: 600, height: 420, crop: 'center' }} 600w"
+                           sizes="(min-width: 861px) 33vw, 100vw" alt="{{ block.settings.title | default: coll.title | escape }}" width="600" height="420" loading="lazy">
+            {%- else -%}
+              <span class="catlist-icon-fallback">{%- render 'icon', name: block.settings.icon -%}</span>
+            {%- endif -%}
+          </span>
+          <span class="catlist-body">
+            <span class="catlist-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+            <span class="catlist-title">{{ block.settings.title | default: coll.title }}</span>
+            {%- if block.settings.text != blank -%}<span class="catlist-text">{{ block.settings.text }}</span>{%- endif -%}
+            <span class="catgrid-cta">{{ 'general.explore' | t }}{%- render 'icon', name: 'arrow-right' -%}</span>
+          </span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Categorías en filas",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Colecciones" },
+    { "type": "text", "id": "title", "label": "Título", "default": "TODO LO QUE NECESITAS" },
+    { "type": "select", "id": "neon_style", "label": "Efecto neón", "options": [
+      { "value": "none", "label": "Sin neón" }, { "value": "subtle", "label": "Sutil" } ], "default": "subtle" },
+    { "type": "color", "id": "neon_color", "label": "Color del neón", "default": "#ff2ecb" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Colección" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "shirt", "label": "Camiseta (Ropa)" }, { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
+          { "value": "supplement", "label": "Cápsula (Suplementos)" }, { "value": "book", "label": "Libro (Conocimiento)" },
+          { "value": "brain", "label": "Mente" }, { "value": "nutrition", "label": "Nutrición" } ], "default": "dumbbell" },
+        { "type": "image_picker", "id": "image", "label": "Imagen (opcional)" },
+        { "type": "text", "id": "title", "label": "Título (opcional)" },
+        { "type": "textarea", "id": "text", "label": "Descripción" },
+        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Categorías en filas", "blocks": [
+      { "type": "category", "settings": { "icon": "shirt", "title": "Ropa", "text": "Prendas técnicas con actitud: entrena con estilo dentro y fuera del gym.", "accent": "#00d4ff" } },
+      { "type": "category", "settings": { "icon": "dumbbell", "title": "Equipo", "text": "Accesorios y herramientas que elevan cada sesión.", "accent": "#ff2ecb" } },
+      { "type": "category", "settings": { "icon": "supplement", "title": "Suplementos", "text": "Fórmulas seleccionadas para rendir y recuperar.", "accent": "#00e87b" } },
+      { "type": "category", "settings": { "icon": "book", "title": "Conocimiento", "text": "Guías, planes y contenido para dominar tu mente.", "accent": "#ff7700" } }
+    ] }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,55 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../../theme/assets/villumination.css">
+<style>:root{--neon-cyan:#00d4ff;--neon-pink:#ff2ecb;--neon-green:#00e87b;--neon-purple:#7b2fff;
+--color-bg:#05060a;--font-heading:system-ui;--font-body:system-ui;--accent:#ef4444}
+body{margin:0;background:#05060a;color:#fff;font-family:system-ui;padding:20px}
+.fila{display:flex;gap:16px;--card-w:210px}</style></head><body>
+
+<!-- Marcado copiado de theme/sections/video-grid.liquid. comprobar.mjs verifica
+     aparte que la seccion siga declarando estas mismas clases, para que esta
+     pagina no se quede describiendo un tema que ya no existe. -->
+<div class="carousel video-carousel"><div class="carousel-track fila">
+
+  <!-- CONTROL ROTO A PROPOSITO: es el marcado que habia ANTES del arreglo, sin
+       respaldo debajo de la miniatura. Con el dominio de las miniaturas
+       bloqueado se queda en negro puro, que es justo el fallo que se reporto.
+       Vive aqui dentro para que la prueba lleve su propia linea de base: si
+       alguien quitara el respaldo, la tarjeta buena caeria hasta este numero y
+       la comprobacion se pondria roja sola. No hace falta recalibrar nada. -->
+  <div class="video-slide" data-control-roto style="--accent:#ef4444"><div class="video-card">
+    <button class="video-card-thumb" type="button" aria-label="Control roto">
+      <img src="https://i.ytimg.com/vi/CONTROL_ROTO/hqdefault.jpg" alt="" width="320" height="180" loading="eager">
+      <span class="video-card-play"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+    </button>
+  </div><p class="video-caption">Control roto</p></div>
+
+  <!-- LA TARJETA REAL: con respaldo de marca debajo. -->
+  <div class="video-slide" data-tarjeta-real style="--accent:#ef4444"><div class="video-card">
+    <button class="video-card-thumb" type="button" data-video-embed="dQw4w9WgXcQ" aria-label="Rutina de fuerza">
+      <span class="video-card-fondo" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+        <span class="video-card-fondo-txt">Rutina de fuerza</span>
+      </span>
+      <img class="video-card-img" data-v-thumb
+           src="https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"
+           data-alt1="https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg"
+           alt="" width="320" height="180" loading="eager" decoding="async">
+      <span class="video-card-play"><svg viewBox="0 0 24 24" width="24" height="24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span>
+    </button>
+  </div><p class="video-caption">Rutina de fuerza</p></div>
+
+  <!-- BLOQUE SIN IDENTIFICADOR: en el escaparate no se pinta; esto es lo que ve
+       el comerciante en el editor. -->
+  <div class="video-slide" data-tarjeta-vacia style="--accent:#ef4444"><div class="video-card">
+    <span class="video-card-fondo video-card-fondo--aviso" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
+      <span class="video-card-fondo-txt">Anade el video</span>
+    </span>
+  </div><p class="video-caption">Bloque sin video</p></div>
+
+</div></div>
+
+<script>window.theme={routes:{},settings:{},strings:{}};</script>
+<script src="../../theme/assets/base.js"></script>
+</body></html>

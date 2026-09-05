@@ -1,0 +1,240 @@
+<section class="section-padding" id="videos">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow" style="color:{{ section.settings.accent }};">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    <div class="carousel video-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+      <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+      <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
+        {%- for block in section.blocks -%}
+          {%- comment -%} Acepta el ID o una URL completa (youtube.com/watch?v=, youtu.be/, /shorts/) {%- endcomment -%}
+          {%- assign vid = block.settings.video_id | strip -%}
+          {%- if vid contains 'youtu' -%}
+            {%- if vid contains 'v=' -%}{%- assign vid = vid | split: 'v=' | last | split: '&' | first -%}
+            {%- elsif vid contains '/shorts/' -%}{%- assign vid = vid | split: '/shorts/' | last | split: '?' | first | split: '/' | first -%}
+            {%- else -%}{%- assign vid = vid | split: '/' | last | split: '?' | first -%}{%- endif -%}
+          {%- endif -%}
+
+          {%- comment -%}
+            Un bloque SIN identificador de video no puede llegar al escaparate:
+            antes dejaba una tarjeta 9:16 completamente vacia, o sea un rectangulo
+            negro. En el editor si se muestra, con un aviso, para que el
+            comerciante vea exactamente que bloque le falta por rellenar.
+          {%- endcomment -%}
+          {%- if vid != blank or request.design_mode -%}
+          <div class="video-slide" style="--accent:{{ section.settings.accent }};" {{ block.shopify_attributes }}>
+            <div class="video-card">
+              {%- if vid != blank -%}
+                <button class="video-card-thumb" type="button" data-video-embed="{{ vid }}" aria-label="{{ block.settings.title | default: 'Video' | escape }}">
+                  {%- comment -%}
+                    RESPALDO SIEMPRE PRESENTE, debajo de la miniatura. La miniatura
+                    viene de i.ytimg.com, que NO es el CDN de Shopify, y falla mas
+                    de lo que parece: la bloquean casi todos los bloqueadores de
+                    anuncios, y algun video no tiene ese tamano de miniatura. Sin
+                    respaldo, la tarjeta se quedaba en negro puro con el icono de
+                    imagen rota asomando. Esto no es JavaScript: aunque el
+                    navegador no ejecute nada, debajo hay siempre algo de marca.
+                  {%- endcomment -%}
+                  <span class="video-card-fondo" aria-hidden="true">
+                    {%- if section.settings.fallback_image != blank -%}
+                      {%- comment -%}
+                        Esta si sale del CDN de Shopify, que no lo bloquea nadie.
+                      {%- endcomment -%}
+                      <img class="video-card-fondo-img"
+                           src="{{ section.settings.fallback_image | image_url: width: 420 }}"
+                           srcset="{{ section.settings.fallback_image | image_url: width: 280 }} 280w, {{ section.settings.fallback_image | image_url: width: 560 }} 560w"
+                           sizes="{{ section.settings.card_width | default: 210 }}px"
+                           width="{{ section.settings.fallback_image.width }}"
+                           height="{{ section.settings.fallback_image.height }}"
+                           alt="" loading="lazy" decoding="async">
+                    {%- endif -%}
+                    {%- render 'icon', name: 'play' -%}
+                    {%- if block.settings.title != blank -%}<span class="video-card-fondo-txt">{{ block.settings.title }}</span>{%- endif -%}
+                  </span>
+                  {%- comment -%}
+                    alt vacio a proposito: el boton ya lleva aria-label, y con un
+                    alt con texto un navegador que no cargue la imagen pinta ese
+                    texto encima del respaldo. Los respaldos van en data-* y los
+                    encadena base.js, no en un atributo onerror, que la politica de
+                    seguridad de contenido de algunas tiendas bloquea.
+                  {%- endcomment -%}
+                  <img class="video-card-img" data-v-thumb
+                       src="https://i.ytimg.com/vi/{{ vid }}/hqdefault.jpg"
+                       data-alt1="https://i.ytimg.com/vi/{{ vid }}/mqdefault.jpg"
+                       alt="" width="320" height="180" loading="lazy" decoding="async">
+                  <span class="video-card-play">{%- render 'icon', name: 'play' -%}</span>
+                </button>
+              {%- else -%}
+                <span class="video-card-fondo video-card-fondo--aviso" aria-hidden="true">
+                  {%- render 'icon', name: 'play' -%}
+                  <span class="video-card-fondo-txt">{{ 'general.video_placeholder' | t }}</span>
+                </span>
+              {%- endif -%}
+            </div>
+            {%- if block.settings.title != blank -%}<p class="video-caption">{{ block.settings.title }}</p>{%- endif -%}
+          </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+    </div>
+
+    {%- if section.settings.button_label != blank -%}
+      <div class="section-cta">
+        <a href="{{ section.settings.button_url }}" target="_blank" rel="noopener" class="btn btn-youtube btn-lg">
+          {%- render 'icon', name: 'youtube' -%}{{ section.settings.button_label }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  VideoObject en JSON-LD. Google puede mostrar los videos con su propia
+  miniatura y ficha en los resultados, y ademas los indexa en la pestana de
+  Videos, que es un canal de trafico aparte del de la busqueda normal.
+  Solo se emite para los bloques que tengan titulo, porque Google exige nombre
+  y descripcion: sin ellos el dato seria rechazado.
+{%- endcomment -%}
+{%- assign vid_count = 0 -%}
+{%- capture video_ld -%}
+  {%- for block in section.blocks -%}
+    {%- assign vid = block.settings.video_id | strip -%}
+    {%- if vid contains 'youtu' -%}
+      {%- if vid contains 'v=' -%}{%- assign vid = vid | split: 'v=' | last | split: '&' | first -%}
+      {%- elsif vid contains '/shorts/' -%}{%- assign vid = vid | split: '/shorts/' | last | split: '?' | first | split: '/' | first -%}
+      {%- else -%}{%- assign vid = vid | split: '/' | last | split: '?' | first -%}{%- endif -%}
+    {%- endif -%}
+    {%- if vid != blank and block.settings.title != blank -%}
+      {%- if vid_count > 0 -%},{%- endif -%}
+    {
+      "@type": "VideoObject",
+      "name": {{ block.settings.title | json }},
+      "description": {{ block.settings.title | append: ' - ' | append: shop.name | json }},
+      "thumbnailUrl": {{ vid | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg' | json }},
+      "embedUrl": {{ vid | prepend: 'https://www.youtube.com/embed/' | json }},
+      "uploadDate": {{ shop.published_at | default: 'now' | date: '%Y-%m-%d' | json }}
+    }
+      {%- assign vid_count = vid_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if vid_count > 0 -%}
+<script type="application/ld+json">
+[{{ video_ld }}]
+</script>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "Carrusel de videos",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta",
+      "default": "YouTube"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "CONTENIDO EXCLUSIVO"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Entrena conmigo, aprende y transfórmate con cada video."
+    },
+    {
+      "type": "color",
+      "id": "accent",
+      "label": "Color de acento",
+      "default": "#ff2ecb"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Imagen de respaldo de las miniaturas",
+      "info": "Se ve cuando la miniatura de YouTube no carga, que pasa a menudo porque los bloqueadores de anuncios bloquean el dominio de las miniaturas. Sin imagen se usa un degradado de la marca. Vertical 9:16, oscura y con el centro despejado."
+    },
+    {
+      "type": "range",
+      "id": "card_width",
+      "min": 150,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Ancho de cada video",
+      "default": 210
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-avance (0 = apagado)",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "Ver más Shorts"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Enlace del botón"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video de YouTube",
+      "settings": [
+        {
+          "type": "text",
+          "id": "video_id",
+          "label": "Video de YouTube",
+          "info": "Pega la URL COMPLETA del video (ej: https://youtu.be/ABC123 o .../shorts/ABC123) o solo su ID. Cámbialo cuando quieras — añade o elimina bloques de video libremente."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título / pie (opcional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Carrusel de videos",
+      "blocks": [
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        },
+        {
+          "type": "video"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,403 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign model_media = product.media | where: 'media_type', 'model'
+  assign model_count = model_media | size
+  assign on_sale = false
+  if current_variant.compare_at_price > current_variant.price
+    assign on_sale = true
+    assign save_amount = current_variant.compare_at_price | minus: current_variant.price
+    assign save_pct = save_amount | times: 100 | divided_by: current_variant.compare_at_price
+  endif
+-%}
+
+<section class="product-page section-padding" data-low-stock="{{ section.settings.low_stock_threshold }}">
+  <div class="container">
+    <div class="product-layout">
+
+      {%- comment -%} ---------- MEDIA GALLERY (with 3D / AR) ---------- {%- endcomment -%}
+      <div class="product-media">
+        <div class="product-media-main">
+          {%- if on_sale -%}<span class="product-media-sale">-{{ save_pct }}%</span>{%- endif -%}
+          {%- if product.media.size > 0 -%}
+            {%- for media in product.media -%}
+              <div class="product-media-item{% if forloop.first %} is-active{% endif %}" data-media-id="{{ media.id }}">
+                {%- case media.media_type -%}
+                  {%- when 'model' -%}
+                    {%- if settings.product_enable_3d -%}
+                      {{ media | model_viewer_tag: image_size: '1200x', reveal: 'interaction', toggleable: true }}
+                      <span class="product-media-tag">{%- render 'icon', name: 'cube' -%} 3D · AR</span>
+                    {%- else -%}
+                      <img src="{{ media.preview_image | image_url: width: 1200 }}"
+                           srcset="{{ media.preview_image | image_url: width: 400 }} 400w,
+                                   {{ media.preview_image | image_url: width: 600 }} 600w,
+                                   {{ media.preview_image | image_url: width: 800 }} 800w,
+                                   {{ media.preview_image | image_url: width: 1200 }} 1200w"
+                           sizes="(min-width: 861px) 50vw, 100vw"
+                           alt="{{ media.alt | escape }}"
+                           width="1200" height="{{ 1200 | divided_by: media.preview_image.aspect_ratio | round }}"
+                           loading="lazy">
+                    {%- endif -%}
+                  {%- when 'video' -%}
+                    {{ media | video_tag: image_size: '1200x', controls: true, class: 'product-video' }}
+                  {%- when 'external_video' -%}
+                    {{ media | external_video_tag: class: 'product-video' }}
+                  {%- else -%}
+                    {%- comment -%}
+                      Sin srcset el móvil descargaba siempre 1200px para la imagen LCP.
+                      Con esto Shopify sirve el ancho real que necesita cada pantalla.
+                    {%- endcomment -%}
+                    <img src="{{ media | image_url: width: 1200 }}"
+                         srcset="{{ media | image_url: width: 400 }} 400w,
+                                 {{ media | image_url: width: 600 }} 600w,
+                                 {{ media | image_url: width: 800 }} 800w,
+                                 {{ media | image_url: width: 1200 }} 1200w,
+                                 {{ media | image_url: width: 1600 }} 1600w"
+                         sizes="(min-width: 861px) 50vw, 100vw"
+                         alt="{{ media.alt | default: product.title | escape }}"
+                         width="1200" height="{{ 1200 | divided_by: media.aspect_ratio | round }}"
+                         loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                         {% if forloop.first %}fetchpriority="high"{% endif %}
+                         {% if settings.product_zoom %}data-zoomable data-zoom-src="{{ media | image_url: width: 2048 }}"{% endif %}>
+                {%- endcase -%}
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="product-media-item is-active"><span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span></div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.media.size > 1 -%}
+          <div class="product-media-thumbs" role="list">
+            {%- for media in product.media -%}
+              <button class="product-media-thumb{% if forloop.first %} is-active{% endif %}" data-media-target="{{ media.id }}" aria-label="{{ 'products.product.media' | t }} {{ forloop.index }}">
+                <img src="{{ media.preview_image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy">
+                {%- if media.media_type == 'model' -%}<span class="thumb-badge">{%- render 'icon', name: 'cube' -%}</span>{%- endif -%}
+                {%- if media.media_type == 'video' or media.media_type == 'external_video' -%}<span class="thumb-badge">{%- render 'icon', name: 'play' -%}</span>{%- endif -%}
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if model_count > 0 and settings.product_enable_3d -%}
+          {%- comment -%}
+            Botón real de realidad aumentada. Antes esto era un simple <p> que
+            anunciaba "míralo en tu espacio" en todos los aparatos (incluido el
+            escritorio, donde la RA no existe) y no se podía pulsar.
+            Shopify quita data-shopify-xr-hidden únicamente en dispositivos con
+            RA, así que el botón se oculta solo donde no funcionaría.
+          {%- endcomment -%}
+          {%- assign first_model = product.media | where: 'media_type', 'model' | first -%}
+          <button type="button"
+                  class="btn btn-outline product-ar-button"
+                  data-shopify-xr
+                  data-shopify-model3d-id="{{ first_model.id }}"
+                  data-shopify-title="{{ product.title | escape }}"
+                  data-shopify-xr-hidden>
+            {%- render 'icon', name: 'cube' -%} {{ 'products.product.view_in_space' | t }}
+          </button>
+          <script type="application/json" data-model-json>
+            {{ product.media | where: 'media_type', 'model' | json }}
+          </script>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} ---------- PRODUCT INFO / FORM ---------- {%- endcomment -%}
+      <div class="product-info{% if settings.product_sticky_form %} is-sticky{% endif %}">
+        {%- if product.vendor != blank -%}<span class="product-vendor">{{ product.vendor }}</span>{%- endif -%}
+        <h1 class="product-title">{{ product.title }}</h1>
+
+        {%- comment -%}
+          Reseñas: usa los metacampos estándar (reviews.rating / reviews.rating_count) que
+          rellenan apps como Judge.me o Shopify Product Reviews. Si no hay ninguna reseña
+          real todavía, cae al valor manual del editor.
+        {%- endcomment -%}
+        {%- liquid
+          assign rating_value = blank
+          assign rating_count = blank
+          assign rating_real = false
+          assign mf = product.metafields.reviews.rating
+          if mf != blank and mf.value != blank and product.metafields.reviews.rating_count.value > 0
+            assign rating_value = mf.value.rating | times: 1.0
+            assign rating_count = product.metafields.reviews.rating_count.value
+            assign rating_real = true
+          elsif section.settings.rating != blank
+            assign rating_value = section.settings.rating | times: 1.0
+            assign rating_count = section.settings.reviews_count
+          endif
+        -%}
+        {%- if section.settings.show_rating and rating_value != blank -%}
+          {%- assign rating_round = rating_value | round -%}
+          <div class="product-rating">
+            <span class="product-stars" aria-hidden="true">
+              {%- for i in (1..5) -%}<span class="star{% if i <= rating_round %} is-on{% endif %}">{%- render 'icon', name: 'star' -%}</span>{%- endfor -%}
+            </span>
+            <span class="product-rating-num">{{ rating_value | round: 1 }}</span>
+            {%- if rating_count != blank -%}
+              <span class="product-rating-count">
+                {%- if rating_real -%}({{ rating_count }} {{ 'products.product.reviews' | t }}){%- else -%}({{ rating_count }}){%- endif -%}
+              </span>
+            {%- endif -%}
+            <span class="visually-hidden">{{ rating_value | round: 1 }} / 5</span>
+          </div>
+        {%- endif -%}
+
+        <div class="product-price product-price--lg">
+          {%- if on_sale -%}
+            <span class="product-price-compare" data-compare>{{ current_variant.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="product-price-amount" data-price>{{ current_variant.price | money }}</span>
+          <span class="product-save-badge" data-save-pct{% unless on_sale %} style="display:none"{% endunless %}>-{{ save_pct }}%</span>
+        </div>
+        <div class="product-save-line" data-save-wrap{% unless on_sale %} style="display:none"{% endunless %}>
+          {%- render 'icon', name: 'bolt' -%} Ahorras <b data-save>{{ save_amount | money }}</b>
+        </div>
+
+        {%- if section.settings.low_stock_threshold > 0 and current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= section.settings.low_stock_threshold -%}
+          {%- assign show_stock = true -%}
+        {%- endif -%}
+        <p class="product-stock-urgency" data-stock data-stock-tpl="{{ section.settings.low_stock_text | escape }}"{% unless show_stock %} style="display:none"{% endunless %}>
+          {%- render 'icon', name: 'bolt' -%} <span>{{ section.settings.low_stock_text | replace: '[n]', current_variant.inventory_quantity }}</span>
+        </p>
+
+        <product-form class="product-form">
+          {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id>
+
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                <div class="product-option">
+                  <label class="product-option-label">{{ option.name }}</label>
+                  <div class="product-option-values" role="radiogroup">
+                    {%- for value in option.values -%}
+                      {%- assign opt_id = 'opt-' | append: option.position | append: '-' | append: forloop.index -%}
+                      <input type="radio" class="product-option-input" name="option{{ option.position }}"
+                             id="{{ opt_id }}" value="{{ value | escape }}"
+                             {% if option.selected_value == value %}checked{% endif %} data-option-selector>
+                      <label for="{{ opt_id }}" class="product-option-value">{{ value }}</label>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- endunless -%}
+
+            <div class="product-purchase">
+              <div class="product-qty" data-qty>
+                <button type="button" data-qty-down aria-label="{{ 'products.product.decrease' | t }}">&minus;</button>
+                {%- comment -%}
+                  El tope sale ya del servidor para que valga aunque el
+                  JavaScript no haya cargado todavía.
+                {%- endcomment -%}
+                <input type="number" name="quantity" value="1" min="1"
+                       {% if current_variant.inventory_management != blank and current_variant.inventory_policy != 'continue' and current_variant.inventory_quantity > 0 %}max="{{ current_variant.inventory_quantity }}"{% endif %}
+                       aria-label="{{ 'products.product.quantity' | t }}" data-qty-input>
+                <button type="button" data-qty-up aria-label="{{ 'products.product.increase' | t }}">&plus;</button>
+              </div>
+              <button type="submit" name="add" class="btn btn-primary btn-lg btn-block product-add"
+                      {% unless current_variant.available %}disabled{% endunless %} data-add-btn>
+                <span data-add-text>{% if current_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+              </button>
+            </div>
+
+            {%- if section.settings.show_payment_button -%}
+              <div class="product-payment">{{ form | payment_button }}</div>
+            {%- endif -%}
+          {%- endform -%}
+        </product-form>
+
+        {%- comment -%} ---------- TRUST BADGES + COLLAPSIBLES (editable blocks) ---------- {%- endcomment -%}
+        {%- comment -%} 'visible' permite apagar un bloque desde el editor sin borrarlo {%- endcomment -%}
+        {%- capture trust_html -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust' and block.settings.visible -%}
+              <li {{ block.shopify_attributes }}>{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.text }}</span></li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign trust_trim = trust_html | strip -%}
+        {%- if trust_trim != blank -%}
+          <ul class="product-trust">{{ trust_html }}</ul>
+        {%- endif -%}
+
+        {%- comment -%}
+          Zona de bloques de apps: aquí el comerciante puede insertar widgets de apps
+          (reseñas Judge.me, upsells, tallas…) desde el editor, sin tocar código.
+        {%- endcomment -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == '@app' -%}
+            <div class="product-app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if product.description != blank -%}
+          <div class="product-description rte">{{ product.description }}</div>
+        {%- endif -%}
+
+        {%- capture info_html -%}
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'collapsible' and block.settings.visible -%}
+              <details class="product-acc-item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="product-acc-head">{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.title }}</span><span class="acc-chev">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
+                <div class="product-acc-body rte">{{ block.settings.content }}</div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endcapture -%}
+        {%- assign info_trim = info_html | strip -%}
+        {%- if info_trim != blank -%}
+          <div class="product-accordion">{{ info_html }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.show_share -%}
+          <div class="product-share">
+            <span>{{ 'products.product.share' | t }}:</span>
+            {%- assign share_url = shop.url | append: product.url -%}
+            <a href="https://www.facebook.com/sharer.php?u={{ share_url }}" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://x.com/intent/tweet?url={{ share_url }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener">X</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} ---------- RELATED PRODUCTS ---------- {%- endcomment -%}
+    {%- assign rel_col = product.collections.first -%}
+    {%- if section.settings.show_related and rel_col and rel_col.products_count > 1 -%}
+      <div class="product-related">
+        <div class="collection-index-head">
+          <span class="fancy-eyebrow">{{ section.settings.related_eyebrow }}</span>
+          <h2 class="section-title neon-underline">{{ section.settings.related_heading }}</h2>
+        </div>
+        <div class="product-grid">
+          {%- assign shown = 0 -%}
+          {%- for p in rel_col.products -%}
+            {%- if p.id != product.id and shown < section.settings.related_count -%}
+              {%- render 'product-card', product: p -%}
+              {%- assign shown = shown | plus: 1 -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_sticky_bar -%}
+    <div class="product-sticky-bar" data-sticky-atc aria-hidden="true">
+      <div class="psb-info">
+        {%- if product.featured_media -%}
+          <img src="{{ product.featured_media | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
+        {%- endif -%}
+        <div class="psb-text">
+          <span class="psb-title">{{ product.title }}</span>
+          <span class="psb-price" data-price>{{ current_variant.price | money }}</span>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary psb-add" data-sticky-add {% unless current_variant.available %}disabled{% endunless %}>
+        {%- if current_variant.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+      </button>
+    </div>
+  {%- endif -%}
+
+  <script type="application/json" data-product-json>
+    {{ product.variants | json }}
+  </script>
+
+  {%- comment -%}
+    Inventario real por variante. No se puede sacar de product.variants | json,
+    que no trae inventory_quantity: por eso el aviso de "últimas unidades"
+    dejaba de actualizarse en cuanto el cliente cambiaba de variante, y el tope
+    de cantidad no podía saber cuántas quedaban.
+    Se usa una lista de listas a propósito, sin llaves literales.
+    Formato: [id, existencias, gestión de inventario, política]
+  {%- endcomment -%}
+  <script type="application/json" data-inventory-json>
+    [
+      {%- for v in product.variants -%}
+        [{{ v.id | json }}, {{ v.inventory_quantity | default: 0 | json }}, {{ v.inventory_management | default: '' | json }}, {{ v.inventory_policy | default: '' | json }}]{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  </script>
+
+  {%- comment -%} Ficha mínima para el historial "Vistos recientemente" (localStorage) {%- endcomment -%}
+  <script type="application/json" data-rv-current>
+    {
+      "id": {{ product.id | json }},
+      "url": {{ product.url | json }},
+      "title": {{ product.title | json }},
+      "image": {{ product.featured_media | image_url: width: 400 | json }},
+      "price": {{ current_variant.price | money | strip_html | json }}
+    }
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Producto",
+  "settings": [
+    { "type": "header", "content": "Prueba social" },
+    { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración (estrellas)", "default": true },
+    { "type": "paragraph", "content": "Si instalas una app de reseñas (Judge.me, Shopify Product Reviews…), las estrellas y el número se toman AUTOMÁTICAMENTE de las reseñas reales. Los valores de abajo solo se usan mientras aún no tengas ninguna." },
+    { "type": "text", "id": "rating", "label": "Valoración provisional (0–5)", "default": "4.9" },
+    { "type": "text", "id": "reviews_count", "label": "Texto provisional de reseñas", "default": "128 reseñas" },
+    { "type": "header", "content": "Urgencia y pago" },
+    { "type": "range", "id": "low_stock_threshold", "min": 0, "max": 50, "step": 1, "label": "Umbral de stock bajo", "default": 10, "info": "Muestra '¡Solo quedan X!' cuando el inventario (rastreado) sea igual o menor. 0 = desactivado." },
+    { "type": "text", "id": "low_stock_text", "label": "Texto de stock bajo", "default": "¡Solo quedan [n]! Date prisa", "info": "Usa [n] para el número de unidades." },
+    { "type": "checkbox", "id": "show_payment_button", "label": "Botón de pago exprés (Shop Pay, Apple/Google Pay)", "default": true },
+    { "type": "checkbox", "id": "show_sticky_bar", "label": "Barra fija 'Añadir' al hacer scroll", "default": true, "info": "Barra flotante con foto, precio y botón que aparece cuando el botón principal sale de pantalla. Sube mucho la conversión en móvil." },
+    { "type": "header", "content": "Productos relacionados" },
+    { "type": "checkbox", "id": "show_related", "label": "Mostrar 'También te puede gustar'", "default": true },
+    { "type": "text", "id": "related_eyebrow", "label": "Etiqueta", "default": "COMPLETA TU ARSENAL" },
+    { "type": "text", "id": "related_heading", "label": "Título", "default": "También te puede gustar" },
+    { "type": "range", "id": "related_count", "min": 2, "max": 8, "step": 1, "label": "Nº de productos", "default": 4 },
+    { "type": "header", "content": "Otros" },
+    { "type": "checkbox", "id": "show_share", "label": "Mostrar botones de compartir", "default": true }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "trust",
+      "name": "Sello de confianza",
+      "settings": [
+        { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "bolt", "label": "Rayo" },
+          { "value": "check", "label": "Check" },
+          { "value": "cube", "label": "Caja/3D" },
+          { "value": "trophy", "label": "Trofeo" },
+          { "value": "cart", "label": "Carrito" },
+          { "value": "star", "label": "Estrella" }
+        ], "default": "check" },
+        { "type": "text", "id": "text", "label": "Texto", "default": "Envío rápido 3–7 días" }
+      ]
+    },
+    {
+      "type": "collapsible",
+      "name": "Desplegable (info)",
+      "settings": [
+        { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
+        { "type": "text", "id": "title", "label": "Título", "default": "Envío y devoluciones" },
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "cube", "label": "Caja" },
+          { "value": "bolt", "label": "Rayo" },
+          { "value": "check", "label": "Check" },
+          { "value": "nutrition", "label": "Nutrición" },
+          { "value": "book", "label": "Libro" },
+          { "value": "trophy", "label": "Trofeo" }
+        ], "default": "cube" },
+        { "type": "richtext", "id": "content", "label": "Contenido", "default": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de 30 días.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Abierto por defecto", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Producto",
+      "blocks": [
+        { "type": "trust", "settings": { "visible": true, "icon": "bolt", "text": "Envío rápido 3–7 días" } },
+        { "type": "trust", "settings": { "visible": true, "icon": "check", "text": "Pago 100% seguro" } },
+        { "type": "trust", "settings": { "visible": true, "icon": "trophy", "text": "Garantía de satisfacción" } },
+        { "type": "collapsible", "settings": { "visible": true, "title": "Envío y devoluciones", "icon": "cube" } },
+        { "type": "collapsible", "settings": { "visible": false, "title": "Cómo se usa", "icon": "bolt", "content": "<p>Describe aquí el modo de uso de tu producto.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

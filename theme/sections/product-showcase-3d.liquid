@@ -1,0 +1,74 @@
+{%- comment -%}
+  Escaparate 3D: presenta productos sobre un escenario holográfico dinámico
+  (levitación, anillo neón giratorio, reflejo y giro 3D al mover el puntero).
+  - Si el producto tiene un modelo 3D (.glb) se usa el visor nativo de Shopify.
+  - 1 producto  → presentación grande a dos columnas.
+  - 2+ productos → carrusel de escenarios.
+  Productos: elígelos por bloques; sin bloques usa la colección de respaldo.
+{%- endcomment -%}
+{%- liquid
+  assign picked = section.blocks | where: 'type', 'product'
+  assign fallback = collections.all
+  if section.settings.collection != blank
+    assign fallback = section.settings.collection
+  endif
+-%}
+
+{%- capture stage_slides -%}
+  {%- if picked.size > 0 -%}
+    {%- for block in picked -%}
+      {%- assign p = block.settings.product -%}
+      {%- if p != blank -%}{%- render 'holo-stage', product: p, attrs: block.shopify_attributes -%}{%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- for p in fallback.products limit: section.settings.limit -%}
+      {%- render 'holo-stage', product: p -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<section class="section-padding showcase3d" id="showcase-3d">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title neon-underline" style="--sec-neon:{{ section.settings.neon_color }};">{{ section.settings.title }}</h2>
+      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+
+    {%- assign total = picked.size -%}
+    {%- if total == 0 -%}{%- assign total = section.settings.limit -%}{%- endif -%}
+
+    {%- if total == 1 -%}
+      <div class="showcase3d-single">{{ stage_slides }}</div>
+    {%- else -%}
+      <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+        <div class="carousel-track" data-carousel-track style="--card-w:min(440px,88vw);">{{ stage_slides }}</div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Escaparate 3D",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Colecciones" },
+    { "type": "text", "id": "title", "label": "Título", "default": "MÍRALO EN 3D" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Gira, siente y descubre cada producto como si lo tuvieras enfrente." },
+    { "type": "collection", "id": "collection", "label": "Colección de respaldo", "info": "Se usa si no añades bloques de producto." },
+    { "type": "range", "id": "limit", "min": 1, "max": 8, "step": 1, "label": "Productos desde la colección", "default": 4 },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 6 },
+    { "type": "color", "id": "neon_color", "label": "Color del neón del título", "default": "#00d4ff" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Producto",
+      "settings": [ { "type": "product", "id": "product", "label": "Producto" } ]
+    }
+  ],
+  "presets": [{ "name": "Escaparate 3D" }]
+}
+{% endschema %}

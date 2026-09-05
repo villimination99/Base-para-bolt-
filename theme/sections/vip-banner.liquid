@@ -1,0 +1,139 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="vip-banner" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      <div class="vip-banner-border" aria-hidden="true"></div>
+      <div class="vip-banner-inner">
+        <div class="vip-banner-glow vip-banner-glow-1" aria-hidden="true"></div>
+        <div class="vip-banner-glow vip-banner-glow-2" aria-hidden="true"></div>
+        {%- if section.settings.image != blank -%}
+          <img class="vip-banner-img" src="{{ section.settings.image | image_url: width: 1600 }}"
+               srcset="{{ section.settings.image | image_url: width: 600 }} 600w,
+                       {{ section.settings.image | image_url: width: 900 }} 900w,
+                       {{ section.settings.image | image_url: width: 1200 }} 1200w,
+                       {{ section.settings.image | image_url: width: 1600 }} 1600w"
+               sizes="100vw"
+               alt="" width="1600" height="{{ 1600 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
+          <div class="vip-banner-shade" aria-hidden="true"></div>
+        {%- endif -%}
+        {%- comment -%}
+          Dos columnas en escritorio: el argumento a la izquierda y las
+          ventajas con las cifras a la derecha. Antes iba todo apilado en una
+          sola columna centrada —insignia, titulo, subtitulo, texto, ocho
+          herramientas, cinco cifras, boton y nota—, y con ese contenido la
+          seccion se hacia larguisima. En movil vuelve a una columna, que es
+          donde apilar si tiene sentido.
+        {%- endcomment -%}
+        <div class="vip-banner-content">
+          <div class="vip-main">
+            {%- if section.settings.badge != blank -%}
+              <span class="vip-badge">{%- render 'icon', name: 'bolt' -%}{{ section.settings.badge }}</span>
+            {%- endif -%}
+            <h2 class="vip-title">{{ section.settings.title }}</h2>
+            {%- if section.settings.subtitle != blank -%}<p class="vip-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+            {%- if section.settings.text != blank -%}<p class="vip-text">{{ section.settings.text }}</p>{%- endif -%}
+
+            <div class="vip-ctas">
+              <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
+                {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
+              </a>
+              {%- if section.settings.note != blank -%}
+                <span class="vip-note">{{ section.settings.note }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+            {%- if stat_blocks.size > 0 -%}
+              <div class="vip-stats">
+                {%- for block in stat_blocks -%}
+                  <div class="vip-stat" {{ block.shopify_attributes }}>
+                    <strong>{{ block.settings.number }}</strong>
+                    <span>{{ block.settings.label }}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- assign tool_blocks = section.blocks | where: 'type', 'tool' -%}
+          {%- if tool_blocks.size > 0 -%}
+            <div class="vip-side">
+              <div class="vip-tools">
+                {%- for block in tool_blocks -%}
+                  <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+                    <span class="vip-tool-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+                    <span class="vip-tool-body">
+                      <span class="vip-tool-name">{{ block.settings.title }}</span>
+                      {%- if block.settings.text != blank -%}<span class="vip-tool-desc">{{ block.settings.text }}</span>{%- endif -%}
+                    </span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner VIP",
+  "settings": [
+    { "type": "text", "id": "badge", "label": "Insignia", "default": "FITNESS HUB · GRATIS" },
+    { "type": "text", "id": "title", "label": "Título", "default": "TU GIMNASIO DIGITAL VI.P" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Transforma tu cuerpo y mente — todo en un solo lugar" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente con cámara, respiración guiada y frecuencias reparadoras. Sin apps y sin pagar." },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "ENTRAR AL HUB VI.P" },
+    { "type": "url", "id": "button_url", "label": "Enlace del botón", "info": "Por defecto: /pages/vi-p" },
+    { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "Gratis · Sin apps · ES / EN / FR" },
+    { "type": "image_picker", "id": "image", "label": "Imagen de fondo (opcional)" }
+  ],
+  "blocks": [
+    {
+      "type": "tool",
+      "name": "Herramienta del Hub",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icono", "options": [
+          { "value": "body3d", "label": "Cuerpo 3D" },
+          { "value": "dumbbell", "label": "Mancuerna" },
+          { "value": "camera", "label": "Cámara (Nutrición IA)" },
+          { "value": "nutrition", "label": "Nutrición" },
+          { "value": "calendar", "label": "Calendario (Planes)" },
+          { "value": "meditation", "label": "Meditación" },
+          { "value": "headphones", "label": "Frecuencias" },
+          { "value": "trophy", "label": "Trofeo (Niveles)" },
+          { "value": "chart", "label": "Gráficos (Progreso)" },
+          { "value": "moon", "label": "Sueño" },
+          { "value": "brain", "label": "Mente" },
+          { "value": "bolt", "label": "Rayo" }
+        ], "default": "dumbbell" },
+        { "type": "text", "id": "title", "label": "Nombre", "default": "Entrenamiento" },
+        { "type": "text", "id": "text", "label": "Descripción corta", "default": "Registra kg y series" }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Cifra",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Número", "default": "27" },
+        { "type": "text", "id": "label", "label": "Etiqueta", "default": "Ejercicios" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Banner VIP", "blocks": [
+      { "type": "tool", "settings": { "icon": "body3d", "title": "Mapa Muscular 3D", "text": "Toca un músculo y ve sus ejercicios" } },
+      { "type": "tool", "settings": { "icon": "dumbbell", "title": "Entrenamiento", "text": "27 ejercicios con calorías reales" } },
+      { "type": "tool", "settings": { "icon": "camera", "title": "Nutrición IA", "text": "Escanea tu plato con la cámara" } },
+      { "type": "tool", "settings": { "icon": "meditation", "title": "Meditación", "text": "Respiración guiada + 21 días" } },
+      { "type": "tool", "settings": { "icon": "headphones", "title": "Frecuencias", "text": "Solfeggio y binaurales" } },
+      { "type": "tool", "settings": { "icon": "trophy", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
+      { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
+      { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
+      { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },
+      { "type": "stat", "settings": { "number": "6", "label": "Niveles" } }
+    ] }
+  ]
+}
+{% endschema %}

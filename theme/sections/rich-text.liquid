@@ -1,0 +1,46 @@
+{%- assign anim = section.settings.animation | default: 'up' -%}
+<section class="section-padding" style="{% if section.settings.bg != blank %}background:{{ section.settings.bg }};{% endif %}">
+  <div class="container rich-text {% render 'section-anim', anim: anim %}" {% if settings.enable_scroll_reveal and anim != 'none' %}data-reveal{% endif %}>
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'eyebrow' -%}
+          <span class="section-eyebrow" style="color:{{ block.settings.color }};" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        {%- when 'heading' -%}
+          <h2 class="section-title" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+        {%- when 'text' -%}
+          <div class="rte" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+        {%- when 'button' -%}
+          <div class="section-cta" {{ block.shopify_attributes }}>
+            <a href="{{ block.settings.url | default: routes.all_products_collection_url }}" class="btn {{ block.settings.style }} btn-lg">{{ block.settings.label }}</a>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Texto enriquecido",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Fondo (opcional)" },
+    { "type": "select", "id": "animation", "label": "Animación al aparecer", "options": [
+      { "value": "none", "label": "Ninguna" }, { "value": "up", "label": "Desde abajo" },
+      { "value": "left", "label": "Desde la izquierda" }, { "value": "right", "label": "Desde la derecha" },
+      { "value": "zoom", "label": "Zoom" } ], "default": "up" }
+  ],
+  "blocks": [
+    { "type": "eyebrow", "name": "Etiqueta", "settings": [
+      { "type": "text", "id": "text", "label": "Texto", "default": "Sobre nosotros" },
+      { "type": "color", "id": "color", "label": "Color", "default": "#00d4ff" } ] },
+    { "type": "heading", "name": "Título", "settings": [
+      { "type": "text", "id": "text", "label": "Texto", "default": "HECHOS PARA GANADORES" } ] },
+    { "type": "text", "name": "Párrafo", "settings": [
+      { "type": "richtext", "id": "text", "label": "Texto", "default": "<p>Cuéntale tu historia a la comunidad.</p>" } ] },
+    { "type": "button", "name": "Botón", "settings": [
+      { "type": "text", "id": "label", "label": "Texto", "default": "Explorar" },
+      { "type": "url", "id": "url", "label": "Enlace" },
+      { "type": "select", "id": "style", "label": "Estilo", "options": [ { "value": "btn-primary", "label": "Relleno" }, { "value": "btn-outline", "label": "Contorno" } ], "default": "btn-primary" } ] }
+  ],
+  "presets": [ { "name": "Texto enriquecido", "blocks": [ { "type": "eyebrow" }, { "type": "heading" }, { "type": "text" }, { "type": "button" } ] } ]
+}
+{% endschema %}

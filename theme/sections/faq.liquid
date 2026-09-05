@@ -1,0 +1,89 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-green">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+        <div class="carousel-track" data-carousel-track style="--card-w:340px;">
+          {%- for block in section.blocks -%}
+            <div class="carousel-slide" {{ block.shopify_attributes }}>
+              <div class="faq-card">
+                <span class="faq-card-num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+                <h3 class="faq-card-q">{{ block.settings.question }}</h3>
+                <div class="faq-card-a rte">{{ block.settings.answer }}</div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+      </div>
+    {%- else -%}
+      <div class="faq-list">
+        {%- for block in section.blocks -%}
+          <details class="faq-item" {{ block.shopify_attributes }} {% if forloop.first %}open{% endif %}>
+            <summary class="faq-q">{{ block.settings.question }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
+            <div class="faq-a rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  FAQPage en JSON-LD. Es lo que hace que Google pueda desplegar las preguntas
+  directamente en los resultados, y es de los formatos que mejor entienden los
+  buscadores de IA cuando alguien pregunta algo que tú ya respondes aquí.
+  La respuesta es richtext, así que se limpia el HTML antes de enviarla.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- for block in section.blocks -%}
+      {%- if block.settings.question != blank and block.settings.answer != blank -%}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | strip_html | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+      }
+    }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "Ayuda" },
+    { "type": "text", "id": "title", "label": "Título", "default": "PREGUNTAS FRECUENTES" },
+    { "type": "select", "id": "layout", "label": "Presentación", "options": [
+      { "value": "carousel", "label": "Carrusel de tarjetas" }, { "value": "accordion", "label": "Acordeón" } ], "default": "carousel" },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 6 }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Pregunta",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuánto tarda el envío?" },
+        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Entre 3 y 7 días hábiles.</p>" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Preguntas frecuentes", "blocks": [ { "type": "qa" }, { "type": "qa" }, { "type": "qa" }, { "type": "qa" } ] } ]
+}
+{% endschema %}

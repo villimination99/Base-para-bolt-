@@ -1,0 +1,328 @@
+<footer class="footer" role="contentinfo">
+  <span class="footer-edge" aria-hidden="true"></span>
+  <div class="container">
+    {%- if section.settings.quotes != blank -%}
+      {%- assign quote_list = section.settings.quotes | strip | newline_to_br | split: '<br />' -%}
+      <div class="footer-quotes" data-quotes {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <span class="footer-quotes-icon" aria-hidden="true">{%- render 'icon', name: 'bolt' -%}</span>
+        <p class="footer-quote" data-quote-text aria-live="polite">{{ quote_list.first | strip }}</p>
+        <script type="application/json" data-quote-list>{{ quote_list | json }}</script>
+      </div>
+    {%- endif -%}
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-head">
+          {%- if settings.logo != blank -%}
+            {%- comment -%}
+              width/height estaban fijos en 120x40: con un logo de otra
+              proporción el navegador reservaba un hueco equivocado y el pie
+              daba un salto al cargar. Se usan las medidas reales, como en el
+              encabezado.
+            {%- endcomment -%}
+            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}"
+                 width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+                 loading="lazy" style="height:36px;width:auto;">
+          {%- else -%}
+            {%- render 'logo-mark' -%}
+            {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
+            <span class="footer-brand-name"><span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}</span>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.about != blank -%}
+          <p class="footer-brand-desc">{{ section.settings.about }}</p>
+        {%- endif -%}
+        <div class="footer-social">
+          {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{%- render 'icon', name: 'tiktok' -%}</a>{%- endif -%}
+          {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" target="_blank" rel="noopener" aria-label="X">{%- render 'icon', name: 'x' -%}</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <ul role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- elsif block.type == 'text' -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <div class="footer-text rte">{{ block.settings.text }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="footer-newsletter">
+        <h3>{{ section.settings.newsletter_title }}</h3>
+        {%- form 'customer', class: 'footer-newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+          <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
+          {%- if form.posted_successfully? -%}<p class="form-success">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
+          {%- if form.errors -%}
+            <div class="form-errors" role="alert">
+              <ul>
+                {%- for field in form.errors -%}
+                  <li>{{ form.errors.messages[field] }}</li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      Franja de garantias. Es de los elementos que mas reducen el abandono en
+      el ultimo tramo: el visitante confirma envio, pago y devoluciones sin
+      salir de la pagina. Se construye con bloques para que el texto lo
+      controle la tienda; NO trae ninguna promesa de envio gratis, que sigue
+      desactivado a peticion expresa.
+    {%- endcomment -%}
+    {%- assign garantias = section.blocks | where: 'type', 'garantia' -%}
+    {%- if garantias.size > 0 -%}
+      <ul class="footer-trust" role="list" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- for block in garantias -%}
+          <li class="footer-trust-item" {{ block.shopify_attributes }}>
+            <span class="footer-trust-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icono -%}</span>
+            <span class="footer-trust-txt">
+              <strong>{{ block.settings.titulo }}</strong>
+              {%- if block.settings.texto != blank -%}<span>{{ block.settings.texto }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- comment -%}
+      Contacto. Ademas de dar confianza, es la senal que Google y las IA usan
+      para saber que detras de la tienda hay alguien real. Todo opcional: si
+      no se rellena, no se imprime nada.
+    {%- endcomment -%}
+    {%- if section.settings.contacto_email != blank or section.settings.contacto_tel != blank or section.settings.contacto_horario != blank -%}
+      <div class="footer-contacto">
+        {%- if section.settings.contacto_email != blank -%}
+          <a class="footer-contacto-item" href="mailto:{{ section.settings.contacto_email }}">
+            {%- render 'icon', name: 'mail' -%}<span>{{ section.settings.contacto_email }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_tel != blank -%}
+          <a class="footer-contacto-item" href="tel:{{ section.settings.contacto_tel | remove: ' ' | remove: '-' }}">
+            {%- render 'icon', name: 'chat' -%}<span>{{ section.settings.contacto_tel }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_horario != blank -%}
+          <span class="footer-contacto-item is-plain">
+            {%- render 'icon', name: 'calendar' -%}<span>{{ section.settings.contacto_horario }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+      <div class="footer-payments" role="list" aria-label="{{ section.settings.payment_label | escape }}">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.payment_label != blank -%}
+        <p class="footer-secure">{%- render 'icon', name: 'check' -%}{{ section.settings.payment_label }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'general.footer.rights' | t }}</p>
+      {%- comment -%} El botón "volver arriba" es ahora el flotante global (layout), no se duplica aquí. {%- endcomment -%}
+      {%- render 'language-selector' -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "Descripción de la marca",
+      "default": "Tienda fitness para atletas que no se conforman con lo ordinario."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar métodos de pago aceptados",
+      "default": true,
+      "info": "Se toman automáticamente de los pagos activos en tu tienda. Genera confianza y reduce el abandono."
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Texto de seguridad",
+      "default": "Pago 100% seguro y cifrado"
+    },
+    {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contacto_email",
+      "label": "Correo de contacto",
+      "info": "Opcional. Se muestra en el pie y da confianza. Usa una dirección de atención al cliente, no una personal."
+    },
+    {
+      "type": "text",
+      "id": "contacto_tel",
+      "label": "Teléfono",
+      "info": "Opcional. Se convierte en un enlace que marca desde el móvil."
+    },
+    {
+      "type": "text",
+      "id": "contacto_horario",
+      "label": "Horario de atención",
+      "info": "Opcional. Por ejemplo: Lunes a viernes, 9:00 a 18:00 (hora del Este)."
+    },
+    {
+      "type": "textarea",
+      "id": "quotes",
+      "label": "Frases motivacionales (una por línea)",
+      "default": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite.",
+      "info": "Rotan automáticamente con un fundido suave. Déjalo vacío para ocultarlas."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar boletín",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título del boletín",
+      "default": "Únete a la comunidad"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Tienda"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Contacto"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    },
+    {
+      "type": "garantia",
+      "name": "Garantía",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "default": "truck",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Camión (envío)"
+            },
+            {
+              "value": "shield",
+              "label": "Escudo (seguridad)"
+            },
+            {
+              "value": "lock",
+              "label": "Candado (pago seguro)"
+            },
+            {
+              "value": "return",
+              "label": "Flecha (devoluciones)"
+            },
+            {
+              "value": "chat",
+              "label": "Mensaje (soporte)"
+            },
+            {
+              "value": "check",
+              "label": "Marca de verificación"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "globe",
+              "label": "Globo (internacional)"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo (calidad)"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "Envío con seguimiento"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "default": "Recibes el número de rastreo en cuanto sale."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "menu",
+        "settings": {
+          "title": "Tienda"
+        }
+      },
+      {
+        "type": "text",
+        "settings": {
+          "title": "Contenido"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}
