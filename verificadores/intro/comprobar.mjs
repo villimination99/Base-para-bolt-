@@ -219,13 +219,17 @@ console.log('\n--- La secuencia nunca se queda en blanco ---');
    regresion que de verdad importa: en ese tramo la malla es lo UNICO que hay
    en el centro. Dos pasadas de cada version, en un iPhone 12:
 
-       instante   rota          buena
-        1300 ms   3,4 / 3,5     11,6 / 11,7
-        1600 ms   3,5 / 3,4     11,9 / 12,0
-        1900 ms   3,4 / 3,2     11,4 / 11,2
+       instante   rota    buena
+        1300 ms   4,3     12,7
+        1600 ms   4,2     12,1
+        1900 ms   4,2     12,4
 
-   El peor de la buena es 11,2 % y el mejor de la rota 3,5 %: el umbral va en
-   el 8 %, con un 40 % de margen por arriba y mas del doble por abajo.
+   El peor de la buena es 12,1 % y el mejor de la rota 4,3 %: el umbral va en
+   el 8 %, con un 50 % de margen por arriba y casi el doble por abajo. Vuelto a
+   medir despues de meter el gimnasio, que tambien aporta luz a esa zona: la
+   separacion aguanta porque el suelo ilumina IGUAL a las dos versiones y lo
+   que de verdad se echa en falta cuando la malla no esta sigue siendo la
+   malla.
 
    La ventana se corta en 1900 ms y no mas tarde por un dato medido: a 2200 ms
    la version rota dio 3,4 % en una pasada y 7,9 % en otra, porque ahi las

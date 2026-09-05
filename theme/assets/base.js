@@ -619,6 +619,27 @@
     });
   });
 
+  /* ---------- Miniaturas de video: cadena de respaldo ----------
+     i.ytimg.com no es el CDN de Shopify y falla mas de lo que parece: la
+     bloquean casi todos los bloqueadores de anuncios, y hay videos que no
+     tienen todos los tamanos de miniatura. Sin esto, la tarjeta se quedaba en
+     negro puro con el icono de imagen rota asomando.
+
+     Se prueba el siguiente tamano y, si tampoco carga, se retira la imagen y
+     queda el respaldo de marca que ya esta pintado debajo. El manejador va
+     aqui y no en un atributo onerror porque la politica de seguridad de
+     contenido de algunas tiendas bloquea el JavaScript suelto en atributos. */
+  $all('[data-v-thumb]').forEach(function (img) {
+    function fallo() {
+      var alt1 = img.getAttribute('data-alt1');
+      if (alt1) { img.removeAttribute('data-alt1'); img.src = alt1; return; }
+      img.classList.add('esta-rota');
+    }
+    img.addEventListener('error', fallo);
+    // Una imagen que ya venia fallada del cache no vuelve a emitir 'error'.
+    if (img.complete && img.naturalWidth === 0) fallo();
+  });
+
   /* ---------- Lazy YouTube embeds ---------- */
   $all('[data-video-embed]').forEach(function (btn) {
     btn.addEventListener('click', function () {

@@ -1042,9 +1042,11 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 .splash-frases[data-frase="0"] .splash-frase[data-i="0"],
 .splash-frases[data-frase="1"] .splash-frase[data-i="1"],
 .splash-frases[data-frase="2"] .splash-frase[data-i="2"]{opacity:1}
-.splash-frases[data-frase="0"] .splash-frase[data-i="0"] .splash-palabra>i,
-.splash-frases[data-frase="1"] .splash-frase[data-i="1"] .splash-palabra>i,
-.splash-frases[data-frase="2"] .splash-frase[data-i="2"] .splash-palabra>i{transform:none}
+/* El revelado depende de "ya se vio", no de cual esta activa. Cada frase se
+   muestra UNA sola vez, asi que una vez arriba se queda arriba y la despedida
+   la hace solo la opacidad. Atado a la frase activa, al salir las palabras
+   volvian a caer escalonadas y se veia el texto desmontandose a trozos. */
+.splash-frase.vista .splash-palabra>i{transform:none}
 
 /* El emblema entra MIENTRAS las particulas viajan, no cuando ya han llegado.
    Con la entrada a 1,55 s habia casi medio segundo con el centro de la pantalla
@@ -1090,3 +1092,44 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   .splash-frases{display:none}
   .splash-palabra>i{transform:none;transition:none}
 }
+
+/* ================= Tarjetas de video: respaldo de la miniatura =================
+   La miniatura de un video de YouTube viene de i.ytimg.com, que no es el CDN de
+   Shopify y falla mas de lo que parece: la bloquean casi todos los bloqueadores
+   de anuncios y algun video no tiene ese tamano concreto. Sin respaldo, la
+   tarjeta se quedaba en NEGRO PURO con el icono de imagen rota asomando por
+   detras del boton de reproducir. Reproducido bloqueando ese dominio.
+
+   El respaldo va DEBAJO, siempre pintado, y la miniatura encima. Si carga, la
+   tapa; si no carga, se ve el respaldo. Sin depender de JavaScript. */
+.video-card-fondo{position:absolute;inset:0;z-index:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;
+  padding:1rem 1rem 1.5rem;text-align:center;
+  background:
+    radial-gradient(120% 80% at 50% 0%,color-mix(in srgb,var(--accent,#ef4444) 22%,transparent),transparent 62%),
+    linear-gradient(160deg,#101433 0%,#0a0a1a 55%,#12082a 100%)}
+.video-card-fondo svg{width:34px;height:34px;opacity:.55;color:#fff;flex:none}
+.video-card-fondo-txt{font-size:.74rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:rgba(255,255,255,.62);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.video-card-fondo--aviso{border:1px dashed rgba(255,255,255,.22)}
+
+/* Dentro del boton ya hay un icono de reproducir en el centro, asi que el del
+   respaldo sobra y el titulo se baja: centrados los dos, el boton se comia el
+   texto justo por la mitad. */
+/* Imagen de respaldo elegida por el comerciante. Va del CDN de Shopify, que
+   no bloquea nadie, al reves que el dominio de las miniaturas de YouTube. */
+.video-card-fondo-img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:.55;z-index:-1}
+.video-card-thumb .video-card-fondo{justify-content:flex-end}
+.video-card-thumb .video-card-fondo>svg{display:none}
+
+/* La miniatura se pinta encima del respaldo. */
+.video-card-img{position:relative;z-index:1}
+/* Cuando base.js agota los respaldos, se retira la imagen para que no quede el
+   icono de rota tapando el fondo de marca. */
+.video-card-img.esta-rota{display:none}
+/* El boton deja de ser negro liso: si algo fallara, lo que se ve es el
+   degradado de marca, no un agujero. */
+.video-card-thumb{background:transparent}
+.video-card-play{z-index:2}

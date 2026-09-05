@@ -345,8 +345,20 @@
     }
   }
 
-  function proyectar(giro) {
+  /* El latido de la malla. Dos golpes seguidos y una pausa, como un corazon de
+     verdad, no una onda senoidal: una esfera que gira es una demo tecnologica,
+     una que LATE es un cuerpo esforzandose. Es lo que hace deportiva a esta
+     parte de la secuencia, y cuesta una multiplicacion por fotograma. */
+  function pulsoCorazon(t) {
+    var f = (t * 1.85) % 1;                       // ~111 pulsaciones por minuto
+    var a = Math.exp(-Math.pow((f - 0.00) / 0.075, 2));   // golpe fuerte
+    var b = Math.exp(-Math.pow((f - 0.22) / 0.095, 2)) * 0.55;  // segundo golpe
+    return a + b;
+  }
+
+  function proyectar(giro, escala) {
     var n = proyX.length;
+    var R = R_ESF * (escala || 1);
     var c = Math.cos(giro), s = Math.sin(giro);
     for (var i = 0; i < n; i++) {
       var x = nodos[i * 3], y = nodos[i * 3 + 1], z = nodos[i * 3 + 2];
@@ -354,9 +366,9 @@
       var za = x * s + z * c;
       var y2 = y * INC_C - za * INC_S; // inclinacion fija
       var z2 = y * INC_S + za * INC_C;
-      var k = FOCO / (FOCO + z2 * R_ESF);   // perspectiva
-      proyX[i] = cx + x2 * R_ESF * k;
-      proyY[i] = cy + y2 * R_ESF * k;
+      var k = FOCO / (FOCO + z2 * R);   // perspectiva
+      proyX[i] = cx + camDX + x2 * R * k;
+      proyY[i] = cy + camDY + y2 * R * k;
       proyK[i] = k;
       proyZ[i] = z2;                   // -1 delante, +1 detras
     }
@@ -418,6 +430,156 @@
     ctx.lineWidth = 1.8 * DPR;
     ctx.lineCap = 'round';
     ctx.stroke();
+  }
+
+  /* ---------- el gimnasio ----------
+     Antes la secuencia pasaba en la nada: objetos bonitos sobre negro. Ahora
+     pasa en un SITIO, y el visitante entra en el. Es lo que convierte una
+     animacion de marca en "acabo de entrar a mi gimnasio".
+
+     Dos piezas y las dos son lineas rectas, que es lo mas barato que sabe
+     dibujar un lienzo:
+
+     1. El suelo en perspectiva, con la camara avanzando. El punto de fuga NO
+        esta en el centro de la pantalla: esta exactamente en el emblema, asi
+        que todo el espacio empuja la mirada hacia la marca y al final se entra
+        literalmente en ella.
+     2. Los racks a los lados, que pasan de largo segun avanza la camara. Sin
+        ellos el suelo es una rejilla de ciencia ficcion cualquiera; con ellos
+        se lee gimnasio a la primera.
+
+     Todo se proyecta con la misma division por la profundidad que la malla, y
+     el suelo entero cabe en UN trazado con un degradado que lo apaga hacia el
+     horizonte, asi que cuesta dos llamadas de dibujo. */
+  var Z_MIN = 0.42, SUELO_FILAS = 15, SUELO_CARRILES = 7;
+  var VEL_CAM = 1.15;
+
+  /* ---------- la camara, tipo dron ----------
+     Esto es lo que separa "capas animadas" de 3D de verdad: el suelo, los
+     racks y la esfera se proyectan TODOS desde el mismo punto de vista, asi
+     que al mover la camara el mundo entero se mueve junto y el ojo lo lee como
+     un espacio, no como dibujos superpuestos.
+
+     El movimiento es un plano de grua: la camara orbita un poco a un lado, se
+     eleva, y VUELVE A CERO justo cuando empieza el colapso. Lo de volver a
+     cero no es un capricho: el emblema es un elemento de la pagina, esta
+     clavado en su sitio, y si la camara siguiera desviada al final las
+     particulas aterrizarian al lado de la marca en vez de encima. Un plano de
+     dron de verdad tambien termina encuadrando al protagonista. */
+  var camDX = 0, camDY = 0;
+  function moverCamara(t) {
+    if (!MALLA || t <= T_IMPACTO) { camDX = 0; camDY = 0; return; }
+    var f = lim((t - T_IMPACTO) / (T_MALLA - T_IMPACTO), 0, 1);
+    // Una orbita completa: derecha, centro, izquierda y vuelta. Empieza y
+    // acaba en cero por construccion.
+    camDX = Math.sin(f * Math.PI * 2) * W * 0.075;
+    // Y una elevacion que sube y baja en el mismo tramo.
+    camDY = Math.sin(f * Math.PI) * H * 0.045;
+  }
+
+  function ejeY() { return cy + camDY; }         // horizonte = el emblema
+  function ejeX() { return cx + camDX; }
+  function alturaCam() { return H * 0.40; }
+  function anchoSuelo() { return W * 1.35; }
+
+  // Proyecta un punto del mundo: x a los lados, y hacia arriba desde el suelo,
+  // z hacia el fondo.
+  function pz(x, y, z) {
+    var zz = z < Z_MIN ? Z_MIN : z;
+    var e = 1 / zz;
+    return [ejeX() + x * e, ejeY() + (alturaCam() - y) * e, e];
+  }
+
+  function suelo(t, op) {
+    if (op <= 0.01) return;
+    var av = (t * VEL_CAM) % 1;
+    var yH = ejeY(), xH = ejeX(), aC = alturaCam(), aS = anchoSuelo();
+    ctx.beginPath();
+    // Transversales: las que se acercan a la camara se separan, que es lo que
+    // da la sensacion de avanzar.
+    for (var i = 0; i < SUELO_FILAS; i++) {
+      var z = i + 1 - av;
+      if (z < Z_MIN) continue;
+      var e = 1 / z, y = yH + aC * e;
+      if (y > H + 6) continue;
+      ctx.moveTo(xH - aS * e, y);
+      ctx.lineTo(xH + aS * e, y);
+    }
+    // Longitudinales: todas mueren en el punto de fuga.
+    var zCerca = 1 - av < Z_MIN ? Z_MIN : 1 - av;
+    var e0 = 1 / zCerca, eN = 1 / SUELO_FILAS;
+    for (var j = -SUELO_CARRILES; j <= SUELO_CARRILES; j++) {
+      var xm = j * (aS / SUELO_CARRILES);
+      ctx.moveTo(xH + xm * e0, yH + aC * e0);
+      ctx.lineTo(xH + xm * eN, yH + aC * eN);
+    }
+    // El degradado apaga el suelo hacia el horizonte: sin el, las lineas del
+    // fondo se amontonan en una franja solida y se pierde la profundidad.
+    var g = ctx.createLinearGradient(0, H, 0, yH);
+    g.addColorStop(0, rgba(CIAN, 0.30 * op));
+    g.addColorStop(0.55, rgba(CIAN, 0.13 * op));
+    g.addColorStop(1, rgba(CIAN, 0));
+    ctx.strokeStyle = g;
+    ctx.lineWidth = 1.1 * DPR;
+    ctx.stroke();
+  }
+
+  /* Un rack: dos postes, dos soportes y una barra con sus discos. Es la
+     silueta que cualquiera reconoce sin pensarlo. */
+  function rack(lado, z, op) {
+    // MUY a los lados. La primera version los ponia a 0,52 del ancho del suelo
+    // y, al dividir por la profundidad, acababan amontonados cerca del punto
+    // de fuga: parecian escombros dentro de la esfera en vez de aparatos de la
+    // sala. A 1,25 pasan por los bordes, que es donde pasa el mobiliario
+    // cuando uno cruza un gimnasio.
+    var xBase = lado * anchoSuelo() * 1.25;
+    var alto = alturaCam() * 0.95, ancho = anchoSuelo() * 0.15;
+    var a = pz(xBase - ancho / 2, 0, z), b = pz(xBase - ancho / 2, alto, z);
+    var c = pz(xBase + ancho / 2, 0, z), d = pz(xBase + ancho / 2, alto, z);
+    var e = pz(xBase - ancho / 2, alto * 0.72, z), f = pz(xBase + ancho / 2, alto * 0.72, z);
+    ctx.beginPath();
+    ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]);           // poste izquierdo
+    ctx.moveTo(c[0], c[1]); ctx.lineTo(d[0], d[1]);           // poste derecho
+    ctx.moveTo(b[0], b[1]); ctx.lineTo(d[0], d[1]);           // travesano alto
+    ctx.moveTo(e[0], e[1]); ctx.lineTo(f[0], f[1]);           // la barra apoyada
+    ctx.strokeStyle = rgba(lado < 0 ? CIAN : ROSA, op);
+    ctx.lineWidth = 1.6 * DPR;
+    ctx.stroke();
+    // Los discos de la barra
+    var r = ancho * 0.30 * e[2];
+    if (r > 0.7) {
+      ctx.beginPath();
+      ctx.moveTo(e[0] + r, e[1]); ctx.arc(e[0], e[1], r, 0, Math.PI * 2);
+      ctx.moveTo(f[0] + r, f[1]); ctx.arc(f[0], f[1], r, 0, Math.PI * 2);
+      ctx.strokeStyle = rgba(lado < 0 ? CIAN : ROSA, op * 1.15);
+      ctx.lineWidth = 2.2 * DPR;
+      ctx.stroke();
+    }
+  }
+
+  function gimnasio(t, op) {
+    if (op <= 0.01) return;
+    // El suelo es UN trazado y es el que lleva casi toda la lectura de
+    // "estoy dentro de un sitio", asi que nunca se recorta.
+    suelo(t, op);
+    // Los racks son doce llamadas de dibujo y son un adorno: en un aparato que
+    // no da la talla se van los primeros. Medido con la CPU a 1/6, con ellos
+    // los fotogramas lentos pasaban de 4 a 13.
+    if (!CAL.arcos) return;
+    var av = (t * VEL_CAM) % 1;
+    // Un par de racks cada tres unidades de profundidad. Se apagan de lejos y
+    // tambien justo al pasar de largo, para que no crezcan hasta comerse la
+    // pantalla.
+    for (var k = 1; k <= 2; k++) {
+      var z = k * 2.5 - av * 2.5;
+      if (z < Z_MIN + 0.3) continue;
+      // Se apagan al acercarse (pasan de largo) y tambien al alejarse: los de
+      // muy al fondo se juntan en el horizonte y solo ensucian.
+      var oz = op * lim((z - 0.6) / 1.2, 0, 1) * (1 - lim((z - 3.6) / 2.6, 0, 1));
+      if (oz <= 0.02) continue;
+      rack(-1, z, oz * 0.5);
+      rack(1, z, oz * 0.5);
+    }
   }
 
   /* ---------- interaccion, para despues de la secuencia ---------- */
@@ -603,6 +765,17 @@
 
     ctx.clearRect(0, 0, W, H);
 
+    /* El gimnasio va debajo de todo: es el SITIO donde ocurre la secuencia.
+       Entra con el impacto -- antes hay solo un monitor y una linea, y meter
+       una sala entera ahi le quitaria protagonismo al latido -- y se apaga con
+       el colapso, cuando ya solo importa la marca. */
+    moverCamara(t);
+    if (MALLA) {
+      var opGim = suave((t - T_IMPACTO - 0.05) / 0.55);
+      if (t > T_MALLA) opGim *= 1 - suave((t - T_MALLA) / (T_FORMA - T_MALLA));
+      gimnasio(t, opGim);
+    }
+
     // Sacudida de camara en el impacto. Muy corta y muy pequena: el objetivo
     // es que se SIENTA el golpe, no que la pantalla se maree.
     var golpe = t - T_IMPACTO;
@@ -706,7 +879,15 @@
       var opMalla = 0;
       if (MALLA) {
         var giro = (t - T_IMPACTO) * 0.62;
-        proyectar(giro);
+        // Latido, y antes del colapso una anticipacion: la esfera se estira un
+        // punto justo antes de encogerse. Sin ella el colapso arranca de golpe
+        // y se nota que es una interpolacion; con ella parece que toma impulso.
+        var escala = 1 + pulsoCorazon(t) * 0.035;
+        if (t > T_MALLA - 0.28) {
+          var ant = lim((t - (T_MALLA - 0.28)) / 0.28, 0, 1);
+          escala += Math.sin(ant * Math.PI) * 0.075;
+        }
+        proyectar(giro, escala);
         // Entra mientras las particulas viajan y se va con el colapso.
         // Entra PRONTO, mientras las particulas todavia viajan hacia ella: asi
         // vuelan hacia una estructura que ya esta ahi, en lugar de aterrizar
@@ -741,6 +922,12 @@
         if (enEsfera && t < T_MALLA) {
           objX = proyX[k]; objY = proyY[k];
           objR = p.r * (0.55 + 0.75 * proyK[k]);   // niebla: lejos, mas pequeno
+          // Especular: los nodos del cuadrante superior izquierdo reciben mas
+          // luz. Sin esto la esfera es una nube de puntos planos; con esto tiene
+          // volumen, que es lo que se pedia por "realismo". Cuesta una resta.
+          var lx = (objX - cx) / (R_ESF || 1), ly = (objY - cy) / (R_ESF || 1);
+          var luzN = lim(0.62 - lx * 0.42 - ly * 0.42, 0, 1.35);
+          objR *= 0.72 + luzN * 0.62;
         } else if (enEsfera) {
           // COLAPSO. El anillo es la esfera aplastada, asi que esto no es un
           // efecto nuevo: es la misma interpolacion tirando hacia el aro.
@@ -850,14 +1037,14 @@
       if (carga > 0.01) {
         var lat = 1 + Math.sin(t * 5.5) * 0.05 * (1 - carga);
         var gr = radio * (0.30 + 0.72 * carga) * lat;
-        var gn = ctx.createRadialGradient(cx, cy, 0, cx, cy, gr);
+        var gn = ctx.createRadialGradient(cx + camDX, cy + camDY, 0, cx + camDX, cy + camDY, gr);
         gn.addColorStop(0, rgba('#ffffff', 0.20 * carga));
         gn.addColorStop(0.30, rgba(CIAN, 0.16 * carga));
         gn.addColorStop(0.70, rgba('#7b2fff', 0.09 * carga));
         gn.addColorStop(1, rgba(CIAN, 0));
         ctx.fillStyle = gn;
         ctx.beginPath();
-        ctx.arc(cx, cy, gr, 0, Math.PI * 2);
+        ctx.arc(cx + camDX, cy + camDY, gr, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -909,7 +1096,18 @@
       if (cual !== fraseActual) {
         fraseActual = cual;
         if (cual < 0) cajaFrases.removeAttribute('data-frase');
-        else cajaFrases.setAttribute('data-frase', String(cual % nFrases));
+        else {
+          var idx = cual % nFrases;
+          cajaFrases.setAttribute('data-frase', String(idx));
+          // La marca de "ya se vio" NO se quita nunca. Sin ella, al salir la
+          // frase las palabras volvian a caer dentro de su mascara, cada una
+          // con su retardo, y durante la despedida se veia el texto
+          // desmontandose a trozos. Cada frase se muestra una sola vez, asi
+          // que una vez revelada se queda arriba y de la salida se encarga
+          // solo la opacidad.
+          var el = cajaFrases.children[idx];
+          if (el) el.classList.add('vista');
+        }
       }
     }
 
