@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "hub": {
+      "type": "fitness-hub",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hub"
+  ]
+}

@@ -25,3 +25,6 @@ skills-lock.json
 # setContent). Ninguno de los dos es parte del tema.
 estudio/video/.fotogramas.jpg
 verificadores/**/.pagina-de-prueba*.html
+
+# Copia del hub tal y como estaba publicado antes de la revision (referencia)
+hub/respaldo-*.html

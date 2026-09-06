@@ -218,11 +218,21 @@ check('Variables de traduccion', () => {
 });
 
 /* 13 — Texto visible escrito a mano (no se traduce nunca).
-   El que solo aparece dentro del editor (request.design_mode) esta permitido. */
+   El que solo aparece dentro del editor (request.design_mode) esta permitido.
+
+   Y hay UNA seccion exenta, con su razon: fitness-hub.liquid no usa los
+   ficheros de traduccion del tema porque trae su propio sistema de idiomas
+   dentro -- espanol, ingles y frances, con el selector en su propia cabecera y
+   diccionarios en assets/fitness-hub.js. Pasar sus mil cadenas a locales/ no
+   traduciria nada nuevo: solo partiria en dos el mismo trabajo y dejaria dos
+   sitios donde tocar cada texto. Si algun dia el hub se integra con las
+   traducciones del tema, se quita esta linea y la comprobacion vuelve sola. */
+const EXENTAS_TRADUCCION = ['sections/fitness-hub.liquid'];
 check('Texto visible sin traducir', () => {
   const ES = /[áéíóúñ¿¡]|\b(el|la|los|las|para|con|tu|tus|sin|más|desde|hasta|todos|envío|gratis|carrito|compra|producto|productos|precio|añadir|agregar|comprar|oferta|talla)\b/i;
   const bad = [];
   for (const f of liquids()) {
+    if (EXENTAS_TRADUCCION.some((e) => f.endsWith(e))) continue;
     let s = stripBlocks(read(f));
     s = s.replace(/\{%-?\s*if\s+request\.design_mode\s*-?%\}[\s\S]*?\{%-?\s*endif\s*-?%\}/g,
       m => '\n'.repeat((m.match(/\n/g) || []).length));

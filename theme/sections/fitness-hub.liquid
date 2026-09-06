@@ -1,0 +1,829 @@
+{%- comment -%}
+  VILLUMINATIONS · Fitness Hub
+  ---------------------------------------------------------------------------
+  Vivia pegado entero -- 460 KB -- dentro del cuerpo de la pagina "VI.P". Eso
+  funciona, pero tiene un coste que se paga en CADA visita: el cuerpo de una
+  pagina es HTML, y el HTML no se cachea aparte. Cada persona que entraba se
+  descargaba los 460 KB otra vez, y ademas el navegador no puede empezar a
+  pintar hasta terminar de leerlos.
+
+  Aqui van 46 KB de marcado y los otros 414 KB salen por assets: los sirve el
+  CDN de Shopify, se cachean, y a partir de la segunda pagina ya no se
+  descargan. Ademas el codigo deja de estar a merced del editor de texto
+  enriquecido, que puede reescribir el HTML que se le pega.
+
+  COMO SE USA
+  1. Contenido -> Paginas -> la pagina que quieras.
+  2. En "Plantilla de tema", elige "page.fitness-hub".
+  3. Guardar. Ya esta: no hay nada que pegar.
+
+  El hub es una isla: todo su CSS cuelga de #vill-hub y no toca el tema.
+{%- endcomment -%}
+
+{{ 'fitness-hub.css' | asset_url | stylesheet_tag }}
+
+<div id="vill-hub">
+
+<!-- ===== BOTÓN FLOTANTE DE PERFIL (el menú lo pone tu tema Shopify) ===== -->
+<button id="profile-btn" aria-label="Mi perfil" title="Mi perfil — guarda tu peso, rutina y calorías">👤</button>
+
+<!-- ===== HERO ===== -->
+<div id="hero-section">
+  <div class="hero-aurora hero-aurora-a"></div>
+  <div class="hero-aurora hero-aurora-b"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-veil"></div>
+  <div class="lang-switch" id="lang-switch">
+    <button data-l="es" class="active" type="button">ES</button><button data-l="en" type="button">EN</button><button data-l="fr" type="button">FR</button>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag">@villumination99 · Fitness Hub</div>
+    <!-- Era un <h1>. La pagina de Shopify ya emite su propio <h1> con el
+         titulo de la pagina, y dos <h1> en el mismo documento reparten la
+         senal principal entre dos textos: peor para el buscador y confuso
+         para un lector de pantalla. Se queda con el MISMO aspecto -- la clase
+         no cambia -- pero cede la jerarquia al titulo real. -->
+    <p class="hero-title" role="heading" aria-level="2">Transforma tu<br><span>Cuerpo y Mente</span></p>
+    <p class="hero-sub">Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente, respiración guiada y frecuencias reparadoras — todo en un solo lugar.</p>
+    <div class="hero-motto" id="hero-motto">💬 El cuerpo logra lo que la mente cree.</div>
+    <div class="hero-btns">
+      <a href="#muscle-map" class="btn btn-primary">🧬 Explorar Anatomía 3D</a>
+      <a href="#planner" class="btn btn-outline">🏋️ Crear mi Rutina</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>27</strong><span>Ejercicios</span></div>
+      <div class="hero-stat"><strong>17</strong><span>Frecuencias</span></div>
+      <div class="hero-stat"><strong>9</strong><span>Zonas 3D</span></div>
+      <div class="hero-stat"><strong>6</strong><span>Niveles de Atleta</span></div>
+    </div>
+    <a class="hero-scroll" href="#hub-index" aria-label="Ver todo lo que hay">▼</a>
+  </div>
+</div>
+
+<!-- ===== ÍNDICE DEL HUB ===== -->
+<div data-section id="hub-index">
+<section style="padding-top:38px;padding-bottom:10px">
+  <h2 class="section-title" id="hub-index-title">Todo lo que encontrarás aquí</h2>
+  <p class="section-sub" id="hub-index-sub">12 herramientas conectadas entre sí: lo que entrenas alimenta tu nivel, lo que comes alimenta tus gráficos. Toca cualquiera para ir directo.</p>
+  <div class="hub-grid">
+    <a class="hub-card" href="#muscle-map" data-sec="muscle-map"><span class="hc-emoji">🗿</span><span class="hc-name">Mapa Muscular 3D</span><span class="hc-desc">Toca un músculo: mira sus ejercicios y súmalos</span></a>
+    <a class="hub-card" href="#planner" data-sec="planner"><span class="hc-emoji">🏋️</span><span class="hc-name">Entrenamiento</span><span class="hc-desc">Registra kg y series — cada kilo cuenta</span></a>
+    <a class="hub-card" href="#nutrition" data-sec="nutrition"><span class="hc-emoji">🍽</span><span class="hc-name">Nutrición</span><span class="hc-desc">Escanea tu plato con IA y controla macros</span></a>
+    <a class="hub-card" href="#goal" data-sec="goal"><span class="hc-emoji">🎯</span><span class="hc-name">Objetivo Calórico</span><span class="hc-desc">Calcula tu TDEE y fija tu meta real</span></a>
+    <a class="hub-card" href="#diet-plans" data-sec="diet-plans"><span class="hc-emoji">📅</span><span class="hc-name">Planes Dietarios</span><span class="hc-desc">4 planes · menús Lun–Dom todo el año</span></a>
+    <a class="hub-card" href="#botanica" data-sec="botanica"><span class="hc-emoji">🌿</span><span class="hc-name">Botánica Nutricional</span><span class="hc-desc">55 alimentos y sus propiedades reales</span></a>
+    <a class="hub-card" href="#meditation" data-sec="meditation"><span class="hc-emoji">🧘</span><span class="hc-name">Meditación</span><span class="hc-desc">Respiración guiada + programa de 21 días</span></a>
+    <a class="hub-card" href="#frequencies" data-sec="frequencies"><span class="hc-emoji">🎧</span><span class="hc-name">Frecuencias</span><span class="hc-desc">Solfeggio, binaurales y pulsos duales</span></a>
+    <a class="hub-card" href="#level" data-sec="level"><span class="hc-emoji">🏆</span><span class="hc-name">Nivel de Atleta</span><span class="hc-desc">De Principiante a Predator</span></a>
+    <a class="hub-card" href="#progress" data-sec="progress"><span class="hc-emoji">📊</span><span class="hc-name">Progreso</span><span class="hc-desc">Tu salud entera en gráficos</span></a>
+    <a class="hub-card" href="#sleep" data-sec="sleep"><span class="hc-emoji">😴</span><span class="hc-name">Sueño</span><span class="hc-desc">¿Descansas lo que tu entreno exige?</span></a>
+    <a class="hub-card" href="#challenges" data-sec="challenges"><span class="hc-emoji">🔥</span><span class="hc-name">Retos</span><span class="hc-desc">Compite en el leaderboard</span></a>
+  </div>
+</section>
+</div>
+
+<!-- ===== MUSCLE MAP ===== -->
+<div data-section id="muscle-map">
+<section>
+  <h2 class="section-title">Mapa Muscular 3D</h2>
+  <p class="section-sub" data-i18n="sub.map">Anatomía esculpida como una sola superficie continua, con surcos de definición tallados entre músculos. Toca una zona: se ilumina en rojo sobre el propio cuerpo.</p>
+  <div class="card">
+    <div style="position:relative">
+      <canvas id="muscle-canvas"></canvas>
+      <div id="mm-loading">Esculpiendo anatomía 3D…</div>
+    </div>
+    <div id="mm-selected-label"></div>
+    <div id="mm-fallback" class="module-error" style="display:none">
+      ⚠️ WebGL no disponible. Usa los botones para explorar grupos musculares.
+    </div>
+    <div class="muscle-btns" id="muscle-btns-list">
+      <button data-tx class="muscle-btn" data-muscle="Pecho">Pecho</button>
+      <button data-tx class="muscle-btn" data-muscle="Espalda">Espalda</button>
+      <button data-tx class="muscle-btn" data-muscle="Hombros">Hombros</button>
+      <button data-tx class="muscle-btn" data-muscle="Biceps">Bíceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Triceps">Tríceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Abdominales">Abdominales</button>
+      <button data-tx class="muscle-btn" data-muscle="Cuadriceps">Cuádriceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Gluteos">Glúteos</button>
+      <button data-tx class="muscle-btn" data-muscle="Gemelos">Gemelos</button>
+      <button class="muscle-btn mm-clear" id="mm-clear-btn" data-muscle="" type="button">✕ Quitar selección</button>
+    </div>
+    <p class="mm-hint" data-tx>Toca un músculo del cuerpo o usa los botones · Arrastra para rotar · Pellizca para hacer zoom</p>
+  </div>
+</section>
+</div>
+
+<!-- ===== ENTRENAMIENTO: PLANNER + LIBRERÍA JUNTOS ===== -->
+<div data-section id="planner">
+<section>
+  <h2 class="section-title">Entrenamiento</h2>
+  <p class="section-sub" data-i18n="sub.planner">Tu rutina del día: escribe el peso, pulsa ✓ y cada kilo suma a tu nivel de atleta, tus PRs y el panel de salud. Elige los ejercicios en la galería de abajo.</p>
+
+  <div class="card" id="planner-card">
+    <div class="planner-cols planner-single">
+      <div class="planner-col">
+        <h3 style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span data-i18n="pl.today">✅ Mi rutina de hoy</span>
+          <button id="unit-toggle" title="Cambiar entre kilos y libras">KG</button>
+        </h3>
+        <div id="routine-list" style="min-height:120px"></div>
+        <div class="planner-total-cal">
+          <span><span data-i18n="pl.kcal">🔥 Calorías estimadas de la sesión</span>
+            <span class="cal-note" id="cal-weight-note">Basado en 75 kg · edita tu peso en el perfil</span>
+          </span>
+          <strong id="total-cal-value">0</strong>
+        </div>
+      </div>
+    </div>
+    <div class="planner-actions">
+      <button class="btn btn-primary" id="save-routine-btn">💾 Guardar rutina</button>
+      <button class="btn btn-outline" id="clear-routine-btn">🗑 Limpiar</button>
+    </div>
+    <div id="planner-save-msg" data-i18n="pl.saved">✓ Rutina guardada exitosamente</div>
+
+    <!-- Recomendación dietaria basada en las calorías de la sesión -->
+    <div id="diet-reco">
+      <div class="reco-head">
+        <div><div class="r-num" id="reco-kcal">0</div><div style="font-size:0.65rem;color:#889;letter-spacing:1px" data-i18n="reco.burned">KCAL QUEMADAS</div></div>
+        <div class="r-txt" id="reco-text"></div>
+      </div>
+      <div class="reco-cards" id="reco-cards"></div>
+    </div>
+  </div>
+
+  <!-- Librería justo debajo, misma sección -->
+  <div data-section id="library"></div>
+  <h3 style="font-size:1.2rem;font-weight:800;margin-top:36px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-tx>Librería de Ejercicios</h3>
+  <p class="section-sub" data-i18n="sub.library" style="margin-bottom:0">27 ejercicios con calorías reales. Filtra por músculo, desliza la galería, escribe el peso que usaste y pulsa ✓ para registrar la serie — sin salir de aquí. Toca cualquier tarjeta ❓ para ver la técnica correcta.</p>
+  <div class="lib-chips" id="lib-chips"></div>
+  <div class="lib-carousel-wrap">
+    <button class="lib-nav lib-prev" aria-label="Anterior">‹</button>
+    <div class="ex-strip" id="ex-grid"></div>
+    <button class="lib-nav lib-next" aria-label="Siguiente">›</button>
+  </div>
+</section>
+</div>
+
+<!-- ===== NUTRITION DASHBOARD ===== -->
+<div data-section id="nutrition">
+<section>
+  <h2 class="section-title">Nutrición Inteligente</h2>
+  <p class="section-sub" data-i18n="sub.nutrition">Rastrea tus macros y registra alimentos con la cámara: el sistema analiza los colores de la foto y te sugiere candidatos para confirmar.</p>
+  <div class="card">
+    <div class="nutrition-grid">
+      <div>
+        <div id="macro-chart-wrap">
+          <canvas id="macro-chart" height="220"></canvas>
+        </div>
+        <div class="macro-legend" id="macro-legend"></div>
+        <div style="margin-top:16px;padding:12px;background:#16161f;border-radius:10px;font-size:0.82rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span data-tx>Calorías hoy</span><strong id="cal-count" style="color:#05D9E8">1840 kcal</strong></div>
+          <div style="display:flex;justify-content:space-between"><span data-tx>Meta</span><strong id="cal-goal">2200 kcal</strong></div>
+          <div class="hydro-row">
+            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#667">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
+            <span class="hydro-btns"><button class="portion-btn" type="button" onclick="addWater(250)">+250 ml</button><button class="portion-btn" type="button" onclick="addWater(500)">+500 ml</button></span>
+          </div>
+          <div style="background:#2a2a3a;border-radius:4px;height:6px;margin-top:8px;overflow:hidden"><div id="cal-bar" style="height:100%;border-radius:4px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);width:83%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="food-search-wrap">
+          <input id="food-input" type="text" placeholder="Buscar alimento…" data-i18n-ph="food" autocomplete="off">
+          <button class="btn btn-outline" id="food-search-btn">🔍</button>
+        </div>
+        <div id="food-suggestions"></div>
+        <div id="food-log"></div>
+        <div style="margin-top:16px">
+          <video id="cam-video" playsinline muted></video>
+          <canvas id="scan-canvas"></canvas>
+          <div class="cam-btns">
+            <button class="btn btn-primary" id="scan-btn">📷 Escanear con cámara</button>
+            <button class="btn btn-outline" id="upload-btn">🖼 Subir foto</button>
+            <button class="btn btn-primary" id="capture-btn" style="display:none">📸 Capturar</button>
+            <button class="btn btn-pink" id="stop-cam-btn" style="display:none">⏹ Detener</button>
+            <input type="file" id="photo-input" accept="image/*" style="display:none">
+            <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none">
+          </div>
+          <div id="scan-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== OBJETIVO & SOMATOTIPO ===== -->
+<div data-section id="goal">
+<section>
+  <h2 class="section-title">Tu Objetivo Calórico</h2>
+  <p class="section-sub" data-i18n="sub.goal">Calcula cuántas calorías necesita tu cuerpo, elige tu meta — subir de peso, mantener o definir — y fíjala como tu objetivo diario de Nutrición.</p>
+  <div class="card">
+    <h3 style="margin-bottom:14px;font-size:1rem">🧮 Calculadora de calorías (TDEE)</h3>
+    <div class="calc-grid">
+      <label><span data-tx>Sexo</span>
+        <select id="calc-sex"><option data-tx value="m">Hombre</option><option data-tx value="f">Mujer</option></select>
+      </label>
+      <label><span data-tx>Edad</span>
+        <input type="number" id="calc-age" min="14" max="90" value="25">
+      </label>
+      <label><span data-tx>Altura (cm)</span>
+        <input type="number" id="calc-height" min="120" max="230" value="175">
+      </label>
+      <label><span data-tx>Peso (kg)</span>
+        <input type="number" id="calc-weight" min="35" max="220" value="70">
+      </label>
+      <label><span data-tx>Actividad</span>
+        <select id="calc-act">
+          <option data-tx value="1.2">Sedentario</option>
+          <option data-tx value="1.375">Ligera (1-3 días/sem)</option>
+          <option data-tx value="1.55" selected>Moderada (3-5 días/sem)</option>
+          <option data-tx value="1.725">Alta (6-7 días/sem)</option>
+        </select>
+      </label>
+      <label><span data-tx>Objetivo</span>
+        <select id="calc-obj">
+          <option data-tx value="400">Subir de peso (+400)</option>
+          <option data-tx value="0" selected>Mantener</option>
+          <option data-tx value="-400">Definir (−400)</option>
+        </select>
+      </label>
+    </div>
+    <button class="btn btn-primary" id="calc-btn" style="margin-top:16px">Calcular mis calorías</button>
+    <div id="goal-result"></div>
+  </div>
+
+  <h3 style="margin:28px 0 12px;font-size:1.05rem;color:#fff" data-tx>¿Cuál es tu tipo de cuerpo?</h3>
+  <div class="soma-grid">
+    <div class="card soma-card">
+      <div class="soma-icon">🍃</div>
+      <h4 data-tx>Ectomorfo</h4>
+      <p class="soma-traits" data-tx>Delgado, metabolismo rápido, le cuesta subir de peso.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> superávit de +300–500 kcal/día</li>
+        <li data-tx><strong>Macros:</strong> carbohidratos altos · 1.6–2 g/kg de proteína</li>
+        <li data-tx><strong>Entreno:</strong> básicos pesados (sentadilla, banca, peso muerto) y poco cardio</li>
+        <li data-tx><strong>Clave:</strong> 4–6 comidas al día; los batidos calóricos ayudan mucho</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('volumen')">Ver plan para subir →</button>
+    </div>
+    <div class="card soma-card">
+      <div class="soma-icon">⚡</div>
+      <h4 data-tx>Mesomorfo</h4>
+      <p class="soma-traits" data-tx>Atlético natural, gana músculo con facilidad.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> mantenimiento o superávit ligero</li>
+        <li data-tx><strong>Macros:</strong> balanceados · 1.6–2 g/kg de proteína</li>
+        <li data-tx><strong>Entreno:</strong> fuerza + hipertrofia, cardio moderado</li>
+        <li data-tx><strong>Clave:</strong> progresión constante de cargas (¡registra tus kilos!)</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('mediterr')">Ver plan equilibrado →</button>
+    </div>
+    <div class="card soma-card">
+      <div class="soma-icon">🔥</div>
+      <h4 data-tx>Endomorfo</h4>
+      <p class="soma-traits" data-tx>Estructura ancha, acumula grasa con facilidad.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> déficit de −300–500 kcal/día</li>
+        <li data-tx><strong>Macros:</strong> carbohidratos moderados · proteína alta (2 g/kg)</li>
+        <li data-tx><strong>Entreno:</strong> pesas + cardio regular (3-4×/semana)</li>
+        <li data-tx><strong>Clave:</strong> constancia y control de porciones</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('defini')">Ver plan de definición →</button>
+    </div>
+  </div>
+  <p style="margin-top:14px;font-size:0.72rem;color:#667" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
+</section>
+</div>
+
+<!-- ===== DIET PLANS ===== -->
+<div data-section id="diet-plans">
+<section>
+  <h2 class="section-title">Planes Dietarios de Élite</h2>
+  <p class="section-sub" data-i18n="sub.diet">Selecciona un plan y sigue los menús, recetas y listas de compras.</p>
+  <div class="card">
+    <div class="diet-tabs" id="diet-tabs">
+      <button data-tx class="diet-tab active" data-plan="volumen">Volumen Limpio</button>
+      <button data-tx class="diet-tab" data-plan="definicion">Definición + Volumen</button>
+      <button data-tx class="diet-tab" data-plan="ciclado">Ciclado de Carbos</button>
+      <button data-tx class="diet-tab" data-plan="mediterranea">Mediterránea</button>
+    </div>
+    <div class="month-toggle">
+      <span class="mt-label" data-tx>Menú:</span>
+      <select id="mt-month" class="mt-select"></select>
+      <select id="mt-week" class="mt-select">
+        <option data-tx value="0">Semana 1</option><option data-tx value="1">Semana 2</option><option data-tx value="2">Semana 3</option><option data-tx value="3">Semana 4</option><option data-tx value="4">Semana 5</option>
+      </select>
+      <span class="mt-hint" id="mt-hint"></span>
+    </div>
+
+    <div class="diet-content active" id="plan-volumen">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>💪 Volumen Limpio – 4 semanas</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>2800-3200 kcal/día · Masa muscular sin grasa extra</p>
+      <div class="diet-macros">
+        <div class="diet-macro-card"><div class="num">175g</div><div><span data-tx>Proteína</span></div></div>
+        <div class="diet-macro-card"><div class="num">370g</div><div><span data-tx>Carbohidratos</span></div></div>
+        <div class="diet-macro-card"><div class="num">69g</div><div><span data-tx>Grasas</span></div></div>
+        <div class="diet-macro-card"><div class="num">2800</div><div>Kcal</div></div>
+      </div>
+      <div class="diet-week" data-plan="volumen"></div>
+      <div style="margin-top:16px">
+        <h4 style="color:#FF2A6D;" data-tx>Recetas destacadas</h4>
+        <div class="diet-recipes">
+          <div class="diet-recipe-card"><div class="title" data-tx>Bowl Proteico Matutino</div>580 kcal · 10 min<br>45g P · 65g C · 12g G</div>
+          <div class="diet-recipe-card"><div class="title" data-tx>Arroz con Pollo Fitness</div>680 kcal · 25 min<br>52g P · 72g C · 14g G</div>
+          <div class="diet-recipe-card"><div class="title" data-tx>Salmón al Horno con Batata</div>620 kcal · 30 min<br>42g P · 55g C · 20g G</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diet-content" id="plan-definicion">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>⚖️ Definición + Volumen – 8 semanas</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>Alterna fases: gana músculo y pierde grasa de forma sostenida</p>
+      <div style="display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:12px;margin:12px 0;">
+        <div style="background:#16161f;border-radius:10px;padding:12px;">
+          <span style="color:#FF2A6D;font-weight:700;" data-tx>Fase Volumen (Sem 1-4)</span><div data-tx>2800-3200 kcal · 2g/kg proteína · 5g/kg carbos · 0.9g/kg grasas</div>
+        </div>
+        <div style="background:#16161f;border-radius:10px;padding:12px;">
+          <span style="color:#05D9E8;font-weight:700;" data-tx>Fase Definición (Sem 5-8)</span><div data-tx>2000-2400 kcal · 2.4g/kg proteína · 3g/kg carbos · 0.7g/kg grasas</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="diet-menu" style="width:100%;min-width:400px;">
+          <thead><tr><th data-tx>Semana</th><th data-tx>Kcal entreno</th><th data-tx>Kcal descanso</th><th><span data-tx>Proteína</span></th><th><span data-tx>Carbos</span></th><th>Cardio</th></tr></thead>
+          <tbody>
+            <tr><td>1-2 (Volumen)</td><td>2900</td><td>2700</td><td>160g</td><td>380g</td><td>-</td></tr>
+            <tr><td>3-4 (Volumen)</td><td>3200</td><td>2700</td><td>180g</td><td>425g</td><td>-</td></tr>
+            <tr><td>5-6 (Definición)</td><td>2300</td><td>2100</td><td>200g</td><td>240g</td><td>2-3 LISS</td></tr>
+            <tr><td>7-8 (Definición)</td><td>2200</td><td>1900</td><td>215g</td><td>210g</td><td>3-4 HIIT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="diet-week" data-plan="definicion"></div>
+    </div>
+
+    <div class="diet-content" id="plan-ciclado">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>🔄 Ciclado de Carbohidratos</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>Días altos en entreno pesado, días bajos en descanso</p>
+      <div style="display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:12px;margin:12px 0;">
+        <div style="background:#16161f;border-radius:10px;padding:12px;border-left:4px solid #FF2A6D;">
+          <span style="color:#FF2A6D;font-weight:700;">Día ALTO (entreno)</span>
+          <div>~3030 kcal · 343g carbos · 257g proteína · 115g grasas</div>
+        </div>
+        <div style="background:#16161f;border-radius:10px;padding:12px;border-left:4px solid #05D9E8;">
+          <span style="color:#05D9E8;font-weight:700;">Día BAJO (descanso)</span>
+          <div>~2300 kcal · 196g carbos · 280g proteína · 148g grasas</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#888899;">Ejemplo de patrón: Lun Alto (pierna), Mar Bajo, Mié Bajo, Jue Alto (espalda), Vie Bajo, Sáb Bajo, Dom Bajo.</p>
+      <div class="diet-week" data-plan="ciclado"></div>
+    </div>
+
+    <div class="diet-content" id="plan-mediterranea">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>🇬🇷 Dieta Mediterránea Élite</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>La dieta más saludable del mundo, optimizada para atletas</p>
+      <div class="diet-macros">
+        <div class="diet-macro-card"><div class="num">150g</div><div><span data-tx>Proteína</span></div></div>
+        <div class="diet-macro-card"><div class="num">280g</div><div><span data-tx>Carbos</span></div></div>
+        <div class="diet-macro-card"><div class="num">80g</div><div><span data-tx>Grasas</span></div></div>
+        <div class="diet-macro-card"><div class="num">2400</div><div>Kcal</div></div>
+      </div>
+      <div class="diet-week" data-plan="mediterranea"></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== BOTÁNICA NUTRICIONAL ===== -->
+<div data-section id="botanica">
+<section>
+  <h2 class="section-title">🌿 Botánica Nutricional</h2>
+  <p class="section-sub" data-i18n="sub.bot">Frutas, semillas, especias y granos con sus propiedades reales — para que la naturaleza trabaje a favor de tu plan.</p>
+  <div class="bot-fact" id="bot-fact" title="Toca para ver otro dato">
+    <span class="bf-icon">💡</span>
+    <span id="bot-fact-text">¿Sabías que el pimiento rojo tiene más vitamina C que la naranja?</span>
+  </div>
+  <p class="bot-fact-sub" data-tx>Datos reales, cero mitos — aquí nada "quema grasa" por arte de magia 😉</p>
+  <div class="bot-tools">
+    <input id="bot-search" type="text" placeholder="Buscar alimento, nutriente o beneficio…" data-i18n-ph="bot" autocomplete="off">
+  </div>
+  <div class="diet-tabs" id="bot-chips"></div>
+  <div class="lib-carousel-wrap">
+    <button class="lib-nav lib-prev" aria-label="Anterior">‹</button>
+    <div class="bot-strip" id="bot-grid"></div>
+    <button class="lib-nav lib-next" aria-label="Siguiente">›</button>
+  </div>
+  <div style="margin-top:26px">
+    <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff" data-tx>🌿 Botiquín Ancestral</h3>
+    <p style="margin:0 0 12px;font-size:0.8rem;color:#889" data-tx>Preparaciones tradicionales con respaldo parcial de la ciencia — contadas con honestidad, sin promesas mágicas.</p>
+    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🥛 Leche dorada</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cúrcuma + pimienta negra + canela en leche tibia. Ritual ayurvédico nocturno: la piperina multiplica la absorción de la curcumina.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍋 Agua de jengibre y limón</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Jengibre rallado + limón en agua tibia al despertar. Tradición digestiva presente en múltiples culturas.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🎃 Semillas de calabaza en ayunas</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Remedio clásico contra parásitos intestinales (cucurbitina): 25-30 g molidas en ayunas. Siglos de tradición; evidencia moderna preliminar.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍈 Agua de semillas de papaya</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>1 cdita de semillas molidas en ayunas por pocos días: tradición tropical para el intestino, con un pequeño estudio clínico a favor. Evitar en embarazo.</p>
+      </div>
+    
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧅 Jarabe de cebolla y miel</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cebolla en rodajas reposada en miel unas horas: jarabe casero clásico para la garganta. La miel sí tiene evidencia real contra la tos (nunca en menores de 1 año).</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🌼 Infusión de manzanilla</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>La apigenina de la manzanilla se une a receptores calmantes del cerebro. 30-60 min antes de dormir: la tradición universal del descanso.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍚 Agua de arroz</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>El agua del arroz cocido, suave con el estómago: tradición asiática y latina para días de digestión delicada.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧄 Ajo reposado en ayunas</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>1 diente picado y reposado 10 min (activa la alicina). Tradición cardiovascular e inmune de la cocina de las abuelas.</p>
+      </div>
+    
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍶 Caldo de huesos</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Huesos cocidos a fuego lento 8-12 h: colágeno, glicina y minerales. Tradición milenaria de recuperación y básico moderno del descanso articular.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧊 Contraste frío</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Termina la ducha con 30-60 s de agua fría. Tradición nórdica; hoy se asocia a mejor recuperación percibida y a un estado de alerta inmediato.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍃 Té de hojas de guayaba</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Infusión latinoamericana clásica para días de digestión revuelta. Sabor suave y siglos de uso en la mesa familiar.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🌿 Agua de menta fresca</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Hojas de menta machacadas en agua fría: frescura digestiva tras comidas pesadas, del Magreb a México.</p>
+      </div>
+    </div>
+    <p style="margin:6px 0 0;font-size:0.68rem;color:#556" data-tx>‹ Desliza para ver más ›</p>
+    <p style="margin:12px 0 0;font-size:0.72rem;color:#e0b34c" data-tx>⚠️ Sabiduría tradicional ≠ tratamiento. Si sospechas parásitos o un problema renal, acude a tu médico: estas preparaciones no sustituyen diagnóstico ni medicación.</p>
+  </div>
+
+  <p style="margin-top:12px;font-size:0.7rem;color:#667" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
+</section>
+</div>
+
+<!-- ===== MEDITACIÓN CON CRONÓMETRO VISUAL ===== -->
+<div data-section id="meditation">
+<section>
+  <h2 class="section-title">Meditación &amp; Respiración Guiada</h2>
+  <p class="section-sub" data-i18n="sub.med">Sigue el círculo: crece cuando inhalas, se detiene cuando retienes y se encoge cuando exhalas. Ideal para personas visuales.</p>
+  <div class="card">
+    <div class="meditation-grid">
+      <div>
+        <div class="breath-stage">
+          <div class="breath-ring" id="breath-ring">
+            <div class="breath-ring-inner">
+              <div class="breath-circle" id="breath-circle">
+                <div class="breath-count" id="breath-count">–</div>
+                <div class="breath-phase" id="breath-phase">Listo</div>
+              </div>
+            </div>
+          </div>
+          <div class="breath-cycle-label" id="breath-cycle-label"></div>
+        </div>
+        <div class="breath-legend">
+          <span><b style="color:#FF2A6D">●</b> <span data-tx>Inhala</span></span>
+          <span><b style="color:#05D9E8">●</b> <span data-tx>Retén</span></span>
+          <span><b style="color:#FFD700">●</b> <span data-tx>Exhala</span></span>
+          <span><b style="color:#9B59B6">●</b> <span data-tx>Pausa</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="breath-patterns" id="breath-patterns">
+          <button class="breath-pattern active" data-pattern="478">
+            <strong data-tx>4 · 7 · 8 — Anti-estrés</strong>
+            <span data-tx>Inhala 4s, retén 7s, exhala 8s. Perfecta antes de dormir.</span>
+          </button>
+          <button class="breath-pattern" data-pattern="box">
+            <strong data-tx>Caja 4 · 4 · 4 · 4 — Enfoque</strong>
+            <span data-tx>Cuatro fases iguales. La técnica de los Navy SEALs.</span>
+          </button>
+          <button class="breath-pattern" data-pattern="coherente">
+            <strong data-tx>Coherente 5 · 5 — Calma</strong>
+            <span data-tx>Inhala 5s, exhala 5s. Equilibra el sistema nervioso.</span>
+          </button>
+        </div>
+        <div class="breath-controls">
+          <label><span data-tx>Ciclos</span>
+            <select id="breath-cycles">
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" id="breath-start">▶ Iniciar</button>
+          <button class="btn btn-pink" id="breath-stop">⏹ Detener</button>
+        </div>
+        <div class="med-program">
+          <div class="mp-head">
+            <h3 data-tx>🗓 Programa Mindfulness — 21 días</h3>
+            <div class="mp-progress"><strong id="mp-done">0</strong>/21 <span data-tx>completados</span>
+              <div class="mp-bar"><div id="mp-fill"></div></div>
+            </div>
+          </div>
+          <p class="mp-sub" data-tx>Un día = una práctica guiada. Toca cualquier día para ver las instrucciones paso a paso y márcalo al terminar — tu progreso se guarda.</p>
+          <div class="mp-grid" id="mp-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== FRECUENCIAS REPARADORAS ===== -->
+<div data-section id="frequencies">
+<section>
+  <h2 class="section-title">Frecuencias Reparadoras</h2>
+  <p class="section-sub" data-i18n="sub.freq">17 frecuencias generadas en tiempo real: tonos Solfeggio, ondas binaurales y pulsos duales para dormir, meditar, enfocarte o activar la mente.</p>
+  <p class="freq-ios-tip" data-i18n="freq.tip">📱 iPhone: el sonido sale como “música”, así que suena incluso con el interruptor en silencio — sube el volumen con los botones laterales. Si no escuchas, toca “Reproducir” otra vez.</p>
+  <div class="card">
+    <div class="freq-intro" data-i18n="freq.intro">
+      <span style="font-size:1.3rem">🎧</span>
+      <span><strong>Usa audífonos</strong> (obligatorio para las binaurales) y un volumen suave. Estas frecuencias son una herramienta de relajación y bienestar — complementan, no reemplazan, el descanso, la nutrición y el entrenamiento.</span>
+    </div>
+    <div class="freq-tabs">
+      <button class="freq-tab active" data-i18n="freq.t1" data-tab="solfeggio">Solfeggio · tonos puros</button>
+      <button class="freq-tab" data-i18n="freq.t2" data-tab="binaural">Ondas cerebrales · binaurales</button>
+      <button class="freq-tab" data-i18n="freq.t3" data-tab="dual">Dual · pulsos 1–7 Hz 🎧</button>
+    </div>
+    <div class="freq-grid" id="freq-grid"></div>
+    <div class="freq-controls">
+      <label><span data-tx>🔊 Volumen</span>
+        <input type="range" id="freq-volume" min="0" max="100" value="35">
+      </label>
+      <label><span data-tx>⏱ Temporizador</span>
+        <select id="freq-timer-select">
+          <option data-tx value="0">∞ Continuo</option>
+          <option data-tx value="5">5 min</option>
+          <option data-tx value="10">10 min</option>
+          <option data-tx value="15">15 min</option>
+          <option data-tx value="30">30 min</option>
+          <option data-tx value="60">60 min</option>
+        </select>
+      </label>
+      <button class="btn btn-pink" id="freq-stop-btn">⏹ Detener</button>
+      <span id="freq-now-playing"></span>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;background:#11131d;border:1px solid #232636;border-radius:14px;padding:16px">
+    <h3 style="margin:0 0 6px;font-size:0.98rem;color:#fff" data-tx>🎛️ Tono libre</h3>
+    <p style="margin:0 0 10px;font-size:0.8rem;color:#aab;line-height:1.5" data-tx>Escribe cualquier frecuencia y escúchala como tono puro. Volumen bajo y sesiones cortas.</p>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="number" id="free-hz" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
+      <span style="color:#889;font-size:0.85rem">Hz · 20–20 000</span>
+    </div>
+    <input type="range" id="free-hz-slider" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
+    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#556;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
+    <button class="btn btn-primary" id="free-tone-btn" type="button" style="width:100%;justify-content:center;margin-top:12px">▶ Reproducir</button>
+  </div>
+</section>
+</div>
+
+<!-- ===== NIVEL DE ATLETA ===== -->
+<div data-section id="level">
+<section>
+  <h2 class="section-title">Tu Nivel de Atleta</h2>
+  <p class="section-sub" data-i18n="sub.level">Cada kilo que registras en tu rutina suma volumen total. Sube de Principiante a Predator y aparece en el leaderboard.</p>
+  <div class="card">
+    <div class="level-card">
+      <div class="level-icon" id="level-icon">🌱</div>
+      <div class="level-info">
+        <div class="level-name" id="level-name">Principiante</div>
+        <div class="level-total"><strong id="level-total">0</strong> <span data-tx>kg levantados en total</span></div>
+        <div class="level-bar-wrap"><div class="level-bar" id="level-bar" style="width:0%"></div></div>
+        <div class="level-next" id="level-next">Empieza a registrar tus series para avanzar</div>
+      </div>
+    </div>
+    <div class="tier-strip" id="tier-strip"></div>
+  </div>
+</section>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div data-section id="progress">
+<section>
+  <h2 class="section-title">Análisis de Progreso</h2>
+  <p class="section-sub" data-i18n="sub.progress">Todo tu progreso en conjunto: comida registrada, calorías quemadas, volumen levantado y descanso.</p>
+  <div class="health-grid" id="health-grid"></div>
+  <div class="card">
+    <div class="period-tabs">
+      <button class="period-tab active" data-period="week">Semana</button>
+      <button class="period-tab" data-period="month">Mes</button>
+    </div>
+    <canvas id="progress-chart" height="200"></canvas>
+    <div class="pr-cards" id="pr-cards">
+      <div class="card pr-card"><div class="pr-lift" data-tx>Sentadilla</div><div class="pr-weight" id="pr-squat">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Banca</div><div class="pr-weight" id="pr-bench">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Peso muerto</div><div class="pr-weight" id="pr-dead">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Press militar</div><div class="pr-weight" id="pr-ohp">—</div><div class="pr-unit">kg</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== SUEÑO & RECUPERACIÓN ===== -->
+<div data-section id="sleep">
+<section>
+  <h2 class="section-title">Sueño &amp; Recuperación</h2>
+  <p class="section-sub" data-i18n="sub.sleep">El músculo se repara mientras duermes. Registra tus horas y te digo si es suficiente según lo que quemaste hoy.</p>
+  <div class="card">
+    <div class="sleep-grid">
+      <div>
+        <div class="sleep-hours-label"><span id="sleep-hours-val">7.5</span> <span>horas</span></div>
+        <input type="range" id="sleep-hours" min="3" max="12" step="0.5" value="7.5">
+        <div class="sleep-quality">
+          <button data-tx class="sq-btn" data-q="ligero">😐 Ligero</button>
+          <button data-tx class="sq-btn active" data-q="regular">🙂 Normal</button>
+          <button data-tx class="sq-btn" data-q="profundo">😴 Profundo</button>
+        </div>
+        <button class="btn btn-primary" id="sleep-save" style="width:100%;justify-content:center">Registrar noche</button>
+        <div id="sleep-verdict"></div>
+      </div>
+      <div>
+        <h3 style="font-size:0.9rem;color:#05D9E8;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px" data-tx>Tu semana de sueño</h3>
+        <div class="sleep-bars" id="sleep-bars"></div>
+        <div data-i18n="sleep.guide" style="margin-top:16px;padding:14px;background:#16161f;border-radius:12px;font-size:0.82rem;color:#9aa;line-height:1.6">
+          <strong style="color:#fff">💡 Guía rápida</strong><br>
+          Días de entrenamiento intenso (&gt;500 kcal) piden ~8.5 h. La mayoría de adultos necesita 7–9 h. Dormir poco reduce la síntesis de proteína muscular y sube el apetito al día siguiente.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== CHALLENGES ===== -->
+<div data-section id="challenges">
+<section>
+  <h2 class="section-title">Retos de la Comunidad</h2>
+  <p class="section-sub" data-i18n="sub.chal">Compite por volumen total con la comunidad. Tu nivel y tus kilos aparecen automáticamente en el leaderboard.</p>
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div>
+        <div class="badge badge-pink" style="margin-bottom:8px" data-tx>🔥 Reto activo</div>
+        <h3 style="margin:0 0 4px;font-size:1.1rem" data-tx>30 Días de Plancha</h3>
+        <p style="margin:0;font-size:0.82rem;color:#888899;" data-tx>Aumenta tu plancha 10 segundos cada día. Quedan 18 días.</p>
+      </div>
+      <button class="btn btn-primary" id="join-btn">🚩 Unirse al reto</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#888899;margin-bottom:6px">
+      <span data-tx>Progreso comunitario</span><span id="challenge-pct">67%</span>
+    </div>
+    <div class="challenge-bar-wrap"><div class="challenge-bar" id="challenge-bar" style="width:67%"></div></div>
+    <div style="font-size:0.78rem;color:#888899;margin-top:6px" data-tx>1,247 de 1,860 participantes completaron el reto de hoy</div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Leaderboard esta semana</h3>
+    <div style="overflow-x:auto">
+      <table class="leaderboard" id="leaderboard-table"></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Tus Badges</h3>
+    <div class="badges-row" id="badges-row"></div>
+  </div>
+</section>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<!-- ===== CTA FINAL ===== -->
+<div data-section id="cta-final">
+<section style="padding-top:24px">
+  <div class="cta-card">
+    <h2 data-tx>¿Listo para transformar tu cuerpo y tu mente?</h2>
+    <p data-tx>Todo lo que necesitas vive en esta página: entrena con técnica, come con datos, descansa mejor y mide tu progreso — gratis y sin apps.</p>
+    <div class="cta-btns">
+      <a data-tx href="#planner" class="btn btn-primary">🏋️ Crear mi rutina ahora</a>
+      <a data-tx href="#goal" class="btn btn-outline">🎯 Calcular mis calorías</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="vh-footer">
+  <div class="footer-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+      <rect x="2" y="2" width="36" height="36" rx="10" fill="url(#logoGradF)"/>
+      <text x="20" y="28" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">V</text>
+      <defs><linearGradient id="logoGradF" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF2A6D"/><stop offset="100%" stop-color="#05D9E8"/></linearGradient></defs>
+    </svg>
+    <span>VILLUMINATIONS</span>
+  </div>
+  <div class="footer-socials">
+    <a href="#" aria-label="YouTube">YT</a>
+    <a href="#" aria-label="Instagram">IG</a>
+    <a href="#" aria-label="TikTok">TK</a>
+    <a href="#" aria-label="X">X</a>
+  </div>
+  <div style="font-size:0.85rem;color:#888899;margin-bottom:8px">@villumination99 en todas las plataformas</div>
+  <div class="footer-links">
+    <a data-tx href="#muscle-map">Músculos</a>
+    <a data-tx href="#planner">Entrenamiento</a>
+    <a data-tx href="#nutrition">Nutrición</a>
+    <a data-tx href="#goal">Objetivo</a>
+    <a data-tx href="#diet-plans">Planes</a>
+    <a data-tx href="#botanica">Botánica</a>
+    <a data-tx href="#meditation">Meditación</a>
+    <a data-tx href="#frequencies">Frecuencias</a>
+    <a data-tx href="#progress">Progreso</a>
+    <a data-tx href="#challenges">Retos</a>
+  </div>
+  <div class="footer-copy" data-tx>© 2026 VILLUMINATIONS. Fitness &amp; Hábitos Sanos. Todos los derechos reservados.</div>
+</div>
+
+<!-- ===== PROFILE / LOGIN MODAL ===== -->
+<div id="profile-modal">
+  <div class="profile-box">
+    <button class="profile-close" id="profile-close">✕</button>
+    <div class="profile-title"><span>Perfil</span></div>
+    <div class="profile-sub">Regístrate o inicia sesión para guardar tu progreso y personalizar las calorías con tu peso.</div>
+    <div class="profile-local">🔒 Este perfil vive <strong>solo en este navegador</strong>: nada se envía a ningún servidor. Aun así, no uses la contraseña de tu correo.</div>
+    <div id="profile-form">
+      <div class="profile-field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="tu@email.com" value="">
+      </div>
+      <div class="profile-field">
+        <label>Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" value="">
+      </div>
+      <div class="profile-field">
+        <label>Peso corporal (kg) — para calcular tus calorías</label>
+        <input type="number" id="login-weight" placeholder="75" min="30" max="250" value="">
+      </div>
+      <div class="profile-actions">
+        <button class="btn btn-primary" id="login-btn">Iniciar sesión</button>
+        <button class="btn btn-outline" id="register-btn">Registrarse</button>
+      </div>
+    </div>
+    <div id="profile-info" style="display:none;">
+      <div class="profile-user-info">
+        <div><span class="label" data-tx>Usuario:</span> <span class="value" id="profile-user-email">-</span></div>
+        <div><span class="label" data-tx>Peso:</span> <span class="value" id="profile-user-weight">-</span> kg</div>
+        <div><span class="label" data-tx>Calorías diarias:</span> <span class="value" id="profile-user-cal">-</span></div>
+        <div style="margin-top:8px"><button class="btn btn-pink" id="logout-btn" style="width:100%;justify-content:center">Cerrar sesión</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="audio-sink" playsinline style="display:none"></audio>
+
+<!-- ===== TOAST ===== -->
+<div id="toast"></div>
+
+{%- comment -%} Cierre de #vill-hub. Al partir el archivo en assets este cierre se
+  quedaba del lado de los scripts y la seccion salia con un <div> abierto: el
+  parser de Liquid de Shopify lo canta, y en la tienda habria absorbido todo lo
+  que viniera despues en la pagina. {%- endcomment -%}
+</div>
+
+{%- comment -%}
+  Chart.js para las graficas de macros y de progreso. Si no carga, el hub
+  detecta la ausencia y muestra un aviso en su sitio en vez de romperse.
+{%- endcomment -%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ 'fitness-hub.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  El mapa muscular 3D. El importmap tiene que ir ANTES del modulo que lo usa.
+  three.js se queda en su CDN a proposito: son 600 KB que muchas visitas ya
+  traen en cache de otras webs, y subirlo a assets lo convertiria en una
+  descarga exclusiva de esta tienda.
+{%- endcomment -%}
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="{{ 'fitness-hub-3d.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Fitness Hub",
+  "tag": "section",
+  "class": "seccion-fitness-hub",
+  "settings": [],
+  "presets": [{ "name": "Fitness Hub" }]
+}
+{% endschema %}
