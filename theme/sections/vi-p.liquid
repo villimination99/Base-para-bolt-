@@ -212,7 +212,7 @@
           <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span data-tx>Calorías hoy</span><strong id="cal-count" style="color:#05D9E8">1840 kcal</strong></div>
           <div style="display:flex;justify-content:space-between"><span data-tx>Meta</span><strong id="cal-goal">2200 kcal</strong></div>
           <div class="hydro-row">
-            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#667">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
+            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#82828f">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
             <span class="hydro-btns"><button class="portion-btn" type="button" onclick="addWater(250)">+250 ml</button><button class="portion-btn" type="button" onclick="addWater(500)">+500 ml</button></span>
           </div>
           <div style="background:#2a2a3a;border-radius:4px;height:6px;margin-top:8px;overflow:hidden"><div id="cal-bar" style="height:100%;border-radius:4px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);width:83%"></div></div>
@@ -323,7 +323,7 @@
       <button class="btn btn-outline" data-tx onclick="openDietTab('defini')">Ver plan de definición →</button>
     </div>
   </div>
-  <p style="margin-top:14px;font-size:0.72rem;color:#667" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
+  <p style="margin-top:14px;font-size:0.72rem;color:#82828f" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
 </section>
 </div>
 
@@ -341,8 +341,8 @@
     </div>
     <div class="month-toggle">
       <span class="mt-label" data-tx>Menú:</span>
-      <select id="mt-month" class="mt-select"></select>
-      <select id="mt-week" class="mt-select">
+      <select id="mt-month" class="mt-select" aria-label="Mes del menú"></select>
+      <select id="mt-week" class="mt-select" aria-label="Semana del menú">
         <option data-tx value="0">Semana 1</option><option data-tx value="1">Semana 2</option><option data-tx value="2">Semana 3</option><option data-tx value="3">Semana 4</option><option data-tx value="4">Semana 5</option>
       </select>
       <span class="mt-hint" id="mt-hint"></span>
@@ -379,7 +379,7 @@
           <span style="color:#05D9E8;font-weight:700;" data-tx>Fase Definición (Sem 5-8)</span><div data-tx>2000-2400 kcal · 2.4g/kg proteína · 3g/kg carbos · 0.7g/kg grasas</div>
         </div>
       </div>
-      <div style="overflow-x:auto">
+      <div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal">
         <table class="diet-menu" style="width:100%;min-width:400px;">
           <thead><tr><th data-tx>Semana</th><th data-tx>Kcal entreno</th><th data-tx>Kcal descanso</th><th><span data-tx>Proteína</span></th><th><span data-tx>Carbos</span></th><th>Cardio</th></tr></thead>
           <tbody>
@@ -447,7 +447,7 @@
   <div style="margin-top:26px">
     <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff" data-tx>🌿 Botiquín Ancestral</h3>
     <p style="margin:0 0 12px;font-size:0.8rem;color:#889" data-tx>Preparaciones tradicionales con respaldo parcial de la ciencia — contadas con honestidad, sin promesas mágicas.</p>
-    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
+    <div tabindex="0" role="group" aria-label="Carrusel, se desplaza en horizontal" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
       <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
         <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🥛 Leche dorada</strong>
         <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cúrcuma + pimienta negra + canela en leche tibia. Ritual ayurvédico nocturno: la piperina multiplica la absorción de la curcumina.</p>
@@ -499,11 +499,11 @@
         <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Hojas de menta machacadas en agua fría: frescura digestiva tras comidas pesadas, del Magreb a México.</p>
       </div>
     </div>
-    <p style="margin:6px 0 0;font-size:0.68rem;color:#556" data-tx>‹ Desliza para ver más ›</p>
+    <p style="margin:6px 0 0;font-size:0.68rem;color:#7e7e8b" data-tx>‹ Desliza para ver más ›</p>
     <p style="margin:12px 0 0;font-size:0.72rem;color:#e0b34c" data-tx>⚠️ Sabiduría tradicional ≠ tratamiento. Si sospechas parásitos o un problema renal, acude a tu médico: estas preparaciones no sustituyen diagnóstico ni medicación.</p>
   </div>
 
-  <p style="margin-top:12px;font-size:0.7rem;color:#667" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
+  <p style="margin-top:12px;font-size:0.7rem;color:#82828f" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
 </section>
 </div>
 
@@ -616,11 +616,11 @@
     <h3 style="margin:0 0 6px;font-size:0.98rem;color:#fff" data-tx>🎛️ Tono libre</h3>
     <p style="margin:0 0 10px;font-size:0.8rem;color:#aab;line-height:1.5" data-tx>Escribe cualquier frecuencia y escúchala como tono puro. Volumen bajo y sesiones cortas.</p>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <input type="number" id="free-hz" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
+      <input type="number" id="free-hz" aria-label="Frecuencia en hercios" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
       <span style="color:#889;font-size:0.85rem">Hz · 20–20 000</span>
     </div>
-    <input type="range" id="free-hz-slider" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
-    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#556;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
+    <input type="range" id="free-hz-slider" aria-label="Ajustar la frecuencia" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
+    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#7e7e8b;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
     <button class="btn btn-primary" id="free-tone-btn" type="button" style="width:100%;justify-content:center;margin-top:12px">▶ Reproducir</button>
   </div>
 </section>
@@ -677,7 +677,7 @@
     <div class="sleep-grid">
       <div>
         <div class="sleep-hours-label"><span id="sleep-hours-val">7.5</span> <span>horas</span></div>
-        <input type="range" id="sleep-hours" min="3" max="12" step="0.5" value="7.5">
+        <input type="range" id="sleep-hours" aria-label="Horas dormidas" min="3" max="12" step="0.5" value="7.5">
         <div class="sleep-quality">
           <button data-tx class="sq-btn" data-q="ligero">😐 Ligero</button>
           <button data-tx class="sq-btn active" data-q="regular">🙂 Normal</button>
@@ -722,7 +722,7 @@
 
   <div class="card" style="margin-bottom:20px">
     <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Leaderboard esta semana</h3>
-    <div style="overflow-x:auto">
+    <div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal">
       <table class="leaderboard" id="leaderboard-table"></table>
     </div>
   </div>

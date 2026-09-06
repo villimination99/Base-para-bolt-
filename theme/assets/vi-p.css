@@ -38,7 +38,7 @@
       letter-spacing: normal !important; text-transform: none !important;
       text-decoration: none !important; min-height: 0 !important; box-shadow: none;
     }
-    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #fff !important; border: none !important; }
+    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #0d0d12 !important; border: none !important; }
     #vill-hub .btn-outline { background: transparent !important; border: 1px solid #05D9E8 !important; color: #05D9E8 !important; }
     #vill-hub .btn-pink { background: transparent !important; border: 1px solid #FF2A6D !important; color: #FF2A6D !important; }
     #vill-hub a { text-decoration: none !important; border-bottom: none !important; }
@@ -93,14 +93,22 @@
       font-family: inherit;
     }
     .btn:active { transform: scale(0.97); opacity: 0.85; }
-    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #fff; }
+    /* Texto oscuro, no blanco, y no es una preferencia. El degradado va de
+       magenta a cian, y el cian #05D9E8 es un color muy claro: el blanco
+       encima da 1,74:1. Eso no es "poco contraste", es la mitad de la
+       palabra ilegible en cuanto el degradado pasa del medio. En oscuro son
+       5,36:1 sobre el magenta y 11,17:1 sobre el cian.
+       Ninguna auditoria lo canta: axe, ante un linear-gradient, no calcula
+       contraste y lo deja como "no concluyente". Se pillo a mano y ahora lo
+       vigila check.mjs. */
+    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #0d0d12; }
     .btn-outline { background: transparent; border: 1px solid #05D9E8; color: #05D9E8; }
     .btn-pink { background: transparent; border: 1px solid #FF2A6D; color: #FF2A6D; }
     .badge {
       display: inline-block; padding: 3px 10px; border-radius: 20px;
       font-size: 0.75rem; font-weight: 700;
     }
-    .badge-pink { background: rgba(255,42,109,0.15); color: #FF2A6D; border: 1px solid rgba(255,42,109,0.3); }
+    .badge-pink { background: rgba(255,42,109,0.15); color: #ff447f; border: 1px solid rgba(255,42,109,0.3); }
 
     /* ===== BOTÓN FLOTANTE DE PERFIL ===== */
     /* Sube por encima de la esquina donde casi todos los temas de Shopify
@@ -390,7 +398,7 @@
       font-size: 0.9rem; border: 1px solid #2a2a3a;
     }
     .planner-total-cal strong { color: #05D9E8; font-size: 1.3rem; }
-    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #667; }
+    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #82828f; }
 
     .lib-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 28px 0 16px; }
     .lib-chip {
@@ -455,7 +463,7 @@
       padding: 6px 12px; border-radius: 8px; border: 1px solid #05D9E8;
       background: transparent; color: #05D9E8; cursor: pointer; font-size: 0.75rem; font-family: inherit;
     }
-    .scan-note { font-size: 0.7rem; color: #667; margin-top: 8px; }
+    .scan-note { font-size: 0.7rem; color: #82828f; margin-top: 8px; }
     #scan-canvas { display: none; }
 
     /* ===== SLIDERS PREMIUM ===== */
@@ -499,7 +507,7 @@
     }
     #vill-hub .exgif-stage::after, #modal-content .exgif-stage::after {
       content: '⤢'; position: absolute; right: 9px; bottom: 8px; z-index: 3;
-      font-size: 0.9rem; color: #fff;
+      font-size: 0.9rem; color: #0d0d12;
       background: linear-gradient(135deg, #FF2A6D, #05D9E8);
       width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.35); pointer-events: none;
@@ -630,7 +638,7 @@
       display: flex; flex-direction: column; gap: 2px; transition: border-color .2s;
     }
     .mp-day:hover { border-color: rgba(5,217,232,0.4); }
-    .mp-day .d-num { font-size: 0.62rem; color: #667; letter-spacing: 1px; }
+    .mp-day .d-num { font-size: 0.62rem; color: #82828f; letter-spacing: 1px; }
     .mp-day .d-name { font-size: 0.74rem; font-weight: 700; color: #fff; line-height: 1.25; }
     .mp-day .d-min { font-size: 0.66rem; color: #05D9E8; }
     .mp-day.done { border-color: rgba(46,204,113,0.5); background: rgba(46,204,113,0.06); }
@@ -675,7 +683,7 @@
     }
     .breath-count { font-size: 3.4rem; font-weight: 900; line-height: 1; color: #fff; }
     .breath-phase { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: #cdd; margin-top: 6px; font-weight: 700; }
-    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #667; }
+    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #82828f; }
     .breath-patterns { display: flex; flex-direction: column; gap: 8px; }
     .breath-pattern {
       text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid #2a2a3a;
@@ -714,7 +722,7 @@
       background: linear-gradient(135deg, #FF2A6D, #05D9E8);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .freq-card .freq-unit { font-size: 0.68rem; color: #667; letter-spacing: 1.5px; margin-top: 2px; }
+    .freq-card .freq-unit { font-size: 0.68rem; color: #82828f; letter-spacing: 1.5px; margin-top: 2px; }
     .freq-card .freq-name { font-weight: 700; margin-top: 8px; font-size: 0.88rem; }
     .freq-card .freq-desc { font-size: 0.73rem; color: #888899; margin-top: 4px; line-height: 1.4; min-height: 42px; }
     .freq-card .freq-state { margin-top: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; color: #05D9E8; text-transform: uppercase; }
@@ -780,10 +788,19 @@
       font-size: 0.72rem; color: #99a;
     }
     .tier .t-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
-    .tier .t-kg { display: block; color: #667; font-size: 0.66rem; margin-top: 2px; }
+    .tier .t-kg { display: block; color: #82828f; font-size: 0.66rem; margin-top: 2px; }
     .tier.unlocked { border-color: rgba(5,217,232,0.45); color: #fff; }
     .tier.current { border-color: #FF2A6D; box-shadow: 0 0 16px rgba(255,42,109,0.25); }
-    .tier.locked { opacity: 0.45; filter: grayscale(0.6); }
+    /* Antes esto era "opacity: 0.45; filter: grayscale(0.6)". La opacidad no
+       distingue entre lo decorativo y lo que hay que leer: apagaba el icono,
+       si, pero tambien el nombre del nivel y los kilos, que se quedaban en
+       1,86:1 -- por debajo de lo que WCAG pide para cualquier texto. Y no se
+       arreglaba subiendo la opacidad: al 0,85, con la caja ya casi encendida
+       y el efecto de "bloqueado" perdido, el texto pequeno seguia en 3,74.
+       Se apaga lo que es decoracion (el emoji, que no dice nada que el
+       nombre no diga) y se atenua la caja, dejando el texto legible. */
+    .tier.locked { background: #121219; border-color: #23232f; }
+    .tier.locked .t-icon { opacity: 0.35; filter: grayscale(1); }
 
     /* ===== PANEL DE SALUD ===== */
     .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 22px; }
@@ -810,7 +827,7 @@
     .sleep-bars { display: flex; gap: 6px; align-items: flex-end; height: 90px; margin-top: 10px; }
     .sleep-bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
     .sleep-bar-fill { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #05D9E8, rgba(5,217,232,0.25)); min-height: 3px; }
-    .sleep-bar-col span { font-size: 0.6rem; color: #667; }
+    .sleep-bar-col span { font-size: 0.6rem; color: #82828f; }
 
     /* ===== GALERÍA DE LIBRERÍA (carrusel) ===== */
     .planner-single { grid-template-columns: minmax(0, 1fr) !important; }
@@ -878,7 +895,7 @@
     /* ===== MENÚ POR MES ===== */
     .month-toggle { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 16px; }
     .mt-label { font-size: 0.78rem; color: #889; }
-    .mt-hint { font-size: 0.7rem; color: #667; flex-basis: 100%; }
+    .mt-hint { font-size: 0.7rem; color: #82828f; flex-basis: 100%; }
 
     /* ===== BOTÁNICA ===== */
     .bot-tools { margin-bottom: 12px; }
@@ -889,7 +906,7 @@
     .bot-card:hover { border-color: rgba(5,217,232,0.35); }
     .bot-emoji { font-size: 1.8rem; }
     .bot-name { font-weight: 800; color: #fff; font-size: 0.92rem; }
-    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #FF2A6D; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
+    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #ff447f; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
     .bot-nut { font-size: 0.74rem; color: #05D9E8; }
     .bot-ben { font-size: 0.76rem; color: #aab; line-height: 1.5; flex: 1; }
     .bot-uso { font-size: 0.72rem; color: #889; }
@@ -904,7 +921,7 @@
       font-size: 0.92rem; color: #fff; line-height: 1.55; font-weight: 600;
     }
     .bot-fact .bf-icon { font-size: 1.2rem; }
-    .bot-fact-sub { font-size: 0.7rem; color: #667; margin: 8px 0 14px; }
+    .bot-fact-sub { font-size: 0.7rem; color: #82828f; margin: 8px 0 14px; }
     .bot-strip {
       display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px;
       scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;

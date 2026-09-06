@@ -33,6 +33,24 @@ const RAIZ = path.resolve(AQUI, '../..');
 const CHROME = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const PAGINA = 'file://' + path.join(AQUI, 'tarjetas.html');
 
+/* El dominio de las miniaturas, como EXPRESION REGULAR y no como comodin.
+
+   Esto estaba escrito '**i.ytimg.com/**', y con esa forma Playwright dejo de
+   interceptar: en sus versiones nuevas los ** tienen que ocupar un segmento
+   entero de la ruta, y ahi van pegados al nombre del dominio. El resultado
+   era peor que un rojo. La prueba de "la miniatura carga bien" se ponia en
+   rojo, si -- pero las DOS de "con el dominio bloqueado" seguian en verde por
+   el motivo equivocado: no bloqueaba la prueba, bloqueaba el contenedor, que
+   no tiene salida a i.ytimg.com. Verde por accidente es exactamente lo que un
+   verificador no puede permitirse.
+
+   Una expresion regular no depende de como interprete nadie los asteriscos.
+   Y para que no vuelva a pasar en silencio, mas abajo se cuenta cuantas
+   peticiones se han interceptado de verdad: si son cero, esta bateria no ha
+   probado nada. */
+const YTIMG = /i\.ytimg\.com/;
+let interceptadas = 0;
+
 let fallos = 0;
 const decir = (ok, txt) => { if (!ok) fallos++; console.log(`${ok ? ' OK   ' : 'FALLA '} ${txt}`); };
 
@@ -100,7 +118,7 @@ for (const [nombre, ancho, alto] of [['movil', 390, 800], ['escritorio', 1280, 8
   console.log(`\n--- ${nombre}: con el dominio de las miniaturas BLOQUEADO ---`);
   const ctx = await navegador.newContext({ viewport: { width: ancho, height: alto }, deviceScaleFactor: 2 });
   // Esto es literalmente lo que hace un bloqueador de anuncios.
-  await ctx.route('**i.ytimg.com/**', r => r.abort());
+  await ctx.route(YTIMG, r => { interceptadas++; r.abort(); });
   const p = await ctx.newPage();
   const errores = [];
   p.on('pageerror', e => errores.push(e.message));
@@ -201,7 +219,7 @@ console.log('\n--- La marca de agua de la imagen de respaldo queda tapada ---');
   const medida = {};
   for (const [nombre, conMarca] of [['con marca', true], ['sin marca', false]]) {
     const ctx = await navegador.newContext({ viewport: { width: 300, height: 480 }, deviceScaleFactor: 3 });
-    await ctx.route('**i.ytimg.com/**', r => r.abort());
+    await ctx.route(YTIMG, r => { interceptadas++; r.abort(); });
     const p = await ctx.newPage();
     await p.goto(PAGINA);
     // Se le mete la imagen de respaldo a la tarjeta real
@@ -249,7 +267,7 @@ console.log('\n--- Sin bloqueo, la miniatura manda ---');
   const png = Buffer.from(
     'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
     'base64');
-  await ctx.route('**i.ytimg.com/**', r => r.fulfill({ status: 200, contentType: 'image/png', body: png }));
+  await ctx.route(YTIMG, r => { interceptadas++; r.fulfill({ status: 200, contentType: 'image/png', body: png }); });
   const p = await ctx.newPage();
   await p.goto(PAGINA);
   await p.waitForTimeout(700);
@@ -265,6 +283,11 @@ console.log('\n--- Sin bloqueo, la miniatura manda ---');
 }
 
 await navegador.close();
+
+/* La comprobacion que vigila a las demas: si no se intercepto ni una
+   peticion, ninguna de las de arriba ha medido lo que dice medir. */
+decir(interceptadas > 0, `las peticiones de miniatura se interceptan de verdad (${interceptadas})`);
+
 console.log(fallos === 0
   ? '\nNinguna tarjeta de video se queda en negro, ni con el dominio de las miniaturas bloqueado.\n'
   : `\n${fallos} comprobacion(es) en rojo.\n`);

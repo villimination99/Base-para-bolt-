@@ -53,7 +53,7 @@
       letter-spacing: normal !important; text-transform: none !important;
       text-decoration: none !important; min-height: 0 !important; box-shadow: none;
     }
-    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #fff !important; border: none !important; }
+    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #0d0d12 !important; border: none !important; }
     #vill-hub .btn-outline { background: transparent !important; border: 1px solid #05D9E8 !important; color: #05D9E8 !important; }
     #vill-hub .btn-pink { background: transparent !important; border: 1px solid #FF2A6D !important; color: #FF2A6D !important; }
     #vill-hub a { text-decoration: none !important; border-bottom: none !important; }
@@ -108,14 +108,22 @@
       font-family: inherit;
     }
     .btn:active { transform: scale(0.97); opacity: 0.85; }
-    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #fff; }
+    /* Texto oscuro, no blanco, y no es una preferencia. El degradado va de
+       magenta a cian, y el cian #05D9E8 es un color muy claro: el blanco
+       encima da 1,74:1. Eso no es "poco contraste", es la mitad de la
+       palabra ilegible en cuanto el degradado pasa del medio. En oscuro son
+       5,36:1 sobre el magenta y 11,17:1 sobre el cian.
+       Ninguna auditoria lo canta: axe, ante un linear-gradient, no calcula
+       contraste y lo deja como "no concluyente". Se pillo a mano y ahora lo
+       vigila check.mjs. */
+    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #0d0d12; }
     .btn-outline { background: transparent; border: 1px solid #05D9E8; color: #05D9E8; }
     .btn-pink { background: transparent; border: 1px solid #FF2A6D; color: #FF2A6D; }
     .badge {
       display: inline-block; padding: 3px 10px; border-radius: 20px;
       font-size: 0.75rem; font-weight: 700;
     }
-    .badge-pink { background: rgba(255,42,109,0.15); color: #FF2A6D; border: 1px solid rgba(255,42,109,0.3); }
+    .badge-pink { background: rgba(255,42,109,0.15); color: #ff447f; border: 1px solid rgba(255,42,109,0.3); }
 
     /* ===== BOTÓN FLOTANTE DE PERFIL ===== */
     /* Sube por encima de la esquina donde casi todos los temas de Shopify
@@ -405,7 +413,7 @@
       font-size: 0.9rem; border: 1px solid #2a2a3a;
     }
     .planner-total-cal strong { color: #05D9E8; font-size: 1.3rem; }
-    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #667; }
+    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #82828f; }
 
     .lib-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 28px 0 16px; }
     .lib-chip {
@@ -470,7 +478,7 @@
       padding: 6px 12px; border-radius: 8px; border: 1px solid #05D9E8;
       background: transparent; color: #05D9E8; cursor: pointer; font-size: 0.75rem; font-family: inherit;
     }
-    .scan-note { font-size: 0.7rem; color: #667; margin-top: 8px; }
+    .scan-note { font-size: 0.7rem; color: #82828f; margin-top: 8px; }
     #scan-canvas { display: none; }
 
     /* ===== SLIDERS PREMIUM ===== */
@@ -514,7 +522,7 @@
     }
     #vill-hub .exgif-stage::after, #modal-content .exgif-stage::after {
       content: '⤢'; position: absolute; right: 9px; bottom: 8px; z-index: 3;
-      font-size: 0.9rem; color: #fff;
+      font-size: 0.9rem; color: #0d0d12;
       background: linear-gradient(135deg, #FF2A6D, #05D9E8);
       width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.35); pointer-events: none;
@@ -645,7 +653,7 @@
       display: flex; flex-direction: column; gap: 2px; transition: border-color .2s;
     }
     .mp-day:hover { border-color: rgba(5,217,232,0.4); }
-    .mp-day .d-num { font-size: 0.62rem; color: #667; letter-spacing: 1px; }
+    .mp-day .d-num { font-size: 0.62rem; color: #82828f; letter-spacing: 1px; }
     .mp-day .d-name { font-size: 0.74rem; font-weight: 700; color: #fff; line-height: 1.25; }
     .mp-day .d-min { font-size: 0.66rem; color: #05D9E8; }
     .mp-day.done { border-color: rgba(46,204,113,0.5); background: rgba(46,204,113,0.06); }
@@ -690,7 +698,7 @@
     }
     .breath-count { font-size: 3.4rem; font-weight: 900; line-height: 1; color: #fff; }
     .breath-phase { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: #cdd; margin-top: 6px; font-weight: 700; }
-    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #667; }
+    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #82828f; }
     .breath-patterns { display: flex; flex-direction: column; gap: 8px; }
     .breath-pattern {
       text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid #2a2a3a;
@@ -729,7 +737,7 @@
       background: linear-gradient(135deg, #FF2A6D, #05D9E8);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .freq-card .freq-unit { font-size: 0.68rem; color: #667; letter-spacing: 1.5px; margin-top: 2px; }
+    .freq-card .freq-unit { font-size: 0.68rem; color: #82828f; letter-spacing: 1.5px; margin-top: 2px; }
     .freq-card .freq-name { font-weight: 700; margin-top: 8px; font-size: 0.88rem; }
     .freq-card .freq-desc { font-size: 0.73rem; color: #888899; margin-top: 4px; line-height: 1.4; min-height: 42px; }
     .freq-card .freq-state { margin-top: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; color: #05D9E8; text-transform: uppercase; }
@@ -795,10 +803,19 @@
       font-size: 0.72rem; color: #99a;
     }
     .tier .t-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
-    .tier .t-kg { display: block; color: #667; font-size: 0.66rem; margin-top: 2px; }
+    .tier .t-kg { display: block; color: #82828f; font-size: 0.66rem; margin-top: 2px; }
     .tier.unlocked { border-color: rgba(5,217,232,0.45); color: #fff; }
     .tier.current { border-color: #FF2A6D; box-shadow: 0 0 16px rgba(255,42,109,0.25); }
-    .tier.locked { opacity: 0.45; filter: grayscale(0.6); }
+    /* Antes esto era "opacity: 0.45; filter: grayscale(0.6)". La opacidad no
+       distingue entre lo decorativo y lo que hay que leer: apagaba el icono,
+       si, pero tambien el nombre del nivel y los kilos, que se quedaban en
+       1,86:1 -- por debajo de lo que WCAG pide para cualquier texto. Y no se
+       arreglaba subiendo la opacidad: al 0,85, con la caja ya casi encendida
+       y el efecto de "bloqueado" perdido, el texto pequeno seguia en 3,74.
+       Se apaga lo que es decoracion (el emoji, que no dice nada que el
+       nombre no diga) y se atenua la caja, dejando el texto legible. */
+    .tier.locked { background: #121219; border-color: #23232f; }
+    .tier.locked .t-icon { opacity: 0.35; filter: grayscale(1); }
 
     /* ===== PANEL DE SALUD ===== */
     .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 22px; }
@@ -825,7 +842,7 @@
     .sleep-bars { display: flex; gap: 6px; align-items: flex-end; height: 90px; margin-top: 10px; }
     .sleep-bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
     .sleep-bar-fill { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #05D9E8, rgba(5,217,232,0.25)); min-height: 3px; }
-    .sleep-bar-col span { font-size: 0.6rem; color: #667; }
+    .sleep-bar-col span { font-size: 0.6rem; color: #82828f; }
 
     /* ===== GALERÍA DE LIBRERÍA (carrusel) ===== */
     .planner-single { grid-template-columns: minmax(0, 1fr) !important; }
@@ -893,7 +910,7 @@
     /* ===== MENÚ POR MES ===== */
     .month-toggle { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 16px; }
     .mt-label { font-size: 0.78rem; color: #889; }
-    .mt-hint { font-size: 0.7rem; color: #667; flex-basis: 100%; }
+    .mt-hint { font-size: 0.7rem; color: #82828f; flex-basis: 100%; }
 
     /* ===== BOTÁNICA ===== */
     .bot-tools { margin-bottom: 12px; }
@@ -904,7 +921,7 @@
     .bot-card:hover { border-color: rgba(5,217,232,0.35); }
     .bot-emoji { font-size: 1.8rem; }
     .bot-name { font-weight: 800; color: #fff; font-size: 0.92rem; }
-    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #FF2A6D; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
+    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #ff447f; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
     .bot-nut { font-size: 0.74rem; color: #05D9E8; }
     .bot-ben { font-size: 0.76rem; color: #aab; line-height: 1.5; flex: 1; }
     .bot-uso { font-size: 0.72rem; color: #889; }
@@ -919,7 +936,7 @@
       font-size: 0.92rem; color: #fff; line-height: 1.55; font-weight: 600;
     }
     .bot-fact .bf-icon { font-size: 1.2rem; }
-    .bot-fact-sub { font-size: 0.7rem; color: #667; margin: 8px 0 14px; }
+    .bot-fact-sub { font-size: 0.7rem; color: #82828f; margin: 8px 0 14px; }
     .bot-strip {
       display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px;
       scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
@@ -1223,7 +1240,7 @@
           <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span data-tx>Calorías hoy</span><strong id="cal-count" style="color:#05D9E8">1840 kcal</strong></div>
           <div style="display:flex;justify-content:space-between"><span data-tx>Meta</span><strong id="cal-goal">2200 kcal</strong></div>
           <div class="hydro-row">
-            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#667">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
+            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#82828f">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
             <span class="hydro-btns"><button class="portion-btn" type="button" onclick="addWater(250)">+250 ml</button><button class="portion-btn" type="button" onclick="addWater(500)">+500 ml</button></span>
           </div>
           <div style="background:#2a2a3a;border-radius:4px;height:6px;margin-top:8px;overflow:hidden"><div id="cal-bar" style="height:100%;border-radius:4px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);width:83%"></div></div>
@@ -1334,7 +1351,7 @@
       <button class="btn btn-outline" data-tx onclick="openDietTab('defini')">Ver plan de definición →</button>
     </div>
   </div>
-  <p style="margin-top:14px;font-size:0.72rem;color:#667" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
+  <p style="margin-top:14px;font-size:0.72rem;color:#82828f" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
 </section>
 </div>
 
@@ -1352,8 +1369,8 @@
     </div>
     <div class="month-toggle">
       <span class="mt-label" data-tx>Menú:</span>
-      <select id="mt-month" class="mt-select"></select>
-      <select id="mt-week" class="mt-select">
+      <select id="mt-month" class="mt-select" aria-label="Mes del menú"></select>
+      <select id="mt-week" class="mt-select" aria-label="Semana del menú">
         <option data-tx value="0">Semana 1</option><option data-tx value="1">Semana 2</option><option data-tx value="2">Semana 3</option><option data-tx value="3">Semana 4</option><option data-tx value="4">Semana 5</option>
       </select>
       <span class="mt-hint" id="mt-hint"></span>
@@ -1390,7 +1407,7 @@
           <span style="color:#05D9E8;font-weight:700;" data-tx>Fase Definición (Sem 5-8)</span><div data-tx>2000-2400 kcal · 2.4g/kg proteína · 3g/kg carbos · 0.7g/kg grasas</div>
         </div>
       </div>
-      <div style="overflow-x:auto">
+      <div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal">
         <table class="diet-menu" style="width:100%;min-width:400px;">
           <thead><tr><th data-tx>Semana</th><th data-tx>Kcal entreno</th><th data-tx>Kcal descanso</th><th><span data-tx>Proteína</span></th><th><span data-tx>Carbos</span></th><th>Cardio</th></tr></thead>
           <tbody>
@@ -1458,7 +1475,7 @@
   <div style="margin-top:26px">
     <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff" data-tx>🌿 Botiquín Ancestral</h3>
     <p style="margin:0 0 12px;font-size:0.8rem;color:#889" data-tx>Preparaciones tradicionales con respaldo parcial de la ciencia — contadas con honestidad, sin promesas mágicas.</p>
-    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
+    <div tabindex="0" role="group" aria-label="Carrusel, se desplaza en horizontal" style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
       <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
         <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🥛 Leche dorada</strong>
         <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cúrcuma + pimienta negra + canela en leche tibia. Ritual ayurvédico nocturno: la piperina multiplica la absorción de la curcumina.</p>
@@ -1510,11 +1527,11 @@
         <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Hojas de menta machacadas en agua fría: frescura digestiva tras comidas pesadas, del Magreb a México.</p>
       </div>
     </div>
-    <p style="margin:6px 0 0;font-size:0.68rem;color:#556" data-tx>‹ Desliza para ver más ›</p>
+    <p style="margin:6px 0 0;font-size:0.68rem;color:#7e7e8b" data-tx>‹ Desliza para ver más ›</p>
     <p style="margin:12px 0 0;font-size:0.72rem;color:#e0b34c" data-tx>⚠️ Sabiduría tradicional ≠ tratamiento. Si sospechas parásitos o un problema renal, acude a tu médico: estas preparaciones no sustituyen diagnóstico ni medicación.</p>
   </div>
 
-  <p style="margin-top:12px;font-size:0.7rem;color:#667" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
+  <p style="margin-top:12px;font-size:0.7rem;color:#82828f" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
 </section>
 </div>
 
@@ -1627,11 +1644,11 @@
     <h3 style="margin:0 0 6px;font-size:0.98rem;color:#fff" data-tx>🎛️ Tono libre</h3>
     <p style="margin:0 0 10px;font-size:0.8rem;color:#aab;line-height:1.5" data-tx>Escribe cualquier frecuencia y escúchala como tono puro. Volumen bajo y sesiones cortas.</p>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-      <input type="number" id="free-hz" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
+      <input type="number" id="free-hz" aria-label="Frecuencia en hercios" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
       <span style="color:#889;font-size:0.85rem">Hz · 20–20 000</span>
     </div>
-    <input type="range" id="free-hz-slider" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
-    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#556;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
+    <input type="range" id="free-hz-slider" aria-label="Ajustar la frecuencia" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
+    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#7e7e8b;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
     <button class="btn btn-primary" id="free-tone-btn" type="button" style="width:100%;justify-content:center;margin-top:12px">▶ Reproducir</button>
   </div>
 </section>
@@ -1688,7 +1705,7 @@
     <div class="sleep-grid">
       <div>
         <div class="sleep-hours-label"><span id="sleep-hours-val">7.5</span> <span>horas</span></div>
-        <input type="range" id="sleep-hours" min="3" max="12" step="0.5" value="7.5">
+        <input type="range" id="sleep-hours" aria-label="Horas dormidas" min="3" max="12" step="0.5" value="7.5">
         <div class="sleep-quality">
           <button data-tx class="sq-btn" data-q="ligero">😐 Ligero</button>
           <button data-tx class="sq-btn active" data-q="regular">🙂 Normal</button>
@@ -1733,7 +1750,7 @@
 
   <div class="card" style="margin-bottom:20px">
     <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Leaderboard esta semana</h3>
-    <div style="overflow-x:auto">
+    <div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal">
       <table class="leaderboard" id="leaderboard-table"></table>
     </div>
   </div>
@@ -2492,7 +2509,7 @@
       var d = DIETWEEKS[w.dataset.plan];
       if (!d) return;
       var rows = getWeekMenu(w.dataset.plan, mi, wi);
-      w.innerHTML = '<div style="overflow-x:auto"><table class="diet-menu" style="width:100%;min-width:560px;margin-top:12px;"><thead><tr><th>' + T('th.day','Día') + '</th><th>' + T('th.bre','Desayuno') + '</th><th>' + T('th.lun','Comida') + '</th><th>' + T('th.sna','Colación') + '</th><th>' + T('th.din','Cena') + '</th></tr></thead><tbody>' +
+      w.innerHTML = '<div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal"><table class="diet-menu" style="width:100%;min-width:560px;margin-top:12px;"><thead><tr><th>' + T('th.day','Día') + '</th><th>' + T('th.bre','Desayuno') + '</th><th>' + T('th.lun','Comida') + '</th><th>' + T('th.sna','Colación') + '</th><th>' + T('th.din','Cena') + '</th></tr></thead><tbody>' +
         rows.map(function(r) { return '<tr><td>' + r[0] + '</td><td>' + TXDISH(r[1]) + '</td><td>' + TXDISH(r[2]) + '</td><td>' + TXDISH(r[3]) + '</td><td>' + TXDISH(r[4]) + '</td></tr>'; }).join('') +
         '</tbody></table></div>' +
         (TX(d.note) ? '<p style="font-size:0.75rem;color:#889;margin-top:8px">' + TX(d.note) + '</p>' : '');
@@ -2835,7 +2852,7 @@
     var days = window.getRecentDays(7);
     var any = days.some(function(d) { return d.sleep; });
     if (!any) {
-      wrap.innerHTML = '<span style="color:#667;font-size:0.75rem">' + T('sleep.empty', 'Aún sin registros — guarda tu primera noche y aquí verás tu semana.') + '</span>';
+      wrap.innerHTML = '<span style="color:#82828f;font-size:0.75rem">' + T('sleep.empty', 'Aún sin registros — guarda tu primera noche y aquí verás tu semana.') + '</span>';
       return;
     }
     wrap.innerHTML = days.map(function(d) {
@@ -2904,7 +2921,7 @@
         '<div class="goal-line">Tu mantenimiento (TDEE): <strong>' + tdee.toLocaleString('es') + ' kcal/día</strong></div>' +
         '<div class="goal-line big">Meta para ' + objTxt + ': <strong>' + meta.toLocaleString('es') + ' kcal/día</strong></div>' +
         '<button class="btn btn-primary" onclick="applyGoal(' + meta + ')">🎯 Establecer como mi meta diaria</button>' +
-        '<div style="margin-top:10px;font-size:0.7rem;color:#667">Fórmula Mifflin-St Jeor · estimación orientativa de bienestar, no consejo médico.</div>';
+        '<div style="margin-top:10px;font-size:0.7rem;color:#82828f">Fórmula Mifflin-St Jeor · estimación orientativa de bienestar, no consejo médico.</div>';
       box.style.display = 'block';
     });
   })();
@@ -3028,7 +3045,7 @@
     document.getElementById('reco-cards').innerHTML = pickRecipes(burned).map(function(r) {
       return '<div class="reco-card">' +
         '<div class="rc-title">' + r.t + '</div>' +
-        '<span class="rc-kcal">' + r.k + ' kcal</span> <span style="font-size:0.68rem;color:#667">· ' + r.m + ' min · ' + r.tag + '</span>' +
+        '<span class="rc-kcal">' + r.k + ' kcal</span> <span style="font-size:0.68rem;color:#82828f">· ' + r.m + ' min · ' + r.tag + '</span>' +
         '<div class="rc-macros">' + r.p + 'g proteína · ' + r.c + 'g carbos · ' + r.f + 'g grasas</div>' +
         '<ul>' + r.i.map(function(x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
       '</div>';
@@ -4683,7 +4700,7 @@
         var box = document.getElementById('scan-result');
         box.style.display = 'block';
         window.__scanHeur = function() { showScanHeuristic(cnv); };
-        box.innerHTML = '<span style="color:#05D9E8">🤖 ' + T('t.scan1', 'Analizando con IA local…') + '</span> <span style="color:#667;font-size:0.75rem">' + T('t.scan2', "La primera vez descarga el modelo (~4 MB); funciona en tu dispositivo, nada se sube.") + '</span>';
+        box.innerHTML = '<span style="color:#05D9E8">🤖 ' + T('t.scan1', 'Analizando con IA local…') + '</span> <span style="color:#82828f;font-size:0.75rem">' + T('t.scan2', "La primera vez descarga el modelo (~4 MB); funciona en tu dispositivo, nada se sube.") + '</span>';
         classifyAI(cnv).then(function(cands) {
           if (cands && cands.length) renderAICandidates(cands);
           else showScanHeuristic(cnv);
@@ -4758,7 +4775,7 @@
         var guard = setTimeout(function() {
           timedOut = true;
           scanFeedback('La cámara en vivo no respondió (típico del navegador dentro de una app). ' + NATIVE_BTN +
-            ' <span style="color:#667;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
+            ' <span style="color:#82828f;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
         }, 4000);
         navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
           .catch(function() { return navigator.mediaDevices.getUserMedia({ video: true, audio: false }); })
@@ -4782,7 +4799,7 @@
               ? 'Permiso de cámara denegado (Ajustes → Safari → Cámara).'
               : 'No se pudo abrir la cámara en vivo.';
             scanFeedback('<span style="color:#FF9F43">' + msg + '</span> ' + NATIVE_BTN +
-              ' <span style="color:#667;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
+              ' <span style="color:#82828f;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
           });
       });
       captureBtn.addEventListener('click', function() {

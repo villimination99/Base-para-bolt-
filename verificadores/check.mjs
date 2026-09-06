@@ -1322,6 +1322,78 @@ check('Imagenes bien servidas', () => {
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');
+check('Texto sobre un degradado, contra los DOS extremos', () => {
+  /* Esta la encontre a mano y merece quedarse automatizada, porque ninguna
+     herramienta de accesibilidad la ve: axe, cuando el fondo es un
+     linear-gradient, no calcula contraste -- lo marca como "no concluyente"
+     y sigue. Asi que un boton puede estar perfectamente ilegible y salir en
+     verde en todas las auditorias.
+
+     Fue exactamente lo que pasaba con el boton que lleva a VI.P desde la
+     portada: texto BLANCO sobre un degradado de magenta a cian. Contra el
+     magenta daba 3,62:1 -- justito. Contra el cian, 1,74:1, que no es
+     "flojo": es texto que no se lee. Y habia una regla anterior que ya lo
+     ponia en oscuro, pisada despues por otra con color:#fff.
+
+     La regla: si una declaracion pone a la vez un color de texto y un
+     linear-gradient con paradas en hexadecimal, el texto tiene que cumplir
+     contra TODAS las paradas, no contra la que quede mejor. Se avisa por
+     debajo de 3:1, que es el minimo incluso para texto grande: ahi no hay
+     discusion posible sobre tamanos ni pesos. */
+  const lum = (h) => {
+    const c = h.length === 4 ? '#' + [...h.slice(1)].map(x => x + x).join('') : h;
+    const s = [0, 1, 2].map(i => parseInt(c.slice(1 + i * 2, 3 + i * 2), 16) / 255)
+      .map(v => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+    return 0.2126 * s[0] + 0.7152 * s[1] + 0.0722 * s[2];
+  };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+
+  /* Se agrupa por SELECTOR y gana la ultima declaracion, que es lo que hace
+     la cascada. Sin esto la comprobacion daba un falso positivo real:
+     .product-card-placeholder tiene dos reglas, y la segunda pisa el
+     degradado con "background: transparent". Avisar de un degradado que ya
+     no esta es mandar a arreglar lo que no esta roto -- justo lo que hace
+     que se dejen de leer los avisos. */
+  /* UNA excepcion, con su motivo. El contenido de #profile-btn es el emoji
+     👤, y un emoji lo pinta la fuente de color del sistema: la propiedad
+     "color" no lo toca. El #fff que hay ahi es el respaldo por si el emoji
+     no existiera, y en ese caso el boton mide 56 px con un glifo enorme
+     dentro -- no es el caso que WCAG mide con 4,5:1.
+     Esta escrita aqui, con el porque, y no borrada de la comprobacion: el
+     dia que ese boton lleve texto de verdad, la excepcion se quita y la
+     comprobacion vuelve sola. */
+  const EXENTOS = ['#profile-btn'];
+
+  const bad = [];
+  for (const hoja of fs.readdirSync(`${T}/assets`).filter(f => f.endsWith('.css'))) {
+    const css = read(`${T}/assets/${hoja}`).replace(/\/\*[\s\S]*?\*\//g, '');
+    const porSelector = new Map();
+    for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      const selector = m[1].trim().replace(/\s+/g, ' ');
+      if (selector.startsWith('@') || selector.includes(':hover') || selector.includes('%')) continue;
+      if (EXENTOS.some(x => selector.includes(x))) continue;
+      const previo = porSelector.get(selector) || { fondo: null, texto: null };
+      const fondo = [...m[2].matchAll(/(?:^|;)\s*background(?:-image)?\s*:\s*([^;]+)/gi)].pop();
+      if (fondo) previo.fondo = fondo[1];
+      const color = [...m[2].matchAll(/(?:^|;)\s*color\s*:\s*(#[0-9a-f]{3,8})\b/gi)].pop();
+      if (color) previo.texto = color[1].slice(0, 7);
+      porSelector.set(selector, previo);
+    }
+    for (const [selector, { fondo, texto }] of porSelector) {
+      if (!fondo || !texto) continue;
+      const grad = fondo.match(/linear-gradient\(([^)]*)\)/);
+      if (!grad) continue;
+      const paradas = [...grad[1].matchAll(/#[0-9a-f]{3,6}\b/gi)].map(x => x[0]);
+      if (paradas.length < 2) continue;
+      for (const parada of paradas) {
+        const r = ratio(texto, parada);
+        if (r < 3) bad.push(`${hoja} ${selector.slice(-70)}: texto ${texto} sobre la parada ${parada} del degradado = ${r.toFixed(2)}:1 (minimo 3)`);
+      }
+    }
+  }
+  return bad;
+});
+
 for (const r of results) {
   const ok = r.problems.length === 0;
   if (!ok) fails++;

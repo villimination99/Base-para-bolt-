@@ -8,7 +8,13 @@
 _extract/
 node_modules/
 package-lock.json
-package.json
+
+# package.json SI se versiona desde 4.48.0. Estaba ignorado, y el precio fue
+# real: como solo declaraba una dependencia, cada "npm i --no-save" de las
+# otras podaba las que no estaban escritas, y a lo largo de la sesion hubo
+# que reinstalar playwright, esbuild, three, chart.js y acorn varias veces
+# persiguiendo errores que parecian del codigo y eran del arbol de modulos.
+# Nada de esto viaja a Shopify: el zip solo lleva theme/.
 tcrun*.mjs
 tcrun.mjs
 villumination-3d-theme-*.zip

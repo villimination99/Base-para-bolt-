@@ -678,7 +678,7 @@
       var d = DIETWEEKS[w.dataset.plan];
       if (!d) return;
       var rows = getWeekMenu(w.dataset.plan, mi, wi);
-      w.innerHTML = '<div style="overflow-x:auto"><table class="diet-menu" style="width:100%;min-width:560px;margin-top:12px;"><thead><tr><th>' + T('th.day','Día') + '</th><th>' + T('th.bre','Desayuno') + '</th><th>' + T('th.lun','Comida') + '</th><th>' + T('th.sna','Colación') + '</th><th>' + T('th.din','Cena') + '</th></tr></thead><tbody>' +
+      w.innerHTML = '<div style="overflow-x:auto" tabindex="0" role="group" aria-label="Tabla del menú, se desplaza en horizontal"><table class="diet-menu" style="width:100%;min-width:560px;margin-top:12px;"><thead><tr><th>' + T('th.day','Día') + '</th><th>' + T('th.bre','Desayuno') + '</th><th>' + T('th.lun','Comida') + '</th><th>' + T('th.sna','Colación') + '</th><th>' + T('th.din','Cena') + '</th></tr></thead><tbody>' +
         rows.map(function(r) { return '<tr><td>' + r[0] + '</td><td>' + TXDISH(r[1]) + '</td><td>' + TXDISH(r[2]) + '</td><td>' + TXDISH(r[3]) + '</td><td>' + TXDISH(r[4]) + '</td></tr>'; }).join('') +
         '</tbody></table></div>' +
         (TX(d.note) ? '<p style="font-size:0.75rem;color:#889;margin-top:8px">' + TX(d.note) + '</p>' : '');
@@ -1021,7 +1021,7 @@
     var days = window.getRecentDays(7);
     var any = days.some(function(d) { return d.sleep; });
     if (!any) {
-      wrap.innerHTML = '<span style="color:#667;font-size:0.75rem">' + T('sleep.empty', 'Aún sin registros — guarda tu primera noche y aquí verás tu semana.') + '</span>';
+      wrap.innerHTML = '<span style="color:#82828f;font-size:0.75rem">' + T('sleep.empty', 'Aún sin registros — guarda tu primera noche y aquí verás tu semana.') + '</span>';
       return;
     }
     wrap.innerHTML = days.map(function(d) {
@@ -1090,7 +1090,7 @@
         '<div class="goal-line">Tu mantenimiento (TDEE): <strong>' + tdee.toLocaleString('es') + ' kcal/día</strong></div>' +
         '<div class="goal-line big">Meta para ' + objTxt + ': <strong>' + meta.toLocaleString('es') + ' kcal/día</strong></div>' +
         '<button class="btn btn-primary" onclick="applyGoal(' + meta + ')">🎯 Establecer como mi meta diaria</button>' +
-        '<div style="margin-top:10px;font-size:0.7rem;color:#667">Fórmula Mifflin-St Jeor · estimación orientativa de bienestar, no consejo médico.</div>';
+        '<div style="margin-top:10px;font-size:0.7rem;color:#82828f">Fórmula Mifflin-St Jeor · estimación orientativa de bienestar, no consejo médico.</div>';
       box.style.display = 'block';
     });
   })();
@@ -1214,7 +1214,7 @@
     document.getElementById('reco-cards').innerHTML = pickRecipes(burned).map(function(r) {
       return '<div class="reco-card">' +
         '<div class="rc-title">' + r.t + '</div>' +
-        '<span class="rc-kcal">' + r.k + ' kcal</span> <span style="font-size:0.68rem;color:#667">· ' + r.m + ' min · ' + r.tag + '</span>' +
+        '<span class="rc-kcal">' + r.k + ' kcal</span> <span style="font-size:0.68rem;color:#82828f">· ' + r.m + ' min · ' + r.tag + '</span>' +
         '<div class="rc-macros">' + r.p + 'g proteína · ' + r.c + 'g carbos · ' + r.f + 'g grasas</div>' +
         '<ul>' + r.i.map(function(x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
       '</div>';
@@ -2869,7 +2869,7 @@
         var box = document.getElementById('scan-result');
         box.style.display = 'block';
         window.__scanHeur = function() { showScanHeuristic(cnv); };
-        box.innerHTML = '<span style="color:#05D9E8">🤖 ' + T('t.scan1', 'Analizando con IA local…') + '</span> <span style="color:#667;font-size:0.75rem">' + T('t.scan2', "La primera vez descarga el modelo (~4 MB); funciona en tu dispositivo, nada se sube.") + '</span>';
+        box.innerHTML = '<span style="color:#05D9E8">🤖 ' + T('t.scan1', 'Analizando con IA local…') + '</span> <span style="color:#82828f;font-size:0.75rem">' + T('t.scan2', "La primera vez descarga el modelo (~4 MB); funciona en tu dispositivo, nada se sube.") + '</span>';
         classifyAI(cnv).then(function(cands) {
           if (cands && cands.length) renderAICandidates(cands);
           else showScanHeuristic(cnv);
@@ -2944,7 +2944,7 @@
         var guard = setTimeout(function() {
           timedOut = true;
           scanFeedback('La cámara en vivo no respondió (típico del navegador dentro de una app). ' + NATIVE_BTN +
-            ' <span style="color:#667;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
+            ' <span style="color:#82828f;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
         }, 4000);
         navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } }, audio: false })
           .catch(function() { return navigator.mediaDevices.getUserMedia({ video: true, audio: false }); })
@@ -2968,7 +2968,7 @@
               ? 'Permiso de cámara denegado (Ajustes → Safari → Cámara).'
               : 'No se pudo abrir la cámara en vivo.';
             scanFeedback('<span style="color:#FF9F43">' + msg + '</span> ' + NATIVE_BTN +
-              ' <span style="color:#667;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
+              ' <span style="color:#82828f;font-size:0.75rem">La cámara nativa y “Subir foto” funcionan en cualquier navegador.</span>');
           });
       });
       captureBtn.addEventListener('click', function() {

@@ -75,20 +75,28 @@ const TMP = path.join(RAIZ, '.paquete');
 fs.rmSync(TMP, { recursive: true, force: true });
 fs.cpSync(TEMA, TMP, { recursive: true });
 
-const rutaCss = path.join(TMP, 'assets/villumination.css');
-const original = fs.readFileSync(rutaCss, 'utf8');
-const limpio = limpiarCss(original);
-const chequeo = comprobar(original, limpio);
-
-if (!chequeo.llavesCuadran || !chequeo.mismosSelectores) {
-  console.error('  La limpieza del CSS cambiaria las reglas. Se aborta y se empaqueta sin limpiar.');
-  console.error('  ' + JSON.stringify(chequeo));
-} else {
-  fs.writeFileSync(rutaCss, limpio);
-  const antes = original.length, despues = limpio.length;
-  console.log(`  CSS: ${antes} -> ${despues} B  (${(100 * (antes - despues) / antes).toFixed(1)} % menos)`);
-  console.log(`  ${chequeo.cuantos} selectores intactos, llaves cuadradas`);
+/* TODAS las hojas, no solo la principal. vi-p.css llevaba sus 55 comentarios
+   al cliente porque esta linea nombraba un archivo suelto en vez de recorrer
+   la carpeta: el dia que el hub estreno hoja propia, se quedo fuera sin que
+   nadie lo notara. Recorrer el directorio no puede olvidarse de un archivo
+   nuevo. */
+let cssAntes = 0, cssDespues = 0, cssSelectores = 0, cssArchivos = 0;
+for (const nombre of fs.readdirSync(path.join(TMP, 'assets')).filter(f => f.endsWith('.css')).sort()) {
+  const ruta = path.join(TMP, 'assets', nombre);
+  const original = fs.readFileSync(ruta, 'utf8');
+  const limpio = limpiarCss(original);
+  const chequeo = comprobar(original, limpio);
+  if (!chequeo.llavesCuadran || !chequeo.mismosSelectores) {
+    console.error(`  ${nombre}: la limpieza cambiaria las reglas. Se deja tal cual.`);
+    console.error('  ' + JSON.stringify(chequeo));
+    continue;
+  }
+  fs.writeFileSync(ruta, limpio);
+  cssAntes += original.length; cssDespues += limpio.length;
+  cssSelectores += chequeo.cuantos; cssArchivos++;
 }
+console.log(`  CSS: ${cssAntes} -> ${cssDespues} B en ${cssArchivos} hojas  (${(100 * (cssAntes - cssDespues) / cssAntes).toFixed(1)} % menos)`);
+console.log(`  ${cssSelectores} selectores intactos, llaves cuadradas`);
 
 /* ---------------------------------------------------------------------
    JavaScript minificado, con la misma logica que el CSS: el repositorio se
@@ -162,7 +170,8 @@ const BATERIAS = [
   ['verificadores/vi-p/comprobar.mjs', 'VI.P entero en un navegador'],
   ['verificadores/teclado/comprobar.mjs', 'paneles con teclado'],
   ['verificadores/lienzos/comprobar.mjs', 'los lienzos animados pintan'],
-  ['verificadores/plataformas/comprobar.mjs', 'sintaxis en motores viejos']
+  ['verificadores/plataformas/comprobar.mjs', 'sintaxis en motores viejos'],
+  ['verificadores/acceso/comprobar.mjs', 'accesibilidad WCAG 2.1 AA']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');
