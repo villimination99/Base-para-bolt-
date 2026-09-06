@@ -1,3 +1,1077 @@
+<!-- ===================================================================
+     VILLUMINATIONS · VI.P
+     Pensado para pegarse DENTRO de una pagina de Shopify (Contenido ->
+     Paginas -> "<>" Mostrar HTML). Empieza directamente por el estilo y el
+     marcado: NO trae las etiquetas de documento (doctype, la raiz, la
+     cabecera ni el cuerpo), porque la tienda ya las pone y repetirlas rompe
+     la pagina.
+     Todo el CSS cuelga de #vill-hub para no tocar el tema.
+     =================================================================== -->
+  <style>
+    /* ===== RESET & GLOBALES ===== */
+    #vill-hub, #vill-hub *, #vill-hub *::before, #vill-hub *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Ojo con los selectores sueltos: esto se pega DENTRO de una tienda que
+       ya tiene su hoja de estilos. 'html' cambiaba el desplazamiento de la
+       tienda entera, no solo del hub. */
+    #vill-hub { scroll-behavior: smooth; }
+    #vill-hub {
+      background: #0A0A0A; color: #EEEEEE;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+      position: relative; width: 100%;
+    }
+    #vill-hub a { color: #05D9E8; text-decoration: none; }
+    #vill-hub section { padding: 60px 16px; max-width: 1200px; margin: 0 auto; }
+
+    /* ===== BLINDAJE PARA TEMA SHOPIFY ===== */
+    #vill-hub section div { min-width: 0; }
+    #vill-hub .hero-stat { min-width: 104px; }
+    #vill-hub img, #vill-hub canvas, #vill-hub svg, #vill-hub video { max-width: 100%; }
+    #vill-hub table { border-collapse: collapse; }
+    #vill-hub input, #vill-hub select, #vill-hub button, #vill-hub textarea { font-family: inherit; }
+    /* límites de gráficos dentro del tema */
+    #vill-hub #macro-chart { max-width: 300px; max-height: 300px; margin: 0 auto; display: block; }
+    #vill-hub #progress-chart { max-height: 320px; }
+
+    /* ===== ARMADURA v12: tipografía, botones e inputs a prueba de tema ===== */
+    #vill-hub #hero-section { position: relative; }
+    #vill-hub h1, #vill-hub h2, #vill-hub h3, #vill-hub h4, #vill-hub h5 {
+      font-family: 'Segoe UI', system-ui, sans-serif !important;
+      text-transform: none !important; letter-spacing: normal !important;
+    }
+    #vill-hub .hero-tag { text-transform: uppercase !important; letter-spacing: 3px !important; }
+    #vill-hub .btn {
+      display: inline-flex !important; align-items: center !important; gap: 8px;
+      padding: 10px 20px !important; border-radius: 10px !important;
+      font-family: 'Segoe UI', system-ui, sans-serif !important;
+      font-size: 0.9rem !important; font-weight: 600 !important; line-height: 1.25 !important;
+      letter-spacing: normal !important; text-transform: none !important;
+      text-decoration: none !important; min-height: 0 !important; box-shadow: none;
+    }
+    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #fff !important; border: none !important; }
+    #vill-hub .btn-outline { background: transparent !important; border: 1px solid #05D9E8 !important; color: #05D9E8 !important; }
+    #vill-hub .btn-pink { background: transparent !important; border: 1px solid #FF2A6D !important; color: #FF2A6D !important; }
+    #vill-hub a { text-decoration: none !important; border-bottom: none !important; }
+    #vill-hub strong { border-bottom: none !important; text-decoration: none !important; }
+    #vill-hub input, #vill-hub select, #vill-hub textarea { font-size: 16px !important; -webkit-appearance: none; appearance: none; }
+    #vill-hub .w-input { width: 74px; }
+    #vill-hub .freq-ios-tip {
+      margin: 10px 0 26px; padding: 10px 14px; border-radius: 10px;
+      background: rgba(5,217,232,0.05); border: 1px solid rgba(5,217,232,0.22);
+      font-size: 0.74rem; color: #8a94a0; line-height: 1.55;
+    }
+
+    /* ===== HERO v12: lema + idioma ===== */
+    .hero-motto {
+      color: #86d3de; font-style: italic; font-size: .95rem; margin: 0; padding-left: 14px;
+      max-width: 34em; min-height: 1.5em; cursor: pointer; line-height: 1.5;
+      border-left: 2px solid rgba(5,217,232,.35);
+      transition: opacity .35s ease;
+    }
+    .hero-motto.fade { opacity: 0; }
+    .i18n-note { font-size: .68rem; color: #6a7480; margin: 12px 0 0; }
+    .lang-switch {
+      position: absolute; top: 14px; right: 14px; z-index: 5;
+      background: rgba(10,10,16,0.7); border: 1px solid #2a2a3a; border-radius: 20px;
+      padding: 4px 6px; display: flex; gap: 2px; backdrop-filter: blur(8px);
+    }
+    .lang-switch button {
+      background: transparent; border: none; color: #7a8290; font-size: 0.72rem; font-weight: 700;
+      padding: 4px 8px; border-radius: 14px; cursor: pointer; font-family: inherit;
+    }
+    .lang-switch button.active { background: rgba(5,217,232,0.15); color: #05D9E8; }
+    .mm-clear { border-color: #3a3a4a !important; color: #8890a0 !important; }
+
+
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .section-sub { color: #888899; margin-bottom: 32px; font-size: 0.95rem; }
+    .card {
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 16px;
+      padding: 20px; transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(5,217,232,0.3); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      transition: opacity .2s, transform .1s; touch-action: manipulation;
+      font-family: inherit;
+    }
+    .btn:active { transform: scale(0.97); opacity: 0.85; }
+    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #fff; }
+    .btn-outline { background: transparent; border: 1px solid #05D9E8; color: #05D9E8; }
+    .btn-pink { background: transparent; border: 1px solid #FF2A6D; color: #FF2A6D; }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700;
+    }
+    .badge-pink { background: rgba(255,42,109,0.15); color: #FF2A6D; border: 1px solid rgba(255,42,109,0.3); }
+
+    /* ===== BOTÓN FLOTANTE DE PERFIL ===== */
+    /* Sube por encima de la esquina donde casi todos los temas de Shopify
+       ponen el carrito flotante o el chat de atencion, y respeta la franja
+       segura de los iPhone con notch. */
+    #profile-btn {
+      position: fixed; right: 16px; z-index: 998;
+      bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+      width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+      font-size: 1.45rem; color: #fff;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      box-shadow: 0 8px 24px rgba(5,217,232,0.35), 0 4px 14px rgba(255,42,109,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .15s;
+    }
+    #profile-btn:active { transform: scale(0.92); }
+
+    /* ================== EL BANNER ==================
+       Lo que habia y por que se rehizo, medido:
+
+       - Ocupaba 662 px de los 852 de un iPhone -- el 92 % de la pantalla --
+         PARA 385 px de contenido. O sea 278 px de nada: 154 arriba y 124
+         abajo. El visitante gastaba una pantalla entera de scroll para leer
+         seis lineas. Ahora el alto lo marca el contenido.
+       - Todo iba centrado en una sola columna: antetitulo, titular, subtitulo,
+         lema, aviso, dos botones y cuatro cifras, uno debajo de otro y todos
+         al centro. Es la composicion mas vista que existe. Ahora el texto va
+         alineado a la izquierda y en pantalla ancha las cifras se ponen al
+         lado, no debajo: dos bloques que se sostienen en vez de una pila.
+       - El degradado del titular iba de magenta a cian de punta a punta, y en
+         una linea larga el punto medio caia en un GRIS SUCIO -- en "Cuerpo y
+         Mente", la "y" salia gris. Ahora pasa por el violeta de la marca, que
+         es un punto medio elegido y no el promedio de dos colores.
+       - De animacion habia dos manchas borrosas al 16 % de opacidad, que
+         practicamente no se veian, y una flecha que botaba. Ahora hay una
+         entrada escalonada al cargar, un haz de luz que barre, la luz de
+         fondo que respira y las cifras que suben contando.
+
+       Todo el movimiento es transform y opacity, que los compone la tarjeta
+       grafica; y con "menos movimiento" activado no se mueve nada. */
+    #hero-section {
+      position: relative; overflow: hidden; isolation: isolate;
+      padding: clamp(54px, 8vh, 88px) 20px clamp(40px, 6vh, 68px);
+    }
+
+    /* La luz de fondo. Antes eran dos circulos desenfocados al 16 %: a esa
+       opacidad, sobre negro, no se veian. Ahora son manchas de color de
+       verdad, y se mueven lo bastante despacio para no distraer al leer. */
+    .hero-aurora { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+    .hero-aurora-a {
+      width: min(560px, 92vw); aspect-ratio: 1; background: #FF2A6D; opacity: .30;
+      top: -22%; left: -18%; animation: auroraA 19s ease-in-out infinite alternate;
+    }
+    .hero-aurora-b {
+      width: min(620px, 98vw); aspect-ratio: 1; background: #05D9E8; opacity: .26;
+      bottom: -30%; right: -22%; animation: auroraB 23s ease-in-out infinite alternate;
+    }
+    @keyframes auroraA { to { transform: translate(14%, 12%) scale(1.22); } }
+    @keyframes auroraB { to { transform: translate(-16%, -10%) scale(1.16); } }
+
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 28% 42%, #000 10%, transparent 78%);
+      mask-image: radial-gradient(ellipse 80% 70% at 28% 42%, #000 10%, transparent 78%);
+    }
+
+    /* Un haz de luz que cruza el banner cada nueve segundos. Es un solo
+       elemento con un degradado en diagonal moviendose: cuesta una
+       transformacion y da la sensacion de que el sitio esta encendido. */
+    .hero-rays {
+      position: absolute; inset: -40% -10%; pointer-events: none; z-index: 0;
+      background: linear-gradient(104deg, transparent 42%, rgba(5,217,232,.11) 49%,
+                  rgba(255,255,255,.06) 51%, rgba(255,42,109,.09) 53%, transparent 60%);
+      animation: heroBarrido 9s ease-in-out infinite;
+    }
+    @keyframes heroBarrido {
+      0%, 100% { transform: translateX(-38%); opacity: 0; }
+      12% { opacity: 1; }
+      50% { transform: translateX(38%); opacity: .9; }
+      70% { opacity: 0; }
+    }
+
+    /* La vineta ya no oscurece el centro: ahora ilumina detras del texto y
+       apaga los bordes, que es lo que hace que el titular se despegue. */
+    .hero-veil {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 62% 58% at 26% 40%, rgba(120,60,255,.14) 0%, transparent 62%),
+        linear-gradient(to bottom, rgba(10,10,14,.28) 0%, transparent 26%, transparent 62%, #0A0A0A 100%);
+    }
+
+    /* Dos bloques: el texto manda y las cifras acompanan. En movil se apilan;
+       a partir de 900 px se ponen lado a lado. */
+    .hero-inner {
+      position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto;
+      display: grid; gap: clamp(28px, 4vw, 52px); align-items: center;
+      text-align: left;
+    }
+    @media (min-width: 900px) { .hero-inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); } }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: .72rem; letter-spacing: .2em; color: #7fe9f4; text-transform: uppercase;
+      font-weight: 700; margin-bottom: 18px;
+      background: rgba(5,217,232,.07); border: 1px solid rgba(5,217,232,.24);
+      border-radius: 999px; padding: 7px 15px 7px 12px;
+    }
+    /* Un punto que late delante del antetitulo: dice "esto esta vivo" con un
+       elemento de nueve pixeles. */
+    .hero-tag::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%; background: #05D9E8;
+      box-shadow: 0 0 0 0 rgba(5,217,232,.7); animation: heroLate 2.1s ease-out infinite; flex: 0 0 auto;
+    }
+    @keyframes heroLate {
+      0% { box-shadow: 0 0 0 0 rgba(5,217,232,.65); }
+      70% { box-shadow: 0 0 0 9px rgba(5,217,232,0); }
+      100% { box-shadow: 0 0 0 0 rgba(5,217,232,0); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 7.2vw, 4.4rem); font-weight: 900; line-height: 1.02;
+      letter-spacing: -.025em; margin-bottom: 18px; text-wrap: balance;
+      text-shadow: 0 6px 44px rgba(0,0,0,.75);
+    }
+    /* El violeta del medio no es decoracion: sin el, el punto medio de un
+       degradado magenta-cian es gris, y en una linea larga la palabra central
+       salia apagada. */
+    .hero-title span {
+      background: linear-gradient(100deg, #FF2A6D 0%, #b23cff 44%, #05D9E8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      color: #a9bbc9; max-width: 34em; margin: 0 0 14px; font-size: clamp(.98rem, 2.4vw, 1.08rem);
+      line-height: 1.62;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap; margin-top: 30px; }
+    #vill-hub .hero-btns .btn { padding: 14px 24px !important; font-size: .95rem !important; }
+
+    /* Las cifras: una rejilla de dos por dos que en pantalla ancha se pone al
+       lado del texto. Antes eran cuatro pastillas apretadas contra los
+       botones. */
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+      margin: 0; justify-content: initial;
+    }
+    .hero-stat {
+      background: linear-gradient(160deg, rgba(20,22,32,.86), rgba(12,13,19,.86));
+      border: 1px solid rgba(5,217,232,.2); border-radius: 16px;
+      padding: 18px 16px; min-width: 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+      transition: border-color .25s, transform .25s;
+    }
+    .hero-stat:hover { border-color: rgba(5,217,232,.45); transform: translateY(-3px); }
+    .hero-stat strong {
+      display: block; font-size: clamp(1.8rem, 5vw, 2.3rem); font-weight: 900; color: #05D9E8;
+      line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+    }
+    .hero-stat:nth-child(even) strong { color: #FF2A6D; }
+    .hero-stat span { display: block; font-size: .74rem; color: #8fa1b0; margin-top: 7px; line-height: 1.35; }
+
+    /* La flecha que botaba se cambia por una linea que se llena: dice "sigue
+       bajando" sin el gesto de siempre. */
+    .hero-scroll {
+      display: flex; align-items: center; gap: 10px; margin-top: 30px;
+      color: #6d7d8c; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+      font-weight: 700; grid-column: 1 / -1;
+    }
+    .hero-scroll::after {
+      content: ''; height: 1px; flex: 1; max-width: 190px;
+      background: linear-gradient(90deg, #05D9E8, transparent);
+      transform-origin: left; animation: heroLinea 2.6s ease-in-out infinite;
+    }
+    @keyframes heroLinea {
+      0%, 100% { transform: scaleX(.25); opacity: .45; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* LA ENTRADA. Un solo momento al cargar, escalonado de arriba abajo. No
+       espera a que nadie haga scroll: si algo tiene que leerse, esta ahi. */
+    .hero-ent { animation: heroEntra .78s cubic-bezier(.22,.8,.28,1) both; }
+    .hero-ent-1 { animation-delay: .04s } .hero-ent-2 { animation-delay: .12s }
+    .hero-ent-3 { animation-delay: .21s } .hero-ent-4 { animation-delay: .30s }
+    .hero-ent-5 { animation-delay: .39s } .hero-ent-6 { animation-delay: .50s }
+    @keyframes heroEntra { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 899px) {
+      #hero-section { text-align: left; }
+      .hero-scroll { display: none; }
+    }
+    /* Quien pide menos movimiento no pierde nada: lo ve todo, quieto. */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-aurora, .hero-rays, .hero-tag::before, .hero-scroll::after, .hero-ent { animation: none !important; }
+      .hero-ent { opacity: 1 !important; transform: none !important; }
+      .hero-stat:hover { transform: none; }
+    }
+
+    /* ===== MUSCLE MAP ===== */
+    /* El alto sale de la pantalla, no de un 540 fijo: en un escritorio ancho
+       el lienzo era una franja apaisada con una figura de pie en medio y el
+       resto negro. */
+    #muscle-canvas {
+      width: 100%; height: clamp(430px, 64vh, 660px); border-radius: 16px; display: block; cursor: grab;
+      box-shadow: 0 0 60px rgba(30,80,255,0.10), inset 0 0 120px rgba(10,20,60,0.4);
+      background: radial-gradient(ellipse at 50% 35%, #101a3a 0%, #070812 65%, #05060d 100%);
+    }
+    @media (max-width: 640px) { #muscle-canvas { height: clamp(400px, 58vh, 520px); } }
+    /* En pantallas anchas el cuerpo no necesita mil pixeles de ancho: se limita
+       la caja y se centra, que es como se presenta una figura. */
+    @media (min-width: 900px) { #muscle-canvas { max-width: 720px; margin: 0 auto; } }
+    #muscle-canvas:active { cursor: grabbing; }
+    #mm-selected-label {
+      text-align: center; margin-top: 12px; min-height: 26px;
+      font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.95rem;
+      background: linear-gradient(135deg, #FF2A6D, #FF8C60);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .muscle-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: center; }
+    .muscle-btn {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: #1a1a28; color: #fff; cursor: pointer; font-size: 0.8rem; font-family: inherit;
+      transition: border-color .2s, color .2s, transform .1s, box-shadow .2s;
+    }
+    .muscle-btn:hover, .muscle-btn.active {
+      border-color: #FF2A6D; color: #FF2A6D; transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,42,109,0.18);
+    }
+    .mm-hint { font-size: 0.78rem; color: #888899; margin-top: 12px; text-align: center; }
+
+    #mm-loading {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #05D9E8; font-size: 0.85rem; letter-spacing: 1px; font-weight: 600;
+      pointer-events: none; text-align: center; text-shadow: 0 0 12px rgba(5,217,232,0.5);
+    }
+
+    /* ===== ENTRENAMIENTO: PLANNER + LIBRERÍA ===== */
+    .planner-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+    @media (max-width: 640px) { .planner-cols { grid-template-columns: minmax(0, 1fr); } }
+    .planner-col h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: #05D9E8; letter-spacing: 1px; text-transform: uppercase; }
+    #routine-list { max-height: 330px; overflow-y: auto; padding-right: 4px; }
+    #unit-toggle {
+      background: #101019; color: #ccd; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 8px 10px; font-size: 0.8rem; outline: none; font-family: inherit; cursor: pointer;
+    }
+    #unit-toggle { color: #05D9E8; border-color: rgba(5,217,232,0.4); font-weight: 700; min-width: 58px; }
+    .routine-done { border-color: rgba(46,204,113,0.45) !important; background: rgba(46,204,113,0.06); }
+    .routine-done .ex-name-t { color: #2ECC71; }
+
+    /* Recomendación dietaria tras guardar */
+    #diet-reco { display: none; margin-top: 18px; }
+    #diet-reco.show { display: block; animation: recoIn .4s ease; }
+    @keyframes recoIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .reco-head {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      background: linear-gradient(135deg, rgba(255,42,109,0.10), rgba(5,217,232,0.10));
+      border: 1px solid rgba(5,217,232,0.28); border-radius: 14px; padding: 14px 16px;
+    }
+    .reco-head .r-num { font-size: 1.6rem; font-weight: 900; color: #05D9E8; }
+    .reco-head .r-txt { font-size: 0.85rem; color: #bcc; line-height: 1.5; flex: 1; min-width: 200px; }
+    .reco-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-top: 14px; }
+    .reco-card {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px;
+      font-size: 0.8rem; transition: border-color .2s;
+    }
+    .reco-card:hover { border-color: rgba(5,217,232,0.4); }
+    .reco-card .rc-title { font-weight: 800; color: #FF2A6D; margin-bottom: 4px; font-size: 0.88rem; }
+    .reco-card .rc-macros { color: #889; font-size: 0.72rem; margin: 6px 0 8px; }
+    .reco-card .rc-kcal { display: inline-block; background: rgba(5,217,232,0.12); color: #05D9E8; border-radius: 20px; padding: 2px 10px; font-size: 0.72rem; font-weight: 700; }
+    .reco-card ul { padding-left: 16px; margin-top: 8px; color: #99a; line-height: 1.6; font-size: 0.74rem; }
+    .ex-item {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 8px; display: flex;
+      justify-content: space-between; align-items: center; font-size: 0.875rem;
+      transition: border-color .2s;
+    }
+    .ex-item:hover { border-color: #05D9E8; }
+    .ex-item .ex-meta { font-size: 0.75rem; color: #888899; margin-top: 2px; }
+    .ex-remove { background: none; border: none; color: #888899; cursor: pointer; font-size: 1.1rem; padding: 2px 8px; font-family: inherit; }
+    .ex-remove:hover { color: #FF2A6D; }
+    .planner-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    #planner-save-msg { font-size: 0.8rem; color: #05D9E8; display: none; margin-top: 8px; }
+    .planner-total-cal {
+      margin-top: 12px; padding: 12px 14px; background: #16161f; border-radius: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.9rem; border: 1px solid #2a2a3a;
+    }
+    .planner-total-cal strong { color: #05D9E8; font-size: 1.3rem; }
+    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #667; }
+
+    .lib-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 28px 0 16px; }
+    .lib-chip {
+      padding: 7px 14px; border-radius: 20px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.78rem; font-family: inherit;
+      transition: all .2s;
+    }
+    .lib-chip.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+    .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+    @media (max-width: 480px) { .ex-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .ex-card {
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 14px;
+      overflow: hidden; cursor: pointer; transition: border-color .2s, transform .2s;
+    }
+    .ex-card:hover { border-color: #05D9E8; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(5,217,232,0.1); }
+    .ex-icon { height: 74px; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; background: #16161f; }
+    .ex-info { padding: 12px; }
+    .ex-name { font-size: 0.82rem; font-weight: 700; margin-bottom: 3px; }
+    .ex-muscle { font-size: 0.7rem; color: #888899; margin-bottom: 5px; }
+    .ex-cal { font-size: 0.72rem; color: #05D9E8; font-weight: 600; margin-bottom: 6px; }
+    .ex-diff { font-size: 0.68rem; font-weight: 700; }
+    .add-routine-btn {
+      width: 100%; margin-top: 8px; padding: 7px 4px; border-radius: 8px; border: none;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      background: rgba(5,217,232,0.12); color: #05D9E8;
+    }
+    .add-routine-btn.in-routine { background: rgba(46,204,113,0.15); color: #2ECC71; }
+
+    /* ===== NUTRITION ===== */
+    .nutrition-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+    @media (max-width: 640px) { .nutrition-grid { grid-template-columns: minmax(0, 1fr); } }
+    #macro-chart-wrap { position: relative; max-width: 260px; margin: 0 auto; }
+    .macro-legend { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .macro-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; }
+    .macro-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+    .food-search-wrap { display: flex; gap: 8px; margin-bottom: 12px; }
+    #food-input {
+      flex: 1; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 14px; color: #fff; font-size: 0.875rem; outline: none; font-family: inherit;
+    }
+    #food-input:focus { border-color: #05D9E8; }
+    #food-suggestions { background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 10px; max-height: 160px; overflow-y: auto; display: none; }
+    #food-suggestions div { padding: 10px 14px; cursor: pointer; font-size: 0.875rem; border-bottom: 1px solid #2a2a3a; }
+    #food-suggestions div:hover { background: #16161f; color: #05D9E8; }
+    #food-log { margin-top: 12px; max-height: 180px; overflow-y: auto; }
+    .food-log-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2a3a; font-size: 0.82rem; }
+    #cam-video { width: 100%; border-radius: 10px; display: none; margin-top: 10px; background: #000; }
+    .cam-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    #scan-result {
+      margin-top: 10px; padding: 12px 14px; background: rgba(5,217,232,0.06);
+      border: 1px solid rgba(5,217,232,0.2); border-radius: 10px; font-size: 0.85rem; display: none;
+    }
+    .scan-candidates { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .scan-cand {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid #2a2a3a;
+      background: #16161f; color: #fff; cursor: pointer; font-size: 0.78rem; font-family: inherit;
+      transition: border-color .2s;
+    }
+    .scan-cand:hover { border-color: #05D9E8; color: #05D9E8; }
+    .portion-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+    .portion-btn {
+      padding: 6px 12px; border-radius: 8px; border: 1px solid #05D9E8;
+      background: transparent; color: #05D9E8; cursor: pointer; font-size: 0.75rem; font-family: inherit;
+    }
+    .scan-note { font-size: 0.7rem; color: #667; margin-top: 8px; }
+    #scan-canvas { display: none; }
+
+    /* ===== SLIDERS PREMIUM ===== */
+    #vill-hub input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 7px; border-radius: 999px;
+      background: linear-gradient(90deg, #FF2A6D 0%, #8a2be2 50%, #05D9E8 100%);
+      outline: none; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #bfeefc 60%, #05D9E8);
+      border: 2px solid #0A0A0A; box-shadow: 0 0 12px rgba(5,217,232,0.75); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #bfeefc 60%, #05D9E8);
+      border: 2px solid #0A0A0A; box-shadow: 0 0 12px rgba(5,217,232,0.75); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-moz-range-track {
+      height: 7px; border-radius: 999px;
+      background: linear-gradient(90deg, #FF2A6D 0%, #8a2be2 50%, #05D9E8 100%);
+    }
+    /* ===== MODAL LEGIBLE (vive fuera de #vill-hub) ===== */
+    #modal-overlay, #modal-content { color: #c9cbe0; }
+    #modal-content h3, #modal-content h4, #modal-content strong { color: #ffffff; }
+    #modal-content ol, #modal-content ul { color: #b9bcd4; }
+
+    /* ===== EX GIF (demostración) — tarjeta de estudio premium ===== */
+    #vill-hub .exgif-stage, #modal-content .exgif-stage {
+      position: relative; width: 100%; max-width: 300px; margin: 12px auto 0;
+      border-radius: 18px; overflow: hidden; cursor: zoom-in;
+      background: #ffffff;
+      border: 1px solid rgba(5,217,232,0.35);
+      box-shadow: 0 0 0 3px rgba(5,217,232,0.10), 0 10px 30px rgba(0,0,0,0.5),
+                  inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    /* Franja superior de marca sobre la tarjeta */
+    #vill-hub .exgif-stage::before, #modal-content .exgif-stage::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; z-index: 2;
+      background: linear-gradient(90deg, #FF2A6D, #8a2be2, #05D9E8);
+    }
+    #vill-hub .exgif-stage::after, #modal-content .exgif-stage::after {
+      content: '⤢'; position: absolute; right: 9px; bottom: 8px; z-index: 3;
+      font-size: 0.9rem; color: #fff;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35); pointer-events: none;
+    }
+    #vill-hub .exgif-pad, #modal-content .exgif-pad { position: relative; width: 100%; padding-top: 84%; }
+    #vill-hub .exgif-img, #modal-content .exgif-img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+      opacity: 0; transition: opacity .4s ease; padding: 10px 10px 6px;
+    }
+    #vill-hub .exgif-badge, #modal-content .exgif-badge {
+      position: absolute; left: 9px; top: 11px; z-index: 3; display: flex; gap: 5px;
+    }
+    #vill-hub .exgif-dot, #modal-content .exgif-dot {
+      width: 25px; height: 25px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 0.66rem; font-weight: 800; color: #fff;
+      background: linear-gradient(135deg, rgba(255,42,109,0.85), rgba(138,43,226,0.85));
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    #vill-hub .exgif-dot.on, #modal-content .exgif-dot.on {
+      background: linear-gradient(135deg, #05D9E8, #05a9c8); color: #041014;
+    }
+    #vill-hub .exgif-spin, #modal-content .exgif-spin {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #05646f; font-size: 0.82rem; font-weight: 600; gap: 8px; background: #ffffff;
+    }
+    #vill-hub .exgif-spin::before, #modal-content .exgif-spin::before {
+      content: ''; width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(5,100,111,0.25); border-top-color: #05646f;
+      animation: exgifspin 0.7s linear infinite;
+    }
+    @keyframes exgifspin { to { transform: rotate(360deg); } }
+    #vill-hub .exgif-cap, #modal-content .exgif-cap {
+      text-align: center; font-size: 0.66rem; color: #8a8ea8; margin-top: 7px; letter-spacing: 0.02em;
+    }
+    /* Lightbox — gif original */
+    #exgif-lb {
+      position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.93);
+      display: none; align-items: center; justify-content: center; padding: 20px; cursor: zoom-out;
+    }
+    #exgif-lb.on { display: flex; }
+    #exgif-lb img { max-width: 92vw; max-height: 84vh; object-fit: contain; display: block; border-radius: 10px; background: #fff; }
+    #exgif-lb .lb-x {
+      position: absolute; top: 18px; right: 22px; color: #fff; font-size: 2rem; cursor: pointer;
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.12); border-radius: 50%;
+    }
+    /* ===== DIET PLANS ===== */
+    .diet-tabs, .freq-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .diet-tab, .freq-tab {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.82rem; font-family: inherit;
+      transition: all .2s;
+    }
+    .diet-tab.active, .freq-tab.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+    .diet-content { display: none; }
+    .diet-content.active { display: block; }
+    .diet-macros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin: 16px 0; }
+    .diet-macro-card { background: #16161f; border-radius: 10px; padding: 12px; text-align: center; }
+    .diet-macro-card .num { font-size: 1.6rem; font-weight: 800; color: #05D9E8; }
+    .diet-menu { font-size: 0.85rem; }
+    .diet-menu td, .diet-menu th { padding: 8px 10px; border-bottom: 1px solid #2a2a3a; }
+    .diet-menu th { color: #05D9E8; font-weight: 600; text-align: left; }
+
+    /* ===== v14: tablas de menú con aire (a prueba de tema) ===== */
+    #vill-hub .diet-menu { border-collapse: separate !important; border-spacing: 0; }
+    #vill-hub .diet-menu thead th {
+      font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+      color: #05D9E8; padding: 10px 14px; white-space: nowrap;
+      background: rgba(5,217,232,0.06); border-bottom: 2px solid rgba(5,217,232,0.35);
+    }
+    #vill-hub .diet-menu td {
+      padding: 12px 14px; font-size: 0.82rem; line-height: 1.55; color: #ccd3da;
+      border-bottom: 1px solid #23232f; vertical-align: top; min-width: 132px;
+    }
+    #vill-hub .diet-menu td:first-child {
+      color: #FF2A6D; font-weight: 800; white-space: nowrap; min-width: 64px;
+      border-right: 1px solid #23232f; background: rgba(255,42,109,0.04);
+    }
+    #vill-hub .diet-menu tbody tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+    #vill-hub .diet-menu tbody tr:nth-child(even) td:first-child { background: rgba(255,42,109,0.06); }
+    #vill-hub .diet-menu tbody tr:last-child td { border-bottom: none; }
+
+    /* ===== v14: técnica en el modal + badge de ayuda ===== */
+    .ex-tech { margin-top: 14px; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 14px; font-size: 0.82rem; }
+    .ex-tech .et-title { font-weight: 800; color: #05D9E8; margin-bottom: 6px; }
+    .ex-tech .et-warn { color: #FF2A6D; margin-top: 10px; }
+    .ex-tech ol, .ex-tech ul { padding-left: 18px; line-height: 1.65; color: #c6ccd4; }
+    .ex-tech li { margin-bottom: 4px; }
+    .ex-tech .et-note { margin-top: 10px; font-size: 0.72rem; color: #7a8290; }
+    .hydro-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-size: 0.82rem; }
+    .hydro-btns { display: flex; gap: 6px; }
+    .cta-card {
+      text-align: center; padding: 40px 22px; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,42,109,0.12), rgba(5,217,232,0.12));
+      border: 1px solid rgba(5,217,232,0.3);
+    }
+    .cta-card h2 { font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 10px; }
+    .cta-card p { color: #aab4bd; max-width: 560px; margin: 0 auto 22px; font-size: 0.92rem; line-height: 1.6; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ===== ÍNDICE DEL HUB ===== */
+    .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(154px, 1fr)); gap: 10px; }
+    .hub-card {
+      background: #14141d; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px 12px;
+      display: flex; flex-direction: column; gap: 3px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .hub-card:hover { border-color: rgba(5,217,232,0.45); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
+    .hub-card:active { transform: scale(0.98); }
+    .hc-emoji { font-size: 1.45rem; line-height: 1.1; }
+    #vill-hub .hc-name { font-weight: 800; color: #fff !important; font-size: 0.85rem; line-height: 1.3; }
+    #vill-hub .hc-desc { font-size: 0.71rem; color: #8892a0 !important; line-height: 1.45; }
+    @media (prefers-reduced-motion: reduce) { .hub-card:hover { transform: none; } }
+
+    /* ===== Programa 21 días ===== */
+    .med-program { margin-top: 16px; background: #14141d; border: 1px solid #2a2a3a; border-radius: 14px; padding: 16px; }
+    .mp-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .mp-head h3 { font-size: 0.95rem; }
+    .mp-progress { font-size: 0.78rem; color: #9aa; min-width: 150px; }
+    .mp-progress strong { color: #05D9E8; }
+    .mp-bar { height: 8px; background: #22222e; border-radius: 6px; overflow: hidden; margin-top: 5px; }
+    #mp-fill { height: 100%; width: 0%; border-radius: 6px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .5s ease; }
+    .mp-sub { font-size: 0.76rem; color: #889; margin: 8px 0 12px; }
+    .mp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+    .mp-day {
+      background: #1a1a26; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 8px;
+      text-align: left; cursor: pointer; font-family: inherit; color: #ccd;
+      display: flex; flex-direction: column; gap: 2px; transition: border-color .2s;
+    }
+    .mp-day:hover { border-color: rgba(5,217,232,0.4); }
+    .mp-day .d-num { font-size: 0.62rem; color: #667; letter-spacing: 1px; }
+    .mp-day .d-name { font-size: 0.74rem; font-weight: 700; color: #fff; line-height: 1.25; }
+    .mp-day .d-min { font-size: 0.66rem; color: #05D9E8; }
+    .mp-day.done { border-color: rgba(46,204,113,0.5); background: rgba(46,204,113,0.06); }
+    .mp-day.done .d-num::after { content: ' ✓'; color: #2ECC71; }
+    #vill-hub .ex-card { position: relative; }
+    .ex-help {
+      position: absolute; top: 6px; right: 8px; z-index: 2; font-size: 0.8rem;
+      background: rgba(10,10,16,0.7); border: 1px solid rgba(5,217,232,0.35);
+      border-radius: 50%; width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .diet-recipes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; margin-top: 12px; }
+    .diet-recipe-card { background: #16161f; border-radius: 10px; padding: 12px; font-size: 0.82rem; }
+    .diet-recipe-card .title { font-weight: 700; color: #FF2A6D; margin-bottom: 4px; }
+
+    /* ===== MEDITACIÓN: CRONÓMETRO VISUAL DE RESPIRACIÓN ===== */
+    .meditation-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+    @media (max-width: 720px) { .meditation-grid { grid-template-columns: minmax(0, 1fr); } }
+    .breath-stage {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 300px; position: relative;
+    }
+    .breath-ring {
+      width: 240px; height: 240px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: conic-gradient(#2a2a3a 0deg, #2a2a3a 360deg);
+      transition: background .1s linear;
+    }
+    .breath-ring-inner {
+      width: 224px; height: 224px; border-radius: 50%; background: #14141f;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .breath-circle {
+      width: 190px; height: 190px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.10), transparent 55%),
+                  linear-gradient(135deg, rgba(255,42,109,0.35), rgba(5,217,232,0.35));
+      border: 2px solid rgba(5,217,232,0.5);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transform: scale(0.62);
+      box-shadow: 0 0 40px rgba(5,217,232,0.18), inset 0 0 30px rgba(5,217,232,0.10);
+      will-change: transform;
+    }
+    .breath-count { font-size: 3.4rem; font-weight: 900; line-height: 1; color: #fff; }
+    .breath-phase { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: #cdd; margin-top: 6px; font-weight: 700; }
+    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #667; }
+    .breath-patterns { display: flex; flex-direction: column; gap: 8px; }
+    .breath-pattern {
+      text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid #2a2a3a;
+      background: #16161f; color: #ccc; cursor: pointer; font-size: 0.85rem; font-family: inherit;
+      transition: border-color .2s;
+    }
+    .breath-pattern strong { color: #fff; display: block; font-size: 0.9rem; }
+    .breath-pattern span { color: #888899; font-size: 0.75rem; }
+    .breath-pattern.active { border-color: #05D9E8; }
+    .breath-pattern.active strong { color: #05D9E8; }
+    .breath-controls { display: flex; gap: 10px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+    .breath-controls select {
+      background: #1a1a28; color: #fff; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 8px 10px; font-size: 0.82rem; outline: none; font-family: inherit;
+    }
+    .breath-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 14px; font-size: 0.75rem; color: #888899; }
+    .breath-legend b { font-weight: 700; }
+
+    /* ===== FRECUENCIAS ===== */
+    #frequencies .freq-intro {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      background: rgba(5,217,232,0.06); border: 1px solid rgba(5,217,232,0.18);
+      border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.85rem; color: #aab;
+    }
+    .freq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+    @media (max-width: 480px) { .freq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .freq-card {
+      position: relative; overflow: hidden; background: #14141f;
+      border: 1px solid #2a2a3a; border-radius: 16px; padding: 18px 12px;
+      text-align: center; cursor: pointer;
+      transition: border-color .25s, transform .2s, box-shadow .3s;
+    }
+    .freq-card:hover { transform: translateY(-3px); border-color: rgba(5,217,232,0.4); }
+    .freq-card .freq-hz {
+      font-size: 1.8rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .freq-card .freq-unit { font-size: 0.68rem; color: #667; letter-spacing: 1.5px; margin-top: 2px; }
+    .freq-card .freq-name { font-weight: 700; margin-top: 8px; font-size: 0.88rem; }
+    .freq-card .freq-desc { font-size: 0.73rem; color: #888899; margin-top: 4px; line-height: 1.4; min-height: 42px; }
+    .freq-card .freq-state { margin-top: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; color: #05D9E8; text-transform: uppercase; }
+    .freq-card .freq-ring {
+      position: absolute; inset: -40%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(5,217,232,0.14) 0%, transparent 60%);
+      opacity: 0; transition: opacity .4s; pointer-events: none;
+    }
+    .freq-card.playing { border-color: #05D9E8; box-shadow: 0 0 30px rgba(5,217,232,0.25); }
+    .freq-card.playing .freq-ring { opacity: 1; animation: freqPulse 2.4s ease-in-out infinite; }
+    @keyframes freqPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    .freq-controls {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      margin-top: 20px; padding: 14px 16px; background: #16161f;
+      border: 1px solid #2a2a3a; border-radius: 12px;
+    }
+    .freq-controls label { font-size: 0.8rem; color: #888899; display: flex; align-items: center; gap: 8px; }
+    #freq-volume { width: 140px; accent-color: #05D9E8; }
+    #freq-timer-select {
+      background: #1a1a28; color: #fff; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 6px 10px; font-size: 0.82rem; outline: none; font-family: inherit;
+    }
+    #freq-now-playing { font-size: 0.85rem; color: #05D9E8; font-weight: 600; margin-left: auto; }
+    @media (max-width: 640px) { #freq-now-playing { margin-left: 0; width: 100%; } }
+
+    /* ===== REGISTRO DE PESO EN RUTINA ===== */
+    .ex-log { display: flex; align-items: center; gap: 6px; }
+    .w-input {
+      width: 62px; background: #101019; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 6px 8px; color: #fff; font-size: 0.8rem; outline: none; text-align: center; font-family: inherit;
+    }
+    .w-input:focus { border-color: #05D9E8; }
+    .log-btn {
+      background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.5); color: #2ECC71;
+      border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; font-family: inherit;
+    }
+    .log-btn:active { transform: scale(0.94); }
+
+    /* ===== NIVEL / BADGES ===== */
+    .level-card { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    .level-icon {
+      width: 84px; height: 84px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem; background: linear-gradient(135deg, rgba(255,42,109,0.2), rgba(5,217,232,0.2));
+      border: 1px solid rgba(5,217,232,0.35); box-shadow: 0 0 28px rgba(5,217,232,0.18);
+    }
+    .level-info { flex: 1; min-width: 220px; }
+    .level-name {
+      font-size: 1.4rem; font-weight: 900;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .level-total { font-size: 0.85rem; color: #9aa; margin: 4px 0 10px; }
+    .level-total strong { color: #05D9E8; }
+    .level-bar-wrap { background: #16161f; border-radius: 8px; height: 12px; overflow: hidden; border: 1px solid #2a2a3a; }
+    .level-bar { height: 100%; border-radius: 8px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .6s ease; }
+    .level-next { font-size: 0.75rem; color: #889; margin-top: 6px; }
+    .tier-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; margin-top: 20px; }
+    .tier {
+      text-align: center; background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 12px 6px;
+      font-size: 0.72rem; color: #99a;
+    }
+    .tier .t-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+    .tier .t-kg { display: block; color: #667; font-size: 0.66rem; margin-top: 2px; }
+    .tier.unlocked { border-color: rgba(5,217,232,0.45); color: #fff; }
+    .tier.current { border-color: #FF2A6D; box-shadow: 0 0 16px rgba(255,42,109,0.25); }
+    .tier.locked { opacity: 0.45; filter: grayscale(0.6); }
+
+    /* ===== PANEL DE SALUD ===== */
+    .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .health-card { background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 12px; text-align: center; }
+    .health-card .h-val { font-size: 1.35rem; font-weight: 900; color: #05D9E8; }
+    .health-card .h-lab { font-size: 0.68rem; color: #889; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+    /* ===== SUEÑO ===== */
+    .sleep-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+    @media (max-width: 720px) { .sleep-grid { grid-template-columns: minmax(0, 1fr); } }
+    #sleep-hours { width: 100%; accent-color: #05D9E8; }
+    .sleep-hours-label { font-size: 2.2rem; font-weight: 900; text-align: center; color: #fff; margin-bottom: 6px; }
+    .sleep-hours-label span { font-size: 0.9rem; color: #889; font-weight: 600; }
+    .sleep-quality { display: flex; gap: 8px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
+    .sq-btn {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 8px 14px;
+      cursor: pointer; font-size: 0.85rem; color: #ccc; font-family: inherit; transition: border-color .2s;
+    }
+    .sq-btn.active { border-color: #05D9E8; color: #fff; box-shadow: 0 0 12px rgba(5,217,232,0.2); }
+    #sleep-verdict { margin-top: 14px; padding: 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.6; display: none; }
+    #sleep-verdict.ok { display: block; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.3); }
+    #sleep-verdict.mid { display: block; background: rgba(255,215,0,0.07); border: 1px solid rgba(255,215,0,0.3); }
+    #sleep-verdict.low { display: block; background: rgba(255,42,109,0.08); border: 1px solid rgba(255,42,109,0.3); }
+    .sleep-bars { display: flex; gap: 6px; align-items: flex-end; height: 90px; margin-top: 10px; }
+    .sleep-bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+    .sleep-bar-fill { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #05D9E8, rgba(5,217,232,0.25)); min-height: 3px; }
+    .sleep-bar-col span { font-size: 0.6rem; color: #667; }
+
+    /* ===== GALERÍA DE LIBRERÍA (carrusel) ===== */
+    .planner-single { grid-template-columns: minmax(0, 1fr) !important; }
+    .lib-carousel-wrap { position: relative; }
+    .ex-strip {
+      display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 14px;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: #2a2a3a transparent;
+    }
+    .ex-strip::-webkit-scrollbar { height: 6px; }
+    .ex-strip::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+    .ex-strip .ex-card { flex: 0 0 210px; scroll-snap-align: start; }
+    @media (max-width: 640px) { .ex-strip .ex-card { flex: 0 0 172px; } }
+    .lib-nav {
+      position: absolute; top: 42%; transform: translateY(-50%); z-index: 5;
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(5,217,232,0.4);
+      background: rgba(10,10,14,0.85); color: #05D9E8; font-size: 1.3rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-family: inherit;
+    }
+    .lib-prev { left: -8px; } .lib-next { right: -8px; }
+    @media (hover: none) { .lib-nav { display: none; } }
+    .ex-weight-row { display: flex; gap: 6px; margin: 8px 0 2px; }
+    .ex-weight-row .w-input { width: 0; flex: 1; min-width: 54px; }
+
+    /* ===== FRECUENCIA DUAL ===== */
+    .dual-panel {
+      grid-column: 1 / -1; background: #16161f; border: 1px solid #2a2a3a; border-radius: 14px;
+      padding: 18px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .dual-desc { font-size: 0.8rem; color: #9aa; line-height: 1.6; }
+    .dual-slider-row { display: flex; align-items: center; gap: 12px; }
+    .dual-slider-row span { font-size: 0.8rem; color: #ccd; min-width: 96px; }
+    .dual-slider-row input[type=range] { flex: 1; accent-color: #05D9E8; }
+    .dual-slider-row strong { color: #05D9E8; min-width: 56px; text-align: right; font-size: 0.85rem; }
+
+    /* ===== OBJETIVO / CALCULADORA ===== */
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .calc-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 0.7rem; color: #889; text-transform: uppercase; letter-spacing: 0.5px; }
+    .calc-grid input, .calc-grid select {
+      background: #101019; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 12px;
+      color: #fff; font-size: 0.9rem; outline: none; font-family: inherit;
+    }
+    .calc-grid input:focus, .calc-grid select:focus { border-color: #05D9E8; }
+    #goal-result { display: none; margin-top: 16px; background: rgba(5,217,232,0.05); border: 1px solid rgba(5,217,232,0.25); border-radius: 12px; padding: 16px; }
+    #goal-result .goal-line { font-size: 0.85rem; color: #bcc; margin-bottom: 6px; }
+    #goal-result .goal-line.big { font-size: 1rem; color: #fff; margin-bottom: 12px; }
+    #goal-result .goal-line strong { color: #05D9E8; }
+    #goal-result .goal-line.big strong { color: #FF2A6D; }
+    .soma-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .soma-card { display: flex; flex-direction: column; gap: 8px; }
+    .soma-icon { font-size: 1.9rem; }
+    .soma-card h4 { font-size: 1rem; color: #fff; }
+    .soma-traits { font-size: 0.78rem; color: #9aa; }
+    .soma-card ul { padding-left: 16px; font-size: 0.76rem; color: #aab; line-height: 1.7; flex: 1; }
+    .soma-card .btn { margin-top: 8px; font-size: 0.78rem; justify-content: center; }
+
+    /* ===== POPUP MÚSCULO: filas de ejercicios ===== */
+    .mm-ex-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+    .mm-ex-name { font-size: 0.88rem; color: #fff; font-weight: 600; }
+    .mm-ex-meta { font-size: 0.72rem; color: #889; margin-top: 2px; }
+    .mm-ex-add { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(5,217,232,0.5); background: rgba(5,217,232,0.12); color: #05D9E8; font-size: 1.15rem; cursor: pointer; font-family: inherit; flex: 0 0 auto; }
+    .mm-ex-add.added { border-color: rgba(46,204,113,0.55); background: rgba(46,204,113,0.14); color: #2ECC71; }
+    .mm-ex-add:active { transform: scale(0.92); }
+
+    /* ===== MENÚ POR MES ===== */
+    .month-toggle { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 16px; }
+    .mt-label { font-size: 0.78rem; color: #889; }
+    .mt-hint { font-size: 0.7rem; color: #667; flex-basis: 100%; }
+
+    /* ===== BOTÁNICA ===== */
+    .bot-tools { margin-bottom: 12px; }
+    #bot-search { width: 100%; max-width: 340px; background: #101019; border: 1px solid #2a2a3a; border-radius: 10px; padding: 9px 12px; color: #fff; font-size: 0.85rem; outline: none; font-family: inherit; }
+    #bot-search:focus { border-color: #05D9E8; }
+    .bot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px; margin-top: 14px; }
+    .bot-card { background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; transition: border-color .2s; }
+    .bot-card:hover { border-color: rgba(5,217,232,0.35); }
+    .bot-emoji { font-size: 1.8rem; }
+    .bot-name { font-weight: 800; color: #fff; font-size: 0.92rem; }
+    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #FF2A6D; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
+    .bot-nut { font-size: 0.74rem; color: #05D9E8; }
+    .bot-ben { font-size: 0.76rem; color: #aab; line-height: 1.5; flex: 1; }
+    .bot-uso { font-size: 0.72rem; color: #889; }
+    .bot-log { margin-top: 6px; background: rgba(5,217,232,0.1); border: 1px solid rgba(5,217,232,0.4); color: #05D9E8; border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 0.74rem; font-family: inherit; }
+    .bot-log:active { transform: scale(0.96); }
+
+    /* ===== BOTÁNICA v10: dato curioso + carrusel ===== */
+    .bot-fact {
+      display: flex; gap: 10px; align-items: flex-start; cursor: pointer;
+      background: linear-gradient(135deg, rgba(255,42,109,0.10), rgba(5,217,232,0.10));
+      border: 1px solid rgba(5,217,232,0.3); border-radius: 14px; padding: 14px 16px;
+      font-size: 0.92rem; color: #fff; line-height: 1.55; font-weight: 600;
+    }
+    .bot-fact .bf-icon { font-size: 1.2rem; }
+    .bot-fact-sub { font-size: 0.7rem; color: #667; margin: 8px 0 14px; }
+    .bot-strip {
+      display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: #2a2a3a transparent;
+    }
+    .bot-strip::-webkit-scrollbar { height: 6px; }
+    .bot-strip::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+    .bot-strip .bot-card { flex: 0 0 235px; scroll-snap-align: start; }
+    @media (max-width: 640px) { .bot-strip .bot-card { flex: 0 0 205px; } }
+    .mt-select {
+      background: #101019; color: #ccd; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 8px 10px; font-size: 0.8rem; outline: none; font-family: inherit; cursor: pointer;
+    }
+    .mt-select:focus { border-color: #05D9E8; }
+
+    /* ===== PROGRESS ===== */
+    .pr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 24px; }
+    .pr-card { text-align: center; }
+    .pr-card .pr-lift { font-size: 0.75rem; color: #888899; text-transform: uppercase; letter-spacing: 1px; }
+    .pr-card .pr-weight { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .pr-card .pr-unit { font-size: 0.75rem; color: #888899; }
+    .period-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .period-tab {
+      padding: 8px 20px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.875rem; font-family: inherit;
+    }
+    .period-tab.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+
+    /* ===== CHALLENGES ===== */
+    .leaderboard { width: 100%; border-collapse: collapse; }
+    .leaderboard th, .leaderboard td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #2a2a3a; font-size: 0.875rem; }
+    .leaderboard th { color: #888899; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+    .leaderboard tr:hover td { background: rgba(255,255,255,0.02); }
+    .rank-1 { color: #FFD700; font-weight: 800; }
+    .rank-2 { color: #C0C0C0; font-weight: 700; }
+    .rank-3 { color: #CD7F32; font-weight: 700; }
+    .challenge-bar-wrap { background: #16161f; border-radius: 8px; height: 12px; margin: 8px 0; overflow: hidden; }
+    .challenge-bar { height: 100%; border-radius: 8px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .6s ease; }
+    .badges-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .badge-item { text-align: center; }
+    .badge-icon { font-size: 2rem; display: block; margin-bottom: 4px; }
+    .badge-label { font-size: 0.7rem; color: #888899; }
+
+    /* ===== PROFILE MODAL ===== */
+    #profile-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1200; display: none; align-items: center; justify-content: center; padding: 16px; }
+    #profile-modal.open { display: flex; }
+    .profile-box { background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 20px; max-width: 400px; width: 100%; padding: 24px; position: relative; }
+    .profile-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: #888899; font-size: 1.3rem; cursor: pointer; font-family: inherit; }
+    .profile-close:hover { color: #fff; }
+    .profile-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+    .profile-title span { background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .profile-sub { font-size: 0.82rem; color: #888899; margin-bottom: 10px; }
+    .profile-local {
+      font-size: 0.72rem; color: #8fa3b5; line-height: 1.5; margin-bottom: 16px;
+      background: rgba(5,217,232,0.06); border: 1px solid rgba(5,217,232,0.20);
+      border-radius: 10px; padding: 9px 11px;
+    }
+    .profile-field { margin-bottom: 14px; }
+    .profile-field label { display: block; font-size: 0.78rem; color: #888899; margin-bottom: 4px; }
+    .profile-field input {
+      width: 100%; background: #16161f; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 8px 12px; color: #fff; font-size: 0.875rem; outline: none; font-family: inherit;
+    }
+    .profile-field input:focus { border-color: #05D9E8; }
+    .profile-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+    .profile-actions .btn { flex: 1; justify-content: center; }
+    .profile-user-info { margin-top: 16px; padding: 12px; background: #16161f; border-radius: 10px; font-size: 0.85rem; }
+    .profile-user-info .label { color: #888899; }
+    .profile-user-info .value { color: #05D9E8; font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    /* Era 'footer' a secas: repintaba EL PIE DE LA TIENDA -- fondo, borde y
+       centrado -- en cualquier pagina donde estuviera el hub. Ahora es una
+       clase propia, y el elemento tambien deja de ser <footer> porque una
+       pagina no puede tener dos pies. */
+    #vill-hub .vh-footer { background: #111118; border-top: 1px solid #2a2a3a; padding: 40px 16px; text-align: center; }
+    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.5rem; font-weight: 900; margin-bottom: 12px; }
+    .footer-logo span { background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .footer-socials { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-socials a {
+      width: 40px; height: 40px; border-radius: 50%; border: 1px solid #2a2a3a;
+      display: flex; align-items: center; justify-content: center;
+      color: #888899; font-size: 0.75rem; font-weight: 800; transition: all .2s;
+    }
+    .footer-socials a:hover { color: #05D9E8; border-color: #05D9E8; }
+    .footer-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; }
+    .footer-links a { color: #888899; font-size: 0.82rem; }
+    .footer-copy { font-size: 0.78rem; color: #888899; }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 20px; font-size: 0.875rem; z-index: 2000;
+      transition: transform .3s ease; white-space: nowrap; max-width: 92vw; overflow: hidden; text-overflow: ellipsis;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ===== UTILIDADES ===== */
+    .module-error { background: rgba(255,42,109,0.08); border: 1px solid rgba(255,42,109,0.2); border-radius: 12px; padding: 20px; color: #888899; text-align: center; font-size: 0.875rem; }
+    #vill-hub [data-section] { scroll-margin-top: 90px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .freq-card.playing .freq-ring { animation: none; opacity: 0.6; }
+      .breath-circle { transition: none !important; }
+      #vill-hub { scroll-behavior: auto; }
+    }
+  </style>
+<!-- El envoltorio del hub. Abria DENTRO de la cabecera del documento, antes
+     de que esta cerrase: el navegador daba la cabecera por terminada por su
+     cuenta al encontrarse una etiqueta de contenido, y todo el blindaje de
+     CSS que cuelga de #vill-hub quedaba a merced de como cada motor decidiera
+     recomponer el documento. Ahora abre donde le toca. -->
+<div id="vill-hub">
+
+<!-- ===== BOTÓN FLOTANTE DE PERFIL (el menú lo pone tu tema Shopify) ===== -->
+<button id="profile-btn" aria-label="Mi perfil" title="Mi perfil — guarda tu peso, rutina y calorías">👤</button>
+
+<!-- ===== HERO ===== -->
+<div id="hero-section">
+  <div class="hero-aurora hero-aurora-a"></div>
+  <div class="hero-aurora hero-aurora-b"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-veil"></div>
+  <div class="lang-switch" id="lang-switch">
+    <button data-l="es" class="active" type="button">ES</button><button data-l="en" type="button">EN</button><button data-l="fr" type="button">FR</button>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-texto">
+      <div class="hero-tag hero-ent hero-ent-1">@villumination99 · VI.P</div>
+      <!-- Este titular era el encabezado de primer nivel. La pagina de Shopify
+           ya emite el suyo con el titulo de la pagina, y dos encabezados de
+           primer nivel reparten la senal principal entre dos textos: peor para
+           el buscador y confuso para un lector de pantalla. Conserva el MISMO
+           aspecto pero cede la jerarquia al titulo real de la pagina. -->
+      <p class="hero-title hero-ent hero-ent-2" role="heading" aria-level="2">Transforma tu<br><span>Cuerpo y Mente</span></p>
+      <p class="hero-sub hero-ent hero-ent-3">Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente, respiración guiada y frecuencias reparadoras — todo en un solo lugar.</p>
+      <div class="hero-motto hero-ent hero-ent-4" id="hero-motto">💬 El cuerpo logra lo que la mente cree.</div>
+      <div class="hero-btns hero-ent hero-ent-5">
+        <a href="#muscle-map" class="btn btn-primary">🧬 Explorar Anatomía 3D</a>
+        <a href="#planner" class="btn btn-outline">🏋️ Crear mi Rutina</a>
+      </div>
+    </div>
+    <!-- Las cifras llevan data-cuenta: el numero final. Al cargar suben desde
+         cero. El texto de dentro se escribe igual en el HTML para que, si el
+         JavaScript no llega a ejecutarse, la cifra ya este puesta. -->
+    <div class="hero-stats hero-ent hero-ent-6">
+      <div class="hero-stat"><strong data-cuenta="27">27</strong><span>Ejercicios</span></div>
+      <div class="hero-stat"><strong data-cuenta="19">19</strong><span>Frecuencias</span></div>
+      <div class="hero-stat"><strong data-cuenta="9">9</strong><span>Zonas 3D</span></div>
+      <div class="hero-stat"><strong data-cuenta="6">6</strong><span>Niveles de Atleta</span></div>
+    </div>
+    <a class="hero-scroll" href="#hub-index" aria-label="Ver todo lo que hay">Desliza para ver las 12 herramientas</a>
+  </div>
+</div>
+
+<script>
 /* Las cifras del banner suben contando al cargar. Tres decisiones:
    1. El numero final ya esta escrito en el HTML, asi que si este script no
       llegara a ejecutarse la cifra se ve igual. La animacion adorna, no
@@ -22,7 +1096,739 @@
   }
   requestAnimationFrame(function () { requestAnimationFrame(paso); });
 })();
+</script>
 
+<!-- ===== ÍNDICE DEL HUB ===== -->
+<div data-section id="hub-index">
+<section style="padding-top:38px;padding-bottom:10px">
+  <h2 class="section-title" id="hub-index-title">Todo lo que encontrarás aquí</h2>
+  <p class="section-sub" id="hub-index-sub">12 herramientas conectadas entre sí: lo que entrenas alimenta tu nivel, lo que comes alimenta tus gráficos. Toca cualquiera para ir directo.</p>
+  <div class="hub-grid">
+    <a class="hub-card" href="#muscle-map" data-sec="muscle-map"><span class="hc-emoji">🗿</span><span class="hc-name">Mapa Muscular 3D</span><span class="hc-desc">Toca un músculo: mira sus ejercicios y súmalos</span></a>
+    <a class="hub-card" href="#planner" data-sec="planner"><span class="hc-emoji">🏋️</span><span class="hc-name">Entrenamiento</span><span class="hc-desc">Registra kg y series — cada kilo cuenta</span></a>
+    <a class="hub-card" href="#nutrition" data-sec="nutrition"><span class="hc-emoji">🍽</span><span class="hc-name">Nutrición</span><span class="hc-desc">Escanea tu plato con IA y controla macros</span></a>
+    <a class="hub-card" href="#goal" data-sec="goal"><span class="hc-emoji">🎯</span><span class="hc-name">Objetivo Calórico</span><span class="hc-desc">Calcula tu TDEE y fija tu meta real</span></a>
+    <a class="hub-card" href="#diet-plans" data-sec="diet-plans"><span class="hc-emoji">📅</span><span class="hc-name">Planes Dietarios</span><span class="hc-desc">4 planes · menús Lun–Dom todo el año</span></a>
+    <a class="hub-card" href="#botanica" data-sec="botanica"><span class="hc-emoji">🌿</span><span class="hc-name">Botánica Nutricional</span><span class="hc-desc">55 alimentos y sus propiedades reales</span></a>
+    <a class="hub-card" href="#meditation" data-sec="meditation"><span class="hc-emoji">🧘</span><span class="hc-name">Meditación</span><span class="hc-desc">Respiración guiada + programa de 21 días</span></a>
+    <a class="hub-card" href="#frequencies" data-sec="frequencies"><span class="hc-emoji">🎧</span><span class="hc-name">Frecuencias</span><span class="hc-desc">Solfeggio, binaurales y pulsos duales</span></a>
+    <a class="hub-card" href="#level" data-sec="level"><span class="hc-emoji">🏆</span><span class="hc-name">Nivel de Atleta</span><span class="hc-desc">De Principiante a Predator</span></a>
+    <a class="hub-card" href="#progress" data-sec="progress"><span class="hc-emoji">📊</span><span class="hc-name">Progreso</span><span class="hc-desc">Tu salud entera en gráficos</span></a>
+    <a class="hub-card" href="#sleep" data-sec="sleep"><span class="hc-emoji">😴</span><span class="hc-name">Sueño</span><span class="hc-desc">¿Descansas lo que tu entreno exige?</span></a>
+    <a class="hub-card" href="#challenges" data-sec="challenges"><span class="hc-emoji">🔥</span><span class="hc-name">Retos</span><span class="hc-desc">Compite en el leaderboard</span></a>
+  </div>
+</section>
+</div>
+
+<!-- ===== MUSCLE MAP ===== -->
+<div data-section id="muscle-map">
+<section>
+  <h2 class="section-title">Mapa Muscular 3D</h2>
+  <p class="section-sub" data-i18n="sub.map">Anatomía esculpida como una sola superficie continua, con surcos de definición tallados entre músculos. Toca una zona: se ilumina en rojo sobre el propio cuerpo.</p>
+  <div class="card">
+    <div style="position:relative">
+      <canvas id="muscle-canvas"></canvas>
+      <div id="mm-loading">Esculpiendo anatomía 3D…</div>
+    </div>
+    <div id="mm-selected-label"></div>
+    <div id="mm-fallback" class="module-error" style="display:none">
+      ⚠️ WebGL no disponible. Usa los botones para explorar grupos musculares.
+    </div>
+    <div class="muscle-btns" id="muscle-btns-list">
+      <button data-tx class="muscle-btn" data-muscle="Pecho">Pecho</button>
+      <button data-tx class="muscle-btn" data-muscle="Espalda">Espalda</button>
+      <button data-tx class="muscle-btn" data-muscle="Hombros">Hombros</button>
+      <button data-tx class="muscle-btn" data-muscle="Biceps">Bíceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Triceps">Tríceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Abdominales">Abdominales</button>
+      <button data-tx class="muscle-btn" data-muscle="Cuadriceps">Cuádriceps</button>
+      <button data-tx class="muscle-btn" data-muscle="Gluteos">Glúteos</button>
+      <button data-tx class="muscle-btn" data-muscle="Gemelos">Gemelos</button>
+      <button class="muscle-btn mm-clear" id="mm-clear-btn" data-muscle="" type="button">✕ Quitar selección</button>
+    </div>
+    <p class="mm-hint" data-tx>Toca un músculo del cuerpo o usa los botones · Arrastra para rotar · Pellizca para hacer zoom</p>
+  </div>
+</section>
+</div>
+
+<!-- ===== ENTRENAMIENTO: PLANNER + LIBRERÍA JUNTOS ===== -->
+<div data-section id="planner">
+<section>
+  <h2 class="section-title">Entrenamiento</h2>
+  <p class="section-sub" data-i18n="sub.planner">Tu rutina del día: escribe el peso, pulsa ✓ y cada kilo suma a tu nivel de atleta, tus PRs y el panel de salud. Elige los ejercicios en la galería de abajo.</p>
+
+  <div class="card" id="planner-card">
+    <div class="planner-cols planner-single">
+      <div class="planner-col">
+        <h3 style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span data-i18n="pl.today">✅ Mi rutina de hoy</span>
+          <button id="unit-toggle" title="Cambiar entre kilos y libras">KG</button>
+        </h3>
+        <div id="routine-list" style="min-height:120px"></div>
+        <div class="planner-total-cal">
+          <span><span data-i18n="pl.kcal">🔥 Calorías estimadas de la sesión</span>
+            <span class="cal-note" id="cal-weight-note">Basado en 75 kg · edita tu peso en el perfil</span>
+          </span>
+          <strong id="total-cal-value">0</strong>
+        </div>
+      </div>
+    </div>
+    <div class="planner-actions">
+      <button class="btn btn-primary" id="save-routine-btn">💾 Guardar rutina</button>
+      <button class="btn btn-outline" id="clear-routine-btn">🗑 Limpiar</button>
+    </div>
+    <div id="planner-save-msg" data-i18n="pl.saved">✓ Rutina guardada exitosamente</div>
+
+    <!-- Recomendación dietaria basada en las calorías de la sesión -->
+    <div id="diet-reco">
+      <div class="reco-head">
+        <div><div class="r-num" id="reco-kcal">0</div><div style="font-size:0.65rem;color:#889;letter-spacing:1px" data-i18n="reco.burned">KCAL QUEMADAS</div></div>
+        <div class="r-txt" id="reco-text"></div>
+      </div>
+      <div class="reco-cards" id="reco-cards"></div>
+    </div>
+  </div>
+
+  <!-- Librería justo debajo, misma sección -->
+  <div data-section id="library"></div>
+  <h3 style="font-size:1.2rem;font-weight:800;margin-top:36px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;" data-tx>Librería de Ejercicios</h3>
+  <p class="section-sub" data-i18n="sub.library" style="margin-bottom:0">27 ejercicios con calorías reales. Filtra por músculo, desliza la galería, escribe el peso que usaste y pulsa ✓ para registrar la serie — sin salir de aquí. Toca cualquier tarjeta ❓ para ver la técnica correcta.</p>
+  <div class="lib-chips" id="lib-chips"></div>
+  <div class="lib-carousel-wrap">
+    <button class="lib-nav lib-prev" aria-label="Anterior">‹</button>
+    <div class="ex-strip" id="ex-grid"></div>
+    <button class="lib-nav lib-next" aria-label="Siguiente">›</button>
+  </div>
+</section>
+</div>
+
+<!-- ===== NUTRITION DASHBOARD ===== -->
+<div data-section id="nutrition">
+<section>
+  <h2 class="section-title">Nutrición Inteligente</h2>
+  <p class="section-sub" data-i18n="sub.nutrition">Rastrea tus macros y registra alimentos con la cámara: el sistema analiza los colores de la foto y te sugiere candidatos para confirmar.</p>
+  <div class="card">
+    <div class="nutrition-grid">
+      <div>
+        <div id="macro-chart-wrap">
+          <canvas id="macro-chart" height="220"></canvas>
+        </div>
+        <div class="macro-legend" id="macro-legend"></div>
+        <div style="margin-top:16px;padding:12px;background:#16161f;border-radius:10px;font-size:0.82rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span data-tx>Calorías hoy</span><strong id="cal-count" style="color:#05D9E8">1840 kcal</strong></div>
+          <div style="display:flex;justify-content:space-between"><span data-tx>Meta</span><strong id="cal-goal">2200 kcal</strong></div>
+          <div class="hydro-row">
+            <span><span data-tx>💧 Agua:</span> <strong id="hydro-val" style="color:#05D9E8">0 ml</strong> <span style="color:#667">/ <span id="hydro-goal">2600</span> <span data-tx>ml sugeridos</span></span></span>
+            <span class="hydro-btns"><button class="portion-btn" type="button" onclick="addWater(250)">+250 ml</button><button class="portion-btn" type="button" onclick="addWater(500)">+500 ml</button></span>
+          </div>
+          <div style="background:#2a2a3a;border-radius:4px;height:6px;margin-top:8px;overflow:hidden"><div id="cal-bar" style="height:100%;border-radius:4px;background:linear-gradient(135deg,#FF2A6D,#05D9E8);width:83%"></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="food-search-wrap">
+          <input id="food-input" type="text" placeholder="Buscar alimento…" data-i18n-ph="food" autocomplete="off">
+          <button class="btn btn-outline" id="food-search-btn">🔍</button>
+        </div>
+        <div id="food-suggestions"></div>
+        <div id="food-log"></div>
+        <div style="margin-top:16px">
+          <video id="cam-video" playsinline muted></video>
+          <canvas id="scan-canvas"></canvas>
+          <div class="cam-btns">
+            <button class="btn btn-primary" id="scan-btn">📷 Escanear con cámara</button>
+            <button class="btn btn-outline" id="upload-btn">🖼 Subir foto</button>
+            <button class="btn btn-primary" id="capture-btn" style="display:none">📸 Capturar</button>
+            <button class="btn btn-pink" id="stop-cam-btn" style="display:none">⏹ Detener</button>
+            <input type="file" id="photo-input" accept="image/*" style="display:none">
+            <input type="file" id="cam-input" accept="image/*" capture="environment" style="display:none">
+          </div>
+          <div id="scan-result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== OBJETIVO & SOMATOTIPO ===== -->
+<div data-section id="goal">
+<section>
+  <h2 class="section-title">Tu Objetivo Calórico</h2>
+  <p class="section-sub" data-i18n="sub.goal">Calcula cuántas calorías necesita tu cuerpo, elige tu meta — subir de peso, mantener o definir — y fíjala como tu objetivo diario de Nutrición.</p>
+  <div class="card">
+    <h3 style="margin-bottom:14px;font-size:1rem">🧮 Calculadora de calorías (TDEE)</h3>
+    <div class="calc-grid">
+      <label><span data-tx>Sexo</span>
+        <select id="calc-sex"><option data-tx value="m">Hombre</option><option data-tx value="f">Mujer</option></select>
+      </label>
+      <label><span data-tx>Edad</span>
+        <input type="number" id="calc-age" min="14" max="90" value="25">
+      </label>
+      <label><span data-tx>Altura (cm)</span>
+        <input type="number" id="calc-height" min="120" max="230" value="175">
+      </label>
+      <label><span data-tx>Peso (kg)</span>
+        <input type="number" id="calc-weight" min="35" max="220" value="70">
+      </label>
+      <label><span data-tx>Actividad</span>
+        <select id="calc-act">
+          <option data-tx value="1.2">Sedentario</option>
+          <option data-tx value="1.375">Ligera (1-3 días/sem)</option>
+          <option data-tx value="1.55" selected>Moderada (3-5 días/sem)</option>
+          <option data-tx value="1.725">Alta (6-7 días/sem)</option>
+        </select>
+      </label>
+      <label><span data-tx>Objetivo</span>
+        <select id="calc-obj">
+          <option data-tx value="400">Subir de peso (+400)</option>
+          <option data-tx value="0" selected>Mantener</option>
+          <option data-tx value="-400">Definir (−400)</option>
+        </select>
+      </label>
+    </div>
+    <button class="btn btn-primary" id="calc-btn" style="margin-top:16px">Calcular mis calorías</button>
+    <div id="goal-result"></div>
+  </div>
+
+  <h3 style="margin:28px 0 12px;font-size:1.05rem;color:#fff" data-tx>¿Cuál es tu tipo de cuerpo?</h3>
+  <div class="soma-grid">
+    <div class="card soma-card">
+      <div class="soma-icon">🍃</div>
+      <h4 data-tx>Ectomorfo</h4>
+      <p class="soma-traits" data-tx>Delgado, metabolismo rápido, le cuesta subir de peso.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> superávit de +300–500 kcal/día</li>
+        <li data-tx><strong>Macros:</strong> carbohidratos altos · 1.6–2 g/kg de proteína</li>
+        <li data-tx><strong>Entreno:</strong> básicos pesados (sentadilla, banca, peso muerto) y poco cardio</li>
+        <li data-tx><strong>Clave:</strong> 4–6 comidas al día; los batidos calóricos ayudan mucho</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('volumen')">Ver plan para subir →</button>
+    </div>
+    <div class="card soma-card">
+      <div class="soma-icon">⚡</div>
+      <h4 data-tx>Mesomorfo</h4>
+      <p class="soma-traits" data-tx>Atlético natural, gana músculo con facilidad.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> mantenimiento o superávit ligero</li>
+        <li data-tx><strong>Macros:</strong> balanceados · 1.6–2 g/kg de proteína</li>
+        <li data-tx><strong>Entreno:</strong> fuerza + hipertrofia, cardio moderado</li>
+        <li data-tx><strong>Clave:</strong> progresión constante de cargas (¡registra tus kilos!)</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('mediterr')">Ver plan equilibrado →</button>
+    </div>
+    <div class="card soma-card">
+      <div class="soma-icon">🔥</div>
+      <h4 data-tx>Endomorfo</h4>
+      <p class="soma-traits" data-tx>Estructura ancha, acumula grasa con facilidad.</p>
+      <ul>
+        <li data-tx><strong>Calorías:</strong> déficit de −300–500 kcal/día</li>
+        <li data-tx><strong>Macros:</strong> carbohidratos moderados · proteína alta (2 g/kg)</li>
+        <li data-tx><strong>Entreno:</strong> pesas + cardio regular (3-4×/semana)</li>
+        <li data-tx><strong>Clave:</strong> constancia y control de porciones</li>
+      </ul>
+      <button class="btn btn-outline" data-tx onclick="openDietTab('defini')">Ver plan de definición →</button>
+    </div>
+  </div>
+  <p style="margin-top:14px;font-size:0.72rem;color:#667" data-tx>Los somatotipos son una guía orientativa, no categorías rígidas — la mayoría somos una mezcla. Estimaciones generales de bienestar, no consejo médico.</p>
+</section>
+</div>
+
+<!-- ===== DIET PLANS ===== -->
+<div data-section id="diet-plans">
+<section>
+  <h2 class="section-title">Planes Dietarios de Élite</h2>
+  <p class="section-sub" data-i18n="sub.diet">Selecciona un plan y sigue los menús, recetas y listas de compras.</p>
+  <div class="card">
+    <div class="diet-tabs" id="diet-tabs">
+      <button data-tx class="diet-tab active" data-plan="volumen">Volumen Limpio</button>
+      <button data-tx class="diet-tab" data-plan="definicion">Definición + Volumen</button>
+      <button data-tx class="diet-tab" data-plan="ciclado">Ciclado de Carbos</button>
+      <button data-tx class="diet-tab" data-plan="mediterranea">Mediterránea</button>
+    </div>
+    <div class="month-toggle">
+      <span class="mt-label" data-tx>Menú:</span>
+      <select id="mt-month" class="mt-select"></select>
+      <select id="mt-week" class="mt-select">
+        <option data-tx value="0">Semana 1</option><option data-tx value="1">Semana 2</option><option data-tx value="2">Semana 3</option><option data-tx value="3">Semana 4</option><option data-tx value="4">Semana 5</option>
+      </select>
+      <span class="mt-hint" id="mt-hint"></span>
+    </div>
+
+    <div class="diet-content active" id="plan-volumen">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>💪 Volumen Limpio – 4 semanas</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>2800-3200 kcal/día · Masa muscular sin grasa extra</p>
+      <div class="diet-macros">
+        <div class="diet-macro-card"><div class="num">175g</div><div><span data-tx>Proteína</span></div></div>
+        <div class="diet-macro-card"><div class="num">370g</div><div><span data-tx>Carbohidratos</span></div></div>
+        <div class="diet-macro-card"><div class="num">69g</div><div><span data-tx>Grasas</span></div></div>
+        <div class="diet-macro-card"><div class="num">2800</div><div>Kcal</div></div>
+      </div>
+      <div class="diet-week" data-plan="volumen"></div>
+      <div style="margin-top:16px">
+        <h4 style="color:#FF2A6D;" data-tx>Recetas destacadas</h4>
+        <div class="diet-recipes">
+          <div class="diet-recipe-card"><div class="title" data-tx>Bowl Proteico Matutino</div>580 kcal · 10 min<br>45g P · 65g C · 12g G</div>
+          <div class="diet-recipe-card"><div class="title" data-tx>Arroz con Pollo Fitness</div>680 kcal · 25 min<br>52g P · 72g C · 14g G</div>
+          <div class="diet-recipe-card"><div class="title" data-tx>Salmón al Horno con Batata</div>620 kcal · 30 min<br>42g P · 55g C · 20g G</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="diet-content" id="plan-definicion">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>⚖️ Definición + Volumen – 8 semanas</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>Alterna fases: gana músculo y pierde grasa de forma sostenida</p>
+      <div style="display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:12px;margin:12px 0;">
+        <div style="background:#16161f;border-radius:10px;padding:12px;">
+          <span style="color:#FF2A6D;font-weight:700;" data-tx>Fase Volumen (Sem 1-4)</span><div data-tx>2800-3200 kcal · 2g/kg proteína · 5g/kg carbos · 0.9g/kg grasas</div>
+        </div>
+        <div style="background:#16161f;border-radius:10px;padding:12px;">
+          <span style="color:#05D9E8;font-weight:700;" data-tx>Fase Definición (Sem 5-8)</span><div data-tx>2000-2400 kcal · 2.4g/kg proteína · 3g/kg carbos · 0.7g/kg grasas</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="diet-menu" style="width:100%;min-width:400px;">
+          <thead><tr><th data-tx>Semana</th><th data-tx>Kcal entreno</th><th data-tx>Kcal descanso</th><th><span data-tx>Proteína</span></th><th><span data-tx>Carbos</span></th><th>Cardio</th></tr></thead>
+          <tbody>
+            <tr><td>1-2 (Volumen)</td><td>2900</td><td>2700</td><td>160g</td><td>380g</td><td>-</td></tr>
+            <tr><td>3-4 (Volumen)</td><td>3200</td><td>2700</td><td>180g</td><td>425g</td><td>-</td></tr>
+            <tr><td>5-6 (Definición)</td><td>2300</td><td>2100</td><td>200g</td><td>240g</td><td>2-3 LISS</td></tr>
+            <tr><td>7-8 (Definición)</td><td>2200</td><td>1900</td><td>215g</td><td>210g</td><td>3-4 HIIT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="diet-week" data-plan="definicion"></div>
+    </div>
+
+    <div class="diet-content" id="plan-ciclado">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>🔄 Ciclado de Carbohidratos</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>Días altos en entreno pesado, días bajos en descanso</p>
+      <div style="display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:12px;margin:12px 0;">
+        <div style="background:#16161f;border-radius:10px;padding:12px;border-left:4px solid #FF2A6D;">
+          <span style="color:#FF2A6D;font-weight:700;">Día ALTO (entreno)</span>
+          <div>~3030 kcal · 343g carbos · 257g proteína · 115g grasas</div>
+        </div>
+        <div style="background:#16161f;border-radius:10px;padding:12px;border-left:4px solid #05D9E8;">
+          <span style="color:#05D9E8;font-weight:700;">Día BAJO (descanso)</span>
+          <div>~2300 kcal · 196g carbos · 280g proteína · 148g grasas</div>
+        </div>
+      </div>
+      <p style="font-size:0.85rem;color:#888899;">Ejemplo de patrón: Lun Alto (pierna), Mar Bajo, Mié Bajo, Jue Alto (espalda), Vie Bajo, Sáb Bajo, Dom Bajo.</p>
+      <div class="diet-week" data-plan="ciclado"></div>
+    </div>
+
+    <div class="diet-content" id="plan-mediterranea">
+      <h3 style="color:#05D9E8;margin-bottom:8px" data-tx>🇬🇷 Dieta Mediterránea Élite</h3>
+      <p style="color:#888899;font-size:0.9rem;" data-tx>La dieta más saludable del mundo, optimizada para atletas</p>
+      <div class="diet-macros">
+        <div class="diet-macro-card"><div class="num">150g</div><div><span data-tx>Proteína</span></div></div>
+        <div class="diet-macro-card"><div class="num">280g</div><div><span data-tx>Carbos</span></div></div>
+        <div class="diet-macro-card"><div class="num">80g</div><div><span data-tx>Grasas</span></div></div>
+        <div class="diet-macro-card"><div class="num">2400</div><div>Kcal</div></div>
+      </div>
+      <div class="diet-week" data-plan="mediterranea"></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== BOTÁNICA NUTRICIONAL ===== -->
+<div data-section id="botanica">
+<section>
+  <h2 class="section-title">🌿 Botánica Nutricional</h2>
+  <p class="section-sub" data-i18n="sub.bot">Frutas, semillas, especias y granos con sus propiedades reales — para que la naturaleza trabaje a favor de tu plan.</p>
+  <div class="bot-fact" id="bot-fact" title="Toca para ver otro dato">
+    <span class="bf-icon">💡</span>
+    <span id="bot-fact-text">¿Sabías que el pimiento rojo tiene más vitamina C que la naranja?</span>
+  </div>
+  <p class="bot-fact-sub" data-tx>Datos reales, cero mitos — aquí nada "quema grasa" por arte de magia 😉</p>
+  <div class="bot-tools">
+    <input id="bot-search" type="text" placeholder="Buscar alimento, nutriente o beneficio…" data-i18n-ph="bot" autocomplete="off">
+  </div>
+  <div class="diet-tabs" id="bot-chips"></div>
+  <div class="lib-carousel-wrap">
+    <button class="lib-nav lib-prev" aria-label="Anterior">‹</button>
+    <div class="bot-strip" id="bot-grid"></div>
+    <button class="lib-nav lib-next" aria-label="Siguiente">›</button>
+  </div>
+  <div style="margin-top:26px">
+    <h3 style="font-size:1.05rem;margin:0 0 4px;color:#fff" data-tx>🌿 Botiquín Ancestral</h3>
+    <p style="margin:0 0 12px;font-size:0.8rem;color:#889" data-tx>Preparaciones tradicionales con respaldo parcial de la ciencia — contadas con honestidad, sin promesas mágicas.</p>
+    <div style="display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:6px">
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🥛 Leche dorada</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cúrcuma + pimienta negra + canela en leche tibia. Ritual ayurvédico nocturno: la piperina multiplica la absorción de la curcumina.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍋 Agua de jengibre y limón</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Jengibre rallado + limón en agua tibia al despertar. Tradición digestiva presente en múltiples culturas.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🎃 Semillas de calabaza en ayunas</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Remedio clásico contra parásitos intestinales (cucurbitina): 25-30 g molidas en ayunas. Siglos de tradición; evidencia moderna preliminar.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍈 Agua de semillas de papaya</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>1 cdita de semillas molidas en ayunas por pocos días: tradición tropical para el intestino, con un pequeño estudio clínico a favor. Evitar en embarazo.</p>
+      </div>
+    
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧅 Jarabe de cebolla y miel</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Cebolla en rodajas reposada en miel unas horas: jarabe casero clásico para la garganta. La miel sí tiene evidencia real contra la tos (nunca en menores de 1 año).</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🌼 Infusión de manzanilla</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>La apigenina de la manzanilla se une a receptores calmantes del cerebro. 30-60 min antes de dormir: la tradición universal del descanso.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍚 Agua de arroz</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>El agua del arroz cocido, suave con el estómago: tradición asiática y latina para días de digestión delicada.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧄 Ajo reposado en ayunas</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>1 diente picado y reposado 10 min (activa la alicina). Tradición cardiovascular e inmune de la cocina de las abuelas.</p>
+      </div>
+    
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍶 Caldo de huesos</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Huesos cocidos a fuego lento 8-12 h: colágeno, glicina y minerales. Tradición milenaria de recuperación y básico moderno del descanso articular.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🧊 Contraste frío</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Termina la ducha con 30-60 s de agua fría. Tradición nórdica; hoy se asocia a mejor recuperación percibida y a un estado de alerta inmediato.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🍃 Té de hojas de guayaba</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Infusión latinoamericana clásica para días de digestión revuelta. Sabor suave y siglos de uso en la mesa familiar.</p>
+      </div>
+      <div style="background:#11131d;border:1px solid #232636;border-radius:14px;padding:14px;flex:0 0 235px;scroll-snap-align:start">
+        <strong style="color:#05D9E8;font-size:0.9rem" data-tx>🌿 Agua de menta fresca</strong>
+        <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Hojas de menta machacadas en agua fría: frescura digestiva tras comidas pesadas, del Magreb a México.</p>
+      </div>
+    </div>
+    <p style="margin:6px 0 0;font-size:0.68rem;color:#556" data-tx>‹ Desliza para ver más ›</p>
+    <p style="margin:12px 0 0;font-size:0.72rem;color:#e0b34c" data-tx>⚠️ Sabiduría tradicional ≠ tratamiento. Si sospechas parásitos o un problema renal, acude a tu médico: estas preparaciones no sustituyen diagnóstico ni medicación.</p>
+  </div>
+
+  <p style="margin-top:12px;font-size:0.7rem;color:#667" data-tx>Valores aproximados por 100 g. Información general de bienestar — no sustituye consejo médico o nutricional profesional.</p>
+</section>
+</div>
+
+<!-- ===== MEDITACIÓN CON CRONÓMETRO VISUAL ===== -->
+<div data-section id="meditation">
+<section>
+  <h2 class="section-title">Meditación &amp; Respiración Guiada</h2>
+  <p class="section-sub" data-i18n="sub.med">Sigue el círculo: crece cuando inhalas, se detiene cuando retienes y se encoge cuando exhalas. Ideal para personas visuales.</p>
+  <div class="card">
+    <div class="meditation-grid">
+      <div>
+        <div class="breath-stage">
+          <div class="breath-ring" id="breath-ring">
+            <div class="breath-ring-inner">
+              <div class="breath-circle" id="breath-circle">
+                <div class="breath-count" id="breath-count">–</div>
+                <div class="breath-phase" id="breath-phase">Listo</div>
+              </div>
+            </div>
+          </div>
+          <div class="breath-cycle-label" id="breath-cycle-label"></div>
+        </div>
+        <div class="breath-legend">
+          <span><b style="color:#FF2A6D">●</b> <span data-tx>Inhala</span></span>
+          <span><b style="color:#05D9E8">●</b> <span data-tx>Retén</span></span>
+          <span><b style="color:#FFD700">●</b> <span data-tx>Exhala</span></span>
+          <span><b style="color:#9B59B6">●</b> <span data-tx>Pausa</span></span>
+        </div>
+      </div>
+      <div>
+        <div class="breath-patterns" id="breath-patterns">
+          <button class="breath-pattern active" data-pattern="478">
+            <strong data-tx>4 · 7 · 8 — Anti-estrés</strong>
+            <span data-tx>Inhala 4s, retén 7s, exhala 8s. Perfecta antes de dormir.</span>
+          </button>
+          <button class="breath-pattern" data-pattern="box">
+            <strong data-tx>Caja 4 · 4 · 4 · 4 — Enfoque</strong>
+            <span data-tx>Cuatro fases iguales. La técnica de los Navy SEALs.</span>
+          </button>
+          <button class="breath-pattern" data-pattern="coherente">
+            <strong data-tx>Coherente 5 · 5 — Calma</strong>
+            <span data-tx>Inhala 5s, exhala 5s. Equilibra el sistema nervioso.</span>
+          </button>
+        </div>
+        <div class="breath-controls">
+          <label><span data-tx>Ciclos</span>
+            <select id="breath-cycles">
+              <option value="3">3</option>
+              <option value="4" selected>4</option>
+              <option value="6">6</option>
+              <option value="8">8</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" id="breath-start">▶ Iniciar</button>
+          <button class="btn btn-pink" id="breath-stop">⏹ Detener</button>
+        </div>
+        <div class="med-program">
+          <div class="mp-head">
+            <h3 data-tx>🗓 Programa Mindfulness — 21 días</h3>
+            <div class="mp-progress"><strong id="mp-done">0</strong>/21 <span data-tx>completados</span>
+              <div class="mp-bar"><div id="mp-fill"></div></div>
+            </div>
+          </div>
+          <p class="mp-sub" data-tx>Un día = una práctica guiada. Toca cualquier día para ver las instrucciones paso a paso y márcalo al terminar — tu progreso se guarda.</p>
+          <div class="mp-grid" id="mp-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== FRECUENCIAS REPARADORAS ===== -->
+<div data-section id="frequencies">
+<section>
+  <h2 class="section-title">Frecuencias Reparadoras</h2>
+  <p class="section-sub" data-i18n="sub.freq">19 frecuencias generadas en tiempo real: tonos Solfeggio, ondas binaurales y pulsos duales para dormir, meditar, enfocarte o activar la mente.</p>
+  <p class="freq-ios-tip" data-i18n="freq.tip">📱 iPhone: el sonido sale como “música”, así que suena incluso con el interruptor en silencio — sube el volumen con los botones laterales. Si no escuchas, toca “Reproducir” otra vez.</p>
+  <div class="card">
+    <div class="freq-intro" data-i18n="freq.intro">
+      <span style="font-size:1.3rem">🎧</span>
+      <span><strong>Usa audífonos</strong> (obligatorio para las binaurales) y un volumen suave. Estas frecuencias son una herramienta de relajación y bienestar — complementan, no reemplazan, el descanso, la nutrición y el entrenamiento.</span>
+    </div>
+    <div class="freq-tabs">
+      <button class="freq-tab active" data-i18n="freq.t1" data-tab="solfeggio">Solfeggio · tonos puros</button>
+      <button class="freq-tab" data-i18n="freq.t2" data-tab="binaural">Ondas cerebrales · binaurales</button>
+      <button class="freq-tab" data-i18n="freq.t3" data-tab="dual">Dual · pulsos 1–7 Hz 🎧</button>
+    </div>
+    <div class="freq-grid" id="freq-grid"></div>
+    <div class="freq-controls">
+      <label><span data-tx>🔊 Volumen</span>
+        <input type="range" id="freq-volume" min="0" max="100" value="35">
+      </label>
+      <label><span data-tx>⏱ Temporizador</span>
+        <select id="freq-timer-select">
+          <option data-tx value="0">∞ Continuo</option>
+          <option data-tx value="5">5 min</option>
+          <option data-tx value="10">10 min</option>
+          <option data-tx value="15">15 min</option>
+          <option data-tx value="30">30 min</option>
+          <option data-tx value="60">60 min</option>
+        </select>
+      </label>
+      <button class="btn btn-pink" id="freq-stop-btn">⏹ Detener</button>
+      <span id="freq-now-playing"></span>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;background:#11131d;border:1px solid #232636;border-radius:14px;padding:16px">
+    <h3 style="margin:0 0 6px;font-size:0.98rem;color:#fff" data-tx>🎛️ Tono libre</h3>
+    <p style="margin:0 0 10px;font-size:0.8rem;color:#aab;line-height:1.5" data-tx>Escribe cualquier frecuencia y escúchala como tono puro. Volumen bajo y sesiones cortas.</p>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <input type="number" id="free-hz" min="20" max="20000" step="1" value="432" inputmode="decimal" style="width:120px;background:#0d0f16;border:1px solid #2a2a3a;border-radius:10px;color:#fff;padding:10px 12px;font-size:16px">
+      <span style="color:#889;font-size:0.85rem">Hz · 20–20 000</span>
+    </div>
+    <input type="range" id="free-hz-slider" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
+    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#556;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
+    <button class="btn btn-primary" id="free-tone-btn" type="button" style="width:100%;justify-content:center;margin-top:12px">▶ Reproducir</button>
+  </div>
+</section>
+</div>
+
+<!-- ===== NIVEL DE ATLETA ===== -->
+<div data-section id="level">
+<section>
+  <h2 class="section-title">Tu Nivel de Atleta</h2>
+  <p class="section-sub" data-i18n="sub.level">Cada kilo que registras en tu rutina suma volumen total. Sube de Principiante a Predator y aparece en el leaderboard.</p>
+  <div class="card">
+    <div class="level-card">
+      <div class="level-icon" id="level-icon">🌱</div>
+      <div class="level-info">
+        <div class="level-name" id="level-name">Principiante</div>
+        <div class="level-total"><strong id="level-total">0</strong> <span data-tx>kg levantados en total</span></div>
+        <div class="level-bar-wrap"><div class="level-bar" id="level-bar" style="width:0%"></div></div>
+        <div class="level-next" id="level-next">Empieza a registrar tus series para avanzar</div>
+      </div>
+    </div>
+    <div class="tier-strip" id="tier-strip"></div>
+  </div>
+</section>
+</div>
+
+<!-- ===== PROGRESS ===== -->
+<div data-section id="progress">
+<section>
+  <h2 class="section-title">Análisis de Progreso</h2>
+  <p class="section-sub" data-i18n="sub.progress">Todo tu progreso en conjunto: comida registrada, calorías quemadas, volumen levantado y descanso.</p>
+  <div class="health-grid" id="health-grid"></div>
+  <div class="card">
+    <div class="period-tabs">
+      <button class="period-tab active" data-period="week">Semana</button>
+      <button class="period-tab" data-period="month">Mes</button>
+    </div>
+    <canvas id="progress-chart" height="200"></canvas>
+    <div class="pr-cards" id="pr-cards">
+      <div class="card pr-card"><div class="pr-lift" data-tx>Sentadilla</div><div class="pr-weight" id="pr-squat">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Banca</div><div class="pr-weight" id="pr-bench">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Peso muerto</div><div class="pr-weight" id="pr-dead">—</div><div class="pr-unit">kg</div></div>
+      <div class="card pr-card"><div class="pr-lift" data-tx>Press militar</div><div class="pr-weight" id="pr-ohp">—</div><div class="pr-unit">kg</div></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== SUEÑO & RECUPERACIÓN ===== -->
+<div data-section id="sleep">
+<section>
+  <h2 class="section-title">Sueño &amp; Recuperación</h2>
+  <p class="section-sub" data-i18n="sub.sleep">El músculo se repara mientras duermes. Registra tus horas y te digo si es suficiente según lo que quemaste hoy.</p>
+  <div class="card">
+    <div class="sleep-grid">
+      <div>
+        <div class="sleep-hours-label"><span id="sleep-hours-val">7.5</span> <span>horas</span></div>
+        <input type="range" id="sleep-hours" min="3" max="12" step="0.5" value="7.5">
+        <div class="sleep-quality">
+          <button data-tx class="sq-btn" data-q="ligero">😐 Ligero</button>
+          <button data-tx class="sq-btn active" data-q="regular">🙂 Normal</button>
+          <button data-tx class="sq-btn" data-q="profundo">😴 Profundo</button>
+        </div>
+        <button class="btn btn-primary" id="sleep-save" style="width:100%;justify-content:center">Registrar noche</button>
+        <div id="sleep-verdict"></div>
+      </div>
+      <div>
+        <h3 style="font-size:0.9rem;color:#05D9E8;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px" data-tx>Tu semana de sueño</h3>
+        <div class="sleep-bars" id="sleep-bars"></div>
+        <div data-i18n="sleep.guide" style="margin-top:16px;padding:14px;background:#16161f;border-radius:12px;font-size:0.82rem;color:#9aa;line-height:1.6">
+          <strong style="color:#fff">💡 Guía rápida</strong><br>
+          Días de entrenamiento intenso (&gt;500 kcal) piden ~8.5 h. La mayoría de adultos necesita 7–9 h. Dormir poco reduce la síntesis de proteína muscular y sube el apetito al día siguiente.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ===== CHALLENGES ===== -->
+<div data-section id="challenges">
+<section>
+  <h2 class="section-title">Retos de la Comunidad</h2>
+  <p class="section-sub" data-i18n="sub.chal">Compite por volumen total con la comunidad. Tu nivel y tus kilos aparecen automáticamente en el leaderboard.</p>
+  <div class="card" style="margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+      <div>
+        <div class="badge badge-pink" style="margin-bottom:8px" data-tx>🔥 Reto activo</div>
+        <h3 style="margin:0 0 4px;font-size:1.1rem" data-tx>30 Días de Plancha</h3>
+        <p style="margin:0;font-size:0.82rem;color:#888899;" data-tx>Aumenta tu plancha 10 segundos cada día. Quedan 18 días.</p>
+      </div>
+      <button class="btn btn-primary" id="join-btn">🚩 Unirse al reto</button>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#888899;margin-bottom:6px">
+      <span data-tx>Progreso comunitario</span><span id="challenge-pct">67%</span>
+    </div>
+    <div class="challenge-bar-wrap"><div class="challenge-bar" id="challenge-bar" style="width:67%"></div></div>
+    <div style="font-size:0.78rem;color:#888899;margin-top:6px" data-tx>1,247 de 1,860 participantes completaron el reto de hoy</div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px">
+    <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Leaderboard esta semana</h3>
+    <div style="overflow-x:auto">
+      <table class="leaderboard" id="leaderboard-table"></table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:16px;font-size:1rem" data-tx>Tus Badges</h3>
+    <div class="badges-row" id="badges-row"></div>
+  </div>
+</section>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<!-- ===== CTA FINAL ===== -->
+<div data-section id="cta-final">
+<section style="padding-top:24px">
+  <div class="cta-card">
+    <h2 data-tx>¿Listo para transformar tu cuerpo y tu mente?</h2>
+    <p data-tx>Todo lo que necesitas vive en esta página: entrena con técnica, come con datos, descansa mejor y mide tu progreso — gratis y sin apps.</p>
+    <div class="cta-btns">
+      <a data-tx href="#planner" class="btn btn-primary">🏋️ Crear mi rutina ahora</a>
+      <a data-tx href="#goal" class="btn btn-outline">🎯 Calcular mis calorías</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<div class="vh-footer">
+  <div class="footer-logo">
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
+      <rect x="2" y="2" width="36" height="36" rx="10" fill="url(#logoGradF)"/>
+      <text x="20" y="28" font-family="Arial, sans-serif" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">V</text>
+      <defs><linearGradient id="logoGradF" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF2A6D"/><stop offset="100%" stop-color="#05D9E8"/></linearGradient></defs>
+    </svg>
+    <span>VILLUMINATIONS</span>
+  </div>
+  <div class="footer-socials">
+    <a href="#" aria-label="YouTube">YT</a>
+    <a href="#" aria-label="Instagram">IG</a>
+    <a href="#" aria-label="TikTok">TK</a>
+    <a href="#" aria-label="X">X</a>
+  </div>
+  <div style="font-size:0.85rem;color:#888899;margin-bottom:8px">@villumination99 en todas las plataformas</div>
+  <div class="footer-links">
+    <a data-tx href="#muscle-map">Músculos</a>
+    <a data-tx href="#planner">Entrenamiento</a>
+    <a data-tx href="#nutrition">Nutrición</a>
+    <a data-tx href="#goal">Objetivo</a>
+    <a data-tx href="#diet-plans">Planes</a>
+    <a data-tx href="#botanica">Botánica</a>
+    <a data-tx href="#meditation">Meditación</a>
+    <a data-tx href="#frequencies">Frecuencias</a>
+    <a data-tx href="#progress">Progreso</a>
+    <a data-tx href="#challenges">Retos</a>
+  </div>
+  <div class="footer-copy" data-tx>© 2026 VILLUMINATIONS. Fitness &amp; Hábitos Sanos. Todos los derechos reservados.</div>
+</div>
+
+<!-- ===== PROFILE / LOGIN MODAL ===== -->
+<div id="profile-modal">
+  <div class="profile-box">
+    <button class="profile-close" id="profile-close">✕</button>
+    <div class="profile-title"><span>Perfil</span></div>
+    <div class="profile-sub">Regístrate o inicia sesión para guardar tu progreso y personalizar las calorías con tu peso.</div>
+    <div class="profile-local">🔒 Este perfil vive <strong>solo en este navegador</strong>: nada se envía a ningún servidor. Aun así, no uses la contraseña de tu correo.</div>
+    <div id="profile-form">
+      <div class="profile-field">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="tu@email.com" value="">
+      </div>
+      <div class="profile-field">
+        <label>Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" value="">
+      </div>
+      <div class="profile-field">
+        <label>Peso corporal (kg) — para calcular tus calorías</label>
+        <input type="number" id="login-weight" placeholder="75" min="30" max="250" value="">
+      </div>
+      <div class="profile-actions">
+        <button class="btn btn-primary" id="login-btn">Iniciar sesión</button>
+        <button class="btn btn-outline" id="register-btn">Registrarse</button>
+      </div>
+    </div>
+    <div id="profile-info" style="display:none;">
+      <div class="profile-user-info">
+        <div><span class="label" data-tx>Usuario:</span> <span class="value" id="profile-user-email">-</span></div>
+        <div><span class="label" data-tx>Peso:</span> <span class="value" id="profile-user-weight">-</span> kg</div>
+        <div><span class="label" data-tx>Calorías diarias:</span> <span class="value" id="profile-user-cal">-</span></div>
+        <div style="margin-top:8px"><button class="btn btn-pink" id="logout-btn" style="width:100%;justify-content:center">Cerrar sesión</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="audio-sink" playsinline style="display:none"></audio>
+
+<!-- ===== TOAST ===== -->
+<div id="toast"></div>
+
+<!-- ===== CDNs ===== -->
+<script>
 /* Diagnóstico VILLUMINATIONS: identifica el origen real de cualquier fallo. */
 (function () {
   var TAG = '[VILL]';
@@ -48,7 +1854,10 @@
       (r && r.stack) ? '\n' + r.stack : '');
   });
 })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+<script>
 (function() {
   'use strict';
 
@@ -1387,7 +3196,7 @@
   var SEC_IDS = ['muscle-map', 'planner', 'nutrition', 'goal', 'diet-plans', 'botanica', 'meditation', 'frequencies', 'level', 'progress', 'sleep', 'challenges'];
   var I18N = {
     en: {
-      tag: '@villumination99 · Fitness Hub',
+      tag: '@villumination99 · VI.P',
       title: 'Transform your<br><span>Body &amp; Mind</span>',
       sub: 'Interactive 3D anatomy, calorie-accurate routines, smart nutrition, guided breathing and restorative frequencies — all in one place.',
       b1: '🧬 Explore 3D Anatomy', b2: '🏋️ Build my Routine',
@@ -1510,7 +3319,7 @@
       btns: { 'save-routine-btn': '💾 Save routine', 'clear-routine-btn': '🗑 Clear', 'calc-btn': 'Calculate my calories', 'sleep-save': 'Log last night', 'join-btn': 'Join the challenge', 'mm-clear-btn': '✕ Clear selection', 'scan-btn': '📷 Scan with camera', 'upload-btn': '🖼 Upload photo', 'capture-btn': '📸 Capture', 'stop-cam-btn': '⏹ Stop', 'breath-start': '▶ Start', 'breath-stop': '⏹ Stop', 'freq-stop-btn': '⏹ Stop', 'login-btn': 'Log in', 'register-btn': 'Sign up', 'logout-btn': 'Log out' }
     },
     fr: {
-      tag: '@villumination99 · Fitness Hub',
+      tag: '@villumination99 · VI.P',
       title: 'Transforme ton<br><span>Corps &amp; Esprit</span>',
       sub: 'Anatomie 3D interactive, routines aux calories réelles, nutrition intelligente, respiration guidée et fréquences réparatrices — tout en un seul endroit.',
       b1: '🧬 Explorer l’anatomie 3D', b2: '🏋️ Créer ma routine',
@@ -2943,3 +4752,812 @@
   })();
 
 })();
+</script>
+
+<!-- ===== CUERPO 3D ESCULPIDO v5: anatomía corregida + surcos tallados + highlight en superficie ===== -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { MarchingCubes } from 'three/addons/objects/MarchingCubes.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+try {
+  const canvas = document.getElementById('muscle-canvas');
+  const loading = document.getElementById('mm-loading');
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0b0d16, 0.10);
+  const camera = new THREE.PerspectiveCamera(33, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+
+  /* ENCUADRAR ES CUENTA, NO GUSTO. Antes la distancia era un 3.7 fijo y el
+     lienzo cambia de forma segun el aparato: en un movil el cuerpo llenaba la
+     caja y en un escritorio ancho se quedaba en una figurita de 16 % del ancho
+     perdida en un rectangulo negro. Aqui la distancia sale de la altura que se
+     quiere llenar y del campo de vision, y ademas se compara con lo que cabe
+     de ANCHO, que es lo que manda en un lienzo apaisado. */
+  const CUERPO_ALTO = 1.86, CUERPO_ANCHO = 0.62;
+  function distanciaParaEncuadrar(llenado) {
+    const fv = camera.fov * Math.PI / 180;
+    const dV = (CUERPO_ALTO / llenado) / (2 * Math.tan(fv / 2));
+    const fh = 2 * Math.atan(Math.tan(fv / 2) * camera.aspect);
+    const dH = (CUERPO_ANCHO / llenado) / (2 * Math.tan(fh / 2));
+    return Math.max(dV, dH);
+  }
+  let distBase = distanciaParaEncuadrar(0.88);
+  camera.position.set(0.42, 1.16, distBase);
+
+  const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.0;
+  window.__mm3dStarted = true;
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(renderer), 0.04).texture;
+
+  /* ---- Luces de estudio con rim azul ---- */
+  scene.add(new THREE.HemisphereLight(0x35507a, 0x0a0a12, 0.35));
+  const keyLight = new THREE.DirectionalLight(0xfff4e8, 1.05);
+  keyLight.position.set(2.4, 3.4, 3.2);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.set(1024, 1024);
+  keyLight.shadow.camera.near = 0.5; keyLight.shadow.camera.far = 12;
+  keyLight.shadow.camera.left = -2; keyLight.shadow.camera.right = 2;
+  keyLight.shadow.camera.top = 3.2; keyLight.shadow.camera.bottom = -1;
+  scene.add(keyLight);
+  const rimL = new THREE.DirectionalLight(0x2f6bff, 1.9);
+  rimL.position.set(-3.4, 1.7, -2.0);
+  scene.add(rimL);
+  const rimR = new THREE.DirectionalLight(0x1e4dff, 1.3);
+  rimR.position.set(3.2, 0.9, -2.6);
+  scene.add(rimR);
+  const fillCyan = new THREE.PointLight(0x05D9E8, 0.3, 8);
+  fillCyan.position.set(0, 0.5, 2.6);
+  scene.add(fillCyan);
+  // Rebote del suelo: sin él las piernas caen a negro y el volumen se pierde
+  const bounce = new THREE.DirectionalLight(0x9fb0d4, 0.42);
+  bounce.position.set(0.6, -1.8, 1.6);
+  scene.add(bounce);
+
+  /* ---- Suelo + anillo + partículas ---- */
+  // Suelo invisible que SOLO recibe sombra (nada de disco gris flotando)
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(1.9, 64), new THREE.ShadowMaterial({ opacity: 0.45 }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.receiveShadow = true;
+  scene.add(ground);
+  // Halo de contacto degradado (textura de canvas: 128px, coste nulo)
+  const gcv = document.createElement('canvas'); gcv.width = gcv.height = 128;
+  const g2d = gcv.getContext('2d');
+  const grd = g2d.createRadialGradient(64, 64, 3, 64, 64, 64);
+  grd.addColorStop(0, 'rgba(5,217,232,0.30)');
+  grd.addColorStop(0.42, 'rgba(5,217,232,0.08)');
+  grd.addColorStop(1, 'rgba(5,217,232,0)');
+  g2d.fillStyle = grd; g2d.fillRect(0, 0, 128, 128);
+  const glow = new THREE.Mesh(
+    new THREE.PlaneGeometry(3.4, 3.4),
+    new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(gcv), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })
+  );
+  glow.rotation.x = -Math.PI / 2; glow.position.y = 0.0015;
+  scene.add(glow);
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(1.05, 1.09, 64),
+    new THREE.MeshBasicMaterial({ color: 0x05D9E8, transparent: true, opacity: 0.22, side: THREE.DoubleSide })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.002;
+  scene.add(ring);
+  const pGeo = new THREE.BufferGeometry();
+  const PCOUNT = 150;
+  const pPos = new Float32Array(PCOUNT * 3);
+  for (let i = 0; i < PCOUNT; i++) {
+    pPos[i * 3] = (Math.random() - 0.5) * 8;
+    pPos[i * 3 + 1] = Math.random() * 3.4;
+    pPos[i * 3 + 2] = (Math.random() - 0.5) * 8;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const particles = new THREE.Points(pGeo, new THREE.PointsMaterial({
+    color: 0x3f6bff, size: 0.02, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending
+  }));
+  scene.add(particles);
+
+  /* =====================================================================
+     MATERIAL "ARCILLA" con highlight EN LA SUPERFICIE
+     Cada vértice lleva pesos (selW/hovW/crease); el shader pinta la zona activa
+     directamente sobre el cuerpo (nada de globos flotantes).
+     ===================================================================== */
+  const uPulse = { value: 0 }, uScanY = { value: 0 };
+  // Material de lámina anatómica: mate, hueso cálido, sin barniz plástico.
+  const clayMat = new THREE.MeshPhysicalMaterial({
+    color: 0xd8d3ca, roughness: 0.62, metalness: 0.0,
+    clearcoat: 0.05, clearcoatRoughness: 0.80, envMapIntensity: 0.50,
+    sheen: 0.30, sheenRoughness: 0.85, sheenColor: new THREE.Color(0xffd9c4)
+  });
+  clayMat.onBeforeCompile = function(shader) {
+    shader.uniforms.uPulse = uPulse;
+    shader.uniforms.uScanY = uScanY;
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', `#include <common>
+attribute float selW; attribute float hovW; attribute float clothId; attribute float crease; attribute float ao;
+varying float vSelW; varying float vHovW; varying float vCloth; varying float vCre; varying float vAO; varying vec3 vLocal;`)
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+vSelW = selW; vHovW = hovW; vCloth = clothId; vCre = crease; vAO = ao; vLocal = position;`);
+    shader.fragmentShader = shader.fragmentShader
+      .replace('#include <common>', `#include <common>
+varying float vSelW; varying float vHovW; varying float vCloth; varying float vCre; varying float vAO; varying vec3 vLocal;
+uniform float uPulse; uniform float uScanY;
+float vhash(vec3 p){ p = fract(p * 0.3183099 + vec3(0.71, 0.113, 0.419)); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
+float vnoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(mix(vhash(i), vhash(i + vec3(1,0,0)), f.x), mix(vhash(i + vec3(0,1,0)), vhash(i + vec3(1,1,0)), f.x), f.y),
+             mix(mix(vhash(i + vec3(0,0,1)), vhash(i + vec3(1,0,1)), f.x), mix(vhash(i + vec3(0,1,1)), vhash(i + vec3(1,1,1)), f.x), f.y), f.z); }`)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+{
+  float cre = clamp(vCre, 0.0, 1.0);
+  float cloth = clamp(vCloth, 0.0, 1.0);
+  float sel = clamp(vSelW, 0.0, 1.0);
+  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);
+  float occ = clamp(vAO, 0.0, 1.0);
+  // Micro-relieve procedural: rompe el albedo uniforme que delata al plástico
+  float grain = vnoise(vLocal * 46.0) - 0.5;
+  float fiber = vnoise(vLocal * vec3(120.0, 26.0, 120.0)) - 0.5; // fibra alargada
+  diffuseColor.rgb *= 1.0 + grain * 0.10 + fiber * 0.055;
+  // Oclusión ambiental horneada desde el propio SDF: hunde axilas, ingles, pliegues
+  diffuseColor.rgb *= mix(1.0, occ, 0.88);
+  // Ropa
+  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.070, 0.070, 0.086), cloth);
+  // Surco anatómico: sombra profunda + tinte frío en el fondo
+  float deep = smoothstep(0.20, 1.0, cre);
+  diffuseColor.rgb *= (1.0 - 0.60 * cre);
+  diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.80, 0.86, 1.0), deep * 0.75);
+  // Músculo activo / bajo el cursor
+  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.86, 0.09, 0.11), sel * 0.90);
+  diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);
+}`)
+      .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+{
+  float sel = clamp(vSelW, 0.0, 1.0);
+  float hov = clamp(vHovW, 0.0, 1.0) * (1.0 - sel);
+  float cre = clamp(vCre, 0.0, 1.0);
+  float occ = clamp(vAO, 0.0, 1.0);
+  // Luz de borde: se apaga en las zonas ocluidas, como la luz real
+  float ndv = clamp(dot(normalize(vViewPosition), normal), 0.0, 1.0);
+  float fres = pow(1.0 - ndv, 3.2);
+  totalEmissiveRadiance += vec3(0.03, 0.62, 0.70) * fres * (0.40 - 0.18 * cre) * occ;
+  float edge = smoothstep(0.05, 0.35, sel) * (1.0 - smoothstep(0.55, 0.95, sel));
+  totalEmissiveRadiance += vec3(1.0, 0.10, 0.05) * (sel * (0.18 + 0.16 * uPulse) + edge * 0.38);
+  float band = smoothstep(0.085, 0.0, abs(vLocal.y - uScanY));
+  totalEmissiveRadiance += vec3(1.0, 0.42, 0.30) * sel * band * 0.85;
+  totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;
+}`)
+      .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
+roughnessFactor += (vnoise(vLocal * 60.0) - 0.5) * 0.17;
+roughnessFactor = mix(roughnessFactor, 0.92, clamp(vCloth, 0.0, 1.0));
+roughnessFactor = mix(roughnessFactor, 0.78, clamp(vCre, 0.0, 1.0) * 0.8);
+roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
+  };
+
+  const bodyRoot = new THREE.Group();
+  scene.add(bodyRoot);
+
+  /* ---- SDF helpers ---- */
+  function clamp01(t) { return t < 0 ? 0 : (t > 1 ? 1 : t); }
+  function smin(a, b, k) {
+    const h = clamp01(0.5 + 0.5 * (b - a) / k);
+    return b * (1 - h) + a * h - k * h * (1 - h);
+  }
+  function smax(a, b, k) { return -smin(-a, -b, k); }
+  function sdEll(px, py, pz, cx, cy, cz, rx, ry, rz) {
+    const x = (px - cx) / rx, y = (py - cy) / ry, z = (pz - cz) / rz;
+    const k0 = Math.sqrt(x * x + y * y + z * z);
+    if (k0 === 0) return -Math.min(rx, Math.min(ry, rz));
+    const x1 = x / rx, y1 = y / ry, z1 = z / rz;
+    const k1 = Math.sqrt(x1 * x1 + y1 * y1 + z1 * z1);
+    return k0 * (k0 - 1) / k1;
+  }
+  function sdCap(px, py, pz, ax, ay, az, bx, by, bz, r) {
+    const bax = bx - ax, bay = by - ay, baz = bz - az;
+    const pax = px - ax, pay = py - ay, paz = pz - az;
+    const h = clamp01((pax * bax + pay * bay + paz * baz) / (bax * bax + bay * bay + baz * baz));
+    const dx = pax - bax * h, dy = pay - bay * h, dz = paz - baz * h;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz) - r;
+  }
+  function sdRC(px, py, pz, ax, ay, az, bx, by, bz, r1, r2) {
+    const bax = bx - ax, bay = by - ay, baz = bz - az;
+    const l2 = bax * bax + bay * bay + baz * baz;
+    const rr = r1 - r2, a2 = l2 - rr * rr, il2 = 1 / l2;
+    const pax = px - ax, pay = py - ay, paz = pz - az;
+    const y = pax * bax + pay * bay + paz * baz;
+    const z = y - l2;
+    const qx = pax * l2 - bax * y, qy = pay * l2 - bay * y, qz = paz * l2 - baz * y;
+    const x2 = qx * qx + qy * qy + qz * qz;
+    const y2 = y * y * l2, z2 = z * z * l2;
+    const k = (rr < 0 ? -1 : 1) * rr * rr * x2;
+    if ((z < 0 ? -1 : 1) * a2 * z2 > k) return Math.sqrt(x2 + z2) * il2 - r2;
+    if ((y < 0 ? -1 : 1) * a2 * y2 < k) return Math.sqrt(x2 + y2) * il2 - r1;
+    return (Math.sqrt(x2 * a2 * il2) + y * rr) * il2 - r1;
+  }
+
+  /* ---- SURCOS DE DEFINICIÓN (líneas talladas entre músculos) ---- */
+  // Cada surco es una cápsula fina que se SUSTRAE de la superficie.
+  const GROOVES = [
+    { a: [0.000, 0.960, 0.118], b: [0.000, 1.225, 0.116], r: 0.0085, m: 0 }, // línea alba
+    { a: [-0.062, 1.168, 0.116], b: [0.062, 1.168, 0.116], r: 0.0080, m: 0 }, // cortes abdominales
+    { a: [-0.062, 1.088, 0.116], b: [0.062, 1.088, 0.116], r: 0.0080, m: 0 },
+    { a: [-0.058, 1.008, 0.114], b: [0.058, 1.008, 0.114], r: 0.0080, m: 0 },
+    { a: [0.027, 1.265, 0.110], b: [0.145, 1.273, 0.070], r: 0.0080, m: 1 }, // pliegue subpectoral
+    { a: [0.149, 1.372, 0.086], b: [0.174, 1.323, 0.084], r: 0.0080, m: 1 }, // deltoides-brazo
+    { a: [0.096, 1.000, 0.098], b: [0.126, 1.090, 0.056], r: 0.0080, m: 1 }, // V del oblicuo
+    { a: [0.000, 1.032, -0.084], b: [0.000, 1.371, -0.112], r: 0.0090, m: 0 }, // surco espinal
+    { a: [0.092, 0.552, 0.088], b: [0.092, 0.716, 0.082], r: 0.0080, m: 1 }, // cuádriceps
+    { a: [0.257, 1.246, -0.002], b: [0.254, 1.349, 0.000], r: 0.0075, m: 1 }, // bíceps-tríceps
+    { a: [0.021, 1.438, 0.087], b: [0.122, 1.419, 0.080], r: 0.0075, m: 1 }, // clavícula
+    { a: [0.018, 1.553, 0.063], b: [0.057, 1.485, 0.061], r: 0.0060, m: 1 }, // esternocleidomastoideo
+    { a: [0.000, 1.284, 0.107], b: [0.000, 1.353, 0.100], r: 0.0075, m: 0 }, // esternón
+    { a: [0.090, 1.185, 0.081], b: [0.128, 1.237, 0.054], r: 0.0060, m: 1 }, // serrato
+    { a: [0.143, 1.466, 0.069], b: [0.163, 1.382, 0.082], r: 0.0060, m: 1 }, // deltoides ant/lat
+    { a: [0.168, 1.468, -0.075], b: [0.190, 1.387, -0.084], r: 0.0060, m: 1 }, // deltoides lat/post
+    { a: [0.205, 1.227, -0.071], b: [0.188, 1.343, -0.085], r: 0.0060, m: 1 }, // tríceps cabeza larga
+    { a: [0.198, 1.009, 0.062], b: [0.219, 1.125, 0.070], r: 0.0055, m: 1 }, // braquiorradial
+    { a: [0.037, 1.509, -0.062], b: [0.114, 1.418, -0.090], r: 0.0070, m: 1 }, // trapecio superior
+    { a: [0.054, 1.286, -0.111], b: [0.117, 1.353, -0.101], r: 0.0070, m: 1 }, // escápula
+    { a: [0.047, 0.702, -0.084], b: [0.116, 0.703, -0.087], r: 0.0075, m: 1 }, // pliegue glúteo
+    { a: [0.124, 0.555, 0.073], b: [0.133, 0.742, 0.073], r: 0.0070, m: 1 }, // recto femoral
+    { a: [0.056, 0.753, 0.086], b: [0.120, 0.549, 0.073], r: 0.0060, m: 1 }, // sartorio
+    { a: [0.099, 0.512, 0.074], b: [0.098, 0.442, 0.066], r: 0.0065, m: 1 }, // rótula
+    { a: [0.099, 0.302, -0.059], b: [0.099, 0.419, -0.063], r: 0.0065, m: 1 }, // gemelo int/ext
+    { a: [0.077, 0.202, 0.030], b: [0.080, 0.396, 0.045], r: 0.0055, m: 1 }, // tibial anterior
+    { a: [0.099, 0.152, -0.043], b: [0.099, 0.248, -0.045], r: 0.0055, m: 1 }  // tendón de Aquiles
+  ];
+
+  /* ---- ANATOMÍA v5 (proporciones corregidas; pies en y=0, altura ~1.83) ---- */
+  function bodySDF(px, py, pz) {
+    const ax = Math.abs(px);
+
+    // Caja torácica: más alta y estrecha en Z (el tórax humano es ovalado, no un barril)
+    let d = sdEll(px, py, pz, 0, 1.330, -0.004, 0.178, 0.170, 0.112);
+    d = smin(d, sdEll(px, py, pz, 0, 1.100, 0, 0.132, 0.140, 0.092), 0.10);
+    d = smin(d, sdEll(px, py, pz, 0, 0.880, 0, 0.138, 0.115, 0.100), 0.09);
+    d = smin(d, sdCap(px, py, pz, -0.140, 1.442, -0.005, 0.140, 1.442, -0.005, 0.056), 0.07);
+    // Placa abdominal PLANA y pegada (evita el vientre abultado)
+    d = smin(d, sdEll(px, py, pz, 0, 1.080, 0.082, 0.086, 0.170, 0.038), 0.05);
+    // Cuello (más fino) + cabeza + mandíbula
+    d = smin(d, sdCap(px, py, pz, 0, 1.480, 0.004, 0, 1.575, 0.010, 0.050), 0.045);
+    let hd = sdEll(px, py, pz, 0, 1.688, 0.010, 0.090, 0.112, 0.096);
+    hd = smin(hd, sdEll(px, py, pz, 0, 1.612, 0.040, 0.066, 0.050, 0.070), 0.04);
+    d = smin(d, hd, 0.04);
+    // Esternón: hunde el centro del pecho para que los pectorales no se fundan en una teta única
+    d = smax(d, -sdCap(px, py, pz, 0, 1.262, 0.104, 0, 1.362, 0.098, 0.013), 0.045);
+
+    // Trapecio (bajo, en pendiente) y deltoides (compacto, encaja en el hombro)
+    d = smin(d, sdCap(ax, py, pz, 0.035, 1.490, -0.010, 0.123, 1.438, -0.006, 0.032), 0.06);
+    d = smin(d, sdEll(ax, py, pz, 0.178, 1.418, -0.002, 0.070, 0.078, 0.072), 0.065);
+    // Brazo pegado al torso, húmero afinado hacia el codo
+    d = smin(d, sdRC(ax, py, pz, 0.189, 1.398, 0, 0.217, 1.178, 0.010, 0.054, 0.047), 0.06);
+    d = smin(d, sdEll(ax, py, pz, 0.206, 1.322, 0.040, 0.036, 0.070, 0.034), 0.032); // bíceps
+    d = smin(d, sdEll(ax, py, pz, 0.211, 1.305, -0.042, 0.036, 0.080, 0.036), 0.032); // tríceps
+    d = smin(d, sdEll(ax, py, pz, 0.219, 1.168, 0.008, 0.040, 0.044, 0.040), 0.05);  // codo
+    d = smin(d, sdRC(ax, py, pz, 0.219, 1.158, 0.012, 0.226, 0.940, 0.044, 0.044, 0.036), 0.045);
+    d = smin(d, sdEll(ax, py, pz, 0.221, 1.088, 0.034, 0.031, 0.062, 0.030), 0.03);  // extensores
+    d = smin(d, sdEll(ax, py, pz, 0.227, 0.872, 0.060, 0.034, 0.064, 0.046), 0.04);  // mano
+
+    // Dorsal (ala), PECTORAL alto y plano (ya no cuelga), oblicuo discreto
+    d = smin(d, sdEll(ax, py, pz, 0.122, 1.246, -0.048, 0.070, 0.138, 0.052), 0.06);
+    d = smin(d, sdEll(ax, py, pz, 0.082, 1.318, 0.088, 0.080, 0.058, 0.030), 0.045);
+    d = smin(d, sdEll(ax, py, pz, 0.108, 1.052, 0.040, 0.024, 0.072, 0.024), 0.055);
+
+    // Pelvis estrecha (nada de bulto): la cadera se estrecha antes del muslo
+    d = smin(d, sdEll(px, py, pz, 0, 0.800, -0.006, 0.118, 0.070, 0.086), 0.06);
+    // Glúteo y pierna: muslo → rodilla → gemelo → pie
+    d = smin(d, sdEll(ax, py, pz, 0.074, 0.798, -0.078, 0.072, 0.078, 0.062), 0.05);
+    d = smin(d, sdRC(ax, py, pz, 0.088, 0.790, 0, 0.098, 0.492, 0.008, 0.084, 0.062), 0.06);
+    d = smin(d, sdEll(ax, py, pz, 0.092, 0.650, 0.046, 0.050, 0.112, 0.036), 0.04);   // cuádriceps
+    d = smin(d, sdEll(ax, py, pz, 0.092, 0.640, -0.042, 0.048, 0.106, 0.038), 0.045); // femoral
+    d = smin(d, sdEll(ax, py, pz, 0.098, 0.478, 0.014, 0.046, 0.052, 0.046), 0.038);  // rodilla
+    d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
+    d = smin(d, sdEll(ax, py, pz, 0.099, 0.368, -0.030, 0.040, 0.086, 0.037), 0.03);  // gemelo
+    d = smin(d, sdEll(ax, py, pz, 0.100, 0.047, 0.062, 0.045, 0.044, 0.112), 0.04);  // pie
+
+    // Entrepierna: sustraer una cuña vertical para separar los muslos limpiamente
+    d = smax(d, -sdCap(px, py, pz, 0, 0.560, -0.030, 0, 0.760, -0.010, 0.030), 0.05);
+    // Ombligo
+    d = smax(d, -sdEll(px, py, pz, 0, 1.030, 0.122, 0.012, 0.013, 0.016), 0.014);
+    // Los surcos ya no se tallan en la malla (eran más finos que un vóxel):
+    // ahora se sombrean por vértice con el atributo 'crease' → nítidos a cualquier zoom.
+    return d;
+  }
+
+  /* ---- Voxelizar + triangulizar (resolución alta para que los surcos se vean) ---- */
+  const isMobile = Math.min(window.innerWidth, window.innerHeight) < 700;
+  // Rejilla EMPAQUETADA: el cuerpo llena el cubo de vóxeles en vez de ocupar el 8%.
+  // Escala no uniforme -> 2.2x más detalle en X y 3.4x en Z al mismo coste.
+  const SX = 0.40, SY = 0.98, SZ = 0.26, CY = 0.935;
+  const RES = isMobile ? 88 : 112;
+  const MAXPOLY = isMobile ? 100000 : 160000; // medido: ~59k / ~96k triángulos reales
+  const mc = new MarchingCubes(RES, clayMat, false, false, MAXPOLY);
+  mc.isolation = 0;
+  mc.position.set(0, CY, 0);
+  mc.scale.set(SX, SY, SZ);
+  mc.castShadow = true;
+  mc.frustumCulled = false;
+  bodyRoot.add(mc);
+
+  // Atributos por vértice (deben existir ANTES de compilar el shader)
+  const creaseArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('crease', new THREE.BufferAttribute(creaseArr, 1));
+  const aoArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('ao', new THREE.BufferAttribute(aoArr, 1));
+  const clothArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('clothId', new THREE.BufferAttribute(clothArr, 1));
+  const selWArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('selW', new THREE.BufferAttribute(selWArr, 1));
+  const hovWArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('hovW', new THREE.BufferAttribute(hovWArr, 1));
+
+  const half = RES / 2;
+  const size2 = RES * RES;
+  const field = mc.field;
+  field.fill(-1000);
+
+  /* ---- ZONAS MUSCULARES (id 1..9): picking invisible + pintado por vértice ---- */
+  /* ---------- LAS ZONAS TIENEN FORMA DE MUSCULO ----------
+     Cada entrada es [x, y, z, radio x, radio y, radio z, espejo]. Con
+     'espejo' a 1 la forma se aplica a los dos lados del cuerpo.
+
+     La espalda era UNA esfera centrada de 16 cm de radio y en pantalla se veia
+     lo que era: un disco rojo pegado entre los omoplatos, del tamano de un
+     plato. Ningun musculo tiene esa forma. Ahora son cuatro piezas por lado
+     -- trapecio, el ala del dorsal y la zona lumbar -- y el resaltado sigue la
+     espalda en vez de taparla.
+
+     Y esto no es solo pintura: la misma lista decide QUE musculo hay bajo el
+     dedo, asi que afinar las formas afina tambien la punteria. */
+  const ZONES = [
+    { id: 1, name: 'Pecho', list: [
+        [ 0.072, 1.322,  0.094, 0.078, 0.056, 0.048, 1],   // cuerpo del pectoral
+        [ 0.108, 1.352,  0.070, 0.052, 0.042, 0.040, 1] ]},// insercion clavicular
+    { id: 2, name: 'Espalda', list: [
+        [ 0.058, 1.446, -0.042, 0.082, 0.062, 0.050, 1],   // trapecio superior
+        [ 0.098, 1.330, -0.078, 0.084, 0.086, 0.048, 1],   // ala del dorsal, arriba
+        [ 0.092, 1.206, -0.070, 0.072, 0.092, 0.046, 1],   // dorsal, hacia la cintura
+        [ 0.042, 1.116, -0.078, 0.052, 0.082, 0.042, 1] ]},// lumbar
+    { id: 3, name: 'Hombros', list: [
+        [ 0.180, 1.416,  0.010, 0.070, 0.076, 0.062, 1],
+        [ 0.176, 1.430, -0.056, 0.056, 0.062, 0.046, 1] ]},// haz posterior
+    { id: 4, name: 'Biceps',      list: [[ 0.206, 1.322,  0.044, 0.042, 0.078, 0.040, 1]] },
+    { id: 5, name: 'Triceps',     list: [[ 0.211, 1.305, -0.046, 0.042, 0.088, 0.042, 1]] },
+    { id: 6, name: 'Abdominales', list: [
+        [ 0.036, 1.130,  0.090, 0.050, 0.090, 0.040, 1],   // recto, mitad alta
+        [ 0.034, 0.990,  0.086, 0.048, 0.078, 0.038, 1],   // recto, mitad baja
+        [ 0.088, 1.070,  0.052, 0.038, 0.086, 0.036, 1] ]},// oblicuo
+    { id: 7, name: 'Cuadriceps',  list: [
+        [ 0.090, 0.690,  0.052, 0.054, 0.098, 0.042, 1],
+        [ 0.098, 0.560,  0.048, 0.046, 0.070, 0.038, 1] ]},// vasto, cerca de la rodilla
+    { id: 8, name: 'Gluteos',     list: [[ 0.074, 0.796, -0.082, 0.078, 0.080, 0.066, 1]] },
+    { id: 9, name: 'Gemelos',     list: [
+        [ 0.098, 0.372, -0.032, 0.048, 0.098, 0.044, 1],
+        [ 0.098, 0.250, -0.030, 0.036, 0.062, 0.036, 1] ]} // hacia el tendon
+  ];
+  const NAME2ID = {};
+  ZONES.forEach(function(z) { NAME2ID[z.name] = z.id; });
+  const CAN_HOVER = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+  let vposCache = null, vertCount = 0;
+  function paintWeight(attrName, zoneName) {
+    if (!vposCache) return;
+    const attr = mc.geometry.getAttribute(attrName);
+    const arr = attr.array;
+    const zone = zoneName ? ZONES.find(function(z) { return z.name === zoneName; }) : null;
+    if (!zone) {
+      for (let i = 0; i < vertCount; i++) arr[i] = 0;
+      attr.needsUpdate = true;
+      return;
+    }
+    const L = zone.list;
+    for (let i = 0; i < vertCount; i++) {
+      const x = vposCache[i * 3], y = vposCache[i * 3 + 1], z = vposCache[i * 3 + 2];
+      let best = 1e9;
+      for (let j = 0; j < L.length; j++) {
+        const e = L[j];
+        const px = e[6] ? Math.abs(x) : x;
+        const dx = (px - e[0]) / e[3], dy = (y - e[1]) / e[4], dz = (z - e[2]) / e[5];
+        const nd = dx * dx + dy * dy + dz * dz;
+        if (nd < best) best = nd;
+      }
+      /* OJO CON LA UNIDAD: 'best' es distancia NORMALIZADA por los radios de
+         la propia elipse, no metros. Un borde de 0.11 sobre un radio de 5 cm
+         son cinco milimetros de degradado: practicamente un canto vivo, y por
+         eso las piezas de un mismo musculo se veian como ovalos sueltos en vez
+         de fundirse en una sola mancha. Con 0.30 el borde mide un tercio del
+         radio -- unos dos centimetros en las piezas grandes -- las piezas
+         vecinas se solapan y el resaltado se lee como un musculo. */
+      arr[i] = best <= 1.0 ? 1.0 : Math.max(0, 1 - (Math.sqrt(best) - 1) / 0.30);
+    }
+    attr.needsUpdate = true;
+  }
+  window.mmClearSelection3D = function() {
+    activeGroup = null;
+    paintWeight('selW', null);
+    paintWeight('hovW', null);
+  };
+
+  /* Aqui vivian once esferas invisibles que hacian de blanco para el dedo.
+     Se retiraron enteras: eran la causa de que se pudiese seleccionar un
+     musculo tapado por el cuerpo. Ahora el blanco es la propia piel. */
+
+
+  /* ---- Construcción por rebanadas (no congela la página) ---- */
+  let iz = 0;
+  function buildSlices() {
+    const t0 = performance.now();
+    const voxX = (2 * SX) / RES;
+    while (iz < RES && performance.now() - t0 < 30) {
+      const wz = ((iz - half) / half) * SZ;
+      for (let iy = 0; iy < RES; iy++) {
+        const wy = ((iy - half) / half) * SY + CY;
+        if (wy < -0.03 || wy > 1.90) continue;
+        const rowBase = iz * size2 + iy * RES;
+        let ix = 0;
+        while (ix < RES) {
+          const wx = ((ix - half) / half) * SX;
+          const d = bodySDF(wx, wy, wz);
+          field[rowBase + ix] = -d * 600;
+          // Sphere tracing: la propia distancia dice cuántos vóxeles se pueden
+          // saltar sin cambiar de signo. Deja 3 vóxeles de margen en la cáscara.
+          const ad = d < 0 ? -d : d, sgn = d < 0 ? -1 : 1;
+          const skip = Math.floor(ad / voxX) - 3;
+          if (skip > 0) {
+            for (let k = 1; k <= skip; k++) field[rowBase + ix + k] = -sgn * (ad - k * voxX) * 600;
+            ix += skip + 1;
+          } else ix++;
+        }
+      }
+      iz++;
+    }
+    if (loading) loading.textContent = 'Esculpiendo anatomía 3D… ' + Math.round(iz / RES * 88) + '%';
+    if (iz < RES) {
+      requestAnimationFrame(buildSlices);
+    } else {
+      try {
+        if (loading) loading.textContent = 'Calculando luz y relieve…';
+        mc.update();
+        // Pintar pesos y surcos por vértice sobre la malla final
+        const posAttr = mc.geometry.getAttribute('position');
+        const nrmAttr = mc.geometry.getAttribute('normal');
+        const n = Math.min(mc.geometry.drawRange.count, posAttr.count);
+        const cAttr = mc.geometry.getAttribute('clothId');
+        const krAttr = mc.geometry.getAttribute('crease');
+        const aoAttr = mc.geometry.getAttribute('ao');
+        vposCache = new Float32Array(n * 3);
+        vertCount = n;
+        const CW = 0.020; // ancho del degradado del surco
+        // Esferas envolventes: descartan en un solo test las líneas lejanas
+        const GB = [];
+        for (let g = 0; g < GROOVES.length; g++) {
+          const G = GROOVES[g];
+          const hl = Math.sqrt((G.b[0] - G.a[0]) * (G.b[0] - G.a[0]) + (G.b[1] - G.a[1]) * (G.b[1] - G.a[1]) + (G.b[2] - G.a[2]) * (G.b[2] - G.a[2])) / 2;
+          const rr = hl + G.r + CW;
+          GB.push([(G.a[0] + G.b[0]) / 2, (G.a[1] + G.b[1]) / 2, (G.a[2] + G.b[2]) / 2, rr * rr]);
+        }
+        // Caché de oclusión por vóxel: miles de vértices comparten celda
+        const AOS = isMobile ? 4 : 5;
+        const aoCache = new Float32Array(RES * RES * RES).fill(-1);
+        for (let i = 0; i < n; i++) {
+          // local -> mundo (la malla va escalada de forma no uniforme)
+          const vx = posAttr.getX(i) * SX, vy = posAttr.getY(i) * SY + CY, vz = posAttr.getZ(i) * SZ;
+          vposCache[i * 3] = vx; vposCache[i * 3 + 1] = vy; vposCache[i * 3 + 2] = vz;
+          let cw = 0;
+          if (Math.abs(vx) < 0.21) {
+            const ft = Math.min((vy - 0.610) / 0.014, (0.852 - vy) / 0.014);
+            cw = Math.max(0, Math.min(1, ft));
+          }
+          cAttr.array[i] = cw;
+          // Surcos anatómicos sombreados
+          let kr = 0;
+          for (let g = 0; g < GROOVES.length; g++) {
+            const B = GB[g], G = GROOVES[g];
+            const gx = G.m ? (vx < 0 ? -vx : vx) : vx;
+            const q0 = gx - B[0], q1 = vy - B[1], q2 = vz - B[2];
+            if (q0 * q0 + q1 * q1 + q2 * q2 > B[3]) continue;
+            const ax0 = G.a[0], ay0 = G.a[1], az0 = G.a[2];
+            const bax = G.b[0] - ax0, bay = G.b[1] - ay0, baz = G.b[2] - az0;
+            const pax = gx - ax0, pay = vy - ay0, paz = vz - az0;
+            const ll = bax * bax + bay * bay + baz * baz;
+            let h = ll > 0 ? (pax * bax + pay * bay + paz * baz) / ll : 0;
+            h = h < 0 ? 0 : (h > 1 ? 1 : h);
+            const dx = pax - bax * h, dy = pay - bay * h, dz = paz - baz * h;
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz) - G.r;
+            const w = dist <= 0 ? 1 : (dist >= CW ? 0 : 1 - dist / CW);
+            if (w > kr) kr = w;
+          }
+          krAttr.array[i] = kr * (1 - cw); // la ropa no lleva surcos
+          // ---- Oclusión ambiental: rayos cortos sobre el propio SDF ----
+          let aov = 1;
+          const qx = Math.round((vx / SX) * half + half);
+          const qy = Math.round(((vy - CY) / SY) * half + half);
+          const qz = Math.round((vz / SZ) * half + half);
+          if (qx >= 0 && qx < RES && qy >= 0 && qy < RES && qz >= 0 && qz < RES) {
+            const gi = (qz * RES + qy) * RES + qx;
+            if (aoCache[gi] >= 0) aov = aoCache[gi];
+            else {
+              let nx = nrmAttr.getX(i) / SX, ny = nrmAttr.getY(i) / SY, nz = nrmAttr.getZ(i) / SZ;
+              const nl = Math.sqrt(nx * nx + ny * ny + nz * nz) || 1;
+              nx /= nl; ny /= nl; nz /= nl;
+              let occ = 0, sca = 1;
+              for (let s = 1; s <= AOS; s++) {
+                const hh = 0.008 + 0.030 * s; // calibrado: cavidades ~0.55, planos ~0.98
+                occ += (hh - bodySDF(vx + nx * hh, vy + ny * hh, vz + nz * hh)) * sca;
+                sca *= 0.75;
+              }
+              aov = 1 - 4.0 * occ;
+              aov = aov < 0.15 ? 0.15 : (aov > 1 ? 1 : aov); // nunca negro absoluto
+              aoCache[gi] = aov;
+            }
+          }
+          aoAttr.array[i] = aov;
+        }
+        cAttr.needsUpdate = true;
+        krAttr.needsUpdate = true;
+        aoAttr.needsUpdate = true;
+        if (activeGroup) paintWeight('selW', activeGroup);
+        if (loading) loading.style.display = 'none';
+        window.__mm3dReady = true;
+      } catch (e2) {
+        console.warn('MC update error:', e2);
+        if (loading) loading.style.display = 'none';
+        canvas.style.display = 'none';
+        const fb = document.getElementById('mm-fallback');
+        if (fb) fb.style.display = 'block';
+      }
+    }
+  }
+  requestAnimationFrame(buildSlices);
+
+  /* ---- Shorts (ropa aparte, como la referencia) ---- */
+  /* Los shorts ahora se PINTAN sobre la superficie esculpida (atributo clothId
+     + shader). Al ser parte del propio cuerpo, jamás flotan ni dejan huecos. */
+
+  /* ---- Selección / hover: el rojo se pinta EN la superficie ---- */
+  let activeGroup = null;
+  let hoverGroup = null;
+  const LABELS = { Gluteos: 'Glúteos', Biceps: 'Bíceps', Triceps: 'Tríceps', Cuadriceps: 'Cuádriceps' };
+  window.selectMuscle3D = function(name, openInfo) {
+    activeGroup = name;
+    paintWeight('selW', name);
+    document.getElementById('mm-selected-label').textContent = name ? '● ' + (LABELS[name] || name) : '';
+    document.getElementById('mm-selected-label').style.display = '';
+    document.querySelectorAll('.muscle-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.muscle === name);
+    });
+    if (openInfo && window.showMuscleModal) window.showMuscleModal(name);
+    if (window.__mmFocus) window.__mmFocus(name);
+    /* La rotacion automatica se para AL ELEGIR y no vuelve sola. Volvia a los
+       6 s y se llevaba el musculo fuera de plano justo cuando el visitante
+       estaba leyendo su ficha: la camara le quitaba de delante lo que acababa
+       de pedir. Vuelve solo al quitar la seleccion. */
+    controls.autoRotate = false;
+    clearTimeout(window.selectMuscle3D._t);
+    if (!name) {
+      window.selectMuscle3D._t = setTimeout(function() {
+        if (!REDUCED) controls.autoRotate = true;
+      }, 900);
+    }
+  };
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.06;
+  controls.minDistance = 1.15;
+  controls.maxDistance = 7.0;
+  controls.maxPolarAngle = Math.PI * 0.62;
+  controls.target.set(0, 0.98, 0);
+  const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  controls.autoRotate = !REDUCED;
+  controls.autoRotateSpeed = 0.9;
+
+  /* ---- Encuadre cinematográfico al elegir un músculo ---- */
+  // [azimut, altura del objetivo, radio] por grupo: la cámara rodea al modelo
+  // hasta ponerse delante del músculo, como una cámara de estudio.
+  /* [azimut, altura del objetivo, cuanto se acerca] por grupo. El tercer
+     numero ya no son metros: es la fraccion de pantalla que llena el cuerpo en
+     ese plano, asi que el encuadre se comporta igual en un movil y en un
+     escritorio panoramico. Mas alto = mas cerca. */
+  const FOCUS = {
+    Pecho:       [0.00, 1.30, 1.15], Abdominales: [0.00, 1.08, 1.20],
+    Hombros:     [0.70, 1.40, 1.35], Biceps:      [1.00, 1.31, 1.45],
+    Triceps:     [2.30, 1.30, 1.45], Espalda:     [Math.PI, 1.26, 1.10],
+    Gluteos:     [Math.PI, 0.80, 1.35], Cuadriceps: [0.28, 0.66, 1.25],
+    Gemelos:     [2.85, 0.36, 1.55]
+  };
+
+  /* POR QUE ESTO NO ES UN LERP POR FOTOGRAMA.
+     Lo era, y medido NO LLEGABA: de los nueve musculos, siete se quedaban a
+     medio camino a los 2,5 s -- cuadriceps se quedaba a 73 grados, o sea que
+     al pedir cuadriceps se veia la ESPALDA. Tres razones, y las tres son del
+     mismo tipo: un lerp del 5,5 % por fotograma tarda unos cincuenta
+     fotogramas en cubrir el 95 % del giro, la rotacion automatica seguia
+     empujando en sentido contrario, y el propio lerp se apagaba al acercarse
+     porque cada paso es mas pequeno que el anterior.
+
+     Ahora es una transicion con RELOJ: se guarda de donde sale, se sabe a
+     donde va, y se recorre en 0,85 s con una curva suave. Llega siempre, y
+     llega en el mismo tiempo tanto si el aparato va a 60 fps como a 24. */
+  let tween = null;
+  const _sph = new THREE.Spherical(), _off = new THREE.Vector3();
+  function cortaAngulo(d) {
+    d = d % (Math.PI * 2);
+    if (d > Math.PI) d -= Math.PI * 2;
+    if (d < -Math.PI) d += Math.PI * 2;
+    return d;
+  }
+  window.__mmFocus = function(name) {
+    const f = FOCUS[name];
+    if (!f) { tween = null; return; }
+    const dest = { th: f[0], y: f[1], r: distanciaParaEncuadrar(0.88) / f[2] };
+    if (REDUCED) {   // sin movimiento: se salta el viaje y se planta el plano
+      controls.target.set(0, dest.y, 0);
+      _sph.set(dest.r, 1.34, dest.th);
+      camera.position.copy(controls.target).add(_off.setFromSpherical(_sph));
+      tween = null; controls.update(); return;
+    }
+    _off.copy(camera.position).sub(controls.target);
+    _sph.setFromVector3(_off);
+    tween = {
+      t0: performance.now(), dur: 850,
+      th0: _sph.theta, dth: cortaAngulo(dest.th - _sph.theta),
+      ph0: _sph.phi,   dph: 1.34 - _sph.phi,
+      r0: _sph.radius, dr: dest.r - _sph.radius,
+      y0: controls.target.y, dy: dest.y - controls.target.y
+    };
+  };
+  controls.addEventListener('start', function() { tween = null; });
+
+  /* ---------- SENALAR: contra la PIEL, no contra globos invisibles ----------
+     Antes el rayo se lanzaba contra once esferas invisibles y el CUERPO NO
+     ESTABA en esa lista. Consecuencia: el cuerpo no tapaba nada, asi que
+     mirando al modelo de frente se podia pulsar sobre el pecho y seleccionar
+     los gluteos, porque la esfera de los gluteos seguia ahi detras y el rayo
+     la atravesaba. Se seleccionaba lo que no se veia.
+
+     Ahora el rayo se lanza contra la MALLA de verdad. Se toma el punto exacto
+     de la superficie donde cayo el dedo y se busca que zona muscular lo
+     contiene. Dos cosas salen gratis: el cuerpo se tapa a si mismo -- de
+     frente es imposible tocar la espalda -- y el punto es el que se ve, no una
+     aproximacion. Y desaparecen once mallas de la escena. */
+  const raycaster = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  const _hit = new THREE.Vector3();
+
+  function zonaDelPunto(p) {
+    let mejor = null, mejorD = 1e9;
+    for (let i = 0; i < ZONES.length; i++) {
+      const L = ZONES[i].list;
+      for (let j = 0; j < L.length; j++) {
+        const e = L[j];
+        const px = e[6] ? Math.abs(p.x) : p.x;
+        const dx = (px - e[0]) / e[3], dy = (p.y - e[1]) / e[4], dz = (p.z - e[2]) / e[5];
+        const d = dx * dx + dy * dy + dz * dz;
+        if (d < mejorD) { mejorD = d; mejor = ZONES[i].name; }
+      }
+    }
+    // Fuera de toda zona con holgura: es tronco neutro, cabeza, mano o pie.
+    return mejorD <= 2.25 ? mejor : null;
+  }
+
+  function pick(x, y) {
+    if (!window.__mm3dReady) return null;
+    const rect = canvas.getBoundingClientRect();
+    mouse.set(((x - rect.left) / rect.width) * 2 - 1, -((y - rect.top) / rect.height) * 2 + 1);
+    raycaster.setFromCamera(mouse, camera);
+    const hits = raycaster.intersectObject(mc, false);
+    if (!hits.length) return null;
+    // La malla va escalada sin uniformidad; el punto llega en mundo y el
+    // cuerpo esta centrado en el origen, asi que basta con deshacer el grupo.
+    _hit.copy(hits[0].point);
+    bodyRoot.worldToLocal(_hit);
+    return zonaDelPunto(_hit);
+  }
+
+  canvas.addEventListener('click', function(e) {
+    const name = pick(e.clientX, e.clientY);
+    if (name) window.selectMuscle3D(name, true);
+  });
+  canvas.addEventListener('touchend', function(e) {
+    if (e.changedTouches && e.changedTouches.length === 1) {
+      const t = e.changedTouches[0];
+      const name = pick(t.clientX, t.clientY);
+      if (name) window.selectMuscle3D(name, true);
+    }
+  }, { passive: true });
+
+  /* El hover se repinta SOLO cuando cambia de musculo. Antes se repintaba en
+     cada mousemove: eso es recorrer los cien mil vertices de la malla y volver
+     a subir el atributo entero a la tarjeta grafica varias veces por segundo,
+     moviendo el raton sobre el fondo vacio y sin que cambiase nada en pantalla.
+     Y el rayo tambien se lanza a lo sumo una vez por fotograma. */
+  let ultimoHover = null, hoverPend = null, hoverRaf = 0;
+  canvas.addEventListener('mousemove', function(e) {
+    hoverPend = { x: e.clientX, y: e.clientY };
+    if (hoverRaf) return;
+    hoverRaf = requestAnimationFrame(function () {
+      hoverRaf = 0;
+      const name = pick(hoverPend.x, hoverPend.y);
+      canvas.style.cursor = name ? 'pointer' : 'grab';
+      hoverGroup = name;
+      if (CAN_HOVER && name !== ultimoHover) {
+        ultimoHover = name;
+        paintWeight('hovW', (name && name !== activeGroup) ? name : null);
+      }
+    });
+  });
+  canvas.addEventListener('mouseleave', function() {
+    if (ultimoHover !== null) { ultimoHover = null; paintWeight('hovW', null); }
+  });
+
+  /* ---- Animación ---- */
+  let time = 0;
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.016;
+    if (!REDUCED) {
+      const breathe = 1 + Math.sin(time * 1.3) * 0.004;
+      bodyRoot.scale.set(breathe, 1, breathe);
+      particles.rotation.y += 0.0006;
+    }
+    uPulse.value = activeGroup ? (0.62 + Math.sin(time * 5) * 0.22) : 0;
+    // Barrido del escáner: recorre el cuerpo en coordenadas locales (-1..1)
+    uScanY.value = activeGroup ? (((time * 0.42) % 2) - 1) : 99;
+    ring.material.opacity = 0.16 + Math.sin(time * 2) * 0.08;
+    // El viaje de camara. Termina solo, y mientras dura la rotacion
+    // automatica no puede empujar en contra.
+    if (tween) {
+      let u = (performance.now() - tween.t0) / tween.dur;
+      if (u >= 1) { u = 1; }
+      const k = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;  // suave a los dos lados
+      controls.target.set(0, tween.y0 + tween.dy * k, 0);
+      _sph.set(tween.r0 + tween.dr * k, tween.ph0 + tween.dph * k, tween.th0 + tween.dth * k);
+      camera.position.copy(controls.target).add(_off.setFromSpherical(_sph));
+      if (u === 1) tween = null;
+    }
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', function() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+    // Al cambiar la forma del lienzo cambia lo que cabe dentro. Sin esto,
+    // girar el movil dejaba el cuerpo recortado o diminuto hasta recargar.
+    const nueva = distanciaParaEncuadrar(0.88);
+    if (!tween && !activeGroup) {
+      _off.copy(camera.position).sub(controls.target);
+      _sph.setFromVector3(_off);
+      _sph.radius *= nueva / distBase;
+      camera.position.copy(controls.target).add(_off.setFromSpherical(_sph));
+    }
+    distBase = nueva;
+  });
+
+} catch (err) {
+  console.warn('Muscle Map 3D error:', err);
+  const c = document.getElementById('muscle-canvas');
+  const l = document.getElementById('mm-loading');
+  if (c) c.style.display = 'none';
+  if (l) l.style.display = 'none';
+  const f = document.getElementById('mm-fallback');
+  if (f) f.style.display = 'block';
+}
+</script>
+</div>

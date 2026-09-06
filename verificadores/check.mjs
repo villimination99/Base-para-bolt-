@@ -220,14 +220,20 @@ check('Variables de traduccion', () => {
 /* 13 — Texto visible escrito a mano (no se traduce nunca).
    El que solo aparece dentro del editor (request.design_mode) esta permitido.
 
-   Y hay UNA seccion exenta, con su razon: fitness-hub.liquid no usa los
+   Y hay UNA seccion exenta, con su razon: vi-p.liquid no usa los
    ficheros de traduccion del tema porque trae su propio sistema de idiomas
    dentro -- espanol, ingles y frances, con el selector en su propia cabecera y
-   diccionarios en assets/fitness-hub.js. Pasar sus mil cadenas a locales/ no
+   diccionarios en assets/vi-p.js. Pasar sus mil cadenas a locales/ no
    traduciria nada nuevo: solo partiria en dos el mismo trabajo y dejaria dos
    sitios donde tocar cada texto. Si algun dia el hub se integra con las
-   traducciones del tema, se quita esta linea y la comprobacion vuelve sola. */
-const EXENTAS_TRADUCCION = ['sections/fitness-hub.liquid'];
+   traducciones del tema, se quita esta linea y la comprobacion vuelve sola.
+
+   Va por NOMBRE DE ARCHIVO, y eso tiene un filo: al renombrar la seccion a
+   vi-p.liquid la exencion dejo de aplicar y la comprobacion se puso roja al
+   instante con sus 159 avisos. Es el comportamiento correcto -- una exencion
+   que sobrevive a que le cambien el archivo debajo es una exencion que ya no
+   sabe a que perdona -- pero conviene saberlo si algun dia se vuelve a mover. */
+const EXENTAS_TRADUCCION = ['sections/vi-p.liquid'];
 check('Texto visible sin traducir', () => {
   const ES = /[áéíóúñ¿¡]|\b(el|la|los|las|para|con|tu|tus|sin|más|desde|hasta|todos|envío|gratis|carrito|compra|producto|productos|precio|añadir|agregar|comprar|oferta|talla)\b/i;
   const bad = [];

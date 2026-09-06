@@ -1,5 +1,5 @@
 {%- comment -%}
-  VILLUMINATIONS · Fitness Hub
+  VI.P — el hub de Villuminations
   ---------------------------------------------------------------------------
   Vivia pegado entero -- 460 KB -- dentro del cuerpo de la pagina "VI.P". Eso
   funciona, pero tiene un coste que se paga en CADA visita: el cuerpo de una
@@ -14,13 +14,13 @@
 
   COMO SE USA
   1. Contenido -> Paginas -> la pagina que quieras.
-  2. En "Plantilla de tema", elige "page.fitness-hub".
+  2. En "Plantilla de tema", elige "page.vi-p".
   3. Guardar. Ya esta: no hay nada que pegar.
 
   El hub es una isla: todo su CSS cuelga de #vill-hub y no toca el tema.
 {%- endcomment -%}
 
-{{ 'fitness-hub.css' | asset_url | stylesheet_tag }}
+{{ 'vi-p.css' | asset_url | stylesheet_tag }}
 
 <div id="vill-hub">
 
@@ -38,7 +38,7 @@
   </div>
   <div class="hero-inner">
     <div class="hero-texto">
-      <div class="hero-tag hero-ent hero-ent-1">@villumination99 · Fitness Hub</div>
+      <div class="hero-tag hero-ent hero-ent-1">@villumination99 · VI.P</div>
       <!-- Este titular era el encabezado de primer nivel. La pagina de Shopify
            ya emite el suyo con el titulo de la pagina, y dos encabezados de
            primer nivel reparten la senal principal entre dos textos: peor para
@@ -832,7 +832,7 @@
   detecta la ausencia y muestra un aviso en su sitio en vez de romperse.
 {%- endcomment -%}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="{{ 'fitness-hub.js' | asset_url }}" defer></script>
+<script src="{{ 'vi-p.js' | asset_url }}" defer></script>
 
 {%- comment -%}
   El mapa muscular 3D. El importmap tiene que ir ANTES del modulo que lo usa.
@@ -848,14 +848,14 @@
   }
 }
 </script>
-<script type="module" src="{{ 'fitness-hub-3d.js' | asset_url }}"></script>
+<script type="module" src="{{ 'vi-p-3d.js' | asset_url }}"></script>
 
 {% schema %}
 {
-  "name": "Fitness Hub",
+  "name": "VI.P",
   "tag": "section",
-  "class": "seccion-fitness-hub",
+  "class": "seccion-vi-p",
   "settings": [],
-  "presets": [{ "name": "Fitness Hub" }]
+  "presets": [{ "name": "VI.P" }]
 }
 {% endschema %}
