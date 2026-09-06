@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VILLUMINATIONS – VI.P</title>
-</head><body style="margin:0;background:#0A0A0A">
-<!-- ===================================================================
-     VILLUMINATIONS · VI.P
-     Pensado para pegarse DENTRO de una pagina de Shopify (Contenido ->
-     Paginas -> "<>" Mostrar HTML). Empieza directamente por el estilo y el
-     marcado: NO trae las etiquetas de documento (doctype, la raiz, la
-     cabecera ni el cuerpo), porque la tienda ya las pone y repetirlas rompe
-     la pagina.
-     Todo el CSS cuelga de #vill-hub para no tocar el tema.
-     =================================================================== -->
+<!-- VILLUMINATIONS VI.P v3 - Compatible con Shopify (sin dependencias de iconos) -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>VILLUMINATIONS – VI.P</title>
   <style>
     /* ===== RESET & GLOBALES ===== */
     #vill-hub, #vill-hub *, #vill-hub *::before, #vill-hub *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1028,6 +1021,9 @@
       #vill-hub { scroll-behavior: auto; }
     }
   </style>
+</head>
+<body>
+
 <!-- El envoltorio del hub. Abria DENTRO de la cabecera del documento, antes
      de que esta cerrase: el navegador daba la cabecera por terminada por su
      cuenta al encontrarse una etiqueta de contenido, y todo el blindaje de
@@ -5612,5 +5608,5 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
 }
 </script>
 </div>
-
-</body></html>
+</body>
+</html>

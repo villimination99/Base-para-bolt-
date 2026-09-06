@@ -828,26 +828,27 @@
 </div>
 
 {%- comment -%}
-  Chart.js para las graficas de macros y de progreso. Si no carga, el hub
-  detecta la ausencia y muestra un aviso en su sitio en vez de romperse.
+  Chart.js para las graficas de macros y de progreso. Recortado a las dos
+  graficas que el hub dibuja de verdad y servido desde assets/, no desde un
+  CDN de terceros. Si aun asi no cargara, el hub detecta la ausencia y muestra
+  un aviso en su sitio en vez de romperse.
 {%- endcomment -%}
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ 'vi-p-chart.js' | asset_url }}" defer></script>
 <script src="{{ 'vi-p.js' | asset_url }}" defer></script>
 
 {%- comment -%}
-  El mapa muscular 3D. El importmap tiene que ir ANTES del modulo que lo usa.
-  three.js se queda en su CDN a proposito: son 600 KB que muchas visitas ya
-  traen en cache de otras webs, y subirlo a assets lo convertiria en una
-  descarga exclusiva de esta tienda.
+  El mapa muscular 3D. three.js viaja DENTRO de vi-p-3d.js, asi que aqui ya no
+  hay importmap ni peticion a jsdelivr. El motivo esta escrito entero en
+  construir-3d.mjs, y en corto es este: los importmap solo existen desde
+  Safari 16.4, de modo que un iPhone con iOS 15 o 16.0-16.3 no resolvia el
+  especificador 'three' y se quedaba sin mapa; y el argumento que habia a
+  favor del CDN -- que muchas visitas ya traen three.js en cache de otra web --
+  dejo de ser cierto cuando los navegadores particionaron la cache por sitio
+  (Chrome 86 en 2020, Safari desde 2013, Firefox desde 2021).
+
+  Sigue siendo type="module" a proposito: asi los motores que no entienden
+  modulos lo ignoran entero en vez de atragantarse, y salta el respaldo.
 {%- endcomment -%}
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-  }
-}
-</script>
 <script type="module" src="{{ 'vi-p-3d.js' | asset_url }}"></script>
 
 {% schema %}

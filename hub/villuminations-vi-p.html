@@ -2067,16 +2067,43 @@
       }
     });
   });
-  setTimeout(function() {
-    if (!window.__mm3dStarted) {
+  /* El vigilante del mapa 3D.
+
+     Antes esto era un setTimeout de 15 segundos desde que arranca el hub, y
+     estaba mal por los dos lados a la vez:
+
+       - Demasiado tarde cuando el modulo NO va a ejecutarse nunca -- el
+         navegador no entiende modulos, el archivo dio 404, la sintaxis le
+         sento mal. En esos casos ya se sabe en el primer segundo, y el
+         visitante se quedaba un cuarto de minuto mirando "Esculpiendo
+         anatomia 3D..." para que al final le dijeran que no hay mapa.
+       - Y a la vez demasiado pronto con una conexion mala: son medio mega,
+         y a 3G lenta pueden tardar mas de quince segundos en bajar. El
+         respaldo saltaba encima de un modulo que venia de camino.
+
+     El reloj no era la senal correcta. La senal correcta es el evento load:
+     no se dispara hasta que los scripts diferidos y los modulos se han
+     bajado y ejecutado. Si cuando llega load el modulo no ha arrancado, es
+     que no va a arrancar -- da igual si tardo dos segundos o cuarenta.
+
+     El margen de 600 ms de despues es para el propio modulo, que entre que
+     empieza y marca la bandera crea el renderizador. Y el caso de que load
+     ya haya pasado cuando esto se ejecuta esta cubierto mirando
+     document.readyState, porque a un evento que ya ocurrio no se llega
+     tarde: no se llega. */
+  function vigilarMapa3D() {
+    setTimeout(function() {
+      if (window.__mm3dStarted) return;
       var c = document.getElementById('muscle-canvas');
       var l = document.getElementById('mm-loading');
       if (c) c.style.display = 'none';
       if (l) l.style.display = 'none';
       var f = document.getElementById('mm-fallback');
       if (f) f.style.display = 'block';
-    }
-  }, 15000);
+    }, 600);
+  }
+  if (document.readyState === 'complete') vigilarMapa3D();
+  else window.addEventListener('load', vigilarMapa3D);
 
   /* ===== MUSCLE MODAL ===== */
   var ZONETAG = { Pecho: 'Pecho', Espalda: 'Espalda', Hombros: 'Hombros', Biceps: 'Biceps', Triceps: 'Triceps', Abdominales: 'Core', Cuadriceps: 'Piernas', Gluteos: 'Gluteos', Gemelos: 'Piernas' };
@@ -4481,17 +4508,36 @@
         return new Promise(function(res, rej) {
           var s = document.createElement('script');
           s.src = u; s.crossOrigin = 'anonymous';
+          /* Sin referente: jsdelivr no necesita saber en que pagina de la
+             tienda esta el visitante para servir un archivo. */
+          s.referrerPolicy = 'no-referrer';
           s.onload = res; s.onerror = rej;
           document.head.appendChild(s);
         });
       }
+      /* El reconocedor de alimentos por camara. Son unos 4 MB de TensorFlow y
+         MobileNet, asi que se bajan SOLO cuando alguien pulsa la camara, y de
+         un CDN: meterlos en el tema seria multiplicar por siete su tamano para
+         una funcion que la mayoria no usa.
+
+         Si no se puede bajar -- red de empresa, filtro de pais, un corte -- no
+         pasa nada visible: quien llama a esto cae al analisis por color, que
+         va entero dentro del hub y no necesita internet.
+
+         El detalle que se arreglo: __mnetLoading guardaba la promesa para no
+         bajar el modelo dos veces, pero si la descarga FALLABA se quedaba
+         guardada una promesa rechazada, y a partir de ahi cada intento moria
+         al instante contra el fallo viejo. Un corte de dos segundos dejaba la
+         IA apagada el resto de la visita. Ahora el fallo se limpia y el
+         siguiente intento vuelve a probar de verdad. */
       function loadMobileNet() {
         if (__mnet) return Promise.resolve(__mnet);
         if (__mnetLoading) return __mnetLoading;
         __mnetLoading = (window.tf ? Promise.resolve() : loadScriptOnce('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js'))
           .then(function() { return window.mobilenet ? null : loadScriptOnce('https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.1/dist/mobilenet.min.js'); })
           .then(function() { return window.mobilenet.load({ version: 2, alpha: 0.5 }); })
-          .then(function(m) { __mnet = m; return m; });
+          .then(function(m) { __mnet = m; return m; })
+          .catch(function(e) { __mnetLoading = null; throw e; });
         return __mnetLoading;
       }
       function findFoodIdx(term) {
