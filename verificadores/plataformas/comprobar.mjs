@@ -37,6 +37,29 @@ const decir = (ok, txt) => { if (!ok) fallos++; console.log(`${ok ? ' OK   ' : '
 
 const js = fs.readdirSync(ASSETS).filter(f => f.endsWith('.js')).sort();
 
+/* Todo el Liquid del tema, para poder mirar COMO se carga cada archivo. */
+const LIQUID = (function leer(dir) {
+  let salida = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) salida = salida.concat(leer(p));
+    else if (e.name.endsWith('.liquid')) salida.push(fs.readFileSync(p, 'utf8'));
+  }
+  return salida;
+})(path.join(RAIZ, 'theme'));
+
+/* ¿El tema carga este archivo con <script type="module">? Se busca la etiqueta
+   completa que lo menciona, no el nombre suelto: asi un archivo citado en un
+   comentario no cuenta. */
+function cargadoComoModulo(nombre) {
+  const esc = nombre.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp('<script[^>]*' + esc + '[^>]*>|<script[^>]*type="module"[^>]*' + esc, 'i');
+  return LIQUID.some((l) => {
+    const m = l.match(re);
+    return !!m && /type="module"/i.test(m[0]);
+  });
+}
+
 console.log('\n--- Sintaxis: el suelo es ES2017 (Safari 11 / iOS 11) ---');
 /* Por que ES2017 y no algo mas nuevo: un iPhone 5s o un iPad de 2014 se
    quedaron en esa version de Safari y siguen navegando. No son muchos, pero
@@ -44,15 +67,21 @@ console.log('\n--- Sintaxis: el suelo es ES2017 (Safari 11 / iOS 11) ---');
    sintaxis tumba el archivo completo antes de ejecutar la primera linea. */
 for (const f of js) {
   const src = fs.readFileSync(path.join(ASSETS, f), 'utf8');
+  /* Un archivo que el tema carga con <script type="module"> puede usar import:
+     los motores que no entienden modulos IGNORAN esa etiqueta entera, asi que
+     nunca llegan a leer el archivo. Exigirle ES2017 a un modulo es pedirle que
+     no sea un modulo. Se mira como lo carga el tema y se analiza en
+     consecuencia, en vez de tratar a todos igual. */
+  const esModulo = cargadoComoModulo(f);
   let error = null;
-  try { Parser.parse(src, { ecmaVersion: 2017, sourceType: 'script' }); }
+  try { Parser.parse(src, { ecmaVersion: esModulo ? 2022 : 2017, sourceType: esModulo ? 'module' : 'script' }); }
   catch (e) { error = e; }
   if (error) {
     const linea = src.slice(0, error.pos).split('\n').length;
     const texto = src.split('\n')[linea - 1].trim().slice(0, 70);
     decir(false, `${f} usa sintaxis posterior a ES2017 en la linea ${linea}: ${texto}`);
   } else {
-    decir(true, `${f.padEnd(22)} se analiza como ES2017`);
+    decir(true, `${f.padEnd(22)} se analiza como ${esModulo ? 'modulo ES (el tema lo carga con type="module")' : 'ES2017'}`);
   }
 }
 

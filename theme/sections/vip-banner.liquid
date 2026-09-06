@@ -76,6 +76,14 @@
   </div>
 </section>
 
+{%- comment -%}
+  El 3D del banner y las cifras que suben contando. Va en assets y con defer:
+  son 5 KB que el CDN de Shopify cachea, no bloquean el pintado, y si por lo
+  que sea no llegasen, el banner se ve y funciona igual -- todo lo que hace
+  ese archivo adorna, no informa.
+{%- endcomment -%}
+<script src="{{ 'vip-banner.js' | asset_url }}" defer></script>
+
 {% schema %}
 {
   "name": "Banner VIP",
@@ -130,7 +138,7 @@
       { "type": "tool", "settings": { "icon": "headphones", "title": "Frecuencias", "text": "Solfeggio y binaurales" } },
       { "type": "tool", "settings": { "icon": "trophy", "title": "Nivel de Atleta", "text": "De Principiante a Predator" } },
       { "type": "stat", "settings": { "number": "27", "label": "Ejercicios" } },
-      { "type": "stat", "settings": { "number": "17", "label": "Frecuencias" } },
+      { "type": "stat", "settings": { "number": "19", "label": "Frecuencias" } },
       { "type": "stat", "settings": { "number": "9", "label": "Zonas 3D" } },
       { "type": "stat", "settings": { "number": "6", "label": "Niveles" } }
     ] }

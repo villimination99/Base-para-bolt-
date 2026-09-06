@@ -1278,3 +1278,266 @@ body{background-image:
 @media (prefers-reduced-motion:reduce){
   .splash-grano{animation:none;opacity:.03}
 }
+
+/* ==========================================================================
+   BANNER VI.P — profundidad, y que quepa en un telefono
+   --------------------------------------------------------------------------
+   Medido antes de tocar nada, con la seccion tal y como estaba en la portada:
+
+     iPhone SE (320 px) ... 1619 px de alto   ← casi TRES pantallas
+     iPhone 15 (393 px) ... 1340 px
+     iPad      (820 px) ... 1017 px
+     Mac / PC / panoramica  774 px
+
+   Mil seiscientos pixeles para un anuncio. La causa es que las ocho tarjetas
+   de herramientas se apilaban de dos en dos: cuatro filas, y cada tarjeta con
+   icono, nombre y descripcion. Ademas los nombres se partian por la mitad en
+   casi todas ("Mapa Muscular 3D", "Planes Dietarios", "Progreso y Sueno") y
+   en escritorio se partia "FRECUENCIAS" en la fila de cifras.
+   ========================================================================== */
+
+/* --- 1. En el telefono, las herramientas van en un carril que se desliza ---
+   Ocho tarjetas apiladas son una lista; ocho en un carril son una vitrina, se
+   recorren con el pulgar y el boton de entrar no se va de la pantalla. */
+@media (max-width: 719px) {
+  .vip-tools {
+    display: flex !important; grid-template-columns: none !important;
+    gap: .6rem; overflow-x: auto; padding-bottom: .5rem;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .vip-tools::-webkit-scrollbar { display: none; }
+  .vip-tool { flex: 0 0 min(64%, 220px); scroll-snap-align: start; }
+  /* En un movil de 320 px, con la tarjeta al 64 % le quedaban 145 px de texto
+     tras el icono y "Mapa Muscular 3D" caia en TRES lineas. Un poco mas ancha
+     y entra en dos, que es lo natural para tres palabras. */
+  @media (max-width: 400px) { .vip-tool { flex: 0 0 min(78%, 240px); } }
+  /* Pista de que hay mas a la derecha, sin escribir "desliza". */
+  .vip-side { position: relative; }
+  .vip-side::after {
+    content: ''; position: absolute; top: 0; bottom: .5rem; right: -1px; width: 46px;
+    pointer-events: none; background: linear-gradient(90deg, transparent, #07071a 82%);
+  }
+}
+
+/* --- 2. Las cifras dejan de partirse ---
+   "FRECUENCIAS" en mayusculas con letter-spacing no cabia en 92 px y se
+   rompia en "FRECUENCIA / S". Se mide la palabra mas larga y se le da sitio. */
+.vip-stats {
+  display: grid !important; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: .6rem; width: 100%; margin-top: .8rem;
+}
+.vip-stat { min-width: 0 !important; padding: .8rem .7rem !important; }
+.vip-stat span { white-space: nowrap; font-size: .64rem; }
+.vip-stat strong { font-variant-numeric: tabular-nums; }
+
+/* --- 3. Los nombres de las herramientas tampoco --- */
+.vip-tool-name { text-wrap: balance; }
+.vip-tool { text-align: left; align-items: flex-start !important; flex-direction: row !important; gap: .7rem !important; }
+.vip-tool-body { display: flex; flex-direction: column; gap: .18rem; min-width: 0; }
+
+/* ==========================================================================
+   --- 4. LA PROFUNDIDAD ---
+   Tres capas de 3D, y las tres son transform: las compone la tarjeta grafica
+   y no obligan al navegador a recalcular la pagina.
+
+   a) La ENTRADA: cada pieza llega inclinada hacia atras y se endereza.
+   b) El PULSO: la tarjeta bajo el raton se inclina hacia el, y su icono y su
+      texto flotan por delante en planos distintos. Eso es lo que separa un
+      "efecto 3D" de una tarjeta que sube cuatro pixeles: las piezas de dentro
+      se mueven a distinta velocidad, como en una caja de verdad.
+   c) La PROFUNDIDAD DE CAMPO: el icono vive 26 px por delante del texto.
+   ========================================================================== */
+.vip-banner { perspective: 1500px; }
+.vip-banner-content { transform-style: preserve-3d; }
+
+.vip-ent {
+  opacity: 0;
+  transform: perspective(1200px) rotateX(-15deg) translateY(28px) translateZ(-80px);
+  transition: opacity .66s ease-out, transform .82s cubic-bezier(.19,.78,.25,1);
+}
+.vip-ent.vip-puesto { opacity: 1; transform: none; }
+
+/* La inclinacion al puntero solo donde hay puntero fino. En una pantalla
+   tactil un "hover" se queda pegado despues de tocar, y ademas ahi el dedo
+   tapa justo lo que se inclina. */
+@media (hover: hover) and (pointer: fine) {
+  .vip-tool {
+    transform-style: preserve-3d; will-change: transform;
+    transition: transform .16s ease-out, border-color .25s, box-shadow .3s;
+  }
+  .vip-tool:hover {
+    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(16px) !important;
+    box-shadow: 0 22px 44px rgba(0,0,0,.55), 0 0 26px rgba(5,217,232,.22);
+  }
+  .vip-tool-icon { transition: transform .22s ease-out; }
+  .vip-tool:hover .vip-tool-icon { transform: translateZ(30px) scale(1.06); }
+  .vip-tool:hover .vip-tool-body { transform: translateZ(14px); }
+  .vip-tool-body { transition: transform .22s ease-out; }
+
+  /* El boton tambien se levanta del plano, no solo cambia de color. */
+  .btn-vip { transform-style: preserve-3d; transition: transform .2s ease-out, box-shadow .3s; }
+  .btn-vip:hover { transform: translateZ(18px) translateY(-2px); box-shadow: 0 20px 40px rgba(255,42,109,.3), 0 0 30px rgba(5,217,232,.25); }
+}
+
+/* Un brillo que recorre el borde del marco: ya habia un conic-gradient ahi
+   parado, ahora gira despacio y el marco deja de ser una linea muerta. */
+.vip-banner-border { animation: vipGira 14s linear infinite !important; }
+@keyframes vipGira { to { transform: rotate(1turn); } }
+
+/* Y la insignia lleva un punto que late, igual que en el banner del hub: los
+   dos sitios hablan el mismo idioma. */
+.vip-badge { position: relative; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vip-ent { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .vip-banner-border { animation: none !important; }
+  .vip-tool:hover, .btn-vip:hover { transform: none !important; }
+  .vip-tool:hover .vip-tool-icon, .vip-tool:hover .vip-tool-body { transform: none !important; }
+}
+
+/* --- 5. Que quepa de verdad en un telefono pequeno ---
+   Desglose medido en un iPhone SE (320 px), con la seccion ya en carril:
+
+     titulo .... 207 px  (CUATRO lineas: "TU GIMNASIO DIGITAL VI.P")
+     texto ..... 274 px  (NUEVE lineas)
+     cifras .... 220 px  (cinco celdas en dos columnas = tres filas)
+     subtitulo . 103 px  (cuatro lineas)
+     insignia ... 59 px  (se partia en dos)
+     boton+nota  120 px
+     carril ..... 90 px
+                -------
+                1279 px
+
+   El problema no es el contenido, es como estaba compuesto: mayusculas con
+   letter-spacing y tamanos de escritorio dentro de 320 px. Se ajusta la
+   tipografia al ancho real y las cifras pasan a carril, como las
+   herramientas. No se esconde nada: en el telefono se lee lo mismo que en el
+   ordenador. */
+@media (max-width: 560px) {
+  .vip-title {
+    font-size: clamp(1.62rem, 8.4vw, 2.2rem) !important;
+    line-height: 1.06; letter-spacing: -.01em; text-wrap: balance;
+  }
+  /* El subtitulo iba en mayusculas con .06em de separacion: eso ensancha cada
+     palabra casi un 10 % y en 320 px lo mandaba a cuatro lineas. */
+  .vip-subtitle {
+    font-size: .84rem !important; letter-spacing: .02em !important;
+    line-height: 1.35; text-transform: none !important;
+  }
+  .vip-text { font-size: .9rem !important; line-height: 1.5; }
+  .vip-badge { white-space: nowrap; font-size: .68rem; padding: .38rem .8rem; }
+
+  /* Las cifras tambien en carril: cinco celdas en dos columnas eran tres
+     filas y 220 px. En carril son 80 y se recorren con el pulgar. */
+  /* flex-wrap: nowrap va explicito. La regla original de .vip-stats traia
+     flex-wrap:wrap, y al cambiar solo el display el carril seguia envolviendo:
+     las cinco celdas caian en tres filas igual que antes (208 px medidos en un
+     SE) y el carril no servia de nada. */
+  .vip-stats {
+    display: flex !important; flex-wrap: nowrap !important; grid-template-columns: none !important;
+    overflow-x: auto; gap: .5rem; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: .35rem;
+  }
+  .vip-stats::-webkit-scrollbar { display: none; }
+  .vip-stat { flex: 0 0 auto; scroll-snap-align: start; padding: .65rem .9rem !important; }
+  .vip-banner-inner { padding: 1.35rem 1.1rem !important; }
+}
+
+/* En escritorio las cifras vuelven a una sola fila apretada: cinco celdas en
+   la columna izquierda caben de sobra y asi la seccion no crece. */
+@media (min-width: 900px) {
+  .vip-stats { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: .5rem; }
+  .vip-stat { padding: .7rem .5rem !important; }
+  .vip-stat span { font-size: .6rem; letter-spacing: .06em; }
+}
+
+/* ==========================================================================
+   PROFUNDIDAD AL DESPLAZAR — sin una linea de JavaScript
+   --------------------------------------------------------------------------
+   Las animaciones dirigidas por scroll de CSS (animation-timeline: view())
+   corren en el hilo del COMPOSITOR: el navegador las mueve aunque el hilo
+   principal este ocupado, asi que no se traban nunca. Chrome y Edge desde la
+   115, Safari desde la 18; Firefox estable todavia las tiene tras una
+   bandera. Por eso van dentro de @supports y como ANADIDO: quien no las
+   tenga ve el banner exactamente como esta ahora, con su entrada por
+   JavaScript. Nadie se queda sin nada.
+
+   Lo que hacen: las tres capas de fondo del banner se mueven a velocidades
+   distintas segun la seccion cruza la pantalla. Eso es paralaje de verdad --
+   planos a distinta distancia -- y es lo que da sensacion de caja con fondo
+   en vez de dibujo plano.
+   ========================================================================== */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vip-banner-glow-1 {
+      animation: vipHonda1 linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    .vip-banner-glow-2 {
+      animation: vipHonda2 linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    .vip-banner-img {
+      animation: vipFoto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    /* El marco entero se endereza al entrar: llega inclinado hacia atras y se
+       pone de frente. Es el gesto 3D principal de la seccion y ocurre una
+       sola vez, mientras entra. */
+    .vip-banner-inner {
+      animation: vipEndereza cubic-bezier(.2,.75,.25,1) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 92%;
+      transform-origin: 50% 100%;
+    }
+  }
+  @keyframes vipHonda1 { from { transform: translate3d(-4%, 16%, 0) scale(1.05); } to { transform: translate3d(3%, -14%, 0) scale(1.14); } }
+  @keyframes vipHonda2 { from { transform: translate3d(5%, -12%, 0) scale(1.12); } to { transform: translate3d(-4%, 13%, 0) scale(1.03); } }
+  @keyframes vipFoto  { from { transform: scale(1.10) translate3d(0, 2.5%, 0); } to { transform: scale(1.02) translate3d(0, -2.5%, 0); } }
+  @keyframes vipEndereza {
+    from { transform: perspective(1400px) rotateX(9deg) translateY(26px) scale(.965); opacity: .35; }
+    to   { transform: none; opacity: 1; }
+  }
+}
+
+/* --- 6. En el carril, la descripcion vuelve ---
+   Una regla anterior escondia .vip-tool-desc en movil, y tenia sentido cuando
+   las ocho tarjetas iban apiladas de dos en dos: la descripcion multiplicaba
+   una altura que ya se iba de madre. En carril la tarjeta es ancha y la
+   descripcion es justo lo que dice para que sirve cada cosa -- "Toca un
+   musculo y ve sus ejercicios" informa; "Mapa Muscular 3D" a secas, no. */
+@media (max-width: 719px) {
+  .vip-tool-desc { display: block !important; font-size: .7rem; line-height: 1.35; }
+  .vip-tool { padding: .8rem .8rem !important; }
+}
+
+/* --- 7. El carril de cifras no se auto-desplaza ---
+   scroll-snap-type: mandatory obliga al navegador a dejar SIEMPRE un elemento
+   pegado al borde, y con las piezas a medio animar puede elegir el segundo en
+   vez del primero: se abria la seccion con la primera cifra ya fuera de
+   pantalla. Con "proximity" el navegador solo ayuda si el desplazamiento se
+   queda cerca de un elemento, y en reposo no toca nada. */
+@media (max-width: 560px) {
+  .vip-stats { scroll-snap-type: x proximity !important; }
+}
+
+/* --- 8. EL PRIMER ELEMENTO DE UN CARRIL NO PUEDE QUEDAR FUERA DE ALCANCE ---
+   Medido: scrollLeft valia 0 y aun asi la primera cifra estaba 97 px A LA
+   IZQUIERDA del contenedor. No estaba desplazado: estaba fuera y sin manera
+   de llegar.
+
+   La causa es una trampa clasica de flexbox. .vip-stats traia
+   justify-content:center de cuando era una fila que cabia entera. Al
+   convertirlo en carril, el contenido pasa a ser mas ancho que la caja, y
+   entonces "centrar" reparte el sobrante a los DOS lados: la mitad se va por
+   la izquierda, a coordenadas negativas, donde el desplazamiento no llega
+   porque scrollLeft no puede bajar de cero. En un telefono, "27 Ejercicios"
+   era invisible para siempre y ni deslizando aparecia.
+
+   Un carril siempre empieza pegado al inicio. */
+.vip-stats { justify-content: flex-start !important; }
+@media (max-width: 719px) { .vip-tools { justify-content: flex-start !important; } }

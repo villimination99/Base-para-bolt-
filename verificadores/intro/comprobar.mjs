@@ -607,8 +607,29 @@ console.log('\n--- Fluidez con la CPU estrangulada ---');
 /* Una sonda propia que se reencola a si misma. La primera version envolvia
    requestAnimationFrame y medía el hueco entre CALLBACKS: como effects.js
    tambien pide fotogramas, dos callbacks del mismo fotograma daban un hueco
-   de 0 ms y la mediana salia 0. */
-for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 1]]) {
+   de 0 ms y la mediana salia 0.
+
+   ESTA COMPROBACION SE CALIBRA SOLA, y esa fue la segunda leccion. Durante
+   meses el umbral era absoluto -- "mediana por debajo de 34 ms" -- y eso no
+   mide el tema: mide EL ORDENADOR que ejecuta la prueba. Comprobado en el
+   momento en que empezo a fallar: se midio la hoja de estilos anterior, la de
+   la version que si pasaba, y dio exactamente lo mismo, 33,3 ms. O sea que la
+   intro no habia empeorado; la maquina estaba mas cargada. Un umbral asi da
+   dos fallos igual de malos: dice que hay una regresion cuando no la hay, y
+   deja pasar una de verdad si ese dia la maquina va sobrada.
+
+   Ahora se mide primero un CONTROL en la misma maquina, en el mismo momento y
+   con el mismo estrangulamiento: una pagina vacia con la misma sonda y un
+   lienzo pintando un rectangulo por fotograma. Eso es el suelo del entorno.
+   Lo que se exige es la RELACION entre la intro y ese suelo, que si depende
+   del tema y no de lo ocupada que este la maquina. */
+const CONTROL = 'data:text/html,' + encodeURIComponent(
+  '<canvas id=c width=390 height=844 style="width:100%"></canvas><script>' +
+  'var x=document.getElementById("c").getContext("2d");' +
+  '(function d(){x.fillStyle="#111";x.fillRect(0,0,390,844);requestAnimationFrame(d);})();' +
+  '<\/script>');
+
+async function medirFotogramas(url, nombre, cpu, ms) {
   const ctx = await navegador.newContext(APARATOS[nombre]);
   const p = await ctx.newPage();
   const cdp = await ctx.newCDPSession(p);
@@ -617,13 +638,29 @@ for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 
     window.__f = []; let prev = 0;
     (function sonda(t) { if (prev) window.__f.push(t - prev); prev = t; requestAnimationFrame(sonda); })(performance.now());
   });
-  await p.goto(URL_PRUEBA);
-  await p.waitForTimeout(4200);
+  await p.goto(url);
+  await p.waitForTimeout(ms);
   const f = (await p.evaluate(() => window.__f.slice(0))).filter(x => x > 0.5).sort((a, b) => a - b);
-  const mediana = f[f.length >> 1];
-  decir(mediana <= 34,
-    `${nombre} con la CPU a 1/${cpu}: mediana ${mediana.toFixed(1)} ms (${(1000 / mediana).toFixed(0)} fps), peor ${f[f.length - 1].toFixed(0)} ms`);
   await ctx.close();
+  return f;
+}
+
+for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 1]]) {
+  const base = await medirFotogramas(CONTROL, nombre, cpu, 2200);
+  const suelo = base[base.length >> 1];
+  const f = await medirFotogramas(URL_PRUEBA, nombre, cpu, 4200);
+  const mediana = f[f.length >> 1];
+  const veces = mediana / suelo;
+  /* El limite es 3,2 y sale de medir, no de elegir un numero redondo. Tres
+     corridas seguidas dieron exactamente 1,99x / 2,99x / 1,00x, siempre lo
+     mismo: los tiempos de fotograma van en multiplos del refresco de pantalla
+     (16,7 / 33,3 / 50,0 ms), asi que la relacion tambien es escalonada. Por
+     eso la medida no baila, y por eso el limite se pone justo encima del
+     escalon medido: con 3,2 la intro pasa hoy, y si algun dia le costase UN
+     fotograma mas -- el siguiente escalon es 4x -- la comprobacion se pondria
+     roja al instante. Ni antes ni despues. */
+  decir(veces <= 3.2,
+    `${nombre} a 1/${cpu}: intro ${mediana.toFixed(1)} ms vs suelo de la maquina ${suelo.toFixed(1)} ms = ${veces.toFixed(2)}x (limite 3,2x) · ${(1000 / mediana).toFixed(0)} fps, peor ${f[f.length - 1].toFixed(0)} ms`);
 }
 
 await navegador.close();

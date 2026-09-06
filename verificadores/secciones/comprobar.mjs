@@ -205,6 +205,13 @@ for (const archivo of secciones) {
 
   const par = /<(div|form|button|ul|ol|li|span|p|a|section|label|select|option|aside|nav|footer|header|h1|h2|h3|h4|table|tr|td|th|figure|picture|video|details|summary)\b/g;
   const cierre = /<\/(div|form|button|ul|ol|li|span|p|a|section|label|select|option|aside|nav|footer|header|h1|h2|h3|h4|table|tr|td|th|figure|picture|video|details|summary)>/g;
+  /* Los comentarios HTML NO cuentan. Un comentario puede describir marcado
+     -- "esto era un <h1> y ahora es un <p>, y aqui esta el porque" -- y eso es
+     documentacion, no etiquetas. Contarlo daba un falso positivo: la seccion
+     del hub salia con "h1 +3 sin cerrar" por tres menciones dentro de un
+     comentario, cuando el marcado real no tiene ni un h1. Un verificador que
+     avisa de lo que no pasa entrena a que se le ignore. */
+  html = html.replace(/<!--[\s\S]*?-->/g, '');
   const ab = (html.match(par) || []).length, ci = (html.match(cierre) || []).length;
   const resto = html.match(/\{\{|\{%/);
 

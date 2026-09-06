@@ -162,7 +162,7 @@
         "s2": {
           "type": "stat",
           "settings": {
-            "number": "17",
+            "number": "19",
             "label": "Frecuencias"
           }
         },
@@ -176,7 +176,7 @@
         "s4": {
           "type": "stat",
           "settings": {
-            "number": "55",
+            "number": "60",
             "label": "Alimentos"
           }
         },

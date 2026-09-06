@@ -1,3 +1,28 @@
+/* Las cifras del banner suben contando al cargar. Tres decisiones:
+   1. El numero final ya esta escrito en el HTML, asi que si este script no
+      llegara a ejecutarse la cifra se ve igual. La animacion adorna, no
+      informa.
+   2. Se anima con requestAnimationFrame y una curva que frena al final, que
+      es como se lee natural una cuenta.
+   3. Con "menos movimiento" activado no cuenta: aparece el numero y ya. */
+(function () {
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cifras = document.querySelectorAll('#hero-section [data-cuenta]');
+  if (!cifras.length || quieto) return;
+  var DUR = 1100, t0 = null;
+  cifras.forEach(function (e) { e.textContent = '0'; });
+  function paso(t) {
+    if (t0 === null) t0 = t;
+    var u = Math.min(1, (t - t0) / DUR);
+    var k = 1 - Math.pow(1 - u, 3);          // frena al llegar
+    cifras.forEach(function (e) {
+      e.textContent = Math.round(parseFloat(e.getAttribute('data-cuenta')) * k);
+    });
+    if (u < 1) requestAnimationFrame(paso);
+  }
+  requestAnimationFrame(function () { requestAnimationFrame(paso); });
+})();
+
 /* Diagnóstico VILLUMINATIONS: identifica el origen real de cualquier fallo. */
 (function () {
   var TAG = '[VILL]';
@@ -1381,7 +1406,7 @@
         'sub.diet': 'Pick a plan and follow the menus, recipes and shopping lists.',
         'sub.bot': 'Fruits, seeds, spices and grains with their real properties — so nature works in favour of your plan.',
         'sub.med': 'Follow the circle: it grows as you inhale, holds as you hold, and shrinks as you exhale. Ideal for visual people.',
-        'sub.freq': '17 frequencies generated in real time: Solfeggio tones, binaural waves and dual pulses to sleep, meditate, focus or switch your mind on.',
+        'sub.freq': '19 frequencies generated in real time: Solfeggio tones, binaural waves and dual pulses to sleep, meditate, focus or switch your mind on.',
         'sub.level': 'Every kilo you log in your routine adds total volume. Climb from Beginner to Predator and show up on the leaderboard.',
         'sub.progress': 'All your progress together: food logged, calories burned, volume lifted and rest.',
         'sub.sleep': 'Muscle repairs while you sleep. Log your hours and I will tell you whether it is enough for what you burned today.',
@@ -1504,7 +1529,7 @@
         'sub.diet': 'Choisis un plan et suis les menus, recettes et listes de courses.',
         'sub.bot': 'Fruits, graines, épices et céréales avec leurs vraies propriétés — pour que la nature travaille en faveur de ton plan.',
         'sub.med': 'Suis le cercle : il grandit quand tu inspires, se fige quand tu retiens, et se rétracte quand tu expires. Idéal pour les visuels.',
-        'sub.freq': '17 fréquences générées en temps réel : tons Solfeggio, ondes binaurales et pulsations duales pour dormir, méditer, te concentrer ou activer ton esprit.',
+        'sub.freq': '19 fréquences générées en temps réel : tons Solfeggio, ondes binaurales et pulsations duales pour dormir, méditer, te concentrer ou activer ton esprit.',
         'sub.level': 'Chaque kilo enregistré dans ta routine ajoute du volume total. Passe de Débutant à Predator et apparais au classement.',
         'sub.progress': 'Tout ton progrès réuni : repas enregistrés, calories brûlées, volume soulevé et repos.',
         'sub.sleep': 'Le muscle se répare pendant ton sommeil. Enregistre tes heures et je te dis si c’est suffisant vu ce que tu as brûlé aujourd’hui.',

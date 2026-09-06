@@ -37,28 +37,60 @@
     <button data-l="es" class="active" type="button">ES</button><button data-l="en" type="button">EN</button><button data-l="fr" type="button">FR</button>
   </div>
   <div class="hero-inner">
-    <div class="hero-tag">@villumination99 · Fitness Hub</div>
-    <!-- Era un <h1>. La pagina de Shopify ya emite su propio <h1> con el
-         titulo de la pagina, y dos <h1> en el mismo documento reparten la
-         senal principal entre dos textos: peor para el buscador y confuso
-         para un lector de pantalla. Se queda con el MISMO aspecto -- la clase
-         no cambia -- pero cede la jerarquia al titulo real. -->
-    <p class="hero-title" role="heading" aria-level="2">Transforma tu<br><span>Cuerpo y Mente</span></p>
-    <p class="hero-sub">Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente, respiración guiada y frecuencias reparadoras — todo en un solo lugar.</p>
-    <div class="hero-motto" id="hero-motto">💬 El cuerpo logra lo que la mente cree.</div>
-    <div class="hero-btns">
-      <a href="#muscle-map" class="btn btn-primary">🧬 Explorar Anatomía 3D</a>
-      <a href="#planner" class="btn btn-outline">🏋️ Crear mi Rutina</a>
+    <div class="hero-texto">
+      <div class="hero-tag hero-ent hero-ent-1">@villumination99 · Fitness Hub</div>
+      <!-- Este titular era el encabezado de primer nivel. La pagina de Shopify
+           ya emite el suyo con el titulo de la pagina, y dos encabezados de
+           primer nivel reparten la senal principal entre dos textos: peor para
+           el buscador y confuso para un lector de pantalla. Conserva el MISMO
+           aspecto pero cede la jerarquia al titulo real de la pagina. -->
+      <p class="hero-title hero-ent hero-ent-2" role="heading" aria-level="2">Transforma tu<br><span>Cuerpo y Mente</span></p>
+      <p class="hero-sub hero-ent hero-ent-3">Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente, respiración guiada y frecuencias reparadoras — todo en un solo lugar.</p>
+      <div class="hero-motto hero-ent hero-ent-4" id="hero-motto">💬 El cuerpo logra lo que la mente cree.</div>
+      <div class="hero-btns hero-ent hero-ent-5">
+        <a href="#muscle-map" class="btn btn-primary">🧬 Explorar Anatomía 3D</a>
+        <a href="#planner" class="btn btn-outline">🏋️ Crear mi Rutina</a>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>27</strong><span>Ejercicios</span></div>
-      <div class="hero-stat"><strong>17</strong><span>Frecuencias</span></div>
-      <div class="hero-stat"><strong>9</strong><span>Zonas 3D</span></div>
-      <div class="hero-stat"><strong>6</strong><span>Niveles de Atleta</span></div>
+    <!-- Las cifras llevan data-cuenta: el numero final. Al cargar suben desde
+         cero. El texto de dentro se escribe igual en el HTML para que, si el
+         JavaScript no llega a ejecutarse, la cifra ya este puesta. -->
+    <div class="hero-stats hero-ent hero-ent-6">
+      <div class="hero-stat"><strong data-cuenta="27">27</strong><span>Ejercicios</span></div>
+      <div class="hero-stat"><strong data-cuenta="19">19</strong><span>Frecuencias</span></div>
+      <div class="hero-stat"><strong data-cuenta="9">9</strong><span>Zonas 3D</span></div>
+      <div class="hero-stat"><strong data-cuenta="6">6</strong><span>Niveles de Atleta</span></div>
     </div>
-    <a class="hero-scroll" href="#hub-index" aria-label="Ver todo lo que hay">▼</a>
+    <a class="hero-scroll" href="#hub-index" aria-label="Ver todo lo que hay">Desliza para ver las 12 herramientas</a>
   </div>
 </div>
+
+<script>
+/* Las cifras del banner suben contando al cargar. Tres decisiones:
+   1. El numero final ya esta escrito en el HTML, asi que si este script no
+      llegara a ejecutarse la cifra se ve igual. La animacion adorna, no
+      informa.
+   2. Se anima con requestAnimationFrame y una curva que frena al final, que
+      es como se lee natural una cuenta.
+   3. Con "menos movimiento" activado no cuenta: aparece el numero y ya. */
+(function () {
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cifras = document.querySelectorAll('#hero-section [data-cuenta]');
+  if (!cifras.length || quieto) return;
+  var DUR = 1100, t0 = null;
+  cifras.forEach(function (e) { e.textContent = '0'; });
+  function paso(t) {
+    if (t0 === null) t0 = t;
+    var u = Math.min(1, (t - t0) / DUR);
+    var k = 1 - Math.pow(1 - u, 3);          // frena al llegar
+    cifras.forEach(function (e) {
+      e.textContent = Math.round(parseFloat(e.getAttribute('data-cuenta')) * k);
+    });
+    if (u < 1) requestAnimationFrame(paso);
+  }
+  requestAnimationFrame(function () { requestAnimationFrame(paso); });
+})();
+</script>
 
 <!-- ===== ÍNDICE DEL HUB ===== -->
 <div data-section id="hub-index">
@@ -548,7 +580,7 @@
 <div data-section id="frequencies">
 <section>
   <h2 class="section-title">Frecuencias Reparadoras</h2>
-  <p class="section-sub" data-i18n="sub.freq">17 frecuencias generadas en tiempo real: tonos Solfeggio, ondas binaurales y pulsos duales para dormir, meditar, enfocarte o activar la mente.</p>
+  <p class="section-sub" data-i18n="sub.freq">19 frecuencias generadas en tiempo real: tonos Solfeggio, ondas binaurales y pulsos duales para dormir, meditar, enfocarte o activar la mente.</p>
   <p class="freq-ios-tip" data-i18n="freq.tip">📱 iPhone: el sonido sale como “música”, así que suena incluso con el interruptor en silencio — sube el volumen con los botones laterales. Si no escuchas, toca “Reproducir” otra vez.</p>
   <div class="card">
     <div class="freq-intro" data-i18n="freq.intro">
