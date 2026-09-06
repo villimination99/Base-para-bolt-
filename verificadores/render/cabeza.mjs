@@ -16,7 +16,7 @@
    verificacion rellenos, para comprobar que salen todos juntos y ninguno
    se pisa a otro. Es la respuesta a "¿no falta nada?". */
 import { Liquid } from 'liquidjs';
-const T='theme';
+const T = process.env.TEMA || 'theme';
 const e = new Liquid({ root:[T+'/snippets',T], extname:'.liquid', strictFilters:false, strictVariables:false });
 const F={escape:v=>String(v==null?'':v),json:v=>JSON.stringify(v===undefined?null:v),
  image_url:v=>(typeof v==='string'?v:(v&&v.src)||'//cdn.shopify.com/x.png'),asset_url:v=>'//cdn.shopify.com/'+v,

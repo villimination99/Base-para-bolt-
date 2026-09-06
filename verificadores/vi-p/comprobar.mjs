@@ -19,7 +19,7 @@ import path from 'path';
 import fs from 'fs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
-const T = path.join(RAIZ, 'theme');
+const T = process.env.TEMA || path.join(RAIZ, 'theme');
 const TMP = fs.mkdtempSync('/tmp/vi-p-');
 const TIPO = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 
@@ -71,8 +71,21 @@ const errs = [], fallos = [], externas = [];
 p.on('pageerror', e => errs.push(e.message));
 p.on('requestfailed', r => fallos.push(r.url()));
 p.on('request', r => { if (!r.url().startsWith(url) && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) externas.push(r.url()); });
+const pedidas = [];
+p.on('request', r => pedidas.push(r.url()));
 await p.goto(url, { waitUntil: 'load' });
+
+/* --- Primero: lo pesado NO se ha bajado --- */
+const pedido = n => pedidas.some(u => u.endsWith('/assets/' + n));
+const antes = await p.evaluate(() => ({ mapa: !!window.__mm3dReady, chart: typeof window.Chart }));
+const perezoso = !pedido('vi-p-3d.js') && !pedido('vi-p-chart.js') && !antes.mapa && antes.chart === 'undefined';
+
+/* --- Y ahora, al acercarse, si --- */
+await p.evaluate(() => document.getElementById('muscle-canvas').scrollIntoView());
 await p.waitForFunction(() => window.__mm3dReady === true, { timeout: 90000 }).catch(() => {});
+await p.evaluate(() => (document.getElementById('nutrition') || document.getElementById('macro-chart')).scrollIntoView());
+await p.waitForFunction(() => typeof window.Chart === 'function', { timeout: 30000 }).catch(() => {});
+await p.evaluate(() => window.scrollTo(0, 0));
 
 const r = await p.evaluate(() => ({
   mapa3d: !!window.__mm3dReady,
@@ -103,6 +116,10 @@ for (const k of Object.keys(esp)) {
   console.log('  ' + (ok ? 'OK   ' : 'FALLA') + ' ' + k.padEnd(25) + String(esp[k]).padEnd(21) + String(r[k]));
 }
 const decir = (ok, txt) => { if (!ok) mal++; console.log('  ' + (ok ? 'OK   ' : 'FALLA') + ' ' + txt); };
+decir(perezoso, `al abrir la pagina NO se bajan el mapa 3D ni las graficas (684 KB, 190 KB por la red) -- llegan al acercarse`);
+decir(pedido('vi-p-3d.js'), 'el mapa 3D se pide al acercarse a el');
+decir(pedido('vi-p-chart.js'), 'las graficas se piden al acercarse a nutricion');
+decir(await p.evaluate(() => { const c = document.getElementById('macro-chart'); return !!(c && c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some(v => v !== 0)); }), 'el anillo de macros esta dibujado, no en blanco');
 decir(externas.length === 0, `ni una peticion a un tercero (${externas.length})`);
 externas.slice(0, 5).forEach(u => console.log('    ✗ ' + u.slice(0, 110)));
 decir(errs.length === 0, `sin errores de JavaScript (${errs.length})`);

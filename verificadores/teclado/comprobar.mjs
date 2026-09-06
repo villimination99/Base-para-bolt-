@@ -20,7 +20,7 @@ import { fileURLToPath } from 'url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.resolve(AQUI, '../..');
-const ASSETS = path.join(RAIZ, 'theme/assets');
+const ASSETS = process.env.TEMA ? path.join(process.env.TEMA, 'assets') : path.join(RAIZ, 'theme/assets');
 const CHROME = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
 const CSS = fs.readFileSync(path.join(ASSETS, 'villumination.css'), 'utf8');

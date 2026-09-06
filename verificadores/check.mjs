@@ -7,7 +7,7 @@ import path from 'path';
 import { execSync } from 'child_process';
 import { toLiquidHtmlAST } from '@shopify/liquid-html-parser';
 
-const T = 'theme';
+const T = process.env.TEMA || 'theme';
 const walk = (d, ext, out = []) => {
   for (const e of fs.readdirSync(d, { withFileTypes: true })) {
     const p = path.join(d, e.name);

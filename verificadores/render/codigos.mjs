@@ -10,7 +10,7 @@
 import { Liquid } from 'liquidjs';
 import fs from 'fs';
 
-const T = 'theme';
+const T = process.env.TEMA || 'theme';
 const e = new Liquid({ root: [T + '/snippets', T], extname: '.liquid',
                        strictFilters: false, strictVariables: false });
 e.registerFilter('escape', v => String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;')

@@ -46,18 +46,88 @@ const LIQUID = (function leer(dir) {
     else if (e.name.endsWith('.liquid')) salida.push(fs.readFileSync(p, 'utf8'));
   }
   return salida;
-})(path.join(RAIZ, 'theme'));
+})(process.env.TEMA || path.join(RAIZ, 'theme'));
 
-/* ¿El tema carga este archivo con <script type="module">? Se busca la etiqueta
-   completa que lo menciona, no el nombre suelto: asi un archivo citado en un
-   comentario no cuenta. */
+/* ¿El tema carga este archivo con type="module"? Hay dos formas, y las dos
+   cuentan:
+
+   1. Una etiqueta <script type="module" src="..."> en el Liquid. Se busca la
+      etiqueta COMPLETA que lo menciona, no el nombre suelto, para que un
+      archivo citado en un comentario no cuente.
+
+   2. Un <script> que crea JavaScript. Desde 4.47.0 el mapa 3D se carga solo
+      cuando se acerca a la pantalla, asi que su etiqueta ya no esta escrita
+      en el Liquid: la fabrica vi-p.js poniendo type = 'module' y sacando la
+      direccion de un data-. Cuando eso paso, esta comprobacion se puso roja
+      y exigio ES2017 a un modulo -- que es pedirle que no sea un modulo.
+
+      Para el segundo caso se mira el par completo: que el Liquid publique la
+      direccion del archivo en un atributo data-, y que algun JavaScript del
+      tema fabrique un script de tipo modulo leyendo ese mismo data-. Con las
+      dos mitades no queda duda de como se carga. */
 function cargadoComoModulo(nombre) {
   const esc = nombre.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const re = new RegExp('<script[^>]*' + esc + '[^>]*>|<script[^>]*type="module"[^>]*' + esc, 'i');
-  return LIQUID.some((l) => {
-    const m = l.match(re);
-    return !!m && /type="module"/i.test(m[0]);
-  });
+  if (LIQUID.some((l) => { const m = l.match(re); return !!m && /type="module"/i.test(m[0]); })) return true;
+
+  const dato = LIQUID.map(l => l.match(new RegExp('(data-[a-z0-9-]+)="\\{\\{\\s*\'' + esc + '\'[^"]*"', 'i'))).find(Boolean);
+  if (!dato) return false;
+  const attr = dato[1];
+
+  /* Y aqui hace falta precision, no buena voluntad.
+
+     La primera version se conformaba con que ALGUN archivo del tema
+     mencionara el data- y ademas dijera type = 'module' en cualquier parte.
+     Como vi-p.js trae los dos cargadores -- el del mapa, que es modulo, y el
+     de las graficas, que es un script clasico -- daba por modulo tambien a
+     vi-p-chart.js. Y eso apagaba justo la comprobacion que habia pillado que
+     Chart.js llevaba sintaxis ES2020 en un script que parsean todos los
+     motores.
+
+     La segunda version exigia que las dos mitades estuvieran a menos de N
+     caracteres. Media 656 en un caso y 1339 en el otro, asi que cualquier
+     N entre ambos "funcionaba" -- hasta que alguien anadiera un comentario
+     dentro del cargador. Un umbral afinado a la forma que tiene el codigo
+     hoy no es una comprobacion, es una coincidencia.
+
+     Asi que se pregunta lo que de verdad se quiere saber: si la LECTURA del
+     data- y la asignacion type = 'module' viven en la MISMA funcion. Eso no
+     depende de espacios, comentarios ni de si el archivo esta minificado
+     -- y el empaquetador pasa esta bateria sobre el tema ya minificado. */
+  const dentroDeLaMismaFuncion = (js) => {
+    let arbol;
+    try { arbol = Parser.parse(js, { ecmaVersion: 2022, sourceType: 'script' }); }
+    catch { return false; }
+
+    const esModuleType = (n) => n.type === 'AssignmentExpression'
+      && n.left.type === 'MemberExpression'
+      && ((n.left.property.name || n.left.property.value) === 'type')
+      && n.right.type === 'Literal' && n.right.value === 'module';
+    const esNuestroDato = (n) => n.type === 'Literal' && typeof n.value === 'string' && n.value.includes(attr);
+
+    let encontrado = false;
+    const recorrer = (n, funcion) => {
+      if (!n || typeof n !== 'object' || encontrado) return;
+      if (/Function(Declaration|Expression)|ArrowFunctionExpression/.test(n.type)) funcion = n;
+      if (funcion && esNuestroDato(n)) {
+        /* Se ha visto el data-. ¿Esta funcion pone type = 'module'? */
+        let hay = false;
+        const buscar = (m) => {
+          if (!m || typeof m !== 'object' || hay) return;
+          if (esModuleType(m)) { hay = true; return; }
+          for (const k in m) { const v = m[k]; if (Array.isArray(v)) v.forEach(buscar); else if (v && typeof v === 'object') buscar(v); }
+        };
+        buscar(funcion);
+        if (hay) { encontrado = true; return; }
+      }
+      for (const k in n) { const v = n[k]; if (Array.isArray(v)) v.forEach(x => recorrer(x, funcion)); else if (v && typeof v === 'object') recorrer(v, funcion); }
+    };
+    recorrer(arbol, null);
+    return encontrado;
+  };
+
+  return fs.readdirSync(ASSETS).filter(f => f.endsWith('.js'))
+    .some(f => dentroDeLaMismaFuncion(fs.readFileSync(path.join(ASSETS, f), 'utf8')));
 }
 
 console.log('\n--- Sintaxis: el suelo es ES2017 (Safari 11 / iOS 11) ---');

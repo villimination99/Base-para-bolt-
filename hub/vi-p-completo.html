@@ -2059,6 +2059,9 @@
   document.querySelectorAll('.muscle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var m = this.dataset.muscle;
+      /* Si alguien salta directo a un musculo antes de que el mapa haya
+         entrado en pantalla, se pide ya: es la otra puerta de entrada. */
+      if (window.__pedirMapa3D) window.__pedirMapa3D();
       if (window.selectMuscle3D) {
         window.selectMuscle3D(m, true);
       } else {
@@ -2068,43 +2071,115 @@
       }
     });
   });
-  /* El vigilante del mapa 3D.
+  /* CARGA PEREZOSA Y VIGILANTE DEL MAPA 3D
+     ------------------------------------------------------------------
+     El modulo del mapa son 520 KB (134 KB por la red). Bajarlos al abrir la
+     pagina es pagarlos aunque el visitante lea el titular y se vaya, y
+     ademas compiten con lo que si se esta viendo. Asi que se piden cuando
+     el mapa se acerca a la pantalla -- o en cuanto alguien toca un boton de
+     musculo, que es la otra forma de llegar a el.
 
-     Antes esto era un setTimeout de 15 segundos desde que arranca el hub, y
-     estaba mal por los dos lados a la vez:
+     Esto solo actua en el tema, donde la seccion deja un #vi-p-cargas con
+     las direcciones de assets/. En la version de un solo archivo, que se
+     pega en una pagina, los scripts ya vienen puestos y aqui no hay nada
+     que hacer: sin ese elemento, esta funcion se retira.
 
-       - Demasiado tarde cuando el modulo NO va a ejecutarse nunca -- el
-         navegador no entiende modulos, el archivo dio 404, la sintaxis le
-         sento mal. En esos casos ya se sabe en el primer segundo, y el
-         visitante se quedaba un cuarto de minuto mirando "Esculpiendo
-         anatomia 3D..." para que al final le dijeran que no hay mapa.
-       - Y a la vez demasiado pronto con una conexion mala: son medio mega,
-         y a 3G lenta pueden tardar mas de quince segundos en bajar. El
-         respaldo saltaba encima de un modulo que venia de camino.
+     Y el vigilante ya no es un reloj. Antes eran 15 segundos desde el
+     arranque -- tarde cuando el modulo no iba a ejecutarse nunca, y pronto
+     con una conexion mala. Ahora se pregunta lo que de verdad importa, y en
+     el momento exacto:
 
-     El reloj no era la senal correcta. La senal correcta es el evento load:
-     no se dispara hasta que los scripts diferidos y los modulos se han
-     bajado y ejecutado. Si cuando llega load el modulo no ha arrancado, es
-     que no va a arrancar -- da igual si tardo dos segundos o cuarenta.
+       - Si el navegador no entiende modulos, 'noModule' no existe en los
+         <script>. Se sabe ANTES de pedir nada, sin esperar ni un
+         milisegundo, y se muestra el respaldo.
+       - Si el archivo no llega, salta su onerror.
+       - Si llega y se ejecuta, salta su onload; 600 ms despues el modulo ya
+         ha tenido tiempo de crear el renderizador y marcar su bandera. Si
+         no la marco, es que fallo por dentro.
 
-     El margen de 600 ms de despues es para el propio modulo, que entre que
-     empieza y marca la bandera crea el renderizador. Y el caso de que load
-     ya haya pasado cuando esto se ejecuta esta cubierto mirando
-     document.readyState, porque a un evento que ya ocurrio no se llega
-     tarde: no se llega. */
-  function vigilarMapa3D() {
-    setTimeout(function() {
-      if (window.__mm3dStarted) return;
+     Ninguna de las tres ramas depende de lo rapida que sea la red. */
+  (function cargaDelMapa3D() {
+    var cfg = document.getElementById('vi-p-cargas');
+    if (!cfg) return;                       // version de un solo archivo
+    var url = cfg.getAttribute('data-mapa3d');
+    var lienzo = document.getElementById('muscle-canvas');
+    if (!url || !lienzo) return;
+
+    function respaldo() {
       var c = document.getElementById('muscle-canvas');
       var l = document.getElementById('mm-loading');
       if (c) c.style.display = 'none';
       if (l) l.style.display = 'none';
       var f = document.getElementById('mm-fallback');
       if (f) f.style.display = 'block';
-    }, 600);
-  }
-  if (document.readyState === 'complete') vigilarMapa3D();
-  else window.addEventListener('load', vigilarMapa3D);
+    }
+
+    var pedido = false;
+    function pedir() {
+      if (pedido) return;
+      pedido = true;
+      if (!('noModule' in document.createElement('script'))) { respaldo(); return; }
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.src = url;
+      s.onerror = respaldo;
+      s.onload = function () {
+        setTimeout(function () { if (!window.__mm3dStarted) respaldo(); }, 600);
+      };
+      document.head.appendChild(s);
+    }
+    window.__pedirMapa3D = pedir;           // lo usan los botones de musculo
+
+    if (!('IntersectionObserver' in window)) { pedir(); return; }
+    var ojo = new IntersectionObserver(function (entradas) {
+      for (var i = 0; i < entradas.length; i++) {
+        if (entradas[i].isIntersecting) { ojo.disconnect(); pedir(); return; }
+      }
+    }, { rootMargin: '500px 0px' });        // arranca antes de que se vea
+    ojo.observe(lienzo);
+  })();
+
+  /* CARGA PEREZOSA DE LAS GRAFICAS
+     Chart.js son otros 164 KB (56 KB por la red) para dos graficas que estan
+     bien abajo. Se pide cuando la seccion de nutricion se acerca. Quien
+     necesita dibujar espera en conChart(), que ejecuta al momento si la
+     libreria ya esta -- que es lo que pasa en la version de un solo
+     archivo, donde viene puesta desde el principio. */
+  var __colaChart = [];
+  window.conChart = function (fn) {
+    if (window.Chart) { fn(); return; }
+    __colaChart.push(fn);
+  };
+  (function cargaDeLasGraficas() {
+    var cfg = document.getElementById('vi-p-cargas');
+    if (!cfg) return;
+    var url = cfg.getAttribute('data-chart');
+    var ancla = document.getElementById('nutrition') || document.getElementById('macro-chart');
+    if (!url || !ancla) return;
+
+    var pedido = false;
+    function pedir() {
+      if (pedido) return;
+      pedido = true;
+      var s = document.createElement('script');
+      s.src = url;
+      s.onload = function () {
+        var cola = __colaChart; __colaChart = [];
+        for (var i = 0; i < cola.length; i++) { try { cola[i](); } catch (e) { console.warn('grafica:', e.message); } }
+      };
+      /* Si no llega, cada quien se queda con su aviso en su sitio: el hub ya
+         comprueba que Chart exista antes de dibujar. */
+      s.onerror = function () { __colaChart = []; };
+      document.head.appendChild(s);
+    }
+    if (!('IntersectionObserver' in window)) { pedir(); return; }
+    var ojo = new IntersectionObserver(function (entradas) {
+      for (var i = 0; i < entradas.length; i++) {
+        if (entradas[i].isIntersecting) { ojo.disconnect(); pedir(); return; }
+      }
+    }, { rootMargin: '500px 0px' });
+    ojo.observe(ancla);
+  })();
 
   /* ===== MUSCLE MODAL ===== */
   var ZONETAG = { Pecho: 'Pecho', Espalda: 'Espalda', Hombros: 'Hombros', Biceps: 'Biceps', Triceps: 'Triceps', Abdominales: 'Core', Cuadriceps: 'Piernas', Gluteos: 'Gluteos', Gemelos: 'Piernas' };
@@ -4343,9 +4418,15 @@
       var macros = { protein: 145, carbs: 220, fat: 62, kcal: 1840 };
       var macroChart = null;
 
-      if (typeof Chart !== 'undefined') {
+      /* conChart dibuja ya si la libreria esta, y si se esta bajando de
+         forma perezosa deja el trabajo en cola hasta que llegue.
+         (Aqui habia ademas un "if (typeof Chart === 'undefined') return;"
+         DENTRO de un "if (typeof Chart !== 'undefined')": codigo muerto, y
+         de los peligrosos, porque ese return no abortaba la grafica sino
+         initNutrition entera -- el registro de comidas, el buscador y la
+         camara se habrian ido con el.) */
+      window.conChart(function () {
         var ctx = document.getElementById('macro-chart').getContext('2d');
-        if (typeof Chart === 'undefined') { console.warn('Chart.js no cargó (CDN)'); return; }
         macroChart = new Chart(ctx, {
           type: 'doughnut',
           data: {
@@ -4354,7 +4435,8 @@
           },
           options: { responsive: true, cutout: '70%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c) { return c.label + ': ' + (c.raw / 4).toFixed(0) + 'g'; } } } } }
         });
-      }
+        updateMacroUI();
+      });
       function updateMacroUI() {
         if (macroChart) {
           macroChart.data.datasets[0].data = [macros.protein * 4, macros.carbs * 4, macros.fat * 9];
@@ -4752,7 +4834,12 @@
     try {
       var weekData = { labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], data: [2800, 3100, 2400, 3500, 3200, 4100, 2200] };
       var monthData = { labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4', 'Sem 5', 'Sem 6', 'Sem 7', 'Sem 8'], data: [18500, 21000, 19800, 24000, 22500, 26000, 23800, 28500] };
-      if (typeof Chart === 'undefined') throw new Error('Chart.js no cargado');
+      /* Igual que el anillo de macros: si Chart.js se esta bajando de forma
+         perezosa, esto espera en la cola en vez de rendirse. El try/catch
+         se repite dentro porque el de fuera ya habra terminado cuando la
+         libreria llegue. */
+      window.conChart(function () {
+       try {
       var ctx = document.getElementById('progress-chart').getContext('2d');
       var progressChart = new Chart(ctx, {
         type: 'bar',
@@ -4775,6 +4862,12 @@
           progressChart.data.datasets[0].data = d.data;
           progressChart.update();
         });
+      });
+       } catch (e) {
+         console.warn('Progress error:', e.message);
+         var pc2 = document.getElementById('progress-chart');
+         if (pc2 && pc2.parentElement) pc2.parentElement.innerHTML = '<div class="module-error">📊 ' + T('err.chart', 'Gráfica no disponible.') + '</div>';
+       }
       });
     } catch(err) {
       console.warn('Progress error:', err.message);

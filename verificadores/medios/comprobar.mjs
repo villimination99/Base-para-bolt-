@@ -40,6 +40,10 @@ const decir = (ok, txt) => { if (!ok) fallos++; console.log(`${ok ? ' OK   ' : '
    estructura, esta prueba se quedaria describiendo un tema que ya no existe, asi
    que se comprueba que las piezas siguen ahi. */
 const SECCION = fs.readFileSync(path.join(RAIZ, 'theme/sections/video-grid.liquid'), 'utf8');
+/* Del repositorio SIEMPRE, no del tema que se este empaquetando: lo que se
+   afirma unas lineas mas abajo es que el codigo FUENTE sigue declarando las
+   piezas que esta prueba mide, y en un build minificado $all es otra letra.
+   (Se probo apuntarlo al tema empaquetado y se puso rojo por eso mismo.) */
 const BASE = fs.readFileSync(path.join(RAIZ, 'theme/assets/base.js'), 'utf8');
 
 console.log('\n--- La seccion sigue teniendo el respaldo que esta prueba mide ---');

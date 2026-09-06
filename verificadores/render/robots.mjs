@@ -9,7 +9,7 @@
 import { Liquid } from 'liquidjs';
 import fs from 'fs';
 
-const T = 'theme';
+const T = process.env.TEMA || 'theme';
 const e = new Liquid({ root: [T + '/snippets', T], extname: '.liquid',
                        strictFilters: false, strictVariables: false });
 e.registerTag('comment', { parse(tk, rem) { let d = 1; while (rem.length) { const t = rem.shift(); if (t.name === 'comment') d++; if (t.name === 'endcomment') { d--; if (!d) break; } } }, render() { return ''; } });

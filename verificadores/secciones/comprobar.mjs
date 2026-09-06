@@ -21,7 +21,7 @@ import { Liquid } from 'liquidjs';
 import fs from 'fs';
 import path from 'path';
 
-const T = 'theme';
+const T = process.env.TEMA || 'theme';
 
 const img = { src: '//cdn/x.png', width: 1200, height: 1200, aspect_ratio: 1, alt: 'foto',
               preview_image: { aspect_ratio: 1, src: '//cdn/x.png' }, media_type: 'image', id: 1 };

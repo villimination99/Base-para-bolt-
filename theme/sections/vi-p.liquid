@@ -828,28 +828,33 @@
 </div>
 
 {%- comment -%}
-  Chart.js para las graficas de macros y de progreso. Recortado a las dos
-  graficas que el hub dibuja de verdad y servido desde assets/, no desde un
-  CDN de terceros. Si aun asi no cargara, el hub detecta la ausencia y muestra
-  un aviso en su sitio en vez de romperse.
+  Las dos piezas pesadas del hub NO se cargan aqui: solo se dejan sus
+  direcciones. vi-p.js las pide cuando su seccion se acerca a la pantalla.
+
+  Por que. Sumaban 684 KB (190 KB por la red) que se bajaban al abrir la
+  pagina aunque el visitante leyera el titular y se fuera, y que ademas
+  competian con lo que si se estaba viendo. El mapa muscular y las graficas
+  quedan bien por debajo del primer pantallazo, asi que ahora se piden
+  cuando faltan 500 px para llegar a ellos -- y el mapa, ademas, en cuanto
+  alguien toca un boton de musculo, que es la otra puerta de entrada.
+
+  three.js viaja DENTRO de vi-p-3d.js, asi que no hay importmap ni peticion
+  a jsdelivr. Los importmap solo existen desde Safari 16.4, de modo que un
+  iPhone con iOS 15 o 16.0-16.3 no resolvia el especificador 'three' y se
+  quedaba sin mapa; y el argumento que habia a favor del CDN -- que muchas
+  visitas ya traen three.js en cache de otra web -- dejo de ser cierto
+  cuando los navegadores particionaron la cache por sitio (Chrome 86 en
+  2020, Safari desde 2013, Firefox desde 2021). El detalle completo esta en
+  construir-3d.mjs.
+
+  El mapa se sigue inyectando como type="module": el cargador comprueba
+  antes si el navegador entiende modulos ('noModule' en un <script>) y, si
+  no, muestra el respaldo al instante en vez de esperar a un reloj.
 {%- endcomment -%}
-<script src="{{ 'vi-p-chart.js' | asset_url }}" defer></script>
+<div id="vi-p-cargas" hidden
+     data-chart="{{ 'vi-p-chart.js' | asset_url }}"
+     data-mapa3d="{{ 'vi-p-3d.js' | asset_url }}"></div>
 <script src="{{ 'vi-p.js' | asset_url }}" defer></script>
-
-{%- comment -%}
-  El mapa muscular 3D. three.js viaja DENTRO de vi-p-3d.js, asi que aqui ya no
-  hay importmap ni peticion a jsdelivr. El motivo esta escrito entero en
-  construir-3d.mjs, y en corto es este: los importmap solo existen desde
-  Safari 16.4, de modo que un iPhone con iOS 15 o 16.0-16.3 no resolvia el
-  especificador 'three' y se quedaba sin mapa; y el argumento que habia a
-  favor del CDN -- que muchas visitas ya traen three.js en cache de otra web --
-  dejo de ser cierto cuando los navegadores particionaron la cache por sitio
-  (Chrome 86 en 2020, Safari desde 2013, Firefox desde 2021).
-
-  Sigue siendo type="module" a proposito: asi los motores que no entienden
-  modulos lo ignoran entero en vez de atragantarse, y salta el respaldo.
-{%- endcomment -%}
-<script type="module" src="{{ 'vi-p-3d.js' | asset_url }}"></script>
 
 {% schema %}
 {
