@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.50.0",
+    "theme_version": "4.51.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -712,18 +712,18 @@
         "type": "select",
         "id": "splash_duracion",
         "label": "Duración de la secuencia",
-        "info": "La completa añade el núcleo de malla y las frases. La corta va directa al emblema. El botón de entrar aparece antes de que termine en las dos.",
+        "info": "Medido en la portada de esta tienda: con la secuencia COMPLETA, el navegador tarda 3172 ms en pintar lo más grande de la pantalla (LCP); con la CORTA, 164 ms. Google llama «malo» a todo lo que pase de 4000 ms y «bueno» a lo que baje de 2500. La diferencia no está en que la intro dure más: está en que las frases aparecen tarde y se convierten en lo último grande que se pinta. Si eliges Completa, sabe que ese es el precio.",
         "options": [
           {
             "value": "completa",
-            "label": "Completa (3,6 s) — con núcleo y frases"
+            "label": "Completa (3,6 s) — con núcleo y frases · LCP 3172 ms"
           },
           {
             "value": "corta",
-            "label": "Corta (2,4 s) — solo el latido"
+            "label": "Corta (2,4 s) — solo el latido · LCP 164 ms"
           }
         ],
-        "default": "completa"
+        "default": "corta"
       },
       {
         "type": "textarea",

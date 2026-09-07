@@ -171,7 +171,8 @@ const BATERIAS = [
   ['verificadores/teclado/comprobar.mjs', 'paneles con teclado'],
   ['verificadores/lienzos/comprobar.mjs', 'los lienzos animados pintan'],
   ['verificadores/plataformas/comprobar.mjs', 'sintaxis en motores viejos'],
-  ['verificadores/acceso/comprobar.mjs', 'accesibilidad WCAG 2.1 AA']
+  ['verificadores/acceso/comprobar.mjs', 'accesibilidad WCAG 2.1 AA'],
+  ['verificadores/lcp/comprobar.mjs', 'la portada se pinta a tiempo (LCP)']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');
