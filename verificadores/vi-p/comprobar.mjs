@@ -17,6 +17,7 @@ import { chromium } from 'playwright';
 import http from 'http';
 import path from 'path';
 import fs from 'fs';
+import { e, prepararFuente, contextoDeSeccion } from '../liquid.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const T = process.env.TEMA || path.join(RAIZ, 'theme');
@@ -24,11 +25,18 @@ const TMP = fs.mkdtempSync('/tmp/vi-p-');
 const TIPO = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 
 /* ---- la seccion, renderizada a mano como lo haria Shopify ---- */
-let sec = fs.readFileSync(path.join(T, 'sections/vi-p.liquid'), 'utf8')
-  .replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '')
-  .replace(/\{%\s*schema\s*%\}[\s\S]*?\{%\s*endschema\s*%\}/g, '')
-  .replace(/\{\{\s*'([^']+)'\s*\|\s*asset_url\s*\|\s*stylesheet_tag\s*\}\}/g, '<link rel="stylesheet" href="/assets/$1">')
-  .replace(/\{\{\s*'([^']+)'\s*\|\s*asset_url\s*\}\}/g, '/assets/$1');
+/* La seccion se renderiza con el MOTOR COMPARTIDO, no con sustituciones a
+   mano. Lo hacia a mano y aguanto mientras la seccion fue marcado plano; en
+   cuanto estreno un {%- assign -%} y un {%- if -%} para servir los productos
+   de la tienda, se atraganto. Un arnes que solo entiende la mitad del Liquid
+   acaba probando una seccion que no existe. */
+let sec = await (async () => {
+  const src = fs.readFileSync(path.join(T, 'sections/vi-p.liquid'), 'utf8');
+  const { ctx } = contextoDeSeccion('vi-p', src);
+  e.options.globals = ctx;
+  return (await e.parseAndRender(prepararFuente(src), ctx))
+    .replace(/\/\/cdn\/([\w.-]+)/g, '/assets/$1');
+})();
 
 const quedaLiquid = sec.match(/\{[%{]/);
 if (quedaLiquid) { console.error('  queda Liquid sin resolver cerca de: ' + sec.slice(Math.max(0, sec.indexOf(quedaLiquid[0]) - 60), sec.indexOf(quedaLiquid[0]) + 60)); process.exit(1); }
@@ -173,6 +181,42 @@ decir(perezoso, `al abrir la pagina NO se bajan el mapa 3D ni las graficas (684 
 decir(pedido('vi-p-3d.js'), 'el mapa 3D se pide al acercarse a el');
 decir(pedido('vi-p-chart.js'), 'las graficas se piden al acercarse a nutricion');
 decir(await p.evaluate(() => { const c = document.getElementById('macro-chart'); return !!(c && c.getContext('2d').getImageData(0, 0, c.width, c.height).data.some(v => v !== 0)); }), 'el anillo de macros esta dibujado, no en blanco');
+/* EL PUENTE CON LA TIENDA. Se prueba lo que de verdad importa: que la ficha
+   de un musculo lleve a productos REALES, y que cuando no hay catalogo -- la
+   version que se pega en una pagina -- se degrade a un enlace en vez de
+   romperse o de quedarse muda. */
+const tienda = await p.evaluate(() => {
+  /* Se inyecta un catalogo de mentira con los mismos campos que emite la
+     seccion, porque el renderizador de esta bateria no trae la coleccion. */
+  const j = document.createElement('script');
+  j.type = 'application/json'; j.id = 'vi-p-tienda';
+  j.textContent = JSON.stringify([
+    { titulo: 'Banco de musculación multifunción', url: '/products/banco', precio: '$199', foto: '' },
+    { titulo: 'Cajón pliométrico de acero', url: '/products/cajon', precio: '$89', foto: '' },
+    { titulo: 'Mochila deportiva impermeable', url: '/products/mochila', precio: '$39', foto: '' }
+  ]);
+  document.body.appendChild(j);
+  window.__viPColeccion = '/collections/equipo';
+  window.showMuscleModal('Pecho');
+  const conCat = document.querySelectorAll('#modal-content .mm-prod').length;
+  const enlaces = [...document.querySelectorAll('#modal-content .mm-prod')].map(a => a.getAttribute('href'));
+  /* Y el caso en el que NO debe recomendar nada. Ojo: el catalogo se guarda
+     en memoria a proposito -- se lee una vez y ya -- asi que cambiarle el
+     JSON a mitad no sirve de nada; la primera version de esta prueba lo
+     intento y fallaba por eso, no por el producto. Se usa un musculo cuyas
+     palabras (maza, chaleco) no aparecen en NINGUNO de los tres productos
+     del catalogo de prueba. */
+  if (window.closeModal) window.closeModal();
+  window.showMuscleModal('Hombros');
+  const sinCasar = document.querySelectorAll('#modal-content .mm-prod').length;
+  const caeAEnlace = !!document.querySelector('#modal-content .mm-tienda a');
+  if (window.closeModal) window.closeModal();
+  return { conCat, enlaces, sinCasar, caeAEnlace };
+});
+decir(tienda.conCat > 0, `la ficha de un musculo lleva a productos de la tienda (${tienda.conCat})`);
+decir(tienda.enlaces.every(h => h && h.startsWith('/products/')), `y los enlaces apuntan a productos: ${tienda.enlaces.join(', ')}`);
+decir(tienda.sinCasar === 0 && tienda.caeAEnlace, 'si ninguna palabra casa NO se inventa una recomendacion: cae al enlace de la coleccion');
+
 decir(externas.length === 0, `ni una peticion a un tercero (${externas.length})`);
 externas.slice(0, 5).forEach(u => console.log('    ✗ ' + u.slice(0, 110)));
 decir(errs.length === 0, `sin errores de JavaScript (${errs.length})`);

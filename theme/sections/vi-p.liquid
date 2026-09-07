@@ -851,6 +851,47 @@
   antes si el navegador entiende modulos ('noModule' en un <script>) y, si
   no, muestra el respaldo al instante en vez de esperar a un reloj.
 {%- endcomment -%}
+{%- comment -%}
+  LOS PRODUCTOS DE VERDAD, para que el hub pueda llevar a la tienda.
+
+  El hub no tenia ni un enlace a la tienda: un iman de trafico entero que no
+  llevaba a ningun producto. Aqui se le pasa la coleccion de equipo tal y como
+  esta AHORA -- titulo, precio, foto y direccion -- y el hub la usa en la
+  ficha de cada musculo. Si un producto se agota, cambia de nombre o
+  desaparece, esto se entera solo; escribir los identificadores dentro del
+  JavaScript seria firmar un enlace roto para dentro de tres meses.
+
+  Se limita a doce y a los campos que se usan: no tiene sentido mandar el
+  catalogo entero por una tira de tres productos.
+
+  En la version que se pega en una pagina no hay Liquid, no hay lista, y el
+  hub ensena un solo enlace a la coleccion. Se degrada, no se rompe.
+{%- endcomment -%}
+{%- comment -%}
+  Las dos condiciones van ANIDADAS, no unidas con "and". En Liquid, "and" se
+  evalua de DERECHA a IZQUIERDA, asi que "col_equipo != blank and
+  col_equipo.products.size > 0" comprueba primero el tamano -- sobre un
+  objeto que puede ser nil -- y la proteccion llega tarde. Es justo lo que
+  parece que hace y no hace. Lo pillo la comprobacion "Comparaciones que
+  podrian tocar nil" de check.mjs.
+{%- endcomment -%}
+{%- assign col_equipo = collections[section.settings.coleccion_equipo] -%}
+{%- if col_equipo != blank -%}
+{%- if col_equipo.products.size > 0 -%}
+  <script type="application/json" id="vi-p-tienda">
+  [
+  {%- for p in col_equipo.products limit: 12 -%}
+    {"titulo": {{ p.title | json }},
+     "url": {{ p.url | json }},
+     "precio": {{ p.price | money | json }},
+     "foto": {{ p.featured_image | image_url: width: 88 | json }}}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+  ]
+  </script>
+  <script>window.__viPColeccion = {{ col_equipo.url | json }};</script>
+{%- endif -%}
+{%- endif -%}
+
 <div id="vi-p-cargas" hidden
      data-chart="{{ 'vi-p-chart.js' | asset_url }}"
      data-mapa3d="{{ 'vi-p-3d.js' | asset_url }}"></div>
@@ -861,7 +902,11 @@
   "name": "VI.P",
   "tag": "section",
   "class": "seccion-vi-p",
-  "settings": [],
+  "settings": [
+    { "type": "header", "content": "Puente con la tienda" },
+    { "type": "paragraph", "content": "El hub muestra, dentro de la ficha de cada músculo, equipo real de esta colección para entrenar en casa. Se lee de la tienda en cada carga, así que nunca enlaza a un producto que ya no existe. Déjalo vacío para no mostrar nada." },
+    { "type": "collection", "id": "coleccion_equipo", "label": "Colección de equipo" }
+  ],
   "presets": [{ "name": "VI.P" }]
 }
 {% endschema %}

@@ -576,6 +576,84 @@
     window.removeFromRoutine(id);
     window.showMuscleModal(zone);
   };
+  /* EL PUENTE ENTRE EL HUB Y LA TIENDA.
+     ------------------------------------------------------------------
+     Hasta aqui el hub no tenia NI UN enlace a la tienda. Ni uno. Un iman de
+     trafico entero -- mapa 3D, rutinas, nutricion, sueno -- que no llevaba a
+     ningun producto, y una tarjeta final que invitaba a bajar a otra seccion
+     del propio hub. Regalar la herramienta esta bien; no decir que existe la
+     tienda es dejar el trabajo a medias.
+
+     Como funciona, y por que asi:
+
+     - Los productos NO estan escritos aqui. La seccion del tema los deja en
+       un <script type="application/json"> sacados de la coleccion de equipo
+       de la tienda de verdad, con su titulo, su precio y su direccion. Si un
+       producto se agota, cambia de nombre o desaparece, esto se entera solo.
+       Escribir los identificadores a mano seria firmar un enlace roto para
+       dentro de tres meses.
+
+     - En la version que se pega en una pagina no hay Liquid que valga, asi
+       que no hay lista: entonces se ensena un solo enlace a la coleccion. Se
+       degrada, no se rompe.
+
+     - Y lo que se muestra por musculo sale de PALABRAS que de verdad
+       aparecen en el titulo del producto. Si ninguna casa, no se inventa una
+       recomendacion: se cae al enlace de la coleccion. Un mapa muscular que
+       recomienda una mochila para entrenar el biceps pierde la confianza que
+       ha ganado en los diez minutos anteriores. */
+  var EQUIPO = {
+    Pecho:       ['banco', 'loseta', 'suelo'],
+    Espalda:     ['maza', 'chaleco', 'banco'],
+    Hombros:     ['maza', 'chaleco'],
+    Biceps:      ['banco', 'maza'],
+    Triceps:     ['banco', 'loseta'],
+    Abdominales: ['banco', 'loseta', 'chaleco'],
+    Cuadriceps:  ['cajon', 'cinturon', 'step'],
+    Gluteos:     ['hip thrust', 'cajon', 'cinturon'],
+    Gemelos:     ['step', 'cajon']
+  };
+  var _tienda = null;
+  function catalogoTienda() {
+    if (_tienda !== null) return _tienda;
+    _tienda = [];
+    try {
+      var el = document.getElementById('vi-p-tienda');
+      if (el) _tienda = JSON.parse(el.textContent) || [];
+    } catch (e) { _tienda = []; }
+    return _tienda;
+  }
+  function sinTildes(t) {
+    return String(t).toLowerCase().normalize ? String(t).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') : String(t).toLowerCase();
+  }
+  function equipoParaMusculo(name) {
+    var lista = catalogoTienda();
+    var url = (window.__viPColeccion || '/collections/equipo');
+    if (!lista.length) {
+      return '<div class="mm-tienda"><a href="' + url + '">' + T('t.equipo', 'Equipo para entrenar esto en casa') + ' →</a></div>';
+    }
+    var claves = EQUIPO[name] || [];
+    var elegidos = [];
+    for (var i = 0; i < lista.length && elegidos.length < 3; i++) {
+      var titulo = sinTildes(lista[i].titulo);
+      for (var k = 0; k < claves.length; k++) {
+        if (titulo.indexOf(sinTildes(claves[k])) !== -1) { elegidos.push(lista[i]); break; }
+      }
+    }
+    if (!elegidos.length) {
+      return '<div class="mm-tienda"><a href="' + url + '">' + T('t.equipo', 'Equipo para entrenar esto en casa') + ' →</a></div>';
+    }
+    return '<div class="mm-tienda">' +
+      '<div class="mm-tienda-tit">' + T('t.equipo', 'Equipo para entrenar esto en casa') + '</div>' +
+      elegidos.map(function (p) {
+        return '<a class="mm-prod" href="' + p.url + '">' +
+          (p.foto ? '<img src="' + p.foto + '" alt="" width="44" height="44" loading="lazy" decoding="async">' : '') +
+          '<span class="mm-prod-t">' + p.titulo + '</span>' +
+          '<span class="mm-prod-p">' + p.precio + '</span></a>';
+      }).join('') +
+      '<a class="mm-tienda-todo" href="' + url + '">' + T('t.vertodo', 'Ver todo el equipo') + ' →</a></div>';
+  }
+
   window.showMuscleModal = function(name) {
     var label = ZONELABEL[name];
     if (!label) return;
@@ -589,6 +667,7 @@
           : '<button class="mm-ex-add" onclick="' + "addFromMap('" + ex.id + "','" + name + "')" + '" title="Agregar a la rutina">＋</button>';
         return '<div class="mm-ex-row"><div><div class="mm-ex-name" style="cursor:pointer" title="Ver técnica correcta" onclick="event.stopPropagation();showExModal(\'' + ex.id + '\')">' + ex.icon + ' ' + TX(ex.name) + ' <span style="font-size:0.72rem;opacity:0.8">📖</span></div><div class="mm-ex-meta">' + ex.sets + ' · ≈' + exKcal(ex) + ' kcal · ' + TX(ex.diff) + '</div></div>' + btn + '</div>';
       }).join('') +
+      equipoParaMusculo(name) +
       '<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">' +
         '<button class="btn btn-primary" onclick="closeModal();document.getElementById(\'planner\').scrollIntoView({behavior:\'smooth\'})">Ir a mi rutina ↓</button>' +
         '<button class="btn btn-outline" onclick="closeModal()">Seguir explorando</button>' +
