@@ -1338,6 +1338,48 @@ check('Imagenes bien servidas', () => {
   return bad;
 });
 
+/* EL HUB NO CABE EN UNA PAGINA, Y ESO NO ES UNA OPINION.
+
+   El cuerpo de una pagina de Shopify tiene un tope DURO de 64 KB. No es una
+   decision de Shopify: es el limite de una celda TEXT de MySQL, y lo dice su
+   propia documentacion, que ademas receta exactamente la salida que usamos
+   aqui -- una plantilla de pagina alternativa que arma el contenido desde el
+   tema. https://shopify.dev/docs/storefronts/themes/troubleshooting/fix-64-kilobyte-limit-errors
+
+   El hub son 514 KB: ocho veces el tope. Pegarlo en Contenido -> Paginas no
+   fallaba por un error de compatibilidad ni por una etiqueta mal cerrada;
+   fallaba porque no cabe, y el editor se limitaba a no guardar.
+
+   Asi que esta comprobacion NO exige que el fragmento quepa -- no va a caber
+   nunca --: exige que la pagina VI.P se sirva desde el TEMA. Si alguien
+   borrara templates/page.vi-p.json o la seccion, volveriamos a la unica ruta
+   que no funciona. */
+check('El hub VI.P se sirve desde el tema, no pegado en una pagina', () => {
+  const bad = [];
+  const plantilla = T + '/templates/page.vi-p.json';
+  if (!fs.existsSync(plantilla)) {
+    bad.push('falta templates/page.vi-p.json: sin esa plantilla la pagina VI.P se queda en blanco y la unica alternativa (pegar el HTML) choca con el tope de 64 KB de Shopify');
+  } else {
+    let j = null;
+    try { j = JSON.parse(read(plantilla)); } catch (e) { bad.push('templates/page.vi-p.json no es JSON valido'); }
+    if (j && !JSON.stringify(j).includes('"vi-p"'))
+      bad.push('templates/page.vi-p.json no monta la seccion vi-p');
+  }
+  if (!fs.existsSync(T + '/sections/vi-p.liquid'))
+    bad.push('falta sections/vi-p.liquid');
+
+  /* Y que el fragmento para pegar siga avisando de su tamano, para que nadie
+     pierda una tarde intentando guardarlo. */
+  const frag = 'hub/villuminations-vi-p.html';
+  if (fs.existsSync(frag)) {
+    const kb = Math.round(fs.statSync(frag).size / 1024);
+    const txt = fs.readFileSync(frag, 'utf8').slice(0, 4000);
+    if (kb > 64 && !/64 ?KB|64 kilobytes/.test(txt))
+      bad.push(`${frag} pesa ${kb} KB y su cabecera no avisa del tope de 64 KB de una pagina de Shopify`);
+  }
+  return bad;
+});
+
 /* ---------------- informe ---------------- */
 let fails = 0;
 console.log('');

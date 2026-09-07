@@ -34,3 +34,8 @@ verificadores/**/.pagina-de-prueba*.html
 
 # Copia del hub tal y como estaba publicado antes de la revision (referencia)
 hub/respaldo-*.html
+
+# Arbol de montaje del empaquetador: theme/ minificado, del que sale el zip.
+# Se borra al terminar, pero si el empaquetador esta a medias o se corta, queda
+# ahi -- y no es codigo fuente, es una copia derivada.
+.paquete/

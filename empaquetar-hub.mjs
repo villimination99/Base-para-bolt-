@@ -49,12 +49,24 @@ const cuerpo = h.slice(iB, fB).trim();
 
 const frag = `<!-- ===================================================================
      VILLUMINATIONS · VI.P
-     Pensado para pegarse DENTRO de una pagina de Shopify (Contenido ->
-     Paginas -> "<>" Mostrar HTML). Empieza directamente por el estilo y el
-     marcado: NO trae las etiquetas de documento (doctype, la raiz, la
-     cabecera ni el cuerpo), porque la tienda ya las pone y repetirlas rompe
-     la pagina.
-     Todo el CSS cuelga de #vill-hub para no tocar el tema.
+
+     ESTO NO SE PEGA EN UNA PAGINA DE SHOPIFY. Ya no, y no por gusto: el
+     cuerpo de una pagina tiene un tope DURO de 64 KB -- el de una celda TEXT
+     de MySQL, que la propia documentacion de Shopify explica en
+     "Fix can't be larger than 64 kilobytes errors" -- y esto son mas de 500.
+     Se pega, parece que va, y al Guardar no guarda nada. No es un fallo de
+     compatibilidad ni una etiqueta mal cerrada: no cabe.
+
+     La salida es la que receta Shopify en esa misma pagina y la que usa la
+     tienda desde la version 4.53.0: una PLANTILLA DE PAGINA que arma el
+     contenido desde el tema. En Shopify: Contenido -> Paginas -> VI.P, y en
+     "Plantilla de tema" se elige "page.vi-p". El cuerpo de la pagina se deja
+     VACIO. El tema pone el resto, y ademas lo sirve en archivos que el
+     navegador cachea, en vez de medio megabyte de HTML en cada visita.
+
+     Este archivo se conserva por dos razones: es la copia de seguridad
+     legible del hub entero, y sirve para abrirlo en un navegador sin tienda
+     (hub/villuminations-vi-p-autonomo.html hace justo eso).
      =================================================================== -->
 ${estilo}
 ${cuerpo}
@@ -70,7 +82,7 @@ if ((frag.match(/<h1/gi) || []).length > 1) fallos.push('mas de un <h1>: parte l
 if (fallos.length) { console.error('  NO se escribe nada:'); fallos.forEach(f => console.error('   - ' + f)); process.exit(1); }
 
 fs.writeFileSync('hub/villuminations-vi-p.html', frag);
-console.log('  hub/villuminations-vi-p.html          ' + (frag.length / 1024).toFixed(0) + ' KB   (para pegar en la pagina)');
+console.log('  hub/villuminations-vi-p.html          ' + (frag.length / 1024).toFixed(0) + ' KB   (copia legible / respaldo)');
 
 const suelta = `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">

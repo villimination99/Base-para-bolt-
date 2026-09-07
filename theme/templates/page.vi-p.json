@@ -2,7 +2,9 @@
   "sections": {
     "hub": {
       "type": "vi-p",
-      "settings": {}
+      "settings": {
+        "coleccion_equipo": "equipo"
+      }
     }
   },
   "order": [
