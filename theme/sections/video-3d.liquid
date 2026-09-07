@@ -191,6 +191,13 @@
                    loading="lazy" decoding="async">
             {%- elsif portada_url != blank -%}
               {%- comment -%}
+                El aviso a los servidores de la miniatura va aqui dentro, en la
+                rama que de verdad pide una imagen a YouTube. Si la portada es
+                del comerciante o el video es de Vimeo o esta subido a Shopify,
+                esta rama no se ejecuta y la tienda no habla con Google.
+              {%- endcomment -%}
+              <link rel="preconnect" href="https://i.ytimg.com">
+              {%- comment -%}
                 Miniatura de YouTube. Sale de i.ytimg.com, no del CDN de
                 Shopify, asi que theme-check avisa de RemoteAsset: es
                 inevitable y ya pasa con el carrusel de videos.

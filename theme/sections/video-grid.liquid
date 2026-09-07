@@ -6,6 +6,14 @@
       {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
     </div>
 
+    {%- comment -%}
+      El aviso a los servidores de las miniaturas, aqui y no en el layout: solo
+      lo pagan las paginas que de verdad enseñan videos. Sin crossorigin, que
+      es lo que hace que la conexion la reutilicen las <img>.
+    {%- endcomment -%}
+    <link rel="preconnect" href="https://i.ytimg.com">
+    <link rel="dns-prefetch" href="https://www.youtube.com">
+
     <div class="carousel video-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
       <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
       <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">

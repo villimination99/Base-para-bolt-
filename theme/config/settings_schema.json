@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.53.2",
+    "theme_version": "4.54.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -935,7 +935,7 @@
         "type": "text",
         "id": "seo_ship_country",
         "label": "Pais principal de envio (codigo ISO)",
-        "info": "Dos letras, por ejemplo FR, ES o US. Vacio = no se declara nada de envio."
+        "info": "Dos letras, por ejemplo CA, FR o US. Vacio = no se declara nada de envio, y para esta tienda eso es lo correcto por ahora. Ojo con rellenarlo: aqui solo cabe UN pais, y en los datos estructurados eso se lee como el destino al que llega la oferta. Esta tienda envia a Canada, Estados Unidos y unos doscientos paises mas, asi que poner CA a secas estrecharia la verdad en vez de mejorarla. Tiene sentido rellenarlo el dia que exista un envio con un precio fijo declarable para ese pais."
       },
       {
         "type": "range",

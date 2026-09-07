@@ -116,7 +116,7 @@ export function adelgazarFragmento(html, cuenta = {}) {
         minify: true,
         target: esModulo ? 'es2020' : 'es2017',
         format: esModulo ? 'esm' : undefined,
-        legalComments: 'none',
+        legalComments: 'inline',   // las licencias de terceros viajan con el codigo
       });
       req('acorn').Parser.parse(r.code, {
         ecmaVersion: esModulo ? 2020 : 2017,

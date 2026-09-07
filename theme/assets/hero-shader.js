@@ -1,3 +1,10 @@
+/*! @license
+ * El shader GLSL de este archivo es una adaptacion de Paper Shaders
+ * (Pulsing Border), https://shaders.paper.design/pulsing-border
+ * Licencia Apache-2.0. Este aviso viaja con el codigo porque la licencia lo
+ * exige, y por eso empieza por /*! : es la marca que hace que el minificador
+ * lo respete en vez de borrarlo con los demas comentarios.
+ */
 /* VILLUMINATION 3D — Fondo de shader "borde pulsante" para el hero.
    WebGL puro, sin dependencias ni framework.
 

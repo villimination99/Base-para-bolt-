@@ -884,6 +884,39 @@
     try { quotes = JSON.parse(listEl.textContent).map(function (q) { return q.trim(); }).filter(Boolean); } catch (e) { return; }
     if (quotes.length < 2) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    /* SE RESERVA EL ALTO DE LA FRASE MAS LARGA ANTES DE EMPEZAR A ROTAR.
+
+       Sin esto, cada cinco segundos la pagina daba un salto: las frases no
+       miden lo mismo, una ocupa una linea y la siguiente dos, y al cambiarlas
+       todo lo que hay debajo se movia. Google lo mide (CLS) y lo mide durante
+       TODA la vida de la pagina, no solo al cargar, asi que un carrusel de
+       frases sin alto reservado va sumando saltos mientras la pestaña siga
+       abierta. Medido en la bateria de paginas: aparecia en nueve de las doce
+       plantillas de la tienda, porque el pie esta en todas.
+
+       Se miden las frases de verdad, no se estima: se ponen una a una, se
+       apunta el alto y se deja el mayor. Y se vuelve a medir si cambia el
+       ancho de la ventana, porque al girar el movil una frase de una linea
+       pasa a dos. */
+    var medir = function () {
+      var original = textEl.textContent;
+      textEl.style.minHeight = '';
+      var alto = 0;
+      for (var k = 0; k < quotes.length; k++) {
+        textEl.textContent = quotes[k];
+        if (textEl.offsetHeight > alto) alto = textEl.offsetHeight;
+      }
+      textEl.textContent = original;
+      if (alto) textEl.style.minHeight = alto + 'px';
+    };
+    medir();
+    var reMedir = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(reMedir);
+      reMedir = setTimeout(medir, 200);
+    }, { passive: true });
+
     var i = 0;
     setInterval(function () {
       i = (i + 1) % quotes.length;

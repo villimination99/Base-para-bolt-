@@ -70,7 +70,7 @@ const r = await esbuild.build({
      el WebGL. */
   target: ['es2020'],
   minify: true,
-  legalComments: 'none',
+  legalComments: 'eof',   // el aviso MIT de three.js viaja con el codigo
   write: false,
   banner: { js: '/* Villumination 3D - mapa muscular. Generado por construir-3d.mjs a partir de fuente/vi-p-3d.js.\n   Incluye three.js 0.160.0 (MIT, (c) 2010-2024 three.js authors) y sus complementos.\n   No editar aqui: se sobreescribe. */' }
 });
@@ -110,7 +110,11 @@ const rc = await esbuild.build({
      porque el archivo ya no vive en un CDN: mientras Chart.js venia de
      jsdelivr, su sintaxis no la miraba nadie. Cuesta 1 KB mas. */
   target: ['es2017'],
-  minify: true, legalComments: 'none', write: false,
+  minify: true, write: false,
+  /* legalComments 'eof': three.js y Chart.js son MIT y su aviso de copyright
+     tiene que viajar con el codigo distribuido. Con 'none' se borraba. Se
+     agrupan al final del archivo para no estorbar al principio. */
+  legalComments: 'eof',
   banner: { js: '/* Villumination 3D - graficas. Generado por construir-3d.mjs a partir de fuente/vi-p-chart.js.\n   Incluye Chart.js 4.4.0 (MIT, (c) 2014-2024 Chart.js Contributors), recortado a doughnut y bar.\n   No editar aqui: se sobreescribe. */' }
 });
 const cjs = rc.outputFiles[0].text;

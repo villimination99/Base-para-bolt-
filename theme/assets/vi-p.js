@@ -34,9 +34,15 @@
       return;
     }
     var m = e && e.message ? e.message : '';
-    if (/Script error/i.test(m) && !e.filename) {
-      console.warn(TAG + ' "Script error." = un script de otro dominio falló y el navegador ' +
-        'oculta el detalle por CORS. No proviene del código de esta página.');
+    /* Fallo enmascarado por CORS. Antes esto solo reconocía el texto
+       "Script error.", y se dejaba fuera el caso más común: el navegador
+       manda el aviso SIN mensaje y SIN archivo. Resultado, una línea roja en
+       la consola de cualquier visitante con un bloqueador que corte el CDN,
+       culpando a esta página de algo que no es suyo. Sin mensaje y sin
+       archivo no hay nada que depurar aquí: es de fuera. */
+    if ((!m || /Script error/i.test(m)) && !e.filename) {
+      console.warn(TAG + ' un script de otro dominio falló y el navegador oculta el detalle ' +
+        'por CORS. No proviene del código de esta página; el resto sigue funcionando.');
       return;
     }
     console.error(TAG + ' error:', m, '@', (e.filename || '?') + ':' + (e.lineno || 0) + ':' + (e.colno || 0),
@@ -169,21 +175,38 @@
        El evento de scroll, en cambio, no se pierde ninguno. Asi que ahi se
        apunta hasta donde se ha llegado, que es un par de restas, y el trabajo
        con el DOM se queda donde debe estar: en el fotograma. */
+    /* Y SI NO HAY FOTOGRAMAS, SE BARRE IGUAL.
+
+       requestAnimationFrame es lo correcto mientras el equipo va sobrado: el
+       trabajo con el DOM se hace en el momento de pintar. Pero es justo lo que
+       falla cuando hace falta: con el mapa 3D montandose al lado, los
+       fotogramas se racionan, y una red de seguridad que depende de que haya
+       fotogramas no es una red de seguridad. Reproducido a mano sobre el tema
+       minificado: unas veces entraban los 59 elementos y otras 56, y los que
+       faltaban eran siempre los tres ultimos de la pagina.
+
+       Asi que si han pasado mas de 250 ms desde el ultimo barrido, se barre en
+       el acto, sin esperar a pintar. Cuesta unas cuantas lecturas de posicion
+       -- barato -- y convierte "casi siempre entra" en "entra". */
+    var ultimoBarrido = 0;
     function anotar() {
       var alto = window.innerHeight || 800;
       var y = window.pageYOffset || document.documentElement.scrollTop || 0;
       if (y + alto > masLejos) masLejos = y + alto;
+      var ahora = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (ahora - ultimoBarrido > 250) { ultimoBarrido = ahora; barrer(); return; }
       pedirBarrido();
     }
     window.addEventListener('scroll', anotar, { passive: true });
     window.addEventListener('resize', anotar, { passive: true });
     var vueltas = 0;
-    /* Treinta segundos, no quince: en un movil flojo el mapa 3D puede tardar
+    /* Un minuto, no quince segundos: en un movil flojo el mapa 3D puede tardar
        veinte en montarse, y hasta entonces los fotogramas van racionados. El
-       reloj se para solo en cuanto no queda nadie por entrar, asi que alargarlo
-       no cuesta nada en el caso normal. */
+       reloj se para SOLO en cuanto no queda nadie por entrar, asi que en el
+       caso normal termina en el primer segundo y alargarlo no cuesta nada. El
+       tope existe para no dejar un intervalo vivo para siempre. */
     var reloj = setInterval(function () {
-      if (barrer() === 0 || ++vueltas > 60) clearInterval(reloj);
+      if (barrer() === 0 || ++vueltas > 120) clearInterval(reloj);
     }, 500);
   }
 
@@ -1820,6 +1843,42 @@
     var el = document.getElementById('hero-motto');
     if (!el) return;
     var mi = Math.floor(Math.random() * MOTTOS.es.length);
+
+    /* SE RESERVA EL ALTO DE LA FRASE MAS LARGA.
+
+       Sin esto, cada seis segundos la pagina daba un salto: las frases no
+       miden lo mismo, una ocupa una linea y la siguiente dos, y al cambiarlas
+       se movia el heroe entero y con el los botones, las cifras y todo lo que
+       viene debajo. Google lo mide (CLS) y lo mide durante TODA la vida de la
+       pagina: medido en la bateria de paginas, VI.P llegaba a 0,104 cuando el
+       limite de "bueno" es 0,1. Era el unico sitio de la tienda que lo pasaba.
+
+       Se miden las frases de verdad, no se estima. Y se vuelve a medir en tres
+       momentos, que son los tres que pueden cambiar cuanto ocupa un texto:
+       cuando termina de cargar la tipografia, cuando cambia el ancho de la
+       ventana y cuando se cambia de idioma -- una frase en frances no mide lo
+       que la misma en espanol. */
+    function medirMotto() {
+      var arr = MOTTOS[CUR_LANG] || MOTTOS.es;
+      var original = el.textContent;
+      el.style.minHeight = '';
+      var alto = 0;
+      for (var k = 0; k < arr.length; k++) {
+        el.textContent = '\uD83D\uDCAC ' + arr[k];
+        if (el.offsetHeight > alto) alto = el.offsetHeight;
+      }
+      el.textContent = original;
+      if (alto) el.style.minHeight = alto + 'px';
+    }
+    el.__medir = medirMotto;      // applyLang lo llama al cambiar de idioma
+    medirMotto();
+    try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(medirMotto); } catch (e) {}
+    var reMotto = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(reMotto);
+      reMotto = setTimeout(medirMotto, 200);
+    }, { passive: true });
+
     function next() {
       el.classList.add('fade');
       setTimeout(function() {
@@ -2449,7 +2508,13 @@
       note.textContent = TX(D.note);
     } else if (note) { note.parentNode.removeChild(note); }
     var m = document.getElementById('hero-motto');
-    if (m) m.textContent = '💬 ' + (MOTTOS[l] || MOTTOS.es)[0];
+    if (m) {
+      m.textContent = '💬 ' + (MOTTOS[l] || MOTTOS.es)[0];
+      /* El alto reservado se recalcula con las frases del idioma nuevo: las
+         francesas son mas largas que las espanolas y con la reserva vieja
+         volveria el salto. */
+      if (m.__medir) m.__medir();
+    }
   }
   (function initLang() {
     var pill = document.getElementById('lang-switch');

@@ -50,9 +50,25 @@
 
   {%- render 'brand-font' -%}
 
-  {%- comment -%} Acelera miniaturas de video (YouTube) sin bloquear el render {%- endcomment -%}
-  <link rel="preconnect" href="https://i.ytimg.com" crossorigin>
-  <link rel="dns-prefetch" href="https://www.youtube.com">
+  {%- comment -%}
+    AQUI YA NO SE AVISA A YOUTUBE. Estas dos lineas abrian conexion con los
+    servidores de Google en TODAS las paginas de la tienda -- una ficha de
+    producto, el carrito, el buscador -- aunque no hubiera un solo video. Eso
+    es trabajo que nadie aprovecha y, sobre todo, es contarle a Google que
+    alguien esta mirando una pagina que no tiene nada que ver con YouTube.
+
+    Ademas la de i.ytimg.com llevaba crossorigin, y ahi no servia de nada: una
+    conexion "crossorigin" solo la reutilizan las peticiones con CORS (fuentes,
+    fetch), y las miniaturas son <img> normales, que usan OTRA conexion. Se
+    abria una conexion y luego se abria la buena.
+
+    Ahora el aviso lo da la propia seccion de video, junto a las miniaturas y
+    solo cuando de verdad hay un video de YouTube que enseñar. Un <link
+    rel="preconnect"> dentro del cuerpo es valido y lo respetan todos los
+    navegadores modernos; llega justo cuando hace falta, no cinco secciones
+    antes. Y si manana se anade una seccion de video a otra pagina, el aviso va
+    con ella sin que nadie tenga que acordarse de tocar este archivo.
+  {%- endcomment -%}
 
   {%- assign body_font = settings.font_body -%}
   {%- assign heading_font = settings.font_heading -%}

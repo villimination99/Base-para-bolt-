@@ -91,7 +91,13 @@ if (!esbuild) {
     if (YA_MINIFICADOS.includes(f)) continue;
     const ruta = path.join(TMP, 'assets', f);
     const src = fs.readFileSync(ruta, 'utf8');
-    const r = esbuild.transformSync(src, { minify: true, target: 'es2017', legalComments: 'none' });
+    /* legalComments 'inline' y no 'none': el zip que se sube a Shopify es una
+       COPIA DISTRIBUIDA, y three.js y Chart.js son MIT, mientras que el shader
+       del hero es una adaptacion de Paper Shaders (Apache-2.0). Las tres
+       licencias exigen que el aviso de copyright viaje con el codigo. Con
+       'none' se borraba, y lo que se subia a la tienda no cumplia. Cuestan
+       unos cientos de bytes. */
+    const r = esbuild.transformSync(src, { minify: true, target: 'es2017', legalComments: 'inline' });
     /* Si la salida no parsea al suelo del tema, se deja el original: mas
        vale un archivo grande que un archivo que no arranca. */
     try { req('acorn').Parser.parse(r.code, { ecmaVersion: 2017, sourceType: 'script' }); }
@@ -124,7 +130,14 @@ const BATERIAS = [
   ['verificadores/lienzos/comprobar.mjs', 'los lienzos animados pintan'],
   ['verificadores/plataformas/comprobar.mjs', 'sintaxis en motores viejos'],
   ['verificadores/acceso/comprobar.mjs', 'accesibilidad WCAG 2.1 AA'],
-  ['verificadores/lcp/comprobar.mjs', 'la portada se pinta a tiempo (LCP)']
+  ['verificadores/lcp/comprobar.mjs', 'la portada se pinta a tiempo (LCP)'],
+  /* Y las DOCE plantillas, no solo la portada. Una tienda no se entra por la
+     portada: se entra por la ficha de producto que salio en Google o por la
+     coleccion que alguien compartio. Esta bateria las monta todas y mide en
+     cada una el LCP, el CLS -- cuanto salta la pagina, que es de los tres
+     numeros con los que Google ordena y que aqui no se medía en ningun sitio
+     -- los errores de JavaScript y los desbordes laterales. */
+  ['verificadores/paginas/comprobar.mjs', 'las doce plantillas cargan bien (LCP y CLS)']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');
