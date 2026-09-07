@@ -36,18 +36,35 @@
       donde los bancos de imagenes y los generadores estampan su marca. El
       comerciante puede subir la foto tal cual, sin recortarla antes.
 
-      Se carga sin prioridad y la secuencia NO la espera: el lienzo empieza a
-      pintar igual desde el primer fotograma, y si la foto tarda o no llega,
-      la intro sigue siendo exactamente la de antes.
+      La secuencia NO la espera: el lienzo empieza a pintar igual desde el
+      primer fotograma, y si la foto tarda o no llega, la intro sigue siendo
+      exactamente la de antes.
+
+      SE PEDIA EN PNG Y HASTA 1400 px, y eso eran megabytes por visita. El
+      original es de 1536x2752 y 5,9 MB; un movil con pantalla de densidad 3
+      elegia la variante de 1400 y el CDN le mandaba del orden de 3 MB, la
+      descarga mas grande de toda la portada, y encima con prioridad, o sea
+      quitandole ancho de banda a la hoja de estilos y al guion de la intro.
+
+      Ahora se pide en pjpg -- JPEG progresivo, que ademas se pinta en pasadas,
+      asi que la primera llega antes -- y el srcset se corta en 900 px. La foto
+      va al 54 % de opacidad, debajo de una vineta oscura y con un zoom lento
+      del 130 %: a 900 px no se distingue de la de 1400, y pesa del orden de
+      diez veces menos. Prioridad alta porque es lo primero que se ve.
+
+      No es el elemento que Google mide: Chrome descarta como candidata a LCP
+      cualquier imagen que cubra la ventana entera, la trata como fondo. Se
+      comprobo a mano. Lo que se gana aqui es red, que en un movil con datos es
+      lo que de verdad se nota.
     {%- endcomment -%}
     <div class="splash-escena" aria-hidden="true">
       <img class="splash-escena-img" data-splash-escena
-           src="{{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }}"
-           srcset="{{ settings.splash_fondo | image_url: width: 640, height: 1013, crop: 'top' }} 640w,
-                   {{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top' }} 900w,
-                   {{ settings.splash_fondo | image_url: width: 1400, height: 2217, crop: 'top' }} 1400w"
+           src="{{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top', format: 'pjpg' }}"
+           srcset="{{ settings.splash_fondo | image_url: width: 480, height: 760, crop: 'top', format: 'pjpg' }} 480w,
+                   {{ settings.splash_fondo | image_url: width: 720, height: 1140, crop: 'top', format: 'pjpg' }} 720w,
+                   {{ settings.splash_fondo | image_url: width: 900, height: 1425, crop: 'top', format: 'pjpg' }} 900w"
            sizes="100vw" width="900" height="1425"
-           alt="" loading="eager" decoding="async">
+           alt="" loading="eager" fetchpriority="high" decoding="async">
     </div>
   {%- endif -%}
   <canvas id="splash-canvas" class="splash-canvas" aria-hidden="true"></canvas>

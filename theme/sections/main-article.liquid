@@ -31,10 +31,10 @@
             height="800" estaba fijo: con imágenes que no fueran 1400x800 el
             navegador reservaba un alto equivocado y la página saltaba (CLS).
           {%- endcomment -%}
-          <img src="{{ article.image | image_url: width: 1400 }}"
-               srcset="{{ article.image | image_url: width: 600 }} 600w,
-                       {{ article.image | image_url: width: 900 }} 900w,
-                       {{ article.image | image_url: width: 1400 }} 1400w"
+          <img src="{{ article.image | image_url: width: 1400, format: 'pjpg' }}"
+               srcset="{{ article.image | image_url: width: 600, format: 'pjpg' }} 600w,
+                       {{ article.image | image_url: width: 900, format: 'pjpg' }} 900w,
+                       {{ article.image | image_url: width: 1400, format: 'pjpg' }} 1400w"
                sizes="(min-width: 1000px) 900px, 100vw"
                alt="{{ article.title | escape }}"
                width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}" loading="eager">

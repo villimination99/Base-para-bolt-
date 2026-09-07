@@ -99,10 +99,29 @@ await p.evaluate(() => window.scrollTo(0, 0));
 const anim = await p.evaluate(async () => {
   const raiz = document.getElementById('vill-hub');
   const marcados = raiz.querySelectorAll('.vp-ent').length;
-  /* Se recorre la pagina entera despacio para que el observador dispare */
-  for (let y = 0; y < document.body.scrollHeight; y += 500) {
-    window.scrollTo(0, y);
-    await new Promise(r => setTimeout(r, 45));
+  /* SE BAJA HASTA EL FONDO DE VERDAD, y esta vez comprobandolo.
+
+     La version anterior hacia un for de 500 en 500 hasta
+     document.body.scrollHeight, leido al empezar cada vuelta. Parece
+     equivalente y no lo es: la pagina CRECE mientras se recorre -- se montan
+     las graficas, el lienzo del mapa toma su alto, entran imagenes -- y el
+     bucle terminaba en el fondo de hace un momento, no en el de ahora. De ahi
+     que la misma bateria diera 59, luego 58 y luego 50 sin que nadie tocara
+     nada: no fallaba el hub, fallaba el cronometro.
+
+     Que un elemento al que NO se ha bajado siga escondido es lo correcto: es
+     una entrada al hacer scroll, no un adorno. Lo que hay que garantizar es
+     que se le baje. Asi que se avanza hasta tocar fondo y se sigue avanzando
+     mientras el fondo se mueva. */
+  const duerme = ms => new Promise(r => setTimeout(r, ms));
+  let anterior = -1;
+  for (let paso = 0; paso < 300; paso++) {
+    window.scrollTo(0, window.scrollY + 400);
+    await duerme(55);
+    const fondo = document.documentElement.scrollHeight;
+    const alFondo = window.scrollY + window.innerHeight >= fondo - 2;
+    if (alFondo && window.scrollY === anterior) break;
+    anterior = window.scrollY;
   }
   window.scrollTo(0, 0);
   /* Se espera a que las transiciones TERMINEN antes de contar los opacos.
@@ -110,7 +129,15 @@ const anim = await p.evaluate(async () => {
      faltaban estaban a mitad de su propia transicion, que dura 620 ms mas
      hasta 320 de retardo escalonado. Medir una animacion antes de que acabe
      y llamarlo fallo es culpar al producto del cronometro. */
-  const vistos = raiz.querySelectorAll('.vp-ent.vp-visto').length;
+  let vistos = raiz.querySelectorAll('.vp-ent.vp-visto').length;
+  for (let i = 0; i < 20 && vistos < marcados; i++) {
+    await new Promise(r => setTimeout(r, 150));
+    vistos = raiz.querySelectorAll('.vp-ent.vp-visto').length;
+  }
+  const faltan = [...raiz.querySelectorAll('.vp-ent:not(.vp-visto)')].map(e => {
+    const r2 = e.getBoundingClientRect();
+    return (e.tagName + '.' + (e.className || '').slice(0, 40)) + ' top=' + Math.round(r2.top + scrollY) + ' h=' + Math.round(r2.height);
+  });
   const cuentaOpacos = () => {
     let k = 0;
     raiz.querySelectorAll('.vp-ent.vp-visto').forEach(e => {
@@ -125,7 +152,7 @@ const anim = await p.evaluate(async () => {
     await new Promise(r => setTimeout(r, 150));
   }
   const cifras = [...raiz.querySelectorAll('.hero-stat strong')].map(e => e.textContent.trim());
-  return { marcados, vistos, opacos, cifras };
+  return { marcados, vistos, opacos, cifras, faltan };
 });
 
 const r = await p.evaluate(() => ({
@@ -175,6 +202,7 @@ decir(anim.marcados >= 30, `las secciones reparten la entrada (${anim.marcados} 
   await ctxSinJs.close();
 }
 decir(anim.vistos === anim.marcados, `todos entran al acercarse (${anim.vistos} de ${anim.marcados})`);
+if (anim.faltan && anim.faltan.length) for (const x of anim.faltan) console.log('        sin entrar: ' + x);
 decir(anim.opacos === anim.vistos, `y quedan visibles de verdad, no solo con la clase (${anim.opacos})`);
 decir(anim.cifras.every(c => /^\d+$/.test(c)), `las cifras del hero terminan en su numero: ${anim.cifras.join(', ')}`);
 decir(perezoso, `al abrir la pagina NO se bajan el mapa 3D ni las graficas (684 KB, 190 KB por la red) -- llegan al acercarse`);

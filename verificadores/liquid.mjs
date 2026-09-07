@@ -75,7 +75,25 @@ export const ctxBase = {
 export const e = new Liquid({ root: [T + '/snippets', T], extname: '.liquid',
                        strictFilters: false, strictVariables: false });
 const F = {
-  image_url: () => '//cdn/x.png', money: v => '$' + (Number(v) / 100).toFixed(2),
+  /* image_url devolvia SIEMPRE la misma URL sin mirar los argumentos, y eso
+     dejo ciego al medidor de LCP durante meses: no habia forma de saber que
+     ancho ni que formato pedia cada plantilla, asi que la bateria acabo
+     borrando los <img> para poder medir algo. Medir la portada sin sus
+     imagenes es medir otra portada. Ahora la URL lleva lo que se pidio, que es
+     justo lo que hace Shopify, y quien mida puede servir una foto del peso que
+     de verdad viajaria. */
+  image_url: (v, ...a) => {
+    const o = Object.fromEntries(a.filter(x => Array.isArray(x)));
+    /* De donde sale la foto, no solo que tamano se pide: sin el origen no se
+       puede saber ni su proporcion ni lo que pesa. Los ajustes del comerciante
+       llegan como 'shopify://shop_images/nombre.png'. */
+    const src = typeof v === 'string' ? v.split('/').pop().split('?')[0] : 'generica';
+    const q = ['width', 'height', 'crop', 'format']
+      .filter(k => o[k] != null).map(k => k + '=' + encodeURIComponent(o[k]));
+    q.unshift('src=' + encodeURIComponent(src));
+    return '//cdn/foto.png?' + q.join('&');
+  },
+  money: v => '$' + (Number(v) / 100).toFixed(2),
   money_without_currency: v => (Number(v) / 100).toFixed(2), money_with_currency: v => '$' + v,
   t: v => String(v), json: v => JSON.stringify(v === undefined ? null : v),
   asset_url: v => '//cdn/' + v, asset_img_url: () => '//cdn/x.png', file_url: v => '//cdn/' + v,

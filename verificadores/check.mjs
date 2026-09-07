@@ -1314,6 +1314,25 @@ check('Imagenes bien servidas', () => {
         bad.push(`${f}:${ln} <img> de ${mostrado}px sin srcset: el movil descarga el mismo archivo que un monitor`);
       if (pedido && mostrado && pedido > mostrado * 3)
         bad.push(`${f}:${ln} <img> pide ${pedido}px para mostrar ${mostrado}px, mas del triple`);
+
+      /* A SANGRE Y EN PNG, NO. Esta regla nace de un fallo que costo el LCP de
+         la portada durante meses y que ninguna bateria veia, porque la que
+         medía el LCP borraba los <img> para poder funcionar sin CDN.
+
+         Una imagen que ocupa el ancho entero (sizes con 100vw) es, casi
+         siempre, el elemento que Google cronometra. El CDN de Shopify reescala
+         pero NO cambia de formato: si la plantilla no pide nada, una foto
+         subida en PNG se sirve en PNG. Aqui eso eran 1,2 MB por visita para la
+         foto del gimnasio y 375 KB para la portada de un video, contra 40 y 56
+         en pjpg -- la misma imagen, indistinguible en pantalla.
+
+         Se exige solo a las imagenes a sangre Y DECORATIVAS (alt vacio), que
+         es la firma exacta de "foto de fondo": la de la intro, la de la
+         portada, la del banner. Una imagen de producto tambien llega a 100vw
+         en movil, pero lleva alt de verdad y puede tener transparencia, y
+         pasarla a JPEG le pondria un fondo blanco encima de un tema oscuro. */
+      if (/sizes="[^"]*100vw/.test(t) && /\balt=""/.test(t) && /image_url/.test(t) && !/format:\s*'pjpg'/.test(t))
+        bad.push(`${f}:${ln} <img> de fondo a sangre (100vw, alt vacio) sin format: 'pjpg': una foto en PNG a ese ancho son megabytes`);
     }
   }
   return bad;

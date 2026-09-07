@@ -222,15 +222,28 @@
     bien en una captura y penaliza cada ficha de producto -- mas peso que
     descargar y menos contraste donde estan el precio y el boton de comprar --,
     que es justo donde se vende. El resto del sitio se queda con el color.
+
+    SE PIDE EXACTAMENTE IGUAL QUE LA FOTO DE LA INTRO, y no es casualidad: casi
+    siempre el comerciante pone la misma imagen en las dos. Con dos recortes
+    distintos el navegador se bajaba la foto DOS VECES; pidiendola con los
+    mismos parametros, la URL es la misma y la segunda sale de la cache sin
+    tocar la red. Si pone fotos distintas no se pierde nada, cada una va por su
+    lado como siempre.
+
+    pjpg y tope de 900 px por la misma razon que en la intro: esta foto ocupa
+    la pantalla entera y por tanto es candidata a LCP. Va al 30 % de opacidad
+    detras de dos degradados, asi que 900 px sobran y un PNG de 1800 px era
+    regalar megabytes. Sigue en lazy a proposito: no queremos que se adelante
+    a la de la intro, que es la que se ve.
   {%- endcomment -%}
   {%- if request.page_type == 'index' and settings.portada_sala != blank -%}
     <div class="sala-portada" aria-hidden="true">
       <img class="sala-portada-img"
-           src="{{ settings.portada_sala | image_url: width: 1200, height: 1900, crop: 'top' }}"
-           srcset="{{ settings.portada_sala | image_url: width: 750, height: 1188, crop: 'top' }} 750w,
-                   {{ settings.portada_sala | image_url: width: 1200, height: 1900, crop: 'top' }} 1200w,
-                   {{ settings.portada_sala | image_url: width: 1800, height: 2850, crop: 'top' }} 1800w"
-           sizes="100vw" width="1200" height="1900"
+           src="{{ settings.portada_sala | image_url: width: 900, height: 1425, crop: 'top', format: 'pjpg' }}"
+           srcset="{{ settings.portada_sala | image_url: width: 480, height: 760, crop: 'top', format: 'pjpg' }} 480w,
+                   {{ settings.portada_sala | image_url: width: 720, height: 1140, crop: 'top', format: 'pjpg' }} 720w,
+                   {{ settings.portada_sala | image_url: width: 900, height: 1425, crop: 'top', format: 'pjpg' }} 900w"
+           sizes="100vw" width="900" height="1425"
            alt="" loading="lazy" decoding="async">
     </div>
   {%- endif -%}

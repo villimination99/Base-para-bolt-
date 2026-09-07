@@ -154,7 +154,7 @@
                    {% if section.settings.autoplay %}autoplay{% endif %}
                    {% if section.settings.loop %}loop{% endif %}
                    {% if section.settings.controls %}controls{% endif %}
-                   {% if portada != blank %}poster="{{ portada | image_url: width: 1200 }}"{% endif %}
+                   {% if portada != blank %}poster="{{ portada | image_url: width: 900, format: 'pjpg' }}"{% endif %}
                    aria-label="{{ titulo | default: shop.name | escape }}">
               <source src="{{ archivo }}"{% if tipo != blank %} type="{{ tipo }}"{% endif %}>
             </video>
@@ -173,8 +173,17 @@
             {%- if portada != blank -%}
               <img class="video3d-portada"
                    data-v3d-portada
-                   src="{{ portada | image_url: width: 1200 }}"
-                   srcset="{{ portada | image_url: width: 600 }} 600w, {{ portada | image_url: width: 1200 }} 1200w, {{ portada | image_url: width: 1800 }} 1800w"
+                   {%- comment -%}
+                     pjpg y tope de 1200 px. Una portada de video es una foto:
+                     en PNG, y con la variante de 1800 que nadie necesita, esta
+                     sola pesaba 375 KB de los 500 que descarga la portada
+                     entera. En JPEG de calidad alta son cuarenta y pico. Y la
+                     de 1800 se quito porque ademas AGRANDABA el original -- la
+                     imagen subida tiene 1080 px de ancho --, o sea que pagaba
+                     el triple de bytes por pixeles inventados.
+                   {%- endcomment -%}
+                   src="{{ portada | image_url: width: 1200, format: 'pjpg' }}"
+                   srcset="{{ portada | image_url: width: 600, format: 'pjpg' }} 600w, {{ portada | image_url: width: 900, format: 'pjpg' }} 900w, {{ portada | image_url: width: 1200, format: 'pjpg' }} 1200w"
                    sizes="(max-width: 900px) 100vw, 1100px"
                    alt="{{ titulo | default: shop.name | escape }}"
                    width="1200"

@@ -156,11 +156,34 @@
       if (barrido) return;
       barrido = requestAnimationFrame(barrer);
     }
-    window.addEventListener('scroll', pedirBarrido, { passive: true });
-    window.addEventListener('resize', pedirBarrido, { passive: true });
+    /* LA MARCA SE APUNTA EN EL PROPIO EVENTO, no dentro del barrido.
+
+       Y esto era un fallo de verdad, medido: los cuatro ultimos elementos de
+       la pagina no entraban nunca. El barrido va con requestAnimationFrame,
+       que en un equipo cargado -- con el mapa 3D girando al lado -- se salta
+       fotogramas: si alguien recorre la pagina entera y vuelve arriba, puede
+       ocurrir que el UNICO barrido que llegue a ejecutarse sea el de despues,
+       ya con el scroll de vuelta en cero. Entonces masLejos vale 844 en vez de
+       13 000 y todo lo de abajo se queda invisible para siempre.
+
+       El evento de scroll, en cambio, no se pierde ninguno. Asi que ahi se
+       apunta hasta donde se ha llegado, que es un par de restas, y el trabajo
+       con el DOM se queda donde debe estar: en el fotograma. */
+    function anotar() {
+      var alto = window.innerHeight || 800;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (y + alto > masLejos) masLejos = y + alto;
+      pedirBarrido();
+    }
+    window.addEventListener('scroll', anotar, { passive: true });
+    window.addEventListener('resize', anotar, { passive: true });
     var vueltas = 0;
+    /* Treinta segundos, no quince: en un movil flojo el mapa 3D puede tardar
+       veinte en montarse, y hasta entonces los fotogramas van racionados. El
+       reloj se para solo en cuanto no queda nadie por entrar, asi que alargarlo
+       no cuesta nada en el caso normal. */
     var reloj = setInterval(function () {
-      if (barrer() === 0 || ++vueltas > 30) clearInterval(reloj);
+      if (barrer() === 0 || ++vueltas > 60) clearInterval(reloj);
     }, 500);
   }
 

@@ -46,10 +46,10 @@
         <a href="{{ lead.url }}" class="article-lead" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
           {%- if lead.image -%}
             <div class="article-lead-media">
-              <img src="{{ lead.image | image_url: width: 1400, height: 700, crop: 'center' }}"
-                   srcset="{{ lead.image | image_url: width: 600, height: 300, crop: 'center' }} 600w,
-                           {{ lead.image | image_url: width: 1000, height: 500, crop: 'center' }} 1000w,
-                           {{ lead.image | image_url: width: 1400, height: 700, crop: 'center' }} 1400w"
+              <img src="{{ lead.image | image_url: width: 1400, height: 700, crop: 'center', format: 'pjpg' }}"
+                   srcset="{{ lead.image | image_url: width: 600, height: 300, crop: 'center', format: 'pjpg' }} 600w,
+                           {{ lead.image | image_url: width: 1000, height: 500, crop: 'center', format: 'pjpg' }} 1000w,
+                           {{ lead.image | image_url: width: 1400, height: 700, crop: 'center', format: 'pjpg' }} 1400w"
                    sizes="100vw"
                    alt="{{ lead.title | escape }}" width="1400" height="700" loading="eager" fetchpriority="high">
             </div>
