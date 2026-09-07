@@ -21,55 +21,7 @@ const version = process.argv[2] ||
   JSON.parse(fs.readFileSync(path.join(TEMA, 'config/settings_schema.json'), 'utf8'))[0].theme_version;
 const SALIDA = path.join(RAIZ, `villumination-3d-theme-${version}.zip`);
 
-/* Quita comentarios de CSS respetando cadenas y url(). */
-function limpiarCss(css) {
-  let out = '';
-  let i = 0;
-  let comilla = null;   // ' o " cuando estamos dentro de una cadena
-  while (i < css.length) {
-    const c = css[i], d = css[i + 1];
-    if (comilla) {
-      out += c;
-      if (c === '\\') { out += css[i + 1] || ''; i += 2; continue; }
-      if (c === comilla) comilla = null;
-      i++;
-      continue;
-    }
-    if (c === '"' || c === "'") { comilla = c; out += c; i++; continue; }
-    if (c === '/' && d === '*') {
-      const fin = css.indexOf('*/', i + 2);
-      i = fin === -1 ? css.length : fin + 2;
-      continue;
-    }
-    out += c;
-    i++;
-  }
-  // Lineas en blanco y sangria que quedan tras quitar los comentarios
-  return out.replace(/\n[ \t]+/g, '\n').replace(/\n{2,}/g, '\n').trim() + '\n';
-}
-
-/* Comprobacion de seguridad. La primera version comparaba el CSS limpio con
-   el ORIGINAL y siempre fallaba, porque los comentarios contienen llaves y
-   selectores de ejemplo: se comparaban peras con manzanas.
-   Lo correcto es contrastar el recorrido caracter a caracter con un metodo
-   INDEPENDIENTE (una regex ingenua). Si dos formas distintas de quitar
-   comentarios dan exactamente los mismos selectores, la limpieza es fiable.
-   Ademas se exige que las llaves cuadren en el resultado. */
-function selectores(css) {
-  return (css.match(/[^{}]+(?=\{)/g) || [])
-    .map(x => x.replace(/\s+/g, ' ').trim())
-    .filter(Boolean);
-}
-
-function comprobar(original, limpio) {
-  const regexLimpio = original.replace(/\/\*[\s\S]*?\*\//g, '');
-  const a = selectores(limpio), b = selectores(regexLimpio);
-  return {
-    llavesCuadran: limpio.split('{').length === limpio.split('}').length,
-    mismosSelectores: a.length === b.length && a.every((x, i) => x === b[i]),
-    cuantos: a.length,
-  };
-}
+import { limpiarCss, comprobar } from './herramientas/adelgazar.mjs';
 
 const TMP = path.join(RAIZ, '.paquete');
 fs.rmSync(TMP, { recursive: true, force: true });

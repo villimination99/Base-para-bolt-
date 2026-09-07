@@ -1338,27 +1338,31 @@ check('Imagenes bien servidas', () => {
   return bad;
 });
 
-/* EL HUB NO CABE EN UNA PAGINA, Y ESO NO ES UNA OPINION.
+/* LAS DOS VIAS DEL HUB, Y EL TAMANO DE LA QUE SE PEGA.
 
-   El cuerpo de una pagina de Shopify tiene un tope DURO de 64 KB. No es una
-   decision de Shopify: es el limite de una celda TEXT de MySQL, y lo dice su
-   propia documentacion, que ademas receta exactamente la salida que usamos
-   aqui -- una plantilla de pagina alternativa que arma el contenido desde el
-   tema. https://shopify.dev/docs/storefronts/themes/troubleshooting/fix-64-kilobyte-limit-errors
+   CORRECCION DE UN ERROR MIO, escrita aqui para que no se repita: esta
+   comprobacion decia que el cuerpo de una pagina de Shopify topa en 64 KB,
+   citando un articulo suyo de solucion de problemas. Es falso para esta
+   tienda, y la prueba estaba en el propio repositorio:
+   hub/respaldo-vi-p-antes-de-4.43.0.html son 443 KB y estuvieron publicados
+   dentro de la pagina sin problema. Lo que dejo de guardarse fue la version
+   de 521 KB. El tope real esta entre esos dos numeros, no en 64 KB.
 
-   El hub son 514 KB: ocho veces el tope. Pegarlo en Contenido -> Paginas no
-   fallaba por un error de compatibilidad ni por una etiqueta mal cerrada;
-   fallaba porque no cabe, y el editor se limitaba a no guardar.
+   Asi que se vigilan dos cosas distintas:
 
-   Asi que esta comprobacion NO exige que el fragmento quepa -- no va a caber
-   nunca --: exige que la pagina VI.P se sirva desde el TEMA. Si alguien
-   borrara templates/page.vi-p.json o la seccion, volveriamos a la unica ruta
-   que no funciona. */
-check('El hub VI.P se sirve desde el tema, no pegado en una pagina', () => {
+   1. Que la via del tema siga existiendo. Es la que no tiene tope, porque no
+      pasa por el cuerpo de la pagina, y ademas sirve el hub en archivos que
+      el navegador cachea. Si alguien borra la plantilla o la seccion, la
+      unica salida que queda es la que tiene limite.
+   2. Que el fragmento para pegar quepa. empaquetar-hub.mjs lo adelgaza y se
+      niega a escribirlo si pasa del tope prudente; aqui se comprueba el
+      archivo que hay en disco, por si se genero con una version anterior de
+      la herramienta. */
+check('El hub VI.P: via del tema intacta y fragmento de tamano guardable', () => {
   const bad = [];
   const plantilla = T + '/templates/page.vi-p.json';
   if (!fs.existsSync(plantilla)) {
-    bad.push('falta templates/page.vi-p.json: sin esa plantilla la pagina VI.P se queda en blanco y la unica alternativa (pegar el HTML) choca con el tope de 64 KB de Shopify');
+    bad.push('falta templates/page.vi-p.json: sin esa plantilla la pagina VI.P se queda en blanco y solo queda la via que tiene tope de tamano');
   } else {
     let j = null;
     try { j = JSON.parse(read(plantilla)); } catch (e) { bad.push('templates/page.vi-p.json no es JSON valido'); }
@@ -1368,14 +1372,17 @@ check('El hub VI.P se sirve desde el tema, no pegado en una pagina', () => {
   if (!fs.existsSync(T + '/sections/vi-p.liquid'))
     bad.push('falta sections/vi-p.liquid');
 
-  /* Y que el fragmento para pegar siga avisando de su tamano, para que nadie
-     pierda una tarde intentando guardarlo. */
+  /* 443 KB es lo ultimo que se guardo de verdad en la pagina. Con un 5 % de
+     margen, el techo son 430 KB. */
   const frag = 'hub/villuminations-vi-p.html';
   if (fs.existsSync(frag)) {
-    const kb = Math.round(fs.statSync(frag).size / 1024);
-    const txt = fs.readFileSync(frag, 'utf8').slice(0, 4000);
-    if (kb > 64 && !/64 ?KB|64 kilobytes/.test(txt))
-      bad.push(`${frag} pesa ${kb} KB y su cabecera no avisa del tope de 64 KB de una pagina de Shopify`);
+    const bytes = fs.statSync(frag).size;
+    const TECHO = Math.round(453312 * 0.95);
+    if (bytes > TECHO)
+      bad.push(`${frag} pesa ${(bytes / 1024).toFixed(0)} KB y el techo medido es ${(TECHO / 1024).toFixed(0)} KB: la pagina de Shopify no lo guardara. Ejecuta node empaquetar-hub.mjs`);
+    const cabecera = fs.readFileSync(frag, 'utf8').slice(0, 3000);
+    if (!/443 KB/.test(cabecera))
+      bad.push(`${frag} no lleva en su cabecera de donde sale el tope de tamano`);
   }
   return bad;
 });

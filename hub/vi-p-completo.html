@@ -2006,9 +2006,15 @@
       return;
     }
     var m = e && e.message ? e.message : '';
-    if (/Script error/i.test(m) && !e.filename) {
-      console.warn(TAG + ' "Script error." = un script de otro dominio falló y el navegador ' +
-        'oculta el detalle por CORS. No proviene del código de esta página.');
+    /* Fallo enmascarado por CORS. Antes esto solo reconocía el texto
+       "Script error.", y se dejaba fuera el caso más común: el navegador
+       manda el aviso SIN mensaje y SIN archivo. Resultado, una línea roja en
+       la consola de cualquier visitante con un bloqueador que corte el CDN,
+       culpando a esta página de algo que no es suyo. Sin mensaje y sin
+       archivo no hay nada que depurar aquí: es de fuera. */
+    if ((!m || /Script error/i.test(m)) && !e.filename) {
+      console.warn(TAG + ' un script de otro dominio falló y el navegador oculta el detalle ' +
+        'por CORS. No proviene del código de esta página; el resto sigue funcionando.');
       return;
     }
     console.error(TAG + ' error:', m, '@', (e.filename || '?') + ':' + (e.lineno || 0) + ':' + (e.colno || 0),
