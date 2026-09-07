@@ -1132,6 +1132,41 @@
       #modal-content .mm-prod:hover, #vill-hub .mm-prod:hover { transform: none; }
     }
 
+    /* EL FOCO QUE SIGUE AL CURSOR.
+       Un circulo de luz muy suave bajo el puntero, dentro de la tarjeta. Es
+       el detalle que separa una tarjeta que reacciona de una que solo se
+       inclina: el ojo lee que hay una fuente de luz y que la tarjeta tiene
+       volumen.
+
+       Va en ::before y con mask/pointer-events:none para no tocar el
+       contenido ni robar clics. Y se dibuja con un degradado radial en
+       coordenadas que pone el JavaScript en dos variables -- una escritura
+       de CSS por fotograma, sin tocar la maquetacion. */
+    #vill-hub .vp-tilt { position: relative; isolation: isolate; }
+    #vill-hub .vp-tilt::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 0; opacity: 0; transition: opacity .35s ease;
+      background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+                  rgba(5,217,232,.16), rgba(255,42,109,.08) 42%, transparent 70%);
+    }
+    #vill-hub .vp-tilt:hover::before { opacity: 1; }
+    #vill-hub .vp-tilt > * { position: relative; z-index: 1; }
+
+    /* BOTONES MAGNETICOS. El boton se acerca un poco al cursor cuando pasa
+       cerca. Tres pixeles como maximo: lo justo para que el pulgar note que
+       el boton "quiere" ser pulsado, sin que el objetivo se mueva tanto que
+       cueste acertar -- un boton que huye del dedo es peor que uno quieto. */
+    #vill-hub .vp-iman {
+      transform: translate3d(var(--ix, 0px), var(--iy, 0px), 0);
+      transition: transform .45s cubic-bezier(.22,.8,.28,1);
+    }
+    #vill-hub .vp-iman.vp-cerca { transition: transform .12s ease-out; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #vill-hub .vp-tilt::before { display: none; }
+      #vill-hub .vp-iman { transform: none !important; transition: none !important; }
+    }
+
     /* Cifras que suben: solo reserva el ancho para que no salte la linea
        mientras cuenta. */
     #vill-hub .vp-cifra { font-variant-numeric: tabular-nums; }

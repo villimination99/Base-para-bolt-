@@ -1142,6 +1142,41 @@
       #modal-content .mm-prod:hover, #vill-hub .mm-prod:hover { transform: none; }
     }
 
+    /* EL FOCO QUE SIGUE AL CURSOR.
+       Un circulo de luz muy suave bajo el puntero, dentro de la tarjeta. Es
+       el detalle que separa una tarjeta que reacciona de una que solo se
+       inclina: el ojo lee que hay una fuente de luz y que la tarjeta tiene
+       volumen.
+
+       Va en ::before y con mask/pointer-events:none para no tocar el
+       contenido ni robar clics. Y se dibuja con un degradado radial en
+       coordenadas que pone el JavaScript en dos variables -- una escritura
+       de CSS por fotograma, sin tocar la maquetacion. */
+    #vill-hub .vp-tilt { position: relative; isolation: isolate; }
+    #vill-hub .vp-tilt::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 0; opacity: 0; transition: opacity .35s ease;
+      background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+                  rgba(5,217,232,.16), rgba(255,42,109,.08) 42%, transparent 70%);
+    }
+    #vill-hub .vp-tilt:hover::before { opacity: 1; }
+    #vill-hub .vp-tilt > * { position: relative; z-index: 1; }
+
+    /* BOTONES MAGNETICOS. El boton se acerca un poco al cursor cuando pasa
+       cerca. Tres pixeles como maximo: lo justo para que el pulgar note que
+       el boton "quiere" ser pulsado, sin que el objetivo se mueva tanto que
+       cueste acertar -- un boton que huye del dedo es peor que uno quieto. */
+    #vill-hub .vp-iman {
+      transform: translate3d(var(--ix, 0px), var(--iy, 0px), 0);
+      transition: transform .45s cubic-bezier(.22,.8,.28,1);
+    }
+    #vill-hub .vp-iman.vp-cerca { transition: transform .12s ease-out; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #vill-hub .vp-tilt::before { display: none; }
+      #vill-hub .vp-iman { transform: none !important; transition: none !important; }
+    }
+
     /* Cifras que suben: solo reserva el ancho para que no salte la linea
        mientras cuenta. */
     #vill-hub .vp-cifra { font-variant-numeric: tabular-nums; }
@@ -5180,15 +5215,32 @@
        en cada scroll (con un solo fotograma pendiente) y a intervalos
        durante los primeros quince segundos. Es barato y convierte "casi
        siempre entra" en "entra". */
-    var barrido = null;
+    var barrido = null, masLejos = 0;
     function barrer() {
       barrido = null;
       var quedan = raiz.querySelectorAll('.vp-ent:not(.vp-visto)');
       var alto = window.innerHeight || 800;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      /* Se recuerda hasta donde se ha llegado a bajar. La primera version
+         solo miraba lo que estaba sobre la linea de flotacion AHORA, y eso
+         deja un hueco real: si alguien baja de golpe -- un fling en el movil,
+         con el mapa 3D girando y comiendo fotogramas -- el observador puede
+         perderse el cruce, y si luego vuelve arriba esos elementos quedan
+         por debajo otra vez y el barrido ya no los ve. Con la marca en
+         coordenadas del DOCUMENTO, lo que se haya pasado una vez se revela
+         aunque despues se suba. */
+      if (y + alto > masLejos) masLejos = y + alto;
       for (var i = 0; i < quedan.length; i++) {
-        if (quedan[i].getBoundingClientRect().top < alto * 0.98) mostrar(quedan[i]);
+        var e = quedan[i];
+        var arriba = e.getBoundingClientRect().top + y;
+        /* Sin recortar el margen: restarle un uno por ciento a la marca
+           dejaba justo fuera a los ultimos elementos de la pagina, que son
+           los que quedan pegados al borde inferior cuando se llega al final.
+           Se anaden 48 px de tolerancia, que es menos que cualquier
+           elemento con contenido. */
+        if (arriba <= masLejos + 48) mostrar(e);
       }
-      return quedan.length;
+      return raiz.querySelectorAll('.vp-ent:not(.vp-visto)').length;
     }
     function pedirBarrido() {
       if (barrido) return;
@@ -5237,6 +5289,10 @@
          incomodo de leer justo cuando el visitante va a leerlo. */
       t.style.setProperty('--ry', (px * 6).toFixed(2) + 'deg');
       t.style.setProperty('--rx', (-py * 6).toFixed(2) + 'deg');
+      /* Y el foco, en el MISMO fotograma: son dos escrituras mas de una
+         variable, no un segundo manejador con su propio rAF. */
+      t.style.setProperty('--mx', Math.round(ev.clientX - r.left) + 'px');
+      t.style.setProperty('--my', Math.round(ev.clientY - r.top) + 'px');
     });
   }
   function soltar(ev) {
@@ -5276,10 +5332,53 @@
     requestAnimationFrame(paso);
   }
 
+  /* ---------- 4. Botones magneticos ---------- */
+  function imantar() {
+    if (quieto) return;
+    if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+    var botones = raiz.querySelectorAll('.btn-primary, .cta-btns .btn');
+    for (var i = 0; i < botones.length; i++) {
+      var b = botones[i];
+      if (b.classList.contains('vp-iman')) continue;
+      b.classList.add('vp-iman');
+      b.addEventListener('pointermove', tira);
+      b.addEventListener('pointerleave', suelta);
+    }
+  }
+  var pendienteIman = null;
+  function tira(ev) {
+    var b = ev.currentTarget;
+    b.classList.add('vp-cerca');
+    if (pendienteIman) cancelAnimationFrame(pendienteIman);
+    pendienteIman = pideFotograma(function () {
+      pendienteIman = null;
+      var r = b.getBoundingClientRect();
+      if (!r.width) return;
+      /* Tres pixeles como maximo, en la direccion del cursor. */
+      var dx = (ev.clientX - (r.left + r.width / 2)) / (r.width / 2);
+      var dy = (ev.clientY - (r.top + r.height / 2)) / (r.height / 2);
+      b.style.setProperty('--ix', (Math.max(-1, Math.min(1, dx)) * 3).toFixed(1) + 'px');
+      b.style.setProperty('--iy', (Math.max(-1, Math.min(1, dy)) * 3).toFixed(1) + 'px');
+    });
+  }
+  function suelta(ev) {
+    var b = ev.currentTarget;
+    b.classList.remove('vp-cerca');
+    b.style.setProperty('--ix', '0px');
+    b.style.setProperty('--iy', '0px');
+  }
+
+  /* requestAnimationFrame con respaldo: en un motor sin rAF, un setTimeout
+     hace el mismo trabajo y nada se queda sin animar. */
+  var pideFotograma = window.requestAnimationFrame
+    ? window.requestAnimationFrame.bind(window)
+    : function (fn) { return setTimeout(function () { fn(Date.now()); }, 16); };
+
   function arrancar() {
     verEntradas();
     inclinar();
     contar();
+    imantar();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
   else arrancar();
@@ -6089,6 +6188,7 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
   controls.maxPolarAngle = Math.PI * 0.62;
   controls.target.set(0, 0.98, 0);
   const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let giroScroll = 0;
   controls.autoRotate = !REDUCED;
   controls.autoRotateSpeed = 0.9;
 
@@ -6284,6 +6384,41 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
       camera.position.copy(controls.target).add(_off.setFromSpherical(_sph));
       if (u === 1) tween = null;
     }
+    /* EL SCROLL MUEVE EL CUERPO.
+       ------------------------------------------------------------------
+       Mientras el mapa cruza la pantalla, la figura gira un cuarto de vuelta
+       ligada a la POSICION del scroll, no al tiempo: subes y baja, bajas y
+       sube. Es lo que hace que se sienta como un objeto en la mano y no como
+       un video que se reproduce solo.
+
+       Tres decisiones:
+       - Se gira el CUERPO (bodyRoot), no la camara. Asi se suma a lo que el
+         visitante haga con el dedo en vez de pelearse con OrbitControls.
+       - Se apaga si hay un musculo elegido: el encuadre acaba de llevar la
+         camara a un sitio concreto y girar la figura debajo lo desharia.
+       - Y se apaga entero con "menos movimiento" del sistema.
+
+       Se hace aqui, dentro del bucle que ya existe, y no con un observador
+       aparte: leer la posicion una vez por fotograma que ya se iba a pintar
+       cuesta lo que cuesta una resta. Y sin libreria: GSAP con ScrollTrigger
+       son unos 70 KB comprimidos, y esta pagina acaba de bajar de 301 a 100. */
+    if (!REDUCED && !activeGroup) {
+      const caja = canvas.getBoundingClientRect();
+      const alto = window.innerHeight || 800;
+      /* 0 cuando el lienzo entra por abajo, 1 cuando sale por arriba */
+      const u = 1 - (caja.top + caja.height) / (alto + caja.height);
+      if (u > -0.1 && u < 1.1) {
+        const objetivo = (Math.min(1, Math.max(0, u)) - 0.5) * (Math.PI * 0.5);
+        /* Se persigue el objetivo en vez de saltar a el: el scroll llega a
+           tirones y sin suavizado la figura tiembla. */
+        giroScroll += (objetivo - giroScroll) * 0.09;
+        bodyRoot.rotation.y = giroScroll;
+      }
+    } else if (bodyRoot.rotation.y !== 0 && !activeGroup) {
+      giroScroll += (0 - giroScroll) * 0.12;
+      bodyRoot.rotation.y = Math.abs(giroScroll) < 0.001 ? 0 : giroScroll;
+    }
+
     controls.update();
     renderer.render(scene, camera);
   }

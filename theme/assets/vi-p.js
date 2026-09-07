@@ -125,15 +125,32 @@
        en cada scroll (con un solo fotograma pendiente) y a intervalos
        durante los primeros quince segundos. Es barato y convierte "casi
        siempre entra" en "entra". */
-    var barrido = null;
+    var barrido = null, masLejos = 0;
     function barrer() {
       barrido = null;
       var quedan = raiz.querySelectorAll('.vp-ent:not(.vp-visto)');
       var alto = window.innerHeight || 800;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      /* Se recuerda hasta donde se ha llegado a bajar. La primera version
+         solo miraba lo que estaba sobre la linea de flotacion AHORA, y eso
+         deja un hueco real: si alguien baja de golpe -- un fling en el movil,
+         con el mapa 3D girando y comiendo fotogramas -- el observador puede
+         perderse el cruce, y si luego vuelve arriba esos elementos quedan
+         por debajo otra vez y el barrido ya no los ve. Con la marca en
+         coordenadas del DOCUMENTO, lo que se haya pasado una vez se revela
+         aunque despues se suba. */
+      if (y + alto > masLejos) masLejos = y + alto;
       for (var i = 0; i < quedan.length; i++) {
-        if (quedan[i].getBoundingClientRect().top < alto * 0.98) mostrar(quedan[i]);
+        var e = quedan[i];
+        var arriba = e.getBoundingClientRect().top + y;
+        /* Sin recortar el margen: restarle un uno por ciento a la marca
+           dejaba justo fuera a los ultimos elementos de la pagina, que son
+           los que quedan pegados al borde inferior cuando se llega al final.
+           Se anaden 48 px de tolerancia, que es menos que cualquier
+           elemento con contenido. */
+        if (arriba <= masLejos + 48) mostrar(e);
       }
-      return quedan.length;
+      return raiz.querySelectorAll('.vp-ent:not(.vp-visto)').length;
     }
     function pedirBarrido() {
       if (barrido) return;
@@ -182,6 +199,10 @@
          incomodo de leer justo cuando el visitante va a leerlo. */
       t.style.setProperty('--ry', (px * 6).toFixed(2) + 'deg');
       t.style.setProperty('--rx', (-py * 6).toFixed(2) + 'deg');
+      /* Y el foco, en el MISMO fotograma: son dos escrituras mas de una
+         variable, no un segundo manejador con su propio rAF. */
+      t.style.setProperty('--mx', Math.round(ev.clientX - r.left) + 'px');
+      t.style.setProperty('--my', Math.round(ev.clientY - r.top) + 'px');
     });
   }
   function soltar(ev) {
@@ -221,10 +242,53 @@
     requestAnimationFrame(paso);
   }
 
+  /* ---------- 4. Botones magneticos ---------- */
+  function imantar() {
+    if (quieto) return;
+    if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+    var botones = raiz.querySelectorAll('.btn-primary, .cta-btns .btn');
+    for (var i = 0; i < botones.length; i++) {
+      var b = botones[i];
+      if (b.classList.contains('vp-iman')) continue;
+      b.classList.add('vp-iman');
+      b.addEventListener('pointermove', tira);
+      b.addEventListener('pointerleave', suelta);
+    }
+  }
+  var pendienteIman = null;
+  function tira(ev) {
+    var b = ev.currentTarget;
+    b.classList.add('vp-cerca');
+    if (pendienteIman) cancelAnimationFrame(pendienteIman);
+    pendienteIman = pideFotograma(function () {
+      pendienteIman = null;
+      var r = b.getBoundingClientRect();
+      if (!r.width) return;
+      /* Tres pixeles como maximo, en la direccion del cursor. */
+      var dx = (ev.clientX - (r.left + r.width / 2)) / (r.width / 2);
+      var dy = (ev.clientY - (r.top + r.height / 2)) / (r.height / 2);
+      b.style.setProperty('--ix', (Math.max(-1, Math.min(1, dx)) * 3).toFixed(1) + 'px');
+      b.style.setProperty('--iy', (Math.max(-1, Math.min(1, dy)) * 3).toFixed(1) + 'px');
+    });
+  }
+  function suelta(ev) {
+    var b = ev.currentTarget;
+    b.classList.remove('vp-cerca');
+    b.style.setProperty('--ix', '0px');
+    b.style.setProperty('--iy', '0px');
+  }
+
+  /* requestAnimationFrame con respaldo: en un motor sin rAF, un setTimeout
+     hace el mismo trabajo y nada se queda sin animar. */
+  var pideFotograma = window.requestAnimationFrame
+    ? window.requestAnimationFrame.bind(window)
+    : function (fn) { return setTimeout(function () { fn(Date.now()); }, 16); };
+
   function arrancar() {
     verEntradas();
     inclinar();
     contar();
+    imantar();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
   else arrancar();

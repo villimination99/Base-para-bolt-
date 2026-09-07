@@ -792,6 +792,7 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
   controls.maxPolarAngle = Math.PI * 0.62;
   controls.target.set(0, 0.98, 0);
   const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let giroScroll = 0;
   controls.autoRotate = !REDUCED;
   controls.autoRotateSpeed = 0.9;
 
@@ -987,6 +988,41 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
       camera.position.copy(controls.target).add(_off.setFromSpherical(_sph));
       if (u === 1) tween = null;
     }
+    /* EL SCROLL MUEVE EL CUERPO.
+       ------------------------------------------------------------------
+       Mientras el mapa cruza la pantalla, la figura gira un cuarto de vuelta
+       ligada a la POSICION del scroll, no al tiempo: subes y baja, bajas y
+       sube. Es lo que hace que se sienta como un objeto en la mano y no como
+       un video que se reproduce solo.
+
+       Tres decisiones:
+       - Se gira el CUERPO (bodyRoot), no la camara. Asi se suma a lo que el
+         visitante haga con el dedo en vez de pelearse con OrbitControls.
+       - Se apaga si hay un musculo elegido: el encuadre acaba de llevar la
+         camara a un sitio concreto y girar la figura debajo lo desharia.
+       - Y se apaga entero con "menos movimiento" del sistema.
+
+       Se hace aqui, dentro del bucle que ya existe, y no con un observador
+       aparte: leer la posicion una vez por fotograma que ya se iba a pintar
+       cuesta lo que cuesta una resta. Y sin libreria: GSAP con ScrollTrigger
+       son unos 70 KB comprimidos, y esta pagina acaba de bajar de 301 a 100. */
+    if (!REDUCED && !activeGroup) {
+      const caja = canvas.getBoundingClientRect();
+      const alto = window.innerHeight || 800;
+      /* 0 cuando el lienzo entra por abajo, 1 cuando sale por arriba */
+      const u = 1 - (caja.top + caja.height) / (alto + caja.height);
+      if (u > -0.1 && u < 1.1) {
+        const objetivo = (Math.min(1, Math.max(0, u)) - 0.5) * (Math.PI * 0.5);
+        /* Se persigue el objetivo en vez de saltar a el: el scroll llega a
+           tirones y sin suavizado la figura tiembla. */
+        giroScroll += (objetivo - giroScroll) * 0.09;
+        bodyRoot.rotation.y = giroScroll;
+      }
+    } else if (bodyRoot.rotation.y !== 0 && !activeGroup) {
+      giroScroll += (0 - giroScroll) * 0.12;
+      bodyRoot.rotation.y = Math.abs(giroScroll) < 0.001 ? 0 : giroScroll;
+    }
+
     controls.update();
     renderer.render(scene, camera);
   }
