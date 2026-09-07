@@ -10,12 +10,20 @@
    Este script lo abre y escribe:
      theme/assets/vi-p.css   el estilo
      theme/assets/vi-p.js    los scripts en linea, unidos
-     fuente/vi-p-3d.js       el modulo del mapa muscular
 
-   Ojo con el ultimo: escribe en fuente/, NO en theme/assets/. El asset que
-   sube el tema lo produce despues construir-3d.mjs, que le mete three.js
-   dentro. Si esto escribiera directamente en assets/ se cargaria el paquete
-   y el mapa dejaria de funcionar en cuanto alguien volviera a partir.
+   NO TOCA EL MODULO 3D, y esto conviene leerlo entero. Lo escribia, y el dia
+   que el mapa paso a editarse en fuente/vi-p-3d.js -- paleta permanente,
+   zonas con union suave, encuadre en metros -- una pasada de partir.mjs lo
+   sobreescribio con la copia vieja del maestro y se llevo el trabajo por
+   delante. Sin ruido: el archivo seguia ahi, seguia compilando, las baterias
+   seguian verdes, y el cuerpo simplemente volvia a salir blanco. Peor aun,
+   el commit quedo incoherente -- el asset construido llevaba la paleta y su
+   fuente no.
+
+   El modulo 3D tiene ahora UN dueno: fuente/vi-p-3d.js. De ahi salen las dos
+   vias -- construir-3d.mjs lo empaqueta con three.js para el tema, y
+   empaquetar-hub.mjs lo inyecta en el maestro para la version pegable. Este
+   script se limita a mirar si el maestro se ha quedado atras y decirlo.
 
    Vivio un tiempo fuera del repositorio, en un directorio temporal, y eso
    significaba que cualquier arreglo hecho a mano en theme/assets/vi-p.js
@@ -53,9 +61,16 @@ if (css.length < 40000) throw new Error('el estilo son ' + css.length + ' car: n
 const js = otros.map(t => t.cuerpo.trim()).join('\n\n') + '\n\n' + principal.cuerpo.trim() + '\n';
 fs.writeFileSync(T + '/assets/vi-p.css', css + '\n');
 fs.writeFileSync(T + '/assets/vi-p.js', js);
-fs.writeFileSync('fuente/vi-p-3d.js', mod3d.cuerpo.trim() + '\n');
+/* El modulo 3D NO se escribe: se compara. Su dueno es fuente/vi-p-3d.js.
+   Si el maestro se ha quedado atras, se avisa -- y lo pone al dia
+   empaquetar-hub.mjs, que es quien lo inyecta en la version pegable. */
+const fuente3d = fs.readFileSync('fuente/vi-p-3d.js', 'utf8').trim();
+const alDia = mod3d.cuerpo.trim() === fuente3d;
 
 const K = n => (n / 1024).toFixed(0).padStart(4) + ' KB';
 console.log('  ' + T + '/assets/vi-p.css   ' + K(css.length));
 console.log('  ' + T + '/assets/vi-p.js    ' + K(js.length) + '   (' + (otros.length + 1) + ' scripts en linea unidos)');
-console.log('  fuente/vi-p-3d.js        ' + K(mod3d.cuerpo.length) + '   <- ahora toca: node construir-3d.mjs');
+console.log('  fuente/vi-p-3d.js        ' + K(fuente3d.length) + '   (no se toca: su dueno es fuente/)');
+console.log(alDia
+  ? '  el maestro lleva el mismo modulo 3D'
+  : '  el maestro lleva un modulo 3D DISTINTO: lo pone al dia empaquetar-hub.mjs');

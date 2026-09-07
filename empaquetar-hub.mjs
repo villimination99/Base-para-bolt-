@@ -18,7 +18,28 @@
 */
 import fs from 'fs';
 
-const h = fs.readFileSync('hub/vi-p-completo.html', 'utf8');
+/* Antes de nada, el maestro se pone al dia con el modulo 3D.
+
+   El mapa muscular se edita en fuente/vi-p-3d.js: es el unico dueno. El
+   maestro lleva su propia copia en linea porque la version pegable no puede
+   referenciar assets/, asi que aqui se inyecta la buena y se guarda. Asi las
+   dos vias -- tema y pagina pegada -- salen siempre del mismo codigo, y no
+   puede repetirse lo que ya paso una vez: que una copia vieja del maestro
+   pisara el trabajo hecho en fuente/. */
+let h = fs.readFileSync('hub/vi-p-completo.html', 'utf8');
+{
+  const modulo = fs.readFileSync('fuente/vi-p-3d.js', 'utf8').trim();
+  const i = h.indexOf('<script type="module">');
+  if (i < 0) throw new Error('el maestro no tiene el modulo 3D en linea');
+  const ini = i + '<script type="module">'.length;
+  const fin = h.indexOf('</script>', ini);
+  if (fin < 0) throw new Error('el modulo 3D del maestro no se cierra');
+  if (h.slice(ini, fin).trim() !== modulo) {
+    h = h.slice(0, ini) + '\n' + modulo + '\n' + h.slice(fin);
+    fs.writeFileSync('hub/vi-p-completo.html', h);
+    console.log('  el maestro se ha puesto al dia con fuente/vi-p-3d.js');
+  }
+}
 const iS = h.indexOf('  <style>'), fS = h.indexOf('</style>') + 8;
 const estilo = h.slice(iS, fS);
 const iB = h.indexOf('<body>') + 6;

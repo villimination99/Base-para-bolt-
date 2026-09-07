@@ -19,9 +19,16 @@ const base = await new Promise(r => srv.listen(0, '127.0.0.1', () => r('http://1
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 const p = await b.newPage({ viewport: { width: 900, height: 1000 }, deviceScaleFactor: 2 });
 const errs = []; p.on('pageerror', x => errs.push(x.message));
+/* Tambien la consola: un shader que no compila NO lanza pageerror, lo cuenta
+   por consola. Sin esto el cuerpo sale blanco y no se sabe por que. */
+p.on('console', m => { if (m.type() === 'error' || /THREE|shader|GLSL/i.test(m.text())) errs.push('[consola] ' + m.text()); });
 await p.goto(base, { waitUntil: 'load' });
 await p.evaluate(() => document.getElementById('muscle-canvas').scrollIntoView());
-await p.waitForFunction(() => window.__mm3dReady === true, { timeout: 90000 }).catch(() => {});
+const t0 = Date.now();
+await p.waitForFunction(() => window.__mm3dReady === true, { timeout: 180000 }).catch(() => {});
+console.log('  esculpido en ' + ((Date.now() - t0) / 1000).toFixed(1) + ' s (con GL por software, el peor caso)');
+console.log('  triangulos: ' + await p.evaluate(() => window.__mmTris || '?'));
+console.log('  fases (ms): ' + JSON.stringify(await p.evaluate(() => window.__mmFases)));
 await p.waitForTimeout(3000);
 await p.evaluate(() => { window.__mmPararGiro && window.__mmPararGiro(); });
 await p.locator('#muscle-canvas').screenshot({ path: SAL + '/mapa-libre.png' });

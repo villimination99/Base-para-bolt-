@@ -4947,6 +4947,15 @@ try {
     const dH = (CUERPO_ANCHO / llenado) / (2 * Math.tan(fh / 2));
     return Math.max(dV, dH);
   }
+  /* La misma cuenta, encuadrando UNA ALTURA EN METROS en vez de una fraccion
+     del cuerpo. Es lo que usa el foco de cada musculo. */
+  function distanciaParaEncuadrarAlto(alto) {
+    const fv = camera.fov * Math.PI / 180;
+    const dV = alto / (2 * Math.tan(fv / 2));
+    const fh = 2 * Math.atan(Math.tan(fv / 2) * camera.aspect);
+    const dH = (alto * 0.62) / (2 * Math.tan(fh / 2));   // un musculo es mas alto que ancho
+    return Math.max(dV, dH);
+  }
   let distBase = distanciaParaEncuadrar(0.88);
   camera.position.set(0.42, 1.16, distBase);
 
@@ -5034,6 +5043,10 @@ try {
      directamente sobre el cuerpo (nada de globos flotantes).
      ===================================================================== */
   const uPulse = { value: 0 }, uScanY = { value: 0 };
+  /* Sube de 0 a 1 en la entrada: el cuerpo aparece en hueso y los colores se
+     encienden despues, que se lee mejor que darlo todo hecho de golpe. */
+  const uPaleta = { value: 0 };
+  let tPaleta0 = 0;
   // Material de lámina anatómica: mate, hueso cálido, sin barniz plástico.
   const clayMat = new THREE.MeshPhysicalMaterial({
     color: 0xd8d3ca, roughness: 0.62, metalness: 0.0,
@@ -5043,16 +5056,21 @@ try {
   clayMat.onBeforeCompile = function(shader) {
     shader.uniforms.uPulse = uPulse;
     shader.uniforms.uScanY = uScanY;
+    shader.uniforms.uPaleta = uPaleta;
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', `#include <common>
 attribute float selW; attribute float hovW; attribute float clothId; attribute float crease; attribute float ao;
-varying float vSelW; varying float vHovW; varying float vCloth; varying float vCre; varying float vAO; varying vec3 vLocal;`)
+attribute vec3 zoneRGB; attribute float zoneW;
+varying float vSelW; varying float vHovW; varying float vCloth; varying float vCre; varying float vAO; varying vec3 vLocal;
+varying vec3 vZoneRGB; varying float vZoneW;`)
       .replace('#include <begin_vertex>', `#include <begin_vertex>
-vSelW = selW; vHovW = hovW; vCloth = clothId; vCre = crease; vAO = ao; vLocal = position;`);
+vSelW = selW; vHovW = hovW; vCloth = clothId; vCre = crease; vAO = ao; vLocal = position;
+vZoneRGB = zoneRGB; vZoneW = zoneW;`);
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 varying float vSelW; varying float vHovW; varying float vCloth; varying float vCre; varying float vAO; varying vec3 vLocal;
-uniform float uPulse; uniform float uScanY;
+varying vec3 vZoneRGB; varying float vZoneW;
+uniform float uPulse; uniform float uScanY; uniform float uPaleta;
 float vhash(vec3 p){ p = fract(p * 0.3183099 + vec3(0.71, 0.113, 0.419)); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
 float vnoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(mix(vhash(i), vhash(i + vec3(1,0,0)), f.x), mix(vhash(i + vec3(0,1,0)), vhash(i + vec3(1,1,0)), f.x), f.y),
@@ -5076,6 +5094,19 @@ float vnoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * 
   float deep = smoothstep(0.20, 1.0, cre);
   diffuseColor.rgb *= (1.0 - 0.60 * cre);
   diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.80, 0.86, 1.0), deep * 0.75);
+  /* LA PALETA PERMANENTE. Cada grupo lleva su color siempre puesto, para que
+     el cuerpo se lea de un vistazo sin ir tocando musculo a musculo. Se apaga
+     en el grupo seleccionado, para que el rojo del elegido no compita con su
+     propio color, y baja a un tercio en los demas cuando hay uno elegido:
+     enfocar es tanto encender uno como apagar el resto. uPulse solo late
+     cuando hay seleccion, asi que sirve de senal sin otro uniforme.
+     La mezcla es COMPLETA y un punto mas oscura que el color puro: con una
+     mezcla parcial el color se perdia, porque la piel base es hueso claro y
+     el entorno ilumina fuerte. Medido sobre la escena, no supuesto. */
+  float hayElegido = step(0.01, uPulse);
+  float pal = clamp(vZoneW, 0.0, 1.0) * uPaleta * (1.0 - cloth) * (1.0 - sel)
+            * mix(1.0, 0.34, hayElegido);
+  diffuseColor.rgb = mix(diffuseColor.rgb, vZoneRGB * 0.82, pal);
   // Músculo activo / bajo el cursor
   diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.86, 0.09, 0.11), sel * 0.90);
   diffuseColor.rgb = mix(diffuseColor.rgb, vec3(1.0, 0.55, 0.25), hov * 0.28);
@@ -5095,6 +5126,13 @@ float vnoise(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * 
   float band = smoothstep(0.085, 0.0, abs(vLocal.y - uScanY));
   totalEmissiveRadiance += vec3(1.0, 0.42, 0.30) * sel * band * 0.85;
   totalEmissiveRadiance += vec3(1.0, 0.5, 0.2) * hov * 0.12;
+  /* Un punto de emision del propio color del grupo. Sin esto, en las caras
+     que miran a la luz el especular blanco se come el tono y el brazo vuelve
+     a parecer de hueso. No se busca que brille: se busca que el color no
+     dependa de como caiga la luz. */
+  float palE = clamp(vZoneW, 0.0, 1.0) * uPaleta * (1.0 - clamp(vCloth, 0.0, 1.0)) * (1.0 - sel)
+             * mix(1.0, 0.34, step(0.01, uPulse));
+  totalEmissiveRadiance += vZoneRGB * palE * 0.16 * occ;
 }`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
 roughnessFactor += (vnoise(vLocal * 60.0) - 0.5) * 0.17;
@@ -5205,7 +5243,18 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
     d = smin(d, sdEll(ax, py, pz, 0.219, 1.168, 0.008, 0.040, 0.044, 0.040), 0.05);  // codo
     d = smin(d, sdRC(ax, py, pz, 0.219, 1.158, 0.012, 0.226, 0.940, 0.044, 0.044, 0.036), 0.045);
     d = smin(d, sdEll(ax, py, pz, 0.221, 1.088, 0.034, 0.031, 0.062, 0.030), 0.03);  // extensores
-    d = smin(d, sdEll(ax, py, pz, 0.227, 0.872, 0.060, 0.034, 0.064, 0.046), 0.04);  // mano
+    /* LA MANO. Antes era una sola elipse y se leia como una manopla.
+       Los dedos NO se pueden tallar aqui, y conviene saber por que: la
+       rejilla mide 112 voxeles para 1,96 m de alto, o sea 1,75 cm por voxel
+       en vertical. Un dedo tiene menos de un centimetro de ancho, asi que no
+       hay malla que lo recoja -- subir la resolucion cuesta al cubo y en un
+       movil ya va justa. Lo que si se resuelve, y es lo que cambia como se
+       lee la mano de lejos, es la silueta: palma plana, pulgar separado y un
+       bloque de dedos que se estrecha. */
+    d = smin(d, sdEll(ax, py, pz, 0.229, 0.888, 0.056, 0.030, 0.046, 0.048), 0.035); // palma
+    d = smin(d, sdEll(ax, py, pz, 0.206, 0.892, 0.078, 0.016, 0.030, 0.024), 0.022); // pulgar
+    d = smin(d, sdEll(ax, py, pz, 0.232, 0.826, 0.056, 0.026, 0.040, 0.042), 0.028); // dedos
+    d = smin(d, sdEll(ax, py, pz, 0.233, 0.792, 0.052, 0.019, 0.024, 0.032), 0.024); // puntas
 
     // Dorsal (ala), PECTORAL alto y plano (ya no cuelga), oblicuo discreto
     d = smin(d, sdEll(ax, py, pz, 0.122, 1.246, -0.048, 0.070, 0.138, 0.052), 0.06);
@@ -5222,8 +5271,17 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
     d = smin(d, sdEll(ax, py, pz, 0.098, 0.478, 0.014, 0.046, 0.052, 0.046), 0.038);  // rodilla
     d = smin(d, sdRC(ax, py, pz, 0.098, 0.468, 0.002, 0.097, 0.132, -0.006, 0.050, 0.037), 0.042);
     d = smin(d, sdEll(ax, py, pz, 0.099, 0.368, -0.030, 0.040, 0.086, 0.037), 0.03);  // gemelo
-    d = smin(d, sdEll(ax, py, pz, 0.100, 0.047, 0.062, 0.045, 0.044, 0.112), 0.04);  // pie
+    /* EL PIE, que era una piedra. Talon, empeine y bloque de dedos: tres
+       masas de mas de tres centimetros cada una, que si caben en la rejilla.
+       Con una sola elipse la figura parecia flotar sobre dos bultos. */
+    d = smin(d, sdEll(ax, py, pz, 0.098, 0.062, -0.012, 0.038, 0.052, 0.042), 0.03);  // talon
+    d = smin(d, sdEll(ax, py, pz, 0.100, 0.046, 0.052, 0.042, 0.036, 0.078), 0.035); // empeine
+    d = smin(d, sdEll(ax, py, pz, 0.102, 0.030, 0.124, 0.040, 0.020, 0.038), 0.026); // dedos
 
+    /* AXILA: el brazo se fundia con el torso y de frente la silueta salia sin
+       cintura de hombro. Se resta una capsula corta entre el costado y el
+       humero -- lo justo para que se vea el hueco, sin abrir un agujero. */
+    d = smax(d, -sdCap(ax, py, pz, 0.148, 1.392, -0.004, 0.166, 1.286, 0.000, 0.030), 0.055);
     // Entrepierna: sustraer una cuña vertical para separar los muslos limpiamente
     d = smax(d, -sdCap(px, py, pz, 0, 0.560, -0.030, 0, 0.760, -0.010, 0.030), 0.05);
     // Ombligo
@@ -5259,6 +5317,13 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
   mc.geometry.setAttribute('selW', new THREE.BufferAttribute(selWArr, 1));
   const hovWArr = new Float32Array(MAXPOLY * 3);
   mc.geometry.setAttribute('hovW', new THREE.BufferAttribute(hovWArr, 1));
+  /* La paleta permanente: cada vertice guarda el color de su grupo y con
+     cuanta fuerza. Se pinta UNA vez al terminar la malla, no en cada
+     seleccion, asi que no cuesta nada por fotograma. */
+  const zoneRGBArr = new Float32Array(MAXPOLY * 3 * 3);
+  mc.geometry.setAttribute('zoneRGB', new THREE.BufferAttribute(zoneRGBArr, 3));
+  const zoneWArr = new Float32Array(MAXPOLY * 3);
+  mc.geometry.setAttribute('zoneW', new THREE.BufferAttribute(zoneWArr, 1));
 
   const half = RES / 2;
   const size2 = RES * RES;
@@ -5278,32 +5343,90 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
 
      Y esto no es solo pintura: la misma lista decide QUE musculo hay bajo el
      dedo, asi que afinar las formas afina tambien la punteria. */
+  /* LAS ZONAS. Cada pieza es una elipse [x, y, z, rx, ry, rz, espejo].
+     Con la union suave de pesoDeZona() las piezas se FUNDEN, asi que ahora
+     interesa poner varias pequenas siguiendo la linea del musculo en vez de
+     una grande: eso da forma de biceps o de dorsal en vez de forma de huevo.
+     Antes, con union dura, cada pieza extra se veia como un ovalo aparte y
+     por eso habia tan pocas. */
   const ZONES = [
     { id: 1, name: 'Pecho', list: [
-        [ 0.072, 1.322,  0.094, 0.078, 0.056, 0.048, 1],   // cuerpo del pectoral
-        [ 0.108, 1.352,  0.070, 0.052, 0.042, 0.040, 1] ]},// insercion clavicular
+        [ 0.062, 1.318,  0.096, 0.062, 0.052, 0.046, 1],
+        [ 0.098, 1.330,  0.086, 0.056, 0.048, 0.044, 1],
+        [ 0.108, 1.356,  0.072, 0.052, 0.040, 0.040, 1],
+        [ 0.040, 1.300,  0.092, 0.044, 0.048, 0.042, 1] ]},
     { id: 2, name: 'Espalda', list: [
-        [ 0.058, 1.446, -0.042, 0.082, 0.062, 0.050, 1],   // trapecio superior
-        [ 0.098, 1.330, -0.078, 0.084, 0.086, 0.048, 1],   // ala del dorsal, arriba
-        [ 0.092, 1.206, -0.070, 0.072, 0.092, 0.046, 1],   // dorsal, hacia la cintura
-        [ 0.042, 1.116, -0.078, 0.052, 0.082, 0.042, 1] ]},// lumbar
+        [ 0.052, 1.452, -0.040, 0.070, 0.052, 0.046, 1],
+        [ 0.030, 1.396, -0.056, 0.058, 0.058, 0.044, 1],
+        [ 0.096, 1.336, -0.074, 0.070, 0.070, 0.046, 1],
+        [ 0.104, 1.268, -0.070, 0.062, 0.070, 0.044, 1],
+        [ 0.086, 1.196, -0.068, 0.058, 0.072, 0.044, 1],
+        [ 0.044, 1.124, -0.076, 0.048, 0.070, 0.042, 1] ]},
     { id: 3, name: 'Hombros', list: [
-        [ 0.180, 1.416,  0.010, 0.070, 0.076, 0.062, 1],
-        [ 0.176, 1.430, -0.056, 0.056, 0.062, 0.046, 1] ]},// haz posterior
-    { id: 4, name: 'Biceps',      list: [[ 0.206, 1.322,  0.044, 0.042, 0.078, 0.040, 1]] },
-    { id: 5, name: 'Triceps',     list: [[ 0.211, 1.305, -0.046, 0.042, 0.088, 0.042, 1]] },
+        [ 0.172, 1.432,  0.020, 0.062, 0.060, 0.056, 1],
+        [ 0.188, 1.424, -0.016, 0.060, 0.062, 0.056, 1],
+        [ 0.176, 1.436, -0.056, 0.056, 0.058, 0.050, 1],
+        [ 0.156, 1.452, -0.014, 0.050, 0.046, 0.050, 1] ]},
+    { id: 4, name: 'Biceps', list: [
+        [ 0.204, 1.336,  0.048, 0.038, 0.044, 0.038, 1],
+        [ 0.208, 1.288,  0.048, 0.038, 0.048, 0.038, 1],
+        [ 0.210, 1.240,  0.042, 0.034, 0.042, 0.034, 1] ]},
+    { id: 5, name: 'Triceps', list: [
+        [ 0.210, 1.332, -0.050, 0.038, 0.046, 0.040, 1],
+        [ 0.214, 1.284, -0.052, 0.038, 0.050, 0.040, 1],
+        [ 0.214, 1.234, -0.046, 0.034, 0.044, 0.036, 1] ]},
     { id: 6, name: 'Abdominales', list: [
-        [ 0.036, 1.130,  0.090, 0.050, 0.090, 0.040, 1],   // recto, mitad alta
-        [ 0.034, 0.990,  0.086, 0.048, 0.078, 0.038, 1],   // recto, mitad baja
-        [ 0.088, 1.070,  0.052, 0.038, 0.086, 0.036, 1] ]},// oblicuo
-    { id: 7, name: 'Cuadriceps',  list: [
-        [ 0.090, 0.690,  0.052, 0.054, 0.098, 0.042, 1],
-        [ 0.098, 0.560,  0.048, 0.046, 0.070, 0.038, 1] ]},// vasto, cerca de la rodilla
-    { id: 8, name: 'Gluteos',     list: [[ 0.074, 0.796, -0.082, 0.078, 0.080, 0.066, 1]] },
-    { id: 9, name: 'Gemelos',     list: [
-        [ 0.098, 0.372, -0.032, 0.048, 0.098, 0.044, 1],
-        [ 0.098, 0.250, -0.030, 0.036, 0.062, 0.036, 1] ]} // hacia el tendon
+        [ 0.034, 1.156,  0.092, 0.042, 0.048, 0.038, 1],
+        [ 0.034, 1.078,  0.092, 0.042, 0.048, 0.038, 1],
+        [ 0.032, 1.000,  0.088, 0.040, 0.048, 0.036, 1],
+        [ 0.086, 1.108,  0.056, 0.036, 0.070, 0.036, 1],
+        [ 0.084, 1.020,  0.052, 0.034, 0.060, 0.034, 1] ]},
+    { id: 7, name: 'Cuadriceps', list: [
+        [ 0.086, 0.756,  0.052, 0.048, 0.058, 0.042, 1],
+        [ 0.090, 0.686,  0.054, 0.050, 0.058, 0.042, 1],
+        [ 0.094, 0.618,  0.052, 0.048, 0.056, 0.040, 1],
+        [ 0.098, 0.556,  0.048, 0.044, 0.052, 0.038, 1],
+        [ 0.100, 0.500,  0.044, 0.038, 0.042, 0.034, 1] ]},
+    { id: 8, name: 'Gluteos', list: [
+        [ 0.072, 0.828, -0.078, 0.062, 0.058, 0.058, 1],
+        [ 0.080, 0.766, -0.074, 0.060, 0.056, 0.056, 1] ]},
+    { id: 9, name: 'Gemelos', list: [
+        [ 0.096, 0.406, -0.034, 0.042, 0.054, 0.040, 1],
+        [ 0.098, 0.344, -0.034, 0.042, 0.054, 0.040, 1],
+        [ 0.098, 0.284, -0.030, 0.034, 0.046, 0.034, 1],
+        [ 0.096, 0.232, -0.026, 0.026, 0.038, 0.028, 1] ]}
   ];
+
+  /* El color de cada grupo. Elegidos para que se distingan tambien a ojo
+     daltonico: no hay dos vecinos que compartan tono, y ninguno cae en el
+     rojo puro, que esta reservado al musculo SELECCIONADO. */
+  const COLORES = {
+    Pecho:       [0.88, 0.20, 0.30],
+    Espalda:     [0.16, 0.42, 0.92],
+    Hombros:     [0.99, 0.42, 0.04],
+    Biceps:      [0.52, 0.26, 0.90],
+    Triceps:     [0.10, 0.66, 0.80],
+    Abdominales: [0.16, 0.72, 0.36],
+    Cuadriceps:  [0.94, 0.74, 0.10],
+    Gluteos:     [0.90, 0.30, 0.62],
+    Gemelos:     [0.38, 0.62, 0.22]
+  };
+  /* Esfera envolvente de cada grupo. La paleta recorre 200.000 vertices por
+     nueve grupos por hasta seis piezas: sin un descarte previo son millones
+     de raices cuadradas y se notan en el reloj de esculpido. Con esto, un
+     vertice del gemelo descarta el pecho en una resta. */
+  ZONES.forEach(function(z) {
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, z0 = 1e9, z1 = -1e9;
+    for (const e of z.list) {
+      const r = 1.55;                       // hasta donde llega el borde
+      x0 = Math.min(x0, (e[6] ? -1 : 1) * e[0] - e[3] * r); x1 = Math.max(x1, e[0] + e[3] * r);
+      y0 = Math.min(y0, e[1] - e[4] * r);   y1 = Math.max(y1, e[1] + e[4] * r);
+      z0 = Math.min(z0, e[2] - e[5] * r);   z1 = Math.max(z1, e[2] + e[5] * r);
+    }
+    z.caja = [x0, x1, y0, y1, z0, z1];
+    z.espejo = z.list.every(e => e[6]);
+  });
+
   const NAME2ID = {};
   ZONES.forEach(function(z) { NAME2ID[z.name] = z.id; });
   const CAN_HOVER = window.matchMedia && window.matchMedia('(hover: hover)').matches;
@@ -5320,26 +5443,47 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
     }
     const L = zone.list;
     for (let i = 0; i < vertCount; i++) {
-      const x = vposCache[i * 3], y = vposCache[i * 3 + 1], z = vposCache[i * 3 + 2];
-      let best = 1e9;
-      for (let j = 0; j < L.length; j++) {
-        const e = L[j];
-        const px = e[6] ? Math.abs(x) : x;
-        const dx = (px - e[0]) / e[3], dy = (y - e[1]) / e[4], dz = (z - e[2]) / e[5];
-        const nd = dx * dx + dy * dy + dz * dz;
-        if (nd < best) best = nd;
-      }
-      /* OJO CON LA UNIDAD: 'best' es distancia NORMALIZADA por los radios de
-         la propia elipse, no metros. Un borde de 0.11 sobre un radio de 5 cm
-         son cinco milimetros de degradado: practicamente un canto vivo, y por
-         eso las piezas de un mismo musculo se veian como ovalos sueltos en vez
-         de fundirse en una sola mancha. Con 0.30 el borde mide un tercio del
-         radio -- unos dos centimetros en las piezas grandes -- las piezas
-         vecinas se solapan y el resaltado se lee como un musculo. */
-      arr[i] = best <= 1.0 ? 1.0 : Math.max(0, 1 - (Math.sqrt(best) - 1) / 0.30);
+      arr[i] = pesoDeZona(L, vposCache[i * 3], vposCache[i * 3 + 1], vposCache[i * 3 + 2]);
     }
     attr.needsUpdate = true;
   }
+
+  /* EL PESO DE UN VERTICE DENTRO DE UN MUSCULO, con union SUAVE.
+
+     Antes se resolvia con el MINIMO de las piezas: la mas cercana mandaba y
+     las demas no contaban. Un minimo es una union DURA, y por eso se veia lo
+     que se veia -- el cuadriceps como cuatro ovalos sueltos y la espalda como
+     un racimo de bolas con los bordes marcados. Cada pieza dibujaba su propio
+     borde porque ninguna sabia de las otras.
+
+     Ahora las piezas se suman como probabilidades: cada una aporta su peso y
+     el total es 1 - producto(1 - peso). Dos piezas que se solapan se
+     refuerzan en vez de competir, el borde comun desaparece y queda una sola
+     mancha continua con forma de musculo. Es la idea del smin() que ya usa el
+     escultor, aplicada al pintado. */
+  function pesoDeZona(L, x, y, z) {
+    let noPertenece = 1;
+    for (let j = 0; j < L.length; j++) {
+      const e = L[j];
+      const px = e[6] ? Math.abs(x) : x;
+      const dx = (px - e[0]) / e[3], dy = (y - e[1]) / e[4], dz = (z - e[2]) / e[5];
+      const nd = dx * dx + dy * dy + dz * dz;
+      if (nd > 2.45) continue;               // ni con el borde llega
+      const d = Math.sqrt(nd);
+      /* Borde de medio radio. La unidad es RADIO NORMALIZADO, no metros: 1.0
+         es la superficie de la elipse. Con 0.30 las piezas se fundian, si,
+         pero cada una seguia dibujando su circulo por dentro y el abdominal
+         se leia como un racimo. A 0.55 el degradado de una llega al centro de
+         la vecina y la mancha sale continua. */
+      const w = d <= 1 ? 1 : Math.max(0, 1 - (d - 1) / 0.55);
+      if (w <= 0) continue;
+      const ws = w * w * (3 - 2 * w);        // suave en los extremos
+      noPertenece *= (1 - ws);
+      if (noPertenece < 0.002) return 1;
+    }
+    return 1 - noPertenece;
+  }
+
   window.mmClearSelection3D = function() {
     activeGroup = null;
     paintWeight('selW', null);
@@ -5353,10 +5497,19 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
 
   /* ---- Construcción por rebanadas (no congela la página) ---- */
   let iz = 0;
+  let _tCampo0 = 0;
   function buildSlices() {
+    if (!_tCampo0) _tCampo0 = performance.now();
     const t0 = performance.now();
     const voxX = (2 * SX) / RES;
-    while (iz < RES && performance.now() - t0 < 30) {
+    /* 30 ms por fotograma era la mitad del tiempo tirada: mientras se
+       esculpe no hay nada que mirar salvo el porcentaje, asi que ceder el
+       hilo cada 30 ms solo servia para que la espera durase el doble.
+       Medido: el relleno de voxeles son ~6 s de CPU y se convertian en el
+       doble de reloj de pared. Con 55 ms el aprovechamiento sube y sigue por
+       debajo del umbral en el que el navegador marca una tarea larga que
+       bloquea la interaccion. */
+    while (iz < RES && performance.now() - t0 < 55) {
       const wz = ((iz - half) / half) * SZ;
       for (let iy = 0; iy < RES; iy++) {
         const wy = ((iy - half) / half) * SY + CY;
@@ -5385,7 +5538,9 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
     } else {
       try {
         if (loading) loading.textContent = 'Calculando luz y relieve…';
+        const _tMC = performance.now();
         mc.update();
+        const _tTrian = performance.now();
         // Pintar pesos y surcos por vértice sobre la malla final
         const posAttr = mc.geometry.getAttribute('position');
         const nrmAttr = mc.geometry.getAttribute('normal');
@@ -5413,7 +5568,10 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
           vposCache[i * 3] = vx; vposCache[i * 3 + 1] = vy; vposCache[i * 3 + 2] = vz;
           let cw = 0;
           if (Math.abs(vx) < 0.21) {
-            const ft = Math.min((vy - 0.610) / 0.014, (0.852 - vy) / 0.014);
+            /* Los shorts acaban mas arriba que antes (0.718 en vez de
+               0.610). Tapaban la mitad del cuadriceps, y en un mapa muscular
+               eso es esconder justo lo que se viene a ver. */
+            const ft = Math.min((vy - 0.718) / 0.014, (0.852 - vy) / 0.014);
             cw = Math.max(0, Math.min(1, ft));
           }
           cAttr.array[i] = cw;
@@ -5464,8 +5622,47 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
         cAttr.needsUpdate = true;
         krAttr.needsUpdate = true;
         aoAttr.needsUpdate = true;
+
+        /* LA PALETA, pintada una sola vez. Para cada vertice se mira a que
+           grupo pertenece con mas fuerza y se le guarda su color. Con union
+           suave dos grupos vecinos se solapan en el borde, asi que gana el
+           mas fuerte y el peso guardado es su margen sobre el segundo: eso
+           difumina la frontera entre pecho y hombro en vez de cortarla. */
+        const _tVert = performance.now();
+        const zcAttr = mc.geometry.getAttribute('zoneRGB');
+        const zwAttr = mc.geometry.getAttribute('zoneW');
+        for (let i = 0; i < n; i++) {
+          const vx = vposCache[i * 3], vy = vposCache[i * 3 + 1], vz = vposCache[i * 3 + 2];
+          let mejor = 0, segundo = 0, col = null;
+          for (let k = 0; k < ZONES.length; k++) {
+            const C = ZONES[k].caja;
+            const cx = ZONES[k].espejo ? (vx < 0 ? -vx : vx) : vx;
+            if (cx < C[0] || cx > C[1] || vy < C[2] || vy > C[3] || vz < C[4] || vz > C[5]) continue;
+            const w = pesoDeZona(ZONES[k].list, vx, vy, vz);
+            if (w > mejor) { segundo = mejor; mejor = w; col = COLORES[ZONES[k].name]; }
+            else if (w > segundo) segundo = w;
+          }
+          if (col && mejor > 0.02) {
+            zcAttr.array[i * 3] = col[0];
+            zcAttr.array[i * 3 + 1] = col[1];
+            zcAttr.array[i * 3 + 2] = col[2];
+            zwAttr.array[i] = mejor * (mejor - segundo * 0.55);
+          } else {
+            zwAttr.array[i] = 0;
+          }
+        }
+        zcAttr.needsUpdate = true;
+        zwAttr.needsUpdate = true;
+
         if (activeGroup) paintWeight('selW', activeGroup);
         if (loading) loading.style.display = 'none';
+        window.__mmTris = Math.round(n / 3);
+        window.__mmFases = {
+          voxeles: Math.round(_tMC - _tCampo0),
+          triangular: Math.round(_tTrian - _tMC),
+          porVertice: Math.round(_tVert - _tTrian),
+          paleta: Math.round(performance.now() - _tVert)
+        };
         window.__mm3dReady = true;
       } catch (e2) {
         console.warn('MC update error:', e2);
@@ -5527,12 +5724,24 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
      numero ya no son metros: es la fraccion de pantalla que llena el cuerpo en
      ese plano, asi que el encuadre se comporta igual en un movil y en un
      escritorio panoramico. Mas alto = mas cerca. */
+  /* EL ENCUADRE DE CADA MUSCULO: [angulo, altura del centro, ALTO A ENCUADRAR].
+
+     El tercer numero era antes un "factor de acercamiento" que dividia la
+     distancia de encuadre del cuerpo entero. Y no acercaba: para el pecho
+     valia 1.15, o sea un 13 % mas cerca de la vista general. Al pedir Pecho
+     el visitante veia el cuerpo entero un pelin mas grande. Un boton que dice
+     "enfocar" y no enfoca es peor que no tenerlo.
+
+     Ahora el tercer numero son METROS: cuanto del cuerpo tiene que llenar la
+     pantalla. La distancia sale de esa altura y no de los 1,86 m del cuerpo,
+     asi que acercar de verdad ya no depende de acertar un factor a ojo.
+     "Que quepan 46 cm" se comprueba con una regla. */
   const FOCUS = {
-    Pecho:       [0.00, 1.30, 1.15], Abdominales: [0.00, 1.08, 1.20],
-    Hombros:     [0.70, 1.40, 1.35], Biceps:      [1.00, 1.31, 1.45],
-    Triceps:     [2.30, 1.30, 1.45], Espalda:     [Math.PI, 1.26, 1.10],
-    Gluteos:     [Math.PI, 0.80, 1.35], Cuadriceps: [0.28, 0.66, 1.25],
-    Gemelos:     [2.85, 0.36, 1.55]
+    Pecho:       [0.00, 1.31, 0.46], Abdominales: [0.00, 1.07, 0.52],
+    Hombros:     [0.72, 1.42, 0.40], Biceps:      [1.05, 1.29, 0.40],
+    Triceps:     [2.25, 1.28, 0.40], Espalda:     [Math.PI, 1.28, 0.62],
+    Gluteos:     [Math.PI, 0.80, 0.44], Cuadriceps: [0.24, 0.63, 0.60],
+    Gemelos:     [2.88, 0.33, 0.40]
   };
 
   /* POR QUE ESTO NO ES UN LERP POR FOTOGRAMA.
@@ -5558,7 +5767,10 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
   window.__mmFocus = function(name) {
     const f = FOCUS[name];
     if (!f) { tween = null; return; }
-    const dest = { th: f[0], y: f[1], r: distanciaParaEncuadrar(0.88) / f[2] };
+    /* Se encuadra el ALTO del musculo, no el del cuerpo. Con suelo: por
+       debajo de 0.55 m la camara se metia dentro de la piel y salia un plano
+       de textura sin forma. */
+    const dest = { th: f[0], y: f[1], r: Math.max(0.55, distanciaParaEncuadrarAlto(f[2])) };
     if (REDUCED) {   // sin movimiento: se salta el viaje y se planta el plano
       controls.target.set(0, dest.y, 0);
       _sph.set(dest.r, 1.34, dest.th);
@@ -5670,6 +5882,19 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
       particles.rotation.y += 0.0006;
     }
     uPulse.value = activeGroup ? (0.62 + Math.sin(time * 5) * 0.22) : 0;
+    /* La paleta se enciende sola cuando la malla esta lista, POR RELOJ y no
+       por fotograma. La primera version sumaba 0.016 en cada pasada, y eso
+       ata la duracion a la velocidad de la maquina: medido en un equipo con
+       GL por software, a los tres segundos iba por 0.16 -- habria tardado
+       veinte en encenderse, y en un movil viejo lo mismo. Asi tarda 900 ms
+       en cualquier aparato. */
+    if (window.__mm3dReady && uPaleta.value < 1) {
+      if (REDUCED) uPaleta.value = 1;
+      else {
+        if (!tPaleta0) tPaleta0 = performance.now();
+        uPaleta.value = Math.min(1, (performance.now() - tPaleta0) / 900);
+      }
+    }
     // Barrido del escáner: recorre el cuerpo en coordenadas locales (-1..1)
     uScanY.value = activeGroup ? (((time * 0.42) % 2) - 1) : 99;
     ring.material.opacity = 0.16 + Math.sin(time * 2) * 0.08;
