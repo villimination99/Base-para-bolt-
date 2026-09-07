@@ -84,17 +84,45 @@
 {%- endcomment -%}
 <script src="{{ 'vip-banner.js' | asset_url }}" defer></script>
 
+{%- comment -%}
+  SOBRE LOS TEXTOS POR DEFECTO, que son decisiones de venta y no relleno:
+
+  - El titular era "TU GIMNASIO DIGITAL VI.P" y el subtitulo "Transforma tu
+    cuerpo y mente". Las dos frases mas repetidas del sector: valen para
+    cualquier marca, asi que no dicen nada de esta. El titular gasta la linea
+    mas grande del bloque, y ahora la gasta en describir el gesto que hace
+    unico al producto -- tocar un musculo y ver que entrenar. El "gimnasio
+    digital VI.P" no se pierde: baja al subtitulo, que es donde encaja.
+
+  - El texto largo empieza ahora por lo que NINGUNA aplicacion de fitness
+    puede decir: que nada se sube a ningun sitio. Y no es una frase de
+    marketing, es como esta hecho -- el hub guarda todo en el propio
+    navegador (localStorage) y no tiene servidor. Verificable abriendo el
+    codigo.
+
+  - "ENTRAR AL HUB" pedia un salto sin decir a donde. "Hub" ademas es jerga
+    de dentro de casa. El boton dice ahora lo que pasa al pulsarlo y repite
+    el precio, que es cero.
+
+  - La insignia y la nota se llevan las dos objeciones que frenan a
+    cualquiera ante algo gratis: "me va a pedir registro" y "me va a hacer
+    instalar una app". Las dos son falsas aqui, asi que conviene decirlo
+    antes de que las piense.
+
+  Todo esto son VALORES POR DEFECTO: se cambian desde el editor del tema sin
+  tocar codigo.
+{%- endcomment -%}
 {% schema %}
 {
   "name": "Banner VIP",
   "settings": [
-    { "type": "text", "id": "badge", "label": "Insignia", "default": "VI.P · GRATIS" },
-    { "type": "text", "id": "title", "label": "Título", "default": "TU GIMNASIO DIGITAL VI.P" },
-    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Transforma tu cuerpo y mente — todo en un solo lugar" },
-    { "type": "textarea", "id": "text", "label": "Texto", "default": "Anatomía 3D interactiva, rutinas con calorías reales, nutrición inteligente con cámara, respiración guiada y frecuencias reparadoras. Sin apps y sin pagar." },
-    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "ENTRAR AL HUB VI.P" },
+    { "type": "text", "id": "badge", "label": "Insignia", "default": "VI.P · GRATIS, SIN REGISTRO" },
+    { "type": "text", "id": "title", "label": "Título", "default": "TOCA UN MÚSCULO Y VE QUÉ ENTRENAR" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo", "default": "Tu gimnasio digital VI.P: anatomía 3D, rutinas con calorías reales y nutrición con la cámara" },
+    { "type": "textarea", "id": "text", "label": "Texto", "default": "Tu peso, tus rutinas y tus comidas se quedan en tu propio dispositivo: aquí no hay cuenta que crear ni servidor al que subir nada. Anatomía 3D interactiva, respiración guiada y frecuencias reparadoras incluidas." },
+    { "type": "text", "id": "button_label", "label": "Texto del botón", "default": "ABRIR VI.P GRATIS" },
     { "type": "url", "id": "button_url", "label": "Enlace del botón", "info": "Por defecto: /pages/vi-p" },
-    { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "Gratis · Sin apps · ES / EN / FR" },
+    { "type": "text", "id": "note", "label": "Nota bajo el botón", "default": "Sin registro · Sin instalar nada · ES / EN / FR" },
     { "type": "image_picker", "id": "image", "label": "Imagen de fondo (opcional)" }
   ],
   "blocks": [

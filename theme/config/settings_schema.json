@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.48.0",
+    "theme_version": "4.49.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -952,6 +952,28 @@
         "id": "seo_return_free",
         "label": "La devolucion es gratuita para el cliente",
         "default": false
+      },
+      {
+        "type": "header",
+        "content": "Página del hub (VI.P)"
+      },
+      {
+        "type": "paragraph",
+        "content": "El hub no es un texto: es una herramienta que se usa dentro del navegador. Con el identificador de su página aquí, el tema la declara como aplicación web GRATUITA en los datos estructurados, que es lo que puede hacer que Google la muestre como herramienta y no como una página más."
+      },
+      {
+        "type": "text",
+        "id": "hub_page_handle",
+        "label": "Identificador de la página del hub",
+        "info": "El final de su dirección. Por defecto: vi-p",
+        "default": "vi-p"
+      },
+      {
+        "type": "textarea",
+        "id": "hub_page_summary",
+        "label": "Resumen del hub para buscadores",
+        "info": "Una o dos frases. Se usa en los datos estructurados de la página del hub.",
+        "default": "Mapa muscular 3D interactivo, 27 ejercicios con calorías reales, nutrición con la cámara, respiración guiada y 19 frecuencias. Gratis y sin instalar nada."
       }
     ]
   },

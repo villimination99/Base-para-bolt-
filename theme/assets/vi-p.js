@@ -1672,7 +1672,7 @@
     en: {
       tag: '@villumination99 · VI.P',
       title: 'Transform your<br><span>Body &amp; Mind</span>',
-      sub: 'Interactive 3D anatomy, calorie-accurate routines, smart nutrition, guided breathing and restorative frequencies — all in one place.',
+      sub: 'Tap a muscle and see what to train. Calorie-accurate routines, camera nutrition, guided breathing and frequencies — and nothing you log ever leaves this device.',
       b1: '🧬 Explore 3D Anatomy', b2: '🏋️ Build my Routine',
       stats: ['Exercises', 'Frequencies', '3D Zones', 'Athlete Levels'],
       note: '🌐 Menus, foods and exercise data are shown in Spanish.',
@@ -1795,7 +1795,7 @@
     fr: {
       tag: '@villumination99 · VI.P',
       title: 'Transforme ton<br><span>Corps &amp; Esprit</span>',
-      sub: 'Anatomie 3D interactive, routines aux calories réelles, nutrition intelligente, respiration guidée et fréquences réparatrices — tout en un seul endroit.',
+      sub: 'Touche un muscle et vois quoi entraîner. Routines aux calories réelles, nutrition à la caméra, respiration guidée et fréquences — et rien de ce que tu notes ne quitte cet appareil.',
       b1: '🧬 Explorer l’anatomie 3D', b2: '🏋️ Créer ma routine',
       stats: ['Exercices', 'Fréquences', 'Zones 3D', 'Niveaux d’athlète'],
       note: '🌐 Les menus, aliments et exercices sont affichés en espagnol.',

@@ -298,8 +298,38 @@
     elsif ph contains 'faq' or ph contains 'preguntas'
       assign page_kind = 'FAQPage'
     endif
+    # La pagina del hub no es un texto: es una herramienta que se usa dentro
+    # del navegador -- mapa muscular 3D, planificador, calculadoras, camara,
+    # audio. WebApplication es su tipo real, y ademas permite decir que es
+    # GRATIS, que es justo el motivo por el que alguien pincharia. Se detecta
+    # por el ajuste del tema y no por el handle: la pagina puede llamarse
+    # manana de otra forma sin que esto deje de funcionar.
+    assign es_hub = false
+    if settings.hub_page_handle != blank and ph == settings.hub_page_handle
+      assign es_hub = true
+    endif
   -%}
-  {%- unless page_kind == 'FAQPage' -%}
+  {%- if es_hub -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": {{ page.title | json }},
+  "url": {{ shop.url | append: page.url | json }},
+  "applicationCategory": "HealthApplication",
+  "browserRequirements": "Requiere un navegador con JavaScript",
+  "operatingSystem": "Cualquiera con navegador web",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": {{ shop.currency | json }} },
+  "isPartOf": { "@id": {{ shop.url | append: '#website' | json }} },
+  "publisher": { "@id": {{ shop.url | append: '#organization' | json }} }
+  {%- if settings.hub_page_summary != blank -%},
+  "description": {{ settings.hub_page_summary | json }}
+  {%- endif -%}
+}
+</script>
+  {%- endif -%}
+  {%- unless page_kind == 'FAQPage' or es_hub -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
