@@ -49,6 +49,187 @@
   });
 })();
 
+/* ANIMACION DE LAS SECCIONES DEL HUB
+   ---------------------------------------------------------------------
+   Reparte las clases de entrada, inclinacion y contadores recorriendo el
+   documento, en vez de pedir que el marcado las traiga escritas. Es a
+   proposito: el marcado del hub vive en DOS sitios -- la seccion del tema y
+   la pagina de un solo archivo -- y cualquier cosa que haya que escribir a
+   mano en los dos acaba separandose. Asi solo hay un sitio que tocar.
+
+   Todo lo que se anima es transform y opacity. Con "menos movimiento" del
+   sistema no se pone nada: se sale en la primera linea. */
+(function animacionesDelHub() {
+  'use strict';
+  var raiz = document.getElementById('vill-hub');
+  if (!raiz) return;
+  var quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. Entrada escalonada al acercarse ---------- */
+  /* El ancla que activa el estado escondido. Va aqui y no en el marcado: si
+     este script no llega a ejecutarse, la clase no se pone y el hub se ve
+     entero. */
+  raiz.classList.add('vp-anim');
+  var secciones = raiz.querySelectorAll('section');
+  for (var s = 0; s < secciones.length; s++) {
+    var sec = secciones[s];
+    /* El hero ya tiene su propia entrada al cargar: no se toca, y ademas
+       animarlo al hacer scroll seria animar algo que ya se esta viendo. */
+    if (sec.id === 'hero-section' || sec.querySelector('.hero-title')) continue;
+    var hijos = sec.children, n = 0;
+    for (var h = 0; h < hijos.length; h++) {
+      var el = hijos[h];
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue;
+      el.classList.add('vp-ent');
+      /* Escalonado corto y con techo: 70 ms entre piezas se lee como una
+         cascada; con quince hijos y sin techo, el ultimo entraria un segundo
+         despues de que el visitante ya este mirando otra cosa. */
+      el.style.setProperty('--vp-d', Math.min(n * 70, 320) + 'ms');
+      n++;
+    }
+  }
+
+  function verEntradas() {
+    var pendientes = raiz.querySelectorAll('.vp-ent:not(.vp-visto)');
+    if (!('IntersectionObserver' in window)) {
+      for (var i = 0; i < pendientes.length; i++) pendientes[i].classList.add('vp-visto', 'vp-fin');
+      return;
+    }
+    function mostrar(e) {
+      if (e.classList.contains('vp-visto')) return;
+      e.classList.add('vp-visto');
+      ojo.unobserve(e);
+      /* Se suelta el will-change cuando la transicion ha terminado: si se
+         deja puesto, cada elemento conserva su capa en memoria de video para
+         siempre y en un movil eso se nota. */
+      setTimeout(function () { e.classList.add('vp-fin'); }, 1100);
+    }
+    var ojo = new IntersectionObserver(function (entradas) {
+      for (var i = 0; i < entradas.length; i++) {
+        if (entradas[i].isIntersecting) mostrar(entradas[i].target);
+      }
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.02 });
+    for (var j = 0; j < pendientes.length; j++) ojo.observe(pendientes[j]);
+
+    /* LA RED DE SEGURIDAD, y no es paranoia: esta medida.
+
+       IntersectionObserver decide en las oportunidades de pintado. Si el
+       aparato va justo -- y aqui hay un mapa 3D girando al lado -- se pierden
+       fotogramas, y un scroll rapido puede pasar de largo por delante de un
+       elemento sin que el observador llegue a verlo cruzar. Probado en un
+       equipo con GL por software: de 59 elementos solo entraban 12.
+
+       Lo que estaria en juego no es una animacion: es CONTENIDO. Un elemento
+       que no recibe su clase se queda en opacity 0 para siempre. Asi que
+       ademas del observador se barre a mano lo que ya ha pasado por delante,
+       en cada scroll (con un solo fotograma pendiente) y a intervalos
+       durante los primeros quince segundos. Es barato y convierte "casi
+       siempre entra" en "entra". */
+    var barrido = null;
+    function barrer() {
+      barrido = null;
+      var quedan = raiz.querySelectorAll('.vp-ent:not(.vp-visto)');
+      var alto = window.innerHeight || 800;
+      for (var i = 0; i < quedan.length; i++) {
+        if (quedan[i].getBoundingClientRect().top < alto * 0.98) mostrar(quedan[i]);
+      }
+      return quedan.length;
+    }
+    function pedirBarrido() {
+      if (barrido) return;
+      barrido = requestAnimationFrame(barrer);
+    }
+    window.addEventListener('scroll', pedirBarrido, { passive: true });
+    window.addEventListener('resize', pedirBarrido, { passive: true });
+    var vueltas = 0;
+    var reloj = setInterval(function () {
+      if (barrer() === 0 || ++vueltas > 30) clearInterval(reloj);
+    }, 500);
+  }
+
+  /* ---------- 2. Inclinacion 3D de las tarjetas ---------- */
+  function inclinar() {
+    if (quieto) return;
+    /* Solo donde hay raton de verdad. En una pantalla tactil no existe el
+       "pasar por encima": el dedo toca y ya, y una tarjeta que se queda
+       torcida despues del toque parece rota. */
+    if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+    var tarjetas = raiz.querySelectorAll('.hub-card, .ex-card, .freq-card, .card');
+    for (var i = 0; i < tarjetas.length; i++) {
+      var t = tarjetas[i];
+      if (t.classList.contains('vp-tilt')) continue;
+      t.classList.add('vp-tilt');
+      if (t.parentElement) t.parentElement.classList.add('vp-3d');
+      t.addEventListener('pointermove', mover);
+      t.addEventListener('pointerleave', soltar);
+    }
+  }
+  var pendiente = null;
+  function mover(ev) {
+    var t = ev.currentTarget;
+    t.classList.add('vp-tocando');
+    /* Un solo fotograma pendiente: pointermove dispara mucho mas a menudo
+       que la pantalla se refresca, y escribir el transform en cada evento es
+       trabajo que se tira. */
+    if (pendiente) cancelAnimationFrame(pendiente);
+    pendiente = requestAnimationFrame(function () {
+      pendiente = null;
+      var r = t.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var px = (ev.clientX - r.left) / r.width - 0.5;
+      var py = (ev.clientY - r.top) / r.height - 0.5;
+      /* Seis grados. Mas que esto y el texto de la tarjeta se vuelve
+         incomodo de leer justo cuando el visitante va a leerlo. */
+      t.style.setProperty('--ry', (px * 6).toFixed(2) + 'deg');
+      t.style.setProperty('--rx', (-py * 6).toFixed(2) + 'deg');
+    });
+  }
+  function soltar(ev) {
+    var t = ev.currentTarget;
+    t.classList.remove('vp-tocando');
+    t.style.setProperty('--rx', '0deg');
+    t.style.setProperty('--ry', '0deg');
+  }
+
+  /* ---------- 3. Las cifras del hero suben ---------- */
+  function contar() {
+    var cifras = raiz.querySelectorAll('.hero-stat strong');
+    if (!cifras.length) return;
+    for (var i = 0; i < cifras.length; i++) {
+      var el = cifras[i];
+      var fin = parseInt(String(el.textContent).replace(/\D/g, ''), 10);
+      if (!fin || fin > 100000) continue;
+      el.classList.add('vp-cifra');
+      if (quieto) continue;
+      arrancarCuenta(el, fin);
+    }
+  }
+  function arrancarCuenta(el, fin) {
+    var t0 = 0, dur = 1100;
+    el.textContent = '0';
+    function paso(ahora) {
+      if (!t0) t0 = ahora;
+      var u = Math.min(1, (ahora - t0) / dur);
+      /* Por RELOJ, no por fotograma: sumar una cantidad fija por pasada ata
+         la duracion a la velocidad del aparato, y en uno lento la cifra
+         seguiria subiendo cuando el visitante ya ha bajado. */
+      var k = 1 - Math.pow(1 - u, 3);
+      el.textContent = String(Math.round(fin * k));
+      if (u < 1) requestAnimationFrame(paso);
+      else el.textContent = String(fin);
+    }
+    requestAnimationFrame(paso);
+  }
+
+  function arrancar() {
+    verEntradas();
+    inclinar();
+    contar();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
+  else arrancar();
+})();
+
 (function() {
   'use strict';
 

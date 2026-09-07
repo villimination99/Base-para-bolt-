@@ -101,9 +101,20 @@ for (const [titulo, arch] of PAGINAS) {
   await p.goto(base + arch.replace('.liquid', '.html'), { waitUntil: 'load' });
   /* Se recorre la pagina entera para que arranque todo lo que carga al
      acercarse; si no, axe mediria media seccion. */
+  /* Se recorre la pagina para que arranque todo lo que carga al acercarse, y
+     DESPUES se espera a que las entradas terminen. axe mide el pixel: un
+     elemento a mitad de su transicion de opacidad da contraste cero y sale
+     como infraccion. La primera version media antes de tiempo y cantaba 928
+     fallos que no existian -- eran 928 elementos todavia apareciendo. */
   await p.evaluate(async () => {
     for (let y = 0; y < document.body.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); }
     window.scrollTo(0, 0);
+    const listo = () => {
+      const faltan = [...document.querySelectorAll('.vp-ent')]
+        .filter(e => parseFloat(getComputedStyle(e).opacity) < 0.95);
+      return faltan.length === 0;
+    };
+    for (let i = 0; i < 40 && !listo(); i++) await new Promise(r => setTimeout(r, 150));
   });
   await p.addScriptTag({ content: AXE });
   const r = await p.evaluate(async () => await window.axe.run(document, {

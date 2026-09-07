@@ -87,6 +87,39 @@ await p.evaluate(() => (document.getElementById('nutrition') || document.getElem
 await p.waitForFunction(() => typeof window.Chart === 'function', { timeout: 30000 }).catch(() => {});
 await p.evaluate(() => window.scrollTo(0, 0));
 
+/* --- Las animaciones de las secciones: que se REPARTAN y que ENTREN --- */
+const anim = await p.evaluate(async () => {
+  const raiz = document.getElementById('vill-hub');
+  const marcados = raiz.querySelectorAll('.vp-ent').length;
+  /* Se recorre la pagina entera despacio para que el observador dispare */
+  for (let y = 0; y < document.body.scrollHeight; y += 500) {
+    window.scrollTo(0, y);
+    await new Promise(r => setTimeout(r, 45));
+  }
+  window.scrollTo(0, 0);
+  /* Se espera a que las transiciones TERMINEN antes de contar los opacos.
+     La primera version miraba a los 400 ms y daba 47 de 59: los doce que
+     faltaban estaban a mitad de su propia transicion, que dura 620 ms mas
+     hasta 320 de retardo escalonado. Medir una animacion antes de que acabe
+     y llamarlo fallo es culpar al producto del cronometro. */
+  const vistos = raiz.querySelectorAll('.vp-ent.vp-visto').length;
+  const cuentaOpacos = () => {
+    let k = 0;
+    raiz.querySelectorAll('.vp-ent.vp-visto').forEach(e => {
+      if (parseFloat(getComputedStyle(e).opacity) > 0.9) k++;
+    });
+    return k;
+  };
+  let opacos = 0;
+  for (let intento = 0; intento < 24; intento++) {
+    opacos = cuentaOpacos();
+    if (opacos >= vistos) break;
+    await new Promise(r => setTimeout(r, 150));
+  }
+  const cifras = [...raiz.querySelectorAll('.hero-stat strong')].map(e => e.textContent.trim());
+  return { marcados, vistos, opacos, cifras };
+});
+
 const r = await p.evaluate(() => ({
   mapa3d: !!window.__mm3dReady,
   hubListo: !!window.__villReady,
@@ -116,6 +149,26 @@ for (const k of Object.keys(esp)) {
   console.log('  ' + (ok ? 'OK   ' : 'FALLA') + ' ' + k.padEnd(25) + String(esp[k]).padEnd(21) + String(r[k]));
 }
 const decir = (ok, txt) => { if (!ok) mal++; console.log('  ' + (ok ? 'OK   ' : 'FALLA') + ' ' + txt); };
+decir(anim.marcados >= 30, `las secciones reparten la entrada (${anim.marcados} elementos marcados)`);
+
+/* SIN JAVASCRIPT EL CONTENIDO SIGUE AHI. Se abre la misma pagina con el
+   script desactivado y se comprueba que nada queda en opacidad cero. Es la
+   comprobacion que evita el peor fallo posible de una entrada al hacer
+   scroll: que un bloqueador, un error o una red que corta dejen media pagina
+   invisible para siempre. El estado escondido cuelga de la clase vp-anim,
+   que solo pone el propio script. */
+{
+  const ctxSinJs = await b.newContext({ viewport: { width: 390, height: 844 }, javaScriptEnabled: false });
+  const pj = await ctxSinJs.newPage();
+  await pj.goto(url, { waitUntil: 'load' });
+  const invisibles = await pj.evaluate === undefined ? -1 : await pj.$$eval('#vill-hub section > *', els =>
+    els.filter(e => parseFloat(getComputedStyle(e).opacity) < 0.5).length);
+  decir(invisibles === 0, `sin JavaScript no se esconde nada (${invisibles} elementos en opacidad baja)`);
+  await ctxSinJs.close();
+}
+decir(anim.vistos === anim.marcados, `todos entran al acercarse (${anim.vistos} de ${anim.marcados})`);
+decir(anim.opacos === anim.vistos, `y quedan visibles de verdad, no solo con la clase (${anim.opacos})`);
+decir(anim.cifras.every(c => /^\d+$/.test(c)), `las cifras del hero terminan en su numero: ${anim.cifras.join(', ')}`);
 decir(perezoso, `al abrir la pagina NO se bajan el mapa 3D ni las graficas (684 KB, 190 KB por la red) -- llegan al acercarse`);
 decir(pedido('vi-p-3d.js'), 'el mapa 3D se pide al acercarse a el');
 decir(pedido('vi-p-chart.js'), 'las graficas se piden al acercarse a nutricion');
