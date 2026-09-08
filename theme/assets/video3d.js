@@ -98,6 +98,51 @@
         };
         root.addEventListener('pointerup', soltar);
         root.addEventListener('pointercancel', soltar);
+
+        /* Y ADEMAS GIRA SOLA AL PASAR POR DELANTE.
+           ------------------------------------------------------------------
+           El arrastre estaba bien pero no lo descubre nadie: en un movil la
+           pantalla se veia plana, igual que las miniaturas del carrusel de mas
+           abajo, y el subtitulo prometia un movimiento que no ocurria salvo
+           que se te ocurriera arrastrar. Ahora la pantalla se inclina segun
+           sube por la ventana -- unos grados, en sentido contrario arriba y
+           abajo -- asi que se ve que es una pantalla en un espacio sin tener
+           que tocar nada. El arrastre sigue mandando cuando el dedo esta
+           encima.
+
+           Va con requestAnimationFrame y solo mientras la seccion se ve, para
+           no calcular nada por una seccion que esta a cinco pantallas. Es
+           adorno: si el equipo va justo y se pierde un fotograma, no pasa
+           nada, que es justo lo contrario de lo que ocurre con el contenido. */
+        var aLaVista = false, sRaf = 0;
+        var porScroll = function () {
+          sRaf = 0;
+          if (arrastra || !aLaVista) return;
+          var r = root.getBoundingClientRect();
+          var alto = window.innerHeight || 800;
+          if (!r.height || !alto) return;
+          /* -0.5 cuando la seccion esta arriba del todo, +0.5 cuando esta
+             abajo del todo, 0 cuando esta centrada. */
+          var centro = (r.top + r.height / 2) / alto - 0.5;
+          objX = limitar(centro * maxGiro * 1.15, -maxGiro, maxGiro);
+          objY = limitar(centro * maxGiro * -0.45, -maxGiro, maxGiro);
+          if (Math.abs(centro) > 0.05) root.classList.add('is-tilt');
+          else root.classList.remove('is-tilt');
+          pedir();
+        };
+        var pedirScroll = function () { if (!sRaf) sRaf = requestAnimationFrame(porScroll); };
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (es) {
+            aLaVista = es[0].isIntersecting;
+            if (aLaVista) pedirScroll();
+            else { objX = 0; objY = 0; root.classList.remove('is-tilt'); pedir(); }
+          }, { threshold: 0 }).observe(root);
+        } else {
+          aLaVista = true;
+        }
+        window.addEventListener('scroll', pedirScroll, { passive: true });
+        window.addEventListener('resize', pedirScroll, { passive: true });
+        pedirScroll();
       }
     }
 

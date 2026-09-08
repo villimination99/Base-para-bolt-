@@ -243,6 +243,26 @@
         <span class="video3d-esquina video3d-esquina--br" aria-hidden="true"></span>
       </div>
 
+      {%- comment -%}
+        EL REFLEJO. Es lo que convierte un rectangulo con borde en una pantalla
+        apoyada en una sala: debajo del marco, la parte baja de la portada
+        repetida boca abajo, borrosa y casi transparente, apagandose hacia el
+        suelo. Junto a la rejilla que ya habia, la seccion deja de parecerse al
+        carrusel de miniaturas de mas abajo, que es de lo que se trataba.
+
+        Solo con portada, y solo como IMAGEN: reflejar el video en vivo
+        obligaria a decodificarlo dos veces, y eso en un movil se paga en
+        bateria y en fotogramas. Mientras el video se reproduce, el reflejo se
+        aparta.
+      {%- endcomment -%}
+      {%- if portada != blank -%}
+        <span class="video3d-reflejo" aria-hidden="true"
+              style="background-image:url({{ portada | image_url: width: 400, format: 'pjpg' }})"></span>
+      {%- elsif portada_url != blank -%}
+        <span class="video3d-reflejo" aria-hidden="true"
+              style="background-image:url({{ portada_url }})"></span>
+      {%- endif -%}
+
       {%- if section.settings.caption != blank -%}
         <p class="video3d-pie">{{ section.settings.caption }}</p>
       {%- endif -%}

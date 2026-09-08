@@ -241,7 +241,64 @@ decir(/prefers-reduced-motion/.test(intro), 'la intro respeta el ajuste de menos
 decir(/Float32Array|Int32Array/.test(intro) ? true : true,
   'los arrays tipados que usa la malla existen en todos los motores desde 2012');
 
+/* ================= EL INVENTARIO DE FUNCIONES MODERNAS =================
+   Aqui no se puede ejecutar Safari: el contenedor no alcanza el CDN de
+   Playwright, asi que webkit y firefox no se pueden descargar. Todo lo demas
+   se mide en Chromium. Decirlo importa, porque un iPhone es WebKit.
+
+   Lo que SI se puede hacer sin ejecutarlos es esto: llevar la cuenta de cada
+   funcion moderna que el tema usa y de la version en la que aparecio, y exigir
+   que cualquiera que llegue mas tarde que el SUELO declarado este justificada
+   por escrito. No sustituye a probar en un telefono de verdad -- nada lo hace
+   -- pero atrapa la clase de fallo que de verdad ocurre: alguien anade una
+   propiedad nueva y reluciente y media tienda se cae en un iPad de hace tres
+   anos, en silencio, durante meses.
+
+   EL SUELO: Safari 15.4 (marzo de 2022). Es la version del ultimo iPhone que
+   ya no recibe iOS nuevo pero sigue en manos de gente, y por debajo de ahi el
+   trafico real es residual. Todo lo que pida mas que eso tiene que estar en la
+   lista de toleradas, con el motivo, o dentro de un @supports. */
+console.log('\n--- Funciones modernas: nada por encima del suelo sin justificar ---');
+const SUELO_SAFARI = 15.4;
+
+/* clave: [nombre, version minima de Safari, motivo por el que se tolera] */
+const FUNCIONES = [
+  ['aspect-ratio', 15, null],
+  ['color-mix(', 16.2, 'check.mjs comprueba que cada uso lleve un color de respaldo delante'],
+  ['inset:', 14.1, null],
+  ['backdrop-filter', 9, null],
+  ['clamp(', 13.1, null],
+  ['env(safe-area', 11.2, null],
+  [':has(', 15.4, null],
+  ['mask-image', 15.4, null],
+  ['text-wrap:', 17.5, 'solo equilibra el corte de linea de un titular; sin ella el texto se parte como siempre'],
+  ['scrollbar-width', 18.2, 'adelgaza la barra de desplazamiento; sin ella se ve la del sistema'],
+  ['content-visibility', 18, 'solo aplaza el pintado de lo que esta fuera de pantalla; sin ella se pinta todo, que es lo que hacia antes'],
+  ['@container', 16, 'ninguna: si aparece, hay que justificarla'],
+  ['subgrid', 16, 'ninguna: si aparece, hay que justificarla'],
+  ['dvh', 15.4, null],
+];
+
+let cssTodo = '';
+for (const f of fs.readdirSync(ASSETS).filter(f => f.endsWith('.css'))) {
+  cssTodo += fs.readFileSync(path.join(ASSETS, f), 'utf8');
+}
+/* Los comentarios no son codigo: una propiedad NOMBRADA en una explicacion no
+   la usa nadie, y contarla seria verificar la prosa otra vez. */
+cssTodo = cssTodo.replace(/\/\*[\s\S]*?\*\//g, '');
+
+for (const [clave, minSafari, motivo] of FUNCIONES) {
+  const usos = cssTodo.split(clave).length - 1;
+  if (!usos) continue;
+  if (minSafari <= SUELO_SAFARI) {
+    decir(true, `${clave.padEnd(20)} ${String(usos).padStart(4)} usos · Safari ${minSafari}, dentro del suelo`);
+  } else {
+    decir(!!motivo, `${clave.padEnd(20)} ${String(usos).padStart(4)} usos · Safari ${minSafari} > suelo ${SUELO_SAFARI}` +
+      (motivo ? ` · tolerada: ${motivo}` : ' · SIN JUSTIFICAR'));
+  }
+}
+
 console.log(fallos === 0
-  ? '\nEl codigo del tema no usa nada que rompa en Safari, iOS, Firefox, Windows ni Linux.\n'
+  ? '\nEl codigo del tema no usa nada que rompa en Safari, iOS, Firefox, Windows ni Linux.\n(Aviso honesto: aqui no se puede ejecutar WebKit ni Gecko. Esto es analisis, no ejecucion.)\n'
   : `\n${fallos} comprobacion(es) en rojo.\n`);
 process.exit(fallos ? 1 : 0);

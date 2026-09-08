@@ -45,7 +45,29 @@ const articulo = { id: 3, title: 'Cómo entrenar', handle: 'como-entrenar', url:
 
 export const ctxBase = {
   shop: { name: 'Villumination', url: 'https://villuminations.com', description: 'Tienda fitness.',
-          enabled_payment_types: ['visa'], published_at: '2024-01-01', money_format: '${{amount}}' },
+          enabled_payment_types: ['visa'], published_at: '2024-01-01', money_format: '${{amount}}',
+          /* La tienda real tiene las cuentas de cliente activadas. Sin esto en
+             el contexto, el icono de cuenta de la cabecera no se renderizaba
+             NUNCA en las pruebas: las baterias daban verde sobre un marcado que
+             no era el que ve un visitante. Es el mismo agujero que tenia el
+             medidor de LCP cuando borraba los <img>. */
+          customer_accounts_enabled: true },
+  /* Los CINCO idiomas publicados de verdad (es primario, en, de, fr, ja). El
+     selector de idioma solo aparece cuando hay mas de uno, asi que sin esto
+     tampoco se probaba. endonym_name es como se llama cada idioma en si mismo,
+     que es como Shopify los lista. */
+  localization: {
+    language: { iso_code: 'es', endonym_name: 'Espanol' },
+    available_languages: [
+      { iso_code: 'es', endonym_name: 'Espanol' },
+      { iso_code: 'en', endonym_name: 'English' },
+      { iso_code: 'de', endonym_name: 'Deutsch' },
+      { iso_code: 'fr', endonym_name: 'Francais' },
+      { iso_code: 'ja', endonym_name: 'Nihongo' },
+    ],
+    country: { iso_code: 'CA', name: 'Canada' },
+    available_countries: [{ iso_code: 'CA', name: 'Canada' }],
+  },
   routes: { cart_add_url: '/cart/add', cart_url: '/cart', root_url: '/', search_url: '/search',
             account_url: '/account', all_products_collection_url: '/collections/all' },
   request: { page_type: 'index', path: '/', locale: { iso_code: 'es', root_url: '/' }, design_mode: false,
@@ -132,10 +154,35 @@ for (const [k, fn] of Object.entries(F)) e.registerFilter(k, fn);
    hace Shopify: {% form %} imprime <form> y {% endform %} imprime </form>. */
 export function prepararFuente(src) {
   return src
-    .replace(/\{%-?\s*form\b[\s\S]*?-?%\}/g, '<form>')
-    .replace(/\{%-?\s*endform\s*-?%\}/g, '</form>')
-    .replace(/\{%-?\s*paginate\b[\s\S]*?-?%\}/g, '')
-    .replace(/\{%-?\s*endpaginate\s*-?%\}/g, '');
+    /* {% render %} -> {% include %}, y hay que explicarlo porque parece un
+       atajo y es lo contrario.
+
+       El motor que se usa aqui (liquidjs) resuelve {% include %} contra la
+       carpeta de fragmentos, pero con {% render %} devuelve CADENA VACIA, sin
+       error. Comprobado con un fragmento de una linea: include da "HOLA",
+       render da "". Y como no lanza nada, nadie se entera.
+
+       El precio de no arreglarlo era enorme y llevaba tiempo pagandose: cada
+       {% render 'icon' %}, cada {% render 'structured-data' %}, cada
+       {% render 'meta-tags' %} salia VACIO en todas las baterias. Se estaba
+       comprobando un marcado sin iconos, sin datos estructurados y sin
+       etiquetas sociales, y dando verde.
+
+       La diferencia real entre los dos: render aisla el ambito y include lo
+       hereda. O sea que aqui un fragmento que dependiera de una variable del
+       padre pasaria, y en Shopify saldria vacio. Es un riesgo, y se asume a
+       conciencia: ver el marcado de verdad con un ambito mas permisivo atrapa
+       muchos mas fallos que no ver marcado ninguno. Los fragmentos de este
+       tema reciben todo por parametro, que es justo lo que hace que la
+       diferencia no muerda. */
+    /* Solo cuando lo que se pide es un ARCHIVO entre comillas. {% render block %}
+       es otra cosa: es como una seccion invita a un bloque de una aplicacion
+       ajena, no hay archivo que buscar, y traducirlo a include hacia reventar
+       tres secciones con "path must be a string". Se sustituye por una marca,
+       que es exactamente lo que representa: un hueco que rellena una app que
+       aqui no esta instalada. */
+    .replace(/\{%-?\s*render\s+block\s*-?%\}/g, '<!-- bloque de app -->')
+    .replace(/\{%(-?)\s*render\s+(['"])/g, '{%$1 include $2');
 }
 
 function tragar(nombre) {
@@ -151,6 +198,40 @@ function tragar(nombre) {
   };
 }
 for (const n of ['comment', 'javascript', 'stylesheet', 'style', 'schema']) e.registerTag(n, tragar(n));
+
+/* form y paginate son BLOQUES de verdad, no una sustitucion de texto.
+
+   Antes se hacian con dos expresiones regulares sobre el codigo de la seccion,
+   y eso tenia un agujero: solo se aplicaban al archivo que se cargaba a mano.
+   Un fragmento incluido desde dentro llegaba con su {% form %} intacto y el
+   motor reventaba con "tag form not found" -- o, peor, ni se llegaba a incluir.
+   Registrandolos en el motor funcionan en cualquier archivo, a cualquier
+   profundidad, que es como funcionan en Shopify.
+
+   El {% form %} de Shopify escribe ademas unos campos ocultos; aqui se emite
+   solo la etiqueta, que es lo que necesitan las comprobaciones de maquetacion
+   y accesibilidad. Lo que se comprueba del formulario de verdad -- que lleve
+   contact[email] y su etiqueta -- se ve igual, porque eso lo escribe la
+   plantilla, no el tag. */
+function bloque(nombre, antes, despues) {
+  return {
+    parse(token, remainTokens) {
+      this.hijos = [];
+      const flujo = this.liquid.parser.parseStream(remainTokens)
+        .on('template', (t) => this.hijos.push(t))
+        .on(`tag:end${nombre}`, () => flujo.stop())
+        .on('end', () => flujo.stop());
+      flujo.start();
+    },
+    *render(ctx, emitter) {
+      if (antes) emitter.write(antes);
+      yield this.liquid.renderer.renderTemplates(this.hijos, ctx, emitter);
+      if (despues) emitter.write(despues);
+    },
+  };
+}
+e.registerTag('form', bloque('form', '<form>', '</form>'));
+e.registerTag('paginate', bloque('paginate', '', ''));
 e.registerTag('section', { parse() {}, render() { return ''; } });
 e.registerTag('sections', { parse() {}, render() { return ''; } });
 

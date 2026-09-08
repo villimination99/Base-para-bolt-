@@ -180,6 +180,42 @@
         {%- if ig != blank -%}<a href="{{ ig }}" target="_blank" rel="noopener" class="instagram" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
       </div>
 
+      {%- comment -%}
+        LA CUENTA. Estaba solo en el pie, dentro del menu movil, y el resultado
+        se ve en el panel: cero clientes registrados. Un icono en la barra, al
+        lado del carrito, es donde la gente lo busca.
+
+        Solo aparece si las cuentas estan activadas en la tienda: si no lo
+        estan, el enlace llevaria a una pagina que no existe. Y cambia de texto
+        segun quien mire, que es lo que hace que un icono se entienda sin
+        explicacion: "Iniciar sesion" para quien no ha entrado, "Mi cuenta"
+        para quien si.
+      {%- endcomment -%}
+      {%- if section.settings.mostrar_cuenta and shop.customer_accounts_enabled -%}
+        {%- liquid
+          if customer
+            assign etiqueta_cuenta = 'customer.account.title' | t
+          else
+            assign etiqueta_cuenta = 'customer.login.title' | t
+          endif
+        -%}
+        <a href="{{ routes.account_url }}" class="nav-icon-btn nav-cuenta{% if customer %} tiene-sesion{% endif %}"
+           title="{{ etiqueta_cuenta | escape }}" aria-label="{{ etiqueta_cuenta | escape }}">
+          {%- render 'icon', name: 'user' -%}
+        </a>
+      {%- endif -%}
+
+      {%- comment -%}
+        EL IDIOMA. La tienda publica cinco, y hasta ahora solo se cambiaba
+        bajando hasta el pie. Quien entra en aleman o japones y no encuentra
+        como cambiar, se va. Aqui va el mismo formulario nativo de Shopify que
+        el del pie -- no un enlace inventado -- para que el cambio se recuerde
+        y las direcciones queden bien.
+      {%- endcomment -%}
+      {%- if section.settings.mostrar_idioma -%}
+        {%- render 'selector-idioma-barra' -%}
+      {%- endif -%}
+
       <a href="{{ routes.cart_url }}" class="cart-btn" id="cart-btn-open" aria-label="{{ 'general.cart.title' | t }} ({{ cart.item_count }})"
          {% if settings.cart_type == 'drawer' %}data-cart-drawer-open{% endif %}>
         {%- render 'icon', name: 'cart' -%}
@@ -299,7 +335,10 @@
       "label": "Encabezado fijo al hacer scroll",
       "default": true
     },
-    { "type": "header", "content": "Estilo del menú" },
+    {
+      "type": "header",
+      "content": "Estilo del menú"
+    },
     {
       "type": "checkbox",
       "id": "transparent_top",
@@ -318,7 +357,10 @@
       "default": 70,
       "info": "0% = totalmente transparente (efecto cristal). 100% = sólido."
     },
-    { "type": "header", "content": "Mega menú de colecciones" },
+    {
+      "type": "header",
+      "content": "Mega menú de colecciones"
+    },
     {
       "type": "text",
       "id": "collections_trigger",
@@ -338,6 +380,24 @@
     {
       "type": "paragraph",
       "content": "Añade bloques 'Entrada del mega menú' para elegir manualmente qué colecciones aparecen (con icono). Si no añades ninguno, se listan automáticamente."
+    },
+    {
+      "type": "header",
+      "content": "Acciones de la barra"
+    },
+    {
+      "type": "checkbox",
+      "id": "mostrar_cuenta",
+      "label": "Icono de cuenta en la barra",
+      "info": "Lleva a iniciar sesion o registrarse. Solo aparece si tienes las cuentas de cliente activadas en Shopify.",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "mostrar_idioma",
+      "label": "Selector de idioma en la barra",
+      "info": "Ademas del que ya hay en el pie. Solo aparece si tienes mas de un idioma publicado.",
+      "default": true
     }
   ],
   "blocks": [
@@ -345,21 +405,69 @@
       "type": "mega_link",
       "name": "Entrada del mega menú",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Colección" },
-        { "type": "select", "id": "icon", "label": "Icono", "options": [
-          { "value": "shirt", "label": "Camiseta (Ropa)" },
-          { "value": "dumbbell", "label": "Mancuerna (Equipo)" },
-          { "value": "supplement", "label": "Cápsula (Suplementos)" },
-          { "value": "book", "label": "Libro (Conocimiento)" },
-          { "value": "brain", "label": "Mente" },
-          { "value": "nutrition", "label": "Nutrición" },
-          { "value": "headphones", "label": "Audio" },
-          { "value": "trophy", "label": "Trofeo" },
-          { "value": "bolt", "label": "Rayo" },
-          { "value": "cube", "label": "Cubo 3D" }
-        ], "default": "shirt" },
-        { "type": "text", "id": "title", "label": "Título (opcional, usa el de la colección si va vacío)" },
-        { "type": "text", "id": "subtitle", "label": "Subtítulo corto (opcional)" }
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Colección"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            {
+              "value": "shirt",
+              "label": "Camiseta (Ropa)"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Mancuerna (Equipo)"
+            },
+            {
+              "value": "supplement",
+              "label": "Cápsula (Suplementos)"
+            },
+            {
+              "value": "book",
+              "label": "Libro (Conocimiento)"
+            },
+            {
+              "value": "brain",
+              "label": "Mente"
+            },
+            {
+              "value": "nutrition",
+              "label": "Nutrición"
+            },
+            {
+              "value": "headphones",
+              "label": "Audio"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "cube",
+              "label": "Cubo 3D"
+            }
+          ],
+          "default": "shirt"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título (opcional, usa el de la colección si va vacío)"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo corto (opcional)"
+        }
       ]
     }
   ]

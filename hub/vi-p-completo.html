@@ -68,8 +68,15 @@
     }
     .hero-motto.fade { opacity: 0; }
     .i18n-note { font-size: .68rem; color: #6a7480; margin: 12px 0 0; }
+    /* --vip-tope-superior lo pone el TEMA, y existe por un fallo que se veia en
+       un iPhone: dentro de la tienda hay una barra de navegacion fija de 80 px
+       encima de todo, y esta pildora, pegada a 14 px del borde del heroe,
+       quedaba justo debajo. No era solo que no se viera: al tocarla el toque se
+       lo llevaba el boton del menu, asi que el selector de idioma era
+       INTOCABLE. Medido con elementFromPoint sobre la pagina montada.
+       En el archivo suelto no hay barra, la variable no existe y vale 0. */
     .lang-switch {
-      position: absolute; top: 14px; right: 14px; z-index: 5;
+      position: absolute; top: calc(14px + var(--vip-tope-superior, 0px)); right: 14px; z-index: 5;
       background: rgba(10,10,16,0.7); border: 1px solid #2a2a3a; border-radius: 20px;
       padding: 4px 6px; display: flex; gap: 2px; backdrop-filter: blur(8px);
     }
@@ -133,6 +140,28 @@
       transition: transform .15s;
     }
     #profile-btn:active { transform: scale(0.92); }
+    /* La etiqueta va a la izquierda del boton y a su misma altura. Mismo hueco
+       de seguridad abajo, para que en un iPhone con barra inferior no quede
+       debajo de ella. */
+    #profile-hint {
+      position: fixed; right: 82px; z-index: 998;
+      bottom: calc(106px + env(safe-area-inset-bottom, 0px));
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(10,10,16,0.92); border: 1px solid rgba(5,217,232,0.35);
+      border-radius: 999px; padding: 7px 8px 7px 13px;
+      font-size: 0.76rem; color: #d9f7ff; white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      animation: hintEntra .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    #profile-hint[hidden] { display: none; }
+    #profile-hint button {
+      background: none; border: none; color: #7a8ea0; cursor: pointer;
+      font-family: inherit; font-size: 0.8rem; line-height: 1; padding: 4px;
+      min-width: 24px; min-height: 24px;
+    }
+    #profile-hint button:hover { color: #fff; }
+    @keyframes hintEntra { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { #profile-hint { animation: none; } }
 
     /* ================== EL BANNER ==================
        Lo que habia y por que se rehizo, medido:
@@ -999,6 +1028,15 @@
     .profile-user-info { margin-top: 16px; padding: 12px; background: #16161f; border-radius: 10px; font-size: 0.85rem; }
     .profile-user-info .label { color: #888899; }
     .profile-user-info .value { color: #05D9E8; font-weight: 600; }
+    /* El registro en la tienda, separado del perfil local por una linea: son
+       dos cosas distintas y tienen que LEERSE como dos cosas distintas. */
+    .profile-tienda { margin-top: 18px; padding-top: 16px; border-top: 1px solid #2a2a3a; }
+    .profile-tienda-cab { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .profile-tienda-txt { font-size: 0.78rem; color: #8fa3b5; line-height: 1.5; margin: 0 0 12px; }
+    .profile-tienda-nota { font-size: 0.7rem; color: #6f7d8c; margin: 8px 0 0; text-align: center; }
+    .profile-tienda-ok { margin-top: 14px; padding: 11px 13px; border-radius: 10px;
+      background: rgba(0,232,123,0.08); border: 1px solid rgba(0,232,123,0.3);
+      color: #7ff0be; font-size: 0.82rem; line-height: 1.5; }
 
     /* ===== FOOTER ===== */
     /* Era 'footer' a secas: repintaba EL PIE DE LA TIENDA -- fondo, borde y
@@ -1198,6 +1236,15 @@
 
 <!-- ===== BOTÓN FLOTANTE DE PERFIL (el menú lo pone tu tema Shopify) ===== -->
 <button id="profile-btn" aria-label="Mi perfil" title="Mi perfil — guarda tu peso, rutina y calorías">👤</button>
+<!-- La etiqueta que explica el boton. Un circulo con un munequito no dice
+     nada: quien no lo toca no sabe que ahi se guarda su progreso. Aparece
+     una sola vez, solo para quien todavia no tiene perfil, y se va en cuanto
+     se toca o se cierra. No es un anuncio: es el nombre del boton, puesto
+     fuera porque dentro no cabe. -->
+<div id="profile-hint" hidden>
+  <span>Guarda tu progreso</span>
+  <button type="button" id="profile-hint-x" aria-label="Cerrar aviso">✕</button>
+</div>
 
 <!-- ===== HERO ===== -->
 <div id="hero-section">
@@ -1958,7 +2005,7 @@
     <button class="profile-close" id="profile-close">✕</button>
     <div class="profile-title"><span>Perfil</span></div>
     <div class="profile-sub">Regístrate o inicia sesión para guardar tu progreso y personalizar las calorías con tu peso.</div>
-    <div class="profile-local">🔒 Este perfil vive <strong>solo en este navegador</strong>: nada se envía a ningún servidor. Aun así, no uses la contraseña de tu correo.</div>
+    <div class="profile-local">🔒 Tu peso, tus rutinas y tus calorías viven <strong>solo en este navegador</strong>: no se envían a ningún servidor. Aun así, no uses la contraseña de tu correo.<br>Lo único que puede salir de aquí es tu correo, y solo si lo pides tú abajo.</div>
     <div id="profile-form">
       <div class="profile-field">
         <label>Email</label>
@@ -1976,6 +2023,37 @@
         <button class="btn btn-primary" id="login-btn">Iniciar sesión</button>
         <button class="btn btn-outline" id="register-btn">Registrarse</button>
       </div>
+
+      <!-- ===== Y ADEMAS, SI SE QUIERE, EN LA TIENDA =====
+           Lo de arriba se queda en el navegador y por eso se pierde al cambiar
+           de telefono o al borrar los datos del sitio. Esto es lo contrario, y
+           se dice con todas las letras antes de pedir nada: crea una cuenta de
+           cliente DE VERDAD en la tienda, con su correo, y desde ahi se puede
+           recuperar el progreso y recibir lo que se publique.
+
+           Es un formulario nativo de Shopify escrito a mano: mismo destino y
+           mismos campos que el formulario "customer" de Liquid, para que
+           funcione igual servido por el tema que pegado en una pagina.
+           Escrito SIN las llaves de Liquid a proposito: dentro de la seccion
+           del tema, un comentario de HTML no protege nada -- Liquid se procesa
+           antes que el HTML -- y la etiqueta de ejemplo se ejecutaba de verdad,
+           abriendo un <form> que nadie cerraba. Lo cazo el contador de
+           etiquetas de la bateria de secciones.
+           La etiqueta deja marcado de donde vino cada contacto. -->
+      <form class="profile-tienda" method="post" action="/contact" accept-charset="UTF-8" data-registro-tienda>
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="vi-p,newsletter">
+        <div class="profile-tienda-cab">☁️ <strong>Guárdalo también en la tienda</strong></div>
+        <p class="profile-tienda-txt">Lo de arriba vive solo en este navegador. Si dejas tu correo creamos tu cuenta en la tienda y no lo pierdes al cambiar de móvil.</p>
+        <div class="profile-field">
+          <label for="tienda-email">Correo para la cuenta</label>
+          <input type="email" id="tienda-email" name="contact[email]" placeholder="tu@email.com" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn-outline" style="width:100%;justify-content:center">Crear mi cuenta en la tienda</button>
+        <p class="profile-tienda-nota">Solo el correo. Nada de pesos ni rutinas: eso no sale de aquí.</p>
+      </form>
+      <div class="profile-tienda-ok" id="tienda-ok" hidden>✅ Listo. Tu cuenta está creada en la tienda; revisa tu correo.</div>
     </div>
     <div id="profile-info" style="display:none;">
       <div class="profile-user-info">
@@ -2098,6 +2176,68 @@
       profileInfo.style.display = 'none';
     }
   }
+  /* ===== EL REGISTRO EN LA TIENDA =====
+     Tres cosas pequenas, y ninguna es adorno:
+
+     1. Al abrir el perfil, el correo del formulario de la tienda se rellena
+        con el que la persona ya escribio arriba. Escribir el mismo correo dos
+        veces en la misma ventana es donde se abandona un formulario.
+     2. Al volver de Shopify, la direccion trae ?customer_posted=true. Es la
+        unica senal de que salio bien, y sin leerla el visitante vuelve a una
+        pantalla identica a la de antes y no sabe si se registro o no.
+     3. Se abre el perfil solo en ese caso, para que vea la confirmacion. */
+  /* La etiqueta del boton de perfil. Se ensena solo a quien no tiene perfil y
+     no la ha cerrado antes, y se retira en cuanto abre el perfil: a partir de
+     ahi ya sabe que esta ahi y repetirselo seria ruido. */
+  (function avisoDelPerfil() {
+    var aviso = document.getElementById('profile-hint');
+    var boton = document.getElementById('profile-btn');
+    if (!aviso || !boton) return;
+    var cerrado = false, tienePerfil = false;
+    try {
+      cerrado = localStorage.getItem('vill_hint_perfil') === 'no';
+      tienePerfil = !!localStorage.getItem('vill_user');
+    } catch (e) {}
+    if (cerrado || tienePerfil) return;
+    var quitar = function () {
+      aviso.hidden = true;
+      try { localStorage.setItem('vill_hint_perfil', 'no'); } catch (e2) {}
+    };
+    /* Un segundo y medio: lo justo para que no compita con lo primero que se
+       ve, y lo bastante pronto para que siga estando cuando se mira abajo. */
+    setTimeout(function () { aviso.hidden = false; }, 1500);
+    aviso.querySelector('span').addEventListener('click', function () { quitar(); boton.click(); });
+    document.getElementById('profile-hint-x').addEventListener('click', quitar);
+    boton.addEventListener('click', quitar);
+  })();
+
+  (function registroEnTienda() {
+    var form = document.querySelector('[data-registro-tienda]');
+    var ok = document.getElementById('tienda-ok');
+    if (!form) return;
+
+    var arriba = document.getElementById('login-email');
+    var campo = document.getElementById('tienda-email');
+    if (arriba && campo) {
+      var copiar = function () { if (!campo.value && arriba.value) campo.value = arriba.value; };
+      arriba.addEventListener('blur', copiar);
+      var abrir = document.getElementById('profile-btn');
+      if (abrir) abrir.addEventListener('click', copiar);
+    }
+
+    var vuelta = false;
+    try { vuelta = /(^|[?&])customer_posted=true/.test(location.search); } catch (e) {}
+    if (vuelta && ok) {
+      ok.hidden = false;
+      form.hidden = true;
+      var m = document.getElementById('profile-modal');
+      if (m) m.classList.add('open');
+      /* Se limpia la direccion para que al recargar no vuelva a felicitar a
+         nadie por algo que ya paso. */
+      try { history.replaceState({}, '', location.pathname + location.hash); } catch (e2) {}
+    }
+  })();
+
   document.getElementById('profile-btn').addEventListener('click', function() {
     loadUser(); updateProfileUI(); profileModal.classList.add('open');
   });
@@ -4215,8 +4355,25 @@
     });
     var saved = null;
     try { saved = localStorage.getItem('vill_lang'); } catch(e) {}
-    var nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
-    var start = saved || (nav === 'es' ? 'es' : (nav === 'fr' ? 'fr' : 'en'));
+    /* EL IDIOMA LO MANDA LA TIENDA, no el navegador.
+
+       Antes esto miraba solo navigator.language, y el resultado se veia en la
+       pagina: alguien entraba a la tienda en frances -- menus, botones y pie en
+       frances -- y el hub le salia en INGLES, porque su telefono estaba en
+       ingles. Dos idiomas a la vez en la misma pantalla.
+
+       Ahora el orden es el que tiene sentido: primero lo que el visitante haya
+       elegido A MANO aqui dentro, que es una decision suya y se respeta; luego
+       el idioma en el que esta viendo la tienda, que el tema publica en
+       data-idioma-tienda; y solo si no hay tienda -- el archivo suelto -- el
+       del navegador. El hub existe en tres idiomas, asi que aleman y japones
+       caen en ingles, y para eso esta la nota que ya avisa de que los menus,
+       alimentos y ejercicios van en espanol. */
+    var raiz = document.getElementById('vill-hub');
+    var tienda = raiz ? (raiz.getAttribute('data-idioma-tienda') || '').slice(0, 2).toLowerCase() : '';
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var pref = tienda || nav || 'es';
+    var start = saved || (pref === 'es' ? 'es' : (pref === 'fr' ? 'fr' : 'en'));
     applyLang(start);
   })();
 

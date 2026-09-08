@@ -22,10 +22,32 @@
 
 {{ 'vi-p.css' | asset_url | stylesheet_tag }}
 
-<div id="vill-hub">
+{%- comment -%}
+  Dos cosas que el hub necesita saber y que solo puede decirle el tema:
+
+  data-idioma-tienda — en que idioma esta viendo la tienda este visitante. Sin
+  esto el hub decidia por su cuenta mirando el navegador, y alguien con la
+  tienda en frances y el telefono en ingles se encontraba el hub en ingles
+  dentro de una pagina en frances.
+
+  --vip-tope-superior — cuanto ocupa la barra de navegacion fija. La pildora de
+  idioma del hub va pegada al borde de arriba del heroe, y en una pagina del
+  tema eso cae justo debajo de la barra: no se veia y, peor, al tocarla
+  respondia el boton del menu. Ochenta de barra mas doce de aire.
+{%- endcomment -%}
+<div id="vill-hub" data-idioma-tienda="{{ request.locale.iso_code }}" style="--vip-tope-superior:92px">
 
 <!-- ===== BOTÓN FLOTANTE DE PERFIL (el menú lo pone tu tema Shopify) ===== -->
 <button id="profile-btn" aria-label="Mi perfil" title="Mi perfil — guarda tu peso, rutina y calorías">👤</button>
+<!-- La etiqueta que explica el boton. Un circulo con un munequito no dice
+     nada: quien no lo toca no sabe que ahi se guarda su progreso. Aparece
+     una sola vez, solo para quien todavia no tiene perfil, y se va en cuanto
+     se toca o se cierra. No es un anuncio: es el nombre del boton, puesto
+     fuera porque dentro no cabe. -->
+<div id="profile-hint" hidden>
+  <span>Guarda tu progreso</span>
+  <button type="button" id="profile-hint-x" aria-label="Cerrar aviso">✕</button>
+</div>
 
 <!-- ===== HERO ===== -->
 <div id="hero-section">
@@ -786,7 +808,7 @@
     <button class="profile-close" id="profile-close">✕</button>
     <div class="profile-title"><span>Perfil</span></div>
     <div class="profile-sub">Regístrate o inicia sesión para guardar tu progreso y personalizar las calorías con tu peso.</div>
-    <div class="profile-local">🔒 Este perfil vive <strong>solo en este navegador</strong>: nada se envía a ningún servidor. Aun así, no uses la contraseña de tu correo.</div>
+    <div class="profile-local">🔒 Tu peso, tus rutinas y tus calorías viven <strong>solo en este navegador</strong>: no se envían a ningún servidor. Aun así, no uses la contraseña de tu correo.<br>Lo único que puede salir de aquí es tu correo, y solo si lo pides tú abajo.</div>
     <div id="profile-form">
       <div class="profile-field">
         <label>Email</label>
@@ -804,6 +826,37 @@
         <button class="btn btn-primary" id="login-btn">Iniciar sesión</button>
         <button class="btn btn-outline" id="register-btn">Registrarse</button>
       </div>
+
+      <!-- ===== Y ADEMAS, SI SE QUIERE, EN LA TIENDA =====
+           Lo de arriba se queda en el navegador y por eso se pierde al cambiar
+           de telefono o al borrar los datos del sitio. Esto es lo contrario, y
+           se dice con todas las letras antes de pedir nada: crea una cuenta de
+           cliente DE VERDAD en la tienda, con su correo, y desde ahi se puede
+           recuperar el progreso y recibir lo que se publique.
+
+           Es un formulario nativo de Shopify escrito a mano: mismo destino y
+           mismos campos que el formulario "customer" de Liquid, para que
+           funcione igual servido por el tema que pegado en una pagina.
+           Escrito SIN las llaves de Liquid a proposito: dentro de la seccion
+           del tema, un comentario de HTML no protege nada -- Liquid se procesa
+           antes que el HTML -- y la etiqueta de ejemplo se ejecutaba de verdad,
+           abriendo un <form> que nadie cerraba. Lo cazo el contador de
+           etiquetas de la bateria de secciones.
+           La etiqueta deja marcado de donde vino cada contacto. -->
+      <form class="profile-tienda" method="post" action="/contact" accept-charset="UTF-8" data-registro-tienda>
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="vi-p,newsletter">
+        <div class="profile-tienda-cab">☁️ <strong>Guárdalo también en la tienda</strong></div>
+        <p class="profile-tienda-txt">Lo de arriba vive solo en este navegador. Si dejas tu correo creamos tu cuenta en la tienda y no lo pierdes al cambiar de móvil.</p>
+        <div class="profile-field">
+          <label for="tienda-email">Correo para la cuenta</label>
+          <input type="email" id="tienda-email" name="contact[email]" placeholder="tu@email.com" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn-outline" style="width:100%;justify-content:center">Crear mi cuenta en la tienda</button>
+        <p class="profile-tienda-nota">Solo el correo. Nada de pesos ni rutinas: eso no sale de aquí.</p>
+      </form>
+      <div class="profile-tienda-ok" id="tienda-ok" hidden>✅ Listo. Tu cuenta está creada en la tienda; revisa tu correo.</div>
     </div>
     <div id="profile-info" style="display:none;">
       <div class="profile-user-info">

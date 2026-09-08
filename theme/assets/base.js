@@ -873,6 +873,25 @@
     var iv = setInterval(tick, 1000);
   });
 
+  /* ---------- Selector de idioma de la barra ---------- */
+  /* El <select> nativo va oculto encima del boton del globo. Aqui solo se hacen
+     dos cosas: enviar el formulario en cuanto se elige, para que no haga falta
+     un segundo toque, y esconder el boton de enviar, que solo existe para quien
+     no tenga JavaScript. Se esconde desde aqui y no desde el CSS a proposito:
+     si la hoja carga y este guion no, el boton tiene que seguir ahi. */
+  mod(function () {
+    var sel = $('[data-idioma-barra]');
+    if (!sel || !once(sel, 'idioma-barra')) return;
+    var formulario = sel.form || sel.closest('form');
+    if (!formulario) return;
+    var enviar = formulario.querySelector('.nav-idioma-enviar');
+    if (enviar) enviar.hidden = true;
+    sel.addEventListener('change', function () {
+      if (typeof formulario.requestSubmit === 'function') formulario.requestSubmit();
+      else formulario.submit();
+    });
+  });
+
   /* ---------- Footer motivational quotes (fade rotation) ---------- */
   mod(function () {
     var wrap = $('[data-quotes]');

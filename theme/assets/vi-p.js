@@ -408,6 +408,68 @@
       profileInfo.style.display = 'none';
     }
   }
+  /* ===== EL REGISTRO EN LA TIENDA =====
+     Tres cosas pequenas, y ninguna es adorno:
+
+     1. Al abrir el perfil, el correo del formulario de la tienda se rellena
+        con el que la persona ya escribio arriba. Escribir el mismo correo dos
+        veces en la misma ventana es donde se abandona un formulario.
+     2. Al volver de Shopify, la direccion trae ?customer_posted=true. Es la
+        unica senal de que salio bien, y sin leerla el visitante vuelve a una
+        pantalla identica a la de antes y no sabe si se registro o no.
+     3. Se abre el perfil solo en ese caso, para que vea la confirmacion. */
+  /* La etiqueta del boton de perfil. Se ensena solo a quien no tiene perfil y
+     no la ha cerrado antes, y se retira en cuanto abre el perfil: a partir de
+     ahi ya sabe que esta ahi y repetirselo seria ruido. */
+  (function avisoDelPerfil() {
+    var aviso = document.getElementById('profile-hint');
+    var boton = document.getElementById('profile-btn');
+    if (!aviso || !boton) return;
+    var cerrado = false, tienePerfil = false;
+    try {
+      cerrado = localStorage.getItem('vill_hint_perfil') === 'no';
+      tienePerfil = !!localStorage.getItem('vill_user');
+    } catch (e) {}
+    if (cerrado || tienePerfil) return;
+    var quitar = function () {
+      aviso.hidden = true;
+      try { localStorage.setItem('vill_hint_perfil', 'no'); } catch (e2) {}
+    };
+    /* Un segundo y medio: lo justo para que no compita con lo primero que se
+       ve, y lo bastante pronto para que siga estando cuando se mira abajo. */
+    setTimeout(function () { aviso.hidden = false; }, 1500);
+    aviso.querySelector('span').addEventListener('click', function () { quitar(); boton.click(); });
+    document.getElementById('profile-hint-x').addEventListener('click', quitar);
+    boton.addEventListener('click', quitar);
+  })();
+
+  (function registroEnTienda() {
+    var form = document.querySelector('[data-registro-tienda]');
+    var ok = document.getElementById('tienda-ok');
+    if (!form) return;
+
+    var arriba = document.getElementById('login-email');
+    var campo = document.getElementById('tienda-email');
+    if (arriba && campo) {
+      var copiar = function () { if (!campo.value && arriba.value) campo.value = arriba.value; };
+      arriba.addEventListener('blur', copiar);
+      var abrir = document.getElementById('profile-btn');
+      if (abrir) abrir.addEventListener('click', copiar);
+    }
+
+    var vuelta = false;
+    try { vuelta = /(^|[?&])customer_posted=true/.test(location.search); } catch (e) {}
+    if (vuelta && ok) {
+      ok.hidden = false;
+      form.hidden = true;
+      var m = document.getElementById('profile-modal');
+      if (m) m.classList.add('open');
+      /* Se limpia la direccion para que al recargar no vuelva a felicitar a
+         nadie por algo que ya paso. */
+      try { history.replaceState({}, '', location.pathname + location.hash); } catch (e2) {}
+    }
+  })();
+
   document.getElementById('profile-btn').addEventListener('click', function() {
     loadUser(); updateProfileUI(); profileModal.classList.add('open');
   });
@@ -2525,8 +2587,25 @@
     });
     var saved = null;
     try { saved = localStorage.getItem('vill_lang'); } catch(e) {}
-    var nav = (navigator.language || 'es').slice(0, 2).toLowerCase();
-    var start = saved || (nav === 'es' ? 'es' : (nav === 'fr' ? 'fr' : 'en'));
+    /* EL IDIOMA LO MANDA LA TIENDA, no el navegador.
+
+       Antes esto miraba solo navigator.language, y el resultado se veia en la
+       pagina: alguien entraba a la tienda en frances -- menus, botones y pie en
+       frances -- y el hub le salia en INGLES, porque su telefono estaba en
+       ingles. Dos idiomas a la vez en la misma pantalla.
+
+       Ahora el orden es el que tiene sentido: primero lo que el visitante haya
+       elegido A MANO aqui dentro, que es una decision suya y se respeta; luego
+       el idioma en el que esta viendo la tienda, que el tema publica en
+       data-idioma-tienda; y solo si no hay tienda -- el archivo suelto -- el
+       del navegador. El hub existe en tres idiomas, asi que aleman y japones
+       caen en ingles, y para eso esta la nota que ya avisa de que los menus,
+       alimentos y ejercicios van en espanol. */
+    var raiz = document.getElementById('vill-hub');
+    var tienda = raiz ? (raiz.getAttribute('data-idioma-tienda') || '').slice(0, 2).toLowerCase() : '';
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var pref = tienda || nav || 'es';
+    var start = saved || (pref === 'es' ? 'es' : (pref === 'fr' ? 'fr' : 'en'));
     applyLang(start);
   })();
 
