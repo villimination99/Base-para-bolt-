@@ -7,7 +7,11 @@ import { fileURLToPath } from 'url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const PAGINAS = ['componentes.html', 'vip.html', 'secciones.html'];
-const ANCHOS = [320, 375, 390, 900, 1440];
+/* 900 y 1200 son FRONTERAS de la hoja de estilos, y las fronteras es donde se
+   rompen las cosas: justo en 900 empieza la fila de cifras del banner y justo
+   en 1200 vuelven a ser cinco. 1024 es el iPad apaisado, que no es ninguna de
+   las dos y es de los tamanos que mas visitan una tienda. */
+const ANCHOS = [320, 375, 390, 768, 900, 1024, 1200, 1440];
 
 const navegador = await chromium.launch({
   executablePath: process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
@@ -34,11 +38,29 @@ for (const pagina of PAGINAS) {
         if ((e.textContent || '').trim() !== '') return false;
         return true; // sin texto: nada que perder
       };
+      /* UN CARRIL NO ES UN DESBORDE. La tira de cifras del banner VIP es, en
+         movil, un carril que se desliza con el dedo: overflow-x:auto,
+         scroll-snap y sin barra visible. Sus celdas se salen de la ventana a
+         proposito y se alcanzan deslizando, igual que en cualquier carrusel.
+         Marcarlas era acusar al diseno de un fallo que no tiene.
+
+         Lo que NO se perdona sigue siendo overflow:hidden, que es recortar de
+         verdad: ahi el texto que se sale no lo alcanza nadie. Esa distincion
+         es justo la que faltaba, y no la de antes ("tiene un ancestro que
+         recorta"), que se tragaba el fallo de verdad de esta misma tira. */
+      const enUnCarril = e => {
+        for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+          const o = getComputedStyle(a);
+          const desliza = /auto|scroll/.test(o.overflowX) || /auto|scroll/.test(o.overflowY);
+          if (desliza && a.scrollWidth > a.clientWidth + 1) return true;
+        }
+        return false;
+      };
       for (const e of document.querySelectorAll('body *')) {
         const r = e.getBoundingClientRect();
         if (!r.width) continue;
         const nombre = (typeof e.className === 'string' && e.className.split(' ')[0]) || e.tagName;
-        if ((r.right > vw + 1 || r.left < -1) && !decorativo(e)) out.push(`${nombre} se sale ${Math.round(Math.max(r.right - vw, -r.left))}px`);
+        if ((r.right > vw + 1 || r.left < -1) && !decorativo(e) && !enUnCarril(e)) out.push(`${nombre} se sale ${Math.round(Math.max(r.right - vw, -r.left))}px`);
         else if (!e.children.length && e.scrollWidth > e.clientWidth + 1
                  && getComputedStyle(e).textOverflow !== 'ellipsis') out.push(`${nombre} texto recortado`);
       }

@@ -1148,15 +1148,83 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    logotipo, que es lo unico que necesita el navegador para reservar el hueco
    antes de descargarlo. El tamano en pantalla lo sigue poniendo esta regla. */
 
+/* ---- El hueco de la esfera: UNA sola fuente de verdad ----
+   Aqui estaba el fallo de la captura: la frase, el nombre de la marca y la
+   esfera pintados unos encima de otros.
+
+   La causa no era la frase. Era que la esfera es MUCHO mas grande que la caja
+   que la sostiene. El emblema mide clamp(160px,42vw,230px) -- 164 px en un
+   iPhone 12 -- y el motor dibuja la esfera con radio min(radio*2,5 / 22% del
+   alto / 31,9% del ancho): 124 px de radio, 248 de diametro. Son 84 px que la
+   esfera se sale de su caja por abajo, y en el flujo no los reservaba nadie,
+   asi que el logotipo, el lema y el boton vivian DENTRO del casquete inferior.
+   Medido: la esfera invadia el logotipo 32 px en un iPhone 12, 77 en un
+   portatil y 121 en un monitor de 1920, y la frase se solapaba con el
+   logotipo 236x21 px.
+
+   No se veia porque hasta la version 4.53.0 el logotipo estaba en opacidad 0
+   hasta el final de la secuencia. Al sacarlo de ahi para arreglar el LCP
+   (4300 -> 1240 ms) quedo a la vista una colision que llevaba tiempo puesta.
+
+   Se arregla reservando el vuelo de la esfera en la maquetacion, y la unica
+   manera de que la reserva no se equivoque nunca es que el CSS y el motor
+   usen EL MISMO numero. Antes iba al reves: el JS publicaba --esfera-r y el
+   CSS tenia 120 px de reserva por si acaso -- un numero que no acierta en
+   ninguna pantalla (los reales son 120, 124, 137, 198, 225 y 238) y que en la
+   version corta no llegaba nunca, porque alli no hay malla que medir. Ahora la
+   formula esta AQUI, .splash-medida la convierte en pixeles y assets/intro.js
+   la lee de ahi. Si manana se cambia el tamano del emblema, la esfera, el
+   hueco y el dibujo se mueven juntos.
+
+   Se usa vh y no svh a proposito. svh es de Safari 15.4 y Chrome 108: con un
+   navegador anterior el min() entero se volveria invalido y la reserva
+   desapareceria de golpe. Ademas vh nunca es MENOR que el alto que mide el
+   motor, asi que el unico error posible es que sobre hueco -- que no se ve --
+   en vez de que falte, que es justo la colision que estamos quitando. */
+.splash-intro{
+  /* El suelo es 128 px y no 160. Con 160, en una pantalla de 320 px de ancho
+     -- un iPhone SE de primera generacion sigue siendo eso -- toda la escena
+     bajaba lo justo para que el borde del emblema se metiera 8 px DEBAJO del
+     boton de SALTAR. Medido, no supuesto. Por debajo de 381 px de ancho manda
+     ahora el 42vw, que es la proporcion, y la escena respira. */
+  --emblema:clamp(128px,42vw,230px);
+  --esfera-r:min(calc(var(--emblema) * 1.25),22vh,31.9vw);
+  /* 1,083 y no 1: con perspectiva, los nodos inclinados hacia el visitante se
+     separan del centro mas que la propia silueta, y el maximo real de la
+     proyeccion es 1,083 R. Es el mismo numero con el que el motor calcula su
+     margen lateral. */
+  --esfera-vuelo:max(0px,calc(var(--esfera-r) * 1.083 - var(--emblema) / 2))}
+.splash-emblem{width:var(--emblema);height:var(--emblema)}
+/* La regla convierte la formula de arriba en pixeles medibles. No se puede
+   leer una variable con vw/vh desde JavaScript -- getComputedStyle devuelve el
+   texto "min(...)" tal cual, sin resolver -- pero SI se puede leer el alto de
+   un elemento. Cero de ancho, invisible y fuera de cualquier flujo: no pinta,
+   no ocupa y no se lee. */
+.splash-medida{position:absolute;left:0;top:0;width:0;height:var(--esfera-r);
+  visibility:hidden;pointer-events:none}
+/* El hueco va como margen del emblema, no como separacion del contenedor,
+   para que las frases caigan DENTRO del hueco: debajo de la esfera y encima
+   del nombre de la marca, que es donde el ojo las espera. */
+.splash-emblem{margin-bottom:var(--esfera-vuelo)}
+
 /* ---- Frases de motivacion ----
-   Se colocan justo debajo del emblema usando EL MISMO clamp que le da tamano,
-   asi que van pegadas a el en cualquier pantalla sin medir nada desde el JS.
-   Estan fuera del flujo para no mover el titulo, que ocupa su sitio despues.
+   Van EN EL FLUJO, en el hueco que deja la esfera, y no colgadas de un top
+   calculado. Un top absoluto no se entera de si lo que hay debajo cabe: por
+   eso acababan encima del logotipo. En el flujo el hueco existe de verdad y
+   nada puede ocuparlo dos veces.
+
+   La caja reserva su altura desde el primer fotograma -- las tres frases estan
+   en la misma celda de la rejilla, asi que mide lo que la mas alta -- y al
+   cambiar de frase no se mueve nada: cero desplazamiento de maquetacion.
    La animacion solo toca transform y opacity: la compone la tarjeta grafica y
    no le quita un fotograma a la secuencia del lienzo. */
-.splash-frases{position:absolute;left:0;right:0;
-  top:calc(clamp(160px,42vw,230px) / 2 + var(--esfera-r,120px) + 2.4rem);
-  display:grid;place-items:center;pointer-events:none;z-index:3}
+.splash-frases{position:static;display:grid;place-items:center;
+  pointer-events:none;z-index:3}
+/* En la version corta el motor no muestra NINGUNA frase: no caben tres frases
+   con sus fundidos en dos segundos y medio de secuencia, y media frase es
+   peor que ninguna. Si la caja siguiera reservando su altura, la version
+   corta llevaria un hueco vacio en mitad de la portada. */
+.splash-intro[data-duracion="corta"] .splash-frases{display:none}
 .splash-frase{grid-area:1/1;margin:0;max-width:min(90vw,32rem);
   font-family:var(--font-heading);font-weight:800;
   font-size:clamp(1rem,4.2vw,1.55rem);letter-spacing:.06em;line-height:1.28;
@@ -1213,6 +1281,36 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 .splash-skip:hover,.splash-skip:focus-visible{color:#fff;
   border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.1)}
 .splash-skip:focus-visible{outline:2px solid var(--neon-cyan,#00d4ff);outline-offset:3px}
+
+/* ---- Pantallas bajas: el movil tumbado ----
+   Con el movil de lado la ventana mide 390 px de alto y la portada pedia 519.
+   El boton de ENTRAR quedaba 41 px por debajo del borde, y la intro es
+   position:fixed con overflow:hidden: no habia forma de bajar hasta el. Se
+   entraba por SALTAR o no se entraba, y quien no viera ese boton discreto
+   arriba a la derecha se quedaba fuera de la tienda. Medido en 844x390.
+
+   El limite es el ALTO, no el ancho ni la orientacion declarada: una ventana
+   de escritorio a media pantalla tiene el mismo problema y ninguna consulta
+   de orientation la ve. La escena se encoge en bloque -- el emblema manda,
+   porque la esfera y el hueco cuelgan de el -- para que la unica puerta de la
+   tienda este SIEMPRE dentro de la pantalla. */
+@media (max-height:560px){
+  .splash-intro{--emblema:clamp(96px,26vh,150px)}
+  .splash-content{gap:.7rem;padding:.6rem}
+  .splash-title{font-size:clamp(1.05rem,4.4vw,1.5rem)}
+  .splash-logotipo{max-height:52px}
+  .splash-mono{font-size:clamp(24px,8vh,46px)}
+  .splash-frase{font-size:clamp(.85rem,3.2vw,1.05rem)}
+  .splash-tagline{font-size:clamp(.72rem,2.4vw,.9rem);letter-spacing:.1em}
+  .splash-enter-btn{padding:.7rem 1.8rem}
+}
+/* Por debajo de 420 px de alto ya no es cuestion de encoger, es de elegir. Se
+   queda lo que identifica la tienda y lo que deja entrar: marca, frase y
+   boton. El lema es lo unico prescindible de los cinco. */
+@media (max-height:420px){
+  .splash-logotipo{max-height:40px}
+  .splash-tagline{display:none}
+}
 
 /* Sin movimiento: no hay secuencia que esperar, asi que todo esta desde el
    primer momento. El motor pinta el estado final del lienzo y pone la clase. */
@@ -1590,11 +1688,26 @@ body{background-image:
   .vip-banner-inner { padding: 1.35rem 1.1rem !important; }
 }
 
-/* En escritorio las cifras vuelven a una sola fila apretada: cinco celdas en
-   la columna izquierda caben de sobra y asi la seccion no crece. */
+/* En escritorio las cifras vuelven a una fila apretada. CINCO CELDAS SOLO
+   CUANDO CABEN CINCO, y ese matiz costo una etiqueta cortada: con
+   repeat(5,...) impuesto desde 900 px, la columna izquierda del banner mide
+   357 px en una pantalla de 900, cada celda se quedaba en 49 px de texto util
+   y "FRECUENCIAS" -- que con nowrap pide 75 -- se cortaba a la mitad sin
+   siquiera unos puntos suspensivos que avisaran. Se veia igual en un iPad
+   apaisado y en un portatil de 1100. Medido con la hoja de estilos de verdad;
+   antes esta bateria comparaba contra una copia congelada del CSS y por eso
+   no lo veia.
+
+   Entre 900 y 1199 las celdas se reparten por lo que de verdad cabe -- tres o
+   cuatro por fila -- y a partir de 1200 vuelven las cinco en linea, que es
+   donde el ancho da para las cinco sin apretar el texto. */
 @media (min-width: 900px) {
-  .vip-stats { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: .5rem; }
+  .vip-stats { grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)) !important; gap: .5rem; }
   .vip-stat { padding: .7rem .5rem !important; }
+  .vip-stat span { font-size: .58rem; letter-spacing: .05em; }
+}
+@media (min-width: 1200px) {
+  .vip-stats { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
   .vip-stat span { font-size: .6rem; letter-spacing: .06em; }
 }
 
@@ -1687,3 +1800,163 @@ body{background-image:
    Un carril siempre empieza pegado al inicio. */
 .vip-stats { justify-content: flex-start !important; }
 @media (max-width: 719px) { .vip-tools { justify-content: flex-start !important; } }
+
+
+/* ==========================================================================
+   EL ROTULO DE LAS COLECCIONES — cuando la foto YA lleva el nombre escrito
+   ==========================================================================
+   Esto sale de un caso real de la tienda: las imagenes de las colecciones
+   llevan el nombre rotulado DENTRO de la foto, y el tema le pintaba encima su
+   propio titulo. Dos textos distintos, con dos tipografias, en el mismo sitio.
+   No es un fallo del tema ni de las fotos: es que nadie le habia dicho al tema
+   que las fotos ya vienen rotuladas.
+
+   Ahora se elige en Configuracion del tema, y la eleccion viaja en una clase
+   del <body>, asi que UNA decision arregla los cuatro sitios donde la cosa
+   pasa: la lista de colecciones, el mosaico, la pagina de todas las
+   colecciones y la portada de cada coleccion.
+
+   EL TEXTO NUNCA SE BORRA DEL CODIGO. En el modo "solo la foto" el titulo se
+   esconde a la vista con la misma tecnica que usa el tema para los textos de
+   lector de pantalla -- sigue en el HTML, sigue en el h1/h2/h3 que le toca y
+   sigue contando para Google. Borrarlo habria costado posicionamiento: el
+   nombre de la coleccion en un encabezado es de las senales mas basicas que
+   lee un buscador, y un texto dentro de un JPEG no lo lee ninguno. */
+
+/* --- 1. Debajo de la imagen: la foto queda limpia --- */
+.rotulo-debajo .collection-tile{aspect-ratio:auto}
+.rotulo-debajo .collection-tile-media{position:relative;inset:auto;aspect-ratio:4/3;
+  border-radius:1rem;overflow:hidden}
+.rotulo-debajo .collection-tile-overlay{display:none}
+.rotulo-debajo .collection-tile-title{position:static;left:auto;bottom:auto;
+  padding:.7rem .1rem 0;font-size:1.1rem}
+
+/* El mosaico tiene celdas de alto fijo y la imagen colocada encima de todo.
+   Con dos filas de rejilla -- foto arriba, rotulo abajo -- la foto sigue
+   llenando lo que le sobra a cada celda, tanto en las pequenas como en la
+   grande que ocupa dos por dos, sin tocar el marcado. */
+.rotulo-debajo .catmosaic-tile{display:grid;grid-template-rows:1fr auto}
+.rotulo-debajo .catmosaic-tile img{position:relative;inset:auto;grid-row:1;
+  width:100%;height:100%;min-height:0;object-fit:cover}
+.rotulo-debajo .catmosaic-shade{display:none}
+.rotulo-debajo .catmosaic-body{position:static;grid-row:2;left:auto;right:auto;bottom:auto;
+  padding:.7rem .9rem .8rem;background:rgba(5,5,16,.92)}
+/* El rotulo se come alto de la celda, y las celdas del mosaico lo tienen
+   fijo: sin esto, en las pequenas la foto se quedaba en un tercio de lo que
+   era. Se le devuelve a la rejilla lo que el rotulo le quita. */
+.rotulo-debajo .catmosaic{grid-auto-rows:190px}
+@media (max-width:749px){.rotulo-debajo .catmosaic{grid-auto-rows:165px}}
+
+.rotulo-debajo .col-index-tile{min-height:0}
+.rotulo-debajo .col-index-media{position:relative;inset:auto;aspect-ratio:4/3}
+.rotulo-debajo .col-index-overlay,
+.rotulo-debajo .col-index-grain{display:none}
+.rotulo-debajo .col-index-body{height:auto;min-height:0;padding:1rem 1.2rem 1.2rem}
+
+/* La portada de la coleccion solo se reordena cuando HAY foto. Sin foto, el
+   fondo de neon es un fondo y no hay nada con lo que chocar: se queda como
+   estaba, con el titulo dentro. */
+.rotulo-debajo .collection-hero.has-img{display:block;min-height:0}
+.rotulo-debajo .collection-hero.has-img .collection-hero-bg{position:relative;inset:auto;
+  display:block;width:100%;height:auto;aspect-ratio:16/5;object-fit:cover}
+.rotulo-debajo .collection-hero.has-img .collection-hero-overlay{display:none}
+.rotulo-debajo .collection-hero.has-img .collection-hero-inner{background:rgba(3,3,10,.92)}
+
+/* --- 2. Solo la foto: el tema no dibuja el nombre, la imagen ya lo trae ---
+   Se esconde EL TITULO y nada mas. El numero de productos, la descripcion y
+   la llamada a la accion no estan en la foto, asi que siguen viendose -- y
+   por eso aqui el degradado oscuro se queda: sin el, esos textos quedarian
+   sobre una foto clara y no se leerian. */
+.rotulo-en_la_foto .collection-tile-title,
+.rotulo-en_la_foto .catmosaic-title,
+.rotulo-en_la_foto .col-index-title,
+.rotulo-en_la_foto .collection-hero.has-img .collection-hero-title{
+  position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+/* Sin titulo que sujetar, la tira de abajo del mosaico y de la lista se queda
+   sin nada que mostrar en muchos casos: se le quita el degradado para que la
+   foto se vea entera. */
+.rotulo-en_la_foto .collection-tile-overlay{display:none}
+
+@media (prefers-reduced-motion:no-preference){
+  /* El titulo que baja de la foto entra con el resto de la tarjeta; no lleva
+     animacion propia para no anadir un movimiento mas a una pagina que ya
+     tiene los suyos. */
+  .rotulo-debajo .collection-tile-title{transition:color .25s ease}
+}
+
+
+/* ==========================================================================
+   PORTADA GENERADA PARA LAS ENTRADAS SIN FOTO
+   ==========================================================================
+   Las doce entradas del blog no tienen imagen destacada, y sin ella la
+   tarjeta se quedaba sin la mitad de arriba: doce bloques de texto seguidos,
+   de alturas distintas, con aspecto de pagina a medio montar.
+
+   Esto NO inventa una fotografia -- poner una foto de banco que no tiene nada
+   que ver con el articulo es enganar al lector y, en una tienda que presume
+   de no prometer nada, seria contradecirse. Lo que dibuja es una portada de
+   la casa: el neon de la marca, la inicial del titulo y un barrido de luz muy
+   lento. Cero peticiones de red, cero kilobytes y la misma altura que una
+   foto de verdad, asi que la rejilla queda pareja.
+
+   El barrido dura doce segundos y solo mueve un degradado con transform: es
+   composicion pura, no repinta nada, y se apaga entero con movimiento
+   reducido. Va detras del texto y con aria-hidden: para un lector de pantalla
+   esto no existe, que es lo que corresponde a un adorno. */
+/* CADA color-mix LLEVA DELANTE SU VERSION PLANA. color-mix no llego a Safari
+   hasta la 16.2 y el suelo declarado del tema es la 15.4: alli la declaracion
+   entera se descarta, no solo el color. En el fondo eso seria un rectangulo
+   negro, y en la inicial -- que se pinta con background-clip:text sobre color
+   transparente -- seria una letra INVISIBLE. La version plana usa el cian de
+   la marca en rgba, que entiende cualquier navegador desde hace quince anos. */
+.article-card-media--generada{position:relative;height:210px;overflow:hidden;
+  display:grid;place-items:center;
+  background:
+    radial-gradient(120% 130% at 18% 12%,rgba(0,212,255,.34),transparent 58%),
+    linear-gradient(155deg,#0a0a1e,#05050f 70%);
+  background:
+    radial-gradient(120% 130% at 18% 12%,color-mix(in srgb,var(--tile-neon,#00d4ff) 34%,transparent),transparent 58%),
+    linear-gradient(155deg,#0a0a1e,#05050f 70%)}
+.article-card-media--generada.ntile-0{--tile-neon:var(--neon-cyan,#00d4ff)}
+.article-card-media--generada.ntile-1{--tile-neon:var(--neon-pink,#ff2ecb)}
+.article-card-media--generada.ntile-2{--tile-neon:var(--neon-green,#00e87b)}
+.article-card-media--generada.ntile-3{--tile-neon:var(--neon-purple,#7b2fff)}
+/* La rejilla de fondo ata la portada al resto del tema: es la misma que hay
+   detras de la tienda entera, aqui a menor escala. */
+.article-card-media--generada::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:26px 26px}
+.article-card-media--generada::after{content:'';position:absolute;top:-50%;bottom:-50%;left:-40%;width:38%;
+  background:linear-gradient(100deg,transparent,rgba(0,212,255,.22),transparent);
+  background:linear-gradient(100deg,transparent,color-mix(in srgb,var(--tile-neon,#00d4ff) 22%,transparent),transparent);
+  transform:translate3d(-40%,0,0) rotate(8deg);
+  animation:portadaBarrido 12s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes portadaBarrido{
+  0%{transform:translate3d(-60%,0,0) rotate(8deg)}
+  55%,100%{transform:translate3d(420%,0,0) rotate(8deg)}}
+.article-card-glifo{position:relative;z-index:2;
+  font-family:var(--font-heading);font-weight:900;font-size:4.6rem;line-height:1;
+  color:transparent;-webkit-background-clip:text;background-clip:text;
+  background-image:linear-gradient(140deg,#fff,#7fe4ff);
+  background-image:linear-gradient(140deg,#fff,color-mix(in srgb,var(--tile-neon,#00d4ff) 85%,#fff));
+  filter:drop-shadow(0 0 18px rgba(0,212,255,.45));
+  filter:drop-shadow(0 0 18px color-mix(in srgb,var(--tile-neon,#00d4ff) 45%,transparent))}
+.article-card:hover .article-card-media--generada::after{animation-duration:6s}
+@media (prefers-reduced-motion:reduce){
+  .article-card-media--generada::after{animation:none;opacity:.35;transform:translate3d(120%,0,0) rotate(8deg)}
+}
+/* En alta legibilidad el adorno se apaga y la inicial se vuelve blanca plana:
+   ese modo existe para quien no distingue bien el texto sobre un degradado. */
+.a11y-mode .article-card-media--generada::after{animation:none;display:none}
+.a11y-mode .article-card-glifo{background:none;color:#fff;filter:none}
+
+/* La misma portada, en dos sitios más: la franja ancha de una entrada sin foto
+   y la baldosa de una colección sin foto. Solo cambia la caja; el dibujo es el
+   mismo, y por eso comparte clase en vez de duplicar cuarenta líneas. */
+.article-hero-media--generada{border-radius:1rem;overflow:hidden}
+.article-hero-media--generada .article-card-media--generada{height:clamp(160px,26vw,260px)}
+.article-hero-media--generada .article-card-glifo{font-size:clamp(4rem,11vw,7rem)}
+.collection-tile-generada{position:absolute;inset:0;height:100%;display:grid;place-items:center}
+.rotulo-debajo .collection-tile-generada{position:relative;inset:auto;height:100%}

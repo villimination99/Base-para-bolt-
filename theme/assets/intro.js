@@ -305,15 +305,26 @@
        anticipacion del colapso, con 0.40 la esfera se salia 22 px por el borde
        en un iPhone 12 y 17 en un SE -- reportado con captura. Con 0.319 quedan
        16 px de margen en el peor caso de todos. */
-    R_ESF = Math.min(radio * 2.5, H * 0.22, W * 0.319);
+    /* EL RADIO LO MANDA LA HOJA DE ESTILOS, no este archivo. La formula es la
+       misma de siempre -- min(radio*2,5 / 22% del alto / 31,9% del ancho) --
+       pero ahora esta escrita en villumination.css, y .splash-medida la
+       convierte en pixeles para poder leerla aqui. El motivo no es de estilo:
+       el CSS tiene que RESERVAR en la maquetacion el hueco por el que la
+       esfera se sale de su caja, y si el que reserva y el que dibuja calculan
+       cada uno por su cuenta, tarde o temprano discrepan. Discrepaban: el CSS
+       reservaba con 120 px fijos mientras el motor dibujaba con 124, 137, 198
+       o 238 segun la pantalla, y la esfera acababa pintada encima del nombre
+       de la tienda.
+
+       Si el elemento no esta -- una plantilla vieja, alguien que lo quito --
+       se vuelve al calculo de aqui, que da lo mismo. Nunca se queda a cero. */
+    var medida = caja.querySelector('[data-splash-medida]');
+    var rCSS = medida ? medida.offsetHeight : 0;
+    R_ESF = rCSS > 0 ? rCSS * DPR : Math.min(radio * 2.5, H * 0.22, W * 0.319);
     FOCO = R_ESF * 2.6;
     var inc = 0.34;                 // inclinacion fija: una esfera vista de
     INC_C = Math.cos(inc);          // frente y sin inclinar parece un circulo
     INC_S = Math.sin(inc);
-    // Las frases van debajo de la esfera, y donde acaba la esfera solo lo sabe
-    // el motor. Se publica el radio en pixeles CSS y el CSS lo coloca solo,
-    // sin que el JS toque posiciones ni mida nada del texto.
-    try { caja.style.setProperty('--esfera-r', (R_ESF / DPR) + 'px'); } catch (e6) {}
   }
 
   function sembrarMalla(n) {

@@ -27,12 +27,54 @@
   <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
 
   {%- comment -%}
-    Meta description con respaldo: si no hay descripción SEO para la página, se usa la de
-    la tienda y, en su defecto, el eslogan. Una página sin description deja que Google
-    invente el fragmento del resultado, y eso baja el porcentaje de clics.
+    Meta description con respaldo EN ESCALERA. Una página sin description deja que
+    Google se invente el fragmento del resultado, y un fragmento inventado baja el
+    porcentaje de clics; pero una description GENÉRICA es casi igual de mala, porque
+    entonces treinta páginas distintas compiten en el buscador diciendo lo mismo, y
+    Google se queda con una y descarta las demás como contenido duplicado.
+
+    Por eso el respaldo no salta directo a la descripción de la tienda: antes intenta
+    escribir una descripción CON EL CONTENIDO DE ESTA PÁGINA -- el texto del producto,
+    el de la colección, la entrada del blog -- que es lo que de verdad la distingue.
+    La de la tienda es el último recurso, no el primero.
+
+    Hoy la tienda tiene las suyas escritas a mano, que siempre serán mejores. Esto es
+    para mañana: el producto nuevo que se suba con prisa, la página que se cree y se
+    publique sin pasar por la pestaña de SEO. Esa es la que se cuela.
   {%- endcomment -%}
   {%- liquid
     assign meta_desc = page_description
+
+    if meta_desc == blank
+      case request.page_type
+        when 'product'
+          assign meta_desc = product.description
+        when 'collection'
+          assign meta_desc = collection.description
+        when 'article'
+          assign meta_desc = article.excerpt_or_content
+        when 'page'
+          assign meta_desc = page.content
+        when 'blog'
+          assign meta_desc = blog.title
+      endcase
+    endif
+
+    # El contenido viene con etiquetas y saltos de línea; en un atributo eso es
+    # ruido que gasta caracteres del fragmento. Se limpia antes de contar.
+    #
+    # EL ORDEN IMPORTA, y aquí estaba el detalle que se ve en el resultado de
+    # Google: quitar las etiquetas de golpe pega la última palabra de un
+    # párrafo con la primera del siguiente -- "verdes.Cada ficha" -- y lo mismo
+    # hace un salto de línea sin más. Los cierres de bloque y los saltos se
+    # cambian ANTES por un espacio, y solo después se quitan las etiquetas.
+    assign meta_desc = meta_desc | newline_to_br | replace: '<br />', ' ' | replace: '<br>', ' '
+    assign meta_desc = meta_desc | replace: '</p>', ' ' | replace: '</li>', ' ' | replace: '</h1>', ' ' | replace: '</h2>', ' ' | replace: '</h3>', ' ' | replace: '</div>', ' '
+    # strip_newlines va DESPUES: newline_to_br deja el salto de línea puesto
+    # detrás del <br />, así que si se quitara antes se perderían los espacios
+    # que acabamos de ganar.
+    assign meta_desc = meta_desc | strip_html | strip_newlines | replace: '   ', ' ' | replace: '  ', ' ' | strip
+
     if meta_desc == blank
       assign meta_desc = shop.description
     endif
@@ -211,7 +253,7 @@
   {{ content_for_header }}
 </head>
 
-<body class="grid-bg template-{{ template.name | handle }} pcard-{{ settings.product_card_style | default: 'float' }}{% if settings.product_img_glow %} pimg-glow{% endif %}{% if settings.product_img_blend %} pimg-blend{% endif %}">
+<body class="grid-bg template-{{ template.name | handle }} pcard-{{ settings.product_card_style | default: 'float' }}{% if settings.product_img_glow %} pimg-glow{% endif %}{% if settings.product_img_blend %} pimg-blend{% endif %} rotulo-{{ settings.coleccion_rotulo | default: 'encima' }}">
 
   <a class="skip-to-content" href="#MainContent">{{ 'accessibility.skip_to_content' | t }}</a>
 

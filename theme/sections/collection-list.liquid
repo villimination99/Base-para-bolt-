@@ -23,7 +23,16 @@
                              {{ coll.featured_image | image_url: width: 700, height: 500, crop: 'center' }} 700w"
                              sizes="(min-width: 861px) 33vw, 100vw" alt="{{ coll.title | escape }}" width="700" height="500" loading="lazy">
               {%- else -%}
-                <span class="product-card-placeholder">{%- render 'icon', name: 'cube' -%}</span>
+                {%- comment -%}
+                  Una colección sin foto mostraba un icono de cubo gris en un
+                  hueco vacío, y en una rejilla junto a fotos de verdad eso se
+                  lee como «esto está roto». La misma portada generada que usan
+                  las entradas del blog: neón de la marca, la inicial y el
+                  barrido. Coherente, y sin inventar una fotografía que no hay.
+                {%- endcomment -%}
+                <span class="article-card-media article-card-media--generada collection-tile-generada ntile-{{ forloop.index0 | modulo: 4 }}" aria-hidden="true">
+                  <span class="article-card-glifo">{{ coll.title | strip_html | slice: 0 | upcase }}</span>
+                </span>
               {%- endif -%}
               <div class="collection-tile-overlay"></div>
             </div>

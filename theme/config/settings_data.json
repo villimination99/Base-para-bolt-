@@ -83,6 +83,7 @@
     "splash_duracion": "completa",
     "splash_frases": "EL LÍMITE LO PONES TÚ",
     "splash_fondo": "shopify://shop_images/hf_20260905_040159_58324d59-e4a8-4fe9-9512-b0c956b23ffa.png",
-    "portada_sala": "shopify://shop_images/hf_20260905_040159_58324d59-e4a8-4fe9-9512-b0c956b23ffa.png"
+    "portada_sala": "shopify://shop_images/hf_20260905_040159_58324d59-e4a8-4fe9-9512-b0c956b23ffa.png",
+    "coleccion_rotulo": "debajo"
   }
 }

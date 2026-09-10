@@ -75,6 +75,16 @@
   {%- comment -%} Grano de pelicula y el destello del corte al salir. {%- endcomment -%}
   <span class="splash-grano" aria-hidden="true"></span>
   <span class="splash-corte" aria-hidden="true"></span>
+  {%- comment -%}
+    La regla del radio de la esfera vive en la hoja de estilos, con vw y vh
+    dentro. JavaScript no puede leer eso: getComputedStyle devuelve el texto
+    "min(...)" sin resolver. Lo que sí puede leer es el ALTO de un elemento, y
+    esto es exactamente eso: la fórmula convertida en píxeles. Cero de ancho,
+    invisible y fuera del flujo, así que no pinta, no ocupa y no se lee.
+    assets/intro.js lo mide y dibuja la esfera con ese radio, de modo que el
+    hueco reservado y la esfera dibujada no pueden discrepar nunca.
+  {%- endcomment -%}
+  <span class="splash-medida" data-splash-medida aria-hidden="true"></span>
   <button class="splash-skip" type="button" data-splash-skip>{{ 'general.skip' | t }}</button>
 
   <div class="splash-content">
@@ -104,30 +114,16 @@
     </div>
 
     {%- comment -%}
-      Un solo h1. Si hay logotipo, es la imagen (con el nombre de la tienda
-      como texto alternativo, así que para un lector de pantalla y para un
-      buscador dice exactamente lo mismo). Si no lo hay, el texto de siempre.
-    {%- endcomment -%}
-    {%- if settings.logo != blank -%}
-      <h1 class="splash-title splash-title--logo">
-        <img class="splash-logotipo"
-             src="{{ settings.logo | image_url: width: 900 }}"
-             srcset="{{ settings.logo | image_url: width: 450 }} 450w, {{ settings.logo | image_url: width: 900 }} 900w"
-             sizes="(max-width: 749px) 78vw, 420px"
-             width="{{ settings.logo.width | default: 900 }}"
-             height="{{ settings.logo.height | default: 200 }}"
-             alt="{{ shop.name | escape }}" loading="eager" decoding="async" fetchpriority="high">
-      </h1>
-    {%- elsif settings.splash_title != blank -%}
-      <h1 class="splash-title">{{ settings.splash_title }}</h1>
-    {%- endif -%}
-    {%- if settings.splash_tagline != blank -%}
-      <p class="splash-tagline">{{ settings.splash_tagline }}</p>
-    {%- endif -%}
+      LAS FRASES VAN AQUÍ, entre el emblema y el nombre de la marca, y no al
+      final del bloque. Antes colgaban de un `top` calculado y acababan encima
+      del logotipo: un top absoluto no se entera de si lo que hay debajo cabe.
+      Ahora caen en el hueco que la hoja de estilos le reserva a la esfera
+      —debajo de ella y encima de la marca—, que es donde el ojo las espera.
+      El orden del marcado es el orden visual, sin `order` ni posiciones
+      absolutas que luego nadie sabe de dónde salen.
 
-    {%- comment -%}
-      Frases de motivación. Van en HTML y no pintadas en el lienzo: así son
-      nítidas a cualquier resolución, se traducen, se seleccionan y las lee un
+      Van en HTML y no pintadas en el lienzo: así son nítidas a cualquier
+      resolución, se traducen, se seleccionan y las lee un
       lector de pantalla. aria-hidden porque durante la secuencia son
       decorativas: lo que importa anunciar es el título y el botón de entrar.
       assets/intro.js va marcando cuál toca con data-frase.
@@ -150,6 +146,28 @@
           {%- endif -%}
         {%- endfor -%}
       </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      Un solo h1. Si hay logotipo, es la imagen (con el nombre de la tienda
+      como texto alternativo, así que para un lector de pantalla y para un
+      buscador dice exactamente lo mismo). Si no lo hay, el texto de siempre.
+    {%- endcomment -%}
+    {%- if settings.logo != blank -%}
+      <h1 class="splash-title splash-title--logo">
+        <img class="splash-logotipo"
+             src="{{ settings.logo | image_url: width: 900 }}"
+             srcset="{{ settings.logo | image_url: width: 450 }} 450w, {{ settings.logo | image_url: width: 900 }} 900w"
+             sizes="(max-width: 749px) 78vw, 420px"
+             width="{{ settings.logo.width | default: 900 }}"
+             height="{{ settings.logo.height | default: 200 }}"
+             alt="{{ shop.name | escape }}" loading="eager" decoding="async" fetchpriority="high">
+      </h1>
+    {%- elsif settings.splash_title != blank -%}
+      <h1 class="splash-title">{{ settings.splash_title }}</h1>
+    {%- endif -%}
+    {%- if settings.splash_tagline != blank -%}
+      <p class="splash-tagline">{{ settings.splash_tagline }}</p>
     {%- endif -%}
 
     <button id="splash-enter" class="splash-enter-btn" type="button">

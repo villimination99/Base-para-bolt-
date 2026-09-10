@@ -39,6 +39,20 @@
                alt="{{ article.title | escape }}"
                width="1400" height="{{ 1400 | divided_by: article.image.aspect_ratio | round }}" loading="eager">
         </div>
+      {%- else -%}
+        {%- comment -%}
+          Sin imagen destacada, la entrada empezaba en el título y seguía en el
+          texto: correcto, pero desnudo, y con el ancho de una columna de texto
+          la página parecía un documento, no una publicación de la marca. La
+          misma portada generada del índice, aquí en franja ancha: el neón, la
+          inicial y el barrido de luz. No finge una fotografía —eso sería
+          engañar—, es un rótulo de la casa. Decorativo, así que aria-hidden.
+        {%- endcomment -%}
+        <div class="article-hero-media article-hero-media--generada" aria-hidden="true">
+          <div class="article-card-media article-card-media--generada ntile-{{ article.title | size | modulo: 4 }}">
+            <span class="article-card-glifo">{{ article.title | strip_html | slice: 0 | upcase }}</span>
+          </div>
+        </div>
       {%- endif -%}
       <div class="rte article-content">{{ article.content }}</div>
 
@@ -138,6 +152,11 @@
                              {{ art.image | image_url: width: 700, height: 450, crop: 'center' }} 700w"
                      sizes="(min-width: 861px) 33vw, 100vw"
                      alt="{{ art.title | escape }}" width="700" height="450" loading="lazy">
+              </div>
+            {%- else -%}
+              {%- comment -%} La misma portada generada que en el índice del blog. {%- endcomment -%}
+              <div class="article-card-media article-card-media--generada ntile-{{ related_shown | modulo: 4 }}" aria-hidden="true">
+                <span class="article-card-glifo">{{ art.title | strip_html | slice: 0 | upcase }}</span>
               </div>
             {%- endif -%}
             <div class="article-card-body">

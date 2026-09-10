@@ -137,7 +137,19 @@ const BATERIAS = [
      cada una el LCP, el CLS -- cuanto salta la pagina, que es de los tres
      numeros con los que Google ordena y que aqui no se medía en ningun sitio
      -- los errores de JavaScript y los desbordes laterales. */
-  ['verificadores/paginas/comprobar.mjs', 'las doce plantillas cargan bien (LCP y CLS)']
+  ['verificadores/paginas/comprobar.mjs', 'las doce plantillas cargan bien (LCP y CLS)'],
+  /* La intro entro en la compuerta el dia que una captura del cliente mostro
+     el nombre de la tienda, la esfera y la frase pintados unos encima de
+     otros en un iPhone. Ninguna de las otras baterias lo vio, y no por
+     descuido: todas miraban el lienzo, y la colision estaba en el HTML de
+     encima. Ahora esta mira lo que mira un ojo -- rectangulos que se ven a la
+     vez y no pueden ocupar el mismo sitio -- en nueve ventanas, incluida la
+     del movil TUMBADO, donde el boton de entrar se salia de la pantalla.
+     Tarda sus minutos. Los vale: es lo PRIMERO que ve cada visitante. */
+  ['verificadores/intro/comprobar.mjs', 'la intro no amontona nada y siempre deja entrar'],
+  /* Y el rotulo de las colecciones, que salio de que las fotos de la tienda
+     llevan el nombre escrito dentro y el tema le pintaba el suyo encima. */
+  ['verificadores/rotulos/comprobar.mjs', 'las colecciones no pintan dos textos en el mismo sitio']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

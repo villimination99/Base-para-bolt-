@@ -25,7 +25,11 @@ import { fileURLToPath } from 'url';
 
 const AQUI = path.dirname(fileURLToPath(import.meta.url));
 const RAIZ = path.resolve(AQUI, '../..');
-const ASSETS = path.join(RAIZ, 'theme/assets');
+/* Con TEMA puesto se mide el tema MINIFICADO que va a viajar a Shopify, que
+   es como la llama la compuerta del empaquetador; sin el, el del repositorio.
+   El marcado y los ajustes se leen siempre del repositorio: son los mismos en
+   los dos sitios y no los toca el minificador. */
+const ASSETS = process.env.TEMA ? path.join(process.env.TEMA, 'assets') : path.join(RAIZ, 'theme/assets');
 const CHROME = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 
 /* El marcado es el del snippet real. Si el snippet cambia de estructura, esta
@@ -33,7 +37,8 @@ const CHROME = process.env.CHROMIUM || '/opt/pw-browsers/chromium-1194/chrome-li
    se usan aqui siguen estando alli. */
 const SNIPPET = fs.readFileSync(path.join(RAIZ, 'theme/snippets/splash-intro.liquid'), 'utf8');
 const PIEZAS = ['splash-canvas', 'splash-emblem', 'splash-enter-btn', 'data-splash-skip',
-                'data-splash-frases', 'splash-logotipo', 'data-duracion', 'intro.js'];
+                'data-splash-frases', 'splash-logotipo', 'data-duracion', 'intro.js',
+                'data-splash-medida'];
 
 const AJUSTES = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_schema.json'), 'utf8'));
 const DATOS = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_data.json'), 'utf8')).current;
@@ -93,6 +98,7 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><b
   </div>
   <span class="splash-grano" aria-hidden="true"></span>
   <span class="splash-corte" aria-hidden="true"></span>
+  <span class="splash-medida" data-splash-medida aria-hidden="true"></span>
   <button class="splash-skip" type="button" data-splash-skip>SALTAR</button>
   <div class="splash-content">
     <div class="splash-emblem">
@@ -105,14 +111,14 @@ body{margin:0;background:#000;color:#fff;font-family:system-ui}</style></head><b
       </span>
       <span class="splash-core"><span class="splash-mono">VI</span></span>
     </div>
+    <div class="splash-frases" data-splash-frases aria-hidden="true">
+${trozos}
+    </div>
     <h1 class="splash-title splash-title--logo">
       <img class="splash-logotipo" src="${LOGO}" width="900" height="200"
            alt="Villumination" loading="eager" decoding="async" fetchpriority="high">
     </h1>
     <p class="splash-tagline">TRANSFORMA TU CUERPO.</p>
-    <div class="splash-frases" data-splash-frases aria-hidden="true">
-${trozos}
-    </div>
     <button id="splash-enter" class="splash-enter-btn" type="button"><span>ENTRAR</span></button>
   </div>
 </div>
@@ -661,6 +667,131 @@ for (const [nombre, cpu] of [['iPhone 12', 4], ['iPhone 12', 6], ['Escritorio', 
      roja al instante. Ni antes ni despues. */
   decir(veces <= 3.2,
     `${nombre} a 1/${cpu}: intro ${mediana.toFixed(1)} ms vs suelo de la maquina ${suelo.toFixed(1)} ms = ${veces.toFixed(2)}x (limite 3,2x) · ${(1000 / mediana).toFixed(0)} fps, peor ${f[f.length - 1].toFixed(0)} ms`);
+}
+
+/* ================= NADA SE AMONTONA =================
+   Esta comprobacion nace de una captura del cliente: en un iPhone, el nombre
+   de la tienda, la esfera y la frase de motivacion pintados unos encima de
+   otros. Ninguna de las comprobaciones que ya habia lo veia, y no por
+   descuido: todas miraban el LIENZO -- pixeles encendidos, fotogramas,
+   composicion del latido -- y la colision estaba en el HTML de encima.
+
+   Lo que se hace aqui es lo que hace un ojo: mirar la pantalla en varios
+   momentos de la secuencia y comprobar que dos cosas que se ven a la vez no
+   ocupan el mismo sitio. Se comparan rectangulos reales, con la opacidad
+   REAL en ese instante -- una pieza en opacidad 0 no molesta a nadie -- y se
+   descartan los pares que son padre e hijo, que por definicion se solapan.
+
+   Y se anade la esfera, que no es un elemento del DOM y por eso no la veia
+   nadie: su extension se calcula igual que la calcula el motor (centro del
+   emblema, radio de .splash-medida, 1,083 de la proyeccion en perspectiva).
+
+   Se prueba tambien 844x390 -- el movil TUMBADO -- porque ahi habia un fallo
+   peor que el amontonamiento: el boton de ENTRAR quedaba 41 px por debajo del
+   borde de una pantalla que no se puede desplazar. La bateria no lo veia
+   porque su ventana mas ancha, 2560x700, es de sobra alta. */
+console.log('\n--- Nada se amontona, y la puerta de la tienda siempre cabe ---');
+{
+  const VENTANAS = {
+    'iPhone 12':    { width: 390, height: 844 },
+    'iPhone SE':    { width: 375, height: 667 },
+    'iPhone SE1':   { width: 320, height: 568 },
+    'Android 360':  { width: 360, height: 640 },
+    '15 Pro Max':   { width: 430, height: 932 },
+    'Tumbado':      { width: 844, height: 390 },
+    'iPad':         { width: 768, height: 1024 },
+    'Portatil':     { width: 1440, height: 900 },
+    'Monitor':      { width: 1920, height: 1080 },
+  };
+  const INSTANTES = [300, 700, 1100, 1500, 1900, 2300, 2700, 3100, 3500, 3900, 4400, 5000];
+
+  for (const [ventana, vp] of Object.entries(VENTANAS)) {
+    for (const dur of ['completa', 'corta']) {
+      const ctx = await navegador.newContext({ viewport: vp, deviceScaleFactor: 2,
+        isMobile: vp.width < 900, hasTouch: vp.width < 900 });
+      const p = await ctx.newPage();
+      await p.goto(dur === 'corta' ? URL_CORTA : URL_PRUEBA);
+      const choques = new Map();   // par -> peor solape visto
+      let fuera = null, esferaEncima = -1e9, sinMedida = false;
+
+      for (const ms of INSTANTES) {
+        await enElInstante(p, ms);
+        const foto = await p.evaluate(() => {
+          const caja = document.querySelector('[data-splash]');
+          const rc = caja.getBoundingClientRect();
+          const piezas = {
+            emblema: '.splash-emblem', marca: '.splash-title', frase: '.splash-frase',
+            lema: '.splash-tagline', entrar: '.splash-enter-btn', saltar: '.splash-skip',
+          };
+          const out = {};
+          for (const k in piezas) {
+            const e = document.querySelector(piezas[k]);
+            if (!e) continue;
+            const b = e.getBoundingClientRect(), c = getComputedStyle(e);
+            const op = c.visibility === 'hidden' || c.display === 'none' ? 0 : parseFloat(c.opacity);
+            if (b.width < 1 || b.height < 1) continue;
+            out[k] = { t: b.top, b: b.bottom, l: b.left, r: b.right, op };
+          }
+          const med = caja.querySelector('[data-splash-medida]');
+          const em = document.querySelector('.splash-emblem').getBoundingClientRect();
+          return { piezas: out, R: med ? med.offsetHeight : 0,
+                   cy: em.top - rc.top + em.height / 2,
+                   alto: caja.clientHeight, ancho: caja.clientWidth };
+        });
+        if (!foto.R) sinMedida = true;
+
+        /* La esfera se dibuja centrada en el emblema; su borde inferior real
+           es el centro mas 1,083 radios. Lo que no puede es alcanzar la
+           marca: el logotipo tiene que leerse sobre el fondo, no sobre la
+           malla. Solo cuenta mientras la esfera existe (version completa). */
+        if (dur === 'completa' && foto.R && foto.piezas.marca) {
+          esferaEncima = Math.max(esferaEncima, (foto.cy + foto.R * 1.083) - foto.piezas.marca.t);
+        }
+
+        const vis = Object.entries(foto.piezas).filter(([, v]) => v.op > 0.06);
+        for (let i = 0; i < vis.length; i++) {
+          for (let j = i + 1; j < vis.length; j++) {
+            const [na, a] = vis[i], [nb, b] = vis[j];
+            const x = Math.min(a.r, b.r) - Math.max(a.l, b.l);
+            const y = Math.min(a.b, b.b) - Math.max(a.t, b.t);
+            if (x > 1 && y > 1) {
+              const clave = na + ' sobre ' + nb;
+              const antes = choques.get(clave) || { x: 0, y: 0, ms: 0 };
+              if (x * y > antes.x * antes.y) choques.set(clave, { x, y, ms });
+            }
+          }
+        }
+
+        /* Que la puerta quepa no es cosmetica: la intro es position:fixed con
+           overflow:hidden, asi que lo que se sale del borde no se alcanza ni
+           desplazando. Se exige tambien un margen de 4 px, porque un boton
+           cuyo borde toca el filo de la pantalla se pulsa mal. */
+        for (const k of ['entrar', 'saltar', 'marca']) {
+          const e = foto.piezas[k];
+          if (!e || e.op <= 0.06) continue;
+          const sobra = Math.min(e.t - 4, e.l - 4, foto.alto - e.b - 4, foto.ancho - e.r - 4);
+          if (sobra < 0 && (!fuera || sobra < fuera.sobra)) fuera = { k, sobra, ms };
+        }
+      }
+
+      const et = `${ventana.padEnd(11)} ${dur.padEnd(8)}`;
+      decir(choques.size === 0, choques.size === 0
+        ? `${et} nada se pisa en ningun instante de la secuencia`
+        : `${et} SE PISAN: ${[...choques].map(([c, v]) => `${c} ${Math.round(v.x)}x${Math.round(v.y)} px a los ${v.ms} ms`).join(' ; ')}`);
+      decir(!fuera, fuera
+        ? `${et} "${fuera.k}" se sale ${Math.abs(fuera.sobra).toFixed(0)} px de la pantalla a los ${fuera.ms} ms`
+        : `${et} la marca y los dos botones caben enteros en la pantalla`);
+      if (dur === 'completa') {
+        decir(esferaEncima < 0, esferaEncima < 0
+          ? `${et} la esfera acaba ${Math.abs(esferaEncima).toFixed(0)} px por encima de la marca`
+          : `${et} la esfera INVADE la marca ${esferaEncima.toFixed(0)} px`);
+        decir(!sinMedida, sinMedida
+          ? `${et} .splash-medida no da radio: el motor estaria calculando por su cuenta`
+          : `${et} el radio de la esfera sale de la hoja de estilos`);
+      }
+      await ctx.close();
+    }
+  }
 }
 
 await navegador.close();

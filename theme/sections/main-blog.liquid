@@ -80,6 +80,19 @@
                                {{ article.image | image_url: width: 700, height: 450, crop: 'center' }} 700w"
                        sizes="(min-width: 861px) 33vw, 100vw" alt="{{ article.title | escape }}" width="700" height="450" loading="lazy">
                 </div>
+              {%- else -%}
+                {%- comment -%}
+                  PORTADA GENERADA cuando la entrada no tiene foto. Antes, sin
+                  imagen, la tarjeta se quedaba sin la parte de arriba: doce
+                  entradas seguidas eran doce bloques de texto de alturas
+                  distintas, y el blog parecía a medio hacer. Esto no inventa
+                  una foto —eso sería engañar—, dibuja una portada de la casa:
+                  el neón de la marca, la inicial del título y un barrido lento
+                  de luz. Cuesta cero peticiones y cero kilobytes.
+                {%- endcomment -%}
+                <div class="article-card-media article-card-media--generada ntile-{{ forloop.index0 | modulo: 4 }}" aria-hidden="true">
+                  <span class="article-card-glifo">{{ article.title | strip_html | slice: 0 | upcase }}</span>
+                </div>
               {%- endif -%}
               <div class="article-card-body">
                 <span class="article-card-date">

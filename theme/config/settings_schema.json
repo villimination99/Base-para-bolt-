@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.56.0",
+    "theme_version": "4.57.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -470,6 +470,22 @@
         "label": "Recortar fondo oscuro de la foto (solo si NO es transparente)",
         "default": false,
         "info": "Actívalo únicamente si alguna foto tiene fondo negro incrustado. Con PNG transparentes déjalo desactivado."
+      },
+      {
+        "type": "header",
+        "content": "Rótulo de las colecciones"
+      },
+      {
+        "type": "select",
+        "id": "coleccion_rotulo",
+        "label": "Dónde va el nombre de la colección",
+        "options": [
+          { "value": "encima", "label": "Encima de la imagen (clásico)" },
+          { "value": "debajo", "label": "Debajo de la imagen — para fotos que YA llevan texto" },
+          { "value": "en_la_foto", "label": "Solo la foto — el nombre lo pone la imagen" }
+        ],
+        "default": "encima",
+        "info": "Si las imágenes de tus colecciones ya llevan el nombre escrito dentro, con «Encima» se ven DOS textos superpuestos. Con «Debajo» la foto queda limpia y el nombre va bajo ella; con «Solo la foto» el tema no lo dibuja. En los tres casos el nombre sigue estando en el código para Google y para los lectores de pantalla: no se pierde nada de posicionamiento. Afecta a la lista de colecciones, al mosaico, a la página de todas las colecciones y a la portada de cada colección."
       }
     ]
   },
@@ -729,7 +745,7 @@
         "type": "textarea",
         "id": "splash_frases",
         "label": "Frases de motivación",
-        "info": "Una por línea. Se muestran mientras gira el núcleo. Deja el campo vacío para no mostrar ninguna.",
+        "info": "Una por línea (máximo 3). Aparecen debajo de la esfera, mientras gira el núcleo, y se van antes de que la marca ocupe el centro. SOLO con la duración completa: en los 2,4 s de la corta no caben tres frases con sus fundidos, y media frase es peor que ninguna, así que ahí no se muestran. Deja el campo vacío para no mostrar ninguna.",
         "default": "EL LÍMITE LO PONES TÚ"
       }
     ]

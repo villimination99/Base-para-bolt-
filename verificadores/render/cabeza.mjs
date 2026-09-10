@@ -48,7 +48,24 @@ const ctxBase={ settings:{
    available:true,featured_media:{preview_image:img},media:[{preview_image:img}],images:[img],featured_image:img,
    selected_or_first_available_variant:{id:1,price:12990,available:true,sku:'X',barcode:'1'},
    variants:[{id:1,price:12990,available:true,sku:'X',barcode:'1'}],metafields:{},tags:[],collections:[]},
- collection:{}, article:{}, blog:{}, cart:{items:[],item_count:0,total_price:0,currency:{iso_code:'CAD'}},
+ /* Con la coleccion, la entrada y la pagina VACIAS, la segunda vuelta de este
+    verificador no probaba nada: el tema no tenia de donde sacar una
+    description propia y caia en la de la tienda, que es exactamente lo que
+    esa vuelta busca impedir. Rojo del banco de pruebas, no del tema. Llevan
+    contenido de verdad, con etiquetas y saltos de linea dentro, para que
+    ademas se compruebe que el tema los limpia antes de meterlos en el
+    atributo. */
+ collection:{title:'Suplementos',handle:'suplementos',
+   description:'<p>Proteina, creatina, preentreno y verdes.</p>\n<p>Cada ficha dice que lleva.</p>',
+   products_count:10,image:img,all_products_count:10},
+ article:{title:'Cuanta proteina hace falta al dia',handle:'cuanta-proteina',
+   excerpt_or_content:'<p>0,8 g por kilo es el minimo oficial,\nno el objetivo de quien entrena.</p>',
+   content:'<p>0,8 g por kilo es el minimo oficial.</p>',image:img,
+   published_at:'2026-08-15',author:'Villumination',tags:[]},
+ blog:{title:'Diario',handle:'diario',url:'/blogs/diario',articles:[]},
+ page:{title:'Como se hace lo que vendemos',handle:'como-se-hace',
+   content:'<p>De donde salen las cifras y por que el programa se niega\na publicar un libro incompleto.</p>'},
+ cart:{items:[],item_count:0,total_price:0,currency:{iso_code:'CAD'}},
  routes:new Proxy({},{get:()=>'/'}), template:{name:'product'}, content_for_header:'<!-- shopify -->' };
 const layout = (await import('fs')).readFileSync(T+'/layout/theme.liquid','utf8');
 const head = layout.slice(0, layout.indexOf('</head>'));
@@ -108,8 +125,62 @@ for (const PAGINA of PAGINAS) {
     (faltan.length ? `  FALTAN: ${faltan.join(', ')}` : '') +
     (repes.length ? `  DUPLICADAS: ${repes.join(', ')}` : ''));
 }
+
+/* ---- SEGUNDA VUELTA: LA DESCRIPCION CUANDO NADIE LA HA ESCRITO ----
+   La primera vuelta comprueba que las etiquetas ESTAN. Esta comprueba que la
+   description dice algo util cuando el comerciante no ha rellenado la pestana
+   de SEO, que es lo que pasa siempre con la prisa de subir un producto nuevo.
+
+   Antes, sin description propia, TODAS las paginas repetian la descripcion de
+   la tienda. Para Google eso no es "una tienda coherente": son treinta
+   paginas con el mismo fragmento, y cuando dos resultados dicen lo mismo se
+   queda con uno y descarta el resto. Ahora el respaldo baja en escalera y usa
+   el contenido de la propia pagina. Aqui se exige justo eso: que con la
+   description vacia, el producto hable del producto y la coleccion de la
+   coleccion, y que no acaben todas diciendo lo mismo. */
+console.log('\n--- Sin descripcion SEO escrita, cada pagina dice lo suyo ---');
+const DELA_TIENDA = ctxBase.shop.description;
+const CONTENIDO = { product: 1, collection: 1, article: 1, page: 1, blog: 1 };
+const vistas = new Map();
+for (const PAGINA of PAGINAS) {
+  const ctxP = Object.assign({}, ctxBase, {
+    page_description: '',
+    request: { page_type: PAGINA.tipo, path: PAGINA.ruta,
+               locale: { iso_code: 'es', root_url: '/' }, design_mode: false },
+  });
+  e.options.globals = ctxP;
+  let out;
+  try { out = await e.parseAndRender(head, ctxP); }
+  catch (err) { console.log(`FALLA  ${PAGINA.tipo}: no renderiza (${err.message})`); fallos++; continue; }
+  const m = out.match(/<meta name="description" content="([^"]*)"/);
+  const texto = m ? m[1].trim() : '';
+  const hay = texto.length > 0;
+  if (!hay) fallos++;
+  if (CONTENIDO[PAGINA.tipo]) {
+    /* Que NO sea la de la tienda: eso significa que ha bajado a buscar el
+       contenido de la pagina, que es lo que la distingue. */
+    const propia = hay && texto !== DELA_TIENDA;
+    if (!propia) fallos++;
+    console.log(`${propia ? ' OK  ' : 'FALLA'}  ${PAGINA.tipo.padEnd(11)} usa su propio contenido: "${texto.slice(0, 46)}"`);
+    /* Y que no haya palabras pegadas. Quitar las etiquetas de golpe une la
+       ultima palabra de un parrafo con la primera del siguiente
+       -- "verdes.Cada ficha" -- y eso es lo que se lee en el resultado de
+       Google. Se busca un signo de puntuacion seguido de letra sin espacio. */
+    if (/[\r\n]/.test(texto)) { fallos++; console.log(`FALLA  ${PAGINA.tipo}: la description lleva saltos de linea dentro del atributo`); }
+    const pegadas = texto.match(/[.,;:!?][A-Za-zÁÉÍÓÚÑáéíóúñ]/);
+    if (pegadas) { fallos++; console.log(`FALLA  ${PAGINA.tipo}: palabras pegadas al quitar las etiquetas ("${pegadas[0]}")`); }
+    if (vistas.has(texto)) { fallos++; console.log(`FALLA  ${PAGINA.tipo}: repite la description de ${vistas.get(texto)}`); }
+    vistas.set(texto, PAGINA.tipo);
+  } else {
+    /* En las paginas sin contenido propio -- carrito, buscador, 404 -- la de
+       la tienda es lo correcto, y ademas van con noindex. Lo unico que no
+       puede pasar es que se queden SIN description. */
+    console.log(`${hay ? ' OK  ' : 'FALLA'}  ${PAGINA.tipo.padEnd(11)} recurre a la de la tienda, que es lo suyo`);
+  }
+}
+
 console.log('');
 console.log(fallos === 0
-  ? `Las ${Object.keys(debe).length} etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados.`
-  : `${fallos} tipo(s) de pagina con problemas.`);
+  ? `Las ${Object.keys(debe).length} etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados, y ninguna pagina se queda sin description propia.`
+  : `${fallos} problema(s) en las cabeceras.`);
 process.exit(fallos ? 1 : 0);
