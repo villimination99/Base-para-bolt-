@@ -96,6 +96,11 @@ export const ctxBase = {
 
 export const e = new Liquid({ root: [T + '/snippets', T], extname: '.liquid',
                        strictFilters: false, strictVariables: false });
+/* El diccionario del idioma por defecto de la tienda, para el filtro t. */
+const TRAD = JSON.parse(fs.readFileSync(
+  path.join(process.env.TEMA || path.resolve(path.dirname(new URL(import.meta.url).pathname), '../theme'),
+            'locales/es.json'), 'utf8'));
+
 const F = {
   /* image_url devolvia SIEMPRE la misma URL sin mirar los argumentos, y eso
      dejo ciego al medidor de LCP durante meses: no habia forma de saber que
@@ -117,7 +122,31 @@ const F = {
   },
   money: v => '$' + (Number(v) / 100).toFixed(2),
   money_without_currency: v => (Number(v) / 100).toFixed(2), money_with_currency: v => '$' + v,
-  t: v => String(v), json: v => JSON.stringify(v === undefined ? null : v),
+  /* EL FILTRO t DEVOLVIA LA CLAVE, NO EL TEXTO, y eso envenenaba cualquier
+     medida de ancho. Un boton rotulado 'general.newsletter.submit' ocupa
+     veinticinco caracteres; el mismo boton en la tienda dice "Suscribirme"
+     y ocupa once. La bateria de reflow canto dos desbordes que no existian
+     -- el boton del pie y una miga de coleccion -- y los dos eran la clave
+     sin traducir asomando por el borde.
+     Y podia fallar en el otro sentido, que es peor: una clave corta con un
+     texto largo detras (ja.json es el caso claro) escondia un desborde de
+     verdad. Se mide lo que ve el cliente o no se mide nada.
+     Se usa es.json porque es el idioma por defecto de la tienda. Si falta
+     una clave se devuelve la clave, que canta a la vista -- y ademas la
+     compuerta ya tiene una comprobacion propia de traducciones completas. */
+  t: (v, ...a) => {
+    const args = Object.fromEntries(a.filter(x => Array.isArray(x)));
+    let n = TRAD;
+    for (const parte of String(v).split('.')) {
+      if (n && typeof n === 'object' && parte in n) n = n[parte]; else return String(v);
+    }
+    if (n && typeof n === 'object') {
+      const c = Number(args.count);
+      n = (c === 0 && n.zero) || (c === 1 && n.one) || n.other || n.one || String(v);
+    }
+    return String(n).replace(/\{\{\s*(\w+)\s*\}\}/g, (m, k) => (k in args ? String(args[k]) : m));
+  },
+  json: v => JSON.stringify(v === undefined ? null : v),
   asset_url: v => '//cdn/' + v, asset_img_url: () => '//cdn/x.png', file_url: v => '//cdn/' + v,
   stylesheet_tag: v => `<link rel="stylesheet" href="${v}">`, script_tag: v => `<script src="${v}"></script>`,
   video_tag: () => '<video></video>', external_video_tag: () => '<iframe></iframe>',

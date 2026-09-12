@@ -20,7 +20,7 @@
 
     <div class="carousel card-carousel bestseller-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
       <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
-      <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
+      <div class="carousel-track" data-carousel-track data-scroll-label="{{ 'accessibility.scrollable_row' | t }}" style="--card-w:{{ section.settings.card_width }}px;">
         {%- for product in src.products limit: section.settings.limit -%}
           <div class="carousel-slide bestseller-slide">
             <div class="bestseller-wrap">

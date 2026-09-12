@@ -650,6 +650,19 @@
           var past = !e.isIntersecting && e.boundingClientRect.top < 0;
           stickyBar.classList.toggle('is-visible', past);
           stickyBar.setAttribute('aria-hidden', past ? 'false' : 'true');
+          /* ARIA-HIDDEN NO BASTA, Y AQUI SE VE POR QUE. La barra se esconde
+             con visibility:hidden, que en un navegador de verdad ya la saca
+             del recorrido del tabulador -- pero eso depende de que el CSS
+             haya llegado y de que nadie toque ese estilo. El boton de
+             comprar seguia siendo enfocable segun el arbol, dentro de algo
+             declarado inexistente para el lector de pantalla: si el CSS
+             falla o alguien cambia esa regla, el visitante tabula hasta un
+             boton que su lector no le ha nombrado.
+             'inert' lo apaga en el arbol, no en el pixel. En Safari 15.4,
+             que es el suelo del tema, todavia no existe -- y ahi sigue
+             cubriendo visibility:hidden. Los dos, y no uno. */
+          if (past) stickyBar.removeAttribute('inert');
+          else stickyBar.setAttribute('inert', '');
         });
       }, { threshold: 0 });
       sObs.observe(purchaseAnchor);
@@ -800,6 +813,37 @@
       var prev = $('[data-carousel-prev]', root);
       var next = $('[data-carousel-next]', root);
       function step() { return Math.max(track.clientWidth * 0.8, 200); }
+      /* UNA PISTA QUE SE DESPLAZA TIENE QUE PODER RECORRERSE CON EL TECLADO.
+         La bateria de accesibilidad, el dia que dejo de mirar solo VI.P y
+         se paso por las 49 secciones, canto la pista del FAQ: desborda, y
+         dentro no hay ni un enlace ni un boton, asi que con el teclado no
+         habia forma de llegar a las preguntas que quedan a la derecha. Las
+         flechas de al lado no cuentan -- estan FUERA de la pista, y lo que
+         hay que poder mover es la pista.
+
+         No se le pone tabindex a todas por igual, y es a proposito:
+           - Si dentro ya hay enlaces (tarjetas de producto, videos), el
+             teclado entra por ellos y un tabindex extra solo anadiria una
+             parada muerta.
+           - Si no desborda, no hay nada que desplazar.
+         Asi que se decide aqui, midiendo, y se revisa en cada resize: lo que
+         el comerciante meta en la seccion cambia la respuesta, y esto se
+         adapta solo. */
+      var etiquetaPista = track.getAttribute('data-scroll-label') || '';
+      var FOCO = 'a[href],button,input,select,textarea,[tabindex]:not([tabindex="-1"])';
+      function alcanzableConTeclado(hayDesborde) {
+        var necesita = hayDesborde && !track.querySelector(FOCO);
+        if (necesita === (track.getAttribute('tabindex') === '0')) return;
+        if (necesita) {
+          track.setAttribute('tabindex', '0');
+          track.setAttribute('role', 'group');
+          if (etiquetaPista) track.setAttribute('aria-label', etiquetaPista);
+        } else {
+          track.removeAttribute('tabindex');
+          track.removeAttribute('role');
+          track.removeAttribute('aria-label');
+        }
+      }
       function updateArrows() {
         var atStart = track.scrollLeft <= 4;
         var atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
@@ -807,6 +851,15 @@
         [prev, next].forEach(function (b) { if (b) b.style.display = noOverflow ? 'none' : ''; });
         if (prev) prev.classList.toggle('is-disabled', atStart);
         if (next) next.classList.toggle('is-disabled', atEnd);
+        /* DOS UMBRALES, Y CADA UNO ES EL SUYO. Las flechas usan una holgura
+           de 4 px: un desbordamiento de dos pixeles no merece dos botones.
+           El teclado no puede permitirse esa holgura -- si el navegador
+           dice que la region se desplaza, por poco que sea, tiene que
+           poder alcanzarse, y eso es literalmente lo que pide el criterio
+           2.1.1. El carrusel del FAQ desbordaba justo 2 px por redondeo y
+           caia en la rendija entre los dos numeros: yo decia "no desborda"
+           y el navegador decia "si". Manda el navegador. */
+        alcanzableConTeclado(track.scrollWidth > track.clientWidth);
       }
       if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step(), behavior: 'smooth' }); });
       if (next) next.addEventListener('click', function () { track.scrollBy({ left: step(), behavior: 'smooth' }); });

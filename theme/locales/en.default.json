@@ -68,7 +68,8 @@
     "main_nav": "Main navigation",
     "menu": "Menu",
     "close": "Close",
-    "back_to_top": "Back to top"
+    "back_to_top": "Back to top",
+    "scrollable_row": "Scrollable row — use the arrow keys"
   },
   "products": {
     "product": {

@@ -68,7 +68,8 @@
     "main_nav": "Hauptnavigation",
     "menu": "Menü",
     "close": "Schließen",
-    "back_to_top": "Nach oben"
+    "back_to_top": "Nach oben",
+    "scrollable_row": "Scrollbare Reihe — mit den Pfeiltasten bewegen"
   },
   "products": {
     "product": {

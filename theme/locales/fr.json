@@ -68,7 +68,8 @@
     "main_nav": "Navigation principale",
     "menu": "Menu",
     "close": "Fermer",
-    "back_to_top": "Retour en haut"
+    "back_to_top": "Retour en haut",
+    "scrollable_row": "Rangée défilante — utilise les flèches du clavier"
   },
   "products": {
     "product": {

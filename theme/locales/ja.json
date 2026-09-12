@@ -68,7 +68,8 @@
     "main_nav": "メインナビゲーション",
     "menu": "メニュー",
     "close": "閉じる",
-    "back_to_top": "トップへ戻る"
+    "back_to_top": "トップへ戻る",
+    "scrollable_row": "横スクロール領域 — 矢印キーで移動"
   },
   "products": {
     "product": {

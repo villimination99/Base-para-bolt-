@@ -16,7 +16,7 @@
 
     <div class="carousel video-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
       <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
-      <div class="carousel-track" data-carousel-track style="--card-w:{{ section.settings.card_width }}px;">
+      <div class="carousel-track" data-carousel-track data-scroll-label="{{ 'accessibility.scrollable_row' | t }}" style="--card-w:{{ section.settings.card_width }}px;">
         {%- for block in section.blocks -%}
           {%- comment -%} Acepta el ID o una URL completa (youtube.com/watch?v=, youtu.be/, /shorts/) {%- endcomment -%}
           {%- assign vid = block.settings.video_id | strip -%}

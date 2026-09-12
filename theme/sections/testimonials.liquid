@@ -41,7 +41,7 @@
     {%- if section.settings.layout == 'carousel' -%}
       <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
         <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
-        <div class="carousel-track" data-carousel-track style="--card-w:340px;">{{ testi_cards }}</div>
+        <div class="carousel-track" data-carousel-track data-scroll-label="{{ 'accessibility.scrollable_row' | t }}" style="--card-w:340px;">{{ testi_cards }}</div>
         <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
       </div>
     {%- else -%}

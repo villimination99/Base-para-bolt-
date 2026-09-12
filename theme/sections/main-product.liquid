@@ -287,7 +287,7 @@
   </div>
 
   {%- if section.settings.show_sticky_bar -%}
-    <div class="product-sticky-bar" data-sticky-atc aria-hidden="true">
+    <div class="product-sticky-bar" data-sticky-atc aria-hidden="true" inert>
       <div class="psb-info">
         {%- if product.featured_media -%}
           <img src="{{ product.featured_media | image_url: width: 120 }}" alt="" width="48" height="48" loading="lazy">
