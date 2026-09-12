@@ -1244,10 +1244,21 @@
       font-size: .79rem; line-height: 1.6; color: #a9a9bb;
     }
     .chakra-card { padding-top: 14px; }
+    /* DOS COLORES POR CHAKRA, Y NO ES CAPRICHO. El color del chakra pinta
+       el borde, el halo y el anillo, donde nadie tiene que leer nada. Pero
+       el indigo del Tercer ojo (#4a5bff) sobre el fondo de la tarjeta da
+       3,68:1, y el violeta de la Corona 4,61: el primero incumple WCAG AA
+       en el rotulo pequeno de estado y el segundo pasa raspando. Lo cazo
+       la bateria de accesibilidad, y con las tarjetas pintandose en dos
+       tiempos el numero de fallos cambiaba de pasada a pasada -- que es
+       como se ve un color que esta justo en la linea.
+       Asi que cada chakra lleva ademas --chakra-tx: el mismo tono subido
+       hasta que se lee (7,2:1 y 7,6:1). Los otros cinco ya pasaban y su
+       --chakra-tx es su propio color, sin cambio ninguno. */
     .chakra-card .chakra-bija {
       font-family: var(--font-heading, inherit);
       font-weight: 900; font-size: 1.45rem; line-height: 1;
-      letter-spacing: .06em; color: var(--chakra, #05D9E8);
+      letter-spacing: .06em; color: var(--chakra-tx, var(--chakra, #05D9E8));
       text-shadow: 0 0 22px color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent);
     }
     .chakra-card .freq-hz {
@@ -1258,11 +1269,11 @@
     .chakra-card .freq-unit { margin-top: 1px; }
     .chakra-card .freq-name { margin-top: 7px; }
     .chakra-card .chakra-sans {
-      font-size: .68rem; color: #7e7e8b; margin-top: 2px;
+      font-size: .68rem; color: #9494a3; margin-top: 2px;
       letter-spacing: .02em; font-style: italic;
     }
     .chakra-card .freq-desc { min-height: 38px; margin-top: 6px; }
-    .chakra-card .freq-state { color: var(--chakra, #05D9E8); }
+    .chakra-card .freq-state { color: var(--chakra-tx, var(--chakra, #05D9E8)); }
     .chakra-card .freq-ring {
       background: radial-gradient(circle, color-mix(in srgb, var(--chakra, #05D9E8) 20%, transparent) 0%, transparent 62%);
     }
@@ -1314,25 +1325,34 @@
       display: inline-flex; align-items: center; gap: 7px;
       padding: 8px 12px; border-radius: 99px; cursor: pointer;
       background: #0d0f16; color: #d6d6e4;
-      border: 1px solid color-mix(in srgb, var(--st, #5b5b6b) 38%, #232636);
+      border: 1px solid color-mix(in srgb, var(--st, #8b8b9c) 38%, #232636);
       font-size: .78rem; font-family: inherit;
       transition: border-color .2s, transform .18s, background .2s;
     }
-    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #5b5b6b); background: #12141d; }
+    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #8b8b9c); background: #12141d; }
     .mm4d-chip:focus-visible { outline: 2px solid var(--st, #05D9E8); outline-offset: 2px; }
     .mm4d-punto {
       width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
-      background: var(--st, #5b5b6b);
-      box-shadow: 0 0 9px var(--st, #5b5b6b);
+      background: var(--st, #8b8b9c);
+      box-shadow: 0 0 9px var(--st, #8b8b9c);
     }
     .mm4d-nom { font-weight: 700; color: #fff; }
-    .mm4d-est { color: var(--st, #5b5b6b); font-weight: 700; letter-spacing: .02em; }
+    .mm4d-est { color: var(--st, #8b8b9c); font-weight: 700; letter-spacing: .02em; }
     /* El que se trabajo hoy late despacio: es el unico que pide atencion. */
     @media (prefers-reduced-motion: no-preference) {
       .mm4d-hoy .mm4d-punto { animation: mm4dLate 2.6s ease-in-out infinite; }
     }
     @keyframes mm4dLate { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
-    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #7e7e8b; line-height: 1.5; }
+    /* EL GRIS DEL "SIN REGISTRO" TENIA QUE SUBIR. Iba en #5b5b6b sobre el
+       fondo de la pastilla (#0d0f16): 2,88:1, y WCAG AA pide 4,5:1 -- lo
+       cazo la bateria de accesibilidad sobre el tema minificado, y con
+       diez grupos sin registro eran diez etiquetas ilegibles de golpe.
+       Ahora el color de estado es #8b8b9c (5,7:1). Para no perder la
+       jerarquia -- un grupo sin datos no debe pedir atencion -- el punto
+       de ese estado se queda callado por su cuenta: sin brillo y a media
+       tinta. Sube el texto, no el ruido. */
+    .mm4d-sin .mm4d-punto { opacity: .5; box-shadow: none; }
+    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #9494a3; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -1838,7 +1858,7 @@
         <p style="margin:6px 0 0;font-size:0.78rem;color:#aab;line-height:1.5" data-tx>Hojas de menta machacadas en agua fría: frescura digestiva tras comidas pesadas, del Magreb a México.</p>
       </div>
     </div>
-    <p style="margin:6px 0 0;font-size:0.68rem;color:#7e7e8b" data-tx>‹ Desliza para ver más ›</p>
+    <p style="margin:6px 0 0;font-size:0.68rem;color:#9494a3" data-tx>‹ Desliza para ver más ›</p>
     <p style="margin:12px 0 0;font-size:0.72rem;color:#e0b34c" data-tx>⚠️ Sabiduría tradicional ≠ tratamiento. Si sospechas parásitos o un problema renal, acude a tu médico: estas preparaciones no sustituyen diagnóstico ni medicación.</p>
   </div>
 
@@ -1959,7 +1979,7 @@
       <span style="color:#889;font-size:0.85rem">Hz · 20–20 000</span>
     </div>
     <input type="range" id="free-hz-slider" aria-label="Ajustar la frecuencia" min="0" max="1000" value="465" style="width:100%;accent-color:#05D9E8;margin:12px 0 2px">
-    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#7e7e8b;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:0.62rem;color:#9494a3;letter-spacing:0.03em"><span>20</span><span>200</span><span>2 000</span><span>20 000 Hz</span></div>
     <button class="btn btn-primary" id="free-tone-btn" type="button" style="width:100%;justify-content:center;margin-top:12px">▶ Reproducir</button>
   </div>
 </section>
@@ -2559,7 +2579,7 @@
   }
 
   function estado4D(d) {
-    if (d === undefined) return { clase: 'sin', color: '#5b5b6b', txt: T('mm4d.none', 'sin registro') };
+    if (d === undefined) return { clase: 'sin', color: '#8b8b9c', txt: T('mm4d.none', 'sin registro') };
     if (d === 0)        return { clase: 'hoy', color: '#ff3b47', txt: T('mm4d.today', 'hoy') };
     if (d <= 2)         return { clase: 'rec', color: '#ffb020', txt: d + ' ' + (d === 1 ? T('mm4d.d1', 'd\u00eda') : T('mm4d.dn', 'd\u00edas')) };
     return { clase: 'listo', color: '#2ee87b', txt: d >= 30 ? '30+ ' + T('mm4d.dn', 'd\u00edas') : d + ' ' + T('mm4d.dn', 'd\u00edas') };
@@ -4836,9 +4856,9 @@
         name: 'Coraz\u00f3n', lugar: 'Centro del pecho', desc: 'El aire del pecho: v\u00ednculo y lo que se abre' },
       { id: 'k5', hz: 741, bija: 'HAM', nota: 'Sol', color: '#00c8ff', sans: 'Vishuddha',
         name: 'Garganta', lugar: 'Garganta', desc: 'El espacio de la voz: decir lo que hay que decir' },
-      { id: 'k6', hz: 852, bija: 'OM / KSHAM', nota: 'La', color: '#4a5bff', sans: 'Ajna',
+      { id: 'k6', hz: 852, bija: 'OM / KSHAM', nota: 'La', color: '#4a5bff', tx: '#8f9aff', sans: 'Ajna',
         name: 'Tercer ojo', lugar: 'Entrecejo', desc: 'Entre las cejas: mirar lo que a\u00fan no se ve' },
-      { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', sans: 'Sahasrara',
+      { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', tx: '#cb8bff', sans: 'Sahasrara',
         name: 'Corona', lugar: 'Coronilla', desc: 'Lo alto de la cabeza: la pr\u00e1ctica que termina sin sonido' }
     ];
 
@@ -4906,7 +4926,7 @@
           '<strong style="color:#fff">La semilla viene de la tradicion; los hercios, no.</strong> Los textos clasicos dan a cada chakra su silaba, su color y su lugar en el cuerpo \u2014 nunca una frecuencia. La correspondencia con estos numeros la puso el trabajo con sonido del siglo XX, y se ofrece como lo que es: una convencion util para practicar. La silaba se canta; el tono acompana.') + '</p>' +
         CHAKRAS.map(function(k) {
           var son = currentId === k.id;
-          return '<div class="freq-card chakra-card' + (son ? ' playing' : '') + '" data-id="' + k.id + '" style="--chakra:' + k.color + '">' +
+          return '<div class="freq-card chakra-card' + (son ? ' playing' : '') + '" data-id="' + k.id + '" style="--chakra:' + k.color + ';--chakra-tx:' + (k.tx || k.color) + '">' +
             '<div class="freq-ring"></div>' +
             '<div class="chakra-bija">' + (k.bija.indexOf('silencio') === 0 ? TX('silencio') + ' / OM' : k.bija) + '</div>' +
             '<div class="freq-hz">' + k.hz + '</div>' +

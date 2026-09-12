@@ -649,7 +649,7 @@
   }
 
   function estado4D(d) {
-    if (d === undefined) return { clase: 'sin', color: '#5b5b6b', txt: T('mm4d.none', 'sin registro') };
+    if (d === undefined) return { clase: 'sin', color: '#8b8b9c', txt: T('mm4d.none', 'sin registro') };
     if (d === 0)        return { clase: 'hoy', color: '#ff3b47', txt: T('mm4d.today', 'hoy') };
     if (d <= 2)         return { clase: 'rec', color: '#ffb020', txt: d + ' ' + (d === 1 ? T('mm4d.d1', 'd\u00eda') : T('mm4d.dn', 'd\u00edas')) };
     return { clase: 'listo', color: '#2ee87b', txt: d >= 30 ? '30+ ' + T('mm4d.dn', 'd\u00edas') : d + ' ' + T('mm4d.dn', 'd\u00edas') };
@@ -2926,9 +2926,9 @@
         name: 'Coraz\u00f3n', lugar: 'Centro del pecho', desc: 'El aire del pecho: v\u00ednculo y lo que se abre' },
       { id: 'k5', hz: 741, bija: 'HAM', nota: 'Sol', color: '#00c8ff', sans: 'Vishuddha',
         name: 'Garganta', lugar: 'Garganta', desc: 'El espacio de la voz: decir lo que hay que decir' },
-      { id: 'k6', hz: 852, bija: 'OM / KSHAM', nota: 'La', color: '#4a5bff', sans: 'Ajna',
+      { id: 'k6', hz: 852, bija: 'OM / KSHAM', nota: 'La', color: '#4a5bff', tx: '#8f9aff', sans: 'Ajna',
         name: 'Tercer ojo', lugar: 'Entrecejo', desc: 'Entre las cejas: mirar lo que a\u00fan no se ve' },
-      { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', sans: 'Sahasrara',
+      { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', tx: '#cb8bff', sans: 'Sahasrara',
         name: 'Corona', lugar: 'Coronilla', desc: 'Lo alto de la cabeza: la pr\u00e1ctica que termina sin sonido' }
     ];
 
@@ -2996,7 +2996,7 @@
           '<strong style="color:#fff">La semilla viene de la tradicion; los hercios, no.</strong> Los textos clasicos dan a cada chakra su silaba, su color y su lugar en el cuerpo \u2014 nunca una frecuencia. La correspondencia con estos numeros la puso el trabajo con sonido del siglo XX, y se ofrece como lo que es: una convencion util para practicar. La silaba se canta; el tono acompana.') + '</p>' +
         CHAKRAS.map(function(k) {
           var son = currentId === k.id;
-          return '<div class="freq-card chakra-card' + (son ? ' playing' : '') + '" data-id="' + k.id + '" style="--chakra:' + k.color + '">' +
+          return '<div class="freq-card chakra-card' + (son ? ' playing' : '') + '" data-id="' + k.id + '" style="--chakra:' + k.color + ';--chakra-tx:' + (k.tx || k.color) + '">' +
             '<div class="freq-ring"></div>' +
             '<div class="chakra-bija">' + (k.bija.indexOf('silencio') === 0 ? TX('silencio') + ' / OM' : k.bija) + '</div>' +
             '<div class="freq-hz">' + k.hz + '</div>' +

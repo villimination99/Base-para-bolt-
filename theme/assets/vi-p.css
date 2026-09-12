@@ -1236,10 +1236,21 @@
       font-size: .79rem; line-height: 1.6; color: #a9a9bb;
     }
     .chakra-card { padding-top: 14px; }
+    /* DOS COLORES POR CHAKRA, Y NO ES CAPRICHO. El color del chakra pinta
+       el borde, el halo y el anillo, donde nadie tiene que leer nada. Pero
+       el indigo del Tercer ojo (#4a5bff) sobre el fondo de la tarjeta da
+       3,68:1, y el violeta de la Corona 4,61: el primero incumple WCAG AA
+       en el rotulo pequeno de estado y el segundo pasa raspando. Lo cazo
+       la bateria de accesibilidad, y con las tarjetas pintandose en dos
+       tiempos el numero de fallos cambiaba de pasada a pasada -- que es
+       como se ve un color que esta justo en la linea.
+       Asi que cada chakra lleva ademas --chakra-tx: el mismo tono subido
+       hasta que se lee (7,2:1 y 7,6:1). Los otros cinco ya pasaban y su
+       --chakra-tx es su propio color, sin cambio ninguno. */
     .chakra-card .chakra-bija {
       font-family: var(--font-heading, inherit);
       font-weight: 900; font-size: 1.45rem; line-height: 1;
-      letter-spacing: .06em; color: var(--chakra, #05D9E8);
+      letter-spacing: .06em; color: var(--chakra-tx, var(--chakra, #05D9E8));
       text-shadow: 0 0 22px color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent);
     }
     .chakra-card .freq-hz {
@@ -1250,11 +1261,11 @@
     .chakra-card .freq-unit { margin-top: 1px; }
     .chakra-card .freq-name { margin-top: 7px; }
     .chakra-card .chakra-sans {
-      font-size: .68rem; color: #7e7e8b; margin-top: 2px;
+      font-size: .68rem; color: #9494a3; margin-top: 2px;
       letter-spacing: .02em; font-style: italic;
     }
     .chakra-card .freq-desc { min-height: 38px; margin-top: 6px; }
-    .chakra-card .freq-state { color: var(--chakra, #05D9E8); }
+    .chakra-card .freq-state { color: var(--chakra-tx, var(--chakra, #05D9E8)); }
     .chakra-card .freq-ring {
       background: radial-gradient(circle, color-mix(in srgb, var(--chakra, #05D9E8) 20%, transparent) 0%, transparent 62%);
     }
@@ -1306,22 +1317,31 @@
       display: inline-flex; align-items: center; gap: 7px;
       padding: 8px 12px; border-radius: 99px; cursor: pointer;
       background: #0d0f16; color: #d6d6e4;
-      border: 1px solid color-mix(in srgb, var(--st, #5b5b6b) 38%, #232636);
+      border: 1px solid color-mix(in srgb, var(--st, #8b8b9c) 38%, #232636);
       font-size: .78rem; font-family: inherit;
       transition: border-color .2s, transform .18s, background .2s;
     }
-    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #5b5b6b); background: #12141d; }
+    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #8b8b9c); background: #12141d; }
     .mm4d-chip:focus-visible { outline: 2px solid var(--st, #05D9E8); outline-offset: 2px; }
     .mm4d-punto {
       width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
-      background: var(--st, #5b5b6b);
-      box-shadow: 0 0 9px var(--st, #5b5b6b);
+      background: var(--st, #8b8b9c);
+      box-shadow: 0 0 9px var(--st, #8b8b9c);
     }
     .mm4d-nom { font-weight: 700; color: #fff; }
-    .mm4d-est { color: var(--st, #5b5b6b); font-weight: 700; letter-spacing: .02em; }
+    .mm4d-est { color: var(--st, #8b8b9c); font-weight: 700; letter-spacing: .02em; }
     /* El que se trabajo hoy late despacio: es el unico que pide atencion. */
     @media (prefers-reduced-motion: no-preference) {
       .mm4d-hoy .mm4d-punto { animation: mm4dLate 2.6s ease-in-out infinite; }
     }
     @keyframes mm4dLate { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
-    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #7e7e8b; line-height: 1.5; }
+    /* EL GRIS DEL "SIN REGISTRO" TENIA QUE SUBIR. Iba en #5b5b6b sobre el
+       fondo de la pastilla (#0d0f16): 2,88:1, y WCAG AA pide 4,5:1 -- lo
+       cazo la bateria de accesibilidad sobre el tema minificado, y con
+       diez grupos sin registro eran diez etiquetas ilegibles de golpe.
+       Ahora el color de estado es #8b8b9c (5,7:1). Para no perder la
+       jerarquia -- un grupo sin datos no debe pedir atencion -- el punto
+       de ese estado se queda callado por su cuenta: sin brillo y a media
+       tinta. Sube el texto, no el ruido. */
+    .mm4d-sin .mm4d-punto { opacity: .5; box-shadow: none; }
+    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #9494a3; line-height: 1.5; }
