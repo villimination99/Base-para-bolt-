@@ -2041,7 +2041,7 @@
     el.addEventListener('click', next);
   })();
 
-  var SEC_IDS = ['muscle-map', 'planner', 'nutrition', 'goal', 'diet-plans', 'botanica', 'meditation', 'frequencies', 'level', 'progress', 'sleep', 'challenges'];
+  var SEC_IDS = ['muscle-map', 'planner', 'nutrition', 'goal', 'diet-plans', 'botanica', 'meditation', 'frequencies', 'chakras', 'level', 'progress', 'sleep', 'challenges'];
   var I18N = {
     en: {
       tag: '@villumination99 · VI.P',
@@ -2050,7 +2050,7 @@
       b1: '🧬 Explore 3D Anatomy', b2: '🏋️ Build my Routine',
       stats: ['Exercises', 'Frequencies', '3D Zones', 'Athlete Levels'],
       note: '🌐 Menus, foods and exercise data are shown in Spanish.',
-      titles: { 'muscle-map': '3D Muscle Map', planner: 'Training', nutrition: 'Smart Nutrition', goal: 'Your Calorie Goal', 'diet-plans': 'Elite Diet Plans', botanica: '🌿 Nutritional Botany', meditation: 'Meditation & Guided Breathing', frequencies: 'Restorative Frequencies', level: 'Your Athlete Level', progress: 'Progress Analytics', sleep: 'Sleep & Recovery', challenges: 'Community Challenges' },
+      titles: { 'muscle-map': '3D Muscle Map', planner: 'Training', nutrition: 'Smart Nutrition', goal: 'Your Calorie Goal', 'diet-plans': 'Elite Diet Plans', botanica: '🌿 Nutritional Botany', meditation: 'Meditation & Guided Breathing', frequencies: 'Restorative Frequencies', chakras: 'Chakra Sounds', level: 'Your Athlete Level', progress: 'Progress Analytics', sleep: 'Sleep & Recovery', challenges: 'Community Challenges' },
       idxTitle: 'Everything you\'ll find here',
       idxSub: '12 tools wired together: what you train feeds your level, what you eat feeds your charts. Tap any to jump straight in.',
       idx: { 'muscle-map': ['3D Muscle Map', 'Tap a muscle: see its exercises and add them'], 'planner': ['Training', 'Log kg and sets — every kilo counts'], 'nutrition': ['Nutrition', 'Scan your plate with AI and track macros'], 'goal': ['Calorie Goal', 'Get your TDEE and set a real target'], 'diet-plans': ['Diet Plans', '4 plans · Mon–Sun menus all year'], 'botanica': ['Nutritional Botany', '55 foods and their real properties'], 'meditation': ['Meditation', 'Guided breathing + 21-day program'], 'frequencies': ['Frequencies', 'Solfeggio, binaural and dual pulses'], 'chakras': ['Chakra Sounds', 'The seven seeds, their note and their journey'], 'level': ['Athlete Level', 'From Beginner to Predator'], 'progress': ['Progress', 'Your whole health in charts'], 'sleep': ['Sleep', 'Do you rest as much as you train?'], 'challenges': ['Challenges', 'Compete on the leaderboard'] },
@@ -2096,6 +2096,29 @@
         "dyn.forlevel": "to reach"
       },
       tx: {
+        /* Los siete chakras */
+        "Raíz": "Root",
+        "Sacro": "Sacral",
+        "Plexo solar": "Solar plexus",
+        "Corazón": "Heart",
+        "Garganta": "Throat",
+        "Tercer ojo": "Third eye",
+        "Corona": "Crown",
+        "Base de la columna": "Base of the spine",
+        "Bajo abdomen": "Lower abdomen",
+        "Ombligo": "Navel",
+        "Centro del pecho": "Centre of the chest",
+        "Entrecejo": "Between the brows",
+        "Coronilla": "Top of the head",
+        "La base: el peso del cuerpo y el suelo bajo los pies": "The base: the weight of the body and the ground under your feet",
+        "El agua que se mueve: deseo, cambio y lo que fluye": "Water in motion: desire, change and what flows",
+        "El fuego del centro: voluntad y decisión": "The fire at the centre: will and decision",
+        "El aire del pecho: vínculo y lo que se abre": "The air in the chest: connection and what opens",
+        "El espacio de la voz: decir lo que hay que decir": "The space of the voice: saying what needs saying",
+        "Entre las cejas: mirar lo que aún no se ve": "Between the brows: looking at what cannot be seen yet",
+        "Lo alto de la cabeza: la práctica que termina sin sonido": "The top of the head: the practice that ends without sound",
+        "silencio": "silence",
+        "NOTA": "NOTE",
         "Pecho": "Chest",
         "Espalda": "Back",
         "Hombros": "Shoulders",
@@ -2177,7 +2200,7 @@
       b1: '🧬 Explorer l’anatomie 3D', b2: '🏋️ Créer ma routine',
       stats: ['Exercices', 'Fréquences', 'Zones 3D', 'Niveaux d’athlète'],
       note: '🌐 Les menus, aliments et exercices sont affichés en espagnol.',
-      titles: { 'muscle-map': 'Carte musculaire 3D', planner: 'Entraînement', nutrition: 'Nutrition intelligente', goal: 'Ton objectif calorique', 'diet-plans': 'Plans diététiques d’élite', botanica: '🌿 Botanique nutritionnelle', meditation: 'Méditation & respiration guidée', frequencies: 'Fréquences réparatrices', level: 'Ton niveau d’athlète', progress: 'Analyse de progrès', sleep: 'Sommeil & récupération', challenges: 'Défis de la communauté' },
+      titles: { 'muscle-map': 'Carte musculaire 3D', planner: 'Entraînement', nutrition: 'Nutrition intelligente', goal: 'Ton objectif calorique', 'diet-plans': 'Plans diététiques d’élite', botanica: '🌿 Botanique nutritionnelle', meditation: 'Méditation & respiration guidée', frequencies: 'Fréquences réparatrices', chakras: 'Sons des chakras', level: 'Ton niveau d’athlète', progress: 'Analyse de progrès', sleep: 'Sommeil & récupération', challenges: 'Défis de la communauté' },
       idxTitle: 'Tout ce que tu trouveras ici',
       idxSub: '12 outils reliés entre eux : ce que tu t’entraînes nourrit ton niveau, ce que tu manges nourrit tes graphiques. Touche pour y aller direct.',
       idx: { 'muscle-map': ['Carte musculaire 3D', 'Touche un muscle : vois ses exercices'], 'planner': ['Entraînement', 'Enregistre kg et séries — chaque kilo compte'], 'nutrition': ['Nutrition', 'Scanne ton assiette avec l’IA, suis tes macros'], 'goal': ['Objectif calorique', 'Calcule ton TDEE et fixe ta vraie cible'], 'diet-plans': ['Plans diététiques', '4 plans · menus lun–dim toute l’année'], 'botanica': ['Botanique nutritionnelle', '55 aliments et leurs vraies propriétés'], 'meditation': ['Méditation', 'Respiration guidée + programme 21 jours'], 'frequencies': ['Fréquences', 'Solfeggio, binaurales et pulsations duales'], 'chakras': ['Sons des chakras', 'Les sept semences, leur note et leur parcours'], 'level': ['Niveau d’athlète', 'De Débutant à Predator'], 'progress': ['Progrès', 'Toute ta santé en graphiques'], 'sleep': ['Sommeil', 'Récupères-tu autant que tu t’entraînes ?'], 'challenges': ['Défis', 'Affronte le classement'] },
@@ -2223,6 +2246,29 @@
         "dyn.forlevel": "pour"
       },
       tx: {
+        /* Les sept chakras */
+        "Raíz": "Racine",
+        "Sacro": "Sacré",
+        "Plexo solar": "Plexus solaire",
+        "Corazón": "Cœur",
+        "Garganta": "Gorge",
+        "Tercer ojo": "Troisième œil",
+        "Corona": "Couronne",
+        "Base de la columna": "Base de la colonne",
+        "Bajo abdomen": "Bas-ventre",
+        "Ombligo": "Nombril",
+        "Centro del pecho": "Centre de la poitrine",
+        "Entrecejo": "Entre les sourcils",
+        "Coronilla": "Sommet du crâne",
+        "La base: el peso del cuerpo y el suelo bajo los pies": "La base : le poids du corps et le sol sous les pieds",
+        "El agua que se mueve: deseo, cambio y lo que fluye": "L’eau qui bouge : désir, changement et ce qui coule",
+        "El fuego del centro: voluntad y decisión": "Le feu du centre : volonté et décision",
+        "El aire del pecho: vínculo y lo que se abre": "L’air de la poitrine : le lien et ce qui s’ouvre",
+        "El espacio de la voz: decir lo que hay que decir": "L’espace de la voix : dire ce qu’il faut dire",
+        "Entre las cejas: mirar lo que aún no se ve": "Entre les sourcils : voir ce qu’on ne voit pas encore",
+        "Lo alto de la cabeza: la práctica que termina sin sonido": "Le haut de la tête : la pratique qui finit sans son",
+        "silencio": "le silence",
+        "NOTA": "NOTE",
         "Pecho": "Poitrine",
         "Espalda": "Dos",
         "Hombros": "Épaules",
@@ -2871,20 +2917,34 @@
        ------------------------------------------------------------------ */
     var CHAKRAS = [
       { id: 'k1', hz: 396, bija: 'LAM', nota: 'Do',  color: '#ff3b47', sans: 'Muladhara',
-        name: 'Raiz', lugar: 'Base de la columna', desc: 'La base: el peso del cuerpo y el suelo bajo los pies' },
+        name: 'Ra\u00edz', lugar: 'Base de la columna', desc: 'La base: el peso del cuerpo y el suelo bajo los pies' },
       { id: 'k2', hz: 417, bija: 'VAM', nota: 'Re',  color: '#ff7a29', sans: 'Svadhisthana',
         name: 'Sacro', lugar: 'Bajo abdomen', desc: 'El agua que se mueve: deseo, cambio y lo que fluye' },
       { id: 'k3', hz: 528, bija: 'RAM', nota: 'Mi',  color: '#ffd000', sans: 'Manipura',
-        name: 'Plexo solar', lugar: 'Ombligo', desc: 'El fuego del centro: voluntad y decision' },
+        name: 'Plexo solar', lugar: 'Ombligo', desc: 'El fuego del centro: voluntad y decisi\u00f3n' },
       { id: 'k4', hz: 639, bija: 'YAM', nota: 'Fa',  color: '#2ee87b', sans: 'Anahata',
-        name: 'Corazon', lugar: 'Centro del pecho', desc: 'El aire del pecho: vinculo y lo que se abre' },
+        name: 'Coraz\u00f3n', lugar: 'Centro del pecho', desc: 'El aire del pecho: v\u00ednculo y lo que se abre' },
       { id: 'k5', hz: 741, bija: 'HAM', nota: 'Sol', color: '#00c8ff', sans: 'Vishuddha',
         name: 'Garganta', lugar: 'Garganta', desc: 'El espacio de la voz: decir lo que hay que decir' },
-      { id: 'k6', hz: 852, bija: 'OM / AUM', nota: 'La',  color: '#4a5bff', sans: 'Ajna',
-        name: 'Tercer ojo', lugar: 'Entrecejo', desc: 'Entre las cejas: mirar lo que aun no se ve' },
+      { id: 'k6', hz: 852, bija: 'OM / KSHAM', nota: 'La', color: '#4a5bff', sans: 'Ajna',
+        name: 'Tercer ojo', lugar: 'Entrecejo', desc: 'Entre las cejas: mirar lo que a\u00fan no se ve' },
       { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', sans: 'Sahasrara',
-        name: 'Corona', lugar: 'Corona de la cabeza', desc: 'Lo alto de la cabeza: la practica que termina sin sonido' }
+        name: 'Corona', lugar: 'Coronilla', desc: 'Lo alto de la cabeza: la pr\u00e1ctica que termina sin sonido' }
     ];
+
+    /* LA NOTA NO PASA POR EL DICCIONARIO GENERAL, y es a proposito. Las
+       notas latinas comparten letra con palabras corrientes: traducir "La"
+       por el diccionario convertiria en "A" cualquier "la" del hub. Tabla
+       propia y cerrada. En espanol y frances la notacion es la misma salvo
+       el Re, que en frances lleva acento; en ingles se usan letras. */
+    var NOTA_EN = { Do: 'C', Re: 'D', Mi: 'E', Fa: 'F', Sol: 'G', La: 'A', Si: 'B' };
+    var NOTA_FR = { Re: 'R\u00e9' };
+    function notaDeChakra(n) {
+      var L = (typeof CUR_LANG !== 'undefined') ? CUR_LANG : 'es';
+      if (L === 'en') return NOTA_EN[n] || n;
+      if (L === 'fr') return NOTA_FR[n] || n;
+      return n;
+    }
     var CARRIER = 200; // Hz portadora para binaurales
 
     var grid = document.getElementById('freq-grid');
@@ -2940,7 +3000,7 @@
             '<div class="freq-ring"></div>' +
             '<div class="chakra-bija">' + (k.bija.indexOf('silencio') === 0 ? TX('silencio') + ' / OM' : k.bija) + '</div>' +
             '<div class="freq-hz">' + k.hz + '</div>' +
-            '<div class="freq-unit">' + TX('HZ') + ' \u00b7 ' + TX('NOTA') + ' ' + k.nota + '</div>' +
+            '<div class="freq-unit">' + TX('HZ') + ' \u00b7 ' + TX('NOTA') + ' ' + notaDeChakra(k.nota) + '</div>' +
             '<div class="freq-name">' + TX(k.name) + '</div>' +
             '<div class="chakra-sans">' + k.sans + ' \u00b7 ' + TX(k.lugar) + '</div>' +
             '<div class="freq-desc">' + TX(k.desc) + '</div>' +

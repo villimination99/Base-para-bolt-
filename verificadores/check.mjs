@@ -1358,7 +1358,7 @@ check('Imagenes bien servidas', () => {
       niega a escribirlo si pasa del tope prudente; aqui se comprueba el
       archivo que hay en disco, por si se genero con una version anterior de
       la herramienta. */
-check('El hub VI.P: via del tema intacta y fragmento de tamano guardable', () => {
+check('El hub VI.P sale del tema, que es la via sin tope', () => {
   const bad = [];
   const plantilla = T + '/templates/page.vi-p.json';
   if (!fs.existsSync(plantilla)) {
@@ -1372,18 +1372,24 @@ check('El hub VI.P: via del tema intacta y fragmento de tamano guardable', () =>
   if (!fs.existsSync(T + '/sections/vi-p.liquid'))
     bad.push('falta sections/vi-p.liquid');
 
-  /* 443 KB es lo ultimo que se guardo de verdad en la pagina. Con un 5 % de
-     margen, el techo son 430 KB. */
+  /* EL TOPE DE TAMANO YA NO SE EXIGE AQUI, y conviene decir por que.
+
+     Hasta el 2026-09-12 la pagina /pages/vi-p llevaba el hub PEGADO en su
+     cuerpo: 421 KB de HTML dentro de una pagina, mientras el tema traia el
+     mismo hub como seccion. Dos copias del mismo hub, y la tienda usaba la
+     que hay que repegar entera cada vez que cambia algo y la que tiene
+     techo. Al anadir los chakras y la tira del tiempo, el fragmento se
+     paso de los 421 KB y el techo se convirtio en una pared.
+
+     La pagina usa ahora templateSuffix "vi-p" con el cuerpo vacio: el hub
+     sale del tema, que no tiene tope. El fragmento se sigue generando
+     porque sirve para llevarse el hub a otro sitio, pero su tamano ya no
+     puede parar una entrega.
+
+     Lo que si se exige es la VIA DEL TEMA, que es la que usa la tienda:
+     esta arriba, y sin ella la pagina se queda en blanco. */
   const frag = 'hub/villuminations-vi-p.html';
-  if (fs.existsSync(frag)) {
-    const bytes = fs.statSync(frag).size;
-    const TECHO = Math.round(453312 * 0.95);
-    if (bytes > TECHO)
-      bad.push(`${frag} pesa ${(bytes / 1024).toFixed(0)} KB y el techo medido es ${(TECHO / 1024).toFixed(0)} KB: la pagina de Shopify no lo guardara. Ejecuta node empaquetar-hub.mjs`);
-    const cabecera = fs.readFileSync(frag, 'utf8').slice(0, 3000);
-    if (!/443 KB/.test(cabecera))
-      bad.push(`${frag} no lleva en su cabecera de donde sale el tope de tamano`);
-  }
+  if (!fs.existsSync(frag)) bad.push(`falta ${frag}: ejecuta node empaquetar-hub.mjs`);
   return bad;
 });
 
@@ -1458,6 +1464,54 @@ check('Texto sobre un degradado, contra los DOS extremos', () => {
         if (r < 3) bad.push(`${hoja} ${selector.slice(-70)}: texto ${texto} sobre la parada ${parada} del degradado = ${r.toFixed(2)}:1 (minimo 3)`);
       }
     }
+  }
+  return bad;
+});
+
+check('El hub del tema coincide con su maestro', () => {
+  /* -------------------------------------------------------------------
+     POR QUE ESTA COMPROBACION EXISTE
+     hub/vi-p-completo.html es el DUENO de theme/assets/vi-p.js y de
+     theme/assets/vi-p.css: partir.mjs los escribe a partir de el. Eso
+     significa que editar los assets a mano funciona -- las baterias pasan,
+     el zip sale bien, todo parece correcto -- hasta que alguien vuelve a
+     partir el hub y el trabajo desaparece sin un solo aviso.
+
+     Me paso en esta misma ronda: los chakras y la tira del tiempo los
+     escribi en los assets y el maestro seguia sin saber nada. Habrian
+     sobrevivido a la entrega y muerto en la siguiente pasada.
+
+     Aqui se parte el maestro EN MEMORIA, sin escribir nada, y se compara
+     con lo que hay en el tema. Si no cuadran, o alguien edito el asset sin
+     tocar el maestro, o el maestro cambio sin partirse. Las dos cosas hay
+     que saberlas antes de entregar, no despues.
+     ------------------------------------------------------------------- */
+  const bad = [];
+  const maestro = read('hub/vi-p-completo.html');
+
+  const trozos = [];
+  const re = /<script([^>]*)>([\s\S]*?)<\/script>/g;
+  let m;
+  while ((m = re.exec(maestro))) trozos.push({ attr: m[1].trim(), cuerpo: m[2] });
+  const enLinea = trozos.filter(t => !t.attr);
+  if (!enLinea.length) { bad.push('el maestro no tiene scripts en linea: algo va muy mal'); return bad; }
+  const principal = enLinea.slice().sort((a, b) => b.cuerpo.length - a.cuerpo.length)[0];
+  const otros = enLinea.filter(t => t !== principal);
+  const js = otros.map(t => t.cuerpo.trim()).join('\n\n') + '\n\n' + principal.cuerpo.trim() + '\n';
+  const css = maestro.slice(maestro.indexOf('  <style>') + 9, maestro.indexOf('</style>')).trim() + '\n';
+
+  const enTema = { 'theme/assets/vi-p.js': js, 'theme/assets/vi-p.css': css };
+  for (const [ruta, esperado] of Object.entries(enTema)) {
+    const actual = read(ruta);
+    if (actual === esperado) continue;
+    /* Se dice DONDE empieza a diferir: con 369 KB, "no coinciden" no sirve
+       para nada. */
+    let i = 0;
+    while (i < actual.length && i < esperado.length && actual[i] === esperado[i]) i++;
+    const linea = actual.slice(0, i).split('\n').length;
+    bad.push(`${ruta}: no sale de hub/vi-p-completo.html (difieren desde la linea ${linea}; ` +
+      `tema ${actual.length} car, maestro ${esperado.length} car). ` +
+      `Si lo editado es el ASSET, hay que volcarlo al maestro; si es el MAESTRO, falta correr partir.mjs.`);
   }
   return bad;
 });

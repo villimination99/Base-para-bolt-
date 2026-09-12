@@ -371,6 +371,42 @@ const pecho = await p.$eval('#mm-4d-strip .mm4d-chip[data-muscle="Pecho"]',
 decir(/sin registro|no record/i.test(pecho),
   'y el pecho, que no se toco, sigue sin registro');
 
+/* ------------------------------------------------------------------
+   LOS CHAKRAS EN LOS TRES IDIOMAS
+   Una seccion nueva cae al espanol en silencio si se olvida el
+   diccionario: no da error, simplemente un frances lee "Corazon" y
+   "Tercer ojo". Aqui se cambia de idioma de verdad y se lee lo que sale.
+   La nota se mira aparte porque no pasa por el diccionario general -- las
+   notas latinas comparten letra con palabras corrientes y traducir "La"
+   por diccionario convertiria en "A" cualquier "la" del hub.
+   ------------------------------------------------------------------ */
+for (const [idioma, esperado] of [
+  ['fr', { nombre: 'C\u0153ur', ojo: 'Troisi\u00e8me \u0153il', nota: 'R\u00e9', titulo: /Sons des chakras/i }],
+  ['en', { nombre: 'Heart',      ojo: 'Third eye',                 nota: 'D',            titulo: /Chakra Sounds/i }]
+]) {
+  await p.click(`#lang-switch button[data-l="${idioma}"]`);
+  await p.waitForTimeout(500);
+  const leido = await p.evaluate(() => ({
+    nombres: Array.from(document.querySelectorAll('#chakra-grid .freq-name')).map(e => e.textContent.trim()),
+    unidad2: (document.querySelector('#chakra-grid .chakra-card[data-id="k2"] .freq-unit') || {}).textContent || '',
+    sitios: Array.from(document.querySelectorAll('#chakra-grid .chakra-sans')).map(e => e.textContent.trim()),
+    titulo: (document.querySelector('#chakras .section-title') || {}).textContent || ''
+  }));
+  decir(leido.nombres.includes(esperado.nombre) && leido.nombres.includes(esperado.ojo),
+    `${idioma}: los siete llevan su nombre (${leido.nombres.slice(0, 4).join(', ')}...)`);
+  decir(leido.unidad2.trim().endsWith(esperado.nota),
+    `${idioma}: la nota del sacro es ${esperado.nota} ("${leido.unidad2.trim()}")`);
+  decir(!leido.sitios.some(x => /Ombligo|Entrecejo|Coronilla/.test(x)),
+    `${idioma}: el lugar del cuerpo tampoco se queda en espanol`);
+  decir(esperado.titulo.test(leido.titulo),
+    `${idioma}: el titulo de la seccion cambia ("${leido.titulo.trim()}")`);
+}
+await p.click('#lang-switch button[data-l="es"]');
+await p.waitForTimeout(400);
+const esNombres = await p.$$eval('#chakra-grid .freq-name', n => n.map(e => e.textContent.trim()));
+decir(esNombres.includes('Ra\u00edz') && esNombres.includes('Coraz\u00f3n'),
+  `es: y en espanol van acentuados (${esNombres.slice(0, 4).join(', ')}...)`);
+
 await b.close(); srv.close(); fs.rmSync(TMP, { recursive: true, force: true });
 console.log(mal ? `\n  ${mal} comprobaciones mal` : '\nVI.P funciona dentro del tema, sin salir a internet y sin tocar lo que hay alrededor.');
 process.exit(mal ? 1 : 0);

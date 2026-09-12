@@ -110,12 +110,34 @@ if (frag.length < 250000) fallos.push(`son ${frag.length} car: falta medio hub`)
    subir el numero: es la plantilla page.vi-p del tema, que no tiene tope
    porque no pasa por el cuerpo de la pagina. */
 const TOPE = Math.round(453312 * 0.95);
-if (frag.length > TOPE) fallos.push(`son ${(frag.length / 1024).toFixed(0)} KB y el tope prudente es ${(TOPE / 1024).toFixed(0)} KB: la pagina de Shopify no lo guardara`);
+/* ------------------------------------------------------------------
+   PASARSE DEL TOPE YA NO ES UN FALLO, Y ESTE ES EL MOTIVO.
+   El comentario de arriba decia que si el hub creciera por encima de
+   esto la salida no era subir el numero sino la plantilla del tema. Eso
+   es exactamente lo que paso el 2026-09-12: /pages/vi-p llevaba el hub
+   PEGADO en su cuerpo -- 421 KB de HTML dentro de una pagina -- mientras
+   el tema ya traia el mismo hub como seccion. Dos copias, y la tienda
+   usaba la peor: la que hay que repegar entera cada vez que cambia algo
+   y la que tiene techo.
+
+   Ahora la pagina usa templateSuffix "vi-p" y su cuerpo esta vacio. El
+   hub sale del tema, que no tiene tope. Este fragmento sigue
+   generandose porque sirve para llevarse el hub a otro sitio, pero ya no
+   es el camino de la tienda: pasarse del tope se avisa y no detiene
+   nada. Lo que si detiene siguen siendo los fallos de integridad.
+   ------------------------------------------------------------------ */
+const pasado = frag.length > TOPE;
 if (/<!DOCTYPE|<html[ >]|<\/body>/i.test(frag)) fallos.push('lleva etiquetas de documento, que rompen la pagina de Shopify');
 if (!frag.includes('id="vill-hub"')) fallos.push('falta el contenedor #vill-hub');
 if (!frag.includes('muscle-canvas')) fallos.push('falta el lienzo del mapa 3D');
 if ((frag.match(/<h1/gi) || []).length > 1) fallos.push('mas de un <h1>: parte la senal de SEO de la pagina');
 if (fallos.length) { console.error('  NO se escribe nada:'); fallos.forEach(f => console.error('   - ' + f)); process.exit(1); }
+if (pasado) {
+  console.log(`  aviso: son ${(frag.length / 1024).toFixed(0)} KB, por encima de los ${(TOPE / 1024).toFixed(0)} KB que admite`);
+  console.log('         el cuerpo de una pagina de Shopify. No importa para la tienda:');
+  console.log('         /pages/vi-p usa la plantilla del tema y su cuerpo esta vacio.');
+  console.log('         Importa solo si alguien quiere volver a pegarlo a mano.');
+}
 
 fs.writeFileSync('hub/villuminations-vi-p.html', frag);
 console.log('  hub/villuminations-vi-p.html          ' + (frag.length / 1024).toFixed(0) + ' KB   (para pegar en la pagina)');
