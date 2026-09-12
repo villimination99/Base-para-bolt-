@@ -277,6 +277,14 @@ const FUNCIONES = [
   ['@container', 16, 'ninguna: si aparece, hay que justificarla'],
   ['subgrid', 16, 'ninguna: si aparece, hay que justificarla'],
   ['dvh', 15.4, null],
+  /* Anadidas en la ronda de superficies del navegador. */
+  ['accent-color', 15.4, null],
+  ['color-scheme', 13, null],
+  ['text-underline-offset', 12.1, null],
+  ['overscroll-behavior', 16, 'evita que al llegar al final del cajon del carro arrastre la tienda de detras; por debajo de Safari 16 se ignora y el comportamiento es el de siempre'],
+  ['forced-colors', 0, 'solo existe en Windows con alto contraste; el resto de motores la ignoran'],
+  ['prefers-contrast', 14.1, null],
+  ['::marker', 11.1, null],
 ];
 
 let cssTodo = '';

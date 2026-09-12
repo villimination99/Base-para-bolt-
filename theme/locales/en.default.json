@@ -57,7 +57,11 @@
     "play_video": "Play the video",
     "sequence_hint": "Move over the animation",
     "collections": "View collection",
-    "skip": "SKIP"
+    "skip": "SKIP",
+    "accessibility": {
+      "close": "Close",
+      "zoom_image": "Enlarge image"
+    }
   },
   "accessibility": {
     "skip_to_content": "Skip to content",

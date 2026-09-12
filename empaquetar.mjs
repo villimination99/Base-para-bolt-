@@ -158,7 +158,14 @@ const BATERIAS = [
   ['verificadores/intro/comprobar.mjs', 'la intro no amontona nada y siempre deja entrar'],
   /* Y el rotulo de las colecciones, que salio de que las fotos de la tienda
      llevan el nombre escrito dentro y el tema le pintaba el suyo encima. */
-  ['verificadores/rotulos/comprobar.mjs', 'las colecciones no pintan dos textos en el mismo sitio']
+  ['verificadores/rotulos/comprobar.mjs', 'las colecciones no pintan dos textos en el mismo sitio'],
+  /* Y los tres estados que nadie mira nunca: Windows en alto contraste, el
+     papel y las superficies que pinta el propio navegador. La tienda entera
+     se apoya en titulos recortados sobre un degradado, y en alto contraste
+     el sistema borra ese degradado y el titulo se queda transparente sobre
+     nada: invisible. En papel, lo mismo en blanco sobre blanco. Aqui se
+     emula cada modo y se lee el color con el que el texto sale de verdad. */
+  ['verificadores/superficies/comprobar.mjs', 'alto contraste, papel y superficies del navegador']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

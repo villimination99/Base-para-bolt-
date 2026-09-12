@@ -57,7 +57,11 @@
     "play_video": "Reproducir el video",
     "sequence_hint": "Muévete sobre la animación",
     "collections": "Ver colección",
-    "skip": "SALTAR"
+    "skip": "SALTAR",
+    "accessibility": {
+      "close": "Cerrar",
+      "zoom_image": "Ampliar imagen"
+    }
   },
   "accessibility": {
     "skip_to_content": "Saltar al contenido",

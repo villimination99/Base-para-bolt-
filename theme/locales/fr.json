@@ -57,7 +57,11 @@
     "play_video": "Lire la vidéo",
     "sequence_hint": "Déplace-toi sur l’animation",
     "collections": "Voir la collection",
-    "skip": "PASSER"
+    "skip": "PASSER",
+    "accessibility": {
+      "close": "Fermer",
+      "zoom_image": "Agrandir l’image"
+    }
   },
   "accessibility": {
     "skip_to_content": "Aller au contenu",

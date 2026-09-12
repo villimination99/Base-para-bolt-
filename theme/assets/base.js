@@ -25,6 +25,32 @@
     MODS.forEach(function (f) { try { f(); } catch (e) {} });
   });
 
+  /* --------------------------------------------------------------------
+     UN SOLO CERROJO PARA EL DESPLAZAMIENTO DE LA PAGINA
+     Habia cuatro sitios poniendo y quitando el bloqueo por su cuenta: la
+     intro, el menu movil, el cajon del carro y la lupa de producto. Con
+     dos capas abiertas a la vez, la primera que se cerraba soltaba el
+     cerrojo de la otra y la tienda de detras volvia a moverse debajo.
+     Ahora se cuenta: se suelta solo cuando se ha cerrado la ultima.
+
+     Va en <html> ademas de en <body> porque Safari en iPhone atiende al
+     elemento raiz y no siempre al cuerpo. Y no se usa el viejo truco de
+     fijar el body: desde Safari 15.4 — que es el suelo declarado de este
+     tema — no hace falta, y fijarlo aplasta la altura del documento.
+     -------------------------------------------------------------------- */
+  var cerrojos = 0;
+  function bloquearScroll() {
+    if (cerrojos++ > 0) return;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  }
+  function soltarScroll(forzar) {
+    if (forzar) cerrojos = 0;
+    else if (cerrojos === 0 || --cerrojos > 0) return;
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+
 
   var currencyCode = ((settings.moneyFormat || '').match(/[A-Z]{3}/) || ['USD'])[0];
   function money(cents) {
@@ -58,12 +84,12 @@
     var forzar = false;
     try { forzar = /[?&]intro=1\b/.test(window.location.search); } catch (e) {}
     if (once && !forzar && store.get('v99_intro_seen', true)) { splash.style.display = 'none'; return; }
-    document.body.style.overflow = 'hidden';
+    bloquearScroll();
     var done = false;
     function dismiss() {
       if (done) return; done = true;
       splash.classList.add('dismissed');
-      document.body.style.overflow = '';
+      soltarScroll();
       if (once) store.set('v99_intro_seen', '1', true);
       // intro.js escucha esto para parar su bucle y soltar el lienzo. Sin el
       // aviso, la secuencia seguiria pintando detras de la tienda: bateria
@@ -140,15 +166,16 @@
     if (!toggle || !menu) return;
     var foco = panelAccesible(menu);
     function open() {
+      if (menu.classList.contains('open')) return;
       menu.classList.add('open');
-      document.body.style.overflow = 'hidden';
+      bloquearScroll();
       toggle.setAttribute('aria-expanded', 'true');
       foco.entrar();
     }
     function close() {
       var estaba = menu.classList.contains('open');
       menu.classList.remove('open');
-      document.body.style.overflow = '';
+      if (estaba) soltarScroll();
       toggle.setAttribute('aria-expanded', 'false');
       if (estaba) foco.salir();
     }
@@ -211,12 +238,24 @@
       entrar: function () {
         previo = document.activeElement;
         document.addEventListener('keydown', alTabular, true);
-        // Un fotograma de margen: el panel se abre con una transicion y
-        // enfocar un elemento aun oculto no hace nada.
-        requestAnimationFrame(function () {
-          var f = visibles();
-          if (f.length) f[0].focus();
-        });
+        /* Un fotograma de margen: el panel se abre con una transicion y
+           enfocar un elemento aun oculto no hace nada.
+
+           Y hace falta reintentar. Los paneles pasan de visibility:hidden a
+           visible DENTRO de una transicion, y en el primer fotograma de esa
+           transicion el valor calculado todavia es hidden: el navegador
+           acepta la llamada a focus() y no hace nada con ella. El visor de
+           zoom caia justo ahi y el foco se quedaba en la miniatura de la
+           ficha. Se comprueba que el foco haya aterrizado de verdad y, si no,
+           se vuelve a intentar en los dos fotogramas siguientes. */
+        var intentos = 0;
+        (function enfocar() {
+          requestAnimationFrame(function () {
+            var f = visibles();
+            if (f.length) f[0].focus();
+            if (!panel.contains(document.activeElement) && ++intentos < 3) enfocar();
+          });
+        })();
       },
       salir: function () {
         document.removeEventListener('keydown', alTabular, true);
@@ -229,9 +268,10 @@
   var focoCarrito = null;
   function openDrawer() {
     if (!drawer) return;
+    var yaAbierto = drawer.classList.contains('open');
     drawer.classList.add('open');
     drawer.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (!yaAbierto) bloquearScroll();
     if (!focoCarrito) focoCarrito = panelAccesible(drawer);
     focoCarrito.entrar();
   }
@@ -240,7 +280,7 @@
     var estaba = drawer.classList.contains('open');
     drawer.classList.remove('open');
     drawer.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (estaba) soltarScroll();
     if (estaba && focoCarrito) focoCarrito.salir();
   }
 
@@ -987,7 +1027,10 @@
       box.className = 'img-lightbox';
       box.setAttribute('role', 'dialog');
       box.setAttribute('aria-modal', 'true');
-      box.innerHTML = '<button class="img-lightbox-close" aria-label="Cerrar">&times;</button><img alt="">';
+      // Un dialogo sin nombre se anuncia como "dialogo" y ya: el lector de
+      // pantalla no dice que se ha abierto una imagen ampliada.
+      box.setAttribute('aria-label', (strings.ampliarImagen || 'Imagen ampliada'));
+      box.innerHTML = '<button class="img-lightbox-close" aria-label="' + (strings.cerrar || 'Cerrar') + '">&times;</button><img alt="">';
       boxImg = box.querySelector('img');
       // El puntero muestra "zoom-out" sobre todo el visor, así que cualquier
       // clic dentro debe cerrarlo. Antes solo cerraba el fondo o la X, y esa X
@@ -996,29 +1039,48 @@
       box.addEventListener('click', close);
       document.body.appendChild(box);
     }
-    var lastFocus = null;
+    // El visor reutiliza el mismo capturador de foco que el menu y el
+    // carrito. Antes solo llevaba el foco al boton de cerrar: a la
+    // siguiente tabulacion el foco se escapaba a la tienda de detras, que
+    // no se ve pero sigue ahi.
+    var foco = null, abierto = false;
     function open(src, alt) {
       if (!box) build();
-      lastFocus = document.activeElement;
+      var yaAbierto = abierto;
+      abierto = true;
       boxImg.src = src; boxImg.alt = alt || '';
-      requestAnimationFrame(function () {
-        box.classList.add('is-open');
-        var c = box.querySelector('.img-lightbox-close');
-        if (c) c.focus();
-      });
-      document.documentElement.style.overflow = 'hidden';
+      /* La clase se pone en el acto, no dentro de un requestAnimationFrame.
+         El visor esta con visibility:hidden hasta que la lleva, y enfocar
+         algo dentro de un subarbol oculto no hace nada: el foco se quedaba
+         en la miniatura de la ficha y la trampa de tabulacion no llegaba a
+         morder. Medido en la bateria de teclado.
+         La lectura de offsetHeight es la que deja correr la transicion de
+         entrada: obliga al navegador a fijar el estado inicial (opacidad 0)
+         antes de que cambie, que es lo que antes conseguia el fotograma de
+         margen. */
+      if (!yaAbierto) { void box.offsetHeight; }
+      box.classList.add('is-open');
+      if (!yaAbierto) {
+        bloquearScroll();
+        if (!foco) foco = panelAccesible(box);
+        foco.entrar();
+      }
     }
     function close() {
-      if (!box || !box.classList.contains('is-open')) return;
+      if (!box || !abierto) return;
+      abierto = false;
       box.classList.remove('is-open');
-      document.documentElement.style.overflow = '';
-      if (lastFocus && lastFocus.focus) lastFocus.focus();
+      soltarScroll();
+      if (foco) foco.salir();
     }
     zoomables.forEach(function (img) {
       img.style.cursor = 'zoom-in';
       // Accesible por teclado: cualquiera puede abrir el zoom con Enter/Espacio
       img.setAttribute('tabindex', '0');
       img.setAttribute('role', 'button');
+      // Con role=button el nombre pasa a ser el alt a secas: "Creatina,
+      // boton". No dice que hace. Se le añade la accion.
+      img.setAttribute('aria-label', (img.alt ? img.alt + '. ' : '') + (strings.ampliarImagen || 'Ampliar imagen'));
       function fire() { open(img.getAttribute('data-zoom-src') || img.currentSrc || img.src, img.alt); }
       img.addEventListener('click', fire);
       img.addEventListener('keydown', function (e) {

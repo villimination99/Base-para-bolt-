@@ -57,7 +57,11 @@
     "play_video": "動画を再生",
     "sequence_hint": "アニメーションの上で動かしてみて",
     "collections": "コレクションを見る",
-    "skip": "スキップ"
+    "skip": "スキップ",
+    "accessibility": {
+      "close": "閉じる",
+      "zoom_image": "画像を拡大"
+    }
   },
   "accessibility": {
     "skip_to_content": "本文へスキップ",
