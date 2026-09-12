@@ -179,6 +179,59 @@ for (const PAGINA of PAGINAS) {
   }
 }
 
+/* ------------------------------------------------------------------
+   UNA COLECCION VACIA NO SE INDEXA
+   Salio de una de verdad: "Cuidado personal" tiene dos jabones y los dos
+   estan ocultos, asi que la pagina existe, entra en el mapa del sitio y a
+   quien llegue le recibe un hueco. Google llama pagina fina a eso, y
+   varias le bajan la nota al dominio entero. Sigue rastreable -- follow --
+   para que vuelva a entrar sola el dia que se publique un producto.
+
+   Se comprueban las DOS mitades por separado, y a proposito: el layout
+   tiene que SACAR la cuenta y el fragmento tiene que OBEDECERLA. Juntarlas
+   en una sola prueba fue lo que me tuvo media hora persiguiendo un fallo
+   que no estaba en el tema sino en como liquidjs reparte el alcance dentro
+   de {% render %}.
+   ------------------------------------------------------------------ */
+{
+  /* Motor propio y limpio para este bloque: el de arriba ha renderizado ya
+     nueve paginas y no quiero que lo que dejo detras se cuele en una prueba
+     que va justo de eso, de que lo que llega es lo que se obedece. */
+  const e2 = new Liquid({ root: [T + '/snippets', T], extname: '.liquid', strictFilters: false, strictVariables: false });
+
+  // 1. El fragmento obedece la bandera que le llega.
+  for (const [bandera, esperado] of [[true, /^noindex, follow$/], [false, /^index, follow/]]) {
+    /* La bandera se pasa por VARIABLE, no como literal en el propio tag:
+       un false escrito a mano dentro de {% render %} llega como la cadena
+       "false", y toda cadena es verdadera en Liquid. Ese fue el fallo de la
+       primera version de esta prueba -- y es exactamente la trampa en la que
+       habria caido el tema si el layout escribiera el literal. */
+    const out = await e2.parseAndRender(
+      "{%- assign cv = v -%}{%- render 'seo-robots', coleccion_vacia: cv -%}",
+      { request: { page_type: 'collection' }, settings: {}, v: bandera });
+    const v = (out.match(/<meta name="robots" content="([^"]*)"/) || [])[1] || '';
+    const ok = esperado.test(v);
+    if (!ok) fallos++;
+    console.log(`${ok ? ' OK  ' : 'FALLA'}  el fragmento obedece coleccion_vacia=${String(bandera).padEnd(5)} \u2192 "${v.slice(0, 28)}"`);
+  }
+
+  // 2. El layout saca bien la cuenta a partir de products_count.
+  const cuenta = "{%- assign coleccion_vacia = false -%}{%- if request.page_type == 'collection' -%}{%- if collection.products_count == 0 -%}{%- assign coleccion_vacia = true -%}{%- endif -%}{%- endif -%}{{ coleccion_vacia }}";
+  for (const [n, esperado] of [[0, 'true'], [10, 'false']]) {
+    const v = (await e2.parseAndRender(cuenta,
+      { request: { page_type: 'collection' }, collection: { handle: 'x', products_count: n } })).trim();
+    const ok = v === esperado;
+    if (!ok) fallos++;
+    console.log(`${ok ? ' OK  ' : 'FALLA'}  con ${String(n).padStart(2)} productos la cuenta da ${v}`);
+  }
+
+  // 3. Y que el layout de verdad le pasa el parametro al fragmento.
+  const layoutTxt = (await import('fs')).readFileSync(T + '/layout/theme.liquid', 'utf8');
+  const pasa = /render 'seo-robots', coleccion_vacia: coleccion_vacia/.test(layoutTxt);
+  if (!pasa) fallos++;
+  console.log(`${pasa ? ' OK  ' : 'FALLA'}  el layout le pasa la cuenta al fragmento`);
+}
+
 console.log('');
 console.log(fallos === 0
   ? `Las ${Object.keys(debe).length} etiquetas estan en los ${PAGINAS.length} tipos de pagina, sin duplicados, y ninguna pagina se queda sin description propia.`

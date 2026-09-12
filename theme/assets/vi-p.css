@@ -1215,3 +1215,113 @@
       #vill-hub .vp-ent.vp-visto .section-title::after,
       #vill-hub .section-title.vp-ent.vp-visto::after { animation: none; transform: none; }
     }
+
+    /* ==================================================================
+       LAS SIETE SEMILLAS
+       ------------------------------------------------------------------
+       Cada chakra trae su propio color en --chakra y la tarjeta entera
+       se tine con el: el halo, el borde al pasar por encima y el estado
+       de sonando. Asi las siete se distinguen de un vistazo sin leer.
+
+       Y aqui el numero de hercios NO va con degradado como en el resto
+       de la rejilla: en estas tarjetas quien manda es la silaba. Poner
+       dos cosas gritando en la misma tarjeta no deja mirar a ninguna.
+       ================================================================== */
+    .chakra-aviso {
+      grid-column: 1 / -1;
+      margin: 0 0 4px; padding: 13px 15px;
+      background: rgba(177,74,255,.07);
+      border: 1px solid rgba(177,74,255,.22);
+      border-radius: 13px;
+      font-size: .79rem; line-height: 1.6; color: #a9a9bb;
+    }
+    .chakra-card { padding-top: 14px; }
+    .chakra-card .chakra-bija {
+      font-family: var(--font-heading, inherit);
+      font-weight: 900; font-size: 1.45rem; line-height: 1;
+      letter-spacing: .06em; color: var(--chakra, #05D9E8);
+      text-shadow: 0 0 22px color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent);
+    }
+    .chakra-card .freq-hz {
+      font-size: 1.15rem; margin-top: 7px;
+      background: none; -webkit-text-fill-color: currentColor;
+      color: #e8e8f4;
+    }
+    .chakra-card .freq-unit { margin-top: 1px; }
+    .chakra-card .freq-name { margin-top: 7px; }
+    .chakra-card .chakra-sans {
+      font-size: .68rem; color: #7e7e8b; margin-top: 2px;
+      letter-spacing: .02em; font-style: italic;
+    }
+    .chakra-card .freq-desc { min-height: 38px; margin-top: 6px; }
+    .chakra-card .freq-state { color: var(--chakra, #05D9E8); }
+    .chakra-card .freq-ring {
+      background: radial-gradient(circle, color-mix(in srgb, var(--chakra, #05D9E8) 20%, transparent) 0%, transparent 62%);
+    }
+    .chakra-card:hover { border-color: color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent); }
+    .chakra-card.playing {
+      border-color: var(--chakra, #05D9E8);
+      box-shadow: 0 0 32px color-mix(in srgb, var(--chakra, #05D9E8) 28%, transparent);
+    }
+
+    /* El recorrido ocupa la fila entera, debajo de las siete. */
+    .chakra-recorrido {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 6px; padding: 15px 16px;
+      background: linear-gradient(100deg, rgba(255,59,71,.07), rgba(177,74,255,.09));
+      border: 1px solid #2a2a3a; border-radius: 14px;
+    }
+    .chakra-rec-txt { display: flex; flex-direction: column; gap: 2px; flex: 1 1 190px; min-width: 0; }
+    .chakra-rec-txt strong { font-size: .92rem; color: #fff; }
+    .chakra-rec-txt span { font-size: .76rem; color: #888899; }
+    .chakra-rec-min { display: flex; align-items: center; gap: 8px; font-size: .76rem; color: #aab; }
+    .chakra-rec-min select {
+      background: #0d0f16; border: 1px solid #2a2a3a; border-radius: 9px;
+      color: #fff; padding: 8px 10px; font-size: 16px;
+    }
+    .chakra-recorrido .btn { flex: 0 0 auto; }
+    .chakra-rec-paso {
+      flex: 1 1 100%; font-size: .78rem; color: #05D9E8;
+      font-weight: 700; letter-spacing: .04em;
+    }
+    @media (max-width: 480px) {
+      /* En un movil la fila entera no cabe: se apila y el boton ocupa el ancho. */
+      .chakra-recorrido { flex-direction: column; align-items: stretch; }
+      .chakra-recorrido .btn { justify-content: center; }
+    }
+
+    /* ==================================================================
+       EL CUERPO EN EL TIEMPO
+       El mapa dice donde esta cada musculo; esta tira dice cuando lo
+       tocaste. Cada pastilla lleva su estado en --st y de ahi salen el
+       punto, el borde y el texto: un color, tres sitios.
+       ================================================================== */
+    .mm-4d { margin-top: 16px; padding: 14px 15px; background: #11131d; border: 1px solid #232636; border-radius: 14px; }
+    .mm-4d-head { display: flex; flex-direction: column; gap: 3px; margin-bottom: 11px; }
+    .mm-4d-head strong { font-size: .92rem; color: #fff; }
+    .mm-4d-head span { font-size: .76rem; color: #888899; line-height: 1.45; }
+    .mm-4d-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mm4d-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 12px; border-radius: 99px; cursor: pointer;
+      background: #0d0f16; color: #d6d6e4;
+      border: 1px solid color-mix(in srgb, var(--st, #5b5b6b) 38%, #232636);
+      font-size: .78rem; font-family: inherit;
+      transition: border-color .2s, transform .18s, background .2s;
+    }
+    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #5b5b6b); background: #12141d; }
+    .mm4d-chip:focus-visible { outline: 2px solid var(--st, #05D9E8); outline-offset: 2px; }
+    .mm4d-punto {
+      width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
+      background: var(--st, #5b5b6b);
+      box-shadow: 0 0 9px var(--st, #5b5b6b);
+    }
+    .mm4d-nom { font-weight: 700; color: #fff; }
+    .mm4d-est { color: var(--st, #5b5b6b); font-weight: 700; letter-spacing: .02em; }
+    /* El que se trabajo hoy late despacio: es el unico que pide atencion. */
+    @media (prefers-reduced-motion: no-preference) {
+      .mm4d-hoy .mm4d-punto { animation: mm4dLate 2.6s ease-in-out infinite; }
+    }
+    @keyframes mm4dLate { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #7e7e8b; line-height: 1.5; }

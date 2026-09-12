@@ -272,6 +272,105 @@ decir(solfeggio === 11 && binaural === 8 && dual === 1,
 decir(anunciadas.includes(String(solfeggio + binaural)),
   `el hero anuncia ${solfeggio + binaural} frecuencias y hay ${solfeggio + binaural} (cifras del hero: ${anunciadas.join(', ')})`);
 
+/* ------------------------------------------------------------------
+   LOS SIETE CHAKRAS
+   Seccion propia, no una pestana. Se comprueba que las siete tarjetas
+   existan, que cada una lleve su color (es lo que las distingue de un
+   vistazo), que la advertencia honesta este escrita -- la que dice que
+   los hercios NO vienen de la tradicion, y que sin ella la seccion
+   estaria vendiendo humo -- y que el recorrido este ahi.
+   ------------------------------------------------------------------ */
+const chakras = await p.$$eval('#chakra-grid .chakra-card', n => n.map(el => ({
+  id: el.dataset.id,
+  color: (el.getAttribute('style') || '').match(/--chakra:\s*(#[0-9a-fA-F]{3,8})/)?.[1] || '',
+  bija: (el.querySelector('.chakra-bija') || {}).textContent || '',
+  hz: (el.querySelector('.freq-hz') || {}).textContent || '',
+  lugar: (el.querySelector('.chakra-sans') || {}).textContent || ''
+})));
+decir(chakras.length === 7, `los siete chakras estan (${chakras.length})`);
+decir(new Set(chakras.map(c => c.color)).size === 7,
+  `cada chakra lleva su propio color (${new Set(chakras.map(c => c.color)).size} distintos)`);
+decir(chakras.every(c => c.bija.trim() && c.hz.trim() && c.lugar.includes('\u00b7')),
+  'cada tarjeta trae silaba, hercios y lugar del cuerpo');
+const HZ_ESPERADOS = ['396', '417', '528', '639', '741', '852', '963'];
+decir(chakras.map(c => c.hz.trim()).join(',') === HZ_ESPERADOS.join(','),
+  `las frecuencias van de la raiz a la corona: ${chakras.map(c => c.hz.trim()).join(' \u00b7 ')}`);
+const aviso = await p.$eval('#chakra-grid .chakra-aviso', el => el.textContent).catch(() => '');
+decir(/hercios|hertz|hertz/i.test(aviso) && /tradici/i.test(aviso),
+  'la advertencia honesta esta escrita: los hercios no vienen de la tradicion');
+decir(await p.$('#chakra-grid .chakra-recorrido #chakra-rec-btn') !== null,
+  'el recorrido de la raiz a la corona esta ahi');
+/* Y que suene de verdad: se toca una tarjeta y tiene que quedar
+   marcada como sonando. Sin esto, la seccion podria pintarse perfecta y
+   no hacer nada al tocarla. */
+await p.click('#chakra-grid .chakra-card[data-id="k4"]');
+await p.waitForTimeout(350);
+decir(await p.$('#chakra-grid .chakra-card[data-id="k4"].playing') !== null,
+  'al tocar un chakra, la tarjeta se enciende');
+await p.click('#chakra-stop-btn');
+await p.waitForTimeout(350);
+decir(await p.$('#chakra-grid .chakra-card.playing') === null,
+  'y el boton de detener la apaga');
+
+/* ------------------------------------------------------------------
+   EL MAPA 3D SE PARA CUANDO NO SE VE
+   Trece secciones y el mapa es la primera. Sin esto, bajar hasta Retos
+   dejaba un WebGL pintando sesenta fotogramas por segundo de un lienzo
+   fuera de pantalla: la GPU encendida y la bateria bajando por una
+   figura que nadie mira. requestAnimationFrame solo se detiene con la
+   PESTANA en segundo plano, no con el lienzo fuera del encuadre.
+   Se mide con el contador de fotogramas, no con una bandera.
+   ------------------------------------------------------------------ */
+await p.evaluate(() => document.getElementById('muscle-map').scrollIntoView());
+await p.waitForTimeout(900);
+const arrancado = await p.evaluate(() => window.__mm3dFrames || 0);
+decir(arrancado > 0, `el mapa pinta cuando se ve (${arrancado} fotogramas)`);
+
+await p.evaluate(() => document.getElementById('challenges').scrollIntoView());
+await p.waitForTimeout(700);
+const a1 = await p.evaluate(() => window.__mm3dFrames || 0);
+await p.waitForTimeout(700);
+const a2 = await p.evaluate(() => window.__mm3dFrames || 0);
+decir(a2 === a1, `lejos del mapa no se pinta ni un fotograma mas (${a1} -> ${a2})`);
+
+await p.evaluate(() => document.getElementById('muscle-map').scrollIntoView());
+await p.waitForTimeout(700);
+const a3 = await p.evaluate(() => window.__mm3dFrames || 0);
+decir(a3 > a2, `y al volver arranca solo (${a2} -> ${a3})`);
+
+/* ------------------------------------------------------------------
+   EL CUERPO EN EL TIEMPO
+   El cuarto eje del mapa: cuando se toco cada grupo por ultima vez. Sale
+   del registro real del visitante, asi que lo importante es que empiece
+   diciendo la verdad -- "sin registro" -- y que cambie SOLO cuando se
+   registra una serie de verdad.
+   ------------------------------------------------------------------ */
+const chips4d = await p.$$eval('#mm-4d-strip .mm4d-chip', n => n.map(el => ({
+  m: el.dataset.muscle,
+  est: (el.querySelector('.mm4d-est') || {}).textContent || ''
+})));
+decir(chips4d.length === 9, `los nueve grupos del mapa estan en la tira del tiempo (${chips4d.length})`);
+decir(chips4d.every(c => /sin registro|no record/i.test(c.est)),
+  'sin registro previo, la tira lo dice y no se inventa un estado');
+const vacioVisible = await p.$eval('#mm-4d-vacio', el => getComputedStyle(el).display !== 'none');
+decir(vacioVisible, 'y explica como empezar a contar');
+
+/* Se registra una serie de sentadilla (etiqueta Piernas) y el cuadriceps
+   tiene que pasar a "hoy". Es la unica forma de comprobar que la tira lee
+   el registro y no una lista fija. */
+await p.evaluate(() => { window.addToRoutine && window.addToRoutine('squat'); });
+await p.waitForTimeout(200);
+await p.evaluate(() => { window.logSet && window.logSet('squat'); });
+await p.waitForTimeout(400);
+const cuad = await p.$eval('#mm-4d-strip .mm4d-chip[data-muscle="Cuadriceps"]',
+  el => ({ clase: el.className, est: (el.querySelector('.mm4d-est') || {}).textContent || '' })).catch(() => null);
+decir(cuad && /hoy|today/i.test(cuad.est) && /mm4d-hoy/.test(cuad.clase),
+  `al registrar una sentadilla el cuadriceps pasa a hoy (${cuad ? cuad.est.trim() : 'no esta'})`);
+const pecho = await p.$eval('#mm-4d-strip .mm4d-chip[data-muscle="Pecho"]',
+  el => (el.querySelector('.mm4d-est') || {}).textContent || '').catch(() => '');
+decir(/sin registro|no record/i.test(pecho),
+  'y el pecho, que no se toco, sigue sin registro');
+
 await b.close(); srv.close(); fs.rmSync(TMP, { recursive: true, force: true });
 console.log(mal ? `\n  ${mal} comprobaciones mal` : '\nVI.P funciona dentro del tema, sin salir a internet y sin tocar lo que hay alrededor.');
 process.exit(mal ? 1 : 0);

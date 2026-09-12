@@ -1315,7 +1315,7 @@
 <div data-section id="hub-index">
 <section style="padding-top:38px;padding-bottom:10px">
   <h2 class="section-title" id="hub-index-title">Todo lo que encontrarás aquí</h2>
-  <p class="section-sub" id="hub-index-sub">12 herramientas conectadas entre sí: lo que entrenas alimenta tu nivel, lo que comes alimenta tus gráficos. Toca cualquiera para ir directo.</p>
+  <p class="section-sub" id="hub-index-sub">13 herramientas conectadas entre sí: lo que entrenas alimenta tu nivel, lo que comes alimenta tus gráficos. Toca cualquiera para ir directo.</p>
   <div class="hub-grid">
     <a class="hub-card" href="#muscle-map" data-sec="muscle-map"><span class="hc-emoji">🗿</span><span class="hc-name">Mapa Muscular 3D</span><span class="hc-desc">Toca un músculo: mira sus ejercicios y súmalos</span></a>
     <a class="hub-card" href="#planner" data-sec="planner"><span class="hc-emoji">🏋️</span><span class="hc-name">Entrenamiento</span><span class="hc-desc">Registra kg y series — cada kilo cuenta</span></a>
@@ -1325,6 +1325,7 @@
     <a class="hub-card" href="#botanica" data-sec="botanica"><span class="hc-emoji">🌿</span><span class="hc-name">Botánica Nutricional</span><span class="hc-desc">55 alimentos y sus propiedades reales</span></a>
     <a class="hub-card" href="#meditation" data-sec="meditation"><span class="hc-emoji">🧘</span><span class="hc-name">Meditación</span><span class="hc-desc">Respiración guiada + programa de 21 días</span></a>
     <a class="hub-card" href="#frequencies" data-sec="frequencies"><span class="hc-emoji">🎧</span><span class="hc-name">Frecuencias</span><span class="hc-desc">Solfeggio, binaurales y pulsos duales</span></a>
+    <a class="hub-card" href="#chakras" data-sec="chakras"><span class="hc-emoji">🟣</span><span class="hc-name">Sonidos de los Chakras</span><span class="hc-desc">Las siete semillas, su nota y su recorrido</span></a>
     <a class="hub-card" href="#level" data-sec="level"><span class="hc-emoji">🏆</span><span class="hc-name">Nivel de Atleta</span><span class="hc-desc">De Principiante a Predator</span></a>
     <a class="hub-card" href="#progress" data-sec="progress"><span class="hc-emoji">📊</span><span class="hc-name">Progreso</span><span class="hc-desc">Tu salud entera en gráficos</span></a>
     <a class="hub-card" href="#sleep" data-sec="sleep"><span class="hc-emoji">😴</span><span class="hc-name">Sueño</span><span class="hc-desc">¿Descansas lo que tu entreno exige?</span></a>
@@ -1358,6 +1359,15 @@
       <button data-tx class="muscle-btn" data-muscle="Gluteos">Glúteos</button>
       <button data-tx class="muscle-btn" data-muscle="Gemelos">Gemelos</button>
       <button class="muscle-btn mm-clear" id="mm-clear-btn" data-muscle="" type="button">✕ Quitar selección</button>
+    </div>
+    <!-- El cuarto eje: el mismo cuerpo leido en el tiempo -->
+    <div class="mm-4d" id="mm-4d">
+      <div class="mm-4d-head">
+        <strong data-i18n="mm4d.t">⏳ El cuerpo en el tiempo</strong>
+        <span data-i18n="mm4d.s">Cuanto hace que entrenaste cada grupo. Toca uno para verlo en el mapa.</span>
+      </div>
+      <div class="mm-4d-strip" id="mm-4d-strip"></div>
+      <p class="mm-4d-vacio" id="mm-4d-vacio" data-i18n="mm4d.v">Registra una serie en Entrenamiento y este panel empieza a contar.</p>
     </div>
     <p class="mm-hint" data-tx>Toca un músculo del cuerpo o usa los botones · Arrastra para rotar · Pellizca para hacer zoom</p>
   </div>
@@ -1845,6 +1855,28 @@
 </section>
 </div>
 
+<!-- ===== SONIDOS DE LOS CHAKRAS ===== -->
+<div data-section id="chakras">
+<section>
+  <h2 class="section-title">Sonidos de los Chakras</h2>
+  <p class="section-sub" data-i18n="sub.chakras">Las siete semillas, cada una con su silaba, su lugar en el cuerpo, su nota y su tono. Y un recorrido que las atraviesa de la raiz a la corona.</p>
+  <div class="card">
+    <div class="freq-intro" data-i18n="chakra.intro">
+      <span style="font-size:1.3rem">🟣</span>
+      <span><strong>Esto es sonido, no medicina.</strong> Se canta la silaba y el tono acompana. Volumen suave, sesiones cortas, y si algo te marea, para.</span>
+    </div>
+    <div class="freq-grid" id="chakra-grid"></div>
+    <div class="freq-controls">
+      <label><span data-tx>🔊 Volumen</span>
+        <input type="range" id="chakra-volume" min="0" max="100" value="35">
+      </label>
+      <button class="btn btn-pink" id="chakra-stop-btn">⏹ Detener</button>
+      <span id="chakra-now-playing"></span>
+    </div>
+  </div>
+</section>
+</div>
+
 <!-- ===== NIVEL DE ATLETA ===== -->
 <div data-section id="level">
 <section>
@@ -1993,6 +2025,7 @@
     <a data-tx href="#botanica">Botánica</a>
     <a data-tx href="#meditation">Meditación</a>
     <a data-tx href="#frequencies">Frecuencias</a>
+    <a data-tx href="#chakras">Chakras</a>
     <a data-tx href="#progress">Progreso</a>
     <a data-tx href="#challenges">Retos</a>
   </div>

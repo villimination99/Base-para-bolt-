@@ -599,6 +599,93 @@
      ===================================================================== */
   window.__mm3dReady = false;
   window.__mm3dStarted = false;
+  /* ====================================================================
+     EL CUERPO EN EL TIEMPO (el cuarto eje del mapa)
+     --------------------------------------------------------------------
+     El mapa dice DONDE esta cada musculo. Esto dice CUANDO lo tocaste por
+     ultima vez, que es la pregunta que de verdad se hace alguien delante
+     de un cuerpo: "hoy, que me toca".
+
+     Sale de lo que ya hay registrado -- vill_done guarda, por dia, los
+     ejercicios marcados -- cruzado con la etiqueta de cada ejercicio. No
+     se inventa nada y no se pide nada: si no hay registro, lo dice.
+
+     Gemelos aparece siempre sin registro a proposito: ningun ejercicio de
+     la libreria lleva esa etiqueta todavia. Mentir con un verde ahi seria
+     peor que el hueco.
+     ==================================================================== */
+  var GRUPOS_4D = [
+    ['Pecho',       ['Pecho']],
+    ['Espalda',     ['Espalda']],
+    ['Hombros',     ['Hombros']],
+    ['Biceps',      ['Biceps']],
+    ['Triceps',     ['Triceps']],
+    ['Abdominales', ['Core']],
+    ['Cuadriceps',  ['Piernas']],
+    ['Gluteos',     ['Gluteos']],
+    ['Gemelos',     []]
+  ];
+  var ETIQ_4D = { Gluteos: 'Gl\u00fateos', Biceps: 'B\u00edceps', Triceps: 'Tr\u00edceps', Cuadriceps: 'Cu\u00e1driceps' };
+
+  function dias4D() {
+    var hoy = new Date(todayKey() + 'T00:00:00').getTime();
+    var res = {};
+    Object.keys(DONE_STORE || {}).forEach(function(fecha) {
+      var t = new Date(fecha + 'T00:00:00').getTime();
+      if (isNaN(t)) return;
+      var d = Math.round((hoy - t) / 86400000);
+      if (d < 0) return;
+      (DONE_STORE[fecha] || []).forEach(function(id) {
+        var ex = EXERCISES.find(function(e) { return e.id === id; });
+        if (!ex || !ex.tags) return;
+        GRUPOS_4D.forEach(function(par) {
+          var casa = par[1].some(function(tag) { return ex.tags.indexOf(tag) !== -1; });
+          if (!casa) return;
+          if (res[par[0]] === undefined || d < res[par[0]]) res[par[0]] = d;
+        });
+      });
+    });
+    return res;
+  }
+
+  function estado4D(d) {
+    if (d === undefined) return { clase: 'sin', color: '#5b5b6b', txt: T('mm4d.none', 'sin registro') };
+    if (d === 0)        return { clase: 'hoy', color: '#ff3b47', txt: T('mm4d.today', 'hoy') };
+    if (d <= 2)         return { clase: 'rec', color: '#ffb020', txt: d + ' ' + (d === 1 ? T('mm4d.d1', 'd\u00eda') : T('mm4d.dn', 'd\u00edas')) };
+    return { clase: 'listo', color: '#2ee87b', txt: d >= 30 ? '30+ ' + T('mm4d.dn', 'd\u00edas') : d + ' ' + T('mm4d.dn', 'd\u00edas') };
+  }
+
+  function render4D() {
+    var strip = document.getElementById('mm-4d-strip');
+    var vacio = document.getElementById('mm-4d-vacio');
+    if (!strip) return;
+    var d = dias4D();
+    var hayAlgo = Object.keys(d).length > 0;
+    if (vacio) vacio.style.display = hayAlgo ? 'none' : '';
+    strip.innerHTML = GRUPOS_4D.map(function(par) {
+      var g = par[0], e = estado4D(d[g]);
+      return '<button type="button" class="mm4d-chip mm4d-' + e.clase + '" data-muscle="' + g + '" style="--st:' + e.color + '">' +
+        '<span class="mm4d-punto"></span>' +
+        '<span class="mm4d-nom">' + TX(ETIQ_4D[g] || g) + '</span>' +
+        '<span class="mm4d-est">' + e.txt + '</span>' +
+      '</button>';
+    }).join('');
+  }
+  window.__render4D = render4D;
+
+  var strip4D = document.getElementById('mm-4d-strip');
+  if (strip4D) {
+    strip4D.addEventListener('click', function(ev) {
+      var chip = ev.target.closest('.mm4d-chip');
+      if (!chip) return;
+      /* Tocar aqui lleva al musculo EN EL MAPA: el tiempo manda sobre el
+         espacio, que es justo lo que se quiere de un panel asi. */
+      if (window.selectMuscle3D) window.selectMuscle3D(chip.dataset.muscle, false);
+      var lienzo = document.getElementById('muscle-canvas');
+      if (lienzo && lienzo.scrollIntoView) lienzo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   document.querySelectorAll('.muscle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var m = this.dataset.muscle;
@@ -1442,7 +1529,7 @@
       renderPRs();
       showToast('🏆 ' + T('t.pr', '¡Nuevo PR en') + ' ' + TX(ex.name) + ': ' + toDisplay(Math.round(kg * 10) / 10) + ' ' + UNIT.toLowerCase() + '!');
     }
-    renderLevel(); renderLeaderboard(); updateHealthPanel(); renderRoutine(); renderLibrary();
+    renderLevel(); renderLeaderboard(); updateHealthPanel(); renderRoutine(); renderLibrary(); render4D();
   };
 
   /* ---- Sueño & recuperación ---- */
@@ -1600,7 +1687,7 @@
   };
   renderMedProgram();
 
-  renderPRs(); renderLevel(); renderLeaderboard(); updateHealthPanel(); renderSleepBars();
+  renderPRs(); renderLevel(); renderLeaderboard(); updateHealthPanel(); renderSleepBars(); render4D();
 
   /* ---- Recetas de recuperación (ordenadas por kcal) ---- */
   var RECIPES = [
@@ -1966,7 +2053,7 @@
       titles: { 'muscle-map': '3D Muscle Map', planner: 'Training', nutrition: 'Smart Nutrition', goal: 'Your Calorie Goal', 'diet-plans': 'Elite Diet Plans', botanica: '🌿 Nutritional Botany', meditation: 'Meditation & Guided Breathing', frequencies: 'Restorative Frequencies', level: 'Your Athlete Level', progress: 'Progress Analytics', sleep: 'Sleep & Recovery', challenges: 'Community Challenges' },
       idxTitle: 'Everything you\'ll find here',
       idxSub: '12 tools wired together: what you train feeds your level, what you eat feeds your charts. Tap any to jump straight in.',
-      idx: { 'muscle-map': ['3D Muscle Map', 'Tap a muscle: see its exercises and add them'], 'planner': ['Training', 'Log kg and sets — every kilo counts'], 'nutrition': ['Nutrition', 'Scan your plate with AI and track macros'], 'goal': ['Calorie Goal', 'Get your TDEE and set a real target'], 'diet-plans': ['Diet Plans', '4 plans · Mon–Sun menus all year'], 'botanica': ['Nutritional Botany', '55 foods and their real properties'], 'meditation': ['Meditation', 'Guided breathing + 21-day program'], 'frequencies': ['Frequencies', 'Solfeggio, binaural and dual pulses'], 'level': ['Athlete Level', 'From Beginner to Predator'], 'progress': ['Progress', 'Your whole health in charts'], 'sleep': ['Sleep', 'Do you rest as much as you train?'], 'challenges': ['Challenges', 'Compete on the leaderboard'] },
+      idx: { 'muscle-map': ['3D Muscle Map', 'Tap a muscle: see its exercises and add them'], 'planner': ['Training', 'Log kg and sets — every kilo counts'], 'nutrition': ['Nutrition', 'Scan your plate with AI and track macros'], 'goal': ['Calorie Goal', 'Get your TDEE and set a real target'], 'diet-plans': ['Diet Plans', '4 plans · Mon–Sun menus all year'], 'botanica': ['Nutritional Botany', '55 foods and their real properties'], 'meditation': ['Meditation', 'Guided breathing + 21-day program'], 'frequencies': ['Frequencies', 'Solfeggio, binaural and dual pulses'], 'chakras': ['Chakra Sounds', 'The seven seeds, their note and their journey'], 'level': ['Athlete Level', 'From Beginner to Predator'], 'progress': ['Progress', 'Your whole health in charts'], 'sleep': ['Sleep', 'Do you rest as much as you train?'], 'challenges': ['Challenges', 'Compete on the leaderboard'] },
       t: {
         'sub.map': 'Anatomy sculpted as one continuous surface, with definition grooves carved between muscles. Tap a zone: it lights up red on the body itself.',
         'sub.planner': 'Your routine for today: enter the weight, hit ✓ and every kilo feeds your athlete level, your PRs and the health panel. Pick exercises from the gallery below.',
@@ -1977,6 +2064,10 @@
         'sub.bot': 'Fruits, seeds, spices and grains with their real properties — so nature works in favour of your plan.',
         'sub.med': 'Follow the circle: it grows as you inhale, holds as you hold, and shrinks as you exhale. Ideal for visual people.',
         'sub.freq': '19 frequencies generated in real time: Solfeggio tones, binaural waves and dual pulses to sleep, meditate, focus or switch your mind on.',
+        'mm4d.t': '\u23f3 The body over time',
+        'mm4d.s': 'How long since you trained each group. Tap one to see it on the map.',
+        'mm4d.v': 'Log a set in Training and this panel starts counting.',
+        'sub.chakras': 'The seven seeds, each with its syllable, its place in the body, its note and its tone. And a journey that runs from root to crown.',
         'sub.level': 'Every kilo you log in your routine adds total volume. Climb from Beginner to Predator and show up on the leaderboard.',
         'sub.progress': 'All your progress together: food logged, calories burned, volume lifted and rest.',
         'sub.sleep': 'Muscle repairs while you sleep. Log your hours and I will tell you whether it is enough for what you burned today.',
@@ -2089,7 +2180,7 @@
       titles: { 'muscle-map': 'Carte musculaire 3D', planner: 'Entraînement', nutrition: 'Nutrition intelligente', goal: 'Ton objectif calorique', 'diet-plans': 'Plans diététiques d’élite', botanica: '🌿 Botanique nutritionnelle', meditation: 'Méditation & respiration guidée', frequencies: 'Fréquences réparatrices', level: 'Ton niveau d’athlète', progress: 'Analyse de progrès', sleep: 'Sommeil & récupération', challenges: 'Défis de la communauté' },
       idxTitle: 'Tout ce que tu trouveras ici',
       idxSub: '12 outils reliés entre eux : ce que tu t’entraînes nourrit ton niveau, ce que tu manges nourrit tes graphiques. Touche pour y aller direct.',
-      idx: { 'muscle-map': ['Carte musculaire 3D', 'Touche un muscle : vois ses exercices'], 'planner': ['Entraînement', 'Enregistre kg et séries — chaque kilo compte'], 'nutrition': ['Nutrition', 'Scanne ton assiette avec l’IA, suis tes macros'], 'goal': ['Objectif calorique', 'Calcule ton TDEE et fixe ta vraie cible'], 'diet-plans': ['Plans diététiques', '4 plans · menus lun–dim toute l’année'], 'botanica': ['Botanique nutritionnelle', '55 aliments et leurs vraies propriétés'], 'meditation': ['Méditation', 'Respiration guidée + programme 21 jours'], 'frequencies': ['Fréquences', 'Solfeggio, binaurales et pulsations duales'], 'level': ['Niveau d’athlète', 'De Débutant à Predator'], 'progress': ['Progrès', 'Toute ta santé en graphiques'], 'sleep': ['Sommeil', 'Récupères-tu autant que tu t’entraînes ?'], 'challenges': ['Défis', 'Affronte le classement'] },
+      idx: { 'muscle-map': ['Carte musculaire 3D', 'Touche un muscle : vois ses exercices'], 'planner': ['Entraînement', 'Enregistre kg et séries — chaque kilo compte'], 'nutrition': ['Nutrition', 'Scanne ton assiette avec l’IA, suis tes macros'], 'goal': ['Objectif calorique', 'Calcule ton TDEE et fixe ta vraie cible'], 'diet-plans': ['Plans diététiques', '4 plans · menus lun–dim toute l’année'], 'botanica': ['Botanique nutritionnelle', '55 aliments et leurs vraies propriétés'], 'meditation': ['Méditation', 'Respiration guidée + programme 21 jours'], 'frequencies': ['Fréquences', 'Solfeggio, binaurales et pulsations duales'], 'chakras': ['Sons des chakras', 'Les sept semences, leur note et leur parcours'], 'level': ['Niveau d’athlète', 'De Débutant à Predator'], 'progress': ['Progrès', 'Toute ta santé en graphiques'], 'sleep': ['Sommeil', 'Récupères-tu autant que tu t’entraînes ?'], 'challenges': ['Défis', 'Affronte le classement'] },
       t: {
         'sub.map': 'Anatomie sculptée en une seule surface continue, avec des sillons de définition entre les muscles. Touche une zone : elle s’illumine en rouge sur le corps.',
         'sub.planner': 'Ta routine du jour : saisis le poids, appuie sur ✓ et chaque kilo nourrit ton niveau d’athlète, tes RP et le panneau santé. Choisis les exercices dans la galerie ci-dessous.',
@@ -2100,6 +2191,10 @@
         'sub.bot': 'Fruits, graines, épices et céréales avec leurs vraies propriétés — pour que la nature travaille en faveur de ton plan.',
         'sub.med': 'Suis le cercle : il grandit quand tu inspires, se fige quand tu retiens, et se rétracte quand tu expires. Idéal pour les visuels.',
         'sub.freq': '19 fréquences générées en temps réel : tons Solfeggio, ondes binaurales et pulsations duales pour dormir, méditer, te concentrer ou activer ton esprit.',
+        'mm4d.t': '\u23f3 Le corps dans le temps',
+        'mm4d.s': 'Depuis combien de temps tu as travaill\u00e9 chaque groupe. Touche-en un pour le voir sur la carte.',
+        'mm4d.v': 'Enregistre une s\u00e9rie dans Entra\u00eenement et ce panneau commence \u00e0 compter.',
+        'sub.chakras': 'Les sept semences, chacune avec sa syllabe, sa place dans le corps, sa note et son ton. Et un parcours qui va de la racine à la couronne.',
         'sub.level': 'Chaque kilo enregistré dans ta routine ajoute du volume total. Passe de Débutant à Predator et apparais au classement.',
         'sub.progress': 'Tout ton progrès réuni : repas enregistrés, calories brûlées, volume soulevé et repos.',
         'sub.sleep': 'Le muscle se répare pendant ton sommeil. Enregistre tes heures et je te dis si c’est suffisant vu ce que tu as brûlé aujourd’hui.',
@@ -2205,7 +2300,7 @@
   };
 
   (function extendI18N() {
-    var addT = { en: {"freq.intro": "<strong>Use headphones</strong> (required for binaurals) and keep the volume gentle. These frequencies are a relaxation and wellbeing tool — they complement, not replace, rest, nutrition and training.", "ex.sets": "Sets", "ex.dur": "Estimated duration", "ex.met": "Intensity (MET)", "ex.cal": "Calories at your weight", "ex.tech": "📖 Correct technique", "ex.err": "⚠️ Common mistakes", "TX(ex.note)": "Master the pattern with light weight before adding load. Joint pain (unlike muscle burn) = stop and review your technique.", "ex.remove": "Remove from routine", "med.how": "🧘 How to do it", "med.min": "minutes · guided practice", "med.done": "✓ Mark as completed", "med.undo": "↺ Unmark", "med.timer": "⏱ Open breathing timer", "med.day": "Day", "med.DAY": "DAY", "med.dayDone": "completed", "dyn.week": "Week", "dyn.hint60": "— 60 weeks a year per plan, combined so they never repeat.", "th.day": "Day", "th.bre": "Breakfast", "th.lun": "Lunch", "th.sna": "Snack", "th.din": "Dinner"}, fr: {"freq.intro": "<strong>Utilise des écouteurs</strong> (obligatoire pour les binaurales) et un volume doux. Ces fréquences sont un outil de détente et de bien-être — elles complètent, sans remplacer, le repos, la nutrition et l’entraînement.", "ex.sets": "Séries", "ex.dur": "Durée estimée", "ex.met": "Intensité (MET)", "ex.cal": "Calories selon ton poids", "ex.tech": "📖 Technique correcte", "ex.err": "⚠️ Erreurs courantes", "TX(ex.note)": "Maîtrise le mouvement avec peu de poids avant de charger. Douleur articulaire (différente de la brûlure musculaire) = arrête et revois ta technique.", "ex.remove": "Retirer de la routine", "med.how": "🧘 Comment faire", "med.min": "minutes · pratique guidée", "med.done": "✓ Marquer comme terminé", "med.undo": "↺ Décocher", "med.timer": "⏱ Ouvrir le chrono respiration", "med.day": "Jour", "med.DAY": "JOUR", "med.dayDone": "terminé", "dyn.week": "Semaine", "dyn.hint60": "— 60 semaines par an et par plan, combinées pour ne jamais se répéter.", "th.day": "Jour", "th.bre": "Petit-déj", "th.lun": "Déjeuner", "th.sna": "Collation", "th.din": "Dîner"} };
+    var addT = { en: {"chakra.intro": "<strong>This is sound, not medicine.</strong> You chant the syllable and the tone accompanies it. Gentle volume, short sessions, and if anything makes you dizzy, stop.", "freq.intro": "<strong>Use headphones</strong> (required for binaurals) and keep the volume gentle. These frequencies are a relaxation and wellbeing tool — they complement, not replace, rest, nutrition and training.", "ex.sets": "Sets", "ex.dur": "Estimated duration", "ex.met": "Intensity (MET)", "ex.cal": "Calories at your weight", "ex.tech": "📖 Correct technique", "ex.err": "⚠️ Common mistakes", "TX(ex.note)": "Master the pattern with light weight before adding load. Joint pain (unlike muscle burn) = stop and review your technique.", "ex.remove": "Remove from routine", "med.how": "🧘 How to do it", "med.min": "minutes · guided practice", "med.done": "✓ Mark as completed", "med.undo": "↺ Unmark", "med.timer": "⏱ Open breathing timer", "med.day": "Day", "med.DAY": "DAY", "med.dayDone": "completed", "dyn.week": "Week", "dyn.hint60": "— 60 weeks a year per plan, combined so they never repeat.", "th.day": "Day", "th.bre": "Breakfast", "th.lun": "Lunch", "th.sna": "Snack", "th.din": "Dinner"}, fr: {"chakra.intro": "<strong>C\u2019est du son, pas de la m\u00e9decine.</strong> On chante la syllabe et le ton l\u2019accompagne. Volume doux, s\u00e9ances courtes, et si quelque chose t\u2019\u00e9tourdit, arr\u00eate.", "freq.intro": "<strong>Utilise des écouteurs</strong> (obligatoire pour les binaurales) et un volume doux. Ces fréquences sont un outil de détente et de bien-être — elles complètent, sans remplacer, le repos, la nutrition et l’entraînement.", "ex.sets": "Séries", "ex.dur": "Durée estimée", "ex.met": "Intensité (MET)", "ex.cal": "Calories selon ton poids", "ex.tech": "📖 Technique correcte", "ex.err": "⚠️ Erreurs courantes", "TX(ex.note)": "Maîtrise le mouvement avec peu de poids avant de charger. Douleur articulaire (différente de la brûlure musculaire) = arrête et revois ta technique.", "ex.remove": "Retirer de la routine", "med.how": "🧘 Comment faire", "med.min": "minutes · pratique guidée", "med.done": "✓ Marquer comme terminé", "med.undo": "↺ Décocher", "med.timer": "⏱ Ouvrir le chrono respiration", "med.day": "Jour", "med.DAY": "JOUR", "med.dayDone": "terminé", "dyn.week": "Semaine", "dyn.hint60": "— 60 semaines par an et par plan, combinées pour ne jamais se répéter.", "th.day": "Jour", "th.bre": "Petit-déj", "th.lun": "Déjeuner", "th.sna": "Collation", "th.din": "Dîner"} };
     var addTX = { en: {"Toca un músculo del cuerpo o usa los botones · Arrastra para rotar · Pellizca para hacer zoom": "Tap a muscle on the body or use the buttons · Drag to rotate · Pinch to zoom", "Sexo": "Sex", "Edad": "Age", "Altura (cm)": "Height (cm)", "Peso (kg)": "Weight (kg)", "Actividad": "Activity", "Objetivo": "Goal", "Ciclos": "Cycles", "🔊 Volumen": "🔊 Volume", "⏱ Temporizador": "⏱ Timer", "Hombre": "Male", "Mujer": "Female", "Sedentario": "Sedentary", "Ligera (1-3 días/sem)": "Light (1-3 days/wk)", "Moderada (3-5 días/sem)": "Moderate (3-5 days/wk)", "Alta (6-7 días/sem)": "High (6-7 days/wk)", "Muy alta (atleta)": "Very high (athlete)", "Subir de peso (+400)": "Gain weight (+400)", "Mantener (0)": "Maintain (0)", "Mantener peso (0)": "Maintain weight (0)", "Definir (−400)": "Cut (−400)", "∞ Continuo": "∞ Continuous", "Semana 1": "Week 1", "Semana 2": "Week 2", "Semana 3": "Week 3", "Semana 4": "Week 4", "Semana 5": "Week 5", "Menú:": "Menu:", "Músculos": "Muscles", "Entrenamiento": "Training", "Nutrición": "Nutrition", "Planes": "Plans", "Botánica": "Botany", "Meditación": "Meditation", "Frecuencias": "Frequencies", "Progreso": "Progress", "Retos": "Challenges", "Sueño": "Sleep", "¿Listo para transformar tu cuerpo y tu mente?": "Ready to transform your body and mind?", "Todo lo que necesitas vive en esta página: entrena con técnica, come con datos, descansa mejor y mide tu progreso — gratis y sin apps.": "Everything you need lives on this page: train with technique, eat with data, rest better and track your progress — free, no apps.", "🏋️ Crear mi rutina ahora": "🏋️ Build my routine now", "🎯 Calcular mis calorías": "🎯 Calculate my calories", "Tu semana de sueño": "Your sleep week", "¿Cuántas horas dormiste anoche?": "How many hours did you sleep last night?", "🗓 Programa Mindfulness — 21 días": "🗓 Mindfulness Program — 21 days", "Un día = una práctica guiada. Toca cualquier día para ver las instrucciones paso a paso y márcalo al terminar — tu progreso se guarda.": "One day = one guided practice. Tap any day for step-by-step instructions and mark it when done — your progress is saved.", "completados": "done", "kg levantados en total": "kg lifted in total", "Meta": "Target", "Calorías hoy": "Calories today", "💧 Agua:": "💧 Water:", "ml sugeridos": "ml suggested", "Datos reales, cero mitos — aquí nada \"quema grasa\" por arte de magia 😉": "Real facts, zero myths — nothing here \"burns fat\" by magic 😉", "Usuario:": "User:", "Peso:": "Weight:", "Calorías diarias:": "Daily calories:", "Proteína": "Protein", "Carbos": "Carbs", "Carbohidratos": "Carbohydrates", "Grasas": "Fats", "Email": "Email", "Contraseña": "Password", "Peso corporal (kg) — para calcular tus calorías": "Body weight (kg) — to calculate your calories"}, fr: {"Toca un músculo del cuerpo o usa los botones · Arrastra para rotar · Pellizca para hacer zoom": "Touche un muscle du corps ou utilise les boutons · Glisse pour pivoter · Pince pour zoomer", "Sexo": "Sexe", "Edad": "Âge", "Altura (cm)": "Taille (cm)", "Peso (kg)": "Poids (kg)", "Actividad": "Activité", "Objetivo": "Objectif", "Ciclos": "Cycles", "🔊 Volumen": "🔊 Volume", "⏱ Temporizador": "⏱ Minuteur", "Hombre": "Homme", "Mujer": "Femme", "Sedentario": "Sédentaire", "Ligera (1-3 días/sem)": "Légère (1-3 j/sem)", "Moderada (3-5 días/sem)": "Modérée (3-5 j/sem)", "Alta (6-7 días/sem)": "Élevée (6-7 j/sem)", "Muy alta (atleta)": "Très élevée (athlète)", "Subir de peso (+400)": "Prendre du poids (+400)", "Mantener (0)": "Maintenir (0)", "Mantener peso (0)": "Maintenir le poids (0)", "Definir (−400)": "Sécher (−400)", "∞ Continuo": "∞ Continu", "Semana 1": "Semaine 1", "Semana 2": "Semaine 2", "Semana 3": "Semaine 3", "Semana 4": "Semaine 4", "Semana 5": "Semaine 5", "Menú:": "Menu :", "Músculos": "Muscles", "Entrenamiento": "Entraînement", "Nutrición": "Nutrition", "Planes": "Plans", "Botánica": "Botanique", "Meditación": "Méditation", "Frecuencias": "Fréquences", "Progreso": "Progrès", "Retos": "Défis", "Sueño": "Sommeil", "¿Listo para transformar tu cuerpo y tu mente?": "Prêt à transformer ton corps et ton esprit ?", "Todo lo que necesitas vive en esta página: entrena con técnica, come con datos, descansa mejor y mide tu progreso — gratis y sin apps.": "Tout ce dont tu as besoin vit sur cette page : entraîne-toi avec technique, mange avec des données, repose-toi mieux et mesure tes progrès — gratuit, sans applis.", "🏋️ Crear mi rutina ahora": "🏋️ Créer ma routine maintenant", "🎯 Calcular mis calorías": "🎯 Calculer mes calories", "Tu semana de sueño": "Ta semaine de sommeil", "¿Cuántas horas dormiste anoche?": "Combien d’heures as-tu dormi cette nuit ?", "🗓 Programa Mindfulness — 21 días": "🗓 Programme Mindfulness — 21 jours", "Un día = una práctica guiada. Toca cualquier día para ver las instrucciones paso a paso y márcalo al terminar — tu progreso se guarda.": "Un jour = une pratique guidée. Touche un jour pour voir les instructions pas à pas et coche-le une fois terminé — ta progression est enregistrée.", "completados": "terminés", "kg levantados en total": "kg soulevés au total", "Meta": "Objectif", "Calorías hoy": "Calories aujourd’hui", "💧 Agua:": "💧 Eau :", "ml sugeridos": "ml conseillés", "Datos reales, cero mitos — aquí nada \"quema grasa\" por arte de magia 😉": "Des faits réels, zéro mythe — ici rien ne « brûle les graisses » par magie 😉", "Usuario:": "Utilisateur :", "Peso:": "Poids :", "Calorías diarias:": "Calories quotidiennes :", "Proteína": "Protéines", "Carbos": "Glucides", "Carbohidratos": "Glucides", "Grasas": "Lipides", "Email": "E-mail", "Contraseña": "Mot de passe", "Peso corporal (kg) — para calcular tus calorías": "Poids corporel (kg) — pour calculer tes calories"} };
     ['en', 'fr'].forEach(function(l) {
       var o = I18N[l];
@@ -2262,8 +2357,8 @@
 
 
   (function extendI18N6() {
-    var t6en = {"f.play": "▶ Play", "f.on": "⏸ Playing", "f.stop": "⏹ Stop", "f.playd": "▶ Play dual", "f.dualintro": "<strong style=\"color:#fff\">Dual pulses per ear (1–7 Hz).</strong> Each side beats at its own rate over a soft 210 Hz tone — in the 1–7 Hz range the ear perceives a pulse, not a tone. Use headphones at low volume. Used for deep relaxation or focus; scientific evidence is limited and the experience is personal.", "f.left": "Left", "f.right": "Right", "err.chart": "Chart unavailable.", "ex.note": "Master the pattern with light weight before progressing."};
-    var t6fr = {"f.play": "▶ Lire", "f.on": "⏸ En lecture", "f.stop": "⏹ Arrêter", "f.playd": "▶ Lecture duale", "f.dualintro": "<strong style=\"color:#fff\">Pulsations duales par oreille (1–7 Hz).</strong> Chaque côté bat à son propre rythme sur un ton doux de 210 Hz — dans la plage 1–7 Hz, l’oreille perçoit une pulsation, pas un ton. Utilise des écouteurs à volume bas. Employé pour la relaxation profonde ou la concentration ; les preuves scientifiques sont limitées et l’expérience est personnelle.", "f.left": "Gauche", "f.right": "Droite", "err.chart": "Graphique indisponible.", "ex.note": "Ma\u00eetrise le sch\u00e9ma avec une charge l\u00e9g\u00e8re avant de progresser."};
+    var t6en = {"mm4d.none": "no record", "mm4d.today": "today", "mm4d.d1": "day", "mm4d.dn": "days", "f.chakraintro": "<strong style=\"color:#fff\">The seed comes from tradition; the hertz do not.</strong> The classical texts give each chakra its syllable, its colour and its place in the body \u2014 never a frequency. The match with these numbers came from 20th-century sound work, and it is offered as what it is: a useful convention for practice. The syllable is chanted; the tone accompanies.", "f.recname": "Full journey", "f.recdesc": "All seven in order, from root to crown.", "f.recmin": "Minutes per chakra", "f.recgo": "\u25b6 Start the journey", "f.recstop": "\u23f9 Stop the journey", "f.recpaso": "Playing", "t.recdone": "\u2728 Journey complete", "silencio": "silence", "NOTA": "NOTE", "f.play": "▶ Play", "f.on": "⏸ Playing", "f.stop": "⏹ Stop", "f.playd": "▶ Play dual", "f.dualintro": "<strong style=\"color:#fff\">Dual pulses per ear (1–7 Hz).</strong> Each side beats at its own rate over a soft 210 Hz tone — in the 1–7 Hz range the ear perceives a pulse, not a tone. Use headphones at low volume. Used for deep relaxation or focus; scientific evidence is limited and the experience is personal.", "f.left": "Left", "f.right": "Right", "err.chart": "Chart unavailable.", "ex.note": "Master the pattern with light weight before progressing."};
+    var t6fr = {"mm4d.none": "aucun relev\u00e9", "mm4d.today": "aujourd\u2019hui", "mm4d.d1": "jour", "mm4d.dn": "jours", "f.chakraintro": "<strong style=\"color:#fff\">La semence vient de la tradition ; les hertz, non.</strong> Les textes classiques donnent \u00e0 chaque chakra sa syllabe, sa couleur et sa place dans le corps \u2014 jamais une fr\u00e9quence. La correspondance avec ces nombres vient du travail sonore du XXe si\u00e8cle, et elle est offerte pour ce qu\u2019elle est : une convention utile pour la pratique. La syllabe se chante ; le ton accompagne.", "f.recname": "Parcours complet", "f.recdesc": "Les sept dans l\u2019ordre, de la racine \u00e0 la couronne.", "f.recmin": "Minutes par chakra", "f.recgo": "\u25b6 Commencer le parcours", "f.recstop": "\u23f9 Arr\u00eater le parcours", "f.recpaso": "En lecture", "t.recdone": "\u2728 Parcours termin\u00e9", "silencio": "silence", "NOTA": "NOTE", "f.play": "▶ Lire", "f.on": "⏸ En lecture", "f.stop": "⏹ Arrêter", "f.playd": "▶ Lecture duale", "f.dualintro": "<strong style=\"color:#fff\">Pulsations duales par oreille (1–7 Hz).</strong> Chaque côté bat à son propre rythme sur un ton doux de 210 Hz — dans la plage 1–7 Hz, l’oreille perçoit une pulsation, pas un ton. Utilise des écouteurs à volume bas. Employé pour la relaxation profonde ou la concentration ; les preuves scientifiques sont limitées et l’expérience est personnelle.", "f.left": "Gauche", "f.right": "Droite", "err.chart": "Graphique indisponible.", "ex.note": "Ma\u00eetrise le sch\u00e9ma avec une charge l\u00e9g\u00e8re avant de progresser."};
     var en6 = {"Sentadilla": "Squat", "Banca": "Bench", "HZ · TONO PURO": "HZ · PURE TONE", "Respiración consciente": "Mindful breathing", "Conteo de respiraciones": "Breath counting", "Escaneo corporal": "Body scan", "Respiración 4-7-8": "4-7-8 breathing", "Caminar consciente": "Mindful walking", "Gratitud": "Gratitude", "Visualización atlética": "Athletic visualization", "Metta (bondad)": "Metta (loving-kindness)", "Respiración de caja": "Box breathing", "Comer consciente": "Mindful eating", "Paisaje de sonidos": "Soundscape", "Escaneo profundo": "Deep body scan", "Respiración coherente": "Coherent breathing", "Revisión + intención": "Review + intention", "Visualizar la meta": "Visualize the goal", "Anclaje 5-4-3-2-1": "5-4-3-2-1 grounding", "Metta ampliada": "Extended metta", "4-7-8 largo": "Long 4-7-8", "Caminata 20": "20-min walk", "Silencio abierto": "Open silence", "Sesión maestra": "Master session"};
     var fr6 = {"Sentadilla": "Squat", "Banca": "Développé", "HZ · TONO PURO": "HZ · TON PUR", "Respiración consciente": "Respiration consciente", "Conteo de respiraciones": "Comptage des respirations", "Escaneo corporal": "Scan corporel", "Respiración 4-7-8": "Respiration 4-7-8", "Caminar consciente": "Marche consciente", "Gratitud": "Gratitude", "Visualización atlética": "Visualisation athlétique", "Metta (bondad)": "Metta (bienveillance)", "Respiración de caja": "Respiration carrée", "Comer consciente": "Manger en conscience", "Paisaje de sonidos": "Paysage sonore", "Escaneo profundo": "Scan profond", "Respiración coherente": "Respiration cohérente", "Revisión + intención": "Bilan + intention", "Visualizar la meta": "Visualiser l’objectif", "Anclaje 5-4-3-2-1": "Ancrage 5-4-3-2-1", "Metta ampliada": "Metta élargie", "4-7-8 largo": "4-7-8 long", "Caminata 20": "Marche 20", "Silencio abierto": "Silence ouvert", "Sesión maestra": "Séance maîtresse"};
     Object.keys(t6en).forEach(function(k) { I18N.en.t[k] = t6en[k]; });
@@ -2549,7 +2644,7 @@
     });
     if (window.__villReady) {
       try {
-        renderRoutine(); renderLibrary(); renderChips();
+        renderRoutine(); renderLibrary(); renderChips(); render4D();
         renderLevel(); renderLeaderboard(); updateHealthPanel();
         if (window.__renderBot) window.__renderBot();
         if (window.__renderFreq) window.__renderFreq();
@@ -2761,6 +2856,35 @@
          reproducir y dos que dicen estar sonando. Retirada la copia. */
       { id: 'b05',  beat: 0.5,  name: 'Delta ultra · Descanso máximo', desc: 'Pulso ultralento asociado al sueño profundo' }
     ];
+    /* ------------------------------------------------------------------
+       LOS SIETE CHAKRAS
+       Cada uno con su semilla (bija), su nota y la frecuencia con la que
+       se trabaja hoy en los banos de sonido.
+
+       Y la advertencia va escrita dentro de la propia seccion, no aqui,
+       porque callarla seria vender humo: la correspondencia entre un
+       chakra y un numero de hercios NO viene de la tradicion. Los textos
+       clasicos dan la semilla, el color y el lugar del cuerpo; los
+       hercios se los puso el trabajo con sonido del siglo XX. Se ofrece
+       como lo que es -- una convencion util para practicar -- y no como
+       un dato antiguo ni como medicina.
+       ------------------------------------------------------------------ */
+    var CHAKRAS = [
+      { id: 'k1', hz: 396, bija: 'LAM', nota: 'Do',  color: '#ff3b47', sans: 'Muladhara',
+        name: 'Raiz', lugar: 'Base de la columna', desc: 'La base: el peso del cuerpo y el suelo bajo los pies' },
+      { id: 'k2', hz: 417, bija: 'VAM', nota: 'Re',  color: '#ff7a29', sans: 'Svadhisthana',
+        name: 'Sacro', lugar: 'Bajo abdomen', desc: 'El agua que se mueve: deseo, cambio y lo que fluye' },
+      { id: 'k3', hz: 528, bija: 'RAM', nota: 'Mi',  color: '#ffd000', sans: 'Manipura',
+        name: 'Plexo solar', lugar: 'Ombligo', desc: 'El fuego del centro: voluntad y decision' },
+      { id: 'k4', hz: 639, bija: 'YAM', nota: 'Fa',  color: '#2ee87b', sans: 'Anahata',
+        name: 'Corazon', lugar: 'Centro del pecho', desc: 'El aire del pecho: vinculo y lo que se abre' },
+      { id: 'k5', hz: 741, bija: 'HAM', nota: 'Sol', color: '#00c8ff', sans: 'Vishuddha',
+        name: 'Garganta', lugar: 'Garganta', desc: 'El espacio de la voz: decir lo que hay que decir' },
+      { id: 'k6', hz: 852, bija: 'OM / AUM', nota: 'La',  color: '#4a5bff', sans: 'Ajna',
+        name: 'Tercer ojo', lugar: 'Entrecejo', desc: 'Entre las cejas: mirar lo que aun no se ve' },
+      { id: 'k7', hz: 963, bija: 'silencio / OM', nota: 'Si', color: '#b14aff', sans: 'Sahasrara',
+        name: 'Corona', lugar: 'Corona de la cabeza', desc: 'Lo alto de la cabeza: la practica que termina sin sonido' }
+    ];
     var CARRIER = 200; // Hz portadora para binaurales
 
     var grid = document.getElementById('freq-grid');
@@ -2772,7 +2896,7 @@
     var busGain = null, sinkDest = null, sinkEl = null, sinkActive = false;
     var IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-    window.__renderFreq = function() { try { renderGrid(); } catch(e) {} };
+    window.__renderFreq = function() { try { redibujar(); } catch(e) {} };
     function renderGrid() {
       if (activeTab === 'dual') {
         var playingD = currentId === 'dual';
@@ -2799,6 +2923,47 @@
         '</div>';
       }).join('');
     }
+    /* Los chakras tienen SECCION propia, no una pestana dentro de
+       Frecuencias: son otra cosa -- silaba, cuerpo y color -- y esconderlos
+       detras de una pestana era enterrarlos. Comparten el motor de audio,
+       porque dos tonos a la vez no significan nada. */
+    var chakraGrid = document.getElementById('chakra-grid');
+    var chakraNow = document.getElementById('chakra-now-playing');
+    function renderChakras() {
+      if (!chakraGrid) return;
+    chakraGrid.innerHTML =
+        '<p class="chakra-aviso">' + T('f.chakraintro',
+          '<strong style="color:#fff">La semilla viene de la tradicion; los hercios, no.</strong> Los textos clasicos dan a cada chakra su silaba, su color y su lugar en el cuerpo \u2014 nunca una frecuencia. La correspondencia con estos numeros la puso el trabajo con sonido del siglo XX, y se ofrece como lo que es: una convencion util para practicar. La silaba se canta; el tono acompana.') + '</p>' +
+        CHAKRAS.map(function(k) {
+          var son = currentId === k.id;
+          return '<div class="freq-card chakra-card' + (son ? ' playing' : '') + '" data-id="' + k.id + '" style="--chakra:' + k.color + '">' +
+            '<div class="freq-ring"></div>' +
+            '<div class="chakra-bija">' + (k.bija.indexOf('silencio') === 0 ? TX('silencio') + ' / OM' : k.bija) + '</div>' +
+            '<div class="freq-hz">' + k.hz + '</div>' +
+            '<div class="freq-unit">' + TX('HZ') + ' \u00b7 ' + TX('NOTA') + ' ' + k.nota + '</div>' +
+            '<div class="freq-name">' + TX(k.name) + '</div>' +
+            '<div class="chakra-sans">' + k.sans + ' \u00b7 ' + TX(k.lugar) + '</div>' +
+            '<div class="freq-desc">' + TX(k.desc) + '</div>' +
+            '<div class="freq-state">' + (son ? T('f.on', '\u23f8 Sonando') : T('f.play', '\u25b6 Reproducir')) + '</div>' +
+          '</div>';
+        }).join('') +
+        '<div class="chakra-recorrido">' +
+          '<div class="chakra-rec-txt"><strong>' + T('f.recname', 'Recorrido completo') + '</strong>' +
+            '<span>' + T('f.recdesc', 'Los siete en orden, de la raiz a la corona.') + '</span></div>' +
+          '<label class="chakra-rec-min"><span>' + T('f.recmin', 'Minutos por chakra') + '</span>' +
+            '<select id="chakra-rec-min">' +
+              ['1','2','3','5'].map(function(m) {
+                return '<option value="' + m + '"' + (String(rec.min) === m ? ' selected' : '') + '>' + m + '</option>';
+              }).join('') +
+            '</select></label>' +
+          '<button class="btn ' + (rec.activo ? 'btn-pink' : 'btn-primary') + '" id="chakra-rec-btn" type="button">' +
+            (rec.activo ? T('f.recstop', '\u23f9 Detener recorrido') : T('f.recgo', '\u25b6 Empezar el recorrido')) + '</button>' +
+          (rec.activo ? '<div class="chakra-rec-paso">' + T('f.recpaso', 'Sonando') + ' ' + (rec.idx + 1) + '/7 \u00b7 ' + TX(CHAKRAS[Math.min(rec.idx, 6)].name) + '</div>' : '') +
+        '</div>';
+    wireRecorrido();
+    }
+    function redibujar() { renderGrid(); renderChakras(); }
+
     document.querySelectorAll('.freq-tab').forEach(function(t) {
       t.addEventListener('click', function() {
         document.querySelectorAll('.freq-tab').forEach(function(x) { x.classList.remove('active'); });
@@ -2808,8 +2973,22 @@
       });
     });
 
-    function getVolume() {
-      return (document.getElementById('freq-volume').value / 100) * 0.25;
+    /* Un solo volumen, dos mandos. Frecuencias y Chakras son secciones
+       distintas pero suenan por el mismo motor: si cada deslizador
+       guardara su propio valor, mover uno no haria nada mientras sonara
+       lo de la otra seccion. */
+    var volPct = 35;
+    function getVolume() { return (volPct / 100) * 0.25; }
+    function ponerVolumen(v, origen) {
+      volPct = Math.max(0, Math.min(100, v));
+      ['freq-volume', 'chakra-volume'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el && el !== origen) el.value = volPct;
+      });
+      if (gainNode && audioCtx) {
+        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(getVolume(), audioCtx.currentTime + 0.1);
+      }
     }
     function ensureCtx() {
       if (!audioCtx) {
@@ -2987,7 +3166,11 @@
       }
       oscs = []; gainNode = null; currentId = null; lfoL = null; lfoR = null;
       nowPlaying.textContent = '';
-      renderGrid();
+      if (chakraNow) chakraNow.textContent = '';
+      /* Parar a mano tambien abandona el recorrido; pararlo desde dentro
+         del propio recorrido, no. */
+      if (rec.activo && !rec.interno) { clearTimeout(rec.timer); rec.timer = null; rec.activo = false; rec.idx = 0; }
+      redibujar();
       if (window.__updFreeBtn) window.__updFreeBtn();
       if (!silent) showToast(T('t.stopf', 'Frecuencia detenida'));
     }
@@ -2999,7 +3182,9 @@
       gainNode.gain.linearRampToValueAtTime(getVolume(), audioCtx.currentTime + FADE);
       gainNode.connect(busGain);
 
-      var solf = (id === 'free' && window.__freeTone) ? window.__freeTone : SOLFEGGIO.find(function(x) { return x.id === id; });
+      var solf = (id === 'free' && window.__freeTone) ? window.__freeTone
+               : (SOLFEGGIO.find(function(x) { return x.id === id; })
+                  || CHAKRAS.find(function(x) { return x.id === id; }));
       var bin = BINAURAL.find(function(x) { return x.id === id; });
       if (solf) {
         var o = audioCtx.createOscillator();
@@ -3031,8 +3216,13 @@
       } else { return; }
 
       currentId = id;
-      renderGrid();
+      if (chakraNow) chakraNow.textContent = CHAKRAS.some(function(k) { return k.id === id; }) ? nowPlaying.textContent : '';
+      redibujar();
       if (window.__updFreeBtn) window.__updFreeBtn();
+      /* Durante el recorrido manda el reloj del recorrido: si aqui se
+         armara ademas el temporizador general, el primer chakra cortaria
+         la sesion entera a los cinco minutos. */
+      if (rec.activo) return;
       var mins = parseInt(document.getElementById('freq-timer-select').value, 10);
       if (mins > 0) {
         timerId = setTimeout(function() {
@@ -3042,6 +3232,52 @@
       }
     }
 
+    /* ------------------------------------------------------------------
+       EL RECORRIDO
+       Los siete chakras en orden, de la raiz a la corona, con su tiempo
+       por cada uno. Lo unico delicado es que el recorrido y el boton de
+       parar comparten el mismo motor de audio: cuando el recorrido pasa
+       al siguiente llama a playById, y playById empieza parando lo que
+       suena. Si parar cancelara siempre el recorrido, el recorrido se
+       cancelaria a si mismo en cada paso. De ahi la bandera.
+       ------------------------------------------------------------------ */
+    var rec = { activo: false, idx: 0, timer: null, min: 2, interno: false };
+
+    function recorridoPaso() {
+      if (rec.idx >= CHAKRAS.length) {
+        recorridoParar(true);
+        showToast(T('t.recdone', '\u2728 Recorrido completo'));
+        return;
+      }
+      rec.interno = true;
+      playById(CHAKRAS[rec.idx].id);
+      rec.interno = false;
+      redibujar();
+      rec.timer = setTimeout(function() { rec.idx++; recorridoPaso(); }, rec.min * 60000);
+    }
+    function recorridoEmpezar() {
+      rec.activo = true; rec.idx = 0;
+      recorridoPaso();
+    }
+    function recorridoParar(silencioso) {
+      clearTimeout(rec.timer); rec.timer = null;
+      var estaba = rec.activo;
+      rec.activo = false; rec.idx = 0;
+      if (estaba && !silencioso) { rec.interno = true; stopTone(true); rec.interno = false; }
+      redibujar();
+    }
+    function wireRecorrido() {
+      var b = document.getElementById('chakra-rec-btn');
+      var m = document.getElementById('chakra-rec-min');
+      if (m) m.addEventListener('change', function() {
+        rec.min = parseInt(this.value, 10) || 2;
+      });
+      if (b) b.addEventListener('click', function() {
+        if (rec.activo) recorridoParar(false);
+        else recorridoEmpezar();
+      });
+    }
+
     grid.addEventListener('click', function(e) {
       var card = e.target.closest('.freq-card');
       if (!card) return;
@@ -3049,14 +3285,23 @@
       if (currentId === id) stopTone();
       else playById(id);
     });
-    document.getElementById('freq-volume').addEventListener('input', function() {
-      if (gainNode && audioCtx) {
-        gainNode.gain.cancelScheduledValues(audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(getVolume(), audioCtx.currentTime + 0.1);
-      }
+    ['freq-volume', 'chakra-volume'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function() { ponerVolumen(parseInt(this.value, 10), this); });
     });
     document.getElementById('freq-stop-btn').addEventListener('click', function() { stopTone(); });
-    renderGrid();
+    if (chakraGrid) {
+      chakraGrid.addEventListener('click', function(e) {
+        var card = e.target.closest('.chakra-card');
+        if (!card) return;
+        var id = card.dataset.id;
+        if (currentId === id) stopTone();
+        else playById(id);
+      });
+    }
+    var chakraStop = document.getElementById('chakra-stop-btn');
+    if (chakraStop) chakraStop.addEventListener('click', function() { stopTone(); });
+    redibujar();
   })();
 
   /* =====================================================================

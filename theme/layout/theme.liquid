@@ -93,7 +93,19 @@
     <meta name="description" content="{{ meta_desc | strip_html | truncate: 300 | escape }}">
   {%- endif -%}
 
-  {%- render 'seo-robots' -%}
+  {%- comment -%}
+    Una coleccion sin ni un producto visible no se indexa. El calculo se hace
+    AQUI y se pasa como parametro en vez de dejar que el fragmento lo deduzca
+    solo: {% render %} aisla el alcance, y cuanto de la tienda entra dentro
+    depende del motor. Lo que entra por parametro entra siempre.
+  {%- endcomment -%}
+  {%- assign coleccion_vacia = false -%}
+  {%- if request.page_type == 'collection' -%}
+    {%- if collection.products_count == 0 -%}
+      {%- assign coleccion_vacia = true -%}
+    {%- endif -%}
+  {%- endif -%}
+  {%- render 'seo-robots', coleccion_vacia: coleccion_vacia -%}
 
   {%- render 'meta-tags' -%}
 

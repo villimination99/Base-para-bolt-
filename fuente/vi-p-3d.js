@@ -951,9 +951,30 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
   });
 
   /* ---- Animación ---- */
+  /* ------------------------------------------------------------------
+     EL BUCLE SE PARA CUANDO EL MAPA NO SE VE
+     Esta pagina tiene trece secciones y el mapa es la primera. Sin esto,
+     alguien que baja hasta Retos deja detras un WebGL pintando sesenta
+     fotogramas por segundo de un lienzo que no esta en pantalla: la GPU
+     encendida, el movil caliente y la bateria bajando por una figura que
+     nadie mira. requestAnimationFrame solo se detiene cuando la PESTANA
+     pasa a segundo plano, no cuando el lienzo sale del encuadre.
+
+     Se para de verdad -- no se pinta en negro, no se baja a 30: no se
+     encadena el siguiente fotograma -- y se reanuda en cuanto vuelve a
+     asomar, con el reloj puesto donde lo dejo para que la respiracion no
+     de un salto. */
   let time = 0;
+  let visible = true, corriendo = false;
   function animate() {
+    if (!visible) { corriendo = false; return; }
     requestAnimationFrame(animate);
+    corriendo = true;
+    /* Un contador de fotogramas, expuesto a proposito: es lo unico que
+       permite COMPROBAR desde fuera que el bucle se para de verdad al
+       salir de pantalla. Una bandera diria lo que queremos oir; esto dice
+       lo que pasa. Cuesta una suma por fotograma. */
+    window.__mm3dFrames = (window.__mm3dFrames || 0) + 1;
     time += 0.016;
     if (!REDUCED) {
       const breathe = 1 + Math.sin(time * 1.3) * 0.004;
@@ -1007,10 +1028,16 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
        cuesta lo que cuesta una resta. Y sin libreria: GSAP con ScrollTrigger
        son unos 70 KB comprimidos, y esta pagina acaba de bajar de 301 a 100. */
     if (!REDUCED && !activeGroup) {
-      const caja = canvas.getBoundingClientRect();
+      /* El alto y la posicion del lienzo en el documento se guardan y solo
+         se vuelven a medir al cambiar el tamano. Antes se llamaba a
+         getBoundingClientRect() en CADA fotograma, y eso obliga al
+         navegador a recalcular la maqueta de la pagina entera sesenta
+         veces por segundo para leer un numero que casi nunca cambia.
+         scrollY no obliga a nada. */
       const alto = window.innerHeight || 800;
+      const arriba = cajaTop - (window.pageYOffset || document.documentElement.scrollTop || 0);
       /* 0 cuando el lienzo entra por abajo, 1 cuando sale por arriba */
-      const u = 1 - (caja.top + caja.height) / (alto + caja.height);
+      const u = 1 - (arriba + cajaAlto) / (alto + cajaAlto);
       if (u > -0.1 && u < 1.1) {
         const objetivo = (Math.min(1, Math.max(0, u)) - 0.5) * (Math.PI * 0.5);
         /* Se persigue el objetivo en vez de saltar a el: el scroll llega a
@@ -1026,12 +1053,38 @@ roughnessFactor = clamp(roughnessFactor, 0.05, 1.0);`);
     controls.update();
     renderer.render(scene, camera);
   }
+  /* La medida del lienzo dentro del documento: se toma una vez y se
+     refresca al cambiar el tamano o al desplazarse (pasivo, no bloquea). */
+  let cajaTop = 0, cajaAlto = 1;
+  function medirCaja() {
+    const r = canvas.getBoundingClientRect();
+    cajaTop = r.top + (window.pageYOffset || document.documentElement.scrollTop || 0);
+    cajaAlto = r.height || 1;
+  }
+  medirCaja();
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(function(entradas) {
+      const dentro = entradas[0] && entradas[0].isIntersecting;
+      if (dentro === visible) return;
+      visible = dentro;
+      if (visible) { medirCaja(); if (!corriendo) animate(); }
+    }, { rootMargin: '120px 0px' });
+    obs.observe(canvas);
+  }
+
   animate();
 
   window.addEventListener('resize', function() {
+    medirCaja();
     const w = canvas.clientWidth, h = canvas.clientHeight;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+    /* Arrastrar la ventana de un portatil a un monitor externo cambia la
+       densidad de pixeles sin recargar. Sin refrescarla aqui, el mapa se
+       queda dibujado a la densidad del otro monitor: borroso en uno o
+       gastando el cuadruple en el otro. */
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(w, h);
     // Al cambiar la forma del lienzo cambia lo que cabe dentro. Sin esto,
     // girar el movil dejaba el cuerpo recortado o diminuto hasta recargar.
