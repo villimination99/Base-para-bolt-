@@ -124,7 +124,7 @@ ${trozos}
 </div>
 <script>window.theme={routes:{},settings:{splashOnce:false,splash3d:true},strings:{}};
 window.__t0=performance.now();</script>
-<script src="file://${ASSETS}/intro.js"></script>
+<script src="file://${ASSETS}/intro.js" async></script>
 <script src="file://${ASSETS}/base.js"></script>
 <script src="file://${ASSETS}/effects.js"></script>
 </body></html>`;

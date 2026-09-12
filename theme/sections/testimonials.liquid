@@ -5,8 +5,21 @@
       <h2 class="section-title">{{ section.settings.title }}</h2>
     </div>
 
+    {%- comment -%}
+      UN TESTIMONIO SIN CITA NO SE PINTA. Esta sección venía con tres nombres de
+      ejemplo escritos en los valores por defecto —Alex R., María G., Diego M.,
+      «Cliente verificado»— y esos nombres llegaron a estar publicados en una
+      tienda que todavía no tenía ni un cliente. Reseñas inventadas: sancionable
+      en Canadá, en la UE y en Estados Unidos, y además lo contrario de lo que
+      esta marca dice ser.
+
+      Los valores por defecto están ahora vacíos, y un bloque sin cita se salta
+      entero. Así el editor enseña el hueco y no se puede publicar por descuido
+      un testimonio que nadie ha dicho.
+    {%- endcomment -%}
     {%- capture testi_cards -%}
       {%- for block in section.blocks -%}
+        {%- if block.settings.quote == blank -%}{%- continue -%}{%- endif -%}
         <div class="{% if section.settings.layout == 'carousel' %}carousel-slide{% endif %}" {{ block.shopify_attributes }}>
           <div class="testi-card" {% if section.settings.layout != 'carousel' and settings.enable_scroll_reveal %}data-reveal{% endif %}>
             <div class="testi-stars" aria-label="{{ block.settings.stars | escape }} / 5">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
@@ -53,10 +66,11 @@
       "name": "Testimonio",
       "settings": [
         { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Estrellas", "default": 5 },
-        { "type": "textarea", "id": "quote", "label": "Cita", "default": "El mejor cambio que hice. Resultados en semanas." },
+        { "type": "textarea", "id": "quote", "label": "Cita (de una persona real)", "default": "",
+          "info": "Sin cita, el bloque no se muestra. No rellenes esto con ejemplos: una reseña inventada es sancionable en Canadá, la UE y Estados Unidos, y no compensa nunca." },
         { "type": "image_picker", "id": "avatar", "label": "Foto" },
-        { "type": "text", "id": "name", "label": "Nombre", "default": "Alex R." },
-        { "type": "text", "id": "role", "label": "Rol", "default": "Cliente verificado" }
+        { "type": "text", "id": "name", "label": "Nombre", "default": "" },
+        { "type": "text", "id": "role", "label": "Rol", "default": "" }
       ]
     }
   ],

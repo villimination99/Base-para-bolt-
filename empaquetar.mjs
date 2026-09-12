@@ -125,6 +125,15 @@ if (!esbuild) {
    y miran lo que ocurre, mas plataformas, que comprueba que el minificado
    sigue parseando al suelo de ES2017. */
 const BATERIAS = [
+  /* El linter OFICIAL de Shopify, el primero de todos: si el tema tiene algo
+     que Shopify considera roto, no hay que seguir midiendo fotogramas. Estuvo
+     fuera de la compuerta sin que nadie se diera cuenta porque su lanzador no
+     estaba versionado; la primera vez que entro encontro un error de verdad
+     -- el guion de la intro detenia el analisis de la tienda entera. */
+  ['verificadores/shopify/comprobar.mjs', 'el linter oficial de Shopify'],
+  /* Y los limites publicados de Shopify -- secciones, bloques, peso del zip --
+     que no avisan mientras vas holgado y avisan el dia que subes. */
+  ['verificadores/limites/comprobar.mjs', 'las reglas y los limites de Shopify'],
   ['verificadores/vi-p/comprobar.mjs', 'VI.P entero en un navegador'],
   ['verificadores/teclado/comprobar.mjs', 'paneles con teclado'],
   ['verificadores/lienzos/comprobar.mjs', 'los lienzos animados pintan'],

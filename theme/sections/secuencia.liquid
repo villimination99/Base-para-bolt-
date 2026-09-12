@@ -81,7 +81,19 @@
                 </ul>
 
               {%- when 'cifra' -%}
-                <p class="secuencia-cifra">{{ block.settings.numero }}</p>
+                {%- comment -%}
+                  EL NÚMERO SE CUENTA SOLO. Estaba escrito a mano —decía 37— y
+                  en el catálogo había 41: ese tipo de cifra se queda vieja el
+                  día que subes un producto y nadie vuelve a mirarla. Ahora sale
+                  del propio catálogo. El campo del editor sigue existiendo por
+                  si algún día quieres poner otra cosa ahí; si lo dejas vacío,
+                  manda el recuento de verdad.
+                {%- endcomment -%}
+                {%- assign cifra_viva = collections.all.all_products_count -%}
+                {%- if block.settings.numero != blank -%}
+                  {%- assign cifra_viva = block.settings.numero -%}
+                {%- endif -%}
+                <p class="secuencia-cifra">{{ cifra_viva }}</p>
                 {%- if block.settings.pie != blank -%}
                   <p class="secuencia-cifra-pie">{{ block.settings.pie }}</p>
                 {%- endif -%}
@@ -160,7 +172,8 @@
         { "type": "text", "id": "sub3", "label": "Subtítulo 3", "default": "PLANES Y CÓDICES" } ] },
     { "type": "cifra", "name": "Cifra", "limit": 1,
       "settings": [
-        { "type": "text", "id": "numero", "label": "Número", "default": "37" },
+        { "type": "text", "id": "numero", "label": "Número (vacío = se cuenta solo)", "default": "",
+          "info": "Déjalo vacío y pone el número real de productos del catálogo, que se actualiza solo. Escribe algo aquí únicamente si quieres destacar otra cifra." },
         { "type": "text", "id": "pie", "label": "Texto debajo", "default": "PRODUCTOS · UNA SOLA META" } ] },
     { "type": "cierre", "name": "Cierre", "limit": 1,
       "settings": [

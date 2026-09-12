@@ -1960,3 +1960,87 @@ body{background-image:
 .article-hero-media--generada .article-card-glifo{font-size:clamp(4rem,11vw,7rem)}
 .collection-tile-generada{position:absolute;inset:0;height:100%;display:grid;place-items:center}
 .rotulo-debajo .collection-tile-generada{position:relative;inset:auto;height:100%}
+
+/* ---- La pila de insignias de la tarjeta de producto ----
+   Cada insignia estaba pegada con position:absolute al mismo top y al mismo
+   left. Con una sola se veia bien; con dos --un producto con modelo 3D que
+   ademas esta de oferta, que no es ningun caso raro-- se pintaban una encima
+   de otra y se leia media palabra de cada una. Se posiciona la PILA, y las
+   insignias se ordenan solas dentro. */
+.product-card-badges{position:absolute;top:.75rem;left:.75rem;z-index:3;
+  display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;
+  pointer-events:none;max-width:calc(100% - 1.5rem)}
+.product-card-badges .product-card-badge{position:static;top:auto;left:auto}
+
+/* ==========================================================================
+   LA ENTRADA EN CASCADA — las rejillas dejan de aparecer de golpe
+   ==========================================================================
+   Hasta ahora, cuando una rejilla entraba en pantalla, sus ocho tarjetas
+   aparecian todas en el mismo fotograma. Tecnicamente correcto y visualmente
+   plano: el ojo no tiene nada que seguir y el movimiento se lee como un
+   parpadeo. Con sesenta milisegundos de diferencia entre una y la siguiente,
+   la misma animacion se lee como una mano que reparte cartas.
+
+   Es CSS puro: el retardo va en la transicion que YA existe, no hay un
+   guion nuevo ni un fotograma mas de trabajo. Y no toca nada del tiempo de
+   carga -- se dispara al entrar en pantalla, mucho despues del primer pintado.
+
+   Se corta en la novena tarjeta a proposito: con diez o mas, el retardo
+   acumulado pasa del medio segundo y lo que era elegancia se vuelve espera.
+   A partir de ahi entran todas juntas, que es lo correcto.
+
+   Y se apaga entero con movimiento reducido: quien pide menos movimiento no
+   quiere que le escalonen la pagina, quiere verla. */
+@media (prefers-reduced-motion:no-preference){
+  .product-grid > .reveal-init:nth-child(2),
+  .article-grid > .reveal-init:nth-child(2),
+  .collection-list-grid > .reveal-init:nth-child(2),
+  .caticons > .reveal-init:nth-child(2),
+  .catgrid > .reveal-init:nth-child(2),
+  .plans-grid > .reveal-init:nth-child(2),
+  .col-index-grid > .reveal-init:nth-child(2){transition-delay:.06s}
+
+  .product-grid > .reveal-init:nth-child(3),
+  .article-grid > .reveal-init:nth-child(3),
+  .collection-list-grid > .reveal-init:nth-child(3),
+  .caticons > .reveal-init:nth-child(3),
+  .catgrid > .reveal-init:nth-child(3),
+  .plans-grid > .reveal-init:nth-child(3),
+  .col-index-grid > .reveal-init:nth-child(3){transition-delay:.12s}
+
+  .product-grid > .reveal-init:nth-child(4),
+  .article-grid > .reveal-init:nth-child(4),
+  .collection-list-grid > .reveal-init:nth-child(4),
+  .caticons > .reveal-init:nth-child(4),
+  .catgrid > .reveal-init:nth-child(4),
+  .col-index-grid > .reveal-init:nth-child(4){transition-delay:.18s}
+
+  .product-grid > .reveal-init:nth-child(5),
+  .article-grid > .reveal-init:nth-child(5),
+  .collection-list-grid > .reveal-init:nth-child(5),
+  .catgrid > .reveal-init:nth-child(5){transition-delay:.24s}
+
+  .product-grid > .reveal-init:nth-child(6),
+  .catgrid > .reveal-init:nth-child(6){transition-delay:.30s}
+
+  .product-grid > .reveal-init:nth-child(7){transition-delay:.36s}
+  .product-grid > .reveal-init:nth-child(8){transition-delay:.42s}
+}
+
+/* ---- La tarjeta de articulo, terminada ----
+   Tenia una transicion de dos decimas y nada que transicionar: ningun estado
+   de hover cambiaba nada. Ahora se levanta un poco y el borde se enciende con
+   el neon de la marca, igual que hacen las tarjetas de producto. Solo
+   transform y border-color: lo compone la tarjeta grafica y no repinta. */
+.article-card{transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s ease,box-shadow .35s ease}
+@media (hover:hover){
+  .article-card:hover{transform:translateY(-4px);
+    border-color:rgba(0,212,255,.38);
+    box-shadow:0 18px 40px rgba(0,0,0,.45)}
+  .article-card:hover .article-card-title{color:var(--neon-cyan,#00d4ff)}
+}
+.article-card:focus-visible{outline:2px solid var(--neon-cyan,#00d4ff);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){
+  .article-card{transition:none}
+  .article-card:hover{transform:none}
+}

@@ -178,8 +178,23 @@
 </div>
 
 {%- comment -%}
-  Sin defer: la intro es lo PRIMERO que se ve y su lienzo tiene que empezar a
-  pintar cuanto antes. Son doce kilobytes y solo se cargan cuando la intro
-  está activa, así que no compite con nada del resto de la tienda.
+  ASYNC, ni bloqueante ni defer. Las tres opciones se han probado y cada una
+  falla en algo distinto:
+
+  - Sin nada (como estaba): el análisis del documento se DETIENE aquí hasta que
+    el guion se descarga y se ejecuta. Y aquí es el principio del <body>: lo
+    que se queda esperando no es un detalle del final, es la cabecera y la
+    tienda entera. El linter oficial de Shopify lo marca como error, y tiene
+    razón.
+  - Con defer: el guion no se ejecuta hasta que TODO el documento está
+    analizado. La pantalla se queda negra ese rato, y la intro es justo lo
+    primero que se ve.
+  - Con async: se descarga en paralelo sin parar el análisis, y se ejecuta en
+    cuanto llega. El marcado de la intro está ARRIBA de esta línea, así que
+    para cuando el guion corre, su lienzo y su emblema ya existen: el motor no
+    puede encontrarse la caja sin montar. Es lo mejor de las dos.
+
+  Son doce kilobytes y solo se cargan cuando la intro está activa, así que no
+  compite con nada del resto de la tienda.
 {%- endcomment -%}
-<script src="{{ 'intro.js' | asset_url }}"></script>
+<script src="{{ 'intro.js' | asset_url }}" async></script>

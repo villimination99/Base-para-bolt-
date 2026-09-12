@@ -234,7 +234,14 @@
 
         {%- capture info_html -%}
           {%- for block in section.blocks -%}
-            {%- if block.type == 'collapsible' and block.settings.visible -%}
+            {%- comment -%}
+              Y con CONTENIDO. Un desplegable vacío es peor que no tenerlo: el
+              cliente lo abre esperando algo y encuentra el hueco. Pasó de
+              verdad — el bloque «Cómo se usa» venía con un texto de ejemplo
+              («Describe aquí el modo de uso…») y ese texto estuvo publicado en
+              las cuarenta y una fichas. Al vaciarlo, el bloque desaparece solo.
+            {%- endcomment -%}
+            {%- if block.type == 'collapsible' and block.settings.visible and block.settings.content != blank -%}
               <details class="product-acc-item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
                 <summary class="product-acc-head">{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.title }}</span><span class="acc-chev">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
                 <div class="product-acc-body rte">{{ block.settings.content }}</div>
@@ -374,6 +381,7 @@
       "settings": [
         { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
         { "type": "text", "id": "title", "label": "Título", "default": "Envío y devoluciones" },
+        { "type": "paragraph", "content": "Sin contenido escrito, este bloque no se muestra: un desplegable que se abre y está vacío es peor que no tenerlo." },
         { "type": "select", "id": "icon", "label": "Icono", "options": [
           { "value": "cube", "label": "Caja" },
           { "value": "bolt", "label": "Rayo" },
@@ -395,7 +403,7 @@
         { "type": "trust", "settings": { "visible": true, "icon": "check", "text": "Pago 100% seguro" } },
         { "type": "trust", "settings": { "visible": true, "icon": "trophy", "text": "Garantía de satisfacción" } },
         { "type": "collapsible", "settings": { "visible": true, "title": "Envío y devoluciones", "icon": "cube" } },
-        { "type": "collapsible", "settings": { "visible": false, "title": "Cómo se usa", "icon": "bolt", "content": "<p>Describe aquí el modo de uso de tu producto.</p>" } }
+        { "type": "collapsible", "settings": { "visible": true, "title": "Cómo se usa", "icon": "bolt", "content": "" } }
       ]
     }
   ]

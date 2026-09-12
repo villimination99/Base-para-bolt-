@@ -51,19 +51,19 @@
           "type": "column",
           "settings": {
             "icon": "cube",
-            "stat": "-40%",
-            "title": "Menos devoluciones",
-            "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar.",
+            "stat": "3D + AR",
+            "title": "Míralo antes de comprarlo",
+            "text": "Los productos con modelo se giran en 3D y se ven en tu propia habitación desde el móvil. Es nativo de Shopify: no hace falta instalar nada.",
             "accent": "#00d4ff"
           }
         },
         "b2": {
           "type": "column",
           "settings": {
-            "icon": "bolt",
-            "stat": "+94%",
-            "title": "Más conversiones",
-            "text": "La experiencia inmersiva multiplica las ventas.",
+            "icon": "book",
+            "stat": "8",
+            "title": "Códices en PDF",
+            "text": "Ocho libros con sus láminas y su cuaderno. Cada cifra que aparece lleva la fuente pública de la que sale.",
             "accent": "#ff2ecb"
           }
         },
@@ -71,9 +71,9 @@
           "type": "column",
           "settings": {
             "icon": "check",
-            "stat": "24/7",
-            "title": "Soporte real",
-            "text": "Estamos contigo en cada paso.",
+            "stat": "Shopify",
+            "title": "El cobro no pasa por nosotros",
+            "text": "El pago lo procesa Shopify de principio a fin. Tus datos de tarjeta no tocan esta tienda en ningún momento.",
             "accent": "#00e87b"
           }
         }
@@ -279,41 +279,6 @@
         "p1",
         "p2",
         "p3"
-      ],
-      "settings": {}
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "blocks": {
-        "t1": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "El mejor cambio que hice. Resultados en semanas.",
-            "name": "Alex R.",
-            "role": "Cliente verificado"
-          }
-        },
-        "t2": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "Los planes de dieta son oro puro. Recomendado.",
-            "name": "María G.",
-            "role": "Miembro Pro"
-          }
-        },
-        "t3": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "Calidad brutal y envío rapidísimo.",
-            "name": "Diego M.",
-            "role": "Cliente verificado"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3"
       ],
       "settings": {}
     },
@@ -583,7 +548,7 @@
         "b4": {
           "type": "cifra",
           "settings": {
-            "numero": "37",
+            "numero": "",
             "pie": "PRODUCTOS · UNA SOLA META"
           }
         },
@@ -610,6 +575,17 @@
         "duracion": 14,
         "compacta": false
       }
+    },
+    "diario": {
+      "type": "blog-destacado",
+      "settings": {
+        "eyebrow": "EL DIARIO",
+        "title": "LO QUE HAY DETRÁS DE CADA PRODUCTO",
+        "subtitle": "Artículos con la fuente pública de cada cifra. Sin promesas y sin humo.",
+        "blog": "diario",
+        "cantidad": 3,
+        "texto_boton": "VER TODOS LOS ARTÍCULOS"
+      }
     }
   },
   "order": [
@@ -627,7 +603,7 @@
     "videos",
     "bestsellers",
     "plans",
-    "testimonials",
+    "diario",
     "motivation",
     "haces",
     "faq",
