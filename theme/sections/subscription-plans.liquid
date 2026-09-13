@@ -25,10 +25,13 @@
 
     <div class="plans-grid">
       {%- for block in section.blocks -%}
+          {%- capture cb_period -%}{%- render 'copia', g: 'sec', b: 'subscription-plans', a: 'period', v: block.settings.period -%}{%- endcapture -%}
+          {%- capture cb_feat -%}{%- render 'copia', g: 'sec', b: 'subscription-plans', a: 'features_html', v: block.settings.features -%}{%- endcapture -%}
         {%- assign accent = block.settings.accent -%}
         <div class="plan-card{% if block.settings.featured %} plan-card--featured{% endif %}" style="--accent:{{ accent }};" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-          {%- if block.settings.featured and block.settings.badge != blank -%}
-            <span class="plan-badge">{{ block.settings.badge }}</span>
+          {%- capture cb_badge -%}{%- render 'copia', g: 'sec', b: 'subscription-plans', a: 'badge', v: block.settings.badge -%}{%- endcapture -%}
+          {%- if block.settings.featured and cb_badge != blank -%}
+            <span class="plan-badge">{{ cb_badge }}</span>
           {%- endif -%}
           <div class="plan-head">
             <h3 class="plan-name">{%- render 'copia', g: 'planes', b: block.id, a: 'name', v: block.settings.name -%}</h3>
@@ -37,16 +40,16 @@
           </div>
           <div class="plan-price">
             <span class="plan-price-amount">{{ block.settings.price }}</span>
-            {%- if block.settings.period != blank -%}<span class="plan-price-period">{{ block.settings.period }}</span>{%- endif -%}
+            {%- if cb_period != blank -%}<span class="plan-price-period">{{ cb_period }}</span>{%- endif -%}
           </div>
-          {%- if block.settings.features != blank -%}
+          {%- if cb_feat != blank -%}
             {%- comment -%}
               El ajuste es de tipo richtext, así que ya trae su propio <ul> o
               sus <p>. Envolverlo en otro <ul> producía una lista dentro de una
               lista sin <li> intermedio: HTML inválido que los lectores de
               pantalla anuncian mal. El contenedor pasa a ser un <div>.
             {%- endcomment -%}
-            <div class="plan-features rte">{{ block.settings.features }}</div>
+            <div class="plan-features rte">{{ cb_feat }}</div>
           {%- endif -%}
           <a href="{{ block.settings.button_url | default: routes.all_products_collection_url }}" class="btn {% if block.settings.featured %}btn-primary{% else %}btn-outline{% endif %} btn-block">{%- render 'copia', g: 'sec', b: 'subscription-plans', a: 'button_label', v: block.settings.button_label -%}</a>
         </div>

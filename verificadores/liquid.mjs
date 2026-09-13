@@ -144,7 +144,22 @@ const F = {
       const c = Number(args.count);
       n = (c === 0 && n.zero) || (c === 1 && n.one) || n.other || n.one || String(v);
     }
-    return String(n).replace(/\{\{\s*(\w+)\s*\}\}/g, (m, k) => (k in args ? String(args[k]) : m));
+    let salida = String(n).replace(/\{\{\s*(\w+)\s*\}\}/g, (m, k) => (k in args ? String(args[k]) : m));
+
+    /* SHOPIFY ESCAPA LAS TRADUCCIONES, Y ESTA PRUEBA NO LO HACIA.
+       "Translated content is escaped by default": cualquier < o > de un
+       texto traducido sale convertido en entidad, y el unico modo de
+       evitarlo es que la clave termine en _html. Esta bateria devolvia el
+       texto crudo, asi que daba verde sobre las respuestas del FAQ -- que
+       llevan <p> -- y en la tienda se leia literalmente "<p>Tous incluent
+       une garantie satisfaction.</p>". Lo vio el cliente en una captura.
+       Un banco de pruebas mas permisivo que la plataforma no avisa: miente
+       en verde, que es la peor forma de fallar. */
+    if (!String(v).endsWith('_html')) {
+      salida = salida.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    return salida;
   },
   json: v => JSON.stringify(v === undefined ? null : v),
   asset_url: v => '//cdn/' + v, asset_img_url: () => '//cdn/x.png', file_url: v => '//cdn/' + v,

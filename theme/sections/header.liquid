@@ -1,3 +1,11 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA: no solo se pinta,
+  # tambien decide, porque media seccion vive dentro de condiciones del
+  # tipo "si no esta vacio" y el ajuste va vacio a proposito.
+  capture cx_collections_trigger
+    render 'copia', g: 'sec', b: 'header', a: 'collections_trigger', v: section.settings.collections_trigger
+  endcapture
+-%}
 {%- comment -%}
   El mega menú exigía que el nombre del enlace coincidiera EXACTAMENTE con el
   ajuste (por defecto "Colecciones"). Con un menú en otro idioma o con acentos
@@ -15,7 +23,7 @@
   assign dd_alpha = section.settings.menu_opacity | default: 85 | divided_by: 100.0
 
   assign trigger_keys = ','
-  assign trigger_parts = section.settings.collections_trigger | split: ','
+  assign trigger_parts = cx_collections_trigger | split: ','
   for t in trigger_parts
     assign tk = t | strip | handle
     if tk != blank
@@ -119,7 +127,7 @@
                       <span class="nav-mega-media nav-mega-media--icon">{%- render 'icon', name: block.settings.icon -%}</span>
                       <span>
                         <span class="nav-mega-title">{{ block.settings.title | default: mc.title }}</span>
-                        {%- if block.settings.subtitle != blank -%}<span class="nav-mega-sub">{{ block.settings.subtitle }}</span>{%- endif -%}
+                        {%- capture cb_sub -%}{%- render 'copia', g: 'cabecera', b: block.id, a: 'subtitle', v: block.settings.subtitle -%}{%- endcapture -%}{%- if cb_sub != blank -%}<span class="nav-mega-sub">{{ cb_sub }}</span>{%- endif -%}
                       </span>
                     </a>
                   {%- endfor -%}
@@ -324,6 +332,10 @@
   "name": "Encabezado",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"): asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
       "type": "link_list",
       "id": "menu",
       "label": "Menú de navegación",
@@ -365,7 +377,6 @@
       "type": "text",
       "id": "collections_trigger",
       "label": "Ítem que abre las colecciones",
-      "default": "Colecciones",
       "info": "Nombre del ítem del menú que abre el mega-menú (ej: Colecciones, Catálogo). Puedes poner varios separados por comas. No importan mayúsculas ni acentos. Si ninguno coincide, se usa automáticamente el primer ítem del menú que tenga sub-elementos. SUB-COLECCIONES: en Tienda online → Navegación, añade elementos hijos a ese ítem (ej. Ropa) y a su vez nietos (ej. Hombre, Mujer); el mega-menú los mostrará como columnas automáticamente."
     },
     {

@@ -400,15 +400,15 @@
     "faq": {
       "f1": {
         "question": "¿Cuánto tarda el envío?",
-        "answer": "<p>Entre 3 y 7 días hábiles.</p>"
+        "answer_html": "<p>Entre 3 y 7 días hábiles.</p>"
       },
       "f2": {
         "question": "¿Puedo cancelar mi suscripción?",
-        "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+        "answer_html": "<p>Sí, cuando quieras desde tu cuenta.</p>"
       },
       "f3": {
         "question": "¿Los productos tienen garantía?",
-        "answer": "<p>Todos incluyen garantía de satisfacción.</p>"
+        "answer_html": "<p>Todos incluyen garantía de satisfacción.</p>"
       }
     },
     "motivacion": {
@@ -466,8 +466,8 @@
         "button_label": "VER CATÁLOGO"
       },
       "best-sellers": {
-        "title": "LOS MÁS VENDIDOS",
-        "subtitle": "Lo que la comunidad no deja de comprar."
+        "title": "LOS SUPLEMENTOS MÁS PEDIDOS",
+        "subtitle": "Proteína, creatina y preentreno. Cada ficha dice qué lleva y cuánto, sin prometer nada sobre tu salud."
       },
       "category-icons": {
         "title": "¿QUÉ BUSCAS HOY?"
@@ -476,9 +476,10 @@
         "title": "PREGUNTAS FRECUENTES"
       },
       "featured-products": {
-        "title": "PRODUCTOS ELITE",
-        "subtitle": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman.",
-        "view_all_label": "Ver toda la tienda"
+        "title": "MONTA TU GIMNASIO",
+        "subtitle": "Bancos, barras, cajones, chalecos y bandas. Lo que aguanta el uso diario, no lo que luce en la foto.",
+        "view_all_label": "Ver todo el equipo",
+        "eyebrow": "EQUIPO"
       },
       "flowing-menu": {
         "eyebrow": "CATEGORÍAS",
@@ -496,19 +497,23 @@
         "privacy_note": "Sin spam. Cancela cuando quieras."
       },
       "product-carousel-3d": {
-        "eyebrow": "DESTACADOS",
-        "heading": "Míralos en 3D",
-        "subheading": "Arrastra para girar el anillo de productos",
-        "hint": "Arrastra o desliza"
+        "eyebrow": "CONOCIMIENTO",
+        "heading": "Ocho libros, ocho temas",
+        "subheading": "Nutrición, carga, descanso, voluntad y práctica interior. Cada cifra con su fuente pública.",
+        "hint": "Arrastra para girar"
       },
       "product-showcase-3d": {
-        "title": "MÍRALO EN 3D",
-        "subtitle": "Gira, siente y descubre cada producto como si lo tuvieras en la mano."
+        "title": "LA ROPA, EN 3D",
+        "subtitle": "Gírala y mira el corte, la costura y el tejido antes de pedir tu talla."
       },
       "subscription-plans": {
         "eyebrow": "Membresía Mensual",
         "title": "PLANES DIETARIOS",
-        "subtitle": "Suscríbete y obtén acceso inmediato a planes de nutrición personalizados."
+        "subtitle": "Suscríbete y obtén acceso inmediato a planes de nutrición personalizados.",
+        "button_label": "Suscribirme",
+        "period": "/mes",
+        "badge": "Más elegido",
+        "features_html": "<ul><li>Plan de volumen</li><li>Macros optimizados</li><li>Lista de compras semanal</li></ul>"
       },
       "video-grid": {
         "eyebrow": "YouTube",
@@ -523,6 +528,54 @@
         "text": "Tu peso, tus rutinas y tus comidas se quedan en tu propio dispositivo.",
         "button_label": "ABRIR VI.P GRATIS",
         "note": "Sin registro · Sin instalar nada · ES / EN / FR"
+      },
+      "footer": {
+        "about": "Tienda fitness para atletas que no se conforman con lo ordinario.",
+        "payment_label": "Pago 100% seguro y cifrado",
+        "newsletter_title": "Únete a la comunidad",
+        "quotes": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite."
+      },
+      "header": {
+        "collections_trigger": "Colecciones"
+      },
+      "announcement-bar": {
+        "countdown_prefix": "Termina en",
+        "countdown_expired": "¡Oferta terminada!"
+      }
+    },
+    "pie": {
+      "menu": {
+        "title": "Información"
+      },
+      "g1": {
+        "titulo": "Envío con seguimiento",
+        "texto": "Recibes el número de rastreo en cuanto tu pedido sale."
+      },
+      "g2": {
+        "titulo": "Pago cifrado",
+        "texto": "Lo procesa Shopify: tus datos de tarjeta no pasan por nosotros."
+      },
+      "g3": {
+        "titulo": "Devoluciones",
+        "texto": "Consulta la política de reembolso antes de comprar."
+      },
+      "g4": {
+        "titulo": "Te responde una persona",
+        "texto": "Escríbenos y te contesta alguien de verdad, no un robot."
+      }
+    },
+    "cabecera": {
+      "m1": {
+        "subtitle": "Estilo que entrena contigo"
+      },
+      "m2": {
+        "subtitle": "Herramientas de poder"
+      },
+      "m3": {
+        "subtitle": "Combustible de élite"
+      },
+      "m4": {
+        "subtitle": "Entrena tu mente"
       }
     }
   }

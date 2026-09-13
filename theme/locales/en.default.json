@@ -400,15 +400,15 @@
     "faq": {
       "f1": {
         "question": "How long does shipping take?",
-        "answer": "<p>Between 3 and 7 business days.</p>"
+        "answer_html": "<p>Between 3 and 7 business days.</p>"
       },
       "f2": {
         "question": "Can I cancel my subscription?",
-        "answer": "<p>Yes, whenever you want, from your account.</p>"
+        "answer_html": "<p>Yes, whenever you want, from your account.</p>"
       },
       "f3": {
         "question": "Do the products have a guarantee?",
-        "answer": "<p>They all include a satisfaction guarantee.</p>"
+        "answer_html": "<p>They all include a satisfaction guarantee.</p>"
       }
     },
     "motivacion": {
@@ -466,8 +466,8 @@
         "button_label": "VIEW CATALOGUE"
       },
       "best-sellers": {
-        "title": "BEST SELLERS",
-        "subtitle": "What the community keeps coming back for."
+        "title": "MOST ORDERED SUPPLEMENTS",
+        "subtitle": "Protein, creatine and pre-workout. Every listing says what is in it and how much, with no health claims."
       },
       "category-icons": {
         "title": "WHAT ARE YOU LOOKING FOR TODAY?"
@@ -476,9 +476,10 @@
         "title": "FREQUENTLY ASKED QUESTIONS"
       },
       "featured-products": {
-        "title": "ELITE PRODUCTS",
-        "subtitle": "Supplements, apparel and gear picked for athletes who never settle.",
-        "view_all_label": "Browse the whole store"
+        "title": "BUILD YOUR GYM",
+        "subtitle": "Benches, bars, boxes, weighted vests and bands. Built for daily use, not for the photo.",
+        "view_all_label": "See all equipment",
+        "eyebrow": "EQUIPMENT"
       },
       "flowing-menu": {
         "eyebrow": "CATEGORIES",
@@ -496,19 +497,23 @@
         "privacy_note": "No spam. Unsubscribe whenever you like."
       },
       "product-carousel-3d": {
-        "eyebrow": "FEATURED",
-        "heading": "See them in 3D",
-        "subheading": "Drag to spin the ring of products",
-        "hint": "Drag or swipe"
+        "eyebrow": "KNOWLEDGE",
+        "heading": "Eight books, eight subjects",
+        "subheading": "Nutrition, load, rest, willpower and inner practice. Every figure cites its public source.",
+        "hint": "Drag to spin"
       },
       "product-showcase-3d": {
-        "title": "SEE IT IN 3D",
-        "subtitle": "Turn it, feel it and discover each product as if it were in your hand."
+        "title": "APPAREL, IN 3D",
+        "subtitle": "Turn it and see the cut, the stitching and the fabric before you pick your size."
       },
       "subscription-plans": {
         "eyebrow": "Monthly Membership",
         "title": "MEAL PLANS",
-        "subtitle": "Subscribe and get immediate access to personalised nutrition plans."
+        "subtitle": "Subscribe and get immediate access to personalised nutrition plans.",
+        "button_label": "Subscribe",
+        "period": "/month",
+        "badge": "Most chosen",
+        "features_html": "<ul><li>Bulking plan</li><li>Optimised macros</li><li>Weekly shopping list</li></ul>"
       },
       "video-grid": {
         "eyebrow": "YouTube",
@@ -523,6 +528,54 @@
         "text": "Your weight, your routines and your meals stay on your own device.",
         "button_label": "OPEN VI.P FOR FREE",
         "note": "No sign-up · Nothing to install · ES / EN / FR"
+      },
+      "footer": {
+        "about": "A fitness store for athletes who never settle for ordinary.",
+        "payment_label": "100% secure, encrypted payment",
+        "newsletter_title": "Join the community",
+        "quotes": "The body achieves what the mind believes.\nToday, 1% better than yesterday.\nDiscipline weighs grams; regret weighs tons.\nYour only rival is yesterday's you.\nTrain · Eat · Sleep · Repeat."
+      },
+      "header": {
+        "collections_trigger": "Collections"
+      },
+      "announcement-bar": {
+        "countdown_prefix": "Ends in",
+        "countdown_expired": "Offer ended!"
+      }
+    },
+    "pie": {
+      "menu": {
+        "title": "Information"
+      },
+      "g1": {
+        "titulo": "Tracked shipping",
+        "texto": "You get the tracking number the moment your order ships."
+      },
+      "g2": {
+        "titulo": "Encrypted payment",
+        "texto": "Shopify processes it: your card details never pass through us."
+      },
+      "g3": {
+        "titulo": "Returns",
+        "texto": "Check the refund policy before you buy."
+      },
+      "g4": {
+        "titulo": "A real person replies",
+        "texto": "Write to us and someone real answers, not a bot."
+      }
+    },
+    "cabecera": {
+      "m1": {
+        "subtitle": "Style that trains with you"
+      },
+      "m2": {
+        "subtitle": "Tools of power"
+      },
+      "m3": {
+        "subtitle": "Elite fuel"
+      },
+      "m4": {
+        "subtitle": "Train your mind"
       }
     }
   }

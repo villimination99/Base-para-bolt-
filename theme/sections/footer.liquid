@@ -1,8 +1,25 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA: no solo se pinta,
+  # tambien decide, porque media seccion vive dentro de condiciones del
+  # tipo "si no esta vacio" y el ajuste va vacio a proposito.
+  capture cx_about
+    render 'copia', g: 'sec', b: 'footer', a: 'about', v: section.settings.about
+  endcapture
+  capture cx_payment_label
+    render 'copia', g: 'sec', b: 'footer', a: 'payment_label', v: section.settings.payment_label
+  endcapture
+  capture cx_newsletter_title
+    render 'copia', g: 'sec', b: 'footer', a: 'newsletter_title', v: section.settings.newsletter_title
+  endcapture
+  capture cx_quotes
+    render 'copia', g: 'sec', b: 'footer', a: 'quotes', v: section.settings.quotes
+  endcapture
+-%}
 <footer class="footer" role="contentinfo">
   <span class="footer-edge" aria-hidden="true"></span>
   <div class="container">
-    {%- if section.settings.quotes != blank -%}
-      {%- assign quote_list = section.settings.quotes | strip | newline_to_br | split: '<br />' -%}
+    {%- if cx_quotes != blank -%}
+      {%- assign quote_list = cx_quotes | strip | newline_to_br | split: '<br />' -%}
       <div class="footer-quotes" data-quotes {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
         <span class="footer-quotes-icon" aria-hidden="true">{%- render 'icon', name: 'bolt' -%}</span>
         <p class="footer-quote" data-quote-text aria-live="polite">{{ quote_list.first | strip }}</p>
@@ -28,8 +45,8 @@
             <span class="footer-brand-name"><span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}</span>
           {%- endif -%}
         </div>
-        {%- if section.settings.about != blank -%}
-          <p class="footer-brand-desc">{{ section.settings.about }}</p>
+        {%- if cx_about != blank -%}
+          <p class="footer-brand-desc">{{ cx_about }}</p>
         {%- endif -%}
         <div class="footer-social">
           {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
@@ -41,8 +58,9 @@
 
       {%- for block in section.blocks -%}
         {%- if block.type == 'menu' -%}
+          {%- capture cb_t -%}{%- render 'copia', g: 'pie', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}
           <div class="footer-links" {{ block.shopify_attributes }}>
-            <h3>{{ block.settings.title }}</h3>
+            <h3>{{ cb_t }}</h3>
             <ul role="list">
               {%- for link in block.settings.menu.links -%}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -60,7 +78,7 @@
 
     {%- if section.settings.show_newsletter -%}
       <div class="footer-newsletter">
-        <h3>{{ section.settings.newsletter_title }}</h3>
+        <h3>{{ cx_newsletter_title }}</h3>
         {%- form 'customer', class: 'footer-newsletter-form' -%}
           <input type="hidden" name="contact[tags]" value="newsletter">
           <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
@@ -93,8 +111,9 @@
           <li class="footer-trust-item" {{ block.shopify_attributes }}>
             <span class="footer-trust-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icono -%}</span>
             <span class="footer-trust-txt">
-              <strong>{{ block.settings.titulo }}</strong>
-              {%- if block.settings.texto != blank -%}<span>{{ block.settings.texto }}</span>{%- endif -%}
+{%- capture cb_tit -%}{%- render 'copia', g: 'pie', b: block.id, a: 'titulo', v: block.settings.titulo -%}{%- endcapture -%}{%- capture cb_txt -%}{%- render 'copia', g: 'pie', b: block.id, a: 'texto', v: block.settings.texto -%}{%- endcapture -%}
+              <strong>{{ cb_tit }}</strong>
+              {%- if cb_txt != blank -%}<span>{{ cb_txt }}</span>{%- endif -%}
             </span>
           </li>
         {%- endfor -%}
@@ -127,13 +146,13 @@
     {%- endif -%}
 
     {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
-      <div class="footer-payments" role="list" aria-label="{{ section.settings.payment_label | escape }}">
+      <div class="footer-payments" role="list" aria-label="{{ cx_payment_label | escape }}">
         {%- for type in shop.enabled_payment_types -%}
           {{ type | payment_type_svg_tag: class: 'payment-icon' }}
         {%- endfor -%}
       </div>
-      {%- if section.settings.payment_label != blank -%}
-        <p class="footer-secure">{%- render 'icon', name: 'check' -%}{{ section.settings.payment_label }}</p>
+      {%- if cx_payment_label != blank -%}
+        <p class="footer-secure">{%- render 'icon', name: 'check' -%}{{ cx_payment_label }}</p>
       {%- endif -%}
     {%- endif -%}
 
@@ -150,10 +169,13 @@
   "name": "Pie de página",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"): asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
       "type": "textarea",
       "id": "about",
-      "label": "Descripción de la marca",
-      "default": "Tienda fitness para atletas que no se conforman con lo ordinario."
+      "label": "Descripción de la marca"
     },
     {
       "type": "checkbox",
@@ -165,8 +187,7 @@
     {
       "type": "text",
       "id": "payment_label",
-      "label": "Texto de seguridad",
-      "default": "Pago 100% seguro y cifrado"
+      "label": "Texto de seguridad"
     },
     {
       "type": "header",
@@ -194,7 +215,6 @@
       "type": "textarea",
       "id": "quotes",
       "label": "Frases motivacionales (una por línea)",
-      "default": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite.",
       "info": "Rotan automáticamente con un fundido suave. Déjalo vacío para ocultarlas."
     },
     {
@@ -206,8 +226,7 @@
     {
       "type": "text",
       "id": "newsletter_title",
-      "label": "Título del boletín",
-      "default": "Únete a la comunidad"
+      "label": "Título del boletín"
     }
   ],
   "blocks": [

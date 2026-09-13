@@ -14,7 +14,7 @@
           "settings": {
             "collection": "ropa",
             "icon": "shirt",
-            "subtitle": "Estilo que entrena contigo"
+            "subtitle": ""
           }
         },
         "m2": {
@@ -22,7 +22,7 @@
           "settings": {
             "collection": "equipo",
             "icon": "dumbbell",
-            "subtitle": "Herramientas de poder"
+            "subtitle": ""
           }
         },
         "m3": {
@@ -30,7 +30,7 @@
           "settings": {
             "collection": "suplementos",
             "icon": "supplement",
-            "subtitle": "Combustible de élite"
+            "subtitle": ""
           }
         },
         "m4": {
@@ -38,7 +38,7 @@
           "settings": {
             "collection": "conocimiento",
             "icon": "book",
-            "subtitle": "Entrena tu mente"
+            "subtitle": ""
           }
         }
       },
@@ -49,7 +49,7 @@
         "m4"
       ],
       "settings": {
-        "collections_trigger": "Colecciones, Catálogo, Collections, Catalog, Catalogue"
+        "collections_trigger": ""
       }
     }
   },

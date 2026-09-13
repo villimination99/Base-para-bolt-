@@ -2,7 +2,8 @@
   "sections": {
     "heroshader": {
       "type": "hero-shader",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "marquee": {
       "type": "marquee",
@@ -42,7 +43,9 @@
     },
     "products": {
       "type": "featured-products",
-      "settings": {}
+      "settings": {
+        "collection": "equipo"
+      }
     },
     "benefits": {
       "type": "multicolumn",
@@ -211,25 +214,25 @@
         "v1": {
           "type": "video",
           "settings": {
-            "video_id": "B6f4OevcqJg"
+            "video_id": "https://youtube.com/shorts/XVxIrtZFQfs?si=K_SNSmtcjbDovFsQ"
           }
         },
         "v2": {
           "type": "video",
           "settings": {
-            "video_id": "f7AvjOoxSPY"
+            "video_id": "https://youtube.com/shorts/JrezbnIa4ok?si=XC-RnH_A-mzMQLOf"
           }
         },
         "v3": {
           "type": "video",
           "settings": {
-            "video_id": "PD0ode222Ps"
+            "video_id": "https://youtube.com/shorts/wz4WpAAnHYg?si=QHr34GW-5LmP7pWS"
           }
         },
         "v4": {
           "type": "video",
           "settings": {
-            "video_id": "1Rj5Q52xhx8"
+            "video_id": "https://youtube.com/shorts/QrZ3rZXFM9o?si=BgnS8zbovhkrnVxu"
           }
         }
       },
@@ -372,11 +375,15 @@
     },
     "bestsellers": {
       "type": "best-sellers",
-      "settings": {}
+      "settings": {
+        "collection": "suplementos"
+      }
     },
     "showcase3d": {
       "type": "product-showcase-3d",
-      "settings": {}
+      "settings": {
+        "collection": "ropa"
+      }
     },
     "flowingmenu": {
       "type": "flowing-menu",
@@ -416,11 +423,14 @@
         "r3",
         "r4"
       ],
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "productcarousel3d": {
       "type": "product-carousel-3d",
-      "settings": {}
+      "settings": {
+        "collection": "conocimiento"
+      }
     },
     "motivation": {
       "type": "curved-carousel",
@@ -509,7 +519,8 @@
         "button_url": "",
         "video_archivo": "https://cdn.shopify.com/s/files/1/0599/8467/4865/files/villumination-marca-v2.webm?v=1788482106",
         "poster": "shopify://shop_images/villumination-marca-portada-v2.png"
-      }
+      },
+      "disabled": true
     },
     "haces": {
       "type": "haces",
@@ -589,18 +600,18 @@
     }
   },
   "order": [
-    "heroshader",
-    "marquee",
     "secuencia",
-    "products",
+    "vip",
+    "marquee",
     "caticons",
+    "videos",
+    "heroshader",
+    "products",
     "flowingmenu",
     "benefits",
-    "vip",
     "showcase3d",
     "productcarousel3d",
     "video3d",
-    "videos",
     "bestsellers",
     "plans",
     "diario",

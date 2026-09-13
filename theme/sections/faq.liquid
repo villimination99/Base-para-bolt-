@@ -24,7 +24,7 @@
             <div class="carousel-slide" {{ block.shopify_attributes }}>
               <div class="faq-card">
                 {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
-      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer_html', v: block.settings.answer -%}{%- endcapture -%}
                 <h3 class="faq-card-q">{{ q }}</h3>
                 <div class="faq-card-a rte">{{ a }}</div>
               </div>
@@ -38,7 +38,7 @@
         {%- for block in section.blocks -%}
           <details class="faq-item" {{ block.shopify_attributes }} {% if forloop.first %}open{% endif %}>
             {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
-      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer_html', v: block.settings.answer -%}{%- endcapture -%}
             <summary class="faq-q">{{ q }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
             <div class="faq-a rte">{{ a }}</div>
           </details>
@@ -62,7 +62,7 @@
   "mainEntity": [
     {%- for block in section.blocks -%}
       {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
-      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer_html', v: block.settings.answer -%}{%- endcapture -%}
       {%- if q != blank and a != blank -%}
     {
       "@type": "Question",

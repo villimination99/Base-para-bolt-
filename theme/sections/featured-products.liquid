@@ -1,4 +1,7 @@
 {%- liquid
+  capture cx_eyebrow
+    render 'copia', g: 'sec', b: 'featured-products', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
   # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
   # Tiene que estar arriba del todo porque no solo se pinta: tambien
   # decide. Media seccion vive dentro de una condicion "si no esta
@@ -20,8 +23,8 @@
   <span class="fp-orb fp-orb--2" aria-hidden="true"></span>
   <div class="container">
     <div class="section-head section-head--fancy" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="fancy-eyebrow">{%- render 'icon', name: 'bolt' -%}{{ section.settings.eyebrow }}</span>
+      {%- if cx_eyebrow != blank -%}
+        <span class="fancy-eyebrow">{%- render 'icon', name: 'bolt' -%}{{ cx_eyebrow }}</span>
       {%- endif -%}
       <h2 class="section-title neon-underline">{{ cx_title }}</h2>
       {%- if cx_subtitle != blank -%}<p class="section-subtitle">{{ cx_subtitle }}</p>{%- endif -%}

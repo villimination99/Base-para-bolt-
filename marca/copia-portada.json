@@ -522,7 +522,7 @@
         "de": "Wie lange dauert der Versand?",
         "ja": "配送にはどのくらいかかりますか？"
       },
-      "answer": {
+      "answer_html": {
         "es": "<p>Entre 3 y 7 días hábiles.</p>",
         "en": "<p>Between 3 and 7 business days.</p>",
         "fr": "<p>Entre 3 et 7 jours ouvrables.</p>",
@@ -538,7 +538,7 @@
         "de": "Kann ich mein Abo kündigen?",
         "ja": "サブスクリプションは解約できますか？"
       },
-      "answer": {
+      "answer_html": {
         "es": "<p>Sí, cuando quieras desde tu cuenta.</p>",
         "en": "<p>Yes, whenever you want, from your account.</p>",
         "fr": "<p>Oui, quand tu veux, depuis ton compte.</p>",
@@ -554,7 +554,7 @@
         "de": "Haben die Produkte eine Garantie?",
         "ja": "製品に保証はありますか？"
       },
-      "answer": {
+      "answer_html": {
         "es": "<p>Todos incluyen garantía de satisfacción.</p>",
         "en": "<p>They all include a satisfaction guarantee.</p>",
         "fr": "<p>Tous incluent une garantie satisfaction.</p>",
@@ -781,18 +781,18 @@
     },
     "best-sellers": {
       "title": {
-        "es": "LOS MÁS VENDIDOS",
-        "en": "BEST SELLERS",
-        "fr": "LES PLUS VENDUS",
-        "de": "DIE BESTSELLER",
-        "ja": "ベストセラー"
+        "es": "LOS SUPLEMENTOS MÁS PEDIDOS",
+        "en": "MOST ORDERED SUPPLEMENTS",
+        "fr": "LES COMPLÉMENTS LES PLUS COMMANDÉS",
+        "de": "DIE MEISTBESTELLTEN SUPPLEMENTE",
+        "ja": "最も注文されているサプリメント"
       },
       "subtitle": {
-        "es": "Lo que la comunidad no deja de comprar.",
-        "en": "What the community keeps coming back for.",
-        "fr": "Ce que la communauté n'arrête pas d'acheter.",
-        "de": "Was die Community immer wieder kauft.",
-        "ja": "コミュニティが買い続けているもの。"
+        "es": "Proteína, creatina y preentreno. Cada ficha dice qué lleva y cuánto, sin prometer nada sobre tu salud.",
+        "en": "Protein, creatine and pre-workout. Every listing says what is in it and how much, with no health claims.",
+        "fr": "Protéine, créatine et pré-entraînement. Chaque fiche dit ce qu'il y a dedans et combien, sans promesse de santé.",
+        "de": "Protein, Kreatin und Pre-Workout. Jede Seite sagt, was drin ist und wie viel, ohne Gesundheitsversprechen.",
+        "ja": "プロテイン、クレアチン、プレワークアウト。成分と含有量を明記し、健康効果は謳いません。"
       }
     },
     "category-icons": {
@@ -815,25 +815,32 @@
     },
     "featured-products": {
       "title": {
-        "es": "PRODUCTOS ELITE",
-        "en": "ELITE PRODUCTS",
-        "fr": "PRODUITS ÉLITE",
-        "de": "ELITE-PRODUKTE",
-        "ja": "エリート製品"
+        "es": "MONTA TU GIMNASIO",
+        "en": "BUILD YOUR GYM",
+        "fr": "MONTE TA SALLE",
+        "de": "BAU DEIN STUDIO",
+        "ja": "あなたのジムを組む"
       },
       "subtitle": {
-        "es": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman.",
-        "en": "Supplements, apparel and gear picked for athletes who never settle.",
-        "fr": "Compléments, vêtements et équipement choisis pour les athlètes qui ne se contentent de rien.",
-        "de": "Nahrungsergänzung, Bekleidung und Ausrüstung für Athleten, die sich nie zufriedengeben.",
-        "ja": "妥協しないアスリートのために選んだサプリ・アパレル・器具。"
+        "es": "Bancos, barras, cajones, chalecos y bandas. Lo que aguanta el uso diario, no lo que luce en la foto.",
+        "en": "Benches, bars, boxes, weighted vests and bands. Built for daily use, not for the photo.",
+        "fr": "Bancs, barres, boîtes, gilets lestés et élastiques. Fait pour l'usage quotidien, pas pour la photo.",
+        "de": "Bänke, Stangen, Sprungkästen, Gewichtswesten und Bänder. Für den täglichen Gebrauch gebaut, nicht fürs Foto.",
+        "ja": "ベンチ、バー、ボックス、ウェイトベスト、バンド。写真映えではなく、毎日の使用に耐えるもの。"
       },
       "view_all_label": {
-        "es": "Ver toda la tienda",
-        "en": "Browse the whole store",
-        "fr": "Voir toute la boutique",
-        "de": "Den ganzen Shop ansehen",
-        "ja": "ストア全体を見る"
+        "es": "Ver todo el equipo",
+        "en": "See all equipment",
+        "fr": "Voir tout l'équipement",
+        "de": "Alle Ausrüstung ansehen",
+        "ja": "器具をすべて見る"
+      },
+      "eyebrow": {
+        "es": "EQUIPO",
+        "en": "EQUIPMENT",
+        "fr": "ÉQUIPEMENT",
+        "de": "AUSRÜSTUNG",
+        "ja": "器具"
       }
     },
     "flowing-menu": {
@@ -907,48 +914,48 @@
     },
     "product-carousel-3d": {
       "eyebrow": {
-        "es": "DESTACADOS",
-        "en": "FEATURED",
-        "fr": "EN VEDETTE",
-        "de": "HIGHLIGHTS",
-        "ja": "注目"
+        "es": "CONOCIMIENTO",
+        "en": "KNOWLEDGE",
+        "fr": "CONNAISSANCE",
+        "de": "WISSEN",
+        "ja": "知識"
       },
       "heading": {
-        "es": "Míralos en 3D",
-        "en": "See them in 3D",
-        "fr": "Vois-les en 3D",
-        "de": "Sieh sie in 3D",
-        "ja": "3Dで見る"
+        "es": "Ocho libros, ocho temas",
+        "en": "Eight books, eight subjects",
+        "fr": "Huit livres, huit sujets",
+        "de": "Acht Bücher, acht Themen",
+        "ja": "8冊の本、8つのテーマ"
       },
       "subheading": {
-        "es": "Arrastra para girar el anillo de productos",
-        "en": "Drag to spin the ring of products",
-        "fr": "Fais glisser pour tourner l'anneau de produits",
-        "de": "Ziehen, um den Produktring zu drehen",
-        "ja": "ドラッグして商品リングを回す"
+        "es": "Nutrición, carga, descanso, voluntad y práctica interior. Cada cifra con su fuente pública.",
+        "en": "Nutrition, load, rest, willpower and inner practice. Every figure cites its public source.",
+        "fr": "Nutrition, charge, repos, volonté et pratique intérieure. Chaque chiffre cite sa source publique.",
+        "de": "Ernährung, Belastung, Erholung, Willenskraft und innere Praxis. Jede Zahl nennt ihre öffentliche Quelle.",
+        "ja": "栄養・負荷・休息・意志・内的実践。すべての数値に公開出典を明記。"
       },
       "hint": {
-        "es": "Arrastra o desliza",
-        "en": "Drag or swipe",
-        "fr": "Glisse ou balaie",
-        "de": "Ziehen oder wischen",
-        "ja": "ドラッグまたはスワイプ"
+        "es": "Arrastra para girar",
+        "en": "Drag to spin",
+        "fr": "Fais glisser pour tourner",
+        "de": "Ziehen zum Drehen",
+        "ja": "ドラッグして回す"
       }
     },
     "product-showcase-3d": {
       "title": {
-        "es": "MÍRALO EN 3D",
-        "en": "SEE IT IN 3D",
-        "fr": "VOIS-LE EN 3D",
-        "de": "SIEH ES IN 3D",
-        "ja": "3Dで見る"
+        "es": "LA ROPA, EN 3D",
+        "en": "APPAREL, IN 3D",
+        "fr": "LES VÊTEMENTS, EN 3D",
+        "de": "BEKLEIDUNG, IN 3D",
+        "ja": "アパレルを3Dで"
       },
       "subtitle": {
-        "es": "Gira, siente y descubre cada producto como si lo tuvieras en la mano.",
-        "en": "Turn it, feel it and discover each product as if it were in your hand.",
-        "fr": "Tourne-le, ressens-le et découvre chaque produit comme s'il était dans ta main.",
-        "de": "Dreh es, fühl es und entdecke jedes Produkt, als hieltest du es in der Hand.",
-        "ja": "回して、触れて、手に取るように商品を確かめる。"
+        "es": "Gírala y mira el corte, la costura y el tejido antes de pedir tu talla.",
+        "en": "Turn it and see the cut, the stitching and the fabric before you pick your size.",
+        "fr": "Fais-le tourner et regarde la coupe, les coutures et le tissu avant de choisir ta taille.",
+        "de": "Dreh es und sieh Schnitt, Nähte und Stoff, bevor du deine Größe wählst.",
+        "ja": "回してカット・縫製・生地を確かめてから、サイズを選べます。"
       }
     },
     "subscription-plans": {
@@ -972,6 +979,34 @@
         "fr": "Abonne-toi et accède immédiatement à des plans nutritionnels personnalisés.",
         "de": "Abonniere und erhalte sofort Zugang zu persönlichen Ernährungsplänen.",
         "ja": "登録すると、パーソナライズされた栄養プランにすぐアクセスできます。"
+      },
+      "button_label": {
+        "es": "Suscribirme",
+        "en": "Subscribe",
+        "fr": "M'abonner",
+        "de": "Abonnieren",
+        "ja": "登録する"
+      },
+      "period": {
+        "es": "/mes",
+        "en": "/month",
+        "fr": "/mois",
+        "de": "/Monat",
+        "ja": "/月"
+      },
+      "badge": {
+        "es": "Más elegido",
+        "en": "Most chosen",
+        "fr": "Le plus choisi",
+        "de": "Am häufigsten gewählt",
+        "ja": "いちばん選ばれている"
+      },
+      "features_html": {
+        "es": "<ul><li>Plan de volumen</li><li>Macros optimizados</li><li>Lista de compras semanal</li></ul>",
+        "en": "<ul><li>Bulking plan</li><li>Optimised macros</li><li>Weekly shopping list</li></ul>",
+        "fr": "<ul><li>Plan de prise de masse</li><li>Macros optimisés</li><li>Liste de courses hebdomadaire</li></ul>",
+        "de": "<ul><li>Masseaufbau-Plan</li><li>Optimierte Makros</li><li>Wöchentliche Einkaufsliste</li></ul>",
+        "ja": "<ul><li>増量プラン</li><li>最適化されたマクロ</li><li>週間の買い物リスト</li></ul>"
       }
     },
     "video-grid": {
@@ -1046,6 +1081,174 @@
         "fr": "Sans inscription · Rien à installer · ES / EN / FR",
         "de": "Ohne Anmeldung · Nichts zu installieren · ES / EN / FR",
         "ja": "登録不要 · インストール不要 · ES / EN / FR"
+      }
+    },
+    "footer": {
+      "about": {
+        "es": "Tienda fitness para atletas que no se conforman con lo ordinario.",
+        "en": "A fitness store for athletes who never settle for ordinary.",
+        "fr": "Une boutique fitness pour les athlètes qui ne se contentent pas de l'ordinaire.",
+        "de": "Ein Fitness-Shop für Athleten, die sich nicht mit Mittelmaß zufriedengeben.",
+        "ja": "平凡で満足しないアスリートのためのフィットネスストア。"
+      },
+      "payment_label": {
+        "es": "Pago 100% seguro y cifrado",
+        "en": "100% secure, encrypted payment",
+        "fr": "Paiement 100 % sécurisé et chiffré",
+        "de": "100 % sichere, verschlüsselte Zahlung",
+        "ja": "100%安全・暗号化された決済"
+      },
+      "newsletter_title": {
+        "es": "Únete a la comunidad",
+        "en": "Join the community",
+        "fr": "Rejoins la communauté",
+        "de": "Werde Teil der Community",
+        "ja": "コミュニティに参加"
+      },
+      "quotes": {
+        "es": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite.",
+        "en": "The body achieves what the mind believes.\nToday, 1% better than yesterday.\nDiscipline weighs grams; regret weighs tons.\nYour only rival is yesterday's you.\nTrain · Eat · Sleep · Repeat.",
+        "fr": "Le corps accomplit ce que l'esprit croit.\nAujourd'hui, 1 % mieux qu'hier.\nLa discipline pèse des grammes ; le regret, des tonnes.\nTon seul rival, c'est toi d'hier.\nEntraîne-toi · Mange · Dors · Recommence.",
+        "de": "Der Körper schafft, woran der Geist glaubt.\nHeute 1 % besser als gestern.\nDisziplin wiegt Gramm; Reue wiegt Tonnen.\nDein einziger Rivale ist dein Ich von gestern.\nTrainieren · Essen · Schlafen · Wiederholen.",
+        "ja": "心が信じたことを身体は成し遂げる。\n今日は昨日より1%だけ良く。\n規律はグラム、後悔はトン。\n唯一の敵は昨日の自分。\n鍛える · 食べる · 眠る · 繰り返す。"
+      }
+    },
+    "header": {
+      "collections_trigger": {
+        "es": "Colecciones",
+        "en": "Collections",
+        "fr": "Collections",
+        "de": "Kollektionen",
+        "ja": "コレクション"
+      }
+    },
+    "announcement-bar": {
+      "countdown_prefix": {
+        "es": "Termina en",
+        "en": "Ends in",
+        "fr": "Se termine dans",
+        "de": "Endet in",
+        "ja": "終了まで"
+      },
+      "countdown_expired": {
+        "es": "¡Oferta terminada!",
+        "en": "Offer ended!",
+        "fr": "Offre terminée !",
+        "de": "Angebot beendet!",
+        "ja": "オファーは終了しました！"
+      }
+    }
+  },
+  "pie": {
+    "menu": {
+      "title": {
+        "es": "Información",
+        "en": "Information",
+        "fr": "Informations",
+        "de": "Informationen",
+        "ja": "インフォメーション"
+      }
+    },
+    "g1": {
+      "titulo": {
+        "es": "Envío con seguimiento",
+        "en": "Tracked shipping",
+        "fr": "Livraison suivie",
+        "de": "Sendungsverfolgung",
+        "ja": "追跡付き配送"
+      },
+      "texto": {
+        "es": "Recibes el número de rastreo en cuanto tu pedido sale.",
+        "en": "You get the tracking number the moment your order ships.",
+        "fr": "Tu reçois le numéro de suivi dès que ta commande part.",
+        "de": "Du bekommst die Sendungsnummer, sobald deine Bestellung rausgeht.",
+        "ja": "ご注文が発送され次第、追跡番号をお送りします。"
+      }
+    },
+    "g2": {
+      "titulo": {
+        "es": "Pago cifrado",
+        "en": "Encrypted payment",
+        "fr": "Paiement chiffré",
+        "de": "Verschlüsselte Zahlung",
+        "ja": "暗号化された決済"
+      },
+      "texto": {
+        "es": "Lo procesa Shopify: tus datos de tarjeta no pasan por nosotros.",
+        "en": "Shopify processes it: your card details never pass through us.",
+        "fr": "C'est Shopify qui traite le paiement : tes données de carte ne passent pas par nous.",
+        "de": "Shopify wickelt das ab: deine Kartendaten laufen nicht über uns.",
+        "ja": "決済はShopifyが処理します。カード情報が当店を経由することはありません。"
+      }
+    },
+    "g3": {
+      "titulo": {
+        "es": "Devoluciones",
+        "en": "Returns",
+        "fr": "Retours",
+        "de": "Rückgaben",
+        "ja": "返品"
+      },
+      "texto": {
+        "es": "Consulta la política de reembolso antes de comprar.",
+        "en": "Check the refund policy before you buy.",
+        "fr": "Consulte la politique de remboursement avant d'acheter.",
+        "de": "Sieh dir vor dem Kauf die Rückerstattungsrichtlinie an.",
+        "ja": "ご購入前に返金ポリシーをご確認ください。"
+      }
+    },
+    "g4": {
+      "titulo": {
+        "es": "Te responde una persona",
+        "en": "A real person replies",
+        "fr": "Une personne te répond",
+        "de": "Es antwortet ein Mensch",
+        "ja": "人が返信します"
+      },
+      "texto": {
+        "es": "Escríbenos y te contesta alguien de verdad, no un robot.",
+        "en": "Write to us and someone real answers, not a bot.",
+        "fr": "Écris-nous et quelqu'un de réel te répond, pas un robot.",
+        "de": "Schreib uns, und es antwortet ein echter Mensch, kein Bot.",
+        "ja": "ご連絡いただければ、ボットではなく担当者が対応します。"
+      }
+    }
+  },
+  "cabecera": {
+    "m1": {
+      "subtitle": {
+        "es": "Estilo que entrena contigo",
+        "en": "Style that trains with you",
+        "fr": "Un style qui s'entraîne avec toi",
+        "de": "Stil, der mit dir trainiert",
+        "ja": "あなたと共に鍛えるスタイル"
+      }
+    },
+    "m2": {
+      "subtitle": {
+        "es": "Herramientas de poder",
+        "en": "Tools of power",
+        "fr": "Des outils de puissance",
+        "de": "Werkzeuge der Kraft",
+        "ja": "力の道具"
+      }
+    },
+    "m3": {
+      "subtitle": {
+        "es": "Combustible de élite",
+        "en": "Elite fuel",
+        "fr": "Carburant d'élite",
+        "de": "Treibstoff der Elite",
+        "ja": "エリートの燃料"
+      }
+    },
+    "m4": {
+      "subtitle": {
+        "es": "Entrena tu mente",
+        "en": "Train your mind",
+        "fr": "Entraîne ton esprit",
+        "de": "Trainiere deinen Geist",
+        "ja": "心を鍛えよう"
       }
     }
   }

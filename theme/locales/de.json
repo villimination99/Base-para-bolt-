@@ -400,15 +400,15 @@
     "faq": {
       "f1": {
         "question": "Wie lange dauert der Versand?",
-        "answer": "<p>Zwischen 3 und 7 Werktagen.</p>"
+        "answer_html": "<p>Zwischen 3 und 7 Werktagen.</p>"
       },
       "f2": {
         "question": "Kann ich mein Abo kündigen?",
-        "answer": "<p>Ja, jederzeit über dein Konto.</p>"
+        "answer_html": "<p>Ja, jederzeit über dein Konto.</p>"
       },
       "f3": {
         "question": "Haben die Produkte eine Garantie?",
-        "answer": "<p>Alle enthalten eine Zufriedenheitsgarantie.</p>"
+        "answer_html": "<p>Alle enthalten eine Zufriedenheitsgarantie.</p>"
       }
     },
     "motivacion": {
@@ -466,8 +466,8 @@
         "button_label": "KATALOG ANSEHEN"
       },
       "best-sellers": {
-        "title": "DIE BESTSELLER",
-        "subtitle": "Was die Community immer wieder kauft."
+        "title": "DIE MEISTBESTELLTEN SUPPLEMENTE",
+        "subtitle": "Protein, Kreatin und Pre-Workout. Jede Seite sagt, was drin ist und wie viel, ohne Gesundheitsversprechen."
       },
       "category-icons": {
         "title": "WONACH SUCHST DU HEUTE?"
@@ -476,9 +476,10 @@
         "title": "HÄUFIGE FRAGEN"
       },
       "featured-products": {
-        "title": "ELITE-PRODUKTE",
-        "subtitle": "Nahrungsergänzung, Bekleidung und Ausrüstung für Athleten, die sich nie zufriedengeben.",
-        "view_all_label": "Den ganzen Shop ansehen"
+        "title": "BAU DEIN STUDIO",
+        "subtitle": "Bänke, Stangen, Sprungkästen, Gewichtswesten und Bänder. Für den täglichen Gebrauch gebaut, nicht fürs Foto.",
+        "view_all_label": "Alle Ausrüstung ansehen",
+        "eyebrow": "AUSRÜSTUNG"
       },
       "flowing-menu": {
         "eyebrow": "KATEGORIEN",
@@ -496,19 +497,23 @@
         "privacy_note": "Kein Spam. Jederzeit abbestellbar."
       },
       "product-carousel-3d": {
-        "eyebrow": "HIGHLIGHTS",
-        "heading": "Sieh sie in 3D",
-        "subheading": "Ziehen, um den Produktring zu drehen",
-        "hint": "Ziehen oder wischen"
+        "eyebrow": "WISSEN",
+        "heading": "Acht Bücher, acht Themen",
+        "subheading": "Ernährung, Belastung, Erholung, Willenskraft und innere Praxis. Jede Zahl nennt ihre öffentliche Quelle.",
+        "hint": "Ziehen zum Drehen"
       },
       "product-showcase-3d": {
-        "title": "SIEH ES IN 3D",
-        "subtitle": "Dreh es, fühl es und entdecke jedes Produkt, als hieltest du es in der Hand."
+        "title": "BEKLEIDUNG, IN 3D",
+        "subtitle": "Dreh es und sieh Schnitt, Nähte und Stoff, bevor du deine Größe wählst."
       },
       "subscription-plans": {
         "eyebrow": "Monatliche Mitgliedschaft",
         "title": "ERNÄHRUNGSPLÄNE",
-        "subtitle": "Abonniere und erhalte sofort Zugang zu persönlichen Ernährungsplänen."
+        "subtitle": "Abonniere und erhalte sofort Zugang zu persönlichen Ernährungsplänen.",
+        "button_label": "Abonnieren",
+        "period": "/Monat",
+        "badge": "Am häufigsten gewählt",
+        "features_html": "<ul><li>Masseaufbau-Plan</li><li>Optimierte Makros</li><li>Wöchentliche Einkaufsliste</li></ul>"
       },
       "video-grid": {
         "eyebrow": "YouTube",
@@ -523,6 +528,54 @@
         "text": "Dein Gewicht, deine Routinen und deine Mahlzeiten bleiben auf deinem eigenen Gerät.",
         "button_label": "VI.P KOSTENLOS ÖFFNEN",
         "note": "Ohne Anmeldung · Nichts zu installieren · ES / EN / FR"
+      },
+      "footer": {
+        "about": "Ein Fitness-Shop für Athleten, die sich nicht mit Mittelmaß zufriedengeben.",
+        "payment_label": "100 % sichere, verschlüsselte Zahlung",
+        "newsletter_title": "Werde Teil der Community",
+        "quotes": "Der Körper schafft, woran der Geist glaubt.\nHeute 1 % besser als gestern.\nDisziplin wiegt Gramm; Reue wiegt Tonnen.\nDein einziger Rivale ist dein Ich von gestern.\nTrainieren · Essen · Schlafen · Wiederholen."
+      },
+      "header": {
+        "collections_trigger": "Kollektionen"
+      },
+      "announcement-bar": {
+        "countdown_prefix": "Endet in",
+        "countdown_expired": "Angebot beendet!"
+      }
+    },
+    "pie": {
+      "menu": {
+        "title": "Informationen"
+      },
+      "g1": {
+        "titulo": "Sendungsverfolgung",
+        "texto": "Du bekommst die Sendungsnummer, sobald deine Bestellung rausgeht."
+      },
+      "g2": {
+        "titulo": "Verschlüsselte Zahlung",
+        "texto": "Shopify wickelt das ab: deine Kartendaten laufen nicht über uns."
+      },
+      "g3": {
+        "titulo": "Rückgaben",
+        "texto": "Sieh dir vor dem Kauf die Rückerstattungsrichtlinie an."
+      },
+      "g4": {
+        "titulo": "Es antwortet ein Mensch",
+        "texto": "Schreib uns, und es antwortet ein echter Mensch, kein Bot."
+      }
+    },
+    "cabecera": {
+      "m1": {
+        "subtitle": "Stil, der mit dir trainiert"
+      },
+      "m2": {
+        "subtitle": "Werkzeuge der Kraft"
+      },
+      "m3": {
+        "subtitle": "Treibstoff der Elite"
+      },
+      "m4": {
+        "subtitle": "Trainiere deinen Geist"
       }
     }
   }
