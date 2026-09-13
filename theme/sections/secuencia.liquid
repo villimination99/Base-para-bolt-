@@ -43,9 +43,10 @@
 
               {%- when 'lema' -%}
                 <p class="secuencia-lema">
-                  {{ block.settings.linea1 }}
-                  {%- if block.settings.linea2 != blank -%}
-                    <br><em>{{ block.settings.linea2 }}</em>
+                  {%- render 'copia', g: 'secuencia', b: block.id, a: 'linea1', v: block.settings.linea1 -%}
+                  {%- capture cb_l2 -%}{%- render 'copia', g: 'secuencia', b: block.id, a: 'linea2', v: block.settings.linea2 -%}{%- endcapture -%}
+                {%- if cb_l2 != blank -%}
+                    <br><em>{{ cb_l2 }}</em>
                   {%- endif -%}
                 </p>
 
@@ -58,22 +59,37 @@
                           assign ico = block.settings.icono1
                           assign tit = block.settings.titulo1
                           assign sub = block.settings.sub1
+                          assign titulo_clave = 'titulo1'
+                          assign sub_clave = 'sub1'
                         when 2
                           assign ico = block.settings.icono2
                           assign tit = block.settings.titulo2
                           assign sub = block.settings.sub2
+                          assign titulo_clave = 'titulo2'
+                          assign sub_clave = 'sub2'
                         else
                           assign ico = block.settings.icono3
                           assign tit = block.settings.titulo3
                           assign sub = block.settings.sub3
+                          assign titulo_clave = 'titulo3'
+                          assign sub_clave = 'sub3'
                       endcase
+                      # La copia traducida ANTES de la guarda: si el campo
+                      # esta vacio manda el idioma, y el pilar tiene que
+                      # pintarse igual.
+                      capture tit_i
+                        render 'copia', g: 'secuencia', b: block.id, a: titulo_clave, v: tit
+                      endcapture
+                      capture sub_i
+                        render 'copia', g: 'secuencia', b: block.id, a: sub_clave, v: sub
+                      endcapture
                     -%}
-                    {%- if tit != blank -%}
+                    {%- if tit_i != blank -%}
                       <li class="secuencia-pilar">
                         <span class="secuencia-pilar-ico" aria-hidden="true">{%- render 'icon', name: ico -%}</span>
                         <span class="secuencia-pilar-txt">
-                          <strong>{{ tit }}</strong>
-                          {%- if sub != blank -%}<span>{{ sub }}</span>{%- endif -%}
+                          <strong>{{ tit_i }}</strong>
+                          {%- if sub_i != blank -%}<span>{{ sub_i }}</span>{%- endif -%}
                         </span>
                       </li>
                     {%- endif -%}
@@ -94,17 +110,19 @@
                   {%- assign cifra_viva = block.settings.numero -%}
                 {%- endif -%}
                 <p class="secuencia-cifra">{{ cifra_viva }}</p>
-                {%- if block.settings.pie != blank -%}
-                  <p class="secuencia-cifra-pie">{{ block.settings.pie }}</p>
+                {%- capture cb_pie -%}{%- render 'copia', g: 'secuencia', b: block.id, a: 'pie', v: block.settings.pie -%}{%- endcapture -%}
+                {%- if cb_pie != blank -%}
+                  <p class="secuencia-cifra-pie">{{ cb_pie }}</p>
                 {%- endif -%}
 
               {%- when 'cierre' -%}
                 {%- if block.settings.titulo != blank -%}
                   <p class="secuencia-cierre-tit">{{ block.settings.titulo }}</p>
                 {%- endif -%}
-                {%- if block.settings.boton != blank and block.settings.enlace != blank -%}
+                {%- capture cb_boton -%}{%- render 'copia', g: 'secuencia', b: block.id, a: 'boton', v: block.settings.boton -%}{%- endcapture -%}
+                {%- if cb_boton != blank and block.settings.enlace != blank -%}
                   <a class="btn btn-primary btn-lg secuencia-cta" href="{{ block.settings.enlace }}">
-                    {{ block.settings.boton }}
+                    {{ cb_boton }}
                   </a>
                 {%- endif -%}
 

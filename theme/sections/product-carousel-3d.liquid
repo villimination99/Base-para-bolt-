@@ -1,3 +1,23 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'sec', b: 'product-carousel-3d', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_heading
+    render 'copia', g: 'sec', b: 'product-carousel-3d', a: 'heading', v: section.settings.heading
+  endcapture
+  capture cx_subheading
+    render 'copia', g: 'sec', b: 'product-carousel-3d', a: 'subheading', v: section.settings.subheading
+  endcapture
+  capture cx_hint
+    render 'copia', g: 'sec', b: 'product-carousel-3d', a: 'hint', v: section.settings.hint
+  endcapture
+-%}
 {%- comment -%}
   Carrusel 3D curvo de PRODUCTOS. Anillo giratorio (coverflow) alimentado por una
   colección: gira solo, se arrastra/desliza y se pausa fuera de pantalla.
@@ -33,9 +53,9 @@
 <section class="curved-carousel product-carousel-3d section-padding"
   style="--cc-neon:{{ neon }};--cc-radius:{{ radius }};--cc-w:{{ cardw }};--cc-h:{{ cardh }};--cc-n:{{ n }}">
   <div class="container">
-    {%- if section.settings.eyebrow != blank -%}<span class="fancy-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-    {%- if section.settings.heading != blank -%}<h2 class="section-title neon-underline">{{ section.settings.heading }}</h2>{%- endif -%}
-    {%- if section.settings.subheading != blank -%}<p class="section-subtitle">{{ section.settings.subheading }}</p>{%- endif -%}
+    {%- if cx_eyebrow != blank -%}<span class="fancy-eyebrow">{{ cx_eyebrow }}</span>{%- endif -%}
+    {%- if cx_heading != blank -%}<h2 class="section-title neon-underline">{{ cx_heading }}</h2>{%- endif -%}
+    {%- if cx_subheading != blank -%}<p class="section-subtitle">{{ cx_subheading }}</p>{%- endif -%}
 
     {%- if n > 0 -%}
       <div class="cc-stage" data-cc data-cc-auto="{{ section.settings.autorotate }}" data-cc-speed="{{ section.settings.speed | times: 0.02 }}">
@@ -66,8 +86,8 @@
           {%- endfor -%}
         </div>
       </div>
-      {%- if section.settings.hint != blank -%}
-        <p class="cc-hint">{%- render 'icon', name: 'chevron-left' -%} {{ section.settings.hint }} {%- render 'icon', name: 'chevron-right' -%}</p>
+      {%- if cx_hint != blank -%}
+        <p class="cc-hint">{%- render 'icon', name: 'chevron-left' -%} {{ cx_hint }} {%- render 'icon', name: 'chevron-right' -%}</p>
       {%- endif -%}
     {%- else -%}
       {%- if request.design_mode -%}<p class="cc-hint">Elige una colección con productos en el editor.</p>{%- endif -%}
@@ -81,27 +101,89 @@
   "tag": "section",
   "class": "section-product-carousel-3d",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "DESTACADOS" },
-    { "type": "text", "id": "heading", "label": "Título", "default": "Míralos en 3D" },
-    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Arrastra para girar el anillo de productos" },
-    { "type": "collection", "id": "collection", "label": "Colección" },
-    { "type": "range", "id": "product_limit", "min": 4, "max": 12, "step": 1, "label": "Nº de productos", "default": 8 },
-    { "type": "color", "id": "neon_color", "label": "Color neón de la sección" },
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta superior"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "product_limit",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "label": "Nº de productos",
+      "default": 8
+    },
+    {
+      "type": "color",
+      "id": "neon_color",
+      "label": "Color neón de la sección"
+    },
     {
       "type": "select",
       "id": "card_size",
       "label": "Tamaño de las tarjetas",
       "options": [
-        { "value": "small", "label": "Pequeño" },
-        { "value": "medium", "label": "Mediano" },
-        { "value": "large", "label": "Grande" }
+        {
+          "value": "small",
+          "label": "Pequeño"
+        },
+        {
+          "value": "medium",
+          "label": "Mediano"
+        },
+        {
+          "value": "large",
+          "label": "Grande"
+        }
       ],
       "default": "medium"
     },
-    { "type": "checkbox", "id": "autorotate", "label": "Girar automáticamente", "default": true },
-    { "type": "range", "id": "speed", "min": 1, "max": 10, "step": 1, "label": "Velocidad de giro", "default": 3 },
-    { "type": "text", "id": "hint", "label": "Texto de ayuda", "default": "Arrastra o desliza" }
+    {
+      "type": "checkbox",
+      "id": "autorotate",
+      "label": "Girar automáticamente",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Velocidad de giro",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "hint",
+      "label": "Texto de ayuda"
+    }
   ],
-  "presets": [{ "name": "Carrusel 3D de productos" }]
+  "presets": [
+    {
+      "name": "Carrusel 3D de productos"
+    }
+  ]
 }
 {% endschema %}

@@ -1,3 +1,20 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_title
+    render 'copia', g: 'sec', b: 'featured-products', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'sec', b: 'featured-products', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_view_all_label
+    render 'copia', g: 'sec', b: 'featured-products', a: 'view_all_label', v: section.settings.view_all_label
+  endcapture
+-%}
 <section class="section-padding fp-section" id="products" style="--sec-neon:{{ section.settings.neon_color | default: '#00d4ff' }};">
   <span class="fp-orb fp-orb--1" aria-hidden="true"></span>
   <span class="fp-orb fp-orb--2" aria-hidden="true"></span>
@@ -6,8 +23,8 @@
       {%- if section.settings.eyebrow != blank -%}
         <span class="fancy-eyebrow">{%- render 'icon', name: 'bolt' -%}{{ section.settings.eyebrow }}</span>
       {%- endif -%}
-      <h2 class="section-title neon-underline">{{ section.settings.title }}</h2>
-      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+      <h2 class="section-title neon-underline">{{ cx_title }}</h2>
+      {%- if cx_subtitle != blank -%}<p class="section-subtitle">{{ cx_subtitle }}</p>{%- endif -%}
     </div>
 
     {%- comment -%}
@@ -65,7 +82,7 @@
 
     {%- if section.settings.show_view_all and coll != blank -%}
       <div class="section-cta">
-        <a href="{{ coll.url }}" class="btn btn-outline btn-lg">{{ section.settings.view_all_label }}{%- render 'icon', name: 'arrow-right' -%}</a>
+        <a href="{{ coll.url }}" class="btn btn-outline btn-lg">{{ cx_view_all_label }}{%- render 'icon', name: 'arrow-right' -%}</a>
       </div>
     {%- endif -%}
   </div>
@@ -75,18 +92,87 @@
 {
   "name": "Productos destacados",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
-    { "type": "text", "id": "title", "label": "Título", "default": "PRODUCTOS ELITE" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo", "default": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman." },
-    { "type": "collection", "id": "collection", "label": "Colección" },
-    { "type": "range", "id": "limit", "min": 2, "max": 12, "step": 1, "label": "Número de productos", "default": 8 },
-    { "type": "select", "id": "layout", "label": "Presentación", "options": [
-      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
-    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 0 },
-    { "type": "checkbox", "id": "show_view_all", "label": "Mostrar botón 'ver todo'", "default": true },
-    { "type": "color", "id": "neon_color", "label": "Color del neón de la sección", "default": "#00d4ff" },
-    { "type": "text", "id": "view_all_label", "label": "Texto del botón", "default": "Ver toda la tienda" }
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Colección"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Número de productos",
+      "default": 8
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Presentación",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Carrusel"
+        },
+        {
+          "value": "grid",
+          "label": "Cuadrícula"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-avance (0 = apagado)",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Mostrar botón 'ver todo'",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "neon_color",
+      "label": "Color del neón de la sección",
+      "default": "#00d4ff"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Texto del botón"
+    }
   ],
-  "presets": [{ "name": "Productos destacados" }]
+  "presets": [
+    {
+      "name": "Productos destacados"
+    }
+  ]
 }
 {% endschema %}

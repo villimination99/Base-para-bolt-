@@ -10,25 +10,25 @@
         "w1": {
           "type": "word",
           "settings": {
-            "text": "FUERZA"
+            "text": ""
           }
         },
         "w2": {
           "type": "word",
           "settings": {
-            "text": "DISCIPLINA"
+            "text": ""
           }
         },
         "w3": {
           "type": "word",
           "settings": {
-            "text": "PODER"
+            "text": ""
           }
         },
         "w4": {
           "type": "word",
           "settings": {
-            "text": "SIN LÍMITES"
+            "text": ""
           }
         }
       },
@@ -52,8 +52,8 @@
           "settings": {
             "icon": "cube",
             "stat": "3D + AR",
-            "title": "Míralo antes de comprarlo",
-            "text": "Los productos con modelo se giran en 3D y se ven en tu propia habitación desde el móvil. Es nativo de Shopify: no hace falta instalar nada.",
+            "title": "",
+            "text": "",
             "accent": "#00d4ff"
           }
         },
@@ -62,8 +62,8 @@
           "settings": {
             "icon": "book",
             "stat": "8",
-            "title": "Códices en PDF",
-            "text": "Ocho libros con sus láminas y su cuaderno. Cada cifra que aparece lleva la fuente pública de la que sale.",
+            "title": "",
+            "text": "",
             "accent": "#ff2ecb"
           }
         },
@@ -72,8 +72,8 @@
           "settings": {
             "icon": "check",
             "stat": "Shopify",
-            "title": "El cobro no pasa por nosotros",
-            "text": "El pago lo procesa Shopify de principio a fin. Tus datos de tarjeta no tocan esta tienda en ningún momento.",
+            "title": "",
+            "text": "",
             "accent": "#00e87b"
           }
         }
@@ -91,64 +91,64 @@
         "t1": {
           "type": "tool",
           "settings": {
-            "title": "Mapa Muscular 3D",
-            "text": "Toca un músculo y ve sus ejercicios",
+            "title": "",
+            "text": "",
             "icon": "body3d"
           }
         },
         "t2": {
           "type": "tool",
           "settings": {
-            "title": "Entrenamiento",
-            "text": "27 ejercicios con calorías reales",
+            "title": "",
+            "text": "",
             "icon": "dumbbell"
           }
         },
         "t3": {
           "type": "tool",
           "settings": {
-            "title": "Nutrición IA",
-            "text": "Escanea tu plato con la cámara",
+            "title": "",
+            "text": "",
             "icon": "camera"
           }
         },
         "t4": {
           "type": "tool",
           "settings": {
-            "title": "Planes Dietarios",
-            "text": "4 planes · menús todo el año",
+            "title": "",
+            "text": "",
             "icon": "calendar"
           }
         },
         "t5": {
           "type": "tool",
           "settings": {
-            "title": "Meditación",
-            "text": "Respiración guiada + 21 días",
+            "title": "",
+            "text": "",
             "icon": "meditation"
           }
         },
         "t6": {
           "type": "tool",
           "settings": {
-            "title": "Frecuencias",
-            "text": "Solfeggio, binaurales y duales",
+            "title": "",
+            "text": "",
             "icon": "headphones"
           }
         },
         "t7": {
           "type": "tool",
           "settings": {
-            "title": "Nivel de Atleta",
-            "text": "De Principiante a Predator",
+            "title": "",
+            "text": "",
             "icon": "trophy"
           }
         },
         "t8": {
           "type": "tool",
           "settings": {
-            "title": "Progreso y Sueño",
-            "text": "Tu salud entera en gráficos",
+            "title": "",
+            "text": "",
             "icon": "chart"
           }
         },
@@ -156,35 +156,35 @@
           "type": "stat",
           "settings": {
             "number": "27",
-            "label": "Ejercicios"
+            "label": ""
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
             "number": "19",
-            "label": "Frecuencias"
+            "label": ""
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
             "number": "9",
-            "label": "Zonas 3D"
+            "label": ""
           }
         },
         "s4": {
           "type": "stat",
           "settings": {
             "number": "60",
-            "label": "Alimentos"
+            "label": ""
           }
         },
         "s5": {
           "type": "stat",
           "settings": {
             "number": "6",
-            "label": "Niveles"
+            "label": ""
           }
         }
       },
@@ -249,8 +249,8 @@
         "p1": {
           "type": "plan",
           "settings": {
-            "name": "Básico",
-            "tagline": "Volumen Limpio",
+            "name": "",
+            "tagline": "",
             "price": "$9.99",
             "accent": "#00e87b"
           }
@@ -258,8 +258,8 @@
         "p2": {
           "type": "plan",
           "settings": {
-            "name": "Pro",
-            "tagline": "Definición + Volumen",
+            "name": "",
+            "tagline": "",
             "price": "$19.99",
             "accent": "#00d4ff",
             "featured": true
@@ -268,8 +268,8 @@
         "p3": {
           "type": "plan",
           "settings": {
-            "name": "Elite",
-            "tagline": "Full Coaching",
+            "name": "",
+            "tagline": "",
             "price": "$39.99",
             "accent": "#ff7700"
           }
@@ -288,22 +288,22 @@
         "f1": {
           "type": "qa",
           "settings": {
-            "question": "¿Cuánto tarda el envío?",
-            "answer": "<p>Entre 3 y 7 días hábiles.</p>"
+            "question": "",
+            "answer": ""
           }
         },
         "f2": {
           "type": "qa",
           "settings": {
-            "question": "¿Puedo cancelar mi suscripción?",
-            "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+            "question": "",
+            "answer": ""
           }
         },
         "f3": {
           "type": "qa",
           "settings": {
-            "question": "¿Los productos tienen garantía?",
-            "answer": "<p>Todos incluyen garantía de satisfacción.</p>"
+            "question": "",
+            "answer": ""
           }
         }
       },
@@ -326,8 +326,8 @@
           "settings": {
             "collection": "ropa",
             "icon": "shirt",
-            "title": "Ropa",
-            "text": "Estilo que entrena contigo.",
+            "title": "",
+            "text": "",
             "accent": "#00d4ff"
           }
         },
@@ -336,8 +336,8 @@
           "settings": {
             "collection": "equipo",
             "icon": "dumbbell",
-            "title": "Equipo",
-            "text": "Herramientas de poder.",
+            "title": "",
+            "text": "",
             "accent": "#ff2ecb"
           }
         },
@@ -346,8 +346,8 @@
           "settings": {
             "collection": "suplementos",
             "icon": "supplement",
-            "title": "Suplementos",
-            "text": "Combustible de élite.",
+            "title": "",
+            "text": "",
             "accent": "#00e87b"
           }
         },
@@ -356,8 +356,8 @@
           "settings": {
             "collection": "conocimiento",
             "icon": "book",
-            "title": "Conocimiento",
-            "text": "Entrena tu mente.",
+            "title": "",
+            "text": "",
             "accent": "#ff7700"
           }
         }
@@ -384,28 +384,28 @@
         "r1": {
           "type": "row",
           "settings": {
-            "label": "Ropa",
+            "label": "",
             "link": "shopify://collections/ropa"
           }
         },
         "r2": {
           "type": "row",
           "settings": {
-            "label": "Equipo",
+            "label": "",
             "link": "shopify://collections/equipo"
           }
         },
         "r3": {
           "type": "row",
           "settings": {
-            "label": "Suplementos",
+            "label": "",
             "link": "shopify://collections/suplementos"
           }
         },
         "r4": {
           "type": "row",
           "settings": {
-            "label": "Conocimiento",
+            "label": "",
             "link": "shopify://collections/conocimiento"
           }
         }
@@ -428,43 +428,43 @@
         "m1": {
           "type": "slide",
           "settings": {
-            "title": "Sin excusas, solo resultados",
-            "caption": "VILLUMINATION"
+            "title": "",
+            "caption": ""
           }
         },
         "m2": {
           "type": "slide",
           "settings": {
-            "title": "Tu única competencia eres tú de ayer",
-            "caption": "MINDSET"
+            "title": "",
+            "caption": ""
           }
         },
         "m3": {
           "type": "slide",
           "settings": {
-            "title": "La disciplina vence al talento",
-            "caption": "FUERZA"
+            "title": "",
+            "caption": ""
           }
         },
         "m4": {
           "type": "slide",
           "settings": {
-            "title": "El dolor es temporal, la gloria eterna",
-            "caption": "PODER"
+            "title": "",
+            "caption": ""
           }
         },
         "m5": {
           "type": "slide",
           "settings": {
-            "title": "Domina tu mente, domina tu cuerpo",
-            "caption": "ENFOQUE"
+            "title": "",
+            "caption": ""
           }
         },
         "m6": {
           "type": "slide",
           "settings": {
-            "title": "Cada repetición te acerca",
-            "caption": "PROGRESO"
+            "title": "",
+            "caption": ""
           }
         }
       },
@@ -477,11 +477,11 @@
         "m6"
       ],
       "settings": {
-        "eyebrow": "MOTIVACIÓN",
-        "heading": "Frases que te mueven",
-        "subheading": "Arrastra para girar el anillo",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
         "card_size": "medium",
-        "hint": "Arrastra o desliza"
+        "hint": ""
       }
     },
     "video3d": {
@@ -489,9 +489,9 @@
       "settings": {
         "video_url": "",
         "formato": "vertical",
-        "eyebrow": "EN MOVIMIENTO",
-        "title": "VIVE LA EXPERIENCIA",
-        "subtitle": "Muévete sobre el vídeo: el marco te sigue.",
+        "eyebrow": "",
+        "title": "",
+        "subtitle": "",
         "caption": "",
         "accent": "#00f0ff",
         "bg": "#05060a",
@@ -527,36 +527,36 @@
         "b2": {
           "type": "lema",
           "settings": {
-            "linea1": "NO TE",
-            "linea2": "CONFORMES"
+            "linea1": "",
+            "linea2": ""
           }
         },
         "b3": {
           "type": "pilares",
           "settings": {
             "icono1": "dumbbell",
-            "titulo1": "FUERZA",
-            "sub1": "EQUIPO Y ACCESORIOS",
+            "titulo1": "",
+            "sub1": "",
             "icono2": "supplement",
-            "titulo2": "NUTRICIÓN",
-            "sub2": "SUPLEMENTOS",
+            "titulo2": "",
+            "sub2": "",
             "icono3": "book",
-            "titulo3": "CONSTANCIA",
-            "sub3": "PLANES Y CÓDICES"
+            "titulo3": "",
+            "sub3": ""
           }
         },
         "b4": {
           "type": "cifra",
           "settings": {
             "numero": "",
-            "pie": "PRODUCTOS · UNA SOLA META"
+            "pie": ""
           }
         },
         "b5": {
           "type": "cierre",
           "settings": {
             "titulo": "VILLUMINATIONS.COM",
-            "boton": "VER CATÁLOGO",
+            "boton": "",
             "enlace": "/collections/all"
           }
         }
@@ -579,12 +579,12 @@
     "diario": {
       "type": "blog-destacado",
       "settings": {
-        "eyebrow": "EL DIARIO",
-        "title": "LO QUE HAY DETRÁS DE CADA PRODUCTO",
-        "subtitle": "Artículos con la fuente pública de cada cifra. Sin promesas y sin humo.",
+        "eyebrow": "",
+        "title": "",
+        "subtitle": "",
         "blog": "diario",
         "cantidad": 3,
-        "texto_boton": "VER TODOS LOS ARTÍCULOS"
+        "texto_boton": ""
       }
     }
   },

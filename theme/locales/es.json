@@ -1,15 +1,15 @@
 {
   "general": {
+    "404": {
+      "title": "Página no encontrada",
+      "subtext": "La página que buscas no existe o fue movida."
+    },
     "home": "Inicio",
     "shop": "Tienda",
     "enter": "Entrar",
     "meta": {
       "tags": "Etiquetado \"{{ tags }}\"",
       "page": "Página {{ page }}"
-    },
-    "404": {
-      "title": "Página no encontrada",
-      "subtext": "La página que buscas no existe o fue movida."
     },
     "pagination": {
       "label": "Paginación"
@@ -251,6 +251,279 @@
       "message": "Mensaje",
       "send": "Enviar",
       "post_success": "¡Gracias! Te responderemos pronto."
+    }
+  },
+  "inicio": {
+    "marquee": {
+      "w1": {
+        "text": "FUERZA"
+      },
+      "w2": {
+        "text": "DISCIPLINA"
+      },
+      "w3": {
+        "text": "PODER"
+      },
+      "w4": {
+        "text": "SIN LÍMITES"
+      }
+    },
+    "secuencia": {
+      "b2": {
+        "linea1": "NO TE",
+        "linea2": "CONFORMES"
+      },
+      "b3": {
+        "titulo1": "FUERZA",
+        "sub1": "EQUIPO Y ACCESORIOS",
+        "titulo2": "NUTRICIÓN",
+        "sub2": "SUPLEMENTOS",
+        "titulo3": "CONSTANCIA",
+        "sub3": "PLANES Y CÓDICES"
+      },
+      "b4": {
+        "pie": "PRODUCTOS · UNA SOLA META"
+      },
+      "b5": {
+        "boton": "VER CATÁLOGO"
+      }
+    },
+    "categorias": {
+      "c1": {
+        "title": "Ropa",
+        "text": "Estilo que entrena contigo."
+      },
+      "c2": {
+        "title": "Equipo",
+        "text": "Herramientas de poder."
+      },
+      "c3": {
+        "title": "Suplementos",
+        "text": "Combustible de élite."
+      },
+      "c4": {
+        "title": "Conocimiento",
+        "text": "Entrena tu mente."
+      }
+    },
+    "menu": {
+      "r1": {
+        "label": "Ropa"
+      },
+      "r2": {
+        "label": "Equipo"
+      },
+      "r3": {
+        "label": "Suplementos"
+      },
+      "r4": {
+        "label": "Conocimiento"
+      }
+    },
+    "beneficios": {
+      "b1": {
+        "title": "Míralo antes de comprarlo",
+        "text": "Los productos con modelo se giran en 3D y se ven en tu propia habitación desde el móvil. Es nativo de Shopify: no hace falta instalar nada."
+      },
+      "b2": {
+        "title": "Códices en PDF",
+        "text": "Ocho libros con sus láminas y su cuaderno. Cada cifra que aparece lleva la fuente pública de la que sale."
+      },
+      "b3": {
+        "title": "El cobro no pasa por nosotros",
+        "text": "El pago lo procesa Shopify de principio a fin. Tus datos de tarjeta no tocan esta tienda en ningún momento."
+      }
+    },
+    "vip": {
+      "t1": {
+        "title": "Mapa Muscular 3D",
+        "text": "Toca un músculo y ve sus ejercicios"
+      },
+      "t2": {
+        "title": "Entrenamiento",
+        "text": "27 ejercicios con calorías reales"
+      },
+      "t3": {
+        "title": "Nutrición IA",
+        "text": "Escanea tu plato con la cámara"
+      },
+      "t4": {
+        "title": "Planes Dietarios",
+        "text": "4 planes · menús todo el año"
+      },
+      "t5": {
+        "title": "Meditación",
+        "text": "Respiración guiada + 21 días"
+      },
+      "t6": {
+        "title": "Frecuencias",
+        "text": "Solfeggio, binaurales y duales"
+      },
+      "t7": {
+        "title": "Nivel de Atleta",
+        "text": "De Principiante a Predator"
+      },
+      "t8": {
+        "title": "Progreso y Sueño",
+        "text": "Tu salud entera en gráficos"
+      },
+      "s1": {
+        "label": "Ejercicios"
+      },
+      "s2": {
+        "label": "Frecuencias"
+      },
+      "s3": {
+        "label": "Zonas 3D"
+      },
+      "s4": {
+        "label": "Alimentos"
+      },
+      "s5": {
+        "label": "Niveles"
+      }
+    },
+    "planes": {
+      "p1": {
+        "name": "Básico",
+        "tagline": "Volumen Limpio"
+      },
+      "p2": {
+        "name": "Pro",
+        "tagline": "Definición + Volumen"
+      },
+      "p3": {
+        "name": "Elite",
+        "tagline": "Full Coaching"
+      }
+    },
+    "faq": {
+      "f1": {
+        "question": "¿Cuánto tarda el envío?",
+        "answer": "<p>Entre 3 y 7 días hábiles.</p>"
+      },
+      "f2": {
+        "question": "¿Puedo cancelar mi suscripción?",
+        "answer": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+      },
+      "f3": {
+        "question": "¿Los productos tienen garantía?",
+        "answer": "<p>Todos incluyen garantía de satisfacción.</p>"
+      }
+    },
+    "motivacion": {
+      "cab": {
+        "eyebrow": "MOTIVACIÓN",
+        "heading": "Frases que te mueven",
+        "subheading": "Arrastra para girar el anillo",
+        "hint": "Arrastra o desliza"
+      },
+      "m1": {
+        "title": "Sin excusas, solo resultados",
+        "caption": "VILLUMINATION"
+      },
+      "m2": {
+        "title": "Tu única competencia eres tú de ayer",
+        "caption": "MINDSET"
+      },
+      "m3": {
+        "title": "La disciplina vence al talento",
+        "caption": "FUERZA"
+      },
+      "m4": {
+        "title": "El dolor es temporal, la gloria eterna",
+        "caption": "PODER"
+      },
+      "m5": {
+        "title": "Domina tu mente, domina tu cuerpo",
+        "caption": "ENFOQUE"
+      },
+      "m6": {
+        "title": "Cada repetición te acerca",
+        "caption": "PROGRESO"
+      }
+    },
+    "video": {
+      "cab": {
+        "eyebrow": "EN MOVIMIENTO",
+        "title": "VIVE LA EXPERIENCIA",
+        "subtitle": "Muévete sobre el vídeo: el marco te sigue."
+      }
+    },
+    "diario": {
+      "cab": {
+        "eyebrow": "EL DIARIO",
+        "title": "LO QUE HAY DETRÁS DE CADA PRODUCTO",
+        "subtitle": "Artículos con la fuente pública de cada cifra. Sin promesas y sin humo.",
+        "texto_boton": "VER TODOS LOS ARTÍCULOS"
+      }
+    },
+    "sec": {
+      "hero-shader": {
+        "eyebrow": "VILLUMINATION",
+        "title": "TRANSFORMA TU CUERPO",
+        "subtitle": "Domina tu mente. Equipo, ropa y suplementos para quienes no se conforman.",
+        "button_label": "VER CATÁLOGO"
+      },
+      "best-sellers": {
+        "title": "LOS MÁS VENDIDOS",
+        "subtitle": "Lo que la comunidad no deja de comprar."
+      },
+      "category-icons": {
+        "title": "¿QUÉ BUSCAS HOY?"
+      },
+      "faq": {
+        "title": "PREGUNTAS FRECUENTES"
+      },
+      "featured-products": {
+        "title": "PRODUCTOS ELITE",
+        "subtitle": "Suplementos, ropa y equipo seleccionado para atletas que no se conforman.",
+        "view_all_label": "Ver toda la tienda"
+      },
+      "flowing-menu": {
+        "eyebrow": "CATEGORÍAS",
+        "heading": "Explora el universo VILLUMINATION"
+      },
+      "multicolumn": {
+        "title": "LA DIFERENCIA VILLUMINATION"
+      },
+      "newsletter": {
+        "title": "ÚNETE AL MOVIMIENTO",
+        "text": "Recibe ofertas, rutinas y contenido exclusivo.",
+        "button_label": "Suscribirme",
+        "incentive": "−10% EN TU PRIMERA COMPRA",
+        "success_text": "¡Bienvenido! Usa tu código:",
+        "privacy_note": "Sin spam. Cancela cuando quieras."
+      },
+      "product-carousel-3d": {
+        "eyebrow": "DESTACADOS",
+        "heading": "Míralos en 3D",
+        "subheading": "Arrastra para girar el anillo de productos",
+        "hint": "Arrastra o desliza"
+      },
+      "product-showcase-3d": {
+        "title": "MÍRALO EN 3D",
+        "subtitle": "Gira, siente y descubre cada producto como si lo tuvieras en la mano."
+      },
+      "subscription-plans": {
+        "eyebrow": "Membresía Mensual",
+        "title": "PLANES DIETARIOS",
+        "subtitle": "Suscríbete y obtén acceso inmediato a planes de nutrición personalizados."
+      },
+      "video-grid": {
+        "eyebrow": "YouTube",
+        "title": "CONTENIDO EXCLUSIVO",
+        "subtitle": "Entrena conmigo, aprende y transfórmate con cada video.",
+        "button_label": "Ver más Shorts"
+      },
+      "vip-banner": {
+        "badge": "VI.P · GRATIS, SIN REGISTRO",
+        "title": "TOCA UN MÚSCULO Y VE QUÉ ENTRENAR",
+        "subtitle": "Tu gimnasio digital VI.P: anatomía 3D, rutinas con calorías y nutrición.",
+        "text": "Tu peso, tus rutinas y tus comidas se quedan en tu propio dispositivo.",
+        "button_label": "ABRIR VI.P GRATIS",
+        "note": "Sin registro · Sin instalar nada · ES / EN / FR"
+      }
     }
   }
 }

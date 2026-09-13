@@ -1,10 +1,21 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_title
+    render 'copia', g: 'sec', b: 'multicolumn', a: 'title', v: section.settings.title
+  endcapture
+-%}
 {%- assign anim = section.settings.animation | default: 'up' -%}
 <section class="section-padding">
   <div class="container">
-    {%- if section.settings.title != blank -%}
+    {%- if cx_title != blank -%}
       <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
         {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-        <h2 class="section-title">{{ section.settings.title }}</h2>
+        <h2 class="section-title">{{ cx_title }}</h2>
         {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
       </div>
     {%- endif -%}
@@ -17,8 +28,9 @@
             {%- elsif block.settings.icon != 'none' -%}
               <div class="feature-icon">{%- render 'icon', name: block.settings.icon -%}</div>
             {%- endif -%}
-            <h3 class="feature-title">{{ block.settings.title }}</h3>
-            {%- if block.settings.text != blank -%}<p class="feature-text">{{ block.settings.text }}</p>{%- endif -%}
+            <h3 class="feature-title">{%- render 'copia', g: 'beneficios', b: block.id, a: 'title', v: block.settings.title -%}</h3>
+            {%- capture cb_text -%}{%- render 'copia', g: 'beneficios', b: block.id, a: 'text', v: block.settings.text -%}{%- endcapture -%}
+        {%- if cb_text != blank -%}<p class="feature-text">{{ cb_text }}</p>{%- endif -%}
           </div>
         </div>
       {%- endfor -%}
@@ -40,33 +52,171 @@
 {
   "name": "Columnas de beneficios",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
-    { "type": "text", "id": "title", "label": "Título", "default": "LA DIFERENCIA VILLUMINATION" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtítulo" },
-    { "type": "select", "id": "animation", "label": "Animación", "options": [ { "value": "none", "label": "Ninguna" }, { "value": "up", "label": "Desde abajo" }, { "value": "zoom", "label": "Zoom" } ], "default": "up" },
-    { "type": "select", "id": "layout", "label": "Presentación", "options": [
-      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
-    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 6 }
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "select",
+      "id": "animation",
+      "label": "Animación",
+      "options": [
+        {
+          "value": "none",
+          "label": "Ninguna"
+        },
+        {
+          "value": "up",
+          "label": "Desde abajo"
+        },
+        {
+          "value": "zoom",
+          "label": "Zoom"
+        }
+      ],
+      "default": "up"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Presentación",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Carrusel"
+        },
+        {
+          "value": "grid",
+          "label": "Cuadrícula"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-avance (0 = apagado)",
+      "default": 6
+    }
   ],
   "blocks": [
     {
       "type": "column",
       "name": "Columna",
       "settings": [
-        { "type": "select", "id": "icon", "label": "Icono", "options": [ { "value": "none", "label": "Ninguno" }, { "value": "bolt", "label": "Rayo" }, { "value": "cube", "label": "Cubo 3D" }, { "value": "cart", "label": "Carrito" }, { "value": "check", "label": "Check" }, { "value": "play", "label": "Play" } ], "default": "bolt" },
-        { "type": "text", "id": "stat", "label": "Estadística (opcional, reemplaza el icono)", "info": "Ej: +94%" },
-        { "type": "text", "id": "title", "label": "Título", "default": "Envío rápido" },
-        { "type": "textarea", "id": "text", "label": "Texto", "default": "Describe el beneficio." },
-        { "type": "color", "id": "accent", "label": "Color de acento", "default": "#00d4ff" }
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            {
+              "value": "none",
+              "label": "Ninguno"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "cube",
+              "label": "Cubo 3D"
+            },
+            {
+              "value": "cart",
+              "label": "Carrito"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "play",
+              "label": "Play"
+            }
+          ],
+          "default": "bolt"
+        },
+        {
+          "type": "text",
+          "id": "stat",
+          "label": "Estadística (opcional, reemplaza el icono)",
+          "info": "Ej: +94%"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Envío rápido"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Texto",
+          "default": "Describe el beneficio."
+        },
+        {
+          "type": "color",
+          "id": "accent",
+          "label": "Color de acento",
+          "default": "#00d4ff"
+        }
       ]
     }
   ],
   "presets": [
-    { "name": "Columnas de beneficios", "blocks": [
-      { "type": "column", "settings": { "icon": "cube", "stat": "-40%", "title": "Menos devoluciones", "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar." } },
-      { "type": "column", "settings": { "icon": "bolt", "stat": "+94%", "title": "Más conversiones", "text": "La experiencia inmersiva multiplica las ventas.", "accent": "#ff2ecb" } },
-      { "type": "column", "settings": { "icon": "check", "stat": "24/7", "title": "Soporte real", "text": "Estamos contigo en cada paso.", "accent": "#00e87b" } }
-    ] }
+    {
+      "name": "Columnas de beneficios",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "icon": "cube",
+            "stat": "-40%",
+            "title": "Menos devoluciones",
+            "text": "Visor 3D + AR: el cliente ve el producto real antes de comprar."
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "bolt",
+            "stat": "+94%",
+            "title": "Más conversiones",
+            "text": "La experiencia inmersiva multiplica las ventas.",
+            "accent": "#ff2ecb"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "check",
+            "stat": "24/7",
+            "title": "Soporte real",
+            "text": "Estamos contigo en cada paso.",
+            "accent": "#00e87b"
+          }
+        }
+      ]
+    }
   ]
 }
 {% endschema %}

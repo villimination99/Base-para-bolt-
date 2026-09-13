@@ -1,3 +1,23 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'sec', b: 'hero-shader', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_title
+    render 'copia', g: 'sec', b: 'hero-shader', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'sec', b: 'hero-shader', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_button_label
+    render 'copia', g: 'sec', b: 'hero-shader', a: 'button_label', v: section.settings.button_label
+  endcapture
+-%}
 {%- comment -%}
   Hero con fondo de shader "borde pulsante" que reacciona al desplazamiento.
 
@@ -45,19 +65,19 @@
   {%- endcomment -%}
   <div class="hero-content hero-shader-content" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
     <div class="hero-shader-shift">
-      {%- if section.settings.eyebrow != blank -%}
-        <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- if cx_eyebrow != blank -%}
+        <span class="section-eyebrow">{{ cx_eyebrow }}</span>
       {%- endif -%}
-      {%- if section.settings.title != blank -%}
-        <h1 class="hero-title">{{ section.settings.title }}</h1>
+      {%- if cx_title != blank -%}
+        <h1 class="hero-title">{{ cx_title }}</h1>
       {%- endif -%}
-      {%- if section.settings.subtitle != blank -%}
-        <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
+      {%- if cx_subtitle != blank -%}
+        <p class="hero-subtitle">{{ cx_subtitle }}</p>
       {%- endif -%}
-      {%- if section.settings.button_label != blank -%}
+      {%- if cx_button_label != blank -%}
         <div class="hero-ctas">
           <a href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
-            {{ section.settings.button_label }}{%- render 'icon', name: 'arrow-right' -%}
+            {{ cx_button_label }}{%- render 'icon', name: 'arrow-right' -%}
           </a>
           {%- if section.settings.button2_label != blank -%}
             <a href="{{ section.settings.button2_url | default: routes.root_url }}" class="btn btn-outline btn-lg">{{ section.settings.button2_label }}</a>
@@ -95,31 +115,31 @@
   "settings": [
     {
       "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "paragraph",
       "content": "Fondo animado en WebGL que reacciona al desplazamiento. Si el visitante pide movimiento reducido o tiene el ahorro de datos activado, se muestra un degradado fijo en su lugar."
     },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Etiqueta",
-      "default": "VILLUMINATION"
+      "label": "Etiqueta"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Titulo",
-      "default": "TRANSFORMA TU CUERPO"
+      "label": "Titulo"
     },
     {
       "type": "textarea",
       "id": "subtitle",
-      "label": "Subtitulo",
-      "default": "Domina tu mente. Equipo, ropa y suplementos para quienes no se conforman."
+      "label": "Subtitulo"
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Boton principal",
-      "default": "VER CATALOGO"
+      "label": "Boton principal"
     },
     {
       "type": "url",
@@ -141,8 +161,14 @@
       "id": "fondo",
       "label": "Fondo animado",
       "options": [
-        { "value": "marco", "label": "Marco pulsante" },
-        { "value": "remolino", "label": "Remolino de vidrio" }
+        {
+          "value": "marco",
+          "label": "Marco pulsante"
+        },
+        {
+          "value": "remolino",
+          "label": "Remolino de vidrio"
+        }
       ],
       "default": "marco",
       "info": "El marco dibuja un borde de neon con rejilla en fuga. El remolino es un liquido que gira sobre si mismo, mas rapido en el centro que en los bordes. Los dos usan los mismos colores de abajo y las mismas guardas: con movimiento reducido o ahorro de datos se muestra un degradado fijo."

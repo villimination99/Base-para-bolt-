@@ -1,3 +1,20 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'video', b: 'cab', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_title
+    render 'copia', g: 'video', b: 'cab', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'video', b: 'cab', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+-%}
 {%- comment -%}
   Video 3D interactivo.
   Un solo video presentado dentro de un marco holografico que se inclina
@@ -17,7 +34,7 @@
   assign enlace = section.settings.video_url
   assign portada = section.settings.poster
   assign acento = section.settings.accent
-  assign titulo = section.settings.title
+  assign titulo = cx_title
 
   # URL directa a un archivo de video (mp4, webm, mov) subido a los Archivos
   # de Shopify como archivo suelto. Shopify solo admite mp4 y mov en su
@@ -90,14 +107,14 @@
          id="video3d-{{ section.id }}"
          style="--v3d-accent:{{ acento }};--v3d-bg:{{ section.settings.bg }};--v3d-alto:{{ alto_pc }}px;--v3d-alto-movil:{{ alto_movil }}px;--v3d-fundido:{{ section.settings.blend | divided_by: 100.0 }};">
   <div class="container">
-    {%- if section.settings.eyebrow != blank or titulo != blank or section.settings.subtitle != blank -%}
+    {%- if cx_eyebrow != blank or titulo != blank or cx_subtitle != blank -%}
       <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="section-eyebrow" style="color:{{ acento }};">{{ section.settings.eyebrow }}</span>
+        {%- if cx_eyebrow != blank -%}
+          <span class="section-eyebrow" style="color:{{ acento }};">{{ cx_eyebrow }}</span>
         {%- endif -%}
         {%- if titulo != blank -%}<h2 class="section-title">{{ titulo }}</h2>{%- endif -%}
-        {%- if section.settings.subtitle != blank -%}
-          <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+        {%- if cx_subtitle != blank -%}
+          <p class="section-subtitle">{{ cx_subtitle }}</p>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -302,7 +319,7 @@
 -%}
 {%- if declarar_video -%}
   {%- liquid
-    assign descripcion = section.settings.subtitle | default: section.settings.caption | default: titulo
+    assign descripcion = cx_subtitle | default: section.settings.caption | default: titulo
     assign miniatura_abs = portada_url
     assign subida = section.settings.upload_date
     if subida == blank

@@ -211,7 +211,17 @@ export function prepararFuente(src) {
        que es exactamente lo que representa: un hueco que rellena una app que
        aqui no esta instalada. */
     .replace(/\{%-?\s*render\s+block\s*-?%\}/g, '<!-- bloque de app -->')
-    .replace(/\{%(-?)\s*render\s+(['"])/g, '{%$1 include $2');
+    .replace(/\{%(-?)\s*render\s+(['"])/g, '{%$1 include $2')
+    /* Y TAMBIEN DENTRO DE UN {% liquid %}, que es donde se escapaba.
+       Ahi las etiquetas van sin llaves -- una linea que pone
+       "render 'copia', ..." a secas -- asi que la regla de arriba, que
+       exige el {%, no la tocaba. Resultado: ese render se quedaba como
+       render, liquidjs devolvia cadena vacia sin error, y la seccion se
+       pintaba a medias en la bateria mientras en Shopify sale entera.
+       Costo perseguir un fallo que no existia: la portada traducida salia
+       "sin la mitad de las frases" y lo que faltaba era esta linea. */
+    .replace(/\{%-?\s*liquid\b[\s\S]*?-?%\}/g, (bloque) =>
+      bloque.replace(/(^|\n)(\s*)render\s+(['"])/g, '$1$2include $3'));
 }
 
 function tragar(nombre) {

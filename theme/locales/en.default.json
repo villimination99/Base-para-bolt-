@@ -1,15 +1,15 @@
 {
   "general": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for does not exist."
+    },
     "home": "Home",
     "shop": "Shop",
     "enter": "Enter",
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
-    },
-    "404": {
-      "title": "Page not found",
-      "subtext": "The page you were looking for does not exist."
     },
     "pagination": {
       "label": "Pagination"
@@ -251,6 +251,279 @@
       "message": "Message",
       "send": "Send",
       "post_success": "Thanks! We'll get back to you soon."
+    }
+  },
+  "inicio": {
+    "marquee": {
+      "w1": {
+        "text": "STRENGTH"
+      },
+      "w2": {
+        "text": "DISCIPLINE"
+      },
+      "w3": {
+        "text": "POWER"
+      },
+      "w4": {
+        "text": "NO LIMITS"
+      }
+    },
+    "secuencia": {
+      "b2": {
+        "linea1": "NEVER",
+        "linea2": "SETTLE"
+      },
+      "b3": {
+        "titulo1": "STRENGTH",
+        "sub1": "GEAR AND ACCESSORIES",
+        "titulo2": "NUTRITION",
+        "sub2": "SUPPLEMENTS",
+        "titulo3": "CONSISTENCY",
+        "sub3": "PLANS AND CODICES"
+      },
+      "b4": {
+        "pie": "PRODUCTS · ONE SINGLE GOAL"
+      },
+      "b5": {
+        "boton": "VIEW CATALOGUE"
+      }
+    },
+    "categorias": {
+      "c1": {
+        "title": "Apparel",
+        "text": "Style that trains with you."
+      },
+      "c2": {
+        "title": "Equipment",
+        "text": "Tools of power."
+      },
+      "c3": {
+        "title": "Supplements",
+        "text": "Elite fuel."
+      },
+      "c4": {
+        "title": "Knowledge",
+        "text": "Train your mind."
+      }
+    },
+    "menu": {
+      "r1": {
+        "label": "Apparel"
+      },
+      "r2": {
+        "label": "Equipment"
+      },
+      "r3": {
+        "label": "Supplements"
+      },
+      "r4": {
+        "label": "Knowledge"
+      }
+    },
+    "beneficios": {
+      "b1": {
+        "title": "See it before you buy it",
+        "text": "Products with a model rotate in 3D and appear in your own room from your phone. It is native to Shopify: nothing to install."
+      },
+      "b2": {
+        "title": "Codices in PDF",
+        "text": "Eight books with their plates and workbook. Every figure shown cites the public source it comes from."
+      },
+      "b3": {
+        "title": "Payment never passes through us",
+        "text": "Shopify processes the payment from start to finish. Your card details never touch this store at any point."
+      }
+    },
+    "vip": {
+      "t1": {
+        "title": "3D Muscle Map",
+        "text": "Tap a muscle and see its exercises"
+      },
+      "t2": {
+        "title": "Training",
+        "text": "27 exercises with real calories"
+      },
+      "t3": {
+        "title": "AI Nutrition",
+        "text": "Scan your plate with the camera"
+      },
+      "t4": {
+        "title": "Meal Plans",
+        "text": "4 plans · menus all year round"
+      },
+      "t5": {
+        "title": "Meditation",
+        "text": "Guided breathing + 21 days"
+      },
+      "t6": {
+        "title": "Frequencies",
+        "text": "Solfeggio, binaural and dual"
+      },
+      "t7": {
+        "title": "Athlete Level",
+        "text": "From Beginner to Predator"
+      },
+      "t8": {
+        "title": "Progress and Sleep",
+        "text": "Your whole health in charts"
+      },
+      "s1": {
+        "label": "Exercises"
+      },
+      "s2": {
+        "label": "Frequencies"
+      },
+      "s3": {
+        "label": "3D zones"
+      },
+      "s4": {
+        "label": "Foods"
+      },
+      "s5": {
+        "label": "Levels"
+      }
+    },
+    "planes": {
+      "p1": {
+        "name": "Basic",
+        "tagline": "Clean Bulk"
+      },
+      "p2": {
+        "name": "Pro",
+        "tagline": "Cutting + Bulking"
+      },
+      "p3": {
+        "name": "Elite",
+        "tagline": "Full Coaching"
+      }
+    },
+    "faq": {
+      "f1": {
+        "question": "How long does shipping take?",
+        "answer": "<p>Between 3 and 7 business days.</p>"
+      },
+      "f2": {
+        "question": "Can I cancel my subscription?",
+        "answer": "<p>Yes, whenever you want, from your account.</p>"
+      },
+      "f3": {
+        "question": "Do the products have a guarantee?",
+        "answer": "<p>They all include a satisfaction guarantee.</p>"
+      }
+    },
+    "motivacion": {
+      "cab": {
+        "eyebrow": "MOTIVATION",
+        "heading": "Words that move you",
+        "subheading": "Drag to spin the ring",
+        "hint": "Drag or swipe"
+      },
+      "m1": {
+        "title": "No excuses, only results",
+        "caption": "VILLUMINATION"
+      },
+      "m2": {
+        "title": "Your only competition is yesterday's you",
+        "caption": "MINDSET"
+      },
+      "m3": {
+        "title": "Discipline beats talent",
+        "caption": "STRENGTH"
+      },
+      "m4": {
+        "title": "Pain is temporary, glory is forever",
+        "caption": "POWER"
+      },
+      "m5": {
+        "title": "Master your mind, master your body",
+        "caption": "FOCUS"
+      },
+      "m6": {
+        "title": "Every rep brings you closer",
+        "caption": "PROGRESS"
+      }
+    },
+    "video": {
+      "cab": {
+        "eyebrow": "IN MOTION",
+        "title": "LIVE THE EXPERIENCE",
+        "subtitle": "Move over the video: the frame follows you."
+      }
+    },
+    "diario": {
+      "cab": {
+        "eyebrow": "THE JOURNAL",
+        "title": "WHAT LIES BEHIND EVERY PRODUCT",
+        "subtitle": "Articles that cite the public source of every figure. No promises, no smoke.",
+        "texto_boton": "SEE ALL ARTICLES"
+      }
+    },
+    "sec": {
+      "hero-shader": {
+        "eyebrow": "VILLUMINATION",
+        "title": "TRANSFORM YOUR BODY",
+        "subtitle": "Master your mind. Gear, apparel and supplements for people who never settle.",
+        "button_label": "VIEW CATALOGUE"
+      },
+      "best-sellers": {
+        "title": "BEST SELLERS",
+        "subtitle": "What the community keeps coming back for."
+      },
+      "category-icons": {
+        "title": "WHAT ARE YOU LOOKING FOR TODAY?"
+      },
+      "faq": {
+        "title": "FREQUENTLY ASKED QUESTIONS"
+      },
+      "featured-products": {
+        "title": "ELITE PRODUCTS",
+        "subtitle": "Supplements, apparel and gear picked for athletes who never settle.",
+        "view_all_label": "Browse the whole store"
+      },
+      "flowing-menu": {
+        "eyebrow": "CATEGORIES",
+        "heading": "Explore the VILLUMINATION universe"
+      },
+      "multicolumn": {
+        "title": "THE VILLUMINATION DIFFERENCE"
+      },
+      "newsletter": {
+        "title": "JOIN THE MOVEMENT",
+        "text": "Get offers, routines and exclusive content.",
+        "button_label": "Subscribe",
+        "incentive": "−10% ON YOUR FIRST ORDER",
+        "success_text": "Welcome! Use your code:",
+        "privacy_note": "No spam. Unsubscribe whenever you like."
+      },
+      "product-carousel-3d": {
+        "eyebrow": "FEATURED",
+        "heading": "See them in 3D",
+        "subheading": "Drag to spin the ring of products",
+        "hint": "Drag or swipe"
+      },
+      "product-showcase-3d": {
+        "title": "SEE IT IN 3D",
+        "subtitle": "Turn it, feel it and discover each product as if it were in your hand."
+      },
+      "subscription-plans": {
+        "eyebrow": "Monthly Membership",
+        "title": "MEAL PLANS",
+        "subtitle": "Subscribe and get immediate access to personalised nutrition plans."
+      },
+      "video-grid": {
+        "eyebrow": "YouTube",
+        "title": "EXCLUSIVE CONTENT",
+        "subtitle": "Train with me, learn and transform with every video.",
+        "button_label": "See more Shorts"
+      },
+      "vip-banner": {
+        "badge": "VI.P · FREE, NO SIGN-UP",
+        "title": "TAP A MUSCLE AND SEE WHAT TO TRAIN",
+        "subtitle": "Your VI.P digital gym: 3D anatomy, routines with calories, and nutrition.",
+        "text": "Your weight, your routines and your meals stay on your own device.",
+        "button_label": "OPEN VI.P FOR FREE",
+        "note": "No sign-up · Nothing to install · ES / EN / FR"
+      }
     }
   }
 }

@@ -1,8 +1,19 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_title
+    render 'copia', g: 'sec', b: 'faq', a: 'title', v: section.settings.title
+  endcapture
+-%}
 <section class="section-padding">
   <div class="container">
     <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
       {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-green">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      <h2 class="section-title">{{ section.settings.title }}</h2>
+      <h2 class="section-title">{{ cx_title }}</h2>
     </div>
 
     {%- if section.settings.layout == 'carousel' -%}
@@ -12,8 +23,10 @@
           {%- for block in section.blocks -%}
             <div class="carousel-slide" {{ block.shopify_attributes }}>
               <div class="faq-card">
-                <h3 class="faq-card-q">{{ block.settings.question }}</h3>
-                <div class="faq-card-a rte">{{ block.settings.answer }}</div>
+                {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+                <h3 class="faq-card-q">{{ q }}</h3>
+                <div class="faq-card-a rte">{{ a }}</div>
               </div>
             </div>
           {%- endfor -%}
@@ -24,8 +37,10 @@
       <div class="faq-list">
         {%- for block in section.blocks -%}
           <details class="faq-item" {{ block.shopify_attributes }} {% if forloop.first %}open{% endif %}>
-            <summary class="faq-q">{{ block.settings.question }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
-            <div class="faq-a rte">{{ block.settings.answer }}</div>
+            {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+            <summary class="faq-q">{{ q }}<span class="nav-caret">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
+            <div class="faq-a rte">{{ a }}</div>
           </details>
         {%- endfor -%}
       </div>
@@ -46,13 +61,15 @@
   "@type": "FAQPage",
   "mainEntity": [
     {%- for block in section.blocks -%}
-      {%- if block.settings.question != blank and block.settings.answer != blank -%}
+      {%- capture q -%}{%- render 'copia', g: 'faq', b: block.id, a: 'question', v: block.settings.question -%}{%- endcapture -%}
+      {%- capture a -%}{%- render 'copia', g: 'faq', b: block.id, a: 'answer', v: block.settings.answer -%}{%- endcapture -%}
+      {%- if q != blank and a != blank -%}
     {
       "@type": "Question",
-      "name": {{ block.settings.question | strip_html | json }},
+      "name": {{ q | strip_html | json }},
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+        "text": {{ a | strip_html | strip_newlines | json }}
       }
     }{%- unless forloop.last -%},{%- endunless -%}
       {%- endif -%}
@@ -67,22 +84,85 @@
 {
   "name": "Preguntas frecuentes",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
-    { "type": "text", "id": "title", "label": "Título", "default": "PREGUNTAS FRECUENTES" },
-    { "type": "select", "id": "layout", "label": "Presentación", "options": [
-      { "value": "carousel", "label": "Carrusel de tarjetas" }, { "value": "accordion", "label": "Acordeón" } ], "default": "carousel" },
-    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 6 }
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Presentación",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Carrusel de tarjetas"
+        },
+        {
+          "value": "accordion",
+          "label": "Acordeón"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-avance (0 = apagado)",
+      "default": 6
+    }
   ],
   "blocks": [
     {
       "type": "qa",
       "name": "Pregunta",
       "settings": [
-        { "type": "text", "id": "question", "label": "Pregunta", "default": "¿Cuánto tarda el envío?" },
-        { "type": "richtext", "id": "answer", "label": "Respuesta", "default": "<p>Entre 3 y 7 días hábiles.</p>" }
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Pregunta",
+          "default": "¿Cuánto tarda el envío?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Respuesta",
+          "default": "<p>Entre 3 y 7 días hábiles.</p>"
+        }
       ]
     }
   ],
-  "presets": [ { "name": "Preguntas frecuentes", "blocks": [ { "type": "qa" }, { "type": "qa" }, { "type": "qa" }, { "type": "qa" } ] } ]
+  "presets": [
+    {
+      "name": "Preguntas frecuentes",
+      "blocks": [
+        {
+          "type": "qa"
+        },
+        {
+          "type": "qa"
+        },
+        {
+          "type": "qa"
+        },
+        {
+          "type": "qa"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

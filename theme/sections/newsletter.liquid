@@ -1,17 +1,43 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_title
+    render 'copia', g: 'sec', b: 'newsletter', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_text
+    render 'copia', g: 'sec', b: 'newsletter', a: 'text', v: section.settings.text
+  endcapture
+  capture cx_button_label
+    render 'copia', g: 'sec', b: 'newsletter', a: 'button_label', v: section.settings.button_label
+  endcapture
+  capture cx_incentive
+    render 'copia', g: 'sec', b: 'newsletter', a: 'incentive', v: section.settings.incentive
+  endcapture
+  capture cx_success_text
+    render 'copia', g: 'sec', b: 'newsletter', a: 'success_text', v: section.settings.success_text
+  endcapture
+  capture cx_privacy_note
+    render 'copia', g: 'sec', b: 'newsletter', a: 'privacy_note', v: section.settings.privacy_note
+  endcapture
+-%}
 <section class="section-padding">
   <div class="container container--narrow" style="text-align:center;" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
     {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-    <h2 class="section-title">{{ section.settings.title }}</h2>
-    {%- if section.settings.text != blank -%}<p class="section-subtitle">{{ section.settings.text }}</p>{%- endif -%}
-    {%- if section.settings.incentive != blank -%}
-      <div class="nl-incentive">{%- render 'icon', name: 'bolt' -%} {{ section.settings.incentive }}</div>
+    <h2 class="section-title">{{ cx_title }}</h2>
+    {%- if cx_text != blank -%}<p class="section-subtitle">{{ cx_text }}</p>{%- endif -%}
+    {%- if cx_incentive != blank -%}
+      <div class="nl-incentive">{%- render 'icon', name: 'bolt' -%} {{ cx_incentive }}</div>
     {%- endif -%}
     <div class="footer-newsletter" style="margin-top:1.4rem;">
       {%- form 'customer' -%}
         <input type="hidden" name="contact[tags]" value="newsletter">
         {%- if form.posted_successfully? -%}
           <div class="nl-success">
-            <p class="form-success">{%- if section.settings.success_text != blank -%}{{ section.settings.success_text }}{%- else -%}{{ 'general.newsletter.success' | t }}{%- endif -%}</p>
+            <p class="form-success">{%- if cx_success_text != blank -%}{{ cx_success_text }}{%- else -%}{{ 'general.newsletter.success' | t }}{%- endif -%}</p>
             {%- if section.settings.coupon_code != blank -%}
               <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code | escape }}">
                 <span class="nl-code-val">{{ section.settings.coupon_code }}</span>
@@ -31,9 +57,9 @@
           {%- endif -%}
           <div class="footer-newsletter-form">
             <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
-            <button type="submit" class="btn btn-primary btn-lg">{{ section.settings.button_label | default: 'Suscribirme' }}</button>
+            <button type="submit" class="btn btn-primary btn-lg">{{ cx_button_label }}</button>
           </div>
-          {%- if section.settings.privacy_note != blank -%}<p class="nl-privacy">{{ section.settings.privacy_note }}</p>{%- endif -%}
+          {%- if cx_privacy_note != blank -%}<p class="nl-privacy">{{ cx_privacy_note }}</p>{%- endif -%}
         {%- endif -%}
       {%- endform -%}
     </div>
@@ -44,16 +70,62 @@
 {
   "name": "Boletín",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
-    { "type": "text", "id": "title", "label": "Título", "default": "ÚNETE AL MOVIMIENTO" },
-    { "type": "textarea", "id": "text", "label": "Texto", "default": "Recibe ofertas, rutinas y contenido exclusivo." },
-    { "type": "text", "id": "button_label", "label": "Botón", "default": "Suscribirme" },
-    { "type": "header", "content": "Cupón de bienvenida" },
-    { "type": "text", "id": "incentive", "label": "Incentivo (insignia)", "default": "−10% EN TU PRIMERA COMPRA", "info": "Se muestra como pastilla neón sobre el formulario." },
-    { "type": "text", "id": "coupon_code", "label": "Código del cupón", "default": "BIENVENIDO10", "info": "Se muestra (copiable) tras suscribirse. Crea el código real en Shopify → Descuentos." },
-    { "type": "text", "id": "success_text", "label": "Mensaje de éxito", "default": "¡Bienvenido! Usa tu código:" },
-    { "type": "text", "id": "privacy_note", "label": "Nota de privacidad", "default": "Sin spam. Cancela cuando quieras." }
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Botón"
+    },
+    {
+      "type": "header",
+      "content": "Cupón de bienvenida"
+    },
+    {
+      "type": "text",
+      "id": "incentive",
+      "label": "Incentivo (insignia)",
+      "info": "Se muestra como pastilla neón sobre el formulario."
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Código del cupón",
+      "default": "BIENVENIDO10",
+      "info": "Se muestra (copiable) tras suscribirse. Crea el código real en Shopify → Descuentos."
+    },
+    {
+      "type": "text",
+      "id": "success_text",
+      "label": "Mensaje de éxito"
+    },
+    {
+      "type": "text",
+      "id": "privacy_note",
+      "label": "Nota de privacidad"
+    }
   ],
-  "presets": [{ "name": "Boletín" }]
+  "presets": [
+    {
+      "name": "Boletín"
+    }
+  ]
 }
 {% endschema %}

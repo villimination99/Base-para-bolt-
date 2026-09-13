@@ -1,3 +1,23 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'diario', b: 'cab', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_title
+    render 'copia', g: 'diario', b: 'cab', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'diario', b: 'cab', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_texto_boton
+    render 'copia', g: 'diario', b: 'cab', a: 'texto_boton', v: section.settings.texto_boton
+  endcapture
+-%}
 {%- comment -%}
   ÚLTIMAS ENTRADAS DEL DIARIO, EN LA PORTADA.
 
@@ -23,12 +43,12 @@
   <section class="section-padding">
     <div class="container">
       <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- if cx_eyebrow != blank -%}
+          <span class="section-eyebrow">{{ cx_eyebrow }}</span>
         {%- endif -%}
-        <h2 class="section-title">{{ section.settings.title }}</h2>
-        {%- if section.settings.subtitle != blank -%}
-          <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+        <h2 class="section-title">{{ cx_title }}</h2>
+        {%- if cx_subtitle != blank -%}
+          <p class="section-subtitle">{{ cx_subtitle }}</p>
         {%- endif -%}
       </div>
 
@@ -65,10 +85,10 @@
         {%- endfor -%}
       </div>
 
-      {%- if section.settings.texto_boton != blank -%}
+      {%- if cx_texto_boton != blank -%}
         <div class="section-cta">
           <a href="{{ blog_elegido.url }}" class="btn btn-outline btn-lg">
-            {{ section.settings.texto_boton }}{%- render 'icon', name: 'arrow-right' -%}
+            {{ cx_texto_boton }}{%- render 'icon', name: 'arrow-right' -%}
           </a>
         </div>
       {%- endif -%}

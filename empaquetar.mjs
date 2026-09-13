@@ -175,7 +175,14 @@ const BATERIAS = [
      El dia que entro encontro que la flecha de bajar del marco pulsante,
      publicada desde siempre, estaba a 1,40:1 en un movil: cian sobre el neon
      cian del propio marco. */
-  ['verificadores/hero/comprobar.mjs', 'el texto del hero sobre un fondo que se mueve']
+  ['verificadores/hero/comprobar.mjs', 'el texto del hero sobre un fondo que se mueve'],
+  /* Y la portada en los cinco idiomas. La tienda tenia cinco publicados y
+     la portada salia en castellano para los cinco: la copia vivia en
+     templates/index.json, que Shopify traduce con registros POR TEMA, y
+     esos registros mueren en cada subida de tema. Ahora la copia vive en
+     los locales, que viajan dentro del zip -- y esta bateria comprueba que
+     de verdad se pinta, frase por frase, en los cinco. */
+  ['verificadores/idiomas/comprobar.mjs', 'la portada entera en los cinco idiomas']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

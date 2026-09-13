@@ -2,7 +2,7 @@
   <div class="marquee-track">
     {%- for i in (1..2) -%}
       {%- for block in section.blocks -%}
-        <span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+        <span {{ block.shopify_attributes }}>{%- render 'copia', g: 'marquee', b: block.id, a: 'text', v: block.settings.text -%}</span>
       {%- endfor -%}
     {%- endfor -%}
   </div>

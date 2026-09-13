@@ -266,7 +266,13 @@ check('Accesibilidad y escapado', () => {
     for (const m of s.matchAll(/<button\b([^>]*)>([\s\S]{0,220}?)<\/button>/g)) {
       if (/aria-label|aria-labelledby/.test(m[1])) continue;
       const text = m[2].replace(/\{[\{%][\s\S]*?[\}%]\}/g, '').replace(/<[^>]*>/g, '').replace(/&[a-z]+;/gi, 'x').trim();
-      if (!text && !/\{\{[\s\S]*?\}\}/.test(m[2])) bad.push(`${f}:${line(s, m.index)} <button> sin texto ni aria-label`);
+      /* Un {% render %} dentro del boton TAMBIEN pone texto -- salvo el de
+         los iconos, que pinta un <svg> y es justo el caso que esta regla
+         existe para cazar. Sin esta distincion, meter la copia traducida en
+         el boton del boletin salia como "boton sin texto" cuando en la
+         tienda dice "Suscribirme", "Subscribe" o "Abonnieren". */
+      const renderConTexto = /\{%-?\s*render\s+'(?!icon\b)[^']+'/.test(m[2]);
+      if (!text && !renderConTexto && !/\{\{[\s\S]*?\}\}/.test(m[2])) bad.push(`${f}:${line(s, m.index)} <button> sin texto ni aria-label`);
     }
     for (const m of s.matchAll(/(alt|title|aria-label|placeholder|content)\s*=\s*"\{\{\s*([^}]+?)\s*\}\}"/g)) {
       const e = m[2].trim();
@@ -355,10 +361,20 @@ check('JSON-LD', () => {
   const render = (src, cond) => {
     let s = src;
     s = s.replace(/\{%-?\s*comment\s*-?%\}[\s\S]*?\{%-?\s*endcomment\s*-?%\}/g, '');
+    /* UN CAPTURE NO PINTA NADA: lo suyo va a una variable. Antes se quitaban
+       las dos ETIQUETAS y se dejaba el cuerpo dentro del documento, asi que
+       un {% render %} capturado acababa como texto suelto en medio del
+       JSON-LD. Se vio al meter la copia traducida en el FAQ: el bloque
+       dejaba de ser JSON valido aqui y era perfectamente valido en la
+       tienda. Se quita el capture ENTERO, cuerpo incluido. */
+    s = s.replace(/\{%-?\s*capture\s[\s\S]*?\{%-?\s*endcapture\s*-?%\}/g, '');
     s = s.replace(/\{%-?\s*(assign|liquid|capture|endcapture)[\s\S]*?-?%\}/g, '');
     s = s.replace(/\{%-?\s*unless\s+forloop\.last\s*-?%\},?\{%-?\s*endunless\s*-?%\}/g, '');
     s = s.replace(/\{%-?\s*for\s[^%]*-?%\}/g, '').replace(/\{%-?\s*endfor\s*-?%\}/g, '');
-    s = s.replace(/\{%-?\s*render\s+'([^']+)'\s*-?%\}/g, (m, n) => {
+    /* Y el render se reconoce TAMBIEN con argumentos. La regla anterior
+       pedia que no llevara ninguno, asi que cualquier snippet con
+       parametros se quedaba escrito tal cual dentro del JSON. */
+    s = s.replace(/\{%-?\s*render\s+'([^']+)'[^%]*?-?%\}/g, (m, n) => {
       const p = `${T}/snippets/${n}.liquid`;
       return fs.existsSync(p) ? render(read(p), cond) : '';
     });

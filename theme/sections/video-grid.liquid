@@ -1,9 +1,29 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'sec', b: 'video-grid', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_title
+    render 'copia', g: 'sec', b: 'video-grid', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'sec', b: 'video-grid', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_button_label
+    render 'copia', g: 'sec', b: 'video-grid', a: 'button_label', v: section.settings.button_label
+  endcapture
+-%}
 <section class="section-padding" id="videos">
   <div class="container">
     <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow" style="color:{{ section.settings.accent }};">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      <h2 class="section-title">{{ section.settings.title }}</h2>
-      {%- if section.settings.subtitle != blank -%}<p class="section-subtitle">{{ section.settings.subtitle }}</p>{%- endif -%}
+      {%- if cx_eyebrow != blank -%}<span class="section-eyebrow" style="color:{{ section.settings.accent }};">{{ cx_eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ cx_title }}</h2>
+      {%- if cx_subtitle != blank -%}<p class="section-subtitle">{{ cx_subtitle }}</p>{%- endif -%}
     </div>
 
     {%- comment -%}
@@ -90,10 +110,10 @@
       <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
     </div>
 
-    {%- if section.settings.button_label != blank -%}
+    {%- if cx_button_label != blank -%}
       <div class="section-cta">
         <a href="{{ section.settings.button_url }}" target="_blank" rel="noopener" class="btn btn-youtube btn-lg">
-          {%- render 'icon', name: 'youtube' -%}{{ section.settings.button_label }}
+          {%- render 'icon', name: 'youtube' -%}{{ cx_button_label }}
         </a>
       </div>
     {%- endif -%}
@@ -142,22 +162,23 @@
   "name": "Carrusel de videos",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
       "type": "text",
       "id": "eyebrow",
-      "label": "Etiqueta",
-      "default": "YouTube"
+      "label": "Etiqueta"
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Título",
-      "default": "CONTENIDO EXCLUSIVO"
+      "label": "Título"
     },
     {
       "type": "textarea",
       "id": "subtitle",
-      "label": "Subtítulo",
-      "default": "Entrena conmigo, aprende y transfórmate con cada video."
+      "label": "Subtítulo"
     },
     {
       "type": "color",
@@ -194,8 +215,7 @@
     {
       "type": "text",
       "id": "button_label",
-      "label": "Texto del botón",
-      "default": "Ver más Shorts"
+      "label": "Texto del botón"
     },
     {
       "type": "url",
