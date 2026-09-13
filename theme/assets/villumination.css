@@ -728,7 +728,7 @@ body:has(.img-lightbox.is-open) .navbar{opacity:0;pointer-events:none}
    --hs-scroll (0 a 1) lo publica hero-shader.js desde su propio bucle, asi que
    no hace falta un segundo escuchador de scroll. */
 .hero-shader-shift{transform:translateY(calc(var(--hs-scroll,0) * -34px));opacity:calc(1 - var(--hs-scroll,0) * 0.55);will-change:transform,opacity}
-.hero-shader-hint{opacity:calc(0.7 - var(--hs-scroll,0) * 0.7);transition:opacity .3s linear}
+.hero-shader-hint{opacity:calc(1 - var(--hs-scroll,0));transition:opacity .3s linear}
 @media (prefers-reduced-motion:reduce){.hero-shader-shift{transform:none;opacity:1}}
 
 /* ================= Video 3D interactivo =================
@@ -2313,3 +2313,65 @@ input[type=search]::-webkit-search-cancel-button:hover{opacity:1}
    normal; solo evita que uno raro se lleve la maquetacion por delante. */
 .product-title{overflow-wrap:anywhere}
 .product-info{min-width:0}
+
+/* ==========================================================================
+   EL VELO DEL REMOLINO VA AL REVES QUE EL DEL MARCO
+   --------------------------------------------------------------------------
+   .hero-shader-shade es un radial transparente en el centro y negro en los
+   bordes. Para el marco pulsante es lo correcto: la luz esta en el perimetro
+   y el centro ya es oscuro, asi que el titulo se lee solo.
+   Con el remolino pasa justo lo contrario. El liquido tiene su nucleo
+   brillante EN EL CENTRO, que es donde van la etiqueta, el titulo, el
+   subtitulo y el boton. Se vio en la primera captura: texto claro sobre
+   morado claro, y ademas un morado que cambia solo -- lo peor posible,
+   porque el contraste deja de ser un numero fijo y pasa a depender del
+   fotograma.
+   Asi que el remolino trae su velo propio, oscuro en el centro y
+   desvaneciendose hacia fuera. Va en ::after de .hero-shader-bg y NO en el
+   span del ajuste "Superposicion": ese lo controla el comerciante con un
+   deslizador y podria dejarlo a cero. Este no se puede apagar, porque de el
+   depende que el texto se lea.
+   Medido despues sobre el pixel compuesto -- con la tinta escondida para
+   fotografiar solo el fondo, y sobre diez fotogramas, porque un fondo que se
+   mueve no tiene UN contraste sino un peor caso. A 900 y a 390 px de ancho:
+       etiqueta ....... 8,65 y 6,26:1
+       titulo ......... 13,96 y 10,40:1
+       subtitulo ...... 14,77 y 8,87:1
+       flecha ......... 6,63 y 5,83:1
+   El minimo de WCAG AA es 4,5:1 para texto. ============================ */
+.hero-shader--remolino .hero-shader-bg::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(68% 54% at 50% 48%,
+      rgba(3,3,12,.86) 0%, rgba(3,3,12,.72) 38%,
+      rgba(3,3,12,.34) 66%, transparent 84%),
+    linear-gradient(180deg, rgba(3,3,12,.42) 0%, transparent 26%,
+      transparent 74%, rgba(3,3,12,.50) 100%);
+}
+
+/* ==========================================================================
+   LA FLECHA DE BAJAR ERA INVISIBLE, Y LLEVABA TIEMPO SIENDOLO
+   --------------------------------------------------------------------------
+   Esto no salio del remolino: salio de medir el hero que YA estaba publicado.
+   La flecha va en cian (--hs-c2) al pie del hero, centrada... que es
+   exactamente por donde pasa el borde de neon cian del marco pulsante. Cian
+   sobre cian.
+   Medido sobre el pixel compuesto, con el texto oculto para fotografiar solo
+   el fondo, y sobre diez fotogramas porque el fondo se mueve:
+       900 px de ancho ... 3,58:1
+       390 px de ancho ... 1,40:1
+   1,40:1 no es "poco contraste", es no verse. Y es en el movil, que es donde
+   esa flecha hace falta.
+   Dos cambios, los dos medidos despues:
+     1. Un disco oscuro debajo. No tapa el fondo: le da suelo a la flecha
+        alli donde el fondo esta encendido, y se funde donde esta apagado.
+     2. La opacidad en reposo sube de 0,7 a 1. El desvanecido al bajar se
+        conserva -- era para eso -- pero ya no se le resta luz de salida.
+   Vuelto a medir despues: 4,79:1 a 900 px y 4,14:1 a 390. Para un grafico
+   no textual WCAG pide 3:1 (criterio 1.4.11), asi que entra con margen.
+   El remolino no lo necesitaba (6,63 y 5,83), pero lo hereda igual: es la
+   misma flecha y un solo sitio donde arreglarla. ========================= */
+.hero-shader-hint{
+  padding:7px 11px;border-radius:999px;
+  background:radial-gradient(closest-side,rgba(3,3,12,.82),rgba(3,3,12,.52) 62%,transparent);
+}

@@ -32,7 +32,7 @@
 
   var VERT = 'attribute vec2 a_position;void main(){gl_Position=vec4(a_position,0.0,1.0);}';
 
-  var FRAG = [
+  var FRAG_MARCO = [
     '#ifdef GL_FRAGMENT_PRECISION_HIGH',
     'precision highp float;',
     '#else',
@@ -145,6 +145,117 @@
     '}'
   ].join('\n');
 
+  /* ------------------------------------------------------------------
+     REMOLINO DE VIDRIO — escrito para este tema, no tomado de ningun sitio.
+
+     De donde sale: de una captura que me pasaste de una libreria de pago.
+     No se copio nada -- no podria aunque quisiera, porque la politica de
+     red de este contenedor no deja abrir esas paginas, y aunque la dejara,
+     un componente de una libreria con tarifa no se mete en una tienda.
+     Lo que se tomo fue la IDEA: un remolino liquido con brillos de vidrio.
+     La implementacion es propia y usa la paleta del tema.
+
+     Como esta hecho, en tres pasos:
+       1. Un giro que decae con el radio. El centro gira deprisa y el borde
+          casi no se mueve, que es como gira un liquido de verdad. Un giro
+          uniforme se lee como una imagen rotando, no como algo que fluye.
+       2. Deformacion del dominio en dos pasadas: el ruido de la primera
+          desplaza las coordenadas de la segunda. Es lo que convierte unas
+          manchas sueltas en vetas que se enroscan.
+       3. El brillo NO sale de una normal calculada con derivadas: WebGL 1
+          las tiene tras una extension (OES_standard_derivatives) que no
+          esta garantizada, y este tema soporta Safari 15.4. Sale de las
+          crestas del propio campo, que cuesta cero muestras extra.
+
+     Coste: diez muestras de ruido por pixel. El marco pulsante anda por
+     ahi, asi que no cambia el presupuesto de GPU de la seccion -- y las
+     mismas guardas de siempre siguen mandando: movimiento reducido, ahorro
+     de datos, pausa fuera de pantalla, pausa con la pestana oculta y tope
+     de densidad de pixeles.
+     ------------------------------------------------------------------ */
+  var FRAG_REMOLINO = [
+    '#ifdef GL_FRAGMENT_PRECISION_HIGH',
+    'precision highp float;',
+    '#else',
+    'precision mediump float;',
+    '#endif',
+    'uniform vec3 u_colors[4];',
+    'uniform vec4 u_scene;',
+    'uniform vec4 u_shape;',
+    'uniform vec4 u_extra;',
+    '#define u_resolution u_scene.xy',
+    '#define u_time u_scene.z',
+    '#define u_colorCount u_scene.w',
+    '#define u_scale u_shape.x',
+    '#define u_intensity u_shape.y',
+    '#define u_paramA u_shape.z',
+    '#define u_grain u_shape.w',
+    '#define u_scroll u_extra.x',
+    '#define u_contrast u_extra.y',
+    '#define u_seed u_extra.z',
+    'float grainHash(vec2 p){vec3 p3=fract(vec3(p.xyx)*0.1031);p3+=dot(p3,p3.yzx+33.33);return fract((p3.x+p3.y)*p3.z);}',
+    'vec3 palette(float x){',
+    '  float n=max(u_colorCount-1.0,1.0);',
+    '  float f=clamp(x,0.0,1.0)*n;',
+    '  vec3 col=u_colors[0];',
+    '  for(int i=0;i<3;i++){',
+    '    if(float(i)<n) col=mix(col,u_colors[i+1],smoothstep(0.0,1.0,clamp(f-float(i),0.0,1.0)));',
+    '  }',
+    '  return col;',
+    '}',
+    // Ruido de valor: hash barato y suavizado cubico. Sin texturas, que en
+    // un fondo a pantalla completa son ancho de banda que no hace falta.
+    'float hash21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
+    'float vnoise(vec2 p){',
+    '  vec2 i=floor(p),f=fract(p);',
+    '  vec2 u=f*f*(3.0-2.0*f);',
+    '  float a=hash21(i),b=hash21(i+vec2(1.0,0.0)),c=hash21(i+vec2(0.0,1.0)),d=hash21(i+vec2(1.0,1.0));',
+    '  return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);',
+    '}',
+    // Tres octavas para las pasadas de deformacion, cuatro para el campo
+    // final: es donde se ve el detalle y donde merece la pena gastarlo.
+    'float fbm3(vec2 p){float s=0.0,a=0.5;for(int i=0;i<3;i++){s+=a*vnoise(p);p*=2.03;a*=0.5;}return s;}',
+    'float fbm4(vec2 p){float s=0.0,a=0.5;for(int i=0;i<4;i++){s+=a*vnoise(p);p*=2.03;a*=0.5;}return s;}',
+    'void main(){',
+    '  float lado=min(u_resolution.x,u_resolution.y);',
+    '  vec2 p=(gl_FragCoord.xy-0.5*u_resolution.xy)/lado;',
+    '  float zoom=1.0/max(u_scale,0.25);',
+    '  vec2 q=p*zoom*(1.0-u_scroll*0.16);',
+    '  float r=length(q);',
+    // 1. El giro decae con el radio. El +0.34 evita la division por cero en
+    //    el centro exacto, que pintaba un punto blanco fijo.
+    '  float vel=0.34+u_paramA*0.55;',
+    '  float giro=u_time*vel*(0.30+u_scroll*0.45)+1.55/(r+0.34);',
+    '  float cg=cos(giro),sg=sin(giro);',
+    '  vec2 w=vec2(q.x*cg-q.y*sg,q.x*sg+q.y*cg);',
+    // 2. Deformacion del dominio en dos pasadas.
+    '  float n1=fbm3(w*2.10+vec2(u_time*0.05,-u_time*0.04));',
+    '  float n2=fbm3(w*2.10+vec2(n1*1.80,-n1*1.35)+u_time*0.07);',
+    '  float campo=fbm4(w*1.55+vec2(n2*2.30,n1*2.30));',
+    // Las vetas: el campo doblado sobre si mismo da las bandas del liquido.
+    '  float vetas=abs(fract(campo*2.60+n2*0.65)-0.5)*2.0;',
+    '  float mezcla=clamp(campo*0.72+n2*0.38,0.0,1.0);',
+    // 3. Brillo de vidrio a partir de las crestas del campo, sin derivadas.
+    '  float cresta=pow(1.0-vetas,10.0);',
+    '  float esp=pow(smoothstep(0.52,0.97,campo+n1*0.22),5.0);',
+    // El corazon del remolino respira despacio: da un punto donde mirar.
+    '  float nucleo=exp(-r*r*(2.9-u_scroll*0.7))*(0.55+0.45*sin(u_time*0.7));',
+    '  vec3 col=palette(mezcla);',
+    '  col=mix(col,palette(clamp(mezcla+0.30,0.0,1.0)),cresta*(0.35+u_intensity*0.55));',
+    '  col+=vec3(0.85,0.92,1.0)*esp*(0.10+u_intensity*0.42);',
+    '  col=mix(col,palette(0.92),clamp(nucleo*(0.22+u_intensity*0.38),0.0,1.0));',
+    // Vinetado hacia el color de fondo: el remolino vive en el centro y los
+    // bordes se funden con la pagina en vez de cortarse en seco.
+    '  col=mix(col,u_colors[0],smoothstep(0.55,1.15,r));',
+    '  col=(col-0.5)*u_contrast+0.5;',
+    // Mismo criterio que el marco: el grano se aparta del centro, que es
+    // donde va el titulo.
+    '  float delCentro=clamp(r/1.05,0.0,1.0);',
+    '  if(u_grain>0.0001) col+=(grainHash(gl_FragCoord.xy+vec2(u_seed*17.0,u_seed*31.0))-0.5)*u_grain*(0.18+0.82*delCentro);',
+    '  gl_FragColor=vec4(clamp(col,0.0,1.0),1.0);',
+    '}'
+  ].join('\n');
+
   function hexToRgb(hex, fallback) {
     var h = String(hex || '').trim().replace('#', '');
     if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
@@ -183,6 +294,11 @@
     var grain = parseFloat(d.grain); if (isNaN(grain)) grain = 0.042;
     var timeScale = parseFloat(d.speed); if (isNaN(timeScale)) timeScale = 0.575;
     var scrollOn = d.scroll !== 'false';
+    /* Dos fondos, dos shaders, y se compila SOLO el que toca. Meter los dos
+       en un programa con un uniforme de modo habria dejado la mitad del
+       codigo muerto ocupando registros en cada pixel. Por defecto sigue el
+       marco pulsante: quien no toque el ajuste no nota ningun cambio. */
+    var FRAG = d.modo === 'remolino' ? FRAG_REMOLINO : FRAG_MARCO;
 
     var gl = null, prog = null, buf = null;
     var uColors, uScene, uShape, uExtra;

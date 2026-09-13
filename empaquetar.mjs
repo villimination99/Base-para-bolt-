@@ -165,7 +165,17 @@ const BATERIAS = [
      el sistema borra ese degradado y el titulo se queda transparente sobre
      nada: invisible. En papel, lo mismo en blanco sobre blanco. Aqui se
      emula cada modo y se lee el color con el que el texto sale de verdad. */
-  ['verificadores/superficies/comprobar.mjs', 'alto contraste, papel y superficies del navegador']
+  ['verificadores/superficies/comprobar.mjs', 'alto contraste, papel y superficies del navegador'],
+  /* Y el hero, que es el unico sitio donde el texto va sobre un fondo que se
+     MUEVE. Ninguna otra bateria puede: axe lee colores computados y sobre un
+     lienzo WebGL no hay ninguno que leer, asi que daba el hero por bueno sin
+     mirarlo. Un fondo animado no tiene un contraste, tiene un peor caso a lo
+     largo del tiempo; esta fotografia diez fotogramas en dos anchos y se
+     queda con el pixel mas claro de cada caja de texto.
+     El dia que entro encontro que la flecha de bajar del marco pulsante,
+     publicada desde siempre, estaba a 1,40:1 en un movil: cian sobre el neon
+     cian del propio marco. */
+  ['verificadores/hero/comprobar.mjs', 'el texto del hero sobre un fondo que se mueve']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

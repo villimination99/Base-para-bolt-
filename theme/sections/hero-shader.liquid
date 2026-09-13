@@ -17,7 +17,7 @@
   assign c3 = section.settings.color_3 | default: settings.color_pink
   assign h_min = section.settings.height | default: 82
 -%}
-<section class="hero hero-shader" style="--hs-min:{{ h_min }}svh;--hs-bg:{{ c_bg }};--hs-c2:{{ c2 }};">
+<section class="hero hero-shader{% if section.settings.fondo == 'remolino' %} hero-shader--remolino{% endif %}" style="--hs-min:{{ h_min }}svh;--hs-bg:{{ c_bg }};--hs-c2:{{ c2 }};">
   <div class="hero-shader-bg" aria-hidden="true">
     <canvas data-hero-shader
             class="hero-shader-canvas"
@@ -30,7 +30,8 @@
             data-thickness="{{ section.settings.thickness | divided_by: 100.0 }}"
             data-grain="{{ section.settings.grain | divided_by: 1000.0 }}"
             data-speed="{{ section.settings.speed | divided_by: 100.0 }}"
-            data-scroll="{% if section.settings.react_scroll %}true{% else %}false{% endif %}"></canvas>
+            data-scroll="{% if section.settings.react_scroll %}true{% else %}false{% endif %}"
+            data-modo="{{ section.settings.fondo | default: 'marco' }}"></canvas>
     {%- if section.settings.overlay > 0 -%}
       <span class="hero-shader-shade" style="opacity:{{ section.settings.overlay | divided_by: 100.0 }};"></span>
     {%- endif -%}
@@ -134,6 +135,17 @@
       "type": "url",
       "id": "button2_url",
       "label": "Enlace del boton secundario"
+    },
+    {
+      "type": "select",
+      "id": "fondo",
+      "label": "Fondo animado",
+      "options": [
+        { "value": "marco", "label": "Marco pulsante" },
+        { "value": "remolino", "label": "Remolino de vidrio" }
+      ],
+      "default": "marco",
+      "info": "El marco dibuja un borde de neon con rejilla en fuga. El remolino es un liquido que gira sobre si mismo, mas rapido en el centro que en los bordes. Los dos usan los mismos colores de abajo y las mismas guardas: con movimiento reducido o ahorro de datos se muestra un degradado fijo."
     },
     {
       "type": "header",
