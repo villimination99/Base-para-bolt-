@@ -408,6 +408,60 @@ check('Rendimiento de animaciones', () => {
   return bad;
 });
 
+/* UN DEFAULT VACIO HACE QUE SHOPIFY SE COMA EL ARCHIVO ENTERO, EN SILENCIO.
+   ---------------------------------------------------------------------
+   Esto costo tres subidas y una portada caida, asi que queda escrito.
+
+   Durante tres versiones seguidas Shopify importo 111 de los 115 archivos
+   del zip. Siempre los mismos cuatro fuera: sections/secuencia.liquid,
+   sections/testimonials.liquid, templates/index.json y
+   templates/robots.txt.liquid. Ningun error, ningun aviso: el tema se
+   creaba "bien" y la tienda daba 404, porque sin index.json no hay
+   plantilla de portada.
+
+   El zip estaba sano (unzip -t limpio, los cuatro dentro y con su tamano),
+   el linter oficial de Shopify no veia nada, y byte a byte esos cuatro no
+   se distinguian de los otros 111. Se acoto subiendolos de uno en uno por
+   la API a un tema sin publicar y mirando cual quedaba guardado -- porque
+   la API se comporta igual: acepta la peticion, no devuelve ni un
+   userError, y no escribe nada.
+
+   Biseccion: cuerpo contra esquema (el cuerpo entra, el esquema no),
+   ajustes contra bloques, y por fin ajuste a ajuste. El culpable:
+
+       { "type": "text", "id": "x", "label": "X", "default": "" }
+
+   Un default de cadena VACIA. Con default "algo" entra; sin la clave
+   default entra; con "" se cae el archivo entero. Y con el archivo se
+   cayo index.json, que nombra a la seccion secuencia.
+
+   Habia cuatro en todo el tema, tres en testimonials y uno en secuencia,
+   y eran justo los dos archivos que Shopify rechazaba. Quitarlos no
+   cambia nada: un default vacio es lo mismo que no poner default.
+
+   (max_blocks se descarto con una prueba propia: se acepta sin problema
+   mientras el esquema declare blocks. La primera medida decia lo
+   contrario porque la variante minima llevaba max_blocks SIN blocks, que
+   es invalido por su cuenta.) */
+check('Defaults vacios en los esquemas (Shopify se come el archivo)', () => {
+  const bad = [];
+  for (const carpeta of ['sections', 'snippets', 'templates', 'config']) {
+    const dir = `${T}/${carpeta}`;
+    if (!fs.existsSync(dir)) continue;
+    for (const f of fs.readdirSync(dir)) {
+      const ruta = `${dir}/${f}`;
+      if (!fs.statSync(ruta).isFile()) continue;
+      if (!/\.(liquid|json)$/.test(f)) continue;
+      const txt = fs.readFileSync(ruta, 'utf8');
+      const re = /"default"\s*:\s*""/g;
+      let m, n = 0;
+      while ((m = re.exec(txt))) n++;
+      if (n) bad.push(`${carpeta}/${f}: ${n} ajuste(s) con "default": "" -- Shopify descartara el archivo entero sin decir nada`);
+    }
+  }
+  return bad;
+});
+
 /* 20 — Reglas de Shopify para settings_schema.json.
    Si se incumplen, "Parametros del tema" sale EN BLANCO sin ningun mensaje. */
 check('Esquema de ajustes (reglas de Shopify)', () => {
