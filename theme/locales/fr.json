@@ -1,0 +1,529 @@
+{
+  "general": {
+    "404": {
+      "title": "Page introuvable",
+      "subtext": "La page que vous cherchez n'existe pas ou a été déplacée."
+    },
+    "home": "Accueil",
+    "shop": "Boutique",
+    "enter": "Entrer",
+    "meta": {
+      "tags": "Étiqueté « {{ tags }} »",
+      "page": "Page {{ page }}"
+    },
+    "pagination": {
+      "label": "Pagination"
+    },
+    "search": {
+      "title": "Rechercher",
+      "placeholder": "Rechercher des produits…",
+      "results_with_count": "{{ count }} résultats pour « {{ terms }} »",
+      "no_results": "Aucun résultat pour « {{ terms }} ».",
+      "no_results_short": "Aucun résultat pour",
+      "view_all": "Voir tous les résultats",
+      "error": "La recherche est indisponible pour le moment. Essayez la page de recherche complète.",
+      "voice": "Recherche vocale",
+      "listening": "Jécoute…"
+    },
+    "cart": {
+      "title": "Panier"
+    },
+    "newsletter": {
+      "email": "Adresse courriel",
+      "submit": "S'abonner",
+      "success": "Merci de votre inscription !"
+    },
+    "footer": {
+      "rights": "Tous droits réservés."
+    },
+    "password_page": {
+      "password_label": "Mot de passe",
+      "admin_link_html": "Vous êtes le propriétaire de la boutique ?"
+    },
+    "view_all": "Tout voir",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "language": "Langue",
+    "explore": "Explorer",
+    "countdown": {
+      "days": "jours",
+      "hours": "heures",
+      "minutes": "min",
+      "seconds": "s"
+    },
+    "copy_hint": "Touchez pour copier",
+    "copied": "Copié !",
+    "video_placeholder": "Choisis une vidéo dans l’éditeur du thème.",
+    "play_video": "Lire la vidéo",
+    "sequence_hint": "Déplace-toi sur l’animation",
+    "collections": "Voir la collection",
+    "skip": "PASSER",
+    "accessibility": {
+      "close": "Fermer",
+      "zoom_image": "Agrandir l’image"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Aller au contenu",
+    "main_nav": "Navigation principale",
+    "menu": "Menu",
+    "close": "Fermer",
+    "back_to_top": "Retour en haut",
+    "scrollable_row": "Rangée défilante — utilise les flèches du clavier"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter au panier",
+      "sold_out": "Épuisé",
+      "new": "Nouveau",
+      "few_left": "Derniers exemplaires",
+      "unavailable": "Indisponible",
+      "quantity": "Quantité",
+      "increase": "Augmenter la quantité",
+      "decrease": "Diminuer la quantité",
+      "view_in_space": "Voir chez vous (3D / RA)",
+      "media": "Média",
+      "share": "Partager",
+      "example": "Produit d'exemple",
+      "reviews": "avis",
+      "drag_to_rotate": "Faites glisser pour tourner"
+    },
+    "recommendations": {
+      "related": "Vous aimerez aussi",
+      "complementary": "À associer avec"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Collections",
+      "items_count": "{{ count }} produits",
+      "no_matches": "Aucun produit trouvé",
+      "no_matches_filter": "Aucun produit ne correspond aux filtres"
+    },
+    "sorting": {
+      "title": "Trier par"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Votre panier",
+      "subtotal": "Sous-total",
+      "taxes_and_shipping": "Taxes et frais de livraison calculés au paiement.",
+      "checkout": "Passer à la caisse",
+      "update": "Mettre à jour",
+      "view_cart": "Voir le panier complet",
+      "remove": "Retirer",
+      "empty": "Votre panier est vide",
+      "note": "Note de commande"
+    },
+    "free_shipping": {
+      "remaining_html": "Plus que <b>{{ amount }}</b> pour la <span class=\"cart-ship-hl\">LIVRAISON GRATUITE</span>",
+      "unlocked_html": "<b>Livraison GRATUITE débloquée !</b>"
+    }
+  },
+  "blogs": {
+    "article": {
+      "by": "par",
+      "comments": "{{ count }} commentaires",
+      "comment_title": "Laisser un commentaire",
+      "comment_name": "Nom",
+      "comment_email": "Courriel",
+      "comment_message": "Commentaire",
+      "comment_submit": "Publier le commentaire",
+      "comment_success": "Votre commentaire a été publié.",
+      "comment_moderated": "Merci ! Votre commentaire paraîtra dès qu'il sera approuvé.",
+      "no_comments": "Aucun commentaire pour l'instant.",
+      "reading_time": "{{ minutes }} min de lecture",
+      "tags": "Étiquettes",
+      "share": "Partager",
+      "share_x": "Partager sur X",
+      "share_fb": "Partager sur Facebook",
+      "share_wa": "Partager sur WhatsApp",
+      "copy_link": "Copier le lien",
+      "link_copied": "Lien copié",
+      "related": "Poursuivre la lecture",
+      "back_to_blog": "Tous les articles"
+    },
+    "general": {
+      "no_articles": "Aucun article publié pour l'instant.",
+      "featured": "À la une",
+      "filter_tag": "Filtré par",
+      "clear_filter": "Tout voir"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mon compte",
+      "details": "Détails du compte",
+      "view_addresses": "Voir les adresses",
+      "return": "Retour au compte",
+      "log_out": "Se déconnecter",
+      "no_address": "Vous n'avez encore enregistré aucune adresse."
+    },
+    "login": {
+      "title": "Se connecter",
+      "email": "Courriel",
+      "password": "Mot de passe",
+      "sign_in": "Entrer",
+      "forgot_password": "Mot de passe oublié ?",
+      "no_account": "Nouveau client ?"
+    },
+    "orders": {
+      "title": "Historique des commandes",
+      "order_number": "Commande",
+      "date": "Date",
+      "total": "Total",
+      "fulfillment_status": "Statut",
+      "none": "Vous n'avez encore passé aucune commande."
+    },
+    "order": {
+      "title": "Commande {{ name }}",
+      "date": "Passée le {{ date }}",
+      "product": "Produit",
+      "quantity": "Qté",
+      "total": "Total",
+      "subtotal": "Sous-total",
+      "shipping": "Livraison",
+      "tax": "Taxes",
+      "status": "Statut",
+      "payment": "Paiement",
+      "shipping_address": "Adresse de livraison"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "Courriel",
+      "password": "Mot de passe",
+      "submit": "Créer",
+      "has_account": "Vous avez déjà un compte ?"
+    },
+    "recover_password": {
+      "email": "Courriel",
+      "submit": "Réinitialiser le mot de passe",
+      "success": "Nous vous avons envoyé un courriel avec un lien pour réinitialiser votre mot de passe.",
+      "title": "Réinitialiser votre mot de passe"
+    },
+    "reset_password": {
+      "title": "Réinitialiser le mot de passe",
+      "password": "Nouveau mot de passe",
+      "password_confirm": "Confirmer le mot de passe",
+      "submit": "Réinitialiser"
+    },
+    "activate_account": {
+      "title": "Activer le compte",
+      "password": "Mot de passe",
+      "password_confirm": "Confirmer le mot de passe",
+      "submit": "Activer",
+      "decline": "Refuser"
+    },
+    "addresses": {
+      "title": "Adresses",
+      "add_new": "Ajouter une adresse",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "address1": "Adresse",
+      "city": "Ville",
+      "country": "Pays",
+      "province": "Province / Région",
+      "zip": "Code postal",
+      "phone": "Téléphone",
+      "add": "Ajouter l'adresse",
+      "edit": "Modifier"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Carte-cadeau",
+      "subtext": "Voici votre carte-cadeau !",
+      "shop_link": "Aller à la boutique",
+      "expired": "Cette carte-cadeau est expirée.",
+      "expires_on": "Expire le {{ date }}",
+      "disabled": "Cette carte-cadeau n'est plus active.",
+      "remaining": "Il reste {{ balance }} sur {{ initial }}",
+      "code_label": "Code de la carte"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Nom",
+      "email": "Courriel",
+      "message": "Message",
+      "send": "Envoyer",
+      "post_success": "Merci ! Nous vous répondrons bientôt."
+    }
+  },
+  "inicio": {
+    "marquee": {
+      "w1": {
+        "text": "FORCE"
+      },
+      "w2": {
+        "text": "DISCIPLINE"
+      },
+      "w3": {
+        "text": "PUISSANCE"
+      },
+      "w4": {
+        "text": "SANS LIMITES"
+      }
+    },
+    "secuencia": {
+      "b2": {
+        "linea1": "NE TE",
+        "linea2": "CONTENTE PAS"
+      },
+      "b3": {
+        "titulo1": "FORCE",
+        "sub1": "ÉQUIPEMENT ET ACCESSOIRES",
+        "titulo2": "NUTRITION",
+        "sub2": "COMPLÉMENTS",
+        "titulo3": "CONSTANCE",
+        "sub3": "PLANS ET CODEX"
+      },
+      "b4": {
+        "pie": "PRODUITS · UN SEUL OBJECTIF"
+      },
+      "b5": {
+        "boton": "VOIR LE CATALOGUE"
+      }
+    },
+    "categorias": {
+      "c1": {
+        "title": "Vêtements",
+        "text": "Un style qui s'entraîne avec toi."
+      },
+      "c2": {
+        "title": "Équipement",
+        "text": "Des outils de puissance."
+      },
+      "c3": {
+        "title": "Compléments",
+        "text": "Carburant d'élite."
+      },
+      "c4": {
+        "title": "Connaissance",
+        "text": "Entraîne ton esprit."
+      }
+    },
+    "menu": {
+      "r1": {
+        "label": "Vêtements"
+      },
+      "r2": {
+        "label": "Équipement"
+      },
+      "r3": {
+        "label": "Compléments"
+      },
+      "r4": {
+        "label": "Connaissance"
+      }
+    },
+    "beneficios": {
+      "b1": {
+        "title": "Vois-le avant de l'acheter",
+        "text": "Les produits avec modèle pivotent en 3D et apparaissent dans ta propre pièce depuis ton téléphone. C'est natif à Shopify : rien à installer."
+      },
+      "b2": {
+        "title": "Codex en PDF",
+        "text": "Huit livres avec leurs planches et leur cahier. Chaque chiffre cité indique la source publique dont il provient."
+      },
+      "b3": {
+        "title": "Le paiement ne passe pas par nous",
+        "text": "Shopify traite le paiement du début à la fin. Les données de ta carte ne touchent jamais cette boutique."
+      }
+    },
+    "vip": {
+      "t1": {
+        "title": "Carte musculaire 3D",
+        "text": "Touche un muscle et vois ses exercices"
+      },
+      "t2": {
+        "title": "Entraînement",
+        "text": "27 exercices avec calories réelles"
+      },
+      "t3": {
+        "title": "Nutrition IA",
+        "text": "Scanne ton assiette avec la caméra"
+      },
+      "t4": {
+        "title": "Plans alimentaires",
+        "text": "4 plans · menus toute l'année"
+      },
+      "t5": {
+        "title": "Méditation",
+        "text": "Respiration guidée + 21 jours"
+      },
+      "t6": {
+        "title": "Fréquences",
+        "text": "Solfège, binaurales et duales"
+      },
+      "t7": {
+        "title": "Niveau d'athlète",
+        "text": "De Débutant à Predator"
+      },
+      "t8": {
+        "title": "Progrès et sommeil",
+        "text": "Toute ta santé en graphiques"
+      },
+      "s1": {
+        "label": "Exercices"
+      },
+      "s2": {
+        "label": "Fréquences"
+      },
+      "s3": {
+        "label": "Zones 3D"
+      },
+      "s4": {
+        "label": "Aliments"
+      },
+      "s5": {
+        "label": "Niveaux"
+      }
+    },
+    "planes": {
+      "p1": {
+        "name": "Essentiel",
+        "tagline": "Prise de masse propre"
+      },
+      "p2": {
+        "name": "Pro",
+        "tagline": "Sèche + Prise de masse"
+      },
+      "p3": {
+        "name": "Élite",
+        "tagline": "Coaching complet"
+      }
+    },
+    "faq": {
+      "f1": {
+        "question": "Combien de temps prend la livraison ?",
+        "answer": "<p>Entre 3 et 7 jours ouvrables.</p>"
+      },
+      "f2": {
+        "question": "Puis-je annuler mon abonnement ?",
+        "answer": "<p>Oui, quand tu veux, depuis ton compte.</p>"
+      },
+      "f3": {
+        "question": "Les produits sont-ils garantis ?",
+        "answer": "<p>Tous incluent une garantie satisfaction.</p>"
+      }
+    },
+    "motivacion": {
+      "cab": {
+        "eyebrow": "MOTIVATION",
+        "heading": "Des phrases qui te font avancer",
+        "subheading": "Fais glisser pour tourner l'anneau",
+        "hint": "Glisse ou balaie"
+      },
+      "m1": {
+        "title": "Pas d'excuses, que des résultats",
+        "caption": "VILLUMINATION"
+      },
+      "m2": {
+        "title": "Ton seul adversaire, c'est toi d'hier",
+        "caption": "ÉTAT D'ESPRIT"
+      },
+      "m3": {
+        "title": "La discipline bat le talent",
+        "caption": "FORCE"
+      },
+      "m4": {
+        "title": "La douleur est passagère, la gloire éternelle",
+        "caption": "PUISSANCE"
+      },
+      "m5": {
+        "title": "Maîtrise ton esprit, maîtrise ton corps",
+        "caption": "CONCENTRATION"
+      },
+      "m6": {
+        "title": "Chaque répétition te rapproche",
+        "caption": "PROGRÈS"
+      }
+    },
+    "video": {
+      "cab": {
+        "eyebrow": "EN MOUVEMENT",
+        "title": "VIS L'EXPÉRIENCE",
+        "subtitle": "Déplace-toi sur la vidéo : le cadre te suit."
+      }
+    },
+    "diario": {
+      "cab": {
+        "eyebrow": "LE JOURNAL",
+        "title": "CE QUI SE CACHE DERRIÈRE CHAQUE PRODUIT",
+        "subtitle": "Des articles qui citent la source publique de chaque chiffre. Sans promesses ni fumée.",
+        "texto_boton": "VOIR TOUS LES ARTICLES"
+      }
+    },
+    "sec": {
+      "hero-shader": {
+        "eyebrow": "VILLUMINATION",
+        "title": "TRANSFORME TON CORPS",
+        "subtitle": "Maîtrise ton esprit. Équipement, vêtements et compléments pour ceux qui ne se contentent de rien.",
+        "button_label": "VOIR LE CATALOGUE"
+      },
+      "best-sellers": {
+        "title": "LES PLUS VENDUS",
+        "subtitle": "Ce que la communauté n'arrête pas d'acheter."
+      },
+      "category-icons": {
+        "title": "QUE CHERCHES-TU AUJOURD'HUI ?"
+      },
+      "faq": {
+        "title": "QUESTIONS FRÉQUENTES"
+      },
+      "featured-products": {
+        "title": "PRODUITS ÉLITE",
+        "subtitle": "Compléments, vêtements et équipement choisis pour les athlètes qui ne se contentent de rien.",
+        "view_all_label": "Voir toute la boutique"
+      },
+      "flowing-menu": {
+        "eyebrow": "CATÉGORIES",
+        "heading": "Explore l'univers VILLUMINATION"
+      },
+      "multicolumn": {
+        "title": "LA DIFFÉRENCE VILLUMINATION"
+      },
+      "newsletter": {
+        "title": "REJOINS LE MOUVEMENT",
+        "text": "Reçois des offres, des routines et du contenu exclusif.",
+        "button_label": "M'abonner",
+        "incentive": "−10 % SUR TA PREMIÈRE COMMANDE",
+        "success_text": "Bienvenue ! Utilise ton code :",
+        "privacy_note": "Pas de spam. Désabonne-toi quand tu veux."
+      },
+      "product-carousel-3d": {
+        "eyebrow": "EN VEDETTE",
+        "heading": "Vois-les en 3D",
+        "subheading": "Fais glisser pour tourner l'anneau de produits",
+        "hint": "Glisse ou balaie"
+      },
+      "product-showcase-3d": {
+        "title": "VOIS-LE EN 3D",
+        "subtitle": "Tourne-le, ressens-le et découvre chaque produit comme s'il était dans ta main."
+      },
+      "subscription-plans": {
+        "eyebrow": "Abonnement mensuel",
+        "title": "PLANS ALIMENTAIRES",
+        "subtitle": "Abonne-toi et accède immédiatement à des plans nutritionnels personnalisés."
+      },
+      "video-grid": {
+        "eyebrow": "YouTube",
+        "title": "CONTENU EXCLUSIF",
+        "subtitle": "Entraîne-toi avec moi, apprends et transforme-toi à chaque vidéo.",
+        "button_label": "Voir plus de Shorts"
+      },
+      "vip-banner": {
+        "badge": "VI.P · GRATUIT, SANS INSCRIPTION",
+        "title": "TOUCHE UN MUSCLE ET VOIS QUOI TRAVAILLER",
+        "subtitle": "Ta salle numérique VI.P : anatomie 3D, routines avec calories et nutrition.",
+        "text": "Ton poids, tes routines et tes repas restent sur ton propre appareil.",
+        "button_label": "OUVRIR VI.P GRATUITEMENT",
+        "note": "Sans inscription · Rien à installer · ES / EN / FR"
+      }
+    }
+  }
+}

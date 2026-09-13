@@ -1,0 +1,115 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_eyebrow
+    render 'copia', g: 'diario', b: 'cab', a: 'eyebrow', v: section.settings.eyebrow
+  endcapture
+  capture cx_title
+    render 'copia', g: 'diario', b: 'cab', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'diario', b: 'cab', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_texto_boton
+    render 'copia', g: 'diario', b: 'cab', a: 'texto_boton', v: section.settings.texto_boton
+  endcapture
+-%}
+{%- comment -%}
+  ÚLTIMAS ENTRADAS DEL DIARIO, EN LA PORTADA.
+
+  Ocupa el sitio que dejaron tres testimonios que no existían. La diferencia no
+  es solo de honestidad: doce artículos escritos con fuente pública no tenían
+  NINGÚN camino desde la portada, así que ni el visitante ni Google llegaban a
+  ellos salvo por el menú. Un enlace interno desde la página con más autoridad
+  del sitio es de lo que más mueve una entrada en el buscador, y aquí son tres.
+
+  No trae marcado nuevo: usa la tarjeta de artículo que ya existe, con su
+  portada generada cuando la entrada no tiene foto. Menos CSS que mantener y
+  una sola cosa que arreglar el día que haya que arreglarla.
+{%- endcomment -%}
+{%- assign blog_elegido = blogs[section.settings.blog] -%}
+{%- comment -%}
+  DOS `if` ANIDADOS Y NO UNA CONDICIÓN CON `and`. En Liquid, `a and b` se
+  evalúa de DERECHA A IZQUIERDA: escrito en una sola línea, se preguntaría
+  primero por `articles_count` de un blog que todavía puede no existir. Aquí
+  eso es un blog sin elegir en el editor.
+{%- endcomment -%}
+{%- if blog_elegido != blank -%}
+{%- if blog_elegido.articles_count > 0 -%}
+  <section class="section-padding">
+    <div class="container">
+      <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- if cx_eyebrow != blank -%}
+          <span class="section-eyebrow">{{ cx_eyebrow }}</span>
+        {%- endif -%}
+        <h2 class="section-title">{{ cx_title }}</h2>
+        {%- if cx_subtitle != blank -%}
+          <p class="section-subtitle">{{ cx_subtitle }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="article-grid">
+        {%- for article in blog_elegido.articles limit: section.settings.cantidad -%}
+          <a href="{{ article.url }}" class="article-card"
+             {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+            {%- if article.image -%}
+              <div class="article-card-media">
+                <img src="{{ article.image | image_url: width: 700, height: 450, crop: 'center' }}"
+                     srcset="{{ article.image | image_url: width: 300, height: 193, crop: 'center' }} 300w,
+                             {{ article.image | image_url: width: 450, height: 289, crop: 'center' }} 450w,
+                             {{ article.image | image_url: width: 700, height: 450, crop: 'center' }} 700w"
+                     sizes="(min-width: 861px) 33vw, 100vw"
+                     alt="{{ article.title | escape }}" width="700" height="450" loading="lazy">
+              </div>
+            {%- else -%}
+              {%- comment -%} La misma portada generada del índice del blog. {%- endcomment -%}
+              <div class="article-card-media article-card-media--generada ntile-{{ forloop.index0 | modulo: 4 }}" aria-hidden="true">
+                <span class="article-card-glifo">{{ article.title | strip_html | slice: 0 | upcase }}</span>
+              </div>
+            {%- endif -%}
+            <div class="article-card-body">
+              <span class="article-card-date">
+                {{ article.published_at | date: format: 'abbreviated_date' }}
+                {%- assign palabras = article.content | strip_html | split: ' ' | size -%}
+                {%- assign minutos = palabras | divided_by: 200 | plus: 1 -%}
+                &middot; {{ 'blogs.article.reading_time' | t: minutes: minutos }}
+              </span>
+              <h3 class="article-card-title">{{ article.title }}</h3>
+              <p class="article-card-excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 20 }}</p>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      {%- if cx_texto_boton != blank -%}
+        <div class="section-cta">
+          <a href="{{ blog_elegido.url }}" class="btn btn-outline btn-lg">
+            {{ cx_texto_boton }}{%- render 'icon', name: 'arrow-right' -%}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Diario en la portada",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta", "default": "EL DIARIO" },
+    { "type": "text", "id": "title", "label": "Título", "default": "LO QUE HAY DETRÁS DE CADA PRODUCTO" },
+    { "type": "text", "id": "subtitle", "label": "Subtítulo" },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "cantidad", "min": 2, "max": 6, "step": 1, "label": "Cuántas entradas", "default": 3 },
+    { "type": "text", "id": "texto_boton", "label": "Texto del botón", "default": "VER TODOS LOS ARTÍCULOS",
+      "info": "Déjalo vacío para no mostrar el botón." }
+  ],
+  "presets": [ { "name": "Diario en la portada" } ]
+}
+{% endschema %}

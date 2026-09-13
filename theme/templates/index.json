@@ -1,0 +1,612 @@
+{
+  "sections": {
+    "heroshader": {
+      "type": "hero-shader",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "w1": {
+          "type": "word",
+          "settings": {
+            "text": ""
+          }
+        },
+        "w2": {
+          "type": "word",
+          "settings": {
+            "text": ""
+          }
+        },
+        "w3": {
+          "type": "word",
+          "settings": {
+            "text": ""
+          }
+        },
+        "w4": {
+          "type": "word",
+          "settings": {
+            "text": ""
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {}
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": {}
+    },
+    "benefits": {
+      "type": "multicolumn",
+      "blocks": {
+        "b1": {
+          "type": "column",
+          "settings": {
+            "icon": "cube",
+            "stat": "3D + AR",
+            "title": "",
+            "text": "",
+            "accent": "#00d4ff"
+          }
+        },
+        "b2": {
+          "type": "column",
+          "settings": {
+            "icon": "book",
+            "stat": "8",
+            "title": "",
+            "text": "",
+            "accent": "#ff2ecb"
+          }
+        },
+        "b3": {
+          "type": "column",
+          "settings": {
+            "icon": "check",
+            "stat": "Shopify",
+            "title": "",
+            "text": "",
+            "accent": "#00e87b"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {}
+    },
+    "vip": {
+      "type": "vip-banner",
+      "blocks": {
+        "t1": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "body3d"
+          }
+        },
+        "t2": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "dumbbell"
+          }
+        },
+        "t3": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "camera"
+          }
+        },
+        "t4": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "calendar"
+          }
+        },
+        "t5": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "meditation"
+          }
+        },
+        "t6": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "headphones"
+          }
+        },
+        "t7": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "trophy"
+          }
+        },
+        "t8": {
+          "type": "tool",
+          "settings": {
+            "title": "",
+            "text": "",
+            "icon": "chart"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "number": "27",
+            "label": ""
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "number": "19",
+            "label": ""
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "number": "9",
+            "label": ""
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "number": "60",
+            "label": ""
+          }
+        },
+        "s5": {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": ""
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6",
+        "t7",
+        "t8",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ],
+      "settings": {}
+    },
+    "videos": {
+      "type": "video-grid",
+      "blocks": {
+        "v1": {
+          "type": "video",
+          "settings": {
+            "video_id": "B6f4OevcqJg"
+          }
+        },
+        "v2": {
+          "type": "video",
+          "settings": {
+            "video_id": "f7AvjOoxSPY"
+          }
+        },
+        "v3": {
+          "type": "video",
+          "settings": {
+            "video_id": "PD0ode222Ps"
+          }
+        },
+        "v4": {
+          "type": "video",
+          "settings": {
+            "video_id": "1Rj5Q52xhx8"
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {
+        "button_url": "https://www.youtube.com/@villumination99/shorts"
+      }
+    },
+    "plans": {
+      "type": "subscription-plans",
+      "blocks": {
+        "p1": {
+          "type": "plan",
+          "settings": {
+            "name": "",
+            "tagline": "",
+            "price": "$9.99",
+            "accent": "#00e87b"
+          }
+        },
+        "p2": {
+          "type": "plan",
+          "settings": {
+            "name": "",
+            "tagline": "",
+            "price": "$19.99",
+            "accent": "#00d4ff",
+            "featured": true
+          }
+        },
+        "p3": {
+          "type": "plan",
+          "settings": {
+            "name": "",
+            "tagline": "",
+            "price": "$39.99",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "f1": {
+          "type": "qa",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        },
+        "f2": {
+          "type": "qa",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        },
+        "f3": {
+          "type": "qa",
+          "settings": {
+            "question": "",
+            "answer": ""
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "caticons": {
+      "type": "category-icons",
+      "blocks": {
+        "c1": {
+          "type": "category",
+          "settings": {
+            "collection": "ropa",
+            "icon": "shirt",
+            "title": "",
+            "text": "",
+            "accent": "#00d4ff"
+          }
+        },
+        "c2": {
+          "type": "category",
+          "settings": {
+            "collection": "equipo",
+            "icon": "dumbbell",
+            "title": "",
+            "text": "",
+            "accent": "#ff2ecb"
+          }
+        },
+        "c3": {
+          "type": "category",
+          "settings": {
+            "collection": "suplementos",
+            "icon": "supplement",
+            "title": "",
+            "text": "",
+            "accent": "#00e87b"
+          }
+        },
+        "c4": {
+          "type": "category",
+          "settings": {
+            "collection": "conocimiento",
+            "icon": "book",
+            "title": "",
+            "text": "",
+            "accent": "#ff7700"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
+      "settings": {}
+    },
+    "bestsellers": {
+      "type": "best-sellers",
+      "settings": {}
+    },
+    "showcase3d": {
+      "type": "product-showcase-3d",
+      "settings": {}
+    },
+    "flowingmenu": {
+      "type": "flowing-menu",
+      "blocks": {
+        "r1": {
+          "type": "row",
+          "settings": {
+            "label": "",
+            "link": "shopify://collections/ropa"
+          }
+        },
+        "r2": {
+          "type": "row",
+          "settings": {
+            "label": "",
+            "link": "shopify://collections/equipo"
+          }
+        },
+        "r3": {
+          "type": "row",
+          "settings": {
+            "label": "",
+            "link": "shopify://collections/suplementos"
+          }
+        },
+        "r4": {
+          "type": "row",
+          "settings": {
+            "label": "",
+            "link": "shopify://collections/conocimiento"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4"
+      ],
+      "settings": {}
+    },
+    "productcarousel3d": {
+      "type": "product-carousel-3d",
+      "settings": {}
+    },
+    "motivation": {
+      "type": "curved-carousel",
+      "blocks": {
+        "m1": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        },
+        "m2": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        },
+        "m3": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        },
+        "m4": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        },
+        "m5": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        },
+        "m6": {
+          "type": "slide",
+          "settings": {
+            "title": "",
+            "caption": ""
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "card_size": "medium",
+        "hint": ""
+      }
+    },
+    "video3d": {
+      "type": "video-3d",
+      "settings": {
+        "video_url": "",
+        "formato": "vertical",
+        "eyebrow": "",
+        "title": "",
+        "subtitle": "",
+        "caption": "",
+        "accent": "#00f0ff",
+        "bg": "#05060a",
+        "height": 560,
+        "tilt": 10,
+        "blend": 60,
+        "scanlines": true,
+        "compact": false,
+        "autoplay": true,
+        "loop": true,
+        "controls": false,
+        "seo_video": true,
+        "upload_date": "",
+        "button_label": "",
+        "button_url": "",
+        "video_archivo": "https://cdn.shopify.com/s/files/1/0599/8467/4865/files/villumination-marca-v2.webm?v=1788482106",
+        "poster": "shopify://shop_images/villumination-marca-portada-v2.png"
+      }
+    },
+    "haces": {
+      "type": "haces",
+      "settings": {}
+    },
+    "secuencia": {
+      "type": "secuencia",
+      "blocks": {
+        "b1": {
+          "type": "marca",
+          "settings": {
+            "texto": "VILLUMINATION"
+          }
+        },
+        "b2": {
+          "type": "lema",
+          "settings": {
+            "linea1": "",
+            "linea2": ""
+          }
+        },
+        "b3": {
+          "type": "pilares",
+          "settings": {
+            "icono1": "dumbbell",
+            "titulo1": "",
+            "sub1": "",
+            "icono2": "supplement",
+            "titulo2": "",
+            "sub2": "",
+            "icono3": "book",
+            "titulo3": "",
+            "sub3": ""
+          }
+        },
+        "b4": {
+          "type": "cifra",
+          "settings": {
+            "numero": "",
+            "pie": ""
+          }
+        },
+        "b5": {
+          "type": "cierre",
+          "settings": {
+            "titulo": "VILLUMINATIONS.COM",
+            "boton": "",
+            "enlace": "/collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {
+        "acento": "#00f0ff",
+        "fondo": "#05060a",
+        "alto": 560,
+        "duracion": 14,
+        "compacta": false
+      }
+    },
+    "diario": {
+      "type": "blog-destacado",
+      "settings": {
+        "eyebrow": "",
+        "title": "",
+        "subtitle": "",
+        "blog": "diario",
+        "cantidad": 3,
+        "texto_boton": ""
+      }
+    }
+  },
+  "order": [
+    "heroshader",
+    "marquee",
+    "secuencia",
+    "products",
+    "caticons",
+    "flowingmenu",
+    "benefits",
+    "vip",
+    "showcase3d",
+    "productcarousel3d",
+    "video3d",
+    "videos",
+    "bestsellers",
+    "plans",
+    "diario",
+    "motivation",
+    "haces",
+    "faq",
+    "newsletter"
+  ]
+}

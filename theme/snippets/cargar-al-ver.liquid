@@ -1,0 +1,51 @@
+{%- comment -%}
+  Carga un script solo cuando su seccion se acerca a la pantalla.
+
+  Uso:  {% render 'cargar-al-ver', archivo: 'secuencia.js', ancla: '[data-secuencia]' %}
+
+  Por que no un simple <script defer>: un defer se descarga SIEMPRE durante
+  la carga inicial, aunque la seccion este a cinco pantallas de distancia.
+  En la portada eso son decenas de kilobytes compitiendo con lo que el
+  visitante si esta mirando. Con esto, quien no baja nunca no descarga nada.
+
+  El margen de 700 px hace que el archivo llegue antes de que la seccion
+  entre en cuadro, asi que el visitante no ve el hueco.
+
+  Respaldos, en este orden:
+   - Sin IntersectionObserver (navegadores viejos): se carga cuando el
+     navegador queda ocioso.
+   - Sin requestIdleCallback (Safari antiguo): al terminar de cargar la
+     pagina, con un respiro.
+  En los dos casos el script acaba llegando: nunca se queda sin cargar.
+{%- endcomment -%}
+<script>
+  (function () {
+    var src = {{ archivo | asset_url | json }};
+    var marca = 'data-src-' + {{ archivo | split: '.' | first | json }};
+    if (document.querySelector('script[' + marca + ']')) return;
+
+    var pedido = false;
+    function cargar() {
+      if (pedido) return;
+      pedido = true;
+      var s = document.createElement('script');
+      s.src = src;
+      s.defer = true;
+      s.setAttribute(marca, '1');
+      document.body.appendChild(s);
+    }
+
+    var ancla = document.querySelector({{ ancla | json }});
+    if (ancla && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (e) {
+        if (!e[0].isIntersecting) return;
+        io.disconnect();
+        cargar();
+      }, { rootMargin: '700px 0px' });
+      io.observe(ancla);
+      return;
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(cargar, { timeout: 2500 });
+    else window.addEventListener('load', function () { setTimeout(cargar, 200); });
+  })();
+</script>

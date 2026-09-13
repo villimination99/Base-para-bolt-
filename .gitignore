@@ -1,0 +1,41 @@
+
+# Built theme package (generated from theme/, incluidas las versionadas)
+# Dependencies (Shopify theme-check tooling used for auditing)
+# Herramientas de auditoría instaladas localmente
+# Local scratch / audit artifacts
+*.log
+.DS_Store
+_extract/
+node_modules/
+package-lock.json
+
+# package.json SI se versiona desde 4.48.0. Estaba ignorado, y el precio fue
+# real: como solo declaraba una dependencia, cada "npm i --no-save" de las
+# otras podaba las que no estaban escritas, y a lo largo de la sesion hubo
+# que reinstalar playwright, esbuild, three, chart.js y acorn varias veces
+# persiguiendo errores que parecian del codigo y eran del arbol de modulos.
+# Nada de esto viaja a Shopify: el zip solo lleva theme/.
+tcrun*.mjs
+tcrun.mjs
+villumination-3d-theme-*.zip
+villumination-3d-theme.zip
+
+# Skills instaladas en el contenedor (no forman parte del tema)
+.agents/
+.claude/
+skills-lock.json
+
+# Temporales de las herramientas: el renderizador acumula los fotogramas en un
+# archivo antes de pasarlos a ffmpeg, y los verificadores escriben su pagina de
+# prueba en disco (addInitScript solo se aplica navegando a una URL, no con
+# setContent). Ninguno de los dos es parte del tema.
+estudio/video/.fotogramas.jpg
+verificadores/**/.pagina-de-prueba*.html
+
+# Copia del hub tal y como estaba publicado antes de la revision (referencia)
+hub/respaldo-*.html
+
+# Arbol de montaje del empaquetador: theme/ minificado, del que sale el zip.
+# Se borra al terminar, pero si el empaquetador esta a medias o se corta, queda
+# ahi -- y no es codigo fuente, es una copia derivada.
+.paquete/

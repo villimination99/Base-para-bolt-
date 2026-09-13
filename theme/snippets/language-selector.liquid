@@ -1,0 +1,32 @@
+{%- comment -%}
+  Selector de idioma (formulario de localización nativo de Shopify).
+  - Cambio manual: el visitante elige y su preferencia se guarda (localStorage).
+  - Cambio automático: base.js detecta el idioma del navegador en la primera
+    visita y envía este mismo formulario una sola vez (respeta la elección manual).
+  Requiere tener los idiomas publicados en Admin → Configuración → Idiomas.
+{%- endcomment -%}
+{%- if localization.available_languages.size > 1 -%}
+  <div class="lang-selector">
+    {%- form 'localization', id: 'LangSelectorForm', class: 'lang-selector-form' -%}
+      <label for="LangSelect" class="lang-selector-label">
+        {%- render 'icon', name: 'globe' -%}
+        <span class="visually-hidden">{{ 'general.language' | t }}</span>
+      </label>
+      <select id="LangSelect" name="locale_code" data-lang-select aria-label="{{ 'general.language' | t }}">
+        {%- for language in localization.available_languages -%}
+          <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+            {{ language.endonym_name | capitalize }}
+          </option>
+        {%- endfor -%}
+      </select>
+      {%- comment -%}
+        El formulario lo envía base.js al cambiar la selección. Sin JavaScript
+        no había forma de cambiar de idioma: el desplegable se movía y no
+        pasaba nada. Este botón solo aparece cuando el JavaScript está apagado.
+      {%- endcomment -%}
+      <noscript>
+        <button type="submit" class="btn btn-outline lang-selector-go">{{ 'general.language' | t }}</button>
+      </noscript>
+    {%- endform -%}
+  </div>
+{%- endif -%}

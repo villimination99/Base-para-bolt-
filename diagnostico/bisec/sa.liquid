@@ -1,0 +1,132 @@
+{%- comment -%}
+  Secuencia de marca: una animacion que se reproduce sola, en bucle, con el
+  lenguaje visual de la tienda (haces de luz y marco de neon pulsante, los
+  mismos del hero). Cada bloque es una escena y el tiempo se reparte entre
+  las que haya.
+
+  Es la alternativa en vivo a un archivo de video, y para una tienda es mejor:
+  el texto es texto de verdad (Google lo indexa y un lector de pantalla lo
+  lee), pesa unos 9 KB en vez de varios megabytes, se ve nitida en cualquier
+  pantalla y reacciona al dedo o al raton.
+{%- endcomment -%}
+
+{%- liquid
+  assign alto = section.settings.alto
+  assign alto_movil = alto | times: 78 | divided_by: 100
+  assign n = section.blocks | size
+-%}
+
+<section class="secuencia-sec{% if section.settings.compacta %} is-compacta{% endif %}"
+         style="--sec-acento:{{ section.settings.acento }};--sec-fondo:{{ section.settings.fondo }};--sec-alto:{{ alto }}px;--sec-alto-movil:{{ alto_movil }}px;">
+  <div class="container">
+    <div class="secuencia"
+         data-secuencia
+         data-sec-duracion="{{ section.settings.duracion }}"
+         data-sec-fondo="{{ section.settings.fondo }}"
+         {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+
+      <canvas class="secuencia-lienzo" data-sec-lienzo aria-hidden="true"></canvas>
+
+      {%- comment -%}
+        Las escenas son texto real, no fotogramas. Van todas en el documento
+        y se muestran por turnos; asi el buscador y el lector de pantalla ven
+        el mensaje completo aunque nadie espere los catorce segundos.
+      {%- endcomment -%}
+      <div class="secuencia-escenas">
+        {%- for block in section.blocks -%}
+          <div class="secuencia-escena secuencia-escena--{{ block.type }}"
+               data-sec-escena {{ block.shopify_attributes }}>
+            {%- case block.type -%}
+
+              {%- when 'marca' -%}
+                <p class="secuencia-marca">{{ block.settings.texto }}</p>
+
+              {%- when 'lema' -%}
+                <p class="secuencia-lema">
+                  {{ block.settings.linea1 }}
+                  {%- if block.settings.linea2 != blank -%}
+                    <br><em>{{ block.settings.linea2 }}</em>
+                  {%- endif -%}
+                </p>
+
+              {%- when 'pilares' -%}
+                <ul class="secuencia-pilares" role="list">
+                  {%- for i in (1..3) -%}
+                    {%- liquid
+                      case i
+                        when 1
+                          assign ico = block.settings.icono1
+                          assign tit = block.settings.titulo1
+                          assign sub = block.settings.sub1
+                        when 2
+                          assign ico = block.settings.icono2
+                          assign tit = block.settings.titulo2
+                          assign sub = block.settings.sub2
+                        else
+                          assign ico = block.settings.icono3
+                          assign tit = block.settings.titulo3
+                          assign sub = block.settings.sub3
+                      endcase
+                    -%}
+                    {%- if tit != blank -%}
+                      <li class="secuencia-pilar">
+                        <span class="secuencia-pilar-ico" aria-hidden="true">{%- render 'icon', name: ico -%}</span>
+                        <span class="secuencia-pilar-txt">
+                          <strong>{{ tit }}</strong>
+                          {%- if sub != blank -%}<span>{{ sub }}</span>{%- endif -%}
+                        </span>
+                      </li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+
+              {%- when 'cifra' -%}
+                {%- comment -%}
+                  EL NÚMERO SE CUENTA SOLO. Estaba escrito a mano —decía 37— y
+                  en el catálogo había 41: ese tipo de cifra se queda vieja el
+                  día que subes un producto y nadie vuelve a mirarla. Ahora sale
+                  del propio catálogo. El campo del editor sigue existiendo por
+                  si algún día quieres poner otra cosa ahí; si lo dejas vacío,
+                  manda el recuento de verdad.
+                {%- endcomment -%}
+                {%- assign cifra_viva = collections.all.all_products_count -%}
+                {%- if block.settings.numero != blank -%}
+                  {%- assign cifra_viva = block.settings.numero -%}
+                {%- endif -%}
+                <p class="secuencia-cifra">{{ cifra_viva }}</p>
+                {%- if block.settings.pie != blank -%}
+                  <p class="secuencia-cifra-pie">{{ block.settings.pie }}</p>
+                {%- endif -%}
+
+              {%- when 'cierre' -%}
+                {%- if block.settings.titulo != blank -%}
+                  <p class="secuencia-cierre-tit">{{ block.settings.titulo }}</p>
+                {%- endif -%}
+                {%- if block.settings.boton != blank and block.settings.enlace != blank -%}
+                  <a class="btn btn-primary btn-lg secuencia-cta" href="{{ block.settings.enlace }}">
+                    {{ block.settings.boton }}
+                  </a>
+                {%- endif -%}
+
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if n > 0 -%}
+        <span class="secuencia-pista" aria-hidden="true">{{ 'general.sequence_hint' | t }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  El script llega cuando la seccion se acerca, no durante la carga inicial:
+  en la portada esta por debajo del pliegue y un <script defer> se descargaba
+  igual aunque el visitante no bajara nunca.
+{%- endcomment -%}
+{%- render 'cargar-al-ver', archivo: 'secuencia.js', ancla: '[data-secuencia]' -%}
+
+{% schema %}
+{ "name": "Bisec A" }
+{% endschema %}

@@ -1,0 +1,750 @@
+/* VILLUMINATION 3D — visual effects layer.
+   Lightweight, dependency-free, and disabled automatically when the visitor
+   prefers reduced motion. Everything here is progressive enhancement. */
+(function () {
+  'use strict';
+  var T = window.theme || {};
+  var settings = T.settings || {};
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Respeta "Ahorro de datos" del visitante: apaga los lienzos decorativos pesados.
+  var saveData = !!(navigator.connection && navigator.connection.saveData);
+
+  function $(s, c) { return (c || document).querySelector(s); }
+  function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  /* Editor de Shopify: al editar una sección, Shopify sustituye su HTML y el JS ligado a
+     esos elementos deja de existir. Se registran los módulos y se vuelven a ejecutar en
+     shopify:section:load. once() garantiza que un elemento ya inicializado no se vuelva a
+     enganchar, así no se duplican manejadores en las secciones que no cambiaron. */
+  var MODS = [];
+  function mod(fn) { MODS.push(fn); try { fn(); } catch (e) {} }
+  function once(el, key) {
+    if (!el) return false;
+    var k = 'vinit' + key;
+    if (el.getAttribute('data-' + k)) return false;
+    el.setAttribute('data-' + k, '1');
+    return true;
+  }
+  document.addEventListener('shopify:section:load', function () {
+    MODS.forEach(function (f) { try { f(); } catch (e) {} });
+  });
+
+  /* ============ 0. Compuerta de la intro ============
+     Mientras la intro tapa la pantalla no se ve NADA de lo que hay detras,
+     pero los lienzos decorativos seguian corriendo igual: los observadores de
+     interseccion ven esos elementos dentro del viewport, porque la intro esta
+     encima, no delante en el flujo. Medido en un movil de gama media (CPU x4):
+     la intro sola va a 60 fps y con los efectos del fondo corriendo detras se
+     quedaba en 30, justo en los dos segundos y medio de los que depende la
+     primera impresion. Ahora los bucles de fondo esperan a que la intro se
+     cierre. No es un apano de rendimiento: es que ese trabajo no servia para
+     nada, nadie lo estaba viendo. */
+  var introViva = !!document.querySelector('[data-splash]');
+  var enEspera = [];
+  function alCerrarIntro(fn) {
+    if (!introViva) { fn(); return; }
+    enEspera.push(fn);
+  }
+  if (introViva) {
+    var cajaIntro = document.querySelector('[data-splash]');
+    var abrirCompuerta = function () {
+      if (!introViva) return;
+      introViva = false;
+      var lista = enEspera; enEspera = [];
+      for (var i = 0; i < lista.length; i++) { try { lista[i](); } catch (e) {} }
+    };
+    cajaIntro.addEventListener('villu:intro-cerrada', abrirCompuerta);
+    // Red de seguridad. Si por lo que sea la intro no llegase a avisar, los
+    // efectos NO se pueden quedar apagados para siempre: peor que ir a 30 fps
+    // dos segundos es una tienda sin fondo animado durante toda la visita.
+    setTimeout(abrirCompuerta, 15000);
+  }
+
+  var hex = function (c, fallback) { return (c && /^#/.test(c)) ? c : fallback; };
+  var CYAN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-cyan').trim(), '#00d4ff');
+  var PINK = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-pink').trim(), '#ff2ecb');
+  var GREEN = hex(getComputedStyle(document.documentElement).getPropertyValue('--neon-green').trim(), '#00e87b');
+
+  /* ============ 1. Scroll reveal (fail-safe: content can NEVER stay hidden) ============ */
+  mod(function () {
+    var els = $all('[data-reveal]').filter(function (e) { return once(e, 'reveal'); });
+    if (!els.length) return;
+
+    // Al terminar la transición se quita reveal-init. Antes se quedaba puesta
+    // para siempre en todo lo revelado al bajar, y con ella su
+    // "transform:none" y su "transition .7s", que podían anular el hover de la
+    // tarjeta y ralentizarlo. La clase solo debe vivir mientras dura la entrada.
+    function settle(el) {
+      if (!el.classList.contains('reveal-init')) return;
+      var done = false;
+      var clear = function () {
+        if (done) return;
+        done = true;
+        el.classList.remove('reveal-init');
+        el.style.transitionDelay = '';
+      };
+      el.addEventListener('transitionend', clear, { once: true });
+      setTimeout(clear, 1400); // red de seguridad si la transición no llega a lanzarse
+    }
+
+    // Escalonado independiente de quien revele. Todo lo que se destapa dentro
+    // del mismo fotograma entra en el mismo lote y recibe un retardo creciente,
+    // asi las tarjetas de una fila aparecen una detras de otra en vez de todas
+    // a la vez. El contador se reinicia solo al fotograma siguiente.
+    var STEP = 70, MAX = 420, lote = 0, loteRaf = 0;
+    function show(el) {
+      if (el.classList.contains('reveal-init')) {
+        if (lote > 0) el.style.transitionDelay = Math.min(lote * STEP, MAX) + 'ms';
+        lote++;
+        if (!loteRaf) loteRaf = requestAnimationFrame(function () { loteRaf = 0; lote = 0; });
+      }
+      el.classList.add('is-visible');
+      settle(el);
+    }
+    function showAll() { els.forEach(show); }
+
+    // If reveal is off, reduced motion, or no observer support → just show everything.
+    if (!settings.scrollReveal || reduce || !('IntersectionObserver' in window)) { showAll(); return; }
+    var vh = window.innerHeight || 800;
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        show(e.target);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -4% 0px' });
+
+    els.forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      // Never hide anything already on screen or taller than the viewport (that is
+      // what turned long pages black — the ratio threshold could never be met).
+      if (rect.top < vh || rect.height > vh * 0.85) { el.classList.add('is-visible'); return; }
+      el.classList.add('reveal-init');
+      io.observe(el);
+    });
+
+    // Red de seguridad. Antes era un showAll() 300 ms despues de load, y eso
+    // revelaba TODA la pagina de golpe: el observador no llegaba a intervenir
+    // nunca y la animacion de entrada, en la practica, no existia. Ahora la
+    // red solo destapa lo que el visitante ya puede ver; lo que sigue mas
+    // abajo se queda para el observador, que es de quien es el trabajo.
+    // Como ademas se repasa al desplazar, si el observador fallara nada
+    // quedaria escondido: al llegar a la altura de un elemento, se muestra.
+    // El repaso va a paso lento a proposito (cada 400 ms como mucho). Es una
+    // red, no el mecanismo: si se ejecutara en cada fotograma le ganaria la
+    // carrera al observador, mediria el tamano de todo lo pendiente en cada
+    // desplazamiento y ademas revelaria filas enteras fuera de su lote.
+    var sweepT = 0;
+    function sweep() {
+      sweepT = 0;
+      var alto = window.innerHeight || 800;
+      for (var i = els.length - 1; i >= 0; i--) {
+        var el = els[i];
+        if (el.classList.contains('is-visible')) { els.splice(i, 1); continue; }
+        if (el.getBoundingClientRect().top < alto) show(el);
+      }
+      if (!els.length) window.removeEventListener('scroll', onScroll);
+    }
+    function onScroll() { if (!sweepT) sweepT = setTimeout(sweep, 400); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    setTimeout(sweep, 2500);
+    window.addEventListener('load', function () { setTimeout(sweep, 300); });
+  });
+
+  /* ============ 1b. Progreso de lectura ============
+     Publica --scroll-y (0 a 1) para toda la pagina: es la idea del heroe
+     llevada al resto de la tienda, cualquier regla puede reaccionar al
+     desplazamiento sin montar su propio escuchador ni su propio bucle.
+     La linea de neon de arriba es la parte visible y es opcional; la variable
+     se publica siempre, porque de ella dependen efectos del resto de la
+     pagina y no tendria sentido que se apagaran al ocultar una decoracion.
+     No se apaga con movimiento reducido: informa, no adorna. Se resuelve una
+     vez por fotograma y solo escribe cuando el valor cambia de verdad. */
+  mod(function () {
+    if (!once(document.body, 'progressbar')) return;
+    var bar = null;
+    if (settings.scrollBar) {
+      bar = document.createElement('div');
+      bar.className = 'read-progress';
+      bar.setAttribute('role', 'presentation');
+      document.body.appendChild(bar);
+    }
+
+    var praf = 0, last = -1;
+    function pintar(v) {
+      if (bar) bar.style.transform = 'scaleX(' + v + ')';
+      document.documentElement.style.setProperty('--scroll-y', v);
+    }
+    function paint() {
+      praf = 0;
+      var doc = document.documentElement;
+      var bd = document.body;
+      // El alto real hay que sacarlo del mayor de los dos: segun como crezca
+      // el documento, a veces es <html> quien lleva la cuenta y a veces
+      // <body>, y quedarse con uno solo daba max=0 en paginas que si se
+      // desplazan, dejando la barra clavada en cero. La resta usa
+      // innerHeight, que es siempre el alto visible de verdad.
+      var alto = Math.max(doc.scrollHeight || 0, bd ? bd.scrollHeight || 0 : 0);
+      var max = alto - (window.innerHeight || doc.clientHeight || 0);
+      if (max <= 8) { if (last !== 0) { last = 0; pintar(0); } return; }
+      var v = (window.scrollY || doc.scrollTop || 0) / max;
+      v = v < 0 ? 0 : (v > 1 ? 1 : v);
+      var r = Math.round(v * 1000) / 1000;
+      if (r === last) return;
+      last = r;
+      pintar(r);
+    }
+    function pedir() { if (!praf) praf = requestAnimationFrame(paint); }
+    window.addEventListener('scroll', pedir, { passive: true });
+    window.addEventListener('resize', pedir);
+    paint();
+  });
+
+  /* ============ 2. Parallax ============ */
+  (function () {
+    if (!settings.parallax || reduce) return;
+    var els = $all('[data-parallax-speed]');
+    if (!els.length) return;
+    var ticking = false;
+    function apply() {
+      var vh = window.innerHeight;
+      els.forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) return;
+        var speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.3;
+        var offset = (rect.top - vh / 2) * speed * -0.4;
+        el.style.transform = 'translate3d(0,' + offset.toFixed(1) + 'px,0)';
+      });
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(apply); } }, { passive: true });
+    apply();
+  })();
+
+  /* ============ 3. Card tilt (3D hover) ============ */
+  mod(function () {
+    if (!settings.cardTilt || reduce || window.matchMedia('(hover: none)').matches) return;
+    $all('.js-tilt').forEach(function (card) {
+      if (!once(card, 'tilt')) return;
+      var raf = 0, cx = 0, cy = 0;
+      function paint() {
+        raf = 0;
+        // Medir aqui y no en el evento: el rectangulo cambia si la pagina se
+        // desplaza con el puntero encima, y asi se paga un solo recalculo de
+        // maqueta por fotograma en lugar de uno por evento.
+        var r = card.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        var px = (cx - r.left) / r.width - 0.5;
+        var py = (cy - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(700px) rotateY(' + (px * 7).toFixed(2) + 'deg) rotateX(' + (-py * 7).toFixed(2) + 'deg) translateZ(0)';
+      }
+      card.addEventListener('pointermove', function (e) {
+        // pointermove llega cientos de veces por segundo; solo se anota la
+        // posicion y se pinta una vez por fotograma.
+        cx = e.clientX; cy = e.clientY;
+        if (!raf) raf = requestAnimationFrame(paint);
+      });
+      card.addEventListener('pointerleave', function () {
+        if (raf) { cancelAnimationFrame(raf); raf = 0; }
+        card.style.transform = '';
+      });
+    });
+  });
+
+  /* ============ 3b. Botones magneticos ============
+     Los botones principales se inclinan hacia el cursor cuando esta cerca y
+     vuelven a su sitio al alejarse. Solo con raton, nunca con movimiento
+     reducido, y con un solo escuchador en el documento en lugar de uno por
+     boton. Se escribe en --mag-x/--mag-y, no en transform, para no borrar el
+     levantamiento del :hover que ya define la hoja de estilos. */
+  mod(function () {
+    if (reduce || !settings.cardTilt) return;
+    if (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) return;
+    if (!once(document.body, 'magnetic')) return;
+
+    var SEL = '.btn-primary, .btn-lg.btn-outline';
+    var RADIO = 78;    // px desde el borde del boton a los que empieza a notarse
+    var FUERZA = 0.26; // cuanto se deja arrastrar
+
+    // Las posiciones se miden UNA vez y se guardan en coordenadas de documento.
+    // Al desplazar la pagina solo cambia scrollY, que ya conocemos: asi no hay
+    // ni una sola lectura de maqueta dentro del bucle de movimiento.
+    var cache = [], caduca = true, raf = 0, mx = 0, my = 0, activos = [];
+    function medir() {
+      caduca = false;
+      var sx = window.scrollX || 0, sy = window.scrollY || 0;
+      cache = $all(SEL).map(function (el) {
+        var r = el.getBoundingClientRect();
+        return { el: el, x: r.left + sx + r.width / 2, y: r.top + sy + r.height / 2, w: r.width, h: r.height };
+      }).filter(function (o) { return o.w > 0; });
+    }
+    function invalidar() { caduca = true; request(); }
+
+    function paint() {
+      raf = 0;
+      if (caduca) medir();
+      var sx = window.scrollX || 0, sy = window.scrollY || 0;
+      var vh = window.innerHeight, vw = window.innerWidth;
+      var siguen = [];
+      for (var i = 0; i < cache.length; i++) {
+        var o = cache[i];
+        var cx = o.x - sx, cy = o.y - sy;
+        if (cy < -RADIO || cy > vh + RADIO || cx < -RADIO || cx > vw + RADIO) continue;
+        var dx = mx - cx, dy = my - cy;
+        // Distancia al borde, no al centro: el tiron no depende de lo ancho
+        // que sea el boton.
+        var ex = Math.max(0, Math.abs(dx) - o.w / 2);
+        var ey = Math.max(0, Math.abs(dy) - o.h / 2);
+        if (ex * ex + ey * ey > RADIO * RADIO) continue;
+        o.el.style.setProperty('--mag-x', (dx * FUERZA).toFixed(1) + 'px');
+        o.el.style.setProperty('--mag-y', (dy * FUERZA).toFixed(1) + 'px');
+        siguen.push(o.el);
+      }
+      for (var j = 0; j < activos.length; j++)
+        if (siguen.indexOf(activos[j]) === -1) soltar(activos[j]);
+      activos = siguen;
+    }
+    function soltar(el) { el.style.removeProperty('--mag-x'); el.style.removeProperty('--mag-y'); }
+    function request() { if (!raf) raf = requestAnimationFrame(paint); }
+
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      mx = e.clientX; my = e.clientY;
+      request();
+    }, { passive: true });
+    document.addEventListener('pointerleave', function () {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      activos.forEach(soltar);
+      activos = [];
+    });
+    window.addEventListener('resize', invalidar);
+    // El editor y el carrito lateral cambian el HTML: hay que volver a medir.
+    document.addEventListener('shopify:section:load', invalidar);
+    medir();
+  });
+
+  /* ============ 4. Seasonal floating effects ============ */
+  (function () {
+    var kind = settings.seasonalEffect;
+    if (!kind || kind === 'none' || reduce) return;
+    var canvas = document.createElement('canvas');
+    canvas.className = 'fx-seasonal-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var W, H, DPR = Math.min(window.devicePixelRatio || 1, 2);
+    var count = Math.max(10, Math.min(120, settings.seasonalDensity || 50));
+    var parts = [];
+    var palette = [CYAN, PINK, GREEN, '#ffd000'];
+
+    function resize() { W = canvas.width = innerWidth * DPR; H = canvas.height = innerHeight * DPR; canvas.style.width = innerWidth + 'px'; canvas.style.height = innerHeight + 'px'; }
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function spawn() {
+      return { x: rnd(0, W), y: rnd(-H, 0), r: rnd(3, 9) * DPR, vy: rnd(0.4, 1.6) * DPR, vx: rnd(-0.4, 0.4) * DPR, sway: rnd(0, 6.28), rot: rnd(0, 6.28), vr: rnd(-0.04, 0.04), color: palette[(Math.random() * palette.length) | 0] };
+    }
+    function heart(p) {
+      ctx.beginPath();
+      var s = p.r / 8;
+      ctx.moveTo(p.x, p.y);
+      ctx.bezierCurveTo(p.x - 5 * s, p.y - 4 * s, p.x - 8 * s, p.y + 2 * s, p.x, p.y + 7 * s);
+      ctx.bezierCurveTo(p.x + 8 * s, p.y + 2 * s, p.x + 5 * s, p.y - 4 * s, p.x, p.y);
+      ctx.fill();
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.y += p.vy; p.x += p.vx + Math.sin(p.sway) * 0.5 * DPR; p.sway += 0.02; p.rot += p.vr;
+        if (p.y > H + 20) { parts[i] = spawn(); parts[i].y = -10; continue; }
+        ctx.save(); ctx.globalAlpha = 0.85;
+        if (kind === 'snow') { ctx.fillStyle = 'rgba(255,255,255,0.9)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 0.5, 0, 6.28); ctx.fill(); }
+        else if (kind === 'hearts') { ctx.fillStyle = p.color; heart(p); }
+        else if (kind === 'sparks') { ctx.fillStyle = p.color; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 0.4, 0, 6.28); ctx.fill(); }
+        else { ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color; ctx.fillRect(-p.r * 0.5, -p.r * 0.25, p.r, p.r * 0.5); } /* confetti */
+        ctx.restore();
+      }
+      raf = requestAnimationFrame(draw);
+    }
+    var raf;
+    function start() { resize(); parts = []; for (var i = 0; i < count; i++) parts.push(spawn()); cancelAnimationFrame(raf); draw(); }
+    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(start, 200); });
+    // Pause when tab hidden to save CPU
+    document.addEventListener('visibilitychange', function () { if (document.hidden) { cancelAnimationFrame(raf); } else { draw(); } });
+    alCerrarIntro(start);
+  })();
+
+  /* ============ 4b. Holo stage: 3D tilt (desktop) + drag-to-spin (touch) ============ */
+  mod(function () {
+    var stages = $all('[data-tilt-3d]');
+    if (!stages.length) return;
+    var noHover = window.matchMedia('(hover: none)').matches;
+    stages.forEach(function (stage) {
+      if (!once(stage, 'holo')) return;
+      var obj = $('.holo-obj', stage);
+      if (!obj) return;
+      obj.classList.add('holo-auto');
+      if (reduce) return;
+
+      if (noHover) {
+        // Touch: arrastra el dedo para girar el producto (rango controlado para que no se vea de canto)
+        var dragging = false, lastX = 0, lastY = 0, ry = 0, rx = 0, idle = null;
+        stage.classList.add('is-draggable');
+        stage.style.touchAction = 'pan-y';
+        stage.addEventListener('pointerdown', function (e) {
+          dragging = true; lastX = e.clientX; lastY = e.clientY;
+          obj.classList.remove('holo-auto'); obj.style.transition = 'none';
+          clearTimeout(idle);
+          try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+        });
+        stage.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          ry += (e.clientX - lastX) * 0.45; rx -= (e.clientY - lastY) * 0.30;
+          ry = Math.max(-42, Math.min(42, ry)); rx = Math.max(-28, Math.min(28, rx));
+          lastX = e.clientX; lastY = e.clientY;
+          obj.style.transform = 'rotateY(' + ry.toFixed(1) + 'deg) rotateX(' + rx.toFixed(1) + 'deg)';
+        });
+        function end() {
+          if (!dragging) return;
+          dragging = false;
+          // Suelta con muelle suave hacia el centro y retoma la levitación
+          obj.style.transition = 'transform 1s cubic-bezier(.22,1,.36,1)';
+          obj.style.transform = 'rotateY(0deg) rotateX(0deg)'; ry = 0; rx = 0;
+          idle = setTimeout(function () { obj.style.transition = ''; obj.style.transform = ''; obj.classList.add('holo-auto'); }, 1000);
+        }
+        stage.addEventListener('pointerup', end);
+        stage.addEventListener('pointercancel', end);
+      } else {
+        // Desktop: el producto sigue el cursor (parallax de inclinación)
+        stage.addEventListener('pointermove', function (e) {
+          var r = stage.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width - 0.5;
+          var py = (e.clientY - r.top) / r.height - 0.5;
+          obj.style.transform = 'rotateY(' + (px * 26).toFixed(2) + 'deg) rotateX(' + (-py * 14).toFixed(2) + 'deg)';
+        });
+        stage.addEventListener('pointerleave', function () { obj.style.transform = ''; obj.classList.add('holo-auto'); });
+        stage.addEventListener('pointerenter', function () { obj.classList.remove('holo-auto'); });
+      }
+    });
+  });
+
+  /* ============ 4c. Ambient futuristic background (aurora + drifting particles) ============
+     Fondo negro intacto: pinta detrás del contenido (z-index -1), 30 fps,
+     se pausa con la pestaña oculta y respeta prefers-reduced-motion. */
+  (function () {
+    var mode = settings.ambient || 'full';
+    if (mode === 'none' || saveData) return;
+    var canvas = document.createElement('canvas');
+    canvas.className = 'fx-ambient-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var DPR = 1; // fondo difuso: resolución nativa baja = más rápido
+    var W, H;
+    function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    resize();
+    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(resize, 250); });
+
+    var ORBS = [
+      { x: 0.18, y: 0.25, r: 0.42, c: '0,212,255',  s: 0.00016, ph: 0 },
+      { x: 0.82, y: 0.65, r: 0.48, c: '255,46,203', s: 0.00013, ph: 2.1 },
+      { x: 0.50, y: 0.90, r: 0.38, c: '123,47,255', s: 0.00019, ph: 4.2 }
+    ];
+    var smallScreen = innerWidth < 700;
+    var parts = [];
+    var N = Math.min(smallScreen ? 20 : 34, Math.floor(innerWidth / 42));
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    for (var i = 0; i < N; i++) {
+      parts.push({ x: rnd(0, 1), y: rnd(0, 1), v: rnd(0.00006, 0.00022), r: rnd(0.7, 1.9), a: rnd(0.12, 0.4),
+                   c: ['0,212,255', '255,46,203', '0,232,123'][i % 3], tw: rnd(0, 6.28) });
+    }
+
+    // Estrellas fugaces neón (una cada pocos segundos) + pulso de escaneo horizontal
+    var streaks = [];
+    var nextStreak = 1800;
+    var scanY = -1, nextScan = 5200;
+    function spawnStreak() {
+      var fromLeft = Math.random() < 0.5;
+      streaks.push({
+        x: fromLeft ? -0.05 : 1.05, y: rnd(0.05, 0.55),
+        vx: (fromLeft ? 1 : -1) * rnd(0.010, 0.017), vy: rnd(0.003, 0.007),
+        life: 1, c: ['0,212,255', '255,46,203', '255,208,0'][(Math.random() * 3) | 0]
+      });
+    }
+
+    function drawFrame(t) {
+      ctx.clearRect(0, 0, W, H);
+      if (mode !== 'particles') {
+        for (var o = 0; o < ORBS.length; o++) {
+          var b = ORBS[o];
+          var ox = (b.x + Math.sin(t * b.s + b.ph) * 0.08) * W;
+          var oy = (b.y + Math.cos(t * b.s * 1.3 + b.ph) * 0.06) * H;
+          var rad = b.r * Math.max(W, H);
+          var g = ctx.createRadialGradient(ox, oy, 0, ox, oy, rad);
+          g.addColorStop(0, 'rgba(' + b.c + ',0.075)');
+          g.addColorStop(1, 'rgba(' + b.c + ',0)');
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, W, H);
+        }
+        // Pulso de escaneo: línea tenue que barre la pantalla de arriba a abajo
+        nextScan -= 33;
+        if (nextScan <= 0 && scanY < 0) { scanY = 0; nextScan = rnd(9000, 14000); }
+        if (scanY >= 0) {
+          scanY += 0.006;
+          if (scanY > 1) { scanY = -1; }
+          else {
+            var sg = ctx.createLinearGradient(0, scanY * H - 40, 0, scanY * H + 40);
+            sg.addColorStop(0, 'rgba(0,212,255,0)');
+            sg.addColorStop(0.5, 'rgba(0,212,255,0.035)');
+            sg.addColorStop(1, 'rgba(0,212,255,0)');
+            ctx.fillStyle = sg;
+            ctx.fillRect(0, scanY * H - 40, W, 80);
+          }
+        }
+      }
+      if (mode !== 'aurora') {
+        for (var p = 0; p < parts.length; p++) {
+          var q = parts[p];
+          q.y -= q.v; q.tw += 0.02;
+          if (q.y < -0.02) { q.y = 1.02; q.x = Math.random(); }
+          var al = q.a * (0.6 + 0.4 * Math.sin(q.tw));
+          ctx.fillStyle = 'rgba(' + q.c + ',' + al.toFixed(3) + ')';
+          ctx.beginPath(); ctx.arc(q.x * W, q.y * H, q.r, 0, 6.2832); ctx.fill();
+        }
+        // Estrellas fugaces
+        nextStreak -= 33;
+        if (nextStreak <= 0) { spawnStreak(); nextStreak = rnd(3200, 6800); }
+        for (var s = streaks.length - 1; s >= 0; s--) {
+          var st = streaks[s];
+          st.x += st.vx; st.y += st.vy; st.life -= 0.016;
+          if (st.life <= 0 || st.x < -0.1 || st.x > 1.1) { streaks.splice(s, 1); continue; }
+          var tx = st.x * W, ty = st.y * H;
+          var tailX = tx - st.vx * W * 9, tailY = ty - st.vy * H * 9;
+          var lg = ctx.createLinearGradient(tailX, tailY, tx, ty);
+          lg.addColorStop(0, 'rgba(' + st.c + ',0)');
+          lg.addColorStop(1, 'rgba(' + st.c + ',' + (0.55 * st.life).toFixed(3) + ')');
+          ctx.strokeStyle = lg; ctx.lineWidth = 1.6; ctx.lineCap = 'round';
+          ctx.beginPath(); ctx.moveTo(tailX, tailY); ctx.lineTo(tx, ty); ctx.stroke();
+        }
+      }
+    }
+
+    if (reduce) { drawFrame(0); return; } // estático con reduced-motion
+    var last = 0, raf, minDelta = smallScreen ? 42 : 33; // 24fps móvil / 30fps escritorio
+    function loop(t) {
+      raf = requestAnimationFrame(loop);
+      if (t - last < minDelta) return;
+      last = t;
+      drawFrame(t);
+    }
+    alCerrarIntro(function () { raf = requestAnimationFrame(loop); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { cancelAnimationFrame(raf); } else if (!introViva) { raf = requestAnimationFrame(loop); }
+    });
+  })();
+
+  /* El campo de particulas de la intro se mudo a assets/intro.js.
+     Alli vive la secuencia entera (trazo del latido, estallido y formacion) y
+     las particulas son el ultimo tiempo de esa secuencia, no un efecto
+     aparte. Tenerlo en dos archivos obligaba a sincronizar tiempos a mano
+     entre ellos, que es justo como se descuadran las cosas. */
+
+  /* ---- Interactive cursor glow (desktop pointer, opt-in) -------------------- */
+  (function () {
+    if (reduce || !settings.cursorGlow) return;
+    if (!window.matchMedia('(pointer:fine)').matches) return;
+    var el = document.createElement('div');
+    el.className = 'cursor-glow';
+    document.body.appendChild(el);
+    var x = window.innerWidth / 2, y = window.innerHeight / 2, tx = x, ty = y, raf = null, on = false;
+    function loop() {
+      x += (tx - x) * 0.18; y += (ty - y) * 0.18;
+      el.style.transform = 'translate3d(' + (x - 210) + 'px,' + (y - 210) + 'px,0)';
+      raf = requestAnimationFrame(loop);
+    }
+    window.addEventListener('pointermove', function (e) {
+      tx = e.clientX; ty = e.clientY;
+      if (!on) { on = true; el.classList.add('is-on'); }
+    }, { passive: true });
+    document.addEventListener('mouseleave', function () { on = false; el.classList.remove('is-on'); });
+    document.addEventListener('pointerover', function (e) {
+      var hot = e.target && e.target.closest && e.target.closest('a,button,.product-card,.holo-card,[data-tilt-3d],.cc-item');
+      el.classList.toggle('is-hot', !!hot);
+    }, { passive: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { cancelAnimationFrame(raf); raf = null; }
+      else if (!raf) loop();
+    });
+    alCerrarIntro(loop);
+  })();
+
+  /* ---- Curved infinite 3D carousel (coverflow ring) ------------------------- */
+  mod(function () {
+    var stages = $all('[data-cc]');
+    if (!stages.length) return;
+    stages.forEach(function (stage) {
+      if (!once(stage, 'cc')) return;
+      var ring = $('[data-cc-ring]', stage);
+      if (!ring) return;
+      var auto = stage.getAttribute('data-cc-auto') !== 'false' && !reduce;
+      var vel = parseFloat(stage.getAttribute('data-cc-speed')) || 0.05;
+      var angle = 0, dragging = false, lastX = 0, moved = 0, raf = null, hover = false;
+      function render() { ring.style.transform = 'rotateY(' + angle + 'deg)'; }
+      function loop() {
+        if (auto && !dragging && !hover) angle += vel;
+        render();
+        raf = requestAnimationFrame(loop);
+      }
+      function start() { if (!raf) loop(); }
+      function stop() { cancelAnimationFrame(raf); raf = null; }
+      stage.addEventListener('pointerdown', function (e) {
+        dragging = true; moved = 0; lastX = e.clientX; stage.classList.add('is-grabbing');
+        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      stage.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+        angle += dx * 0.35;
+      });
+      function endDrag() { dragging = false; stage.classList.remove('is-grabbing'); }
+      stage.addEventListener('pointerup', endDrag);
+      stage.addEventListener('pointercancel', endDrag);
+      stage.addEventListener('mouseenter', function () { hover = true; });
+      stage.addEventListener('mouseleave', function () { hover = false; endDrag(); });
+      // Swallow accidental link clicks after a drag
+      stage.addEventListener('click', function (e) {
+        if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
+      }, true);
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { en.isIntersecting ? alCerrarIntro(start) : stop(); });
+      }, { threshold: 0 });
+      io.observe(stage);
+      render();
+    });
+  });
+
+  /* ---- Flowing menu: direction-aware neon reveal ---------------------------- */
+  mod(function () {
+    var rows = $all('[data-fm-row]');
+    // Faltaba respetar "reducir movimiento": el panel entraba deslizándose
+    // igualmente para quien pide en su sistema que no haya animaciones.
+    if (!rows.length || reduce) return;
+    rows.forEach(function (row) {
+      if (!once(row, 'fm')) return;
+      var mq = $('.fm-marquee', row);
+      if (!mq) return;
+      function edge(e) {
+        var r = row.getBoundingClientRect();
+        return (Math.abs(e.clientY - r.top) < Math.abs(e.clientY - r.bottom)) ? -101 : 101;
+      }
+      row.addEventListener('mouseenter', function (e) {
+        var from = edge(e);
+        mq.style.transition = 'none';
+        mq.style.transform = 'translateY(' + from + '%)';
+        void mq.offsetWidth;
+        mq.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)';
+        mq.style.transform = 'translateY(0)';
+      });
+      row.addEventListener('mouseleave', function (e) {
+        mq.style.transition = 'transform .5s cubic-bezier(.22,1,.36,1)';
+        mq.style.transform = 'translateY(' + edge(e) + '%)';
+      });
+    });
+  });
+
+  /* ---- Hero cinematic particle field (depth + mouse parallax) --------------- */
+  mod(function () {
+    var canvas = $('[data-hero-particles]');
+    if (!canvas || reduce || saveData) return;
+    // Sin esta guarda, cada recarga de sección en el editor arrancaba OTRO
+    // bucle de animación sobre el mismo lienzo, con su propio observador y sus
+    // propios escuchadores: tras unos pocos cambios la vista previa se
+    // arrastraba. Es el único módulo de este archivo al que le faltaba.
+    if (!once(canvas, 'hp')) return;
+    var host = canvas.closest('.hero') || canvas.parentNode;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, parts = [], raf = null, mx = 0, my = 0, tmx = 0, tmy = 0;
+    var mobile = window.matchMedia('(max-width:749px)').matches;
+    // Aparatos de gama baja: menos partículas todavía.
+    var lowEnd = (navigator.deviceMemory && navigator.deviceMemory <= 2) ||
+                 (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+    var N = Math.round((parseFloat(canvas.getAttribute('data-density')) || 70) *
+                       (mobile ? 0.5 : 1) * (lowEnd ? 0.5 : 1));
+    var colors = ['#00d4ff', '#7b2fff', '#ff2ecb'];
+
+    /* shadowBlur es de lo más caro que existe en canvas: obliga a un desenfoque
+       por cada partícula y cada fotograma (miles por segundo). Se dibuja una
+       sola vez cada combinación de color y tamaño en un lienzo aparte y después
+       solo se copia esa imagen ya desenfocada. */
+    var sprites = {};
+    function sprite(color, r) {
+      var rr = Math.max(0.5, Math.round(r * 4) / 4);
+      var key = color + '|' + rr;
+      if (sprites[key]) return sprites[key];
+      var pad = rr * 3 + 2;
+      var size = Math.ceil((rr + pad) * 2);
+      var c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      var g = c.getContext('2d');
+      var cx = size / 2;
+      g.fillStyle = color;
+      g.shadowColor = color;
+      g.shadowBlur = rr * 3;
+      g.beginPath(); g.arc(cx, cx, rr, 0, 6.283); g.fill();
+      sprites[key] = c;
+      return c;
+    }
+    function resize() {
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    function build() {
+      parts = [];
+      for (var i = 0; i < N; i++) {
+        var z = Math.random() * 0.8 + 0.2; // depth 0.2..1
+        var rad = z * (mobile ? 2 : 2.8) + 0.4;
+        var col = colors[(Math.random() * colors.length) | 0];
+        parts.push({
+          x: Math.random() * W, y: Math.random() * H, z: z,
+          r: rad,
+          vy: (Math.random() * 0.22 + 0.05) * z,
+          vx: (Math.random() - 0.5) * 0.15 * z,
+          c: col,
+          s: sprite(col, rad),   // imagen ya desenfocada, lista para copiar
+          a: Math.random() * 0.45 + 0.4
+        });
+      }
+    }
+    var last = 0;
+    function frame(t) {
+      raf = requestAnimationFrame(frame);
+      if (t - last < 33) return; // ~30fps cap
+      last = t;
+      mx += (tmx - mx) * 0.05; my += (tmy - my) * 0.05;
+      ctx.clearRect(0, 0, W, H);
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.y -= p.vy; p.x += p.vx;
+        var px = p.x + mx * p.z * 34;
+        var py = p.y + my * p.z * 34;
+        if (p.y < -4) { p.y = H + 4; p.x = Math.random() * W; }
+        if (p.x < -4) p.x = W + 4; else if (p.x > W + 4) p.x = -4;
+        ctx.globalAlpha = p.a;
+        ctx.drawImage(p.s, px - p.s.width / 2, py - p.s.height / 2);
+      }
+      ctx.globalAlpha = 1;
+    }
+    function start() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
+    function stop() { cancelAnimationFrame(raf); raf = null; }
+    host.addEventListener('pointermove', function (e) {
+      var r = host.getBoundingClientRect();
+      tmx = (e.clientX - r.left) / r.width - 0.5;
+      tmy = (e.clientY - r.top) / r.height - 0.5;
+    }, { passive: true });
+    window.addEventListener('resize', function () { clearTimeout(canvas._t); canvas._t = setTimeout(function () { resize(); build(); }, 200); });
+    document.addEventListener('visibilitychange', function () { document.hidden ? stop() : start(); });
+    var io = new IntersectionObserver(function (en) { en.forEach(function (x) { x.isIntersecting ? alCerrarIntro(start) : stop(); }); }, { threshold: 0 });
+    resize(); build(); io.observe(canvas);
+  });
+})();

@@ -1,0 +1,81 @@
+{%- comment -%}
+  Banda de haces holograficos.
+
+  Adaptacion del componente React "beams-background": pilares de luz con las
+  componentes de color separadas, lineas de barrido y vinetado. El motor es
+  canvas 2D plano; no hace falta React ni Tailwind.
+
+  Sirve de heroe alternativo o de banda entre secciones. El texto va encima y
+  es opcional: sin titulo queda solo el fondo, util como separador.
+
+  El JS solo se carga en las paginas que llevan esta seccion, y en tiempo
+  libre. Si el visitante pide movimiento reducido se pinta un fotograma fijo;
+  con ahorro de datos no arranca y queda el degradado CSS de debajo.
+{%- endcomment -%}
+{%- liquid
+  assign alto = section.settings.alto | default: 64
+  assign c_fondo = section.settings.color_fondo | default: '#000000'
+-%}
+<section class="haces{% if section.settings.compacta %} haces--compacta{% endif %}"
+         style="--haces-min:{{ alto }}svh;--haces-bg:{{ c_fondo }};">
+  <div class="haces-fondo" aria-hidden="true">
+    <canvas data-haces
+            class="haces-lienzo"
+            data-densidad="{{ section.settings.densidad }}"
+            data-velocidad="{{ section.settings.velocidad | divided_by: 100.0 }}"
+            data-aberracion="{{ section.settings.aberracion | divided_by: 10.0 }}"
+            data-opacidad="{{ section.settings.opacidad }}"
+            data-rojo="255,0,0" data-azul="0,50,255" data-nucleo="200,255,255"></canvas>
+    {%- if section.settings.barrido -%}
+      <span class="haces-barrido"></span>
+    {%- endif -%}
+    <span class="haces-vineta"></span>
+  </div>
+
+  {%- if section.settings.titulo != blank or section.settings.texto != blank -%}
+    <div class="haces-contenido" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.etiqueta != blank -%}
+        <span class="section-eyebrow">{{ section.settings.etiqueta }}</span>
+      {%- endif -%}
+      {%- if section.settings.titulo != blank -%}
+        <h2 class="haces-titulo">{{ section.settings.titulo }}</h2>
+      {%- endif -%}
+      {%- if section.settings.texto != blank -%}
+        <p class="haces-texto">{{ section.settings.texto }}</p>
+      {%- endif -%}
+      {%- if section.settings.boton != blank -%}
+        <a href="{{ section.settings.boton_url | default: routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+          {{ section.settings.boton }}{%- render 'icon', name: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{%- render 'cargar-al-ver', archivo: 'haces.js', ancla: '[data-haces]' -%}
+
+{% schema %}
+{
+  "name": "Haces de luz",
+  "tag": "section",
+  "settings": [
+    { "type": "paragraph", "content": "Pilares de luz animados con aberración cromática. Sirve de héroe alternativo o de banda separadora. Si el visitante pide movimiento reducido, se queda quieto." },
+    { "type": "text", "id": "etiqueta", "label": "Etiqueta" },
+    { "type": "text", "id": "titulo", "label": "Título" },
+    { "type": "textarea", "id": "texto", "label": "Texto" },
+    { "type": "text", "id": "boton", "label": "Botón" },
+    { "type": "url", "id": "boton_url", "label": "Enlace del botón" },
+    { "type": "header", "content": "Movimiento" },
+    { "type": "range", "id": "densidad", "min": 8, "max": 60, "step": 2, "label": "Cuántos haces", "default": 30 },
+    { "type": "range", "id": "velocidad", "min": 20, "max": 300, "step": 10, "unit": "%", "label": "Velocidad", "default": 100 },
+    { "type": "range", "id": "aberracion", "min": 0, "max": 80, "step": 5, "label": "Separación de color", "default": 25, "info": "Cuánto se separan el rojo y el azul del núcleo." },
+    { "type": "range", "id": "opacidad", "min": 10, "max": 100, "step": 5, "unit": "%", "label": "Brillo", "default": 50 },
+    { "type": "header", "content": "Aspecto" },
+    { "type": "range", "id": "alto", "min": 30, "max": 100, "step": 2, "unit": "%", "label": "Alto de la pantalla", "default": 64 },
+    { "type": "checkbox", "id": "barrido", "label": "Líneas de barrido", "default": true, "info": "Textura de pantalla antigua sobre los haces." },
+    { "type": "checkbox", "id": "compacta", "label": "Modo banda", "default": false, "info": "Reduce el alto y el texto para usarla como separador entre secciones." },
+    { "type": "color", "id": "color_fondo", "label": "Fondo", "default": "#000000" }
+  ],
+  "presets": [{ "name": "Haces de luz" }]
+}
+{% endschema %}

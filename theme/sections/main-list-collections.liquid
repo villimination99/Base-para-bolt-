@@ -1,0 +1,59 @@
+<section class="section-padding collection-index">
+  <div class="container">
+    <div class="collection-index-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="fancy-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h1 class="section-title neon-underline">{{ section.settings.heading | default: 'collections.general.title' | t }}</h1>
+      {%- if section.settings.subheading != blank -%}<p class="section-subtitle">{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+
+    <div class="col-index-grid" style="--cols:{{ section.settings.columns }}">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="col-index-tile ntile-{{ forloop.index0 | modulo: 4 }}{% if settings.enable_card_tilt %} js-tilt{% endif %}"
+           {% if settings.enable_scroll_reveal %}data-reveal{% endif %} aria-label="{{ collection.title | escape }}">
+          <div class="col-index-media">
+            {%- if collection.featured_image -%}
+              <img src="{{ collection.featured_image | image_url: width: 800, height: 600, crop: 'center' }}"
+                   srcset="{{ collection.featured_image | image_url: width: 500, height: 375, crop: 'center' }} 500w, {{ collection.featured_image | image_url: width: 800, height: 600, crop: 'center' }} 800w"
+                   sizes="(max-width:749px) 90vw, 40vw"
+                   alt="{{ collection.title | escape }}" width="800" height="600" loading="lazy" decoding="async">
+            {%- else -%}
+              <span class="col-index-fallback" aria-hidden="true"><span class="col-index-glyph">{{ collection.title | slice: 0 }}</span></span>
+            {%- endif -%}
+            <span class="col-index-grain" aria-hidden="true"></span>
+            <span class="col-index-overlay" aria-hidden="true"></span>
+          </div>
+          <div class="col-index-body">
+            <span class="col-index-count">{{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
+            <h2 class="col-index-title">{{ collection.title }}</h2>
+            <span class="col-index-cta">{{ section.settings.cta_text }} {%- render 'icon', name: 'arrow-right' -%}</span>
+          </div>
+        </a>
+      {%- else -%}
+        <p class="collection-empty">{{ 'collections.general.no_matches' | t }}</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Lista de colecciones",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "CATÁLOGO" },
+    { "type": "text", "id": "heading", "label": "Título", "default": "Explora el universo VILLUMINATION" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Elige tu categoría y entra en modo élite." },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columnas (escritorio)",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "2"
+    },
+    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Explorar" }
+  ]
+}
+{% endschema %}
