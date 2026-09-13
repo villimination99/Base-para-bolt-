@@ -73,7 +73,7 @@
             {%- endif -%}
             <div class="article-card-body">
               <span class="article-card-date">
-                {{ article.published_at | date: '%d %b, %Y' }}
+                {{ article.published_at | date: format: 'abbreviated_date' }}
                 {%- assign palabras = article.content | strip_html | split: ' ' | size -%}
                 {%- assign minutos = palabras | divided_by: 200 | plus: 1 -%}
                 &middot; {{ 'blogs.article.reading_time' | t: minutes: minutos }}

@@ -13,7 +13,7 @@
     <article>
       <header class="article-header" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
         <div class="article-meta">
-          <span class="article-card-date">{{ article.published_at | date: '%d %b, %Y' }}</span>
+          <span class="article-card-date">{{ article.published_at | date: format: 'abbreviated_date' }}</span>
           {%- comment -%}
             Tiempo de lectura estimado a 200 palabras por minuto. Da al lector
             una idea del compromiso antes de empezar, y reduce el rebote.
@@ -160,7 +160,7 @@
               </div>
             {%- endif -%}
             <div class="article-card-body">
-              <span class="article-card-date">{{ art.published_at | date: '%d %b, %Y' }}</span>
+              <span class="article-card-date">{{ art.published_at | date: format: 'abbreviated_date' }}</span>
               <h3 class="article-card-title">{{ art.title }}</h3>
             </div>
           </a>

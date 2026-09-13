@@ -59,7 +59,7 @@
             <h2 class="article-lead-title">{{ lead.title }}</h2>
             <p class="article-lead-excerpt">{{ lead.excerpt_or_content | strip_html | truncatewords: 34 }}</p>
             <span class="article-lead-meta">
-              {{ lead.published_at | date: '%d %b, %Y' }}
+              {{ lead.published_at | date: format: 'abbreviated_date' }}
               {%- assign lead_words = lead.content | strip_html | split: ' ' | size -%}
               {%- assign lead_min = lead_words | divided_by: 200 | plus: 1 -%}
               &middot; {{ 'blogs.article.reading_time' | t: minutes: lead_min }}
@@ -96,7 +96,7 @@
               {%- endif -%}
               <div class="article-card-body">
                 <span class="article-card-date">
-                  {{ article.published_at | date: '%d %b, %Y' }}
+                  {{ article.published_at | date: format: 'abbreviated_date' }}
                   {%- assign a_words = article.content | strip_html | split: ' ' | size -%}
                   {%- assign a_min = a_words | divided_by: 200 | plus: 1 -%}
                   &middot; {{ 'blogs.article.reading_time' | t: minutes: a_min }}
