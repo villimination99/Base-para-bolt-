@@ -15,6 +15,23 @@
    1200x630 es la proporcion que piden Open Graph y Twitter. Se rinden con el
    Chromium que ya trae el contenedor, sin dependencias nuevas.
 
+   LA CAJA SEGURA, QUE ES LA LECCION DE LA PRIMERA VERSION. La tarjeta del
+   blog NO ensena la portada entera: la recorta DOS veces seguidas. Primero
+   el Liquid le pide a Shopify 700x450 con recorte centrado, que ya deja
+   fuera el 18 % del ancho; despues el CSS hace object-fit:cover sobre un
+   hueco de ancho_tarjeta x 210 px y vuelve a recortar. Con la rejilla
+   minmax(280px,1fr), el peor caso deja a la vista el 70 % del ancho y el
+   68 % del alto.
+
+   La primera version ponia la marca al 7 % del borde -- dentro de la zona
+   que se corta -- y en un movil se veia "ILLUMINATION" y el titulo sin su
+   primera letra. Lo vio el cliente en una captura, no yo.
+
+   Asi que todo lo que hay que leer vive dentro de 840x428 px centrados.
+   Fuera de esa caja solo va decoracion: rejilla, halos y el filo de color,
+   que se pueden cortar sin que se pierda nada. El archivo sigue siendo
+   1200x630 completo, asi que al compartirlo en redes se ve entero.
+
    Uso:  node marca/generar-portadas.mjs                                    */
 import { chromium } from 'playwright';
 import fs from 'fs';
@@ -53,12 +70,15 @@ const fuenteB64 = fs.readFileSync(FUENTE).toString('base64');
 /* El titulo manda sobre el cuerpo: cuanto mas largo, mas pequeno, para que
    nunca se salga del lienzo ni quede una linea suelta abajo. Medido sobre los
    doce titulos reales, no a ojo. */
+/* Medido sobre los doce titulos reales contra la caja de 840 px, no a ojo:
+   el verificador de abajo falla si alguno se sale. */
 function tamano(t) {
   const n = t.length;
-  if (n <= 30) return 78;
-  if (n <= 42) return 68;
-  if (n <= 54) return 60;
-  return 52;
+  if (n <= 24) return 68;
+  if (n <= 34) return 60;
+  if (n <= 46) return 52;
+  if (n <= 56) return 46;
+  return 41;
 }
 
 const pagina = (titulo, fam) => `<!doctype html><html lang="es"><head><meta charset="utf-8">
@@ -81,18 +101,20 @@ const pagina = (titulo, fam) => `<!doctype html><html lang="es"><head><meta char
   .borde{position:absolute;inset:0;border:2px solid ${fam.color}40}
   .filo{position:absolute;left:0;right:0;top:0;height:6px;
     background:linear-gradient(90deg,${fam.color},#ff2ecb 55%,#7b2fff)}
-  .cuerpo{position:absolute;inset:0;padding:72px 84px;display:flex;flex-direction:column;justify-content:space-between}
-  .arriba{display:flex;align-items:center;gap:18px}
-  .marca{font-weight:900;font-size:21px;letter-spacing:.28em;color:#fff}
+  /* 180 px a los lados y 101 arriba y abajo: la caja que sobrevive al peor
+     recorte de la tarjeta. Todo lo legible vive aqui dentro. */
+  .cuerpo{position:absolute;inset:0;padding:101px 180px;display:flex;flex-direction:column;justify-content:space-between}
+  .arriba{display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
+  .marca{font-weight:900;font-size:19px;letter-spacing:.24em;color:#fff;white-space:nowrap}
   .marca span{color:${fam.color}}
-  .fam{font-weight:700;font-size:15px;letter-spacing:.22em;color:${fam.color};
+  .fam{font-weight:700;font-size:13px;white-space:nowrap;letter-spacing:.22em;color:${fam.color};
     border:1.5px solid ${fam.color}66;border-radius:999px;padding:8px 16px;background:${fam.color}14}
-  h1{font-weight:800;font-size:${tamano(titulo)}px;line-height:1.14;letter-spacing:-.012em;
-     max-width:17ch;text-wrap:balance;
+  h1{font-weight:800;font-size:${tamano(titulo)}px;line-height:1.16;letter-spacing:-.012em;
+     max-width:840px;text-wrap:balance;
      text-shadow:0 0 34px ${fam.color}5c, 0 2px 0 rgba(0,0,0,.4)}
-  .abajo{display:flex;align-items:center;justify-content:space-between}
-  .pie{font-weight:600;font-size:17px;letter-spacing:.16em;color:#a9b6cc}
-  .raya{height:4px;width:190px;border-radius:2px;
+  .abajo{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .pie{font-weight:600;font-size:15px;white-space:nowrap;letter-spacing:.16em;color:#a9b6cc}
+  .raya{height:4px;width:150px;flex:0 0 auto;border-radius:2px;
     background:linear-gradient(90deg,${fam.color},transparent)}
 </style></head><body>
   <div class="rejilla"></div><div class="halo"></div><div class="halo2"></div>
@@ -105,14 +127,33 @@ const pagina = (titulo, fam) => `<!doctype html><html lang="es"><head><meta char
 </body></html>`;
 
 fs.mkdirSync(SALIDA, { recursive: true });
+const salidas = [];
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const p = await b.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
 for (const [handle, titulo, familia] of ARTICULOS) {
   await p.setContent(pagina(titulo, FAMILIAS[familia]), { waitUntil: 'load' });
   await p.evaluate(() => document.fonts.ready);
+  /* SE MIDE, NO SE SUPONE. Cada cosa legible tiene que caber en la caja
+     segura; si una sola se sale, no se escribe ninguna portada. */
+  const fuera = await p.evaluate(([mx, my]) => {
+    const malos = [];
+    for (const el of document.querySelectorAll('.marca,.fam,h1,.pie')) {
+      const r = el.getBoundingClientRect();
+      if (r.left < mx - 0.5 || r.right > 1200 - mx + 0.5 || r.top < my - 0.5 || r.bottom > 630 - my + 0.5) {
+        malos.push(`${el.className || el.tagName} [${Math.round(r.left)},${Math.round(r.top)} → ${Math.round(r.right)},${Math.round(r.bottom)}]`);
+      }
+    }
+    return malos;
+  }, [180, 101]);
+  if (fuera.length) { salidas.push(`${handle}: ${fuera.join(' | ')}`); }
   await p.screenshot({ path: path.join(SALIDA, handle + '.png') });
   const kb = Math.round(fs.statSync(path.join(SALIDA, handle + '.png')).size / 1024);
-  console.log(`  ${handle.padEnd(44)} ${String(kb).padStart(4)} KB  ${FAMILIAS[familia].etiqueta}`);
+  console.log(`  ${handle.padEnd(44)} ${String(kb).padStart(4)} KB  ${FAMILIAS[familia].etiqueta}${fuera.length ? '   <<<< SE SALE' : ''}`);
 }
 await b.close();
+if (salidas.length) {
+  console.error('\n  Estas portadas se salen de la caja segura de 840x428:');
+  for (const s of salidas) console.error('   ' + s);
+  process.exit(1);
+}
 console.log(`\n  ${ARTICULOS.length} portadas en marca/portadas/`);
