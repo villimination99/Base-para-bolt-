@@ -1,0 +1,55 @@
+<section class="section-padding">
+  <div class="container">
+    <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      {%- if section.settings.eyebrow != blank -%}<span class="section-eyebrow neon-text-pink">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+
+    {%- comment -%}
+      UN TESTIMONIO SIN CITA NO SE PINTA. Esta sección venía con tres nombres de
+      ejemplo escritos en los valores por defecto —Alex R., María G., Diego M.,
+      «Cliente verificado»— y esos nombres llegaron a estar publicados en una
+      tienda que todavía no tenía ni un cliente. Reseñas inventadas: sancionable
+      en Canadá, en la UE y en Estados Unidos, y además lo contrario de lo que
+      esta marca dice ser.
+
+      Los valores por defecto están ahora vacíos, y un bloque sin cita se salta
+      entero. Así el editor enseña el hueco y no se puede publicar por descuido
+      un testimonio que nadie ha dicho.
+    {%- endcomment -%}
+    {%- capture testi_cards -%}
+      {%- for block in section.blocks -%}
+        {%- if block.settings.quote == blank -%}{%- continue -%}{%- endif -%}
+        <div class="{% if section.settings.layout == 'carousel' %}carousel-slide{% endif %}" {{ block.shopify_attributes }}>
+          <div class="testi-card" {% if section.settings.layout != 'carousel' and settings.enable_scroll_reveal %}data-reveal{% endif %}>
+            <div class="testi-stars" aria-label="{{ block.settings.stars | escape }} / 5">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
+            <p class="testi-quote">“{{ block.settings.quote }}”</p>
+            <div class="testi-author">
+              {%- if block.settings.avatar != blank -%}
+                <img class="testi-avatar" src="{{ block.settings.avatar | image_url: width: 96 }}" alt="{{ block.settings.name | escape }}" width="44" height="44" loading="lazy">
+              {%- endif -%}
+              <div>
+                <div class="testi-name">{{ block.settings.name }}</div>
+                {%- if block.settings.role != blank -%}<div class="testi-role">{{ block.settings.role }}</div>{%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if section.settings.layout == 'carousel' -%}
+      <div class="carousel card-carousel" data-carousel data-autoplay="{{ section.settings.autoplay_speed }}">
+        <button class="carousel-arrow carousel-prev" type="button" data-carousel-prev aria-label="{{ 'general.previous' | t }}">{%- render 'icon', name: 'chevron-left' -%}</button>
+        <div class="carousel-track" data-carousel-track data-scroll-label="{{ 'accessibility.scrollable_row' | t }}" style="--card-w:340px;">{{ testi_cards }}</div>
+        <button class="carousel-arrow carousel-next" type="button" data-carousel-next aria-label="{{ 'general.next' | t }}">{%- render 'icon', name: 'chevron-right' -%}</button>
+      </div>
+    {%- else -%}
+      <div class="testi-grid">{{ testi_cards }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Bisec A" }
+{% endschema %}
