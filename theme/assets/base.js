@@ -994,7 +994,18 @@
     function tick() {
       var diff = target - Date.now();
       if (diff <= 0) {
-        root.innerHTML = '<p class="countdown-expired">' + (root.getAttribute('data-expired') || '') + '</p>';
+        /* SE CONSTRUYE EL NODO, NO SE PEGA HTML. Antes era innerHTML con el
+           texto del ajuste dentro, y ese texto lo escribe el comerciante: al
+           pasar por | escape en el atributo y volver a deshacerse aqui, un
+           <img onerror=...> escrito en el editor se convertia en HTML de
+           verdad y se ejecutaba. Es su propia tienda, asi que el dano es
+           acotado, pero pegar HTML que no controlas no se hace y punto.
+           Con textContent el texto se ve igual y no puede ser otra cosa. */
+        var avisoFin = document.createElement('p');
+        avisoFin.className = 'countdown-expired';
+        avisoFin.textContent = desescapar(root.getAttribute('data-expired') || '');
+        root.textContent = '';
+        root.appendChild(avisoFin);
         clearInterval(iv);
         return;
       }
@@ -1125,7 +1136,19 @@
       // Un dialogo sin nombre se anuncia como "dialogo" y ya: el lector de
       // pantalla no dice que se ha abierto una imagen ampliada.
       box.setAttribute('aria-label', (strings.ampliarImagen || 'Imagen ampliada'));
-      box.innerHTML = '<button class="img-lightbox-close" aria-label="' + (strings.cerrar || 'Cerrar') + '">&times;</button><img alt="">';
+      /* SE CONSTRUYE, NO SE CONCATENA. El rotulo iba pegado dentro de un
+         atributo en una cadena de HTML, sin escapar. Mientras las traducciones
+         llegaban escapadas por Shopify daba igual; desde que se desescapan en
+         la frontera -- que es lo correcto para que no se lea "l&#39;esprit" --
+         una comilla en una traduccion futura se saldria del atributo. Con
+         setAttribute no hay atributo del que salirse. */
+      var cerrarBtn = document.createElement('button');
+      cerrarBtn.className = 'img-lightbox-close';
+      cerrarBtn.setAttribute('aria-label', strings.cerrar || 'Cerrar');
+      cerrarBtn.innerHTML = '&times;';
+      box.textContent = '';
+      box.appendChild(cerrarBtn);
+      box.appendChild(document.createElement('img')).alt = '';
       boxImg = box.querySelector('img');
       // El puntero muestra "zoom-out" sobre todo el visor, así que cualquier
       // clic dentro debe cerrarlo. Antes solo cerraba el fondo o la X, y esa X

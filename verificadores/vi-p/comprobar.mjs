@@ -407,6 +407,44 @@ const esNombres = await p.$$eval('#chakra-grid .freq-name', n => n.map(e => e.te
 decir(esNombres.includes('Ra\u00edz') && esNombres.includes('Coraz\u00f3n'),
   `es: y en espanol van acentuados (${esNombres.slice(0, 4).join(', ')}...)`);
 
+/* ------------------------------------------------------------------
+   NI UNA ENTIDAD HTML A LA VISTA, EN NINGUNO DE LOS TRES IDIOMAS
+   El hub pinta casi todo su texto con JavaScript, que es justo donde una
+   entidad se queda sin deshacer y el cliente lee "l&#39;esprit" tal cual.
+   Paso en el pie de la tienda y lo vio el cliente en una captura; aqui hay
+   mil quinientas cadenas y muchas llevan apostrofo en frances, asi que el
+   riesgo es mayor, no menor.
+   ------------------------------------------------------------------ */
+const ENTIDAD = /&(?:#\d{2,5}|#x[0-9a-fA-F]{2,4}|amp|lt|gt|quot|apos|nbsp);/;
+for (const idioma of ['fr', 'en', 'es']) {
+  await p.click(`#lang-switch button[data-l="${idioma}"]`);
+  await p.waitForTimeout(450);
+  const sucias = await p.evaluate(() => {
+    const t = document.body.innerText || '';
+    return [...new Set(t.match(/[^\n]*&(?:#\d{2,5}|#x[0-9a-fA-F]{2,4}|amp|lt|gt|quot|apos|nbsp);[^\n]*/g) || [])];
+  });
+  decir(sucias.length === 0, `${idioma}: no se lee ninguna entidad HTML por pantalla`);
+  for (const x of sucias.slice(0, 3)) console.log('        \u00ab' + x.trim().slice(0, 74) + '\u00bb');
+}
+
+/* ------------------------------------------------------------------
+   EL INFORME QUE EL PROPIO HUB YA LLEVA DENTRO, Y QUE NADIE MIRABA
+   vi-p.js apunta cada cadena que pide traducir y no encuentra, y lo saca
+   por __i18nReport(). Estaba ahi para depurar a mano y no lo usaba nadie:
+   ahora es una comprobacion. Si alguien anade una seccion nueva al hub y
+   se olvida del diccionario, esto lo canta el mismo dia.
+   ------------------------------------------------------------------ */
+for (const idioma of ['fr', 'en']) {
+  await p.evaluate(() => { window.__i18nMiss = {}; });
+  await p.click(`#lang-switch button[data-l="${idioma}"]`);
+  await p.waitForTimeout(700);
+  const sueltas = await p.evaluate(() => Object.keys(window.__i18nMiss || {}));
+  decir(sueltas.length === 0, `${idioma}: el hub no deja ni una cadena sin traducir (${sueltas.length})`);
+  for (const x of sueltas.slice(0, 6)) console.log('        sin traducir: ' + String(x).slice(0, 74));
+}
+await p.click('#lang-switch button[data-l="es"]');
+await p.waitForTimeout(300);
+
 await b.close(); srv.close(); fs.rmSync(TMP, { recursive: true, force: true });
 console.log(mal ? `\n  ${mal} comprobaciones mal` : '\nVI.P funciona dentro del tema, sin salir a internet y sin tocar lo que hay alrededor.');
 process.exit(mal ? 1 : 0);
