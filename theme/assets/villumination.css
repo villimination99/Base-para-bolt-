@@ -1144,6 +1144,125 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 .splash-intro.intro-lista .splash-tagline{opacity:1;transform:none}
 .splash-intro.intro-lista .splash-tagline{transition-delay:.10s}
 
+/* ==================================================================
+   EL BOTON DE ENTRAR
+   ------------------------------------------------------------------
+   Es el unico sitio de la tienda donde un boton tiene que ganarle la
+   mirada a una animacion de dos segundos y medio, un emblema que late y
+   una marca en degradado. Era el mas apagado de los tres: relleno de
+   cian al 8 %, un filo de 1 px y la letra del mismo cian. Sobre negro
+   eso no es un boton primario, es un fantasma -- y encima repetia el
+   cian que ya llevan el emblema, el anillo y las frases, asi que ni
+   siquiera se distinguia de la decoracion.
+
+   Lo raro es que el resto de la tienda ya sabia como se hace: .btn-primary
+   es degradado macizo con la tinta OSCURA encima. El de la intro era el
+   unico que se habia quedado fuera de esa familia. Aqui vuelve a ella y
+   va un paso mas alla, porque es el que manda:
+
+     - Macizo, con el degradado de la marca entero -- cian, morado y rosa,
+       los mismos tres colores del anillo del emblema y del monograma. No
+       se inventa una paleta: cierra la que ya estaba abierta.
+       El degradado va ESPEJADO (cian, morado, rosa, morado, cian) sobre el
+       doble del ancho de la caja, y esa es la razon: con un degradado
+       normal al 190 %, en reposo solo entraban en la caja el cian y el
+       morado y el rosa se quedaba fuera, asi que el boton volvia a leerse
+       como azul -- justo lo que se venia a arreglar. Espejado, cualquier
+       ventana de media imagen contiene los tres, y la deriva solo cambia
+       en que orden aparecen.
+     - Tinta casi negra sobre el neon. Suena al reves y es justo lo que
+       sube el contraste: #05050f sobre el cian del degradado pasa de 12:1,
+       mientras que el cian sobre negro que habia se quedaba cerca del
+       minimo y encima con la letra muy espaciada, que es la que peor se
+       lee.
+     - Florece. Tres sombras de color -- cian, rosa y morado -- lo
+       convierten en la fuente de luz de la pantalla en vez de un agujero
+       recortado en ella.
+     - Respira y brilla. El degradado se desplaza despacio y cada seis
+       segundos lo cruza un destello. Las dos cosas mueven un FONDO, no la
+       caja: no hay reflujo, no hay salto y no le cuestan un fotograma a
+       la secuencia que corre debajo.
+
+   Y UN FALLO QUE ESTABA ESCONDIDO EN LA CASCADA. El hover subia el boton
+   2 px con `.splash-enter-btn:hover`, que son dos clases. En cuanto la
+   intro se abre, el boton lo gobierna `.splash-intro.intro-puerta
+   .splash-enter-btn`, que son TRES y ademas fija `transform:none`. O sea
+   que el gesto existia en la hoja de estilos y no se veia nunca en la
+   tienda: ganaba la regla de la puerta. Por eso el boton se sentia muerto
+   al pasar el raton. Las reglas de aqui abajo llevan la misma raiz
+   `.splash-intro.intro-puerta`, asi que pesan lo mismo o mas y el gesto
+   por fin ocurre. */
+.splash-intro .splash-enter-btn{
+  position:relative;
+  padding:1.05rem 2.9rem;
+  border:0;
+  border-radius:.75rem;
+  color:#05050f;
+  font-family:var(--font-heading);
+  font-weight:800;
+  font-size:1.02rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  /* Dos capas: el destello que cruza, y debajo el degradado de la marca.
+     El redondeo de la caja ya recorta las dos, asi que no hace falta
+     overflow ni un pseudoelemento que tape nada. */
+  background:
+    linear-gradient(112deg,transparent 34%,rgba(255,255,255,.62) 46%,transparent 58%) 160% 0/260% 100% no-repeat,
+    linear-gradient(120deg,var(--neon-cyan,#00d4ff) 0%,var(--neon-purple,#7b2fff) 25%,var(--neon-pink,#ff2ecb) 50%,var(--neon-purple,#7b2fff) 75%,var(--neon-cyan,#00d4ff) 100%) 0 0/200% 100%;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.34),
+    0 10px 30px -8px rgba(0,212,255,.6),
+    0 12px 42px -6px rgba(255,46,203,.38),
+    0 0 58px -12px rgba(123,47,255,.55);
+  /* Entra encendiendose: sube, crece de 0.94 a 1 y florece. Solo opacidad
+     y transform, que el navegador resuelve sin volver a medir la pagina. */
+  transform:translateY(14px) scale(.94);
+  transition:opacity .55s ease-out,
+             transform .55s cubic-bezier(.22,1,.36,1),
+             box-shadow .3s ease;
+  animation:vi-entrar-vive 9s linear 1.2s infinite}
+.splash-intro .splash-enter-btn svg{transition:transform .25s cubic-bezier(.22,1,.36,1)}
+/* letter-spacing tambien se lo pone a la ULTIMA letra, asi que la palabra
+   arrastra .16em de aire por la derecha que nadie ve y que empuja la flecha.
+   Se le descuenta exactamente lo mismo. Con el japones se nota mas, porque
+   ahi cada signo lleva su espacio. */
+.splash-intro .splash-enter-btn>span{margin-right:-.16em}
+
+/* El gesto del raton, con el peso suficiente para que se vea. */
+.splash-intro.intro-puerta .splash-enter-btn:hover,
+.splash-intro.intro-puerta .splash-enter-btn:focus-visible{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    0 16px 38px -8px rgba(0,212,255,.75),
+    0 18px 54px -6px rgba(255,46,203,.5),
+    0 0 78px -10px rgba(123,47,255,.7)}
+.splash-intro.intro-puerta .splash-enter-btn:hover svg{transform:translateX(4px)}
+.splash-intro.intro-puerta .splash-enter-btn:active{transform:translateY(-1px) scale(.99)}
+/* El anillo de foco por fuera de la floracion, o se lo come la luz. */
+.splash-intro .splash-enter-btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+
+/* El lema es la unica frase larga de la pantalla y en un movil parte donde le
+   toca: "TRANSFORMA TU CUERPO. DOMINA TU / MENTE." deja una linea llena y una
+   con una palabra suelta, que es lo que hace que una portada parezca
+   descuidada. balance reparte las dos lineas por igual. Donde el navegador no
+   lo entienda no pasa nada: parte como hasta ahora. */
+.splash-intro .splash-tagline,
+.splash-intro .splash-title{text-wrap:balance}
+
+/* Las dos cosas -- la deriva del degradado y el destello que lo cruza --
+   viven en UNA sola pista. Dos animaciones no pueden repartirse
+   background-position: las dos escriben la propiedad entera, con sus dos
+   capas, y la segunda le pisa a la primera lo que acaba de poner. Asi que
+   van juntas, y el destello vuelve a su sitio en el salto de 56 a 56,1 %,
+   con las dos posiciones fuera de la caja: el regreso no se ve.   */
+@keyframes vi-entrar-vive{
+  0%    {background-position:160% 0,0 0}
+  40%   {background-position:160% 0,100% 0}
+  56%   {background-position:-60% 0,100% 0}
+  56.1% {background-position:160% 0,100% 0}
+  100%  {background-position:160% 0,0 0}}
+
 /* ---- El logotipo de la marca ----
    El logotipo de la tienda es apaisado. Metido dentro del nucleo circular del
    emblema salia diminuto: se quedaba con la altura que le permitiera el ancho
@@ -1317,7 +1436,10 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   .splash-mono{font-size:clamp(24px,8vh,46px)}
   .splash-frase{font-size:clamp(.85rem,3.2vw,1.05rem)}
   .splash-tagline{font-size:clamp(.72rem,2.4vw,.9rem);letter-spacing:.1em}
-  .splash-enter-btn{padding:.7rem 1.8rem}
+  /* Con la raiz .splash-intro delante, porque la regla que fija el tamano
+     normal del boton tambien la lleva. Sin ella esta pesaba menos y el boton
+     se quedaba grande justo en la pantalla donde no cabe. */
+  .splash-intro .splash-enter-btn{padding:.74rem 1.9rem;font-size:.92rem;letter-spacing:.13em}
 }
 /* Por debajo de 420 px de alto ya no es cuestion de encoger, es de elegir. Se
    queda lo que identifica la tienda y lo que deja entrar: marca, frase y
@@ -2212,6 +2334,18 @@ input[type=search]::-webkit-search-cancel-button:hover{opacity:1}
 
   /* Las decoraciones que solo son luz dejan de aportar y solo estorban. */
   .splash-particles,.splash-bg::before,.hero-glow{display:none!important}
+
+  /* El boton de entrar es degradado macizo con tinta oscura encima. Aqui el
+     sistema borra el degradado y las sombras de color, y sin esto quedaria
+     tinta casi negra sobre el lienzo del sistema -- la unica puerta de la
+     tienda, ilegible. Se le devuelven los colores de boton del sistema y un
+     filo, que es lo que este modo espera ver. */
+  .splash-enter-btn{
+    background:ButtonFace!important;
+    color:ButtonText!important;
+    border:2px solid ButtonText!important;
+    box-shadow:none!important;
+    animation:none!important}
 }
 
 /* Quien pide mas contraste al sistema operativo pide leer, no adivinar. */
