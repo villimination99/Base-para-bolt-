@@ -18,7 +18,7 @@
       {%- else -%}
         {%- comment -%} Solo dentro del editor: en la tienda en vivo el cliente no debe leer instrucciones. {%- endcomment -%}
         {%- if request.design_mode -%}
-          <p class="section-subtitle" style="text-align:center;">Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.</p>
+          <p class="section-subtitle" style="text-align:center;">{{ 'onboarding.app_block' | t }}</p>
         {%- endif -%}
       {%- endfor -%}
     </div>

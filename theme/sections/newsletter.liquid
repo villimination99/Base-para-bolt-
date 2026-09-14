@@ -34,7 +34,7 @@
     {%- endif -%}
     <div class="footer-newsletter" style="margin-top:1.4rem;">
       {%- form 'customer' -%}
-        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="hidden" name="contact[tags]" value="newsletter,portada">
         {%- if form.posted_successfully? -%}
           <div class="nl-success">
             <p class="form-success">{%- if cx_success_text != blank -%}{{ cx_success_text }}{%- else -%}{{ 'general.newsletter.success' | t }}{%- endif -%}</p>

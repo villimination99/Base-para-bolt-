@@ -86,7 +86,8 @@
       "share": "Partager",
       "example": "Produit d'exemple",
       "reviews": "avis",
-      "drag_to_rotate": "Faites glisser pour tourner"
+      "drag_to_rotate": "Faites glisser pour tourner",
+      "save": "Tu économises"
     },
     "recommendations": {
       "related": "Vous aimerez aussi",
@@ -540,7 +541,18 @@
       },
       "announcement-bar": {
         "countdown_prefix": "Se termine dans",
-        "countdown_expired": "Offre terminée !"
+        "countdown_expired": "Offre terminée !",
+        "text": "Livraison suivie sur toutes les commandes 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "TON HISTORIQUE",
+        "heading": "Vus récemment"
+      },
+      "main-list-collections": {
+        "eyebrow": "CATALOGUE",
+        "heading": "Explore l'univers VILLUMINATION",
+        "subheading": "Choisis ta catégorie et passe en mode élite.",
+        "cta_text": "Explorer"
       }
     },
     "pie": {
@@ -577,6 +589,37 @@
       "m4": {
         "subtitle": "Entraîne ton esprit"
       }
+    },
+    "producto": {
+      "t1": {
+        "text": "Livraison rapide, 3 à 7 jours"
+      },
+      "t2": {
+        "text": "Paiement 100 % sécurisé"
+      },
+      "t3": {
+        "text": "Garantie satisfaction"
+      },
+      "c1": {
+        "title": "Livraison et retours",
+        "content_html": "<p>Livraison en 3 à 7 jours ouvrés. Retours gratuits sous 30 jours.</p>"
+      },
+      "c2": {
+        "title": "Comment l'utiliser"
+      },
+      "sec": {
+        "related_heading": "Ça pourrait aussi te plaire",
+        "low_stock_text": "Il n'en reste que [n] ! Dépêche-toi",
+        "rec_eyebrow": "Pour toi",
+        "related_eyebrow": "COMPLÈTE TON ARSENAL"
+      }
     }
+  },
+  "onboarding": {
+    "app_block": "Ajoute ici le bloc de ton app 3D/RA ou d'essayage virtuel depuis l'éditeur.",
+    "add_cards": "Ajoute des cartes depuis l'éditeur.",
+    "add_rows": "Ajoute des lignes depuis l'éditeur.",
+    "add_pdf": "Ajoute l'URL d'un PDF ou d'un flipbook.",
+    "pick_collection": "Choisis une collection avec des produits dans l'éditeur."
   }
 }

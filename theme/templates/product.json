@@ -8,7 +8,7 @@
           "settings": {
             "visible": true,
             "icon": "bolt",
-            "text": "Envío rápido 3–7 días"
+            "text": ""
           }
         },
         "t2": {
@@ -16,7 +16,7 @@
           "settings": {
             "visible": true,
             "icon": "check",
-            "text": "Pago 100% seguro"
+            "text": ""
           }
         },
         "t3": {
@@ -24,23 +24,23 @@
           "settings": {
             "visible": true,
             "icon": "trophy",
-            "text": "Garantía de satisfacción"
+            "text": ""
           }
         },
         "c1": {
           "type": "collapsible",
           "settings": {
             "visible": true,
-            "title": "Envío y devoluciones",
+            "title": "",
             "icon": "cube",
-            "content": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>"
+            "content": ""
           }
         },
         "c2": {
           "type": "collapsible",
           "settings": {
             "visible": false,
-            "title": "Cómo se usa",
+            "title": "",
             "icon": "bolt",
             "content": ""
           }
@@ -64,7 +64,7 @@
       "settings": {
         "intent": "related",
         "limit": 4,
-        "eyebrow": "Para ti"
+        "eyebrow": ""
       }
     }
   },

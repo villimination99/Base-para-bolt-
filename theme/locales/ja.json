@@ -86,7 +86,8 @@
       "share": "シェア",
       "example": "サンプル商品",
       "reviews": "件のレビュー",
-      "drag_to_rotate": "ドラッグで回転"
+      "drag_to_rotate": "ドラッグで回転",
+      "save": "お得"
     },
     "recommendations": {
       "related": "こちらもおすすめ",
@@ -540,7 +541,18 @@
       },
       "announcement-bar": {
         "countdown_prefix": "終了まで",
-        "countdown_expired": "オファーは終了しました！"
+        "countdown_expired": "オファーは終了しました！",
+        "text": "全注文で追跡付き配送 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "あなたの履歴",
+        "heading": "最近見た商品"
+      },
+      "main-list-collections": {
+        "eyebrow": "カタログ",
+        "heading": "VILLUMINATIONの世界を探索",
+        "subheading": "カテゴリーを選んでエリートモードへ。",
+        "cta_text": "見る"
       }
     },
     "pie": {
@@ -577,6 +589,37 @@
       "m4": {
         "subtitle": "心を鍛えよう"
       }
+    },
+    "producto": {
+      "t1": {
+        "text": "3〜7日のスピード配送"
+      },
+      "t2": {
+        "text": "100%安全な決済"
+      },
+      "t3": {
+        "text": "満足保証"
+      },
+      "c1": {
+        "title": "配送と返品",
+        "content_html": "<p>営業日3〜7日で発送。30日以内は返品無料。</p>"
+      },
+      "c2": {
+        "title": "使い方"
+      },
+      "sec": {
+        "related_heading": "こちらもおすすめ",
+        "low_stock_text": "残り[n]点！お早めに",
+        "rec_eyebrow": "あなたに",
+        "related_eyebrow": "装備を完成させる"
+      }
     }
+  },
+  "onboarding": {
+    "app_block": "エディタから3D/ARアプリまたはバーチャル試着のブロックをここに追加してください。",
+    "add_cards": "エディタからカードを追加してください。",
+    "add_rows": "エディタから行を追加してください。",
+    "add_pdf": "PDFまたはフリップブックのURLを追加してください。",
+    "pick_collection": "エディタで商品のあるコレクションを選んでください。"
   }
 }

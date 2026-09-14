@@ -26,7 +26,10 @@
           <span class="catmosaic-shade" aria-hidden="true"></span>
           <span class="catmosaic-body">
             <span class="catmosaic-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
-            <span class="catmosaic-title">{{ block.settings.title | default: coll.title | default: 'general.collections' | t }}</span>
+            {%- capture cm_title -%}{%- render 'copia', g: 'categorias', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}
+            {%- if cm_title == blank -%}{%- assign cm_title = coll.title -%}{%- endif -%}
+            {%- if cm_title == blank -%}{%- capture cm_title -%}{{ 'collections.general.title' | t }}{%- endcapture -%}{%- endif -%}
+            <span class="catmosaic-title">{{ cm_title }}</span>
             {%- if block.settings.text != blank -%}<span class="catmosaic-text">{{ block.settings.text }}</span>{%- endif -%}
           </span>
         </a>

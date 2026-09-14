@@ -90,7 +90,7 @@
         <p class="cc-hint">{%- render 'icon', name: 'chevron-left' -%} {{ cx_hint }} {%- render 'icon', name: 'chevron-right' -%}</p>
       {%- endif -%}
     {%- else -%}
-      {%- if request.design_mode -%}<p class="cc-hint">Elige una colección con productos en el editor.</p>{%- endif -%}
+      {%- if request.design_mode -%}<p class="cc-hint">{{ 'onboarding.pick_collection' | t }}</p>{%- endif -%}
     {%- endif -%}
   </div>
 </section>

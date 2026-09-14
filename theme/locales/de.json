@@ -86,7 +86,8 @@
       "share": "Teilen",
       "example": "Beispielprodukt",
       "reviews": "Bewertungen",
-      "drag_to_rotate": "Ziehen zum Drehen"
+      "drag_to_rotate": "Ziehen zum Drehen",
+      "save": "Du sparst"
     },
     "recommendations": {
       "related": "Das könnte Ihnen auch gefallen",
@@ -540,7 +541,18 @@
       },
       "announcement-bar": {
         "countdown_prefix": "Endet in",
-        "countdown_expired": "Angebot beendet!"
+        "countdown_expired": "Angebot beendet!",
+        "text": "Versand mit Sendungsverfolgung bei jeder Bestellung 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "DEIN VERLAUF",
+        "heading": "Kürzlich angesehen"
+      },
+      "main-list-collections": {
+        "eyebrow": "KATALOG",
+        "heading": "Erkunde das VILLUMINATION-Universum",
+        "subheading": "Wähle deine Kategorie und schalte in den Elite-Modus.",
+        "cta_text": "Entdecken"
       }
     },
     "pie": {
@@ -577,6 +589,37 @@
       "m4": {
         "subtitle": "Trainiere deinen Geist"
       }
+    },
+    "producto": {
+      "t1": {
+        "text": "Schneller Versand, 3–7 Tage"
+      },
+      "t2": {
+        "text": "100 % sichere Zahlung"
+      },
+      "t3": {
+        "text": "Zufriedenheitsgarantie"
+      },
+      "c1": {
+        "title": "Versand und Rückgabe",
+        "content_html": "<p>Versand in 3–7 Werktagen. Kostenlose Rückgabe innerhalb von 30 Tagen.</p>"
+      },
+      "c2": {
+        "title": "So wird es benutzt"
+      },
+      "sec": {
+        "related_heading": "Das könnte dir auch gefallen",
+        "low_stock_text": "Nur noch [n]! Beeil dich",
+        "rec_eyebrow": "Für dich",
+        "related_eyebrow": "VERVOLLSTÄNDIGE DEIN ARSENAL"
+      }
     }
+  },
+  "onboarding": {
+    "app_block": "Füge hier im Editor den Block deiner 3D-/AR-App oder Anprobe hinzu.",
+    "add_cards": "Füge im Editor Karten hinzu.",
+    "add_rows": "Füge im Editor Zeilen hinzu.",
+    "add_pdf": "Füge die URL eines PDFs oder Flipbooks hinzu.",
+    "pick_collection": "Wähle im Editor eine Kollektion mit Produkten."
   }
 }

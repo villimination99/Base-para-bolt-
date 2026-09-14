@@ -86,7 +86,8 @@
       "share": "Share",
       "example": "Example product",
       "reviews": "reviews",
-      "drag_to_rotate": "Drag to rotate"
+      "drag_to_rotate": "Drag to rotate",
+      "save": "You save"
     },
     "recommendations": {
       "related": "You may also like",
@@ -540,7 +541,18 @@
       },
       "announcement-bar": {
         "countdown_prefix": "Ends in",
-        "countdown_expired": "Offer ended!"
+        "countdown_expired": "Offer ended!",
+        "text": "Tracked shipping on every order 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "YOUR HISTORY",
+        "heading": "Recently viewed"
+      },
+      "main-list-collections": {
+        "eyebrow": "CATALOGUE",
+        "heading": "Explore the VILLUMINATION universe",
+        "subheading": "Pick your category and switch to elite mode.",
+        "cta_text": "Explore"
       }
     },
     "pie": {
@@ -577,6 +589,37 @@
       "m4": {
         "subtitle": "Train your mind"
       }
+    },
+    "producto": {
+      "t1": {
+        "text": "Fast shipping, 3–7 days"
+      },
+      "t2": {
+        "text": "100% secure payment"
+      },
+      "t3": {
+        "text": "Satisfaction guarantee"
+      },
+      "c1": {
+        "title": "Shipping and returns",
+        "content_html": "<p>Shipping in 3–7 business days. Free returns within 30 days.</p>"
+      },
+      "c2": {
+        "title": "How to use it"
+      },
+      "sec": {
+        "related_heading": "You might also like",
+        "low_stock_text": "Only [n] left! Hurry",
+        "rec_eyebrow": "For you",
+        "related_eyebrow": "COMPLETE YOUR ARSENAL"
+      }
     }
+  },
+  "onboarding": {
+    "app_block": "Add your 3D/AR app block or virtual try-on here from the editor.",
+    "add_cards": "Add cards from the editor.",
+    "add_rows": "Add rows from the editor.",
+    "add_pdf": "Add the URL of a PDF or flipbook.",
+    "pick_collection": "Pick a collection with products in the editor."
   }
 }

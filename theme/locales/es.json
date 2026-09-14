@@ -86,7 +86,8 @@
       "share": "Compartir",
       "example": "Producto de ejemplo",
       "reviews": "reseñas",
-      "drag_to_rotate": "Arrastra para girar"
+      "drag_to_rotate": "Arrastra para girar",
+      "save": "Ahorras"
     },
     "recommendations": {
       "related": "También te puede gustar",
@@ -540,7 +541,18 @@
       },
       "announcement-bar": {
         "countdown_prefix": "Termina en",
-        "countdown_expired": "¡Oferta terminada!"
+        "countdown_expired": "¡Oferta terminada!",
+        "text": "Envío con seguimiento en todos los pedidos 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "TU HISTORIAL",
+        "heading": "Vistos recientemente"
+      },
+      "main-list-collections": {
+        "eyebrow": "CATÁLOGO",
+        "heading": "Explora el universo VILLUMINATION",
+        "subheading": "Elige tu categoría y entra en modo élite.",
+        "cta_text": "Explorar"
       }
     },
     "pie": {
@@ -577,6 +589,37 @@
       "m4": {
         "subtitle": "Entrena tu mente"
       }
+    },
+    "producto": {
+      "t1": {
+        "text": "Envío rápido 3–7 días"
+      },
+      "t2": {
+        "text": "Pago 100% seguro"
+      },
+      "t3": {
+        "text": "Garantía de satisfacción"
+      },
+      "c1": {
+        "title": "Envío y devoluciones",
+        "content_html": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>"
+      },
+      "c2": {
+        "title": "Cómo se usa"
+      },
+      "sec": {
+        "related_heading": "También te puede gustar",
+        "low_stock_text": "¡Solo quedan [n]! Date prisa",
+        "rec_eyebrow": "Para ti",
+        "related_eyebrow": "COMPLETA TU ARSENAL"
+      }
     }
+  },
+  "onboarding": {
+    "app_block": "Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.",
+    "add_cards": "Añade tarjetas desde el editor.",
+    "add_rows": "Añade filas desde el editor.",
+    "add_pdf": "Añade la URL de un PDF o flipbook.",
+    "pick_collection": "Elige una colección con productos en el editor."
   }
 }

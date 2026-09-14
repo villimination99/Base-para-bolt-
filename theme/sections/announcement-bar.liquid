@@ -18,13 +18,15 @@
       {%- if section.settings.scrolling -%}
         <div class="announcement-track">
           {%- for block in section.blocks -%}
-            {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ block.settings.text }}</a>{%- else -%}<span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{%- endif -%}
+            {%- capture cb_msg -%}{%- render 'copia', g: 'sec', b: 'announcement-bar', a: 'text', v: block.settings.text -%}{%- endcapture -%}
+            {%- if block.settings.link != blank -%}<a href="{{ block.settings.link }}" {{ block.shopify_attributes }}>{{ cb_msg }}</a>{%- else -%}<span {{ block.shopify_attributes }}>{{ cb_msg }}</span>{%- endif -%}
             &nbsp;&nbsp;•&nbsp;&nbsp;
           {%- endfor -%}
         </div>
       {%- else -%}
         {%- assign b = section.blocks | first -%}
-        {%- if b.settings.link != blank -%}<a href="{{ b.settings.link }}" {{ b.shopify_attributes }}>{{ b.settings.text }}</a>{%- else -%}<span {{ b.shopify_attributes }}>{{ b.settings.text }}</span>{%- endif -%}
+        {%- capture cb_msg -%}{%- render 'copia', g: 'sec', b: 'announcement-bar', a: 'text', v: b.settings.text -%}{%- endcapture -%}
+        {%- if b.settings.link != blank -%}<a href="{{ b.settings.link }}" {{ b.shopify_attributes }}>{{ cb_msg }}</a>{%- else -%}<span {{ b.shopify_attributes }}>{{ cb_msg }}</span>{%- endif -%}
       {%- endif -%}
 
       {%- if show_cd -%}
@@ -99,7 +101,7 @@
           "type": "text",
           "id": "text",
           "label": "Texto",
-          "default": "Envío gratis en pedidos +$50 🚀"
+          "info": "Déjalo vacío y el aviso se traduce solo en los cinco idiomas."
         },
         {
           "type": "url",

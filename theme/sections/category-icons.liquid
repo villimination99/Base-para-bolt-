@@ -29,7 +29,10 @@
            {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
           <span class="caticons-halo" aria-hidden="true"></span>
           <span class="caticons-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
-          <span class="caticons-title">{%- capture ci_title -%}{%- render 'copia', g: 'categorias', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}{{ ci_title | default: coll.title | default: 'general.collections' | t }}</span>
+          {%- capture ci_title -%}{%- render 'copia', g: 'categorias', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}
+          {%- if ci_title == blank -%}{%- assign ci_title = coll.title -%}{%- endif -%}
+          {%- if ci_title == blank -%}{%- capture ci_title -%}{{ 'collections.general.title' | t }}{%- endcapture -%}{%- endif -%}
+          <span class="caticons-title">{{ ci_title }}</span>
           {%- capture cb_text -%}{%- render 'copia', g: 'categorias', b: block.id, a: 'text', v: block.settings.text -%}{%- endcapture -%}
               {%- if cb_text != blank -%}<span class="caticons-text">{{ cb_text }}</span>{%- endif -%}
         </a>

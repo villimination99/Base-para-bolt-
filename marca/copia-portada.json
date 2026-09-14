@@ -1136,6 +1136,59 @@
         "fr": "Offre terminée !",
         "de": "Angebot beendet!",
         "ja": "オファーは終了しました！"
+      },
+      "text": {
+        "es": "Envío con seguimiento en todos los pedidos 🚀",
+        "en": "Tracked shipping on every order 🚀",
+        "fr": "Livraison suivie sur toutes les commandes 🚀",
+        "de": "Versand mit Sendungsverfolgung bei jeder Bestellung 🚀",
+        "ja": "全注文で追跡付き配送 🚀"
+      }
+    },
+    "recently-viewed": {
+      "eyebrow": {
+        "es": "TU HISTORIAL",
+        "en": "YOUR HISTORY",
+        "fr": "TON HISTORIQUE",
+        "de": "DEIN VERLAUF",
+        "ja": "あなたの履歴"
+      },
+      "heading": {
+        "es": "Vistos recientemente",
+        "en": "Recently viewed",
+        "fr": "Vus récemment",
+        "de": "Kürzlich angesehen",
+        "ja": "最近見た商品"
+      }
+    },
+    "main-list-collections": {
+      "eyebrow": {
+        "es": "CATÁLOGO",
+        "en": "CATALOGUE",
+        "fr": "CATALOGUE",
+        "de": "KATALOG",
+        "ja": "カタログ"
+      },
+      "heading": {
+        "es": "Explora el universo VILLUMINATION",
+        "en": "Explore the VILLUMINATION universe",
+        "fr": "Explore l'univers VILLUMINATION",
+        "de": "Erkunde das VILLUMINATION-Universum",
+        "ja": "VILLUMINATIONの世界を探索"
+      },
+      "subheading": {
+        "es": "Elige tu categoría y entra en modo élite.",
+        "en": "Pick your category and switch to elite mode.",
+        "fr": "Choisis ta catégorie et passe en mode élite.",
+        "de": "Wähle deine Kategorie und schalte in den Elite-Modus.",
+        "ja": "カテゴリーを選んでエリートモードへ。"
+      },
+      "cta_text": {
+        "es": "Explorar",
+        "en": "Explore",
+        "fr": "Explorer",
+        "de": "Entdecken",
+        "ja": "見る"
       }
     }
   },
@@ -1249,6 +1302,90 @@
         "fr": "Entraîne ton esprit",
         "de": "Trainiere deinen Geist",
         "ja": "心を鍛えよう"
+      }
+    }
+  },
+  "producto": {
+    "t1": {
+      "text": {
+        "es": "Envío rápido 3–7 días",
+        "en": "Fast shipping, 3–7 days",
+        "fr": "Livraison rapide, 3 à 7 jours",
+        "de": "Schneller Versand, 3–7 Tage",
+        "ja": "3〜7日のスピード配送"
+      }
+    },
+    "t2": {
+      "text": {
+        "es": "Pago 100% seguro",
+        "en": "100% secure payment",
+        "fr": "Paiement 100 % sécurisé",
+        "de": "100 % sichere Zahlung",
+        "ja": "100%安全な決済"
+      }
+    },
+    "t3": {
+      "text": {
+        "es": "Garantía de satisfacción",
+        "en": "Satisfaction guarantee",
+        "fr": "Garantie satisfaction",
+        "de": "Zufriedenheitsgarantie",
+        "ja": "満足保証"
+      }
+    },
+    "c1": {
+      "title": {
+        "es": "Envío y devoluciones",
+        "en": "Shipping and returns",
+        "fr": "Livraison et retours",
+        "de": "Versand und Rückgabe",
+        "ja": "配送と返品"
+      },
+      "content_html": {
+        "es": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>",
+        "en": "<p>Shipping in 3–7 business days. Free returns within 30 days.</p>",
+        "fr": "<p>Livraison en 3 à 7 jours ouvrés. Retours gratuits sous 30 jours.</p>",
+        "de": "<p>Versand in 3–7 Werktagen. Kostenlose Rückgabe innerhalb von 30 Tagen.</p>",
+        "ja": "<p>営業日3〜7日で発送。30日以内は返品無料。</p>"
+      }
+    },
+    "c2": {
+      "title": {
+        "es": "Cómo se usa",
+        "en": "How to use it",
+        "fr": "Comment l'utiliser",
+        "de": "So wird es benutzt",
+        "ja": "使い方"
+      }
+    },
+    "sec": {
+      "related_heading": {
+        "es": "También te puede gustar",
+        "en": "You might also like",
+        "fr": "Ça pourrait aussi te plaire",
+        "de": "Das könnte dir auch gefallen",
+        "ja": "こちらもおすすめ"
+      },
+      "low_stock_text": {
+        "es": "¡Solo quedan [n]! Date prisa",
+        "en": "Only [n] left! Hurry",
+        "fr": "Il n'en reste que [n] ! Dépêche-toi",
+        "de": "Nur noch [n]! Beeil dich",
+        "ja": "残り[n]点！お早めに"
+      },
+      "rec_eyebrow": {
+        "es": "Para ti",
+        "en": "For you",
+        "fr": "Pour toi",
+        "de": "Für dich",
+        "ja": "あなたに"
+      },
+      "related_eyebrow": {
+        "es": "COMPLETA TU ARSENAL",
+        "en": "COMPLETE YOUR ARSENAL",
+        "fr": "COMPLÈTE TON ARSENAL",
+        "de": "VERVOLLSTÄNDIGE DEIN ARSENAL",
+        "ja": "装備を完成させる"
       }
     }
   }

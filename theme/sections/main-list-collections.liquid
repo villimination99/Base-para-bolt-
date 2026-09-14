@@ -1,9 +1,14 @@
 <section class="section-padding collection-index">
   <div class="container">
     <div class="collection-index-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-      {%- if section.settings.eyebrow != blank -%}<span class="fancy-eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
-      <h1 class="section-title neon-underline">{{ section.settings.heading | default: 'collections.general.title' | t }}</h1>
-      {%- if section.settings.subheading != blank -%}<p class="section-subtitle">{{ section.settings.subheading }}</p>{%- endif -%}
+      {%- capture cx_cta -%}{%- render 'copia', g: 'sec', b: 'main-list-collections', a: 'cta_text', v: section.settings.cta_text -%}{%- endcapture -%}
+      {%- capture cx_eyebrow -%}{%- render 'copia', g: 'sec', b: 'main-list-collections', a: 'eyebrow', v: section.settings.eyebrow -%}{%- endcapture -%}
+      {%- if cx_eyebrow != blank -%}<span class="fancy-eyebrow">{{ cx_eyebrow }}</span>{%- endif -%}
+      {%- capture lc_heading -%}{%- render 'copia', g: 'sec', b: 'main-list-collections', a: 'heading', v: section.settings.heading -%}{%- endcapture -%}
+      {%- if lc_heading == blank -%}{%- capture lc_heading -%}{{ 'collections.general.title' | t }}{%- endcapture -%}{%- endif -%}
+      <h1 class="section-title neon-underline">{{ lc_heading }}</h1>
+      {%- capture cx_subheading -%}{%- render 'copia', g: 'sec', b: 'main-list-collections', a: 'subheading', v: section.settings.subheading -%}{%- endcapture -%}
+      {%- if cx_subheading != blank -%}<p class="section-subtitle">{{ cx_subheading }}</p>{%- endif -%}
     </div>
 
     <div class="col-index-grid" style="--cols:{{ section.settings.columns }}">
@@ -25,7 +30,7 @@
           <div class="col-index-body">
             <span class="col-index-count">{{ 'collections.general.items_count' | t: count: collection.products_count }}</span>
             <h2 class="col-index-title">{{ collection.title }}</h2>
-            <span class="col-index-cta">{{ section.settings.cta_text }} {%- render 'icon', name: 'arrow-right' -%}</span>
+            <span class="col-index-cta">{{ cx_cta }} {%- render 'icon', name: 'arrow-right' -%}</span>
           </div>
         </a>
       {%- else -%}
@@ -39,9 +44,9 @@
 {
   "name": "Lista de colecciones",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "CATÁLOGO" },
-    { "type": "text", "id": "heading", "label": "Título", "default": "Explora el universo VILLUMINATION" },
-    { "type": "text", "id": "subheading", "label": "Subtítulo", "default": "Elige tu categoría y entra en modo élite." },
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior" },
+    { "type": "text", "id": "heading", "label": "Título" },
+    { "type": "text", "id": "subheading", "label": "Subtítulo" },
     {
       "type": "select",
       "id": "columns",
@@ -53,7 +58,7 @@
       ],
       "default": "2"
     },
-    { "type": "text", "id": "cta_text", "label": "Texto del botón", "default": "Explorar" }
+    { "type": "text", "id": "cta_text", "label": "Texto del botón" }
   ]
 }
 {% endschema %}

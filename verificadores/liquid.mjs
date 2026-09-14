@@ -32,12 +32,24 @@ const producto = { id: 9, title: 'Proteína', handle: 'proteina', url: '/product
   available: true, sold_out: false, has_only_default_variant: true, featured_media: img,
   media: [img], images: [img], variants: [variante], selected_or_first_available_variant: variante,
   options_with_values: [{ name: 'Talla', values: [{ name: 'Único', selected: true }] }],
-  collections: [], metafields: { reviews: {}, villumination: {} }, tags: [], created_at: '2024-01-01' };
+  metafields: { reviews: {}, villumination: {} }, tags: [], created_at: '2024-01-01' };
+/* EL PRODUCTO PERTENECE A UNA COLECCION CON HERMANOS, y esto no es un
+   detalle del banco de pruebas: con collections:[] el bloque de
+   "Tambien te puede gustar" no se pintaba NUNCA, asi que su titulo y su
+   etiqueta no los miraba ninguna bateria. Estuvieron sin traducir y en
+   verde. Un banco de pruebas que no puede entrar en una rama es un banco
+   que da por buena esa rama. */
+producto.collections = [];
+
+const hermano = (n) => Object.assign({}, producto, { id: 90 + n, title: 'Producto ' + n,
+  handle: 'producto-' + n, url: '/products/producto-' + n });
+const hermanos = [producto, hermano(1), hermano(2), hermano(3)];
 
 const coleccion = { id: 2, title: 'Suplementos', handle: 'suplementos', url: '/collections/suplementos',
-  description: 'Todo lo que se toma.', products: [producto], products_count: 1, all_products_count: 1,
+  description: 'Todo lo que se toma.', products: hermanos, products_count: 4, all_products_count: 4,
   image: img, featured_image: img, all_tags: [], sort_by: 'manual', default_sort_by: 'manual',
   sort_options: [{ name: 'Manual', value: 'manual' }], filters: [] };
+producto.collections = [coleccion];
 
 const articulo = { id: 3, title: 'Cómo entrenar', handle: 'como-entrenar', url: '/blogs/diario/como',
   content: '<p>Texto.</p>', excerpt: 'Resumen.', author: 'Villumination', image: img,
@@ -90,7 +102,10 @@ export const ctxBase = {
   template: { name: 'index', suffix: null },
   current_tags: [], current_page: 1, canonical_url: 'https://villuminations.com/',
   page_title: 'Villumination', page_description: 'Tienda fitness.',
-  recommendations: { products: [producto], performed: true },
+  /* performed? con interrogacion, que es como lo escribe Shopify y como lo
+     pregunta la seccion. Sin la clave con el signo, el bloque de
+     recomendaciones se quedaba fuera de toda prueba. */
+  recommendations: { products: hermanos.slice(1), 'performed?': true, performed: true, products_count: 3 },
   form: {}, customer: null, content_for_header: '', powered_by_link: '',
 };
 
@@ -131,18 +146,26 @@ const F = {
      Y podia fallar en el otro sentido, que es peor: una clave corta con un
      texto largo detras (ja.json es el caso claro) escondia un desborde de
      verdad. Se mide lo que ve el cliente o no se mide nada.
-     Se usa es.json porque es el idioma por defecto de la tienda. Si falta
-     una clave se devuelve la clave, que canta a la vista -- y ademas la
-     compuerta ya tiene una comprobacion propia de traducciones completas. */
+     Se usa es.json porque es el idioma por defecto de la tienda.
+
+     OCTAVA DIVERGENCIA CON SHOPIFY, y la mas cara hasta ahora: ante una
+     clave que no existe, esta prueba devolvia la clave y Shopify devuelve
+     "Translation missing: es.<clave>". Por eso la compuerta de idiomas
+     daba verde sobre {{ x | default: y | t }} -- el filtro t recibia el
+     texto ya resuelto ("Ropa"), no lo encontraba en el diccionario, y
+     devolvia "Ropa" tan tranquilo. En la tienda se leia
+     "Translation missing: fr.Vetements" y lo vio el cliente en una
+     captura en frances. Se devuelve lo mismo que Shopify o no se prueba
+     nada. */
   t: (v, ...a) => {
     const args = Object.fromEntries(a.filter(x => Array.isArray(x)));
     let n = TRAD;
     for (const parte of String(v).split('.')) {
-      if (n && typeof n === 'object' && parte in n) n = n[parte]; else return String(v);
+      if (n && typeof n === 'object' && parte in n) n = n[parte]; else return `Translation missing: es.${v}`;
     }
     if (n && typeof n === 'object') {
       const c = Number(args.count);
-      n = (c === 0 && n.zero) || (c === 1 && n.one) || n.other || n.one || String(v);
+      n = (c === 0 && n.zero) || (c === 1 && n.one) || n.other || n.one || `Translation missing: es.${v}`;
     }
     let salida = String(n).replace(/\{\{\s*(\w+)\s*\}\}/g, (m, k) => (k in args ? String(args[k]) : m));
 

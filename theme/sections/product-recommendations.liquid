@@ -23,8 +23,9 @@
   {%- if recommendations.performed? and recommendations.products_count > 0 -%}
     <div class="container">
       <div class="section-head" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- capture cx_eyebrow -%}{%- render 'copia', g: 'producto', b: 'sec', a: 'rec_eyebrow', v: section.settings.eyebrow -%}{%- endcapture -%}
+        {%- if cx_eyebrow != blank -%}
+          <span class="section-eyebrow">{{ cx_eyebrow }}</span>
         {%- endif -%}
         <h2 class="section-title">
           {%- if section.settings.title != blank -%}

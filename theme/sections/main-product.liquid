@@ -9,6 +9,13 @@
     assign save_pct = save_amount | times: 100 | divided_by: current_variant.compare_at_price
   endif
 -%}
+{%- comment -%}
+  LA COPIA, RESUELTA ARRIBA Y UNA SOLA VEZ. El aviso de stock bajo se pinta
+  en dos sitios -- el atributo data-stock-tpl que lee el JavaScript al
+  cambiar de variante, y el texto visible -- y los dos tienen que decir lo
+  mismo y en el idioma del visitante.
+{%- endcomment -%}
+{%- capture cx_low_stock -%}{%- render 'copia', g: 'producto', b: 'sec', a: 'low_stock_text', v: section.settings.low_stock_text -%}{%- endcapture -%}
 
 <section class="product-page section-padding" data-low-stock="{{ section.settings.low_stock_threshold }}">
   <div class="container">
@@ -149,14 +156,14 @@
           <span class="product-save-badge" data-save-pct{% unless on_sale %} style="display:none"{% endunless %}>-{{ save_pct }}%</span>
         </div>
         <div class="product-save-line" data-save-wrap{% unless on_sale %} style="display:none"{% endunless %}>
-          {%- render 'icon', name: 'bolt' -%} Ahorras <b data-save>{{ save_amount | money }}</b>
+          {%- render 'icon', name: 'bolt' -%} {{ 'products.product.save' | t }} <b data-save>{{ save_amount | money }}</b>
         </div>
 
         {%- if section.settings.low_stock_threshold > 0 and current_variant.inventory_management != blank and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= section.settings.low_stock_threshold -%}
           {%- assign show_stock = true -%}
         {%- endif -%}
-        <p class="product-stock-urgency" data-stock data-stock-tpl="{{ section.settings.low_stock_text | escape }}"{% unless show_stock %} style="display:none"{% endunless %}>
-          {%- render 'icon', name: 'bolt' -%} <span>{{ section.settings.low_stock_text | replace: '[n]', current_variant.inventory_quantity }}</span>
+        <p class="product-stock-urgency" data-stock data-stock-tpl="{{ cx_low_stock | escape }}"{% unless show_stock %} style="display:none"{% endunless %}>
+          {%- render 'icon', name: 'bolt' -%} <span>{{ cx_low_stock | replace: '[n]', current_variant.inventory_quantity }}</span>
         </p>
 
         <product-form class="product-form">
@@ -209,7 +216,8 @@
         {%- capture trust_html -%}
           {%- for block in section.blocks -%}
             {%- if block.type == 'trust' and block.settings.visible -%}
-              <li {{ block.shopify_attributes }}>{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.text }}</span></li>
+              {%- capture cb_trust -%}{%- render 'copia', g: 'producto', b: block.id, a: 'text', v: block.settings.text -%}{%- endcapture -%}
+              {%- if cb_trust != blank -%}<li {{ block.shopify_attributes }}>{%- render 'icon', name: block.settings.icon -%}<span>{{ cb_trust }}</span></li>{%- endif -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endcapture -%}
@@ -241,11 +249,21 @@
               («Describe aquí el modo de uso…») y ese texto estuvo publicado en
               las cuarenta y una fichas. Al vaciarlo, el bloque desaparece solo.
             {%- endcomment -%}
-            {%- if block.type == 'collapsible' and block.settings.visible and block.settings.content != blank -%}
-              <details class="product-acc-item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
-                <summary class="product-acc-head">{%- render 'icon', name: block.settings.icon -%}<span>{{ block.settings.title }}</span><span class="acc-chev">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
-                <div class="product-acc-body rte">{{ block.settings.content }}</div>
-              </details>
+            {%- comment -%}
+              LA COMPUERTA MIRA LA COPIA YA RESUELTA. Si mirase block.settings.content
+              -- el ajuste crudo -- este desplegable desapareceria en las cinco
+              lenguas, porque el ajuste va vacio a proposito para que mande el
+              archivo de idioma. Es el mismo error que borro media portada.
+            {%- endcomment -%}
+            {%- if block.type == 'collapsible' and block.settings.visible -%}
+              {%- capture cb_acc_body -%}{%- render 'copia', g: 'producto', b: block.id, a: 'content_html', v: block.settings.content -%}{%- endcapture -%}
+              {%- capture cb_acc_head -%}{%- render 'copia', g: 'producto', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}
+              {%- if cb_acc_body != blank -%}
+                <details class="product-acc-item"{% if block.settings.open %} open{% endif %} {{ block.shopify_attributes }}>
+                  <summary class="product-acc-head">{%- render 'icon', name: block.settings.icon -%}<span>{{ cb_acc_head }}</span><span class="acc-chev">{%- render 'icon', name: 'chevron-down' -%}</span></summary>
+                  <div class="product-acc-body rte">{{ cb_acc_body }}</div>
+                </details>
+              {%- endif -%}
             {%- endif -%}
           {%- endfor -%}
         {%- endcapture -%}
@@ -270,8 +288,10 @@
     {%- if section.settings.show_related and rel_col and rel_col.products_count > 1 -%}
       <div class="product-related">
         <div class="collection-index-head">
-          <span class="fancy-eyebrow">{{ section.settings.related_eyebrow }}</span>
-          <h2 class="section-title neon-underline">{{ section.settings.related_heading }}</h2>
+          {%- capture cx_rel_eyebrow -%}{%- render 'copia', g: 'producto', b: 'sec', a: 'related_eyebrow', v: section.settings.related_eyebrow -%}{%- endcapture -%}
+          {%- capture cx_rel_heading -%}{%- render 'copia', g: 'producto', b: 'sec', a: 'related_heading', v: section.settings.related_heading -%}{%- endcapture -%}
+          {%- if cx_rel_eyebrow != blank -%}<span class="fancy-eyebrow">{{ cx_rel_eyebrow }}</span>{%- endif -%}
+          <h2 class="section-title neon-underline">{{ cx_rel_heading }}</h2>
         </div>
         <div class="product-grid">
           {%- assign shown = 0 -%}
@@ -342,17 +362,17 @@
     { "type": "header", "content": "Prueba social" },
     { "type": "checkbox", "id": "show_rating", "label": "Mostrar valoración (estrellas)", "default": true },
     { "type": "paragraph", "content": "Si instalas una app de reseñas (Judge.me, Shopify Product Reviews…), las estrellas y el número se toman AUTOMÁTICAMENTE de las reseñas reales. Los valores de abajo solo se usan mientras aún no tengas ninguna." },
-    { "type": "text", "id": "rating", "label": "Valoración provisional (0–5)", "default": "4.9" },
-    { "type": "text", "id": "reviews_count", "label": "Texto provisional de reseñas", "default": "128 reseñas" },
+    { "type": "text", "id": "rating", "label": "Valoración provisional (0–5)", "info": "Déjalo vacío hasta tener reseñas reales: si lo rellenas, las estrellas se pintan sin que nadie haya valorado nada." },
+    { "type": "text", "id": "reviews_count", "label": "Texto provisional de reseñas" },
     { "type": "header", "content": "Urgencia y pago" },
     { "type": "range", "id": "low_stock_threshold", "min": 0, "max": 50, "step": 1, "label": "Umbral de stock bajo", "default": 10, "info": "Muestra '¡Solo quedan X!' cuando el inventario (rastreado) sea igual o menor. 0 = desactivado." },
-    { "type": "text", "id": "low_stock_text", "label": "Texto de stock bajo", "default": "¡Solo quedan [n]! Date prisa", "info": "Usa [n] para el número de unidades." },
+    { "type": "text", "id": "low_stock_text", "label": "Texto de stock bajo", "info": "Déjalo vacío y se traduce solo en los cinco idiomas. Usa [n] para el número de unidades." },
     { "type": "checkbox", "id": "show_payment_button", "label": "Botón de pago exprés (Shop Pay, Apple/Google Pay)", "default": true },
     { "type": "checkbox", "id": "show_sticky_bar", "label": "Barra fija 'Añadir' al hacer scroll", "default": true, "info": "Barra flotante con foto, precio y botón que aparece cuando el botón principal sale de pantalla. Sube mucho la conversión en móvil." },
     { "type": "header", "content": "Productos relacionados" },
     { "type": "checkbox", "id": "show_related", "label": "Mostrar 'También te puede gustar'", "default": true },
-    { "type": "text", "id": "related_eyebrow", "label": "Etiqueta", "default": "COMPLETA TU ARSENAL" },
-    { "type": "text", "id": "related_heading", "label": "Título", "default": "También te puede gustar" },
+    { "type": "text", "id": "related_eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "related_heading", "label": "Título" },
     { "type": "range", "id": "related_count", "min": 2, "max": 8, "step": 1, "label": "Nº de productos", "default": 4 },
     { "type": "header", "content": "Otros" },
     { "type": "checkbox", "id": "show_share", "label": "Mostrar botones de compartir", "default": true }
@@ -372,7 +392,7 @@
           { "value": "cart", "label": "Carrito" },
           { "value": "star", "label": "Estrella" }
         ], "default": "check" },
-        { "type": "text", "id": "text", "label": "Texto", "default": "Envío rápido 3–7 días" }
+        { "type": "text", "id": "text", "label": "Texto" }
       ]
     },
     {
@@ -380,7 +400,7 @@
       "name": "Desplegable (info)",
       "settings": [
         { "type": "checkbox", "id": "visible", "label": "Mostrar este bloque", "default": true, "info": "Desmárcalo para ocultarlo sin borrarlo." },
-        { "type": "text", "id": "title", "label": "Título", "default": "Envío y devoluciones" },
+        { "type": "text", "id": "title", "label": "Título" },
         { "type": "paragraph", "content": "Sin contenido escrito, este bloque no se muestra: un desplegable que se abre y está vacío es peor que no tenerlo." },
         { "type": "select", "id": "icon", "label": "Icono", "options": [
           { "value": "cube", "label": "Caja" },
@@ -390,7 +410,7 @@
           { "value": "book", "label": "Libro" },
           { "value": "trophy", "label": "Trofeo" }
         ], "default": "cube" },
-        { "type": "richtext", "id": "content", "label": "Contenido", "default": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de 30 días.</p>" },
+        { "type": "richtext", "id": "content", "label": "Contenido" },
         { "type": "checkbox", "id": "open", "label": "Abierto por defecto", "default": false }
       ]
     }
