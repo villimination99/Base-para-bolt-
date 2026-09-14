@@ -15,15 +15,38 @@
    simbolo geometrico y una constelacion sembrada con el handle.
 
    LA CAJA SEGURA, Y AQUI ES MAS DURA QUE EN EL DIARIO. El tema pide esta
-   imagen en CUATRO proporciones distintas, todas con recorte centrado:
+   imagen en CINCO proporciones distintas, todas con recorte centrado:
      collection-list        700x500  (1.40)
      main-list-collections  800x600  (1.33)
      category-mosaic        900x700  (1.29)
-     header, el megamenu    160x160  (1.00)  <-- esta manda
-   La del megamenu es cuadrada, asi que de un lienzo 4:3 solo sobrevive el
-   CUADRADO CENTRAL: 1200x1200 de los 1600 de ancho, o sea el 75 %. Todo lo
-   que haya que ver vive ahi dentro, con margen. Fuera solo va decoracion:
-   rejilla, halos y constelacion, que se pueden cortar sin perder nada.
+     header, el megamenu    160x160  (1.00)  <-- manda a lo ANCHO
+     el banner de coleccion   16/5   (3.20)  <-- manda a lo ALTO
+   Son dos tijeras que cortan en direcciones contrarias, y por eso la caja
+   segura es la INTERSECCION de las dos, no la mas estrecha:
+
+     - El megamenu es cuadrado: de un lienzo 4:3 solo sobreviven los
+       1200x1200 centrales de los 1600 de ancho -- el 75 %. Eso fija los
+       bordes izquierdo y derecho: x de 200 a 1400.
+     - El banner de la pagina de coleccion (.collection-hero-bg, 16/5 con
+       object-fit:cover) recorta por arriba y por abajo: de los 1200 de
+       alto solo sobreviven los 500 centrales. Eso fija el techo y el
+       suelo: y de 350 a 850.
+
+   Fuera de esa caja solo va decoracion: rejilla, halos, anillo y
+   constelacion, que se pueden cortar sin perder nada.
+
+   POR QUE ESTO ESTA ESCRITO ASI. La primera version solo medía el cuadrado
+   del megamenu y daba por bueno TODO el alto del lienzo. Habria dado luz
+   verde a un simbolo colocado a 100 px del borde de arriba, que el banner
+   de la coleccion se come entero. El fallo no llego a salir porque el
+   simbolo esta centrado, pero el detector no lo sabia: lo daba por bueno
+   por casualidad, no por haberlo comprobado. Un detector que aprueba por
+   casualidad no es un detector.
+
+   Los margenes son distintos a proposito: 90 px sobran en horizontal (de
+   una caja de 1200) y serian imposibles en vertical (de una franja de 500,
+   con un simbolo de 440). En vertical se pide 24, que es lo que de verdad
+   hace falta para que no roce el corte.
 
    Uso:  node marca/generar-colecciones.mjs                                */
 import { chromium } from 'playwright';
@@ -34,11 +57,14 @@ const RAIZ = path.dirname(path.dirname(new URL(import.meta.url).pathname));
 const SALIDA = path.join(RAIZ, 'marca/colecciones');
 
 const A = 1600, ALTO = 1200;
-/* El cuadrado central que sobrevive al recorte del megamenu, menos un
-   margen de respiro. */
-const LADO = ALTO;                       // 1200
-const CAJA_X = (A - LADO) / 2;           // 200
-const MARGEN = 90;
+/* La caja segura: interseccion del cuadrado del megamenu (manda a lo ancho)
+   con la franja 16/5 del banner de coleccion (manda a lo alto). */
+const LADO = ALTO;                                  // 1200, el cuadrado
+const CAJA_X = (A - LADO) / 2;                      // 200 .. 1400
+const FRANJA = Math.round(A * 5 / 16);              // 500, el banner 16/5
+const CAJA_Y = (ALTO - FRANJA) / 2;                 // 350 .. 850
+const MARGEN_X = 90;                                // sobra: caja de 1200
+const MARGEN_Y = 24;                                // justo: franja de 500
 
 /* Un simbolo por coleccion, dibujado en SVG sobre un lienzo de 100x100.
    El color es el mismo acento que la seccion de categorias de la portada,
@@ -113,35 +139,45 @@ const pagina = (handle, color, glifo) => `<!doctype html><html lang="en"><head><
   <div class="glifo"><svg viewBox="0 0 100 100">${glifo}</svg></div>
 </body></html>`;
 
-fs.mkdirSync(SALIDA, { recursive: true });
+/* Primero se pintan y se miden TODAS en memoria; al disco no baja nada
+   hasta que las seis han pasado. Antes esto escribia el PNG y despues
+   fallaba, asi que dejaba en la carpeta justo la imagen rota que acababa de
+   rechazar -- lista para que alguien la subiera sin leer la consola. Un
+   detector que deja el destrozo servido no protege de nada. */
 const fuera = [];
+const pendientes = [];
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const p = await b.newPage({ viewport: { width: A, height: ALTO }, deviceScaleFactor: 1 });
 
 for (const [handle, color, glifo] of COLECCIONES) {
   await p.setContent(pagina(handle, color, glifo), { waitUntil: 'load' });
-  /* SE MIDE, NO SE SUPONE. El simbolo tiene que caber en el cuadrado
-     central con su margen; si uno solo se sale, no se escribe ninguna. */
-  const mal = await p.evaluate(([x0, lado, margen]) => {
+  /* SE MIDE, NO SE SUPONE. El simbolo tiene que caber en la INTERSECCION de
+     las dos tijeras -- el cuadrado del megamenu a los lados, la franja 16/5
+     del banner arriba y abajo. Si uno solo se sale, no se escribe ninguna. */
+  const mal = await p.evaluate(([x0, lado, mx, y0, franja, my]) => {
     const r = document.querySelector('.glifo').getBoundingClientRect();
-    const izq = x0 + margen, der = x0 + lado - margen;
+    const izq = x0 + mx, der = x0 + lado - mx;
+    const techo = y0 + my, suelo = y0 + franja - my;
     const malos = [];
-    if (r.left < izq - 0.5) malos.push('se sale por la izquierda');
-    if (r.right > der + 0.5) malos.push('se sale por la derecha');
-    if (r.top < margen - 0.5) malos.push('se sale por arriba');
-    if (r.bottom > lado - margen + 0.5) malos.push('se sale por abajo');
+    if (r.left   < izq   - 0.5) malos.push(`se sale por la izquierda (${Math.round(izq - r.left)} px)`);
+    if (r.right  > der   + 0.5) malos.push(`se sale por la derecha (${Math.round(r.right - der)} px)`);
+    if (r.top    < techo - 0.5) malos.push(`el banner 16/5 le corta por arriba (${Math.round(techo - r.top)} px)`);
+    if (r.bottom > suelo + 0.5) malos.push(`el banner 16/5 le corta por abajo (${Math.round(r.bottom - suelo)} px)`);
     return malos;
-  }, [CAJA_X, LADO, MARGEN]);
+  }, [CAJA_X, LADO, MARGEN_X, CAJA_Y, FRANJA, MARGEN_Y]);
   if (mal.length) fuera.push(`${handle}: ${mal.join(', ')}`);
-  await p.screenshot({ path: path.join(SALIDA, handle + '.png') });
-  const kb = Math.round(fs.statSync(path.join(SALIDA, handle + '.png')).size / 1024);
-  console.log(`  ${handle.padEnd(20)} ${String(kb).padStart(4)} KB  ${color}${mal.length ? '   <<<< SE SALE' : ''}`);
+  const png = await p.screenshot();
+  pendientes.push([handle, png]);
+  console.log(`  ${handle.padEnd(20)} ${String(Math.round(png.length / 1024)).padStart(4)} KB  ${color}${mal.length ? '   <<<< SE SALE' : ''}`);
 }
 await b.close();
 
 if (fuera.length) {
-  console.error('\n  Estas se salen del cuadrado que sobrevive al recorte:');
+  console.error('\n  Estas se salen de la caja segura, y no se ha escrito ninguna:');
   for (const f of fuera) console.error('   ' + f);
   process.exit(1);
 }
+
+fs.mkdirSync(SALIDA, { recursive: true });
+for (const [handle, png] of pendientes) fs.writeFileSync(path.join(SALIDA, handle + '.png'), png);
 console.log(`\n  ${COLECCIONES.length} portadas de coleccion en marca/colecciones/, sin una palabra dentro.`);
