@@ -182,7 +182,15 @@ const BATERIAS = [
      esos registros mueren en cada subida de tema. Ahora la copia vive en
      los locales, que viajan dentro del zip -- y esta bateria comprueba que
      de verdad se pinta, frase por frase, en los cinco. */
-  ['verificadores/idiomas/comprobar.mjs', 'la portada entera en los cinco idiomas']
+  ['verificadores/idiomas/comprobar.mjs', 'la tienda entera en los cinco idiomas'],
+  /* Y que no se lea una entidad HTML por pantalla. Entro en la compuerta el
+     dia que una captura del pie en frances decia, con todas sus letras,
+     "l&#39;esprit". Shopify escapa las traducciones y textContent no deshace
+     entidades: mientras el texto lo pinta Liquid no se nota, pero en cuanto
+     cruza a JavaScript sale crudo. La bateria de idiomas no podia verlo
+     porque no ejecuta el guion del tema; esta lo ejecuta y ademas adelanta
+     los temporizadores, porque la frase mala aparece a los cinco segundos. */
+  ['verificadores/entidades/comprobar.mjs', 'ni una entidad HTML a la vista']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

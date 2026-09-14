@@ -4,7 +4,49 @@
   var T = window.theme || {};
   var routes = T.routes || {};
   var settings = T.settings || {};
-  var strings = T.strings || {};
+
+  /* SHOPIFY ESCAPA TODA TRADUCCION, Y textContent NO DESHACE ENTIDADES.
+     ------------------------------------------------------------------
+     Esas dos verdades juntas son un fallo que solo se ve en las lenguas con
+     apostrofo. El filtro t de Shopify convierte "l'esprit" en "l&#39;esprit":
+     si esa frase la pinta Liquid dentro del HTML, el navegador deshace la
+     entidad y se lee bien. Pero si viaja hasta aqui -- en window.theme.strings,
+     en un data-* o en un <script type="application/json"> -- y se pinta con
+     textContent, la entidad sale LITERAL por pantalla.
+
+     Se vio en el pie: la primera frase la pinta Liquid y salia bien; las que
+     rotan las pinta este guion y salian "Le corps accomplit ce que
+     l&#39;esprit croit." Lo vio el cliente en una captura en frances.
+
+     El aviso de stock bajo esta peor todavia: viaja en un atributo con
+     | escape ENCIMA de lo que ya escapo t, asi que llega doblemente escapado.
+
+     Se arregla en la frontera y una sola vez, no parcheando cada sitio: todo
+     lo que cruza de Liquid a JavaScript pasa por aqui. Se usa un <textarea>
+     a proposito: su contenido se analiza como texto (RCDATA), asi que una
+     etiqueta dentro NO se ejecuta ni crea nodos -- no es un innerHTML
+     disfrazado. */
+  var cajaTexto = document.createElement('textarea');
+  function desescapar(v) {
+    if (typeof v !== 'string' || v.indexOf('&') < 0) return v;
+    cajaTexto.innerHTML = v;
+    var r = cajaTexto.value;
+    /* Doble escapado (t + | escape): se repite hasta que deje de cambiar, con
+       tope para que una cadena rara no de vueltas para siempre. */
+    for (var i = 0; i < 3 && r.indexOf('&') >= 0; i++) {
+      cajaTexto.innerHTML = r;
+      if (cajaTexto.value === r) break;
+      r = cajaTexto.value;
+    }
+    return r;
+  }
+  function desescaparLista(a) { return (a || []).map(desescapar); }
+
+  var strings = (function (o) {
+    var d = {};
+    for (var k in (o || {})) if (Object.prototype.hasOwnProperty.call(o, k)) d[k] = desescapar(o[k]);
+    return d;
+  })(T.strings);
 
   function $(s, c) { return (c || document).querySelector(s); }
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
@@ -586,7 +628,7 @@
         var q = srec ? srec.qty : null;
         var managed = srec && srec.tracked != null && srec.tracked !== '';
         if (lowStock > 0 && managed && typeof q === 'number' && q > 0 && q <= lowStock) {
-          var tpl = stockEl.getAttribute('data-stock-tpl') || '';
+          var tpl = desescapar(stockEl.getAttribute('data-stock-tpl') || '');
           var span = stockEl.querySelector('span');
           if (span) span.textContent = tpl.replace('[n]', q);
           stockEl.style.display = '';
@@ -993,7 +1035,7 @@
     var listEl = $('[data-quote-list]', wrap);
     if (!textEl || !listEl) return;
     var quotes = [];
-    try { quotes = JSON.parse(listEl.textContent).map(function (q) { return q.trim(); }).filter(Boolean); } catch (e) { return; }
+    try { quotes = desescaparLista(JSON.parse(listEl.textContent)).map(function (q) { return q.trim(); }).filter(Boolean); } catch (e) { return; }
     if (quotes.length < 2) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -1043,7 +1085,7 @@
     if (!el || !once(el, 'typed')) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var words = [];
-    try { words = JSON.parse(el.getAttribute('data-typed')).map(function (w) { return w.trim(); }); } catch (e) { return; }
+    try { words = desescaparLista(JSON.parse(el.getAttribute('data-typed'))).map(function (w) { return w.trim(); }); } catch (e) { return; }
     if (words.length < 2) return;
     el.style.transition = 'opacity 0.25s ease';
     var i = 0;
