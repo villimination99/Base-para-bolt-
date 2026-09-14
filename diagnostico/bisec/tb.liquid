@@ -1,0 +1,28 @@
+<p>bisec b</p>
+{% schema %}
+{
+  "name": "Testimonios",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta" },
+    { "type": "text", "id": "title", "label": "Título", "default": "LO QUE DICEN LOS ATLETAS" },
+    { "type": "select", "id": "layout", "label": "Presentación", "options": [
+      { "value": "carousel", "label": "Carrusel" }, { "value": "grid", "label": "Cuadrícula" } ], "default": "carousel" },
+    { "type": "range", "id": "autoplay_speed", "min": 0, "max": 10, "step": 1, "unit": "s", "label": "Auto-avance (0 = apagado)", "default": 5 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonio",
+      "settings": [
+        { "type": "range", "id": "stars", "min": 1, "max": 5, "step": 1, "label": "Estrellas", "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Cita (de una persona real)", "default": "",
+          "info": "Sin cita, el bloque no se muestra. No rellenes esto con ejemplos: una reseña inventada es sancionable en Canadá, la UE y Estados Unidos, y no compensa nunca." },
+        { "type": "image_picker", "id": "avatar", "label": "Foto" },
+        { "type": "text", "id": "name", "label": "Nombre", "default": "" },
+        { "type": "text", "id": "role", "label": "Rol", "default": "" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Testimonios", "blocks": [ { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" }, { "type": "testimonial" } ] } ]
+}
+{% endschema %}

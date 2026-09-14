@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "hub": {
+      "type": "vi-p",
+      "settings": {
+        "coleccion_equipo": "equipo"
+      }
+    }
+  },
+  "order": [
+    "hub"
+  ]
+}
