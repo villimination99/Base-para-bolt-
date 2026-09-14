@@ -20,7 +20,9 @@ let fallos = 0;
 const decir = (ok, txt) => { if (!ok) fallos++; console.log(`${ok ? ' OK   ' : 'FALLA '} ${txt}`); };
 
 async function tipos(handle) {
-  const ctx = JSON.parse(JSON.stringify(ctxBase));
+  const ctx = structuredClone(ctxBase)  /* structuredClone y no JSON: el contexto tiene
+    ciclos a proposito -- un producto pertenece a una coleccion que contiene a
+    ese producto, que es como es en Shopify. Con JSON.stringify reventaba. */;
   ctx.request = Object.assign({}, ctxBase.request, { page_type: 'page' });
   ctx.page = { title: 'Una pagina', handle, url: '/pages/' + handle, content: '<p>Texto</p>' };
   ctx.settings = Object.assign({}, ctxBase.settings, {

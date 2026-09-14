@@ -71,7 +71,9 @@ const reapuntar = (h) => h
 const splashSrc = fs.readFileSync(path.join(TEMA, 'snippets/splash-intro.liquid'), 'utf8');
 const guardados = JSON.parse(fs.readFileSync(path.join(TEMA, 'config/settings_data.json'), 'utf8')).current;
 async function montarSplash(duracion) {
-  const ctxS = JSON.parse(JSON.stringify(ctxBase));
+  const ctxS = structuredClone(ctxBase)  /* structuredClone y no JSON: el contexto tiene
+    ciclos a proposito -- un producto pertenece a una coleccion que contiene a
+    ese producto, que es como es en Shopify. Con JSON.stringify reventaba. */;
   ctxS.settings = Object.assign({}, ctxBase.settings, guardados, { splash_duracion: duracion });
   e.options.globals = ctxS;
   return reapuntar(await e.parseAndRender(prepararFuente(splashSrc), ctxS));

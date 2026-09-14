@@ -78,11 +78,19 @@ for (const a of fs.readdirSync(path.join(T, 'assets'))) fs.copyFileSync(path.joi
    alcanzable con el teclado cuando desborda, el foco atrapado en los
    paneles -- quedaba fuera de la medida. Verde en la bateria y roto en la
    tienda, o al reves. Ahora va, con defer como en el layout, y se espera
-   a que termine antes de medir. */
+   a que termine antes de medir.
+
+   Y SE QUEDO A MEDIAS: faltaba effects.js. Se arreglo base.js y se dio por
+   hecho lo demas. Todo lo que vive en effects.js -- el anillo 3D, el menu
+   que fluye, los carruseles con arrastre -- se midio en una pagina donde
+   ese guion no existia: sus tarjetas no giraban nunca y su comportamiento
+   de teclado no lo miraba nadie. En el layout se carga en tiempo libre;
+   aqui con defer, que para lo que se mide es lo mismo. */
 const envolver = (titulo, cuerpo) => `<!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>${titulo}</title>
 <link rel="stylesheet" href="/assets/villumination.css">
 <script src="/assets/base.js" defer></script>
+<script src="/assets/effects.js" defer></script>
 <style>body{margin:0;font-family:system-ui;background:#0A0A0A;color:#eee}
 h1.t{font-size:2rem;margin:24px 18px}</style></head><body>
 <main><h1 class="t">${titulo}</h1>
@@ -168,7 +176,18 @@ for (const [titulo, arch] of PAGINAS) {
        - Lo que vive dentro de una marquesina: una cinta con animacion
          infinita esta hecha para ser mas ancha que la pantalla, y el texto
          no se pierde porque pasa por delante solo. flowing-menu y marquee
-         daban 2116 y 31 px de "desborde" por esto. */
+         daban 2116 y 31 px de "desborde" por esto.
+       - Lo que vive dentro de un anillo 3D (transform-style:preserve-3d
+         dentro de un escenario que recorta): las tarjetas del lado de atras
+         del anillo estan FUERA del viewport a proposito, y no se pierden
+         porque el anillo gira solo, se arrastra con el dedo y -- desde esta
+         ronda -- se gira tambien al recibir el foco de teclado. Salio al
+         darle al banco de pruebas una coleccion con cuatro productos en vez
+         de uno: con un solo producto el anillo no llegaba a desbordar y
+         ninguna de las dos cosas se habia mirado nunca.
+         LA EXENCION NO ES GRATIS: solo vale si al tabular a una tarjeta el
+         anillo la trae de frente. Si alguien quita ese manejador, esto pasa
+         a ser un recorte de verdad. */
   await p.setViewportSize({ width: 320, height: 800 });
   await p.waitForTimeout(250);
   const reflow = await p.evaluate(() => {
@@ -178,6 +197,7 @@ for (const [titulo, arch] of PAGINAS) {
         const cs = getComputedStyle(a);
         if (cs.overflowX === 'auto' || cs.overflowX === 'scroll') return true;
         if (cs.animationName !== 'none' && cs.animationIterationCount === 'infinite') return true;
+        if (cs.transformStyle === 'preserve-3d') return true;
       }
       return false;
     };
@@ -203,13 +223,70 @@ for (const [titulo, arch] of PAGINAS) {
   });
   await p.setViewportSize({ width: 390, height: 844 });
 
+  /* LA CONTRAPARTIDA DE LA EXENCION DEL ANILLO 3D. Arriba se perdona que las
+     tarjetas del lado de atras se salgan del viewport, con un argumento: que
+     el anillo las trae de frente al recibir el foco. Un argumento que no se
+     comprueba es una excusa, asi que aqui se comprueba: se tabula a cada
+     tarjeta y se exige que acabe DENTRO de la pantalla. Si alguien quita el
+     manejador de foco, esta prueba se pone roja y la exencion deja de tapar
+     nada. Es WCAG 2.4.11: el foco no puede quedar fuera de la vista. */
+  const focoTapado = await p.evaluate(async () => {
+    const malos = [];
+    for (const anillo of document.querySelectorAll('[data-cc-ring]')) {
+      const tarjetas = [...anillo.querySelectorAll('a,button')];
+      if (tarjetas.length < 2) continue;
+      anillo.scrollIntoView({ block: 'center' });
+      await new Promise(r => setTimeout(r, 120));
+      for (const t of tarjetas) {
+        t.focus();
+        await new Promise(r => setTimeout(r, 520));   // el giro dura .45 s
+        /* COMO SE MIDE "esta de cara". Dos intentos fallaron antes:
+             - Pedir que el rectangulo cruce el viewport daba verde hasta sin
+               manejador de foco: una tarjeta del lado de atras todavia roza
+               la pantalla por una esquina.
+             - elementFromPoint en el centro daba rojo CON el manejador
+               puesto y el anillo bien girado. Se instrumento: el transform
+               era el correcto (-90, -180, -270 grados) y la tarjeta estaba
+               delante; lo que falla es el test de impacto del navegador
+               sobre rotaciones 3D anidadas justo en multiplos de 90 grados.
+               Una prueba que depende de eso mide el navegador, no el tema.
+           Asi que se mide la geometria, que es exacta: la tarjeta i esta
+           girada i * (360/n) grados dentro del anillo, y el anillo esta
+           girado lo que diga su transform. Sumadas las dos, la tarjeta con
+           el foco tiene que quedar a menos de 45 grados del frente -- o
+           sea, de cara -- y su caja, en pantalla. */
+        const r2 = t.getBoundingClientRect();
+        const w = document.documentElement.clientWidth;
+        const h = document.documentElement.clientHeight;
+        const cx = r2.left + r2.width / 2, cy = r2.top + r2.height / 2;
+        const enPantalla = cx > 0 && cx < w && cy > 0 && cy < h;
+        const giroAnillo = parseFloat((/rotateY\(([-\d.]+)deg\)/.exec(anillo.style.transform) || [0, 0])[1]) || 0;
+        const paso = 360 / tarjetas.length;
+        const propio = parseFloat(getComputedStyle(t).getPropertyValue('--cc-i')) * paso;
+        let cara = (giroAnillo + propio) % 360;
+        if (cara > 180) cara -= 360;
+        if (cara < -180) cara += 360;
+        if (!enPantalla || Math.abs(cara) > 45) {
+          malos.push((t.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 34) + ` [${Math.round(cara)}°]`);
+        }
+      }
+      document.activeElement.blur();
+    }
+    return malos;
+  });
+
   console.log(`\n--- ${titulo} ---`);
+  if (focoTapado.length) {
+    fallos++;
+    console.log(`  FALLA [serious] el foco de teclado cae fuera de la pantalla en el anillo 3D (WCAG 2.4.11)`);
+    for (const m of focoTapado.slice(0, 3)) console.log(`        «${m}»`);
+  }
   if (reflow) {
     fallos++;
     console.log(`  FALLA [serious] reflow: a 320 px de ancho hay contenido recortado por el borde (WCAG 1.4.10)`);
     console.log(`        se sale ${reflow.sale} px: ${reflow.que.slice(0, 110)}  «${reflow.txt}»`);
   }
-  if (!graves.length && !reflow) console.log('  OK    sin infracciones graves de WCAG 2.1 AA, y no se desplaza de lado a 320 px');
+  if (!graves.length && !reflow && !focoTapado.length) console.log('  OK    sin infracciones graves de WCAG 2.1 AA, y no se desplaza de lado a 320 px');
   for (const v of graves) {
     fallos++;
     console.log(`  FALLA [${v.impact}] ${v.id}: ${v.help}  (${v.nodes.length} elemento(s))`);

@@ -587,10 +587,10 @@
       if (!ring) return;
       var auto = stage.getAttribute('data-cc-auto') !== 'false' && !reduce;
       var vel = parseFloat(stage.getAttribute('data-cc-speed')) || 0.05;
-      var angle = 0, dragging = false, lastX = 0, moved = 0, raf = null, hover = false;
+      var angle = 0, dragging = false, lastX = 0, moved = 0, raf = null, hover = false, conFoco = false;
       function render() { ring.style.transform = 'rotateY(' + angle + 'deg)'; }
       function loop() {
-        if (auto && !dragging && !hover) angle += vel;
+        if (auto && !dragging && !hover && !conFoco) angle += vel;
         render();
         raf = requestAnimationFrame(loop);
       }
@@ -614,6 +614,36 @@
       stage.addEventListener('click', function (e) {
         if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
       }, true);
+      /* EL TECLADO CAIA EN EL LADO DE ATRAS DEL ANILLO. Las tarjetas son
+         enlaces, asi que entran en el orden de tabulacion -- pero nada giraba
+         el anillo hacia la que recibia el foco, y .cc-stage recorta con
+         overflow:hidden. Un usuario de teclado tabulaba a un producto que no
+         se veia por ninguna parte, y encima el anillo seguia girando solo y
+         se lo llevaba. Es WCAG 2.4.11 (el foco no puede quedar tapado).
+         Ahora, al recibir el foco una tarjeta, el anillo se para y gira hasta
+         ponerla de frente; al salir el foco, vuelve a girar. */
+      var items = $all('.cc-item', ring);
+      ring.addEventListener('focusin', function (e) {
+        var item = e.target.closest ? e.target.closest('.cc-item') : null;
+        if (!item) return;
+        var i = items.indexOf(item);
+        if (i < 0) return;
+        conFoco = true;
+        /* El paso del anillo es 360/n, y la tarjeta i esta girada i pasos.
+           Para ponerla de frente hay que girar el anillo -i pasos, buscando
+           la vuelta mas cercana para que no de un latigazo de varias vueltas. */
+        var paso = 360 / (items.length || 1);
+        var destino = -i * paso;
+        angle = destino + Math.round((angle - destino) / 360) * 360;
+        ring.style.transition = reduce ? 'none' : 'transform .45s cubic-bezier(.22,1,.36,1)';
+        render();
+      });
+      ring.addEventListener('focusout', function (e) {
+        if (ring.contains(e.relatedTarget)) return;
+        conFoco = false;
+        ring.style.transition = '';
+      });
+
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (en) { en.isIntersecting ? alCerrarIntro(start) : stop(); });
       }, { threshold: 0 });
