@@ -573,17 +573,17 @@
         }
       },
       "block_order": [
-        "b1",
         "b2",
         "b3",
         "b4",
+        "b1",
         "b5"
       ],
       "settings": {
         "acento": "#00f0ff",
         "fondo": "#05060a",
         "alto": 560,
-        "duracion": 14,
+        "duracion": 16,
         "compacta": false
       }
     },

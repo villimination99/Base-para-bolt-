@@ -190,7 +190,8 @@ const BATERIAS = [
      cruza a JavaScript sale crudo. La bateria de idiomas no podia verlo
      porque no ejecuta el guion del tema; esta lo ejecuta y ademas adelanta
      los temporizadores, porque la frase mala aparece a los cinco segundos. */
-  ['verificadores/entidades/comprobar.mjs', 'ni una entidad HTML a la vista']
+  ['verificadores/entidades/comprobar.mjs', 'ni una entidad HTML a la vista'],
+  ['verificadores/secuencia/comprobar.mjs', 'la secuencia de marca, fotograma a fotograma']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

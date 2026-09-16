@@ -27,6 +27,22 @@ import { e, prepararFuente, ctxBase, contextoDeSeccion, T } from '../liquid.mjs'
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const TEMA = path.isAbsolute(T) ? T : path.join(RAIZ, T);
+
+/* LOS BLOQUES, EN EL ORDEN DE block_order, QUE ES EL QUE USA SHOPIFY.
+   Esto leia las claves del objeto `blocks` tal como venian y daba por bueno
+   ese orden. Shopify no: el orden de los bloques de una seccion vive en
+   `block_order`, y `blocks` es solo un diccionario. La diferencia no se noto
+   hasta que hubo que cambiar el orden de las escenas de la secuencia: se
+   cambio en la plantilla, la tienda lo habria pintado bien, y la bateria
+   seguia midiendo el orden viejo y dando rojo. Un banco de pruebas que no
+   pinta lo que se envia esta midiendo otra pagina. */
+function bloquesEnOrden(sec) {
+  const dicc = sec.blocks || {};
+  const orden = sec.block_order || Object.keys(dicc);
+  return orden.filter((k) => dicc[k]).map((k) => ({
+    id: k, type: dicc[k].type, settings: dicc[k].settings || {}, shopify_attributes: '',
+  }));
+}
 const TMP = fs.mkdtempSync('/tmp/paginas-');
 const TIPO = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
 
@@ -52,11 +68,7 @@ async function montarPlantilla(archivo) {
     try {
       const { ctx } = contextoDeSeccion(tipo, src);
       Object.assign(ctx.section.settings, j.sections[id].settings || {});
-      if (j.sections[id].blocks) {
-        ctx.section.blocks = Object.entries(j.sections[id].blocks).map(([k, b]) => ({
-          id: k, type: b.type, settings: b.settings || {}, shopify_attributes: '',
-        }));
-      }
+      if (j.sections[id].blocks) ctx.section.blocks = bloquesEnOrden(j.sections[id]);
       e.options.globals = ctx;
       html += await e.parseAndRender(prepararFuente(src), ctx);
     } catch (err) {
@@ -82,11 +94,7 @@ async function montarGrupo(nombre) {
     try {
       const { ctx } = contextoDeSeccion(tipo, src);
       Object.assign(ctx.section.settings, j.sections[id].settings || {});
-      if (j.sections[id].blocks) {
-        ctx.section.blocks = Object.entries(j.sections[id].blocks).map(([k, b]) => ({
-          id: k, type: b.type, settings: b.settings || {}, shopify_attributes: '',
-        }));
-      }
+      if (j.sections[id].blocks) ctx.section.blocks = bloquesEnOrden(j.sections[id]);
       e.options.globals = ctx;
       html += await e.parseAndRender(prepararFuente(src), ctx);
     } catch (err) { /* el grupo no es lo que se juzga aqui */ }
@@ -233,6 +241,11 @@ for (const m of montadas) {
   const kb = (r.red / 1024).toFixed(0) + ' KB';
   const nota = [];
   if (r.peor && r.cls >= 0.01) nota.push('salta ' + r.peor.quien);
+  /* QUIEN marca el LCP, no solo cuanto. Un rojo de LCP sin el nombre del
+     elemento obliga a reconstruir el fallo a mano, probando a quitar cosas;
+     con el nombre delante, la causa suele verse de un vistazo. El dato ya se
+     recogia arriba y se tiraba a la basura. */
+  if (r.lcp >= 2500 && r.que) nota.push('lo mas grande: ' + r.que);
   if (r.errores.length) nota.push(r.errores.length + ' error(es) JS');
   if (r.desborde > 0) nota.push('desborde ' + r.desborde + ' px');
   if (m.problemas.length) nota.push(m.problemas.length + ' seccion(es) sin montar');

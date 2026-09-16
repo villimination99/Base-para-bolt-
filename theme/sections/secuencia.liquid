@@ -34,19 +34,34 @@
       {%- endcomment -%}
       <div class="secuencia-escenas">
         {%- for block in section.blocks -%}
+          {%- comment -%}
+            data-sec-tipo: el motor reparte el tiempo POR TIPO de escena, no a
+            partes iguales. La marca es una palabra y los pilares son nueve
+            lineas de texto; darles los mismos segundos era la razon de que
+            unas se leyeran con prisa y otras se quedaran esperando.
+          {%- endcomment -%}
           <div class="secuencia-escena secuencia-escena--{{ block.type }}"
-               data-sec-escena {{ block.shopify_attributes }}>
+               data-sec-escena data-sec-tipo="{{ block.type }}" {{ block.shopify_attributes }}>
             {%- case block.type -%}
 
               {%- when 'marca' -%}
                 <p class="secuencia-marca">{{ block.settings.texto }}</p>
 
               {%- when 'lema' -%}
+                {%- comment -%}
+                  Las dos lineas van en cajas propias porque entran por
+                  separado: la primera cae, la segunda aterriza un tiempo
+                  despues con la onda. Con las dos en el mismo nodo -- como
+                  estaba, separadas por un <br> -- no habia forma de darles
+                  tiempos distintos.
+                {%- endcomment -%}
                 <p class="secuencia-lema">
-                  {%- render 'copia', g: 'secuencia', b: block.id, a: 'linea1', v: block.settings.linea1 -%}
+                  <span class="secuencia-lema-l1">
+                    {%- render 'copia', g: 'secuencia', b: block.id, a: 'linea1', v: block.settings.linea1 -%}
+                  </span>
                   {%- capture cb_l2 -%}{%- render 'copia', g: 'secuencia', b: block.id, a: 'linea2', v: block.settings.linea2 -%}{%- endcapture -%}
-                {%- if cb_l2 != blank -%}
-                    <br><em>{{ cb_l2 }}</em>
+                  {%- if cb_l2 != blank -%}
+                    <em class="secuencia-lema-l2">{{ cb_l2 }}</em>
                   {%- endif -%}
                 </p>
 
@@ -85,7 +100,12 @@
                       endcapture
                     -%}
                     {%- if tit_i != blank -%}
-                      <li class="secuencia-pilar">
+                      {%- comment -%}
+                        --i es el turno del pilar. Los tres no entran a la vez:
+                        se apilan en orden, como se cargan los discos en una
+                        barra. La hoja de estilos lo usa para retrasar cada uno.
+                      {%- endcomment -%}
+                      <li class="secuencia-pilar" style="--i:{{ forloop.index0 }}">
                         <span class="secuencia-pilar-ico" aria-hidden="true">{%- render 'icon', name: ico -%}</span>
                         <span class="secuencia-pilar-txt">
                           <strong>{{ tit_i }}</strong>
@@ -120,9 +140,19 @@
                   <p class="secuencia-cierre-tit">{{ block.settings.titulo }}</p>
                 {%- endif -%}
                 {%- capture cb_boton -%}{%- render 'copia', g: 'secuencia', b: block.id, a: 'boton', v: block.settings.boton -%}{%- endcapture -%}
+                {%- comment -%}
+                  btn-neon, no btn-primary. Este es el unico boton de la
+                  seccion y compite con una animacion de dieciocho segundos:
+                  el azul plano de .btn-primary desaparecia dentro de ella.
+                  btn-neon es el mismo tratamiento que el boton de entrar de
+                  la intro -- degradado de los tres colores de la marca con
+                  tinta oscura encima -- para que la tienda entera tenga UN
+                  solo boton principal y no tres dialectos.
+                {%- endcomment -%}
                 {%- if cb_boton != blank and block.settings.enlace != blank -%}
-                  <a class="btn btn-primary btn-lg secuencia-cta" href="{{ block.settings.enlace }}">
-                    {{ cb_boton }}
+                  <a class="btn-neon secuencia-cta" href="{{ block.settings.enlace }}">
+                    <span>{{ cb_boton }}</span>
+                    {%- render 'icon', name: 'arrow-right' -%}
                   </a>
                 {%- endif -%}
 
@@ -154,8 +184,8 @@
   "settings": [
     { "type": "color", "id": "acento", "label": "Color de acento", "default": "#00f0ff" },
     { "type": "color", "id": "fondo", "label": "Color de fondo", "default": "#05060a" },
-    { "type": "range", "id": "alto", "min": 380, "max": 760, "step": 20, "unit": "px", "label": "Alto", "default": 560 },
-    { "type": "range", "id": "duracion", "min": 8, "max": 24, "step": 2, "unit": "s", "label": "Duración del ciclo", "default": 14, "info": "El tiempo se reparte entre las escenas que tengas." },
+    { "type": "range", "id": "alto", "min": 420, "max": 860, "step": 20, "unit": "px", "label": "Alto", "default": 640 },
+    { "type": "range", "id": "duracion", "min": 10, "max": 32, "step": 2, "unit": "s", "label": "Duración del ciclo", "default": 18, "info": "El tiempo se reparte entre las escenas que tengas." },
     { "type": "checkbox", "id": "compacta", "label": "Menos espacio arriba y abajo", "default": false }
   ],
   "blocks": [
@@ -201,7 +231,7 @@
   ],
   "presets": [
     { "name": "Secuencia de marca",
-      "blocks": [ { "type": "marca" }, { "type": "lema" }, { "type": "pilares" }, { "type": "cifra" }, { "type": "cierre" } ] }
+      "blocks": [ { "type": "lema" }, { "type": "pilares" }, { "type": "cifra" }, { "type": "marca" }, { "type": "cierre" } ] }
   ]
 }
 {% endschema %}

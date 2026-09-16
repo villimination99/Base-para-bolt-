@@ -1012,20 +1012,60 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   background:var(--sec-fondo,#05060a);
   box-shadow:0 30px 80px -34px rgba(0,0,0,.9);
   touch-action:pan-y}
-/* El desenfoque convierte los poligonos del lienzo en luz: sin el se ven
-   los bordes rectos de cada haz. Solo afecta al fondo, porque los textos
-   son nodos del documento, no pixeles del lienzo. */
-/* inset negativo: el desenfoque muestrea fuera del lienzo y dejaba un halo
-   mas claro pegado al borde del contenedor. Sacando los bordes fuera del
-   recorte, ese halo cae donde nadie lo ve. */
-.secuencia-lienzo{position:absolute;inset:-10px;width:calc(100% + 20px);
-  height:calc(100% + 20px);
-  display:block;opacity:0;transition:opacity .8s ease;filter:blur(5px)}
+/* AQUI ESTABA EL PROBLEMA. Habia un `filter: blur(5px)` sobre el lienzo
+   ENTERO. Estaba puesto para disimular que los haces eran poligonos con los
+   bordes rectos, pero un filtro no distingue: se llevaba por delante tambien
+   el marco, el polvo y cualquier cosa nitida que se pintara. En una captura
+   el resultado era exactamente lo que parece un video mal comprimido --
+   barras verticales borrosas -- y por eso la seccion se veia barata.
+
+   Ahora el suavizado lo hace el motor donde toca: la luz se pinta en un
+   lienzo aparte a un sexto de resolucion y se estira encima, asi que la
+   suaviza el propio escalado del navegador; los corchetes, el polvo y el
+   riel se pintan a resolucion completa y NO se desenfocan. El lienzo de
+   aqui ya no lleva filtro ninguno. */
+.secuencia-lienzo{position:absolute;inset:0;width:100%;height:100%;
+  display:block;opacity:0;transition:opacity .8s ease}
+
+/* LA VINETA Y EL GRANO, FUERA DEL LIENZO.
+   Los dos estaban dentro del bucle del motor: dos rellenos a pantalla
+   completa, sesenta veces por segundo, para dibujar algo que NO CAMBIA.
+   Medido, costaban 4,4 ms de cada fotograma de 16,7.
+
+   Aqui son dos capas quietas encima del lienzo y debajo del texto. El
+   navegador las pinta UNA vez y despues solo las compone, que es trabajo de
+   la tarjeta grafica. El grano sale de un feTurbulence en SVG -- unos
+   cientos de bytes, sin fichero que descargar -- y se queda quieto: moverlo
+   era bonito y volvia a costar un repintado por fotograma.
+
+   z-index 1: por encima del lienzo (0) y por debajo de las escenas (2). */
+.secuencia::before,.secuencia::after{content:"";position:absolute;inset:0;
+  pointer-events:none;z-index:1}
+/* Mas suave de lo que estaba en el lienzo, y por una razon: alli se pintaba
+   ANTES que los corchetes y el riel, asi que no los tocaba. Aqui va por
+   ENCIMA de todo el lienzo y tambien los oscurece. Con .62 los apagaba. */
+.secuencia::before{
+  background:radial-gradient(ellipse 82% 82% at 50% 46%,
+    transparent 0%,transparent 46%,rgba(0,0,0,.5) 100%)}
+.secuencia::after{opacity:.5;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.34'/%3E%3C/svg%3E")}
+@supports not (mix-blend-mode:soft-light){ .secuencia::after{opacity:.16} }
 .secuencia.is-live .secuencia-lienzo{opacity:1}
 
-.secuencia-escenas{position:absolute;inset:0;display:grid;
+/* minmax(0,1fr) Y min-width:0, Y NO ES DECORACION.
+   Las cinco escenas comparten UNA pista de rejilla. Por defecto una pista se
+   estira hasta que quepa el hijo mas ancho que no sepa encoger, y entonces
+   las CINCO escenas se salen de la caja -- no solo la culpable. Paso dos
+   veces en la misma tarde: primero con el boton, que llevaba white-space
+   nowrap, y despues con el titulo del cierre, que abria las letras mientras
+   entraba y en ese rato medía 277 px en una caja de 246.
+   Con la pista fijada a minmax(0,1fr) ya no hay hijo que pueda ensancharla:
+   lo que no quepa se ajustara o se cortara, pero la caja manda. */
+.secuencia-escenas{position:absolute;inset:0;z-index:2;display:grid;
+  grid-template-columns:minmax(0,1fr);
   place-items:center;padding:2rem 8%;pointer-events:none}
-.secuencia-escena{grid-area:1/1;width:100%;text-align:center;opacity:0;
+.secuencia-escena{grid-area:1/1;width:100%;min-width:0;max-width:100%;
+  text-align:center;opacity:0;
   will-change:opacity,transform}
 .secuencia-escena a{pointer-events:auto}
 
@@ -1046,6 +1086,14 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 .secuencia-pilares{list-style:none;margin:0;padding:0;display:flex;
   flex-direction:column;gap:clamp(1.1rem,3.4vw,2rem);
   align-items:flex-start;max-width:30ch;margin-inline:auto}
+/* En una pantalla ancha, 30ch obligaban a "EQUIPEMENT ET ACCESSOIRES" a
+   partir en dos lineas y el primer pilar quedaba mas alto que los otros dos:
+   la columna se veia torcida. Con sitio de sobra, no hay razon para
+   estrecharla. */
+@media (min-width:901px){
+  .secuencia-pilares{max-width:46ch}
+  .secuencia-pilar-txt span{white-space:nowrap}
+}
 .secuencia-pilar{display:flex;align-items:center;gap:1.1rem;text-align:left;min-width:0}
 .secuencia-pilar-ico{flex:0 0 auto;display:grid;place-items:center;
   width:clamp(38px,8vw,54px);height:clamp(38px,8vw,54px);border-radius:14px;
@@ -1074,12 +1122,163 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   font-size:clamp(1rem,3.6vw,1.7rem);letter-spacing:.14em;margin:0 0 1.5rem;color:#fff}
 .secuencia-cta{pointer-events:auto}
 
+/* ==================================================================
+   LA COREOGRAFIA DE LAS CINCO ESCENAS
+   ------------------------------------------------------------------
+   Antes las cinco entraban IGUAL: opacidad y catorce pixeles hacia arriba.
+   Con el mismo gesto repetido cinco veces seguidas, el ojo deja de leerlo
+   como una pelicula y lo lee como un pase de diapositivas -- que es
+   exactamente lo que el cliente dijo al verlo.
+
+   EL REPARTO DE TAREAS. El motor solo dice CUANDO: a cada escena le pone
+   `--p`, su progreso local de 0 a 1, en cada fotograma. El COMO vive aqui
+   entero. Asi se puede cambiar el gesto de una escena sin abrir el
+   JavaScript, y el motor no sabe nada de como se ve nada.
+
+   `--q` es el mismo `--p` recortado y acelerado para cada pieza: cambiando
+   el numero que resta y el que multiplica se retrasa o se acorta su entrada
+   sin tocar el reloj de nadie mas.
+
+   El valor por defecto de `--p` esta puesto en la escena para que estas
+   cuentas sean validas aunque el guion no llegue a correr nunca. */
+.secuencia-escena{--p:0}
+
+/* Sin guion no hay secuencia: se ensena la escena del cierre, que es la que
+   lleva la marca y el boton. El marcador lo pone el motor al montarse, no al
+   entrar en pantalla, asi que no hay parpadeo al bajar. */
+.secuencia:not([data-sec-listo]) .secuencia-escena--cierre{opacity:1}
+
+/* ---- 1. La marca se compone desde el centro ----
+   Las letras no llegan de izquierda a derecha, que es como se teclea, sino
+   desde el centro hacia fuera, que es como se resuelve un logotipo. --d es
+   la distancia de cada letra al centro y --s el lado hacia el que entra;
+   los dos los pone el motor al partir la palabra. */
+.secuencia-marca-letras{display:inline-block;white-space:pre}
+/* LAS LETRAS VAN EN BLANCO MACIZO, Y NO ES UN CAPRICHO.
+   La palabra heredaba de .secuencia-marca un degradado recortado al texto
+   (background-clip:text con la tinta transparente). Eso funciona mientras el
+   texto no se mueve; en cuanto cada letra lleva su propio transform, el
+   recorte deja de seguirlas y el navegador pinta trece letras transparentes
+   sobre un fondo que ya no esta debajo. Resultado: la escena encendida, con
+   opacidad 1, y NADA a la vista. Se vio en la primera prueba y por eso existe
+   ahora una bateria que mide tinta en pantalla y no solo opacidad.
+
+   Se podria devolver el degradado midiendo cada letra y desplazandole el
+   fondo, pero hay que volver a medir en cada cambio de tamano y se raja en
+   bandas. En blanco sobre el halo de color se lee mejor, aguanta cualquier
+   fondo y no depende de ningun truco. El degradado sigue donde si funciona:
+   la segunda linea del lema y la cifra, que no se mueven letra a letra. */
+.secuencia-letra{display:inline-block;
+  -webkit-text-fill-color:#fff;color:#fff;background:none;
+  text-shadow:0 0 22px rgba(0,240,255,.55),0 0 46px rgba(255,46,203,.35);
+  --q:min(1,max(0,calc((var(--p) - var(--d) * .34) * 3.6)));
+  opacity:var(--q);
+  transform:translateX(calc(var(--s) * (1 - var(--q)) * .55em))
+            scale(calc(.82 + .18 * var(--q)))}
+
+/* ---- 2. El lema, en dos tiempos ----
+   La primera linea cae. La segunda aterriza despues, y al aterrizar suelta
+   una onda. Que las dos lineas entren a la vez es lo que hace que un lema
+   suene a texto y no a golpe. */
+.secuencia-lema-l1,.secuencia-lema-l2{display:block}
+.secuencia-lema-l1{
+  --q:min(1,max(0,calc(var(--p) * 3.4)));
+  opacity:var(--q);
+  transform:translateY(calc((1 - var(--q)) * -.34em))}
+.secuencia-lema-l2{position:relative;
+  --q:min(1,max(0,calc((var(--p) - .26) * 3.6)));
+  opacity:var(--q);
+  transform:translateY(calc((1 - var(--q)) * .42em)) scale(calc(.94 + .06 * var(--q)))}
+/* La onda: un aro que se abre y se apaga justo cuando la segunda linea
+   toca el suelo. Dura poco a proposito -- una onda que se queda es un
+   adorno, una que pasa es un impacto. */
+.secuencia-lema-l2::after{content:"";position:absolute;left:50%;top:50%;
+  width:1.2em;height:1.2em;margin:-.6em 0 0 -.6em;border-radius:50%;
+  border:2px solid var(--neon-cyan,#00f0ff);pointer-events:none;
+  --w:min(1,max(0,calc((var(--p) - .30) * 6)));
+  opacity:calc(.55 * (1 - var(--w)) * var(--w) * 4);
+  transform:scale(calc(.4 + var(--w) * 6))}
+
+/* ---- 3. Los pilares se apilan en orden ----
+   Como se cargan los discos en una barra: uno, y luego el siguiente. --i es
+   el turno y lo pone Liquid. Entran desde la izquierda porque el texto se
+   lee desde la izquierda; si entraran desde abajo, los tres competirian con
+   el movimiento del fondo. */
+.secuencia-pilar{
+  --q:min(1,max(0,calc((var(--p) - var(--i) * .12) * 3.8)));
+  opacity:var(--q);
+  transform:translateX(calc((1 - var(--q)) * -1.6rem))}
+.secuencia-pilar-ico{transform:scale(calc(.62 + .38 * var(--q)));
+  transition:none}
+
+/* ---- 4. La cifra ----
+   El numero lo cuenta el motor, de cero a su valor. Aqui solo se le da el
+   golpe de camara al llegar. tabular-nums es lo que impide que la caja
+   cambie de ancho mientras cuenta: sin eso, los digitos de anchos distintos
+   hacen temblar todo lo que tienen debajo. */
+.secuencia-cifra{font-variant-numeric:tabular-nums;
+  --q:min(1,max(0,calc(var(--p) * 2.4)));
+  transform:scale(calc(.92 + .08 * var(--q)))}
+.secuencia-cifra-pie{
+  --q:min(1,max(0,calc((var(--p) - .34) * 3.4)));
+  opacity:var(--q);
+  transform:translateY(calc((1 - var(--q)) * .5rem))}
+
+/* ---- 5. El cierre ----
+   El titulo llega y el boton florece detras. El boton el ultimo a proposito:
+   es lo unico de los dieciocho segundos en lo que se puede hacer clic, y
+   llega cuando ya no compite con nada. */
+/* Sin animar el espaciado de las letras: era bonito y cambiaba el ANCHO del
+   titulo en cada fotograma, que es justo lo que una rejilla compartida no
+   perdona. El gesto lo hacen la opacidad y el desplazamiento, que no tocan
+   la caja de nadie. */
+.secuencia-cierre-tit{
+  --q:min(1,max(0,calc(var(--p) * 3.2)));
+  opacity:var(--q);
+  transform:translateY(calc((1 - var(--q)) * -.6rem))}
+.secuencia-cta{
+  --q:min(1,max(0,calc((var(--p) - .20) * 3.4)));
+  opacity:var(--q);
+  transform:translateY(calc((1 - var(--q)) * 1.1rem)) scale(calc(.9 + .1 * var(--q)))}
+/* El gesto del raton tiene que ganarle a la linea de arriba, que se
+   recalcula en cada fotograma. */
+.secuencia-cta:hover,.secuencia-cta:focus-visible{
+  transform:translateY(-3px) scale(1.02)}
+
+/* EL TAMANO DEL BOTON DENTRO DE LA SECUENCIA, Y POR QUE LLEVA DOS CLASES.
+   En frances dice VOIR LE CATALOGUE y en aleman KATALOG ANSEHEN: partido en
+   dos lineas deja un ladrillo. Que no parta.
+
+   Pero con nowrap el boton deja de poder encogerse, y aqui vive dentro de
+   una rejilla: un hijo que no encoge ENSANCHA LA PISTA, y con la pista
+   ensanchada se salen de la caja las CINCO escenas, no solo esta. Es lo que
+   paso: a 320 px la caja media 280 y las escenas 350.
+
+   La causa era de cascada. Estas reglas pesaban lo mismo que .btn-neon
+   (una clase cada una) y .btn-neon esta mas abajo en la hoja, asi que ganaba
+   y el boton se quedaba con sus 2,9 rem de relleno a cada lado -- 93 px de
+   los 246 disponibles. Con las dos clases juntas pesan mas y el relleno de
+   aqui es el que manda. El detector lo caza midiendo el ancho de cada
+   escena contra el de la caja. */
+.btn-neon.secuencia-cta{white-space:nowrap;
+  font-size:clamp(.74rem,2.4vw,1.02rem);
+  letter-spacing:clamp(.09em,.5vw,.16em);
+  gap:clamp(.4rem,1.6vw,.75rem);
+  padding:clamp(.72rem,2.4vw,1.05rem) clamp(1.05rem,5vw,2.9rem)}
+.btn-neon.secuencia-cta>span{margin-right:calc(-1 * clamp(.09em,.5vw,.16em))}
+.btn-neon.secuencia-cta svg{width:clamp(14px,4vw,18px);height:clamp(14px,4vw,18px)}
+
 /* Pista de interaccion: se desvanece sola a los seis segundos para no
    quedarse estorbando encima de la animacion. */
-.secuencia-pista{position:absolute;left:50%;bottom:1rem;transform:translateX(-50%);
+.secuencia-pista{position:absolute;left:50%;bottom:2.4rem;transform:translateX(-50%);
   font-size:.7rem;letter-spacing:.18em;color:rgba(255,255,255,.34);
   pointer-events:none;white-space:nowrap;
   animation:secPista 6s ease-out 1.2s forwards}
+/* Dice "muevete sobre la animacion" y en un movil no hay raton que mover:
+   ahi es una instruccion imposible encima de la unica pieza que tiene que
+   verse limpia. Y ademas se montaba justo encima del riel de progreso, que
+   ahora ocupa esa franja. */
+@media (hover:none){ .secuencia-pista{display:none} }
 @keyframes secPista{0%{opacity:0}18%{opacity:1}75%{opacity:1}100%{opacity:0}}
 
 @media (max-width:900px){
@@ -1192,12 +1391,42 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    al pasar el raton. Las reglas de aqui abajo llevan la misma raiz
    `.splash-intro.intro-puerta`, asi que pesan lo mismo o mas y el gesto
    por fin ocurre. */
-.splash-intro .splash-enter-btn{
+/* ==================================================================
+   .btn-neon -- EL BOTON PRINCIPAL DE LA TIENDA, UNO SOLO
+   ------------------------------------------------------------------
+   Esta receta nacio para el boton de entrar de la intro y se quedo alli
+   encerrada. Cuando la seccion de la secuencia necesito lo mismo, lo que
+   habia era .btn-primary: azul plano. Copiar la receta habria dejado dos
+   sitios que hay que acordarse de cambiar a la vez, que es como se acaba
+   con tres dialectos de boton en la misma tienda.
+
+   Asi que vive aqui, sin dueno, y la usan los dos. Lo que cada sitio anade
+   -- la entrada de la intro, el peso que necesita para ganarle a la regla
+   de la puerta -- se escribe alli y solo alli.
+
+   Tres decisiones y su porque:
+     - Tinta CASI NEGRA sobre el neon, no neon sobre negro. Suena al reves y
+       es justo lo que sube el contraste: #05050f pasa de 12:1 sobre el cian
+       y de 6:1 sobre el rosa.
+     - El degradado va ESPEJADO (cian, morado, rosa, morado, cian) sobre el
+       doble del ancho. Con uno normal, en reposo solo entraban en la caja el
+       cian y el morado, el rosa se quedaba fuera y el boton volvia a leerse
+       como azul.
+     - Respira y lo cruza un destello. Las dos cosas mueven un FONDO, no la
+       caja: ni reflujo ni fotogramas robados a lo que corra al lado.
+   ================================================================== */
+.btn-neon{
   position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.75rem;
   padding:1.05rem 2.9rem;
   border:0;
   border-radius:.75rem;
   color:#05050f;
+  text-decoration:none;
+  cursor:pointer;
   font-family:var(--font-heading);
   font-weight:800;
   font-size:1.02rem;
@@ -1214,19 +1443,35 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
     0 10px 30px -8px rgba(0,212,255,.6),
     0 12px 42px -6px rgba(255,46,203,.38),
     0 0 58px -12px rgba(123,47,255,.55);
-  /* Entra encendiendose: sube, crece de 0.94 a 1 y florece. Solo opacidad
-     y transform, que el navegador resuelve sin volver a medir la pagina. */
-  transform:translateY(14px) scale(.94);
-  transition:opacity .55s ease-out,
-             transform .55s cubic-bezier(.22,1,.36,1),
-             box-shadow .3s ease;
+  transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease;
   animation:vi-entrar-vive 9s linear 1.2s infinite}
-.splash-intro .splash-enter-btn svg{transition:transform .25s cubic-bezier(.22,1,.36,1)}
+.btn-neon svg{width:18px;height:18px;flex:0 0 auto;
+  transition:transform .25s cubic-bezier(.22,1,.36,1)}
 /* letter-spacing tambien se lo pone a la ULTIMA letra, asi que la palabra
    arrastra .16em de aire por la derecha que nadie ve y que empuja la flecha.
    Se le descuenta exactamente lo mismo. Con el japones se nota mas, porque
    ahi cada signo lleva su espacio. */
-.splash-intro .splash-enter-btn>span{margin-right:-.16em}
+.btn-neon>span{margin-right:-.16em}
+.btn-neon:hover,.btn-neon:focus-visible{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.45),
+    0 16px 38px -8px rgba(0,212,255,.75),
+    0 18px 54px -6px rgba(255,46,203,.5),
+    0 0 78px -10px rgba(123,47,255,.7)}
+.btn-neon:hover svg{transform:translateX(4px)}
+.btn-neon:active{transform:translateY(-1px) scale(.99)}
+/* El anillo de foco por fuera de la floracion, o se lo come la luz. */
+.btn-neon:focus-visible{outline:2px solid #fff;outline-offset:4px}
+
+.splash-intro .splash-enter-btn{
+  /* Entra encendiendose: sube, crece de 0.94 a 1 y florece. Solo opacidad
+     y transform, que el navegador resuelve sin volver a medir la pagina.
+     Lo demas -- degradado, tinta, floracion, destello -- lo pone .btn-neon. */
+  transform:translateY(14px) scale(.94);
+  transition:opacity .55s ease-out,
+             transform .55s cubic-bezier(.22,1,.36,1),
+             box-shadow .3s ease}
 
 /* El gesto del raton, con el peso suficiente para que se vea. */
 .splash-intro.intro-puerta .splash-enter-btn:hover,
@@ -1455,6 +1700,9 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
   .splash-intro .splash-title,
   .splash-intro .splash-tagline,
   .splash-intro .splash-enter-btn{opacity:1;transform:none;transition:none;animation:none}
+  /* El de la secuencia no entra con la intro, pero tampoco tiene por que
+     respirar ni destellar si se ha pedido menos movimiento. */
+  .btn-neon{animation:none}
   .splash-intro .splash-emblem{animation:none}
   .splash-skip{transition:none}
   /* Sin secuencia se pinta el fotograma FINAL, y en el final las frases ya se
@@ -2340,7 +2588,7 @@ input[type=search]::-webkit-search-cancel-button:hover{opacity:1}
      tinta casi negra sobre el lienzo del sistema -- la unica puerta de la
      tienda, ilegible. Se le devuelven los colores de boton del sistema y un
      filo, que es lo que este modo espera ver. */
-  .splash-enter-btn{
+  .splash-enter-btn,.btn-neon{
     background:ButtonFace!important;
     color:ButtonText!important;
     border:2px solid ButtonText!important;
