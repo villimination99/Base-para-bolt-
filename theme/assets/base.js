@@ -1,4 +1,4 @@
-/* VILLUMINATION 3D — core store interactions (vanilla JS, no dependencies) */
+/* VILLUMINATIONS 3D — core store interactions (vanilla JS, no dependencies) */
 (function () {
   'use strict';
   var T = window.theme || {};

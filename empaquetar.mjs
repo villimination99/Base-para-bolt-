@@ -191,7 +191,12 @@ const BATERIAS = [
      porque no ejecuta el guion del tema; esta lo ejecuta y ademas adelanta
      los temporizadores, porque la frase mala aparece a los cinco segundos. */
   ['verificadores/entidades/comprobar.mjs', 'ni una entidad HTML a la vista'],
-  ['verificadores/secuencia/comprobar.mjs', 'la secuencia de marca, fotograma a fotograma']
+  ['verificadores/secuencia/comprobar.mjs', 'la secuencia de marca, fotograma a fotograma'],
+  /* Y los textos que NO viven en los ficheros de idioma sino en los ajustes,
+     porque los teclea el comerciante en el editor. Ninguna bateria los veia:
+     por ahi se escapo el lema de la intro -- la primera linea que lee quien
+     llega -- en castellano para el frances, el aleman y el japones. */
+  ['verificadores/ajustes/comprobar.mjs', 'los textos que se escriben en el editor']
 ];
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');

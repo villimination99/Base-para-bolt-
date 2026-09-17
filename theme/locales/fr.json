@@ -421,7 +421,7 @@
       },
       "m1": {
         "title": "Pas d'excuses, que des résultats",
-        "caption": "VILLUMINATION"
+        "caption": "VILLUMINATIONS"
       },
       "m2": {
         "title": "Ton seul adversaire, c'est toi d'hier",
@@ -461,7 +461,7 @@
     },
     "sec": {
       "hero-shader": {
-        "eyebrow": "VILLUMINATION",
+        "eyebrow": "VILLUMINATIONS",
         "title": "TRANSFORME TON CORPS",
         "subtitle": "Maîtrise ton esprit. Équipement, vêtements et compléments pour ceux qui ne se contentent de rien.",
         "button_label": "VOIR LE CATALOGUE"
@@ -484,10 +484,10 @@
       },
       "flowing-menu": {
         "eyebrow": "CATÉGORIES",
-        "heading": "Explore l'univers VILLUMINATION"
+        "heading": "Explore l'univers VILLUMINATIONS"
       },
       "multicolumn": {
-        "title": "LA DIFFÉRENCE VILLUMINATION"
+        "title": "LA DIFFÉRENCE VILLUMINATIONS"
       },
       "newsletter": {
         "title": "REJOINS LE MOUVEMENT",
@@ -550,7 +550,7 @@
       },
       "main-list-collections": {
         "eyebrow": "CATALOGUE",
-        "heading": "Explore l'univers VILLUMINATION",
+        "heading": "Explore l'univers VILLUMINATIONS",
         "subheading": "Choisis ta catégorie et passe en mode élite.",
         "cta_text": "Explorer"
       }

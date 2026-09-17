@@ -421,7 +421,7 @@
       },
       "m1": {
         "title": "No excuses, only results",
-        "caption": "VILLUMINATION"
+        "caption": "VILLUMINATIONS"
       },
       "m2": {
         "title": "Your only competition is yesterday's you",
@@ -461,7 +461,7 @@
     },
     "sec": {
       "hero-shader": {
-        "eyebrow": "VILLUMINATION",
+        "eyebrow": "VILLUMINATIONS",
         "title": "TRANSFORM YOUR BODY",
         "subtitle": "Master your mind. Gear, apparel and supplements for people who never settle.",
         "button_label": "VIEW CATALOGUE"
@@ -484,10 +484,10 @@
       },
       "flowing-menu": {
         "eyebrow": "CATEGORIES",
-        "heading": "Explore the VILLUMINATION universe"
+        "heading": "Explore the VILLUMINATIONS universe"
       },
       "multicolumn": {
-        "title": "THE VILLUMINATION DIFFERENCE"
+        "title": "THE VILLUMINATIONS DIFFERENCE"
       },
       "newsletter": {
         "title": "JOIN THE MOVEMENT",
@@ -550,7 +550,7 @@
       },
       "main-list-collections": {
         "eyebrow": "CATALOGUE",
-        "heading": "Explore the VILLUMINATION universe",
+        "heading": "Explore the VILLUMINATIONS universe",
         "subheading": "Pick your category and switch to elite mode.",
         "cta_text": "Explore"
       }

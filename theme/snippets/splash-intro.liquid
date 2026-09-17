@@ -1,3 +1,4 @@
+{%- assign marca = settings.brand_display_name | default: shop.name -%}
 {%- comment -%}
   Intro "Pulso". Se muestra una vez por sesión y, por defecto, solo en la
   portada, para que nunca tape una página a la que el visitante ha ido a
@@ -24,7 +25,7 @@
   la esquina, que no espera a ninguna animación, y la tecla Escape. El botón
   grande de entrar aparece cuando la secuencia termina.
 {%- endcomment -%}
-<div id="splash-intro" class="splash-intro" data-splash data-duracion="{{ settings.splash_duracion | default: 'completa' }}" {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ shop.name | escape }}">
+<div id="splash-intro" class="splash-intro" data-splash data-duracion="{{ settings.splash_duracion | default: 'completa' }}" {% if settings.splash_3d %}data-splash-3d{% endif %} role="dialog" aria-label="{{ marca | escape }}">
   <div class="splash-bg"></div>
   {%- if settings.splash_fondo != blank -%}
     {%- comment -%}
@@ -161,7 +162,7 @@
              sizes="(max-width: 749px) 78vw, 420px"
              width="{{ settings.logo.width | default: 900 }}"
              height="{{ settings.logo.height | default: 200 }}"
-             alt="{{ shop.name | escape }}" loading="eager" decoding="async" fetchpriority="high">
+             alt="{{ marca | escape }}" loading="eager" decoding="async" fetchpriority="high">
       </h1>
     {%- elsif settings.splash_title != blank -%}
       <h1 class="splash-title">{{ settings.splash_title }}</h1>

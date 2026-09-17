@@ -421,7 +421,7 @@
       },
       "m1": {
         "title": "Keine Ausreden, nur Ergebnisse",
-        "caption": "VILLUMINATION"
+        "caption": "VILLUMINATIONS"
       },
       "m2": {
         "title": "Dein einziger Gegner ist dein Ich von gestern",
@@ -461,7 +461,7 @@
     },
     "sec": {
       "hero-shader": {
-        "eyebrow": "VILLUMINATION",
+        "eyebrow": "VILLUMINATIONS",
         "title": "FORME DEINEN KÖRPER",
         "subtitle": "Beherrsche deinen Geist. Ausrüstung, Bekleidung und Nahrungsergänzung für alle, die sich nie zufriedengeben.",
         "button_label": "KATALOG ANSEHEN"
@@ -484,10 +484,10 @@
       },
       "flowing-menu": {
         "eyebrow": "KATEGORIEN",
-        "heading": "Entdecke das VILLUMINATION-Universum"
+        "heading": "Entdecke das VILLUMINATIONS-Universum"
       },
       "multicolumn": {
-        "title": "DER VILLUMINATION-UNTERSCHIED"
+        "title": "DER VILLUMINATIONS-UNTERSCHIED"
       },
       "newsletter": {
         "title": "SCHLIESS DICH AN",
@@ -550,7 +550,7 @@
       },
       "main-list-collections": {
         "eyebrow": "KATALOG",
-        "heading": "Erkunde das VILLUMINATION-Universum",
+        "heading": "Erkunde das VILLUMINATIONS-Universum",
         "subheading": "Wähle deine Kategorie und schalte in den Elite-Modus.",
         "cta_text": "Entdecken"
       }

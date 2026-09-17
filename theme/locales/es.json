@@ -421,7 +421,7 @@
       },
       "m1": {
         "title": "Sin excusas, solo resultados",
-        "caption": "VILLUMINATION"
+        "caption": "VILLUMINATIONS"
       },
       "m2": {
         "title": "Tu única competencia eres tú de ayer",
@@ -461,7 +461,7 @@
     },
     "sec": {
       "hero-shader": {
-        "eyebrow": "VILLUMINATION",
+        "eyebrow": "VILLUMINATIONS",
         "title": "TRANSFORMA TU CUERPO",
         "subtitle": "Domina tu mente. Equipo, ropa y suplementos para quienes no se conforman.",
         "button_label": "VER CATÁLOGO"
@@ -484,10 +484,10 @@
       },
       "flowing-menu": {
         "eyebrow": "CATEGORÍAS",
-        "heading": "Explora el universo VILLUMINATION"
+        "heading": "Explora el universo VILLUMINATIONS"
       },
       "multicolumn": {
-        "title": "LA DIFERENCIA VILLUMINATION"
+        "title": "LA DIFERENCIA VILLUMINATIONS"
       },
       "newsletter": {
         "title": "ÚNETE AL MOVIMIENTO",
@@ -550,7 +550,7 @@
       },
       "main-list-collections": {
         "eyebrow": "CATÁLOGO",
-        "heading": "Explora el universo VILLUMINATION",
+        "heading": "Explora el universo VILLUMINATIONS",
         "subheading": "Elige tu categoría y entra en modo élite.",
         "cta_text": "Explorar"
       }

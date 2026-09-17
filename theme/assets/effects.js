@@ -1,4 +1,4 @@
-/* VILLUMINATION 3D — visual effects layer.
+/* VILLUMINATIONS 3D — visual effects layer.
    Lightweight, dependency-free, and disabled automatically when the visitor
    prefers reduced motion. Everything here is progressive enhancement. */
 (function () {

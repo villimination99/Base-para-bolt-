@@ -31,7 +31,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180, height: 180, crop: 'center' }}">
   {%- endif -%}
 
-  <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+  {%- assign marca = settings.brand_display_name | default: shop.name -%}
+  <title>{{ page_title }}{% if current_tags %} &ndash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains marca %} &ndash; {{ marca }}{% endunless %}</title>
 
   {%- comment -%}
     Meta description con respaldo EN ESCALERA. Una página sin description deja que

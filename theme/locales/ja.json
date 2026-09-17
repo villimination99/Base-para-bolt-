@@ -421,7 +421,7 @@
       },
       "m1": {
         "title": "言い訳ではなく結果を",
-        "caption": "VILLUMINATION"
+        "caption": "VILLUMINATIONS"
       },
       "m2": {
         "title": "唯一の競争相手は昨日の自分",
@@ -461,7 +461,7 @@
     },
     "sec": {
       "hero-shader": {
-        "eyebrow": "VILLUMINATION",
+        "eyebrow": "VILLUMINATIONS",
         "title": "身体を変えろ",
         "subtitle": "心を制する。妥協しない人のための器具・アパレル・サプリメント。",
         "button_label": "カタログを見る"
@@ -484,10 +484,10 @@
       },
       "flowing-menu": {
         "eyebrow": "カテゴリー",
-        "heading": "VILLUMINATIONの世界を探索"
+        "heading": "VILLUMINATIONSの世界を探索"
       },
       "multicolumn": {
-        "title": "VILLUMINATIONの違い"
+        "title": "VILLUMINATIONSの違い"
       },
       "newsletter": {
         "title": "ムーブメントに参加",
@@ -550,7 +550,7 @@
       },
       "main-list-collections": {
         "eyebrow": "カタログ",
-        "heading": "VILLUMINATIONの世界を探索",
+        "heading": "VILLUMINATIONSの世界を探索",
         "subheading": "カテゴリーを選んでエリートモードへ。",
         "cta_text": "見る"
       }

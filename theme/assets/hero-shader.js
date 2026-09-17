@@ -5,7 +5,7 @@
  * exige, y por eso empieza por /*! : es la marca que hace que el minificador
  * lo respete en vez de borrarlo con los demas comentarios.
  */
-/* VILLUMINATION 3D — Fondo de shader "borde pulsante" para el hero.
+/* VILLUMINATIONS 3D — Fondo de shader "borde pulsante" para el hero.
    WebGL puro, sin dependencias ni framework.
 
    El shader GLSL es una adaptacion de Paper Shaders (Pulsing Border),

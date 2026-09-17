@@ -1,4 +1,13 @@
 {%- comment -%}
+  EL NOMBRE DE LA MARCA SALE DEL AJUSTE DEL TEMA, NO DE shop.name.
+  En la administracion la tienda se llama "VIllumination": singular y con la
+  ele suelta. Ese nombre se colaba en el titulo de cada pestana, en og:site_name
+  y en los datos estructurados -- justo lo que leen Google y los sistemas de IA
+  para saber como se llama la marca. Con el ajuste delante manda el tema, y
+  shop.name se queda de red de seguridad por si el ajuste se vacia.
+{%- endcomment -%}
+{%- assign marca = settings.brand_display_name | default: shop.name -%}
+{%- comment -%}
   Datos estructurados (JSON-LD schema.org). Es lo que leen Google (resultados
   enriquecidos: precio, stock, estrellas) y los rastreadores de IA para entender
   qué vendes. Sin esto, tu tienda es "invisible" para ellos.
@@ -15,7 +24,7 @@
   {%- endcomment -%}
   "@type": "OnlineStore",
   "@id": {{ shop.url | append: '#organization' | json }},
-  "name": {{ shop.name | json }},
+  "name": {{ marca | json }},
   "url": {{ shop.url | json }}
   {%- comment -%}
     Logo para Google. Exige un mínimo de 112x112 px: si el logo es apaisado, se amplía el
@@ -94,7 +103,7 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "@id": {{ shop.url | append: '#website' | json }},
-  "name": {{ shop.name | json }},
+  "name": {{ marca | json }},
   "url": {{ shop.url | json }},
   "publisher": { "@id": {{ shop.url | append: '#organization' | json }} },
   "inLanguage": {{ request.locale.iso_code | json }}
@@ -222,7 +231,7 @@
   {%- if article.author != blank -%}
   "author": { "@type": "Person", "name": {{ article.author | json }} },
   {%- else -%}
-  "author": { "@type": "Organization", "name": {{ shop.name | json }} },
+  "author": { "@type": "Organization", "name": {{ marca | json }} },
   {%- endif -%}
   {%- comment -%} Se referencia la Organización ya declarada, con su logo, en vez de repetir solo el nombre. {%- endcomment -%}
   "publisher": { "@id": {{ shop.url | append: '#organization' | json }} }

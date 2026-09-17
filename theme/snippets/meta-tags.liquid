@@ -1,10 +1,19 @@
 {%- comment -%}
+  EL NOMBRE DE LA MARCA SALE DEL AJUSTE DEL TEMA, NO DE shop.name.
+  En la administracion la tienda se llama "VIllumination": singular y con la
+  ele suelta. Ese nombre se colaba en el titulo de cada pestana, en og:site_name
+  y en los datos estructurados -- justo lo que leen Google y los sistemas de IA
+  para saber como se llama la marca. Con el ajuste delante manda el tema, y
+  shop.name se queda de red de seguridad por si el ajuste se vacia.
+{%- endcomment -%}
+{%- comment -%}
   Open Graph + Twitter Cards. Controla cómo se ve tu tienda al compartirla en
   WhatsApp, Instagram, Facebook, X, Discord… y ayuda a los rastreadores a entenderla.
 {%- endcomment -%}
 {%- liquid
   assign og_title = page_title
-  assign og_desc = page_description | default: shop.description | default: shop.name
+  assign marca = settings.brand_display_name | default: shop.name
+  assign og_desc = page_description | default: shop.description | default: marca
   assign og_type = 'website'
   assign og_image = null
 
@@ -30,7 +39,7 @@
     assign og_image = settings.logo
   endif
 -%}
-<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:site_name" content="{{ marca | escape }}">
 <meta property="og:locale" content="{{ request.locale.iso_code }}">
 {%- comment -%}
   og:locale:alternate declara los demas idiomas de la tienda. hreflang se lo

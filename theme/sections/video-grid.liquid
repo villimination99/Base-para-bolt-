@@ -1,3 +1,4 @@
+{%- assign marca = settings.brand_display_name | default: shop.name -%}
 {%- liquid
   # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
   # Tiene que estar arriba del todo porque no solo se pinta: tambien
@@ -141,7 +142,7 @@
     {
       "@type": "VideoObject",
       "name": {{ block.settings.title | json }},
-      "description": {{ block.settings.title | append: ' - ' | append: shop.name | json }},
+      "description": {{ block.settings.title | append: ' - ' | append: marca | json }},
       "thumbnailUrl": {{ vid | prepend: 'https://i.ytimg.com/vi/' | append: '/hqdefault.jpg' | json }},
       "embedUrl": {{ vid | prepend: 'https://www.youtube.com/embed/' | json }},
       "uploadDate": {{ shop.published_at | default: 'now' | date: '%Y-%m-%d' | json }}

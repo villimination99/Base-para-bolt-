@@ -69,7 +69,16 @@
 {%- endcomment -%}
 <nav class="navbar{% if section.settings.transparent_top %} transparent-top{% endif %}{% unless section.settings.sticky %} navbar--static{% endunless %}" id="navbar" role="navigation" aria-label="{{ 'accessibility.main_nav' | t }}">
   <div class="navbar-inner">
-    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ shop.name | escape }}">
+    {%- comment -%}
+      El nombre sale del ajuste del tema, NO de shop.name. En la administracion
+      la tienda se llama "VIllumination" -- singular y con la ele suelta -- y ese
+      nombre se colaba en el alt del logotipo y en el aria-label del enlace, o
+      sea en TODAS las paginas y en los cinco idiomas, sin que el tema pudiera
+      hacer nada. Con el ajuste delante, la marca la manda el tema y shop.name
+      queda solo de red de seguridad.
+    {%- endcomment -%}
+    {%- assign marca = settings.brand_display_name | default: shop.name -%}
+    <a href="{{ routes.root_url }}" class="nav-logo" aria-label="{{ marca | escape }}">
       {%- if settings.logo != blank -%}
         {%- assign logo_h = settings.logo_height | default: 44 -%}
         {%- comment -%}
@@ -78,13 +87,13 @@
           su cuenta le da prioridad baja por ser pequeno en el marcado.
         {%- endcomment -%}
         <img src="{{ settings.logo | image_url: width: 240 }}"
-             alt="{{ shop.name | escape }}"
+             alt="{{ marca | escape }}"
              loading="eager" fetchpriority="high" decoding="async"
              width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
              style="height:{{ logo_h }}px;width:auto;object-fit:contain;">
       {%- else -%}
         {%- render 'logo-mark' -%}
-        {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
+        {%- assign brand_name = marca -%}
         <span class="nav-brand">
           <span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}
         </span>

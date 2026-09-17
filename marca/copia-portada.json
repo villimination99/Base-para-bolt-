@@ -603,11 +603,11 @@
         "ja": "言い訳ではなく結果を"
       },
       "caption": {
-        "es": "VILLUMINATION",
-        "en": "VILLUMINATION",
-        "fr": "VILLUMINATION",
-        "de": "VILLUMINATION",
-        "ja": "VILLUMINATION"
+        "es": "VILLUMINATIONS",
+        "en": "VILLUMINATIONS",
+        "fr": "VILLUMINATIONS",
+        "de": "VILLUMINATIONS",
+        "ja": "VILLUMINATIONS"
       }
     },
     "m2": {
@@ -751,11 +751,11 @@
   "sec": {
     "hero-shader": {
       "eyebrow": {
-        "es": "VILLUMINATION",
-        "en": "VILLUMINATION",
-        "fr": "VILLUMINATION",
-        "de": "VILLUMINATION",
-        "ja": "VILLUMINATION"
+        "es": "VILLUMINATIONS",
+        "en": "VILLUMINATIONS",
+        "fr": "VILLUMINATIONS",
+        "de": "VILLUMINATIONS",
+        "ja": "VILLUMINATIONS"
       },
       "title": {
         "es": "TRANSFORMA TU CUERPO",
@@ -852,20 +852,20 @@
         "ja": "カテゴリー"
       },
       "heading": {
-        "es": "Explora el universo VILLUMINATION",
-        "en": "Explore the VILLUMINATION universe",
-        "fr": "Explore l'univers VILLUMINATION",
-        "de": "Entdecke das VILLUMINATION-Universum",
-        "ja": "VILLUMINATIONの世界を探索"
+        "es": "Explora el universo VILLUMINATIONS",
+        "en": "Explore the VILLUMINATIONS universe",
+        "fr": "Explore l'univers VILLUMINATIONS",
+        "de": "Entdecke das VILLUMINATIONS-Universum",
+        "ja": "VILLUMINATIONSの世界を探索"
       }
     },
     "multicolumn": {
       "title": {
-        "es": "LA DIFERENCIA VILLUMINATION",
-        "en": "THE VILLUMINATION DIFFERENCE",
-        "fr": "LA DIFFÉRENCE VILLUMINATION",
-        "de": "DER VILLUMINATION-UNTERSCHIED",
-        "ja": "VILLUMINATIONの違い"
+        "es": "LA DIFERENCIA VILLUMINATIONS",
+        "en": "THE VILLUMINATIONS DIFFERENCE",
+        "fr": "LA DIFFÉRENCE VILLUMINATIONS",
+        "de": "DER VILLUMINATIONS-UNTERSCHIED",
+        "ja": "VILLUMINATIONSの違い"
       }
     },
     "newsletter": {
@@ -1170,11 +1170,11 @@
         "ja": "カタログ"
       },
       "heading": {
-        "es": "Explora el universo VILLUMINATION",
-        "en": "Explore the VILLUMINATION universe",
-        "fr": "Explore l'univers VILLUMINATION",
-        "de": "Erkunde das VILLUMINATION-Universum",
-        "ja": "VILLUMINATIONの世界を探索"
+        "es": "Explora el universo VILLUMINATIONS",
+        "en": "Explore the VILLUMINATIONS universe",
+        "fr": "Explore l'univers VILLUMINATIONS",
+        "de": "Erkunde das VILLUMINATIONS-Universum",
+        "ja": "VILLUMINATIONSの世界を探索"
       },
       "subheading": {
         "es": "Elige tu categoría y entra en modo élite.",

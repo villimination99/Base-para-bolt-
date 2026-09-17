@@ -1,3 +1,4 @@
+{%- assign marca = settings.brand_display_name | default: shop.name -%}
 {%- liquid
   # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA: no solo se pinta,
   # tambien decide, porque media seccion vive dentro de condiciones del
@@ -36,12 +37,12 @@
               daba un salto al cargar. Se usan las medidas reales, como en el
               encabezado.
             {%- endcomment -%}
-            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ shop.name | escape }}"
+            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ marca | escape }}"
                  width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
                  loading="lazy" style="height:36px;width:auto;">
           {%- else -%}
             {%- render 'logo-mark' -%}
-            {%- assign brand_name = settings.brand_display_name | default: shop.name -%}
+            {%- assign brand_name = marca -%}
             <span class="footer-brand-name"><span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}</span>
           {%- endif -%}
         </div>
@@ -157,7 +158,7 @@
     {%- endif -%}
 
     <div class="footer-bottom">
-      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'general.footer.rights' | t }}</p>
+      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ marca }}. {{ 'general.footer.rights' | t }}</p>
       {%- comment -%} El botón "volver arriba" es ahora el flotante global (layout), no se duplica aquí. {%- endcomment -%}
       {%- render 'language-selector' -%}
     </div>
