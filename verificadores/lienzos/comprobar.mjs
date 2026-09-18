@@ -33,7 +33,12 @@ const PAGINA = CABEZA + `
 
 // La pagina se escribe en disco: addInitScript solo se aplica al navegar a
 // una URL, no con setContent, y la sonda de dibujos la necesita.
-const TMP = path.join(AQUI, '.pagina-de-prueba.html');
+/* El nombre lleva el PID. Con un nombre fijo, dos pasadas a la vez -- dos
+   compuertas, o una compuerta y alguien probando a mano -- se borran el
+   temporal la una a la otra, y lo que sale es un ERR_FILE_NOT_FOUND en mitad
+   de una bateria que no tiene nada roto. Ese falso rojo cuesta mas que el
+   fallo que oculta: se lee como una regresion y se va a buscar a otro sitio. */
+const TMP = path.join(AQUI, `.pagina-de-prueba-${process.pid}.html`);
 fs.writeFileSync(TMP, PAGINA);
 const URL_PRUEBA = 'file://' + TMP;
 
@@ -222,7 +227,7 @@ for (const reducido of [false, true]) {
 }
 
 await navegador.close();
-fs.unlinkSync(TMP);
+try { fs.unlinkSync(TMP); } catch (e) {}
 console.log('');
 console.log(fallos === 0 ? 'Los lienzos animados pintan, se paran y se adaptan.' : `${fallos} problema(s) en los lienzos.`);
 process.exit(fallos === 0 ? 0 : 1);

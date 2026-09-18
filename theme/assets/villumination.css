@@ -1168,12 +1168,22 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
    bandas. En blanco sobre el halo de color se lee mejor, aguanta cualquier
    fondo y no depende de ningun truco. El degradado sigue donde si funciona:
    la segunda linea del lema y la cifra, que no se mueven letra a letra. */
+/* --d (lo lejos que esta la letra del centro) y --s (a que lado cae) los
+   pone partirMarca() en cada letra, desde JavaScript. Van con respaldo a 0
+   a proposito: si el guion no llega a correr -- bloqueado, con un error
+   antes de partir la marca, o sencillamente todavia no descargado -- un
+   var() sin respaldo invalida la declaracion ENTERA en la que aparece, y
+   con ella --q, y con --q la opacidad y el transform de todas las letras.
+   Hoy eso cae del lado bueno por como el navegador trata un valor invalido
+   (opacity vuelve a 1 y se ven), pero eso es suerte, no diseno. Con el
+   respaldo a 0 el estado sin JavaScript queda dicho: letras en su sitio,
+   sin desplazamiento, animadas solo por --p. */
 .secuencia-letra{display:inline-block;
   -webkit-text-fill-color:#fff;color:#fff;background:none;
   text-shadow:0 0 22px rgba(0,240,255,.55),0 0 46px rgba(255,46,203,.35);
-  --q:min(1,max(0,calc((var(--p) - var(--d) * .34) * 3.6)));
+  --q:min(1,max(0,calc((var(--p) - var(--d,0) * .34) * 3.6)));
   opacity:var(--q);
-  transform:translateX(calc(var(--s) * (1 - var(--q)) * .55em))
+  transform:translateX(calc(var(--s,0) * (1 - var(--q)) * .55em))
             scale(calc(.82 + .18 * var(--q)))}
 
 /* ---- 2. El lema, en dos tiempos ----
@@ -1331,8 +1341,16 @@ a.footer-contacto-item:focus-visible{outline:2px solid var(--neon-cyan,#00f0ff);
 .splash-intro .splash-enter-btn{
   animation:none!important;
   opacity:0;
-  transform:translateY(12px);
   transition:opacity .55s ease-out,transform .55s cubic-bezier(.22,1,.36,1)}
+/* El desplazamiento de entrada va aparte, y no por gusto: el boton trae el
+   suyo mas abajo -- translateY(14px) y escala 0.94, junto al resto de su
+   gesto -- con el MISMO selector y por tanto la misma especificidad, asi que
+   gana por ir despues. Mientras los dos vivian en la regla de arriba, el
+   translateY(12px) del boton no se veia nunca: quien viniera a afinar la
+   entrada del boton tocando este numero no habria notado ningun cambio y
+   habria acabado buscando el fallo en otro sitio. Aqui solo queda el
+   eslogan, que es de quien es. */
+.splash-intro .splash-tagline{transform:translateY(12px)}
 
 /* DOS puertas, no una. La de arriba abre la TIENDA: el boton de entrar
    aparece a 2,40 s, antes de que la secuencia acabe, para que nadie tenga que

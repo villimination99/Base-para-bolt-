@@ -4638,7 +4638,14 @@
         var anchorEl = document.getElementById('hero-motto') || subEl;
         anchorEl.parentNode.insertBefore(note, anchorEl.nextSibling);
       }
-      note.textContent = TX(D.note);
+      /* D es I18N[l], asi que D.note YA viene en el idioma de destino. Pasarla
+         otra vez por TX() la buscaba en el diccionario como si fuera espanol,
+         no la encontraba -- claro -- y la apuntaba en __i18nMiss. El texto en
+         pantalla salia bien, pero el informe de cadenas pendientes daba un
+         falso positivo en cada idioma. Eso es justo lo que vuelve inservible
+         un informe: con ruido fijo, nadie lo mira. Por eso llevaba ahi sin que
+         nadie lo usara. */
+      note.textContent = D.note;
     } else if (note) { note.parentNode.removeChild(note); }
     var m = document.getElementById('hero-motto');
     if (m) {

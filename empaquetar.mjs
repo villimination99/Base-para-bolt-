@@ -196,11 +196,51 @@ const BATERIAS = [
      porque los teclea el comerciante en el editor. Ninguna bateria los veia:
      por ahi se escapo el lema de la intro -- la primera linea que lee quien
      llega -- en castellano para el frances, el aleman y el japones. */
-  ['verificadores/ajustes/comprobar.mjs', 'los textos que se escriben en el editor']
+  ['verificadores/ajustes/comprobar.mjs', 'los textos que se escriben en el editor'],
 ];
+
+/* ---- las comprobaciones que leen el FUENTE, contra theme/ ----
+
+   Estas no pueden correr contra el minificado, y la razon esta explicada
+   arriba: buscan nombres, y en el build los nombres son deliberadamente
+   otros. Su sitio es el tema del repositorio.
+
+   Hasta hoy eso se decia en un comentario y se dejaba "para pasarlas
+   aparte". Aparte no era ningun sitio: no habia guion que las llamara, ni
+   entrada en package.json, ni nada. Corrian si alguien se acordaba. Se vio
+   al buscar verificadores huerfanos: TRECE ficheros que existian y no los
+   ejecutaba nadie, y check.mjs llevaba tiempo en rojo con cuatro problemas
+   -- entre ellos que theme/assets/vi-p.js se habia separado de su maestro,
+   o sea que el siguiente partir.mjs iba a revertir un arreglo en silencio.
+
+   Nada de eso hacia falta que pasara. Ahora corren aqui, con TEMA=theme. */
+const FUENTE = [
+  ['verificadores/check.mjs', 'las 47 comprobaciones de fuente (y el hub contra su maestro)'],
+  ['verificadores/render/jsonld.mjs', 'los datos estructurados, con el Liquid ejecutado'],
+  ['verificadores/render/cabeza.mjs', 'la cabeza del documento'],
+  ['verificadores/render/codigos.mjs', 'los codigos de verificacion de los buscadores'],
+  ['verificadores/render/robots.mjs', 'el robots.txt, renderizado'],
+  ['verificadores/render/deriva-hub.mjs', 'el hub no se separa de su maestro'],
+  ['verificadores/render/hub-webapp.mjs', 'el hub como aplicacion'],
+];
+function pasar(lista, tema, contra) {
+  for (const [script, que] of lista) {
+    try {
+      execSync(`node "${path.join(RAIZ, script)}"`, { cwd: RAIZ, env: { ...process.env, TEMA: tema }, stdio: 'pipe' });
+      console.log(`  OK   ${que}`);
+    } catch (e) {
+      console.error(`  FALLA ${que} sobre ${contra}. NO se escribe el zip.`);
+      const salida = String(e.stdout || '') + String(e.stderr || '');
+      console.error(salida.split('\n').filter(l => /FALLA|FALLO|rojo|mal|INVALIDO|HUECO|✗/.test(l)).slice(0, 8).join('\n'));
+      process.exit(1);
+    }
+  }
+}
+
 if (process.env.SIN_BATERIAS) {
   console.log('  (SIN_BATERIAS: no se comprueba el tema minificado)');
 } else {
+  pasar(FUENTE, path.join(RAIZ, 'theme'), 'el tema del repositorio');
   for (const [script, que] of BATERIAS) {
     try {
       execSync(`node "${path.join(RAIZ, script)}"`, { cwd: RAIZ, env: { ...process.env, TEMA: TMP }, stdio: 'pipe' });

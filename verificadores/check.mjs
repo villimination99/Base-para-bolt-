@@ -1185,7 +1185,14 @@ check('Secuencia de marca: piezas completas', () => {
     if (!css.includes('.' + c)) bad.push(`falta el estilo .${c}`);
   // Movimiento reducido: tiene que quedar el fotograma con la llamada a la accion
   const js = read(`${T}/assets/secuencia.js`);
-  if (!/reduce[\s\S]{0,400}pintar\(/.test(js))
+  /* Que con movimiento reducido se pinte UN fotograma. Ojo con esta linea:
+     buscaba `pintar(` y el motor nuevo llama a `pintarTodo(`, asi que se
+     quedo roja durante toda una reescritura sin que pasara nada malo. Una
+     comprobacion que busca un NOMBRE caduca en cuanto alguien renombra.
+     La garantia de verdad es la bateria de la secuencia, que con
+     reducedMotion:'reduce' tapa el texto y MIDE la tinta del lienzo; esta
+     de aqui solo avisa pronto, leyendo el fuente. */
+  if (!/reduce[\s\S]{0,400}pintar[A-Za-z]*\(/.test(js))
     bad.push('con movimiento reducido la secuencia no pinta ningun fotograma');
   // Los iconos ofrecidos tienen que existir
   const iconos = read(`${T}/snippets/icon.liquid`);

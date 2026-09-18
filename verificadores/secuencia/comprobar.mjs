@@ -333,6 +333,41 @@ for (const [lang, L] of Object.entries(IDIOMAS)) {
   });
   decir(r.o > 0.9 && r.alcanzable && r.ancho > 80,
     `sin movimiento se ve el boton y se puede pulsar (opacidad ${r.o}, ${r.ancho} px)`);
+
+  /* Y QUE LA LUZ ESTE PINTADA, no solo el texto.
+     -------------------------------------------------------------------
+     Lo de arriba comprueba el boton. Pero con movimiento reducido el motor
+     no anima: pinta UN fotograma y se para. Si esa unica llamada se
+     rompiera, el boton seguiria visible y esta prueba seguiria en verde
+     mientras el visitante ve el texto flotando sobre un vacio negro.
+
+     Asi que se tapa la capa de texto y se mide la tinta DEL LIENZO. Es la
+     misma leccion que la bateria numero 1: se mide lo que se pinta, no lo
+     que el codigo dice que pinta. */
+  const p2 = await ctx.newPage();
+  await p2.setContent(pagina(IDIOMAS.fr, 640, 12), { waitUntil: 'load' });
+  await p2.addStyleTag({ content: '.secuencia-escenas{display:none!important}' +
+                                  '.secuencia::before,.secuencia::after{display:none!important}' +
+                                  '.secuencia{background:#000!important}' });
+  await p2.waitForFunction(() => !!document.querySelector('[data-secuencia][data-sec-listo]'));
+  await p2.waitForTimeout(350);
+  const caja2 = await p2.locator('.secuencia').boundingBox();
+  const foto2 = await p2.screenshot({ clip: caja2 });
+  const luz = await p2.evaluate(async (b64) => {
+    const img = new Image();
+    await new Promise((r) => { img.onload = r; img.src = 'data:image/png;base64,' + b64; });
+    const c = document.createElement('canvas');
+    c.width = img.width; c.height = img.height;
+    const g = c.getContext('2d');
+    g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, c.width, c.height).data;
+    let n = 0;
+    for (let k = 0; k < d.length; k += 4) if (d[k] + d[k + 1] + d[k + 2] > 90) n++;
+    return { encendidos: n, total: d.length / 4 };
+  }, foto2.toString('base64'));
+  const pc = (luz.encendidos / luz.total) * 100;
+  decir(pc > 1, `sin movimiento el lienzo tambien pinta su fotograma (${pc.toFixed(2)} % del cuadro)`);
+  await p2.close();
   await ctx.close();
 }
 

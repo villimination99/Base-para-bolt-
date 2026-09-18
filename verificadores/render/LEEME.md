@@ -11,12 +11,33 @@ rastreador.
 
 ## Uso
 
-    npm install liquidjs --no-save
     node verificadores/render/jsonld.mjs
 
+Entra en la compuerta (`node empaquetar.mjs`), asi que normalmente no hay que
+correrlo a mano. Durante meses NO entraba: se corria a mano o no se corria, y
+no por falta de dependencias -- liquidjs ya estaba fijada en package.json. Fue
+un olvido. Se noto al unificar el nombre de la marca, porque tres de los campos
+que se tocaron son justo los que leen Google y los sistemas de IA.
+
 Recorre nueve tipos de pagina (index, product, collection, article, blog, page,
-search, 404, cart), renderiza los datos estructurados de cada uno y hace
-JSON.parse de cada bloque. Sale con codigo 1 si alguno no es JSON valido.
+search, 404, cart) en tres escenarios: precio unico, precio variable
+(AggregateOffer) y **la configuracion que de verdad se envia**, con el correo y
+el telefono de contacto vacios. Ese tercero faltaba: las dos pasadas anteriores
+renderizaban el contacto relleno, asi que la forma en que el tema sale de
+fabrica no se probaba nunca.
+
+De cada bloque hace JSON.parse y ademas mira lo que dice dentro:
+
+  - `name`, `url`, `@type` y `@id` no pueden ir en null ni vacios. Es el fallo
+    que `{{ marca | json }}` deja a un descuido de distancia: con la variable
+    vacia escribe `null`, que es JSON impecable y le dice a Google que la
+    marca no se llama de ninguna manera.
+  - El correo de la administracion no puede aparecer en ningun campo. Hoy no
+    hay via para que llegue -- el bloque de contacto solo se pinta si el
+    comerciante rellena el ajuste a mano, y va vacio de fabrica -- pero es la
+    clase de respaldo "util" que alguien anade con la mejor intencion.
+
+Sale con codigo 1 si algun bloque no es JSON valido o si le falta contenido.
 
 ## Comprobado que salta
 

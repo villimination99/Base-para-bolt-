@@ -130,8 +130,13 @@ window.__t0=performance.now();</script>
 </body></html>`;
 }
 
-const TMP = path.join(AQUI, '.pagina-de-prueba.html');
-const TMP_CORTA = path.join(AQUI, '.pagina-de-prueba-corta.html');
+/* El nombre lleva el PID. Con un nombre fijo, dos pasadas a la vez -- dos
+   compuertas, o una compuerta y alguien probando a mano -- se borran el
+   temporal la una a la otra, y lo que sale es un ERR_FILE_NOT_FOUND en mitad
+   de una bateria que no tiene nada roto. Ese falso rojo cuesta mas que el
+   fallo que oculta: se lee como una regresion y se va a buscar a otro sitio. */
+const TMP = path.join(AQUI, `.pagina-de-prueba-${process.pid}.html`);
+const TMP_CORTA = path.join(AQUI, `.pagina-de-prueba-corta-${process.pid}.html`);
 fs.writeFileSync(TMP, pagina('completa'));
 fs.writeFileSync(TMP_CORTA, pagina('corta'));
 const URL_PRUEBA = 'file://' + TMP;

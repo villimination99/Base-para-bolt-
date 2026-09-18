@@ -36,7 +36,7 @@ engine.registerFilter('default', (v,d) => (v===undefined||v===null||v==='' ? d :
 engine.registerTag('style', { parse(t,r){this.tpls=[];const s=this;let tok;while((tok=r.shift())){if(tok.name==='endstyle')return;s.tpls.push(tok);}}, render(){ return ''; } });
 engine.registerTag('schema', { parse(t,r){while(r.length){const k=r.shift();if(k.name==='endschema')return;}}, render(){return '';} });
 
-const img = { src:'//cdn.shopify.com/logo.png', width:1600, height:400, alt:'VILLUMINATION', aspect_ratio:4 };
+const img = { src:'//cdn.shopify.com/logo.png', width:1600, height:400, alt:'VILLUMINATIONS', aspect_ratio:4 };
 const ctx = {
   settings: {
     seo_google_verification:'ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE',
@@ -46,7 +46,7 @@ const ctx = {
     social_tiktok:'', social_x:'',
     seo_contact_email:'hola@villuminations.com', seo_contact_phone:'+1 514 555 0134',
     seo_ship_country:'CA', seo_return_days:30, seo_return_free:true,
-    cart_free_shipping_threshold:'', brand_display_name:'VILLUMINATION',
+    cart_free_shipping_threshold:'', brand_display_name:'VILLUMINATIONS',
   },
   shop: { name:'VIllumination', url:'https://villuminations.com',
     description:'Villuminations te guía hacia un fitness sin límites.',
@@ -57,7 +57,7 @@ const ctx = {
   localization: { available_languages:[{iso_code:'es',primary:true,root_url:'/'},{iso_code:'en',root_url:'/en'},{iso_code:'fr',root_url:'/fr'},{iso_code:'de',root_url:'/de'},{iso_code:'ja',root_url:'/ja'}] },
   routes: { root_url:'/', search_url:'/search', all_products_collection_url:'/collections/all' },
   product: { title:'Proteína de suero aislada', id:1, url:'/products/proteina', handle:'proteina',
-    description:'Proteína de suero aislada sabor chocolate.', vendor:'VILLUMINATION', type:'Suplementos',
+    description:'Proteína de suero aislada sabor chocolate.', vendor:'VILLUMINATIONS', type:'Suplementos',
     featured_media:{preview_image:img}, media:[{preview_image:img}], images:[img], featured_image:img,
     price:12990, price_min:12990, price_max:15990, available:true, selected_or_first_available_variant:{id:9,sku:'VP-001',barcode:'1234567890123',price:12990,available:true,title:'2 kg'},
     variants:[{id:9,sku:'VP-001',barcode:'1234567890123',price:12990,available:true,title:'2 kg'}],
@@ -69,7 +69,7 @@ const ctx = {
     tags:[], collections:[{title:'Suplementos',url:'/collections/suplementos'}] },
   collection: { title:'Suplementos', url:'/collections/suplementos', description:'Proteína y creatina.', products:[], all_products_count:10, image:img },
   article: { title:'Qué suplementos tienen evidencia', url:'/blogs/diario/x', content:'<p>Texto</p>', excerpt:'Resumen',
-    published_at:'2026-08-01', updated_at:'2026-08-02', author:'Villumination', image:img, tags:[], comments_count:0 },
+    published_at:'2026-08-01', updated_at:'2026-08-02', author:'VILLUMINATIONS', image:img, tags:[], comments_count:0 },
   blog: { title:'Diario', url:'/blogs/diario', articles:[] },
   page: { title:'Contacto', url:'/pages/contact', content:'' },
   cart: { total_price:0, item_count:0, items:[] },
@@ -80,13 +80,58 @@ const ctx = {
 const objetivo = process.argv[2] || 'structured-data.liquid';
 const tipos = (process.argv[3] || 'index,product,collection,article,blog,page,search,404,cart').split(',');
 let totalMalos = 0;
+
+/* SER JSON VALIDO NO ES SER JSON UTIL.
+   -------------------------------------------------------------------
+   Hasta aqui esto solo comprobaba que cada bloque PARSEA. Pero
+   {{ marca | json }} con marca vacia escribe null, y "name": null es JSON
+   impecable que le dice a Google que la marca no se llama de ninguna manera.
+   Lo mismo con "url" o "@type". El dia que el nombre dejo de salir de
+   shop.name y paso a salir de un ajuste del tema, ese fallo pasaba a estar
+   a un descuido de distancia y nadie lo habria visto.
+
+   Y una segunda: el correo de la administracion (villumination@outlook.com)
+   NO puede acabar en los datos estructurados. Hoy no hay ninguna via -- el
+   bloque de contacto solo se pinta si el comerciante rellena el ajuste a
+   mano, y va vacio de fabrica -- pero es la clase de respaldo "util" que
+   alguien anade con la mejor intencion. Si aparece, aqui se entera. */
+const CORREO_PROHIBIDO = 'villumination@outlook.com';
+
+function revisar(j, donde, fallos) {
+  if (Array.isArray(j)) { j.forEach((x, i) => revisar(x, donde + '[' + i + ']', fallos)); return; }
+  if (j === null || typeof j !== 'object') return;
+  const tipo = typeof j['@type'] === 'string' ? j['@type'] : donde;
+  for (const [k, v] of Object.entries(j)) {
+    if (v && typeof v === 'object') { revisar(v, tipo + '.' + k, fallos); continue; }
+    if (typeof v === 'string' && v.toLowerCase().includes(CORREO_PROHIBIDO)) {
+      fallos.push('el correo de la administracion sale en ' + tipo + '.' + k);
+      continue;
+    }
+    /* Los campos que identifican algo no pueden ir vacios ni en null. */
+    if (['name', 'url', '@type', '@id'].includes(k)) {
+      if (v === null) fallos.push(tipo + '.' + k + ' es null');
+      else if (typeof v === 'string' && !v.trim()) fallos.push(tipo + '.' + k + ' esta vacio');
+    }
+  }
+}
 /* Cada tipo de pagina se renderiza dos veces: con un producto de precio unico
    y con uno de precio variable. Son dos ramas distintas del JSON-LD (Offer y
    AggregateOffer) y la segunda no se ejercitaba nunca, que es justo donde es
    mas facil colar una coma de mas y romper el bloque entero. */
-for (const varia of [false, true]) {
+/* Y una tercera pasada con el contacto VACIO, que es como sale el tema de
+   fabrica. Las dos de arriba lo renderizaban con correo y telefono puestos:
+   la configuracion que de verdad se envia no se probaba nunca. */
+const ESCENARIOS = [
+  { nom: null, varia: false, contacto: true },
+  { nom: '\n  --- con precio variable (AggregateOffer) ---', varia: true, contacto: true },
+  { nom: '\n  --- como sale de fabrica: sin correo ni telefono de contacto ---', varia: false, contacto: false },
+];
+for (const esc of ESCENARIOS) {
+ const varia = esc.varia;
  ctx.product.price_varies = varia;
- if (varia) console.log('\n  --- con precio variable (AggregateOffer) ---');
+ ctx.settings.seo_contact_email = esc.contacto ? 'hola@villuminations.com' : '';
+ ctx.settings.seo_contact_phone = esc.contacto ? '+1 514 555 0134' : '';
+ if (esc.nom) console.log(esc.nom);
  for (const tipo of tipos) {
   ctx.request.page_type = tipo;
   ctx.template.name = tipo;
@@ -96,8 +141,12 @@ for (const varia of [false, true]) {
   let malos = 0;
   bloques.forEach(b => {
     try { const j = JSON.parse(b[1]);
+      const huecos = [];
+      revisar(j, 'raiz', huecos);
       const t = JSON.stringify(j).match(/"@type":"[A-Za-z]+"/g) || [];
-      resumen.push([...new Set(t.map(x=>x.split('"')[3]))].join('+'));
+      const nombres = [...new Set(t.map(x=>x.split('"')[3]))].join('+');
+      if (huecos.length) { malos++; totalMalos++; resumen.push('HUECO en ' + nombres + ': ' + huecos.join('; ')); }
+      else resumen.push(nombres);
     } catch (e) { malos++; totalMalos++; resumen.push('INVALIDO: ' + e.message); }
   });
   console.log(`  ${tipo.padEnd(16)} ${String(salida.length).padStart(5)} car | ${bloques.length} bloques JSON-LD | ${resumen.join('  ·  ') || '(ninguno)'}`);
