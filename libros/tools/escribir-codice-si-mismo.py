@@ -1,0 +1,1416 @@
+#!/usr/bin/env python3
+"""
+CÓDICE DEL SÍ MISMO — obra original de VILLUMINATIONS
+=======================================================
+Redacción propia. El material de partida es de dominio público y de tradición
+común: el «Manual» de Epicteto, las «Meditaciones» de Marco Aurelio y las
+«Cartas a Lucilio» de Séneca —los tres con casi dos milenios y libres de
+derechos—, junto con la práctica de observación de sí, el examen nocturno y las
+técnicas respiratorias pautadas, que no son propiedad de nadie.
+
+Se cita siempre la fuente cuando una idea viene de un sitio concreto. Lo que
+aquí es propio: la redacción entera, la estructura, los ejercicios, las seis
+láminas y el encuadre.
+
+    python3 tools/escribir-codice-si-mismo.py && python3 build.py si-mismo
+"""
+
+import json
+from pathlib import Path
+
+SRC = Path(__file__).resolve().parent.parent / "src"
+
+
+def p(t):        return {"t": "p", "x": t}
+def h(t):        return {"t": "h2", "x": t}
+def ficha(tit, filas): return {"t": "ficha", "tit": tit, "x": filas}
+def lista(*i):   return {"t": "lista", "x": list(i)}
+def pasos(*i):   return {"t": "pasos", "x": list(i)}
+def nota(tit, t): return {"t": "nota", "tit": tit, "x": t}
+def sep():       return {"t": "sep"}
+def ritual(*l):  return {"t": "ritual", "x": list(l)}
+
+
+def fig(simbolo, tit, pie, clase=""):
+    return {"t": "figura", "x": simbolo, "tit": tit, "pie": pie, "clase": clase}
+
+
+def cap(titulo, *bloques):
+    return {"titulo": titulo, "bloques": [b for b in bloques if b]}
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE I · EL PROBLEMA
+# ══════════════════════════════════════════════════════════════════════
+
+C1 = cap(
+    "No estabas aquí",
+    p("Haz una prueba antes de seguir leyendo. Cierra el libro y trata de "
+      "recordar cómo has llegado a esta página: en qué postura estabas hace dos "
+      "minutos, qué hacía tu respiración, qué pensabas justo antes de abrirlo. "
+      "Casi con total seguridad no lo sabes."),
+    p("No es un defecto tuyo. Es el modo por defecto de funcionamiento humano, y "
+      "es el punto de partida de este libro: pasamos la mayor parte de la vida "
+      "haciendo cosas sin estar presentes mientras las hacemos. Comemos leyendo, "
+      "conducimos pensando, discutimos sin oír, y al final del día no podríamos "
+      "reconstruir ni la décima parte de lo que ha pasado por nuestra cabeza."),
+    h("Lo que este libro propone"),
+    p("Una disciplina concreta, antigua y verificable: aprender a estar presente "
+      "en lo que se hace mientras se hace. No como estado permanente —eso no "
+      "existe y quien lo prometa está vendiendo algo— sino como capacidad "
+      "entrenable que empieza en unos segundos al día y crece con la práctica."),
+    p("El nombre tradicional de esta disciplina es observación de sí. No es "
+      "introspección, y la diferencia importa desde la primera página: la "
+      "introspección piensa sobre uno mismo, y la observación de sí mira. Pensar "
+      "sobre uno mismo es una actividad más de las que se hacen estando ausente. "
+      "Mirar es otra cosa."),
+    h("Lo que no propone"),
+    lista(
+        "No propone una creencia. No hay cosmología aquí, no hay que aceptar "
+        "nada previo y todo lo que se afirma se puede comprobar en la propia "
+        "experiencia en cuestión de días.",
+        "No propone una terapia. Este libro no trata trastornos, no sustituye "
+        "atención psicológica y no es el lugar donde resolver un trauma. Si "
+        "estás en una crisis, lo que necesitas es un profesional; volverás a "
+        "esto después y te será más útil.",
+        "No promete paz. La observación de sí produce, al principio, bastante "
+        "incomodidad: se ve lo que no se veía y buena parte de ello no es "
+        "agradable. Quien busque consuelo inmediato encontrará antes otras "
+        "lecturas.",
+        "No promete resultados espectaculares. Produce una cosa muy sobria: más "
+        "tiempo despierto dentro de tu propia vida. Cuando se prueba, resulta "
+        "ser suficiente.",
+    ),
+    nota("La única promesa que este libro hace",
+         "Si practicas lo que aquí se propone durante tres meses, con registro "
+         "escrito, sabrás cosas de tu propio funcionamiento que hoy no sabes: qué "
+         "te dispara, en qué orden reaccionas, cuánto duran tus estados y cuáles "
+         "de tus opiniones sobre ti mismo eran falsas. Eso es todo, y es más de "
+         "lo que la mayoría de la gente averigua en una vida entera."),
+)
+
+C2 = cap(
+    "Las cuatro cosas que no sabemos de nosotros",
+    p("Antes de proponer un método conviene establecer el problema con precisión. "
+      "Hay cuatro hechos sobre el propio funcionamiento que casi nadie conoce y "
+      "que se descubren en las primeras semanas de observación. Los cuatro son "
+      "comprobables y los cuatro son incómodos."),
+    h("Primero: reaccionamos antes de decidir"),
+    p("La secuencia que creemos que ocurre es: pasa algo, lo evalúo, decido cómo "
+      "responder, respondo. La secuencia real es otra: pasa algo, el cuerpo ya ha "
+      "respondido —la mandíbula, el tono de voz, la respiración—, y después "
+      "aparece un relato que explica la respuesta como si hubiera sido una "
+      "decisión. La justificación llega siempre después del acto, y llega tan "
+      "rápido que se confunde con su causa."),
+    h("Segundo: no sabemos en qué estado estamos"),
+    p("Pregunta a alguien cómo está y responderá «bien» o «cansado» sin haber "
+      "mirado. Es una respuesta automática, no un informe. La capacidad de decir "
+      "en qué estado se está —con precisión, con localización corporal, con "
+      "duración— no viene de serie: se aprende, y es la primera destreza que "
+      "este libro entrena."),
+    h("Tercero: cambiamos de persona varias veces al día"),
+    p("Quien habla con su jefe y quien habla con su madre no son exactamente el "
+      "mismo: la voz cambia, el vocabulario cambia, las opiniones cambian, y en "
+      "algunos casos se contradicen sin que se note. Lo llamamos adaptación y en "
+      "buena parte lo es. Pero cualquiera que observe con cuidado descubrirá que "
+      "no hay una sola persona ahí dentro que se adapte, sino varias que se "
+      "alternan y que apenas se conocen entre sí."),
+    h("Cuarto: no recordamos nuestros propios estados"),
+    p("Esta es la más difícil de aceptar y la que hace obligatorio el cuaderno. "
+      "La memoria de los estados internos es malísima y además reescribe: a los "
+      "tres días no recuerdas cómo te sentías, y lo que recuerdas está teñido por "
+      "lo que ha pasado desde entonces. Sin registro escrito no puedes saber si "
+      "algo cambia, y por tanto no puedes corregir nada."),
+    sep(),
+    nota("La consecuencia práctica",
+         "Estos cuatro hechos definen el método de este libro. Como reaccionamos "
+         "antes de decidir, hay que buscar la pausa. Como no sabemos en qué estado "
+         "estamos, hay que aprender a mirarlo. Como cambiamos de persona, hay que "
+         "registrar cuál está al mando. Y como no recordamos, hay que escribir. "
+         "Todo lo demás es desarrollo de esas cuatro consecuencias."),
+)
+
+C3 = cap(
+    "De dónde viene esto",
+    p("La observación de sí no la inventó nadie recientemente. Conviene saber de "
+      "dónde sale el material, tanto por honestidad como porque las fuentes "
+      "antiguas siguen siendo mejores que casi todo lo que se publica hoy."),
+    h("Los estoicos: entre el siglo I y el II"),
+    p("La escuela estoica romana dejó tres textos que son, de hecho, manuales de "
+      "práctica y están en dominio público desde siempre. Epicteto, esclavo "
+      "liberto que enseñaba en Nicópolis, dictó un «Manual» de cuarenta y tres "
+      "capítulos breves cuya primera línea contiene la idea más útil de toda la "
+      "filosofía práctica: hay cosas que dependen de nosotros y cosas que no, y "
+      "casi todo el sufrimiento evitable viene de confundirlas. Marco Aurelio, "
+      "emperador, escribió durante años unas notas privadas que nunca pensó "
+      "publicar y que son el mejor ejemplo conservado de observación de sí por "
+      "escrito. Séneca, en sus cartas, describe la práctica del examen nocturno "
+      "con un detalle que todavía hoy sirve de instrucción."),
+    ficha("Las tres fuentes antiguas de este libro", [
+        ("Epicteto", "«Manual» (Enquiridión), siglo I–II. La distinción entre lo "
+                     "que depende de nosotros y lo que no. Capítulo 15 de este "
+                     "libro."),
+        ("Marco Aurelio", "«Meditaciones», siglo II. La observación de sí "
+                          "escrita, sin público y sin adorno. Capítulos 10 y 19."),
+        ("Séneca", "«Cartas a Lucilio», siglo I. El examen de conciencia al "
+                   "final del día, con su método concreto. Capítulo 14."),
+    ]),
+    h("La tradición contemplativa"),
+    p("Las técnicas de atención sostenida, de vigilancia sobre el pensamiento y "
+      "de división de la atención aparecen de forma independiente en tradiciones "
+      "que no se conocían entre sí: en el monacato cristiano de los primeros "
+      "siglos, en las escuelas budistas, en el sufismo, en la práctica yóguica. "
+      "Esa convergencia es un dato interesante por sí mismo: cuando gente que no "
+      "se ha leído llega al mismo procedimiento, suele ser porque el "
+      "procedimiento describe algo real del funcionamiento humano."),
+    h("El siglo XX y la psicología"),
+    p("La psicología contemporánea ha estudiado buena parte de este territorio "
+      "con otro vocabulario y con método experimental: la atención sostenida, el "
+      "etiquetado de emociones, la reevaluación cognitiva, la distancia "
+      "psicológica. Este libro no expone esa literatura —no es su formato— pero sí "
+      "se apoya en ella para no afirmar cosas que están descartadas y para no "
+      "prometer efectos que no se sostienen."),
+    nota("Qué se descarta de la tradición",
+         "Bastante. Se descarta toda jerarquía de maestros y discípulos, que "
+         "produce dependencia. Se descarta la idea de que el sufrimiento sea "
+         "necesario para el progreso, que ha hecho mucho daño. Se descarta el "
+         "desprecio del cuerpo y de las emociones que arrastran algunas de estas "
+         "escuelas: en este libro el cuerpo es el instrumento principal y las "
+         "emociones son información, no obstáculos. Y se descarta el secretismo: "
+         "todo lo que hay aquí está publicado desde hace siglos."),
+)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE II · LOS INSTRUMENTOS
+# ══════════════════════════════════════════════════════════════════════
+
+C4 = cap(
+    "La atención dividida",
+    p("Aquí está el instrumento central de todo el libro, y se puede describir en "
+      "una frase: hacer algo y verse hacerlo, al mismo tiempo."),
+    fig("sm-atencion", "Lám. 1",
+        "A la izquierda, la atención corriente: toda hacia el objeto. A la "
+        "derecha, la atención dividida: una parte sigue en la tarea y otra "
+        "vuelve sobre quien la hace."),
+    h("Cómo funciona la atención corriente"),
+    p("Normalmente la atención va entera hacia fuera. Miras la pantalla y estás "
+      "en la pantalla; discutes y estás en la discusión. No queda nada mirando "
+      "hacia dentro, y por eso durante todo ese tiempo no hay nadie registrando "
+      "lo que ocurre. Es exactamente lo que significa estar ausente: no que la "
+      "atención falte, sino que esté toda gastada en un solo sitio."),
+    h("Cómo se divide"),
+    p("Se reserva una parte pequeña —basta con muy poca— para el hecho de que hay "
+      "alguien haciendo eso. No es pensar en uno mismo, y esta distinción es la "
+      "que más cuesta al principio. No se trata de comentar mentalmente «ahora "
+      "estoy escribiendo»; eso es otro pensamiento y consume la atención igual "
+      "que el primero. Se trata de sentir, sin palabras, que hay un cuerpo aquí "
+      "escribiendo."),
+    ficha("Las tres cosas que no es", [
+        ("No es pensar en uno mismo", "Eso es un pensamiento más, y va hacia "
+                                      "fuera como todos."),
+        ("No es juzgar lo que se hace", "El juicio interrumpe la observación: en "
+                                        "cuanto valoras, has dejado de mirar."),
+        ("No es dejar la tarea", "La tarea sigue igual de bien, y con la práctica "
+                                 "mejor. Si la tarea se para, no era atención "
+                                 "dividida: era distracción."),
+    ]),
+    h("El primer ejercicio"),
+    pasos(
+        "Elige una acción corriente que hagas todos los días y que dure menos de "
+        "un minuto: lavarte las manos, subir un tramo de escaleras, servirte agua.",
+        "Cada vez que la hagas, y solo entonces, añade lo siguiente: siente el "
+        "peso de tu cuerpo y el aire entrando y saliendo, mientras la haces.",
+        "No hagas nada más. No la valores, no la prolongues, no la conviertas en "
+        "meditación. Diez o veinte segundos.",
+        "Cuenta las veces que se te ha olvidado. Ese número es tu punto de "
+        "partida real y bajará muy despacio.",
+    ),
+    nota("Lo que vas a descubrir la primera semana",
+         "Que se te olvida casi siempre. Que cuando te acuerdas, ya has "
+         "terminado la acción. Y que el simple hecho de acordarte produce un "
+         "cambio brusco y reconocible, como si alguien encendiera una luz. Ese "
+         "cambio es el fenómeno que estamos entrenando, y la primera vez que se "
+         "nota con claridad es difícil de olvidar."),
+)
+
+C5 = cap(
+    "Los tres centros",
+    p("Un esquema tradicional muy útil, que aquí se ofrece como lo que es: un "
+      "modelo de trabajo, no una descripción neuroanatómica. Su valor está en que "
+      "ordena la observación."),
+    fig("sm-centros", "Lám. 2",
+        "Los tres centros con su sede, su velocidad relativa y su función. El "
+        "esquema es tradicional y se usa aquí como mapa de observación, no como "
+        "afirmación fisiológica."),
+    h("Por qué tres"),
+    p("Porque cuando uno empieza a observarse descubre que las respuestas no "
+      "vienen todas del mismo sitio ni a la misma velocidad. Hay un tipo de "
+      "respuesta que es un pensamiento articulado y llega tarde. Hay otra que es "
+      "una valoración inmediata, un «esto me gusta» o «esto no» que aparece antes "
+      "de cualquier razonamiento. Y hay una tercera que es puramente corporal: "
+      "postura, tono muscular, respiración, hábito de gesto, funcionando sin "
+      "interrupción y sin que nadie la consulte."),
+    ficha("Los tres, en la práctica", [
+        ("Intelectual", "Sede: cabeza. El más lento. Piensa, compara, planifica, "
+                        "decide. Llega siempre después de que algo haya pasado, y "
+                        "casi siempre para explicarlo."),
+        ("Emocional", "Sede: pecho. El más rápido. Valora antes de entender. "
+                      "Cuando el intelectual empieza a analizar, este ya ha "
+                      "reaccionado y ha teñido todo lo demás."),
+        ("Motor e instintivo", "Sede: vientre y miembros. El más constante. "
+                               "Postura, respiración, movimiento, hábito. No se "
+                               "detiene nunca, ni durmiendo."),
+    ]),
+    h("Para qué sirve el esquema"),
+    p("Para localizar. Cuando una observación no se puede colocar en ninguno de "
+      "los tres, es que no era una observación sino una idea. Y cuando se puede "
+      "colocar, la información se vuelve mucho más precisa: «estoy nervioso» no "
+      "dice nada; «respiración alta y hombros subidos, sin ningún pensamiento "
+      "concreto» dice mucho, y además sugiere qué hacer."),
+    h("La regla del más rápido"),
+    p("De las tres, la emocional es la que manda en la práctica, y no porque sea "
+      "más importante: porque llega primero. Cuando aparece una reacción fuerte, "
+      "el centro emocional ha decidido ya y el intelectual solo está redactando el "
+      "informe. Toda la técnica de la pausa del capítulo siguiente consiste en "
+      "meter unos segundos entre esos dos momentos."),
+    nota("La honestidad sobre este esquema",
+         "El modelo de tres centros procede de la tradición y no de la "
+         "neurociencia. No se corresponde con estructuras cerebrales concretas y "
+         "no se ofrece como si lo hiciera. Se conserva porque como herramienta de "
+         "clasificación de las propias observaciones funciona extraordinariamente "
+         "bien: tres cajones bastan para ordenar casi todo y son pocos como para "
+         "usarlos en caliente."),
+)
+
+C6 = cap(
+    "El bucle de la identificación",
+    p("Identificarse es la palabra tradicional para el fenómeno más frecuente y "
+      "más costoso de la vida interior: dejar de tener algo y convertirse en ello. "
+      "No tener enfado, sino ser el enfado. Es la diferencia entre «hay miedo "
+      "aquí» y «soy un cobarde», y esa diferencia decide bastante."),
+    fig("sm-identificacion", "Lám. 3",
+        "El bucle en sus cuatro pasos. Se cierra solo y se refuerza en cada "
+        "vuelta. Hay un único punto con salida, y está entre el primero y el "
+        "segundo."),
+    h("Los cuatro pasos"),
+    pasos(
+        "El estímulo. Algo pasa: un comentario, un correo, una cara, un recuerdo. "
+        "Dura una fracción de segundo y casi nunca se registra.",
+        "La reacción. El cuerpo responde: se aprieta algo, cambia la respiración, "
+        "sube el tono. Ocurre antes de cualquier pensamiento y es lo primero que "
+        "se puede aprender a notar.",
+        "La justificación. Aparece un relato que explica la reacción y le da la "
+        "razón. Es rapidísimo, es convincente y es la parte que más cuesta "
+        "reconocer como parte del bucle y no como pensamiento propio.",
+        "La confirmación. La conclusión: «soy así». La reacción queda incorporada "
+        "a la identidad, y a la vez siguiente arrancará con más fuerza porque "
+        "ahora tiene un precedente.",
+    ),
+    h("Por qué se refuerza"),
+    p("Porque cada vuelta añade una prueba. Un patrón que se ha justificado "
+      "cuarenta veces tiene cuarenta razones a su favor, y a la cuarenta y una "
+      "sale antes y más fuerte. Nada de esto requiere mala voluntad: es "
+      "aprendizaje ordinario funcionando sobre material que preferiríamos no "
+      "aprender."),
+    h("La pausa"),
+    p("Entre el estímulo y la reacción hay un intervalo, y es el único lugar del "
+      "bucle donde hay algo que elegir. Una vez que la reacción ha ocurrido, la "
+      "justificación viene sola y la confirmación detrás; discutir con la "
+      "justificación cuando ya se ha reaccionado es llegar tarde a todo. La "
+      "práctica entera consiste en ampliar ese intervalo, y se amplía por un "
+      "único procedimiento: notar la reacción corporal antes de que llegue el "
+      "relato."),
+    pasos(
+        "Aprende primero a reconocer TU reacción física característica. Cada "
+        "persona tiene una o dos: mandíbula, estómago, hombros, respiración alta, "
+        "calor en la cara. Búscala durante una semana sin intentar cambiar nada.",
+        "Cuando la reconozcas en caliente, no hagas nada con ella. Solo nómbrala "
+        "por dentro, sin palabras bonitas: «mandíbula».",
+        "Respira una vez, completa, antes de hablar. Una. No es una técnica de "
+        "relajación: es un retardo deliberado.",
+        "Después responde lo que quieras. La práctica no consiste en no "
+        "reaccionar; consiste en que haya alguien presente cuando ocurra.",
+    ),
+    nota("Lo que no es la pausa",
+         "No es tragarse las cosas. Reprimir una reacción es otra reacción, y "
+         "suele salir más caro. La pausa no cambia lo que vas a decir "
+         "necesariamente: cambia quién lo dice. A veces dirás exactamente lo "
+         "mismo, y será distinto porque lo habrás elegido."),
+)
+
+C7 = cap(
+    "Nombrar",
+    p("La herramienta más simple del libro y una de las que mejor rinden: poner "
+      "nombre, por dentro y en el momento, a lo que está pasando."),
+    h("La técnica"),
+    p("Cuando aparece un estado, se le pone una palabra. Una sola, corta y "
+      "descriptiva: «miedo», «prisa», «rabia», «vergüenza», «hambre», «sueño». No "
+      "una frase, no una explicación, no una valoración. Solo la etiqueta."),
+    h("Por qué funciona"),
+    lista(
+        "Separa. En el momento en que nombras algo, dejas de ser solo eso: hace "
+        "falta alguien que nombre. Ese alguien es lo que la observación de sí "
+        "entrena, y nombrar es la forma más económica de convocarlo.",
+        "Reduce la intensidad. Un estado nombrado con precisión suele bajar de "
+        "volumen, y no porque se resuelva: porque deja de ser una masa difusa y "
+        "se convierte en una cosa con contorno.",
+        "Permite el registro. Solo lo que tiene nombre se puede anotar, y solo lo "
+        "anotado se puede comparar con lo de la semana pasada.",
+        "Corrige el error de precisión. La mayoría de nosotros usamos tres "
+        "palabras para veinte estados distintos. Ampliar el vocabulario interior "
+        "es, literalmente, ver más.",
+    ),
+    h("La precisión importa"),
+    p("Hay una diferencia práctica considerable entre «estoy mal» y «estoy "
+      "cansado y además me he ofendido». La primera no permite hacer nada; la "
+      "segunda sugiere dos cosas distintas, una de las cuales se arregla "
+      "durmiendo. Buena parte de la confusión interior es imprecisión de "
+      "vocabulario, y se corrige con la misma disciplina con que se corrige "
+      "cualquier imprecisión: usando la palabra exacta."),
+    ficha("Cuatro pares que conviene distinguir", [
+        ("Cansancio y desánimo", "El primero se arregla durmiendo. El segundo no, "
+                                 "y confundirlos hace que se traten los dos mal."),
+        ("Miedo y prudencia", "El miedo anticipa lo que no ha pasado; la "
+                              "prudencia calcula lo que puede pasar. Uno paraliza "
+                              "y el otro prepara."),
+        ("Ira y ofensa", "La ira responde a un límite pisado; la ofensa, a la "
+                         "imagen que uno tiene de sí. Se parecen mucho por dentro "
+                         "y piden cosas distintas."),
+        ("Culpa y vergüenza", "La culpa dice «hice algo mal»; la vergüenza dice "
+                              "«soy algo malo». La primera es utilizable; la "
+                              "segunda casi nunca."),
+    ]),
+    nota("El error de nombrar",
+         "Convertirlo en discurso. En cuanto la etiqueta se alarga —«estoy "
+         "sintiendo cierta irritación probablemente relacionada con lo de "
+         "ayer»— has vuelto al centro intelectual y a la ausencia. Una palabra. "
+         "Dos como mucho. La brevedad es la técnica."),
+)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE III · LA PRÁCTICA
+# ══════════════════════════════════════════════════════════════════════
+
+C8 = cap(
+    "La regla de la observación",
+    p("Una sola regla, y tres errores que la anulan. Este es el capítulo más "
+      "corto y el que hay que releer más veces."),
+    ritual(
+        "LA REGLA",
+        "Observar sin intervenir.",
+        "Mirar lo que hay, tal como está,",
+        "sin cambiarlo, sin juzgarlo y sin explicarlo.",
+    ),
+    h("Por qué no se interviene"),
+    p("Por dos razones. La primera es técnica: en cuanto intentas cambiar lo que "
+      "observas, dejas de verlo — la intervención consume la atención que estaba "
+      "mirando. La segunda es más profunda: no se puede cambiar con criterio algo "
+      "que todavía no se conoce, y la prisa por corregir es lo que hace que la "
+      "gente lleve años arreglando el problema equivocado."),
+    p("Esto no significa resignación. Significa orden: primero ver, y bastante "
+      "tiempo; después, si hace falta, actuar. En la práctica ocurre además algo "
+      "curioso y muy reportado: una parte de lo observado con constancia cambia "
+      "sin que se haga nada, simplemente porque dejar de ser automático ya es un "
+      "cambio."),
+    h("Los tres errores"),
+    pasos(
+        "Juzgar. «Otra vez lo mismo, qué desastre soy.» En el momento en que "
+        "aparece el juicio, la observación ha terminado y ha empezado otra cosa "
+        "—normalmente el bucle del capítulo 6—. Cuando notes el juicio, nómbralo "
+        "también: «juicio». Y sigue.",
+        "Explicar. «Esto me pasa porque de pequeño…» Puede que sea verdad y no "
+        "es el momento. La explicación sustituye el dato por una teoría, y una "
+        "teoría es mucho más cómoda de mirar que un hecho.",
+        "Arreglar. «A partir de ahora voy a…» Los propósitos formulados en "
+        "caliente son casi todos falsos, y su función real es cerrar la "
+        "observación antes de que resulte incómoda. Anota lo visto; los propósitos "
+        "se toman en frío y por escrito.",
+    ),
+    nota("Y el error que los engloba",
+         "Querer que la observación sirva para algo hoy. Sirve, pero en la escala "
+         "de los meses. El que exige rendimiento inmediato acaba fabricando "
+         "hallazgos para sentir que avanza, y eso arruina el instrumento: un "
+         "observador que quiere encontrar algo encuentra siempre lo que quiere."),
+)
+
+C9 = cap(
+    "Los seis recuerdos del día",
+    p("La observación de sí no se practica todo el día: eso no es posible y "
+      "quien lo intenta abandona en una semana. Se practica en momentos "
+      "concretos, pocos y fijos, y se extiende desde ahí."),
+    fig("sm-reloj", "Lám. 4",
+        "Los seis momentos repartidos por el día, siempre los mismos y siempre a "
+        "la misma hora. En gris, el tramo de descanso."),
+    h("Los seis momentos"),
+    ficha("Uno cada pocas horas", [
+        ("Al despertar", "Antes de levantarte y antes de coger el teléfono. "
+                         "Treinta segundos: qué estado hay, qué tal el cuerpo, "
+                         "qué es lo primero que aparece en la cabeza."),
+        ("Antes de empezar", "Antes de la primera tarea real del día. La postura "
+                             "y la respiración, y una palabra para el estado."),
+        ("Antes de comer", "El mejor de los seis, porque el hambre y la prisa "
+                           "hacen visible mucho. Tres respiraciones antes del "
+                           "primer bocado."),
+        ("A media tarde", "El momento del bajón, y por tanto el más informativo. "
+                          "Distinguir cansancio de desánimo."),
+        ("Al terminar", "Al cerrar la jornada. Qué queda encendido: eso es lo que "
+                        "se llevará a casa si nadie lo mira."),
+        ("Antes de dormir", "Enlaza con el inventario nocturno del capítulo 14."),
+    ]),
+    h("Lo que se hace en cada uno"),
+    pasos(
+        "Parar. Literalmente: dejar de moverse durante unos segundos.",
+        "Sentir el cuerpo entero de una vez —peso, apoyo, postura— sin recorrerlo "
+        "por partes.",
+        "Notar la respiración tal como está. Sin corregirla. Este punto es el que "
+        "casi todo el mundo se salta.",
+        "Poner una palabra al estado.",
+        "Seguir con lo que estabas haciendo. Sin conclusiones.",
+    ),
+    p("Treinta segundos cada uno. Tres minutos al día en total. Es "
+      "deliberadamente poco: lo que se busca en los primeros meses no es "
+      "cantidad, es que el hábito exista."),
+    nota("Cómo acordarse",
+         "Al principio no te acordarás, y no es un problema de voluntad: es que "
+         "estar ausente es precisamente el estado que impide recordar que hay que "
+         "mirar. Usa anclas externas sin ningún pudor: una alarma, una pegatina "
+         "en el marco de la puerta, el gesto de lavarse las manos. Con las "
+         "semanas el ancla se vuelve innecesaria; al principio es indispensable."),
+)
+
+C10 = cap(
+    "El registro",
+    p("Marco Aurelio escribió las «Meditaciones» sin intención de publicarlas: "
+      "son las notas de un hombre observándose por escrito durante años. Es el "
+      "mejor ejemplo conservado de lo que este capítulo pide, y no es casualidad "
+      "que sea también el texto que mejor ha resistido dieciocho siglos."),
+    h("Por qué por escrito y no mentalmente"),
+    lista(
+        "Porque la memoria de los estados internos reescribe. Sin registro, a los "
+        "diez días recuerdas la versión que te conviene.",
+        "Porque escribir obliga a concretar. Un estado difuso no se puede poner "
+        "en una línea, y el esfuerzo de ponerlo en una línea es la mitad del "
+        "trabajo.",
+        "Porque solo lo escrito se puede comparar. El valor del cuaderno no está "
+        "en la entrada de hoy: está en releer tres meses juntos y ver el patrón "
+        "que ninguna entrada individual mostraba.",
+        "Porque el papel no discute. Es el único sitio donde se puede ser "
+        "completamente sincero sin consecuencias, y esa es una posibilidad rara.",
+    ),
+    h("Qué se anota"),
+    ficha("Entrada diaria mínima", [
+        ("Fecha", "Y la hora en que escribes"),
+        ("Los seis recuerdos", "Cuántos de los seis hiciste. El número, sin "
+                               "excusas al lado"),
+        ("Estados del día", "Dos o tres palabras. Solo las etiquetas"),
+        ("Una reacción observada", "Qué la disparó y dónde la notaste en el "
+                                   "cuerpo. Una línea"),
+        ("Lo que no quiero escribir", "El campo más útil de los cinco. Se deja en "
+                                      "blanco muchos días y los días que se "
+                                      "rellena valen la semana entera"),
+    ]),
+    nota("Contra el diario literario",
+         "La tentación de escribir bien arruina el registro. Las entradas útiles "
+         "son cortas, feas y precisas. «12/04, 4 de 6, prisa y sueño, se me "
+         "apretó el estómago al leer el mensaje de M.» Eso, cien veces, revela "
+         "más que cualquier página elegante — y además se sostiene, que es la "
+         "otra ventaja de escribir poco."),
+    h("La revisión, donde está el valor"),
+    pasos(
+        "Cada domingo: relee la semana. Diez minutos. Cuenta los recuerdos "
+        "hechos y busca qué día falló y por qué.",
+        "Cada mes: relee el mes y escribe cinco líneas. Qué estado se repite, qué "
+        "disparador se repite, qué has dejado de anotar.",
+        "Cada tres meses: relee el trimestre y escribe media página. Aquí es "
+        "donde aparece lo que ninguna semana muestra.",
+        "Cada año: relee el año. Es la práctica más incómoda del libro y la que "
+        "más enseña. Reserva una tarde.",
+    ),
+)
+
+C11 = cap(
+    "La respiración pautada",
+    p("La respiración es el único proceso que funciona solo y que además se puede "
+      "gobernar a voluntad, y eso la convierte en la puerta más práctica al "
+      "estado del cuerpo. Dos pautas bastan para todo lo que este libro propone."),
+    fig("sm-respiracion", "Lám. 5",
+        "Las dos pautas, con la duración relativa de cada tramo. Se cuenta a un "
+        "tiempo por segundo, sin forzar."),
+    h("Por qué funciona"),
+    p("Por un mecanismo bien establecido y sin nada de misterioso: alargar la "
+      "espiración por encima de la inspiración desplaza el equilibrio del sistema "
+      "nervioso autónomo hacia el lado que baja el pulso. No hace falta ninguna "
+      "técnica exótica; hace falta que la exhalación sea más larga que la "
+      "inhalación y que se cuente."),
+    h("Pauta para bajar · 4-7-8"),
+    pasos(
+        "Inhalar por la nariz contando cuatro, llenando primero el abdomen.",
+        "Retener contando siete. Sin apretar la garganta ni subir los hombros.",
+        "Exhalar por la boca, con los labios entreabiertos, contando ocho.",
+        "Cuatro ciclos. No más al principio: con ocho seguidos mucha gente se "
+        "marea, y el mareo no es un estado, es una hiperventilación.",
+    ),
+    h("Pauta para sostener · 4-4-4-4"),
+    pasos(
+        "Inhalar cuatro. Retener cuatro. Exhalar cuatro. Quedarse vacío cuatro.",
+        "El cuarto tramo —el vacío— es el que casi todo el mundo se salta y el "
+        "que hace el trabajo: mantener los pulmones vacíos sin urgencia es lo que "
+        "entrena la tolerancia a la incomodidad.",
+        "Cuatro a seis ciclos. Sirve para antes de una tarea que requiere "
+        "concentración y para antes de una conversación difícil.",
+    ),
+    nota("Aviso concreto y no de estilo",
+         "Si aparece hormigueo en manos o alrededor de la boca, mareo o sensación "
+         "de irrealidad, para y respira normal: son signos de hiperventilación. "
+         "No practiques retenciones si estás embarazada, tienes epilepsia, "
+         "hipertensión no controlada, un trastorno de pánico o problemas "
+         "cardíacos, sin consultarlo antes con tu médico. Nunca practiques "
+         "retenciones dentro del agua."),
+    h("Dónde encaja"),
+    p("En los seis recuerdos del día no se hace ninguna pauta: ahí solo se mira "
+      "la respiración tal como está. Las pautas se usan en tres sitios: en la "
+      "pausa del capítulo 6, antes de una conversación que se prevé difícil, y en "
+      "los cinco minutos previos al inventario nocturno. Fuera de esos tres, una "
+      "vez al día como entrenamiento y ya está."),
+)
+
+C12 = cap(
+    "El cuerpo como ancla",
+    p("De los tres centros, el motor es el único que está siempre disponible. "
+      "Nunca se apaga, nunca está en otra parte y no hay que convocarlo. Eso lo "
+      "convierte en el punto de entrada más fiable a la observación, y en el "
+      "único que funciona incluso cuando todo lo demás está revuelto."),
+    h("Las cuatro señales que siempre se pueden consultar"),
+    ficha("Un inventario de cuatro puntos", [
+        ("El peso", "Dónde está apoyado tu cuerpo ahora mismo. Es la pregunta que "
+                    "más rápido devuelve a la habitación."),
+        ("La respiración", "Alta o baja, corta o larga, por nariz o por boca. Sin "
+                           "corregirla."),
+        ("Los puntos de tensión", "Mandíbula, hombros, entrecejo, manos, "
+                                  "estómago. Casi todo el mundo tiene dos "
+                                  "favoritos y conviene saber cuáles."),
+        ("La temperatura", "Frío o calor, y dónde. Es el que menos se usa y "
+                           "delata muchos estados antes que los otros tres."),
+    ]),
+    h("La postura, que no es un detalle"),
+    p("Hay una relación de doble sentido entre postura y estado: el estado "
+      "modifica la postura, y la postura modifica el estado. Eso hace que la "
+      "postura sirva para dos cosas distintas. Como observación, es un informe "
+      "fiable de en qué estado estás. Como intervención —la única que este libro "
+      "recomienda hacer en caliente— es la palanca más rápida disponible: "
+      "enderezarse, bajar los hombros y soltar la mandíbula cambia algo en "
+      "segundos."),
+    nota("La excepción a la regla de no intervenir",
+         "El capítulo 8 dice observar sin intervenir, y aquí se hace una "
+         "excepción explícita con la postura y la respiración. El motivo es "
+         "práctico: son las dos únicas cosas que se pueden corregir sin dejar de "
+         "observar, porque la corrección misma es observable. Todo lo demás —los "
+         "pensamientos, las emociones, las decisiones— se mira y se deja."),
+    h("El ejercicio de los tres apoyos"),
+    pasos(
+        "Sentado o de pie, localiza tres puntos donde tu cuerpo esté apoyado. "
+        "Planta de los pies, isquiones, espalda contra el respaldo, antebrazos "
+        "sobre la mesa: los que sean.",
+        "Siente los tres a la vez. No uno detrás de otro: los tres al mismo "
+        "tiempo, que es lo que cuesta.",
+        "Añade la respiración sin dejar los tres apoyos. Ahora son cuatro cosas "
+        "simultáneas.",
+        "Sostenlo treinta segundos. Cuando se caiga —se caerá— vuelve a empezar "
+        "sin comentarios.",
+    ),
+    p("Este ejercicio es la forma más económica que conozco de entrenar atención "
+      "dividida, porque no requiere ninguna condición: se puede hacer en una "
+      "reunión, en una cola o en medio de una discusión, y nadie lo nota."),
+)
+
+C13 = cap(
+    "Las cuatro difíciles",
+    p("Miedo, ira, tristeza y vergüenza. Son las cuatro emociones que la "
+      "tradición llama negativas y que este libro prefiere llamar difíciles, "
+      "porque «negativas» sugiere que no deberían estar y ese es exactamente el "
+      "error que hay que evitar."),
+    fig("sm-emociones", "Lám. 6",
+        "Las cuatro, con su firma corporal, la información que traen y el punto "
+        "donde se tuercen."),
+    h("La regla de las tres partes"),
+    p("Con las cuatro se hace lo mismo, y son tres cosas que hay que sostener a "
+      "la vez porque cada una sola falla."),
+    pasos(
+        "No expresarlas automáticamente. Descargar la emoción sobre alguien no la "
+        "descarga: la entrena. La rabia expresada sin filtro sale más fácil la "
+        "próxima vez, y de paso rompe cosas.",
+        "No reprimirlas. Empujar una emoción hacia abajo consume energía, no la "
+        "elimina y suele reaparecer en otra parte —el cuerpo, el sueño, el trato "
+        "con quien no tenía culpa—.",
+        "Mirarlas hasta que pasen. Esta es la tercera vía y la difícil: sentir la "
+        "emoción entera, en el cuerpo, con su nombre puesto, sin actuarla y sin "
+        "empujarla. Y esperar. Todas pasan, y pasan bastante antes de lo que uno "
+        "cree cuando no se las alimenta con relato.",
+    ),
+    h("La información que traen"),
+    p("Ninguna de las cuatro es un error del sistema. Las cuatro informan de algo "
+      "y el problema nunca es que aparezcan: es lo que se hace con ellas."),
+    ficha("Qué avisa cada una y dónde se tuerce", [
+        ("Miedo", "Avisa de un riesgo. Se tuerce cuando anticipa lo que no ha "
+                  "pasado y se queda a vivir ahí."),
+        ("Ira", "Avisa de un límite pisado. Se tuerce cuando se convierte en "
+                "juicio sobre una persona en lugar de sobre un hecho."),
+        ("Tristeza", "Avisa de una pérdida y pide tiempo. Se tuerce cuando se "
+                     "vuelve relato sobre uno mismo: de «he perdido algo» a «soy "
+                     "alguien que pierde»."),
+        ("Vergüenza", "Avisa de una norma propia que se ha cruzado. Se tuerce —y "
+                      "es la que peor se tuerce— cuando pasa del acto a la "
+                      "identidad."),
+    ]),
+    h("La cuenta del tiempo"),
+    p("Una observación que sorprende a casi todo el que la hace por primera vez: "
+      "cronometra cuánto dura una emoción difícil cuando no la alimentas con "
+      "pensamiento. La ola corporal —el calor, el apretón, la aceleración— suele "
+      "durar entre uno y tres minutos. Lo que dura horas o días no es la emoción: "
+      "es el relato que la vuelve a encender cada vez que se apaga. Y el relato "
+      "sí es opcional, aunque no lo parezca."),
+    nota("Cuándo esto no basta",
+         "Si una emoción difícil no baja en varios días, si interfiere con dormir "
+         "o comer, si aparece sin disparador reconocible o si trae pensamientos de "
+         "hacerte daño, este libro no es la herramienta y la observación de sí no "
+         "lo va a resolver. Eso se consulta, y consultarlo es una decisión de "
+         "quien se conoce bien, no una rendición."),
+)
+
+C14 = cap(
+    "El inventario nocturno",
+    p("Séneca describe en sus cartas una práctica que hacía cada noche: repasar "
+      "el día entero preguntándose qué había hecho y qué había corregido, «como "
+      "quien pasa cuentas». Es probablemente el ejercicio de autoconocimiento "
+      "mejor documentado de la antigüedad y funciona exactamente igual hoy."),
+    h("Cómo se hace"),
+    pasos(
+        "En la cama, con la luz apagada, o sentado cinco minutos antes de "
+        "acostarte. No en el sofá y no con el teléfono cerca.",
+        "Recorre el día desde que te despertaste, en orden, sin saltar. No lo "
+        "resumas: recórrelo. Ese recorrido es la mitad del ejercicio, porque la "
+        "mayor parte del día no está en la memoria y hay que ir a buscarla.",
+        "En cada momento en que hubo una reacción, párate un segundo. No la "
+        "juzgues: localízala. Qué pasó, qué hiciste, dónde lo notaste.",
+        "Elige una sola cosa que mañana harías distinto. Una. Y déjala ahí, sin "
+        "propósito solemne.",
+        "Termina siempre con una cosa del día que estuvo bien. No por optimismo: "
+        "porque un inventario que solo recoge fallos deja de hacerse en dos "
+        "semanas.",
+    ),
+    h("Por qué el orden importa"),
+    p("Recorrer el día en orden cronológico, y no por temas, es lo que hace que "
+      "aparezca lo que no se recuerda. Cuando se repasa por temas se recuerda lo "
+      "que ya se sabía; cuando se recorre en orden, aparecen huecos —«¿qué hice "
+      "entre las once y la una?»— y esos huecos son el dato más honesto que "
+      "produce el ejercicio. La cantidad de vida que no está en la memoria es lo "
+      "primero que enseña esta práctica, y es una lección que no se olvida."),
+    nota("El error de convertirlo en juicio",
+         "Séneca lo describe como pasar cuentas, no como pasar sentencia, y la "
+         "diferencia es todo. Un inventario que se convierte en reproche produce "
+         "insomnio y abandono. Si notas que estás juzgando, vuelve al modo "
+         "descriptivo: qué pasó, qué hice, dónde lo noté. Los hechos primero; la "
+         "valoración, si hace falta, en el cuaderno y por la mañana."),
+    h("Si te duermes"),
+    p("Te dormirás, sobre todo al principio, y no importa: el recorrido hecho "
+      "hasta ese punto ya ha trabajado. Es de hecho uno de los mejores efectos "
+      "secundarios de la práctica — mucha gente descubre que se duerme antes "
+      "haciendo el inventario que dando vueltas a lo mismo sin estructura."),
+)
+
+C15 = cap(
+    "Lo que depende de mí",
+    p("El «Manual» de Epicteto empieza con una distinción, y es la idea más útil "
+      "de toda la filosofía práctica occidental: hay cosas que dependen de "
+      "nosotros y cosas que no, y casi todo el sufrimiento evitable viene de "
+      "tratar unas como si fueran las otras."),
+    h("La lista corta"),
+    ficha("Lo que sí depende de mí", [
+        ("Mi juicio", "Lo que decido pensar sobre lo que pasa. No la primera "
+                      "reacción, que es automática: lo que hago con ella después."),
+        ("Mi atención", "Dónde la pongo y cuánto tiempo la sostengo. Es el único "
+                        "recurso verdaderamente propio."),
+        ("Mi acción", "Lo que hago, incluido no hacer nada."),
+        ("Mi palabra", "Lo que digo y cómo lo digo. También lo que no digo."),
+        ("Mi esfuerzo", "Cuánto pongo. Nunca el resultado; solo lo que pongo."),
+    ]),
+    ficha("Lo que no depende de mí", [
+        ("El pasado", "Entero y sin excepción."),
+        ("Lo que otros hacen", "Sus decisiones, su carácter, su ritmo, su humor."),
+        ("Lo que otros piensan de mí", "Ni siquiera con toda la información en su "
+                                       "poder."),
+        ("El resultado", "Se puede influir, nunca determinar."),
+        ("El cuerpo, en gran medida", "Se cuida, se entrena, y aun así envejece y "
+                                      "enferma."),
+        ("La primera reacción", "Aparece antes de cualquier decisión. Lo que "
+                               "viene después sí es tuyo."),
+    ]),
+    h("Lo que la distinción NO significa"),
+    lista(
+        "No significa resignación. Epicteto no dice que no se actúe: dice que se "
+        "actúe sobre lo que se puede y no se sufra por lo que no. Es una "
+        "asignación de esfuerzo, no una renuncia.",
+        "No significa desapego de la gente. Que las decisiones de los demás no "
+        "dependan de ti no las hace indiferentes; las hace no negociables por la "
+        "vía del enfado.",
+        "No significa que el resultado no importe. Significa que el resultado no "
+        "es donde se pone la identidad. Se trabaja para conseguirlo y no se "
+        "convierte en la medida de uno mismo.",
+        "No significa que las emociones estén prohibidas. Significa que la "
+        "emoción es información sobre uno, y no una factura que le corresponda "
+        "pagar a otro.",
+    ),
+    h("El ejercicio de las dos columnas"),
+    pasos(
+        "Coge lo que más te esté pesando ahora mismo. Una sola cosa.",
+        "Divide una hoja en dos columnas: lo que depende de mí, lo que no.",
+        "Reparte todos los elementos del asunto. Todos, incluidos los incómodos.",
+        "Tacha la columna derecha. Literalmente: pásale una raya.",
+        "De la columna izquierda, elige lo primero y hazlo hoy. Suele ser mucho "
+        "más pequeño de lo que parecía desde dentro del problema.",
+    ),
+    nota("Por qué funciona este ejercicio",
+         "Porque la mayor parte del peso de un problema está en la columna "
+         "derecha, y la columna derecha no admite trabajo: solo admite rumiación. "
+         "Separar las dos no resuelve nada por sí mismo, y sin embargo cambia "
+         "bastante la sensación — porque el agotamiento no venía del problema, "
+         "venía de empujar contra lo que no se mueve."),
+)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE IV · LO QUE APARECE
+# ══════════════════════════════════════════════════════════════════════
+
+C16 = cap(
+    "Los papeles",
+    p("Con unas semanas de observación aparece un hallazgo que suele incomodar: "
+      "no hay una sola persona ahí dentro. Hay varias formas de ser que se "
+      "alternan según el contexto, con voz distinta, vocabulario distinto y a "
+      "veces opiniones incompatibles entre sí."),
+    h("Cómo se detectan"),
+    p("Por la voz, que es el indicador más fiable. Grábate hablando con tu jefe y "
+      "con tu mejor amigo el mismo día: cambia el tono, cambia la velocidad, "
+      "cambia el registro de vocabulario. Por la postura, que también cambia. Y "
+      "por las opiniones: casi todo el mundo sostiene, en contextos distintos, "
+      "cosas que no encajan entre sí, y no lo nota porque nunca están las dos en "
+      "la misma habitación."),
+    ficha("Los papeles más comunes", [
+        ("El competente", "En el trabajo. No admite no saber. Suele ser el más "
+                          "desarrollado y el más agotador de sostener."),
+        ("El hijo", "Con la familia de origen. Recupera de golpe reacciones de "
+                    "hace veinte años, con una fidelidad que asusta."),
+        ("El agradable", "Con desconocidos y en grupo. Cede en cosas que no "
+                         "quería ceder y se entera después."),
+        ("El crítico", "A solas y por dentro. Es el que habla cuando no hay nadie "
+                       "y el que peor trata al que lo escucha."),
+        ("El de la pareja", "El más ciego de todos, porque el otro suele ver de él "
+                            "mucho más que uno mismo."),
+    ]),
+    h("Qué se hace con esto"),
+    p("Nada, al principio. Se observa y se anota cuál está al mando: es el dato "
+      "más útil que puede tener el cuaderno, porque explica de golpe reacciones "
+      "que aisladas no tenían sentido. «Estaba el competente» aclara más que "
+      "cualquier análisis de por qué te pusiste a la defensiva en esa reunión."),
+    p("Con el tiempo aparece la segunda parte, y es lo que la tradición llama "
+      "recordarse a sí mismo: notar que hay algo que permanece mientras los "
+      "papeles se alternan. No es una experiencia mística ni tiene nada de "
+      "espectacular; es la sensación bastante sobria de estar presente en varios "
+      "contextos siendo el mismo. Aparece sola, a los meses, y no se puede "
+      "forzar."),
+    nota("El malentendido que hay que evitar",
+         "Descubrir que hay varios papeles no significa que haya un papel "
+         "auténtico escondido debajo y los demás sean máscaras. Esa idea es "
+         "atractiva y no aguanta la observación: los cinco son igual de reales y "
+         "todos son tú. Lo que se busca no es encontrar al verdadero, es dejar de "
+         "estar dormido dentro de cada uno."),
+)
+
+C17 = cap(
+    "Las cuentas pendientes",
+    p("Marco Aurelio vuelve una y otra vez, en sus notas, sobre el mismo asunto: "
+      "la gente que le molesta y el tiempo que gasta molestándose. Que un "
+      "emperador con poder absoluto dedicara tantas páginas a eso dice bastante "
+      "sobre lo universal del problema."),
+    h("Qué es una cuenta pendiente"),
+    p("Un asunto no cerrado con alguien que sigue consumiendo atención. Una "
+      "conversación que no se tuvo, un agravio que no se dijo, un reproche que se "
+      "repite mentalmente en las mismas palabras. Se reconoce por una señal "
+      "inconfundible: la conversación imaginaria. Cuando descubras que estás "
+      "discutiendo con alguien que no está en la habitación, tienes una cuenta "
+      "pendiente localizada."),
+    h("Por qué son caras"),
+    lista(
+        "Consumen atención en segundo plano todo el día, y la atención es "
+        "precisamente el recurso que esta práctica busca liberar.",
+        "Se ensayan, y al ensayarse se afinan: la versión de hoy del agravio es "
+        "más pulida y más injusta que la de hace un año.",
+        "Se contagian a quien no tiene nada que ver. El trato con la gente "
+        "cercana empeora por cuentas abiertas con otros.",
+        "Se confunden con identidad. Un resentimiento sostenido mucho tiempo "
+        "acaba pareciendo un rasgo de carácter.",
+    ),
+    h("El inventario de cuentas"),
+    pasos(
+        "Haz la lista. Todas las personas con las que tienes conversaciones "
+        "imaginarias. Sin filtrar, sin justificar y sin ordenar por gravedad.",
+        "Junto a cada una, escribe en una línea qué querías y no obtuviste. Esa "
+        "es la cuenta real, y muy pocas veces coincide con lo que uno creía que "
+        "era el problema.",
+        "Clasifica cada una en tres: se puede hablar, no se puede hablar, o no "
+        "quiero hablar. Las tres son respuestas legítimas.",
+        "Las que se pueden hablar: habla, y hazlo por la cuenta y no por la "
+        "razón. El objetivo es cerrar, no ganar.",
+        "Las que no se pueden o no quieres: escríbelas enteras en el cuaderno, en "
+        "segunda persona, sin ninguna contención. Y no las envíes. El destinatario "
+        "de ese texto eres tú.",
+    ),
+    nota("Sobre el perdón",
+         "Este libro no va a pedirte que perdones a nadie. El perdón, cuando "
+         "llega, llega solo y no se puede fabricar por decisión; intentarlo suele "
+         "producir una versión falsa que tapa el asunto sin cerrarlo. Lo que sí "
+         "se puede hacer es dejar de pagar intereses: reconocer la cuenta, "
+         "escribirla entera y dejar de ensayarla. En bastantes casos, con eso "
+         "basta — y en los que no, al menos deja de crecer."),
+)
+
+C18 = cap(
+    "El sufrimiento innecesario",
+    p("Una distinción que ahorra mucho, y que se puede comprobar en la propia "
+      "experiencia en una semana. Hay dos capas en casi cualquier malestar: lo "
+      "que ha pasado y lo que uno le añade."),
+    h("Las dos capas"),
+    ficha("Un ejemplo cualquiera", [
+        ("El hecho", "Han rechazado tu propuesta."),
+        ("Primera capa", "Decepción. Dura un rato, es proporcionada, no requiere "
+                         "ninguna técnica: es lo que se siente cuando algo sale "
+                         "mal."),
+        ("Segunda capa", "«Siempre me pasa lo mismo. No valgo para esto. Van a "
+                         "darse cuenta de que no sé. Debería haber hecho otra "
+                         "cosa.» Dura días, no es proporcionada, y es la que "
+                         "hace el daño."),
+        ("La diferencia", "La primera capa la pone el hecho. La segunda la pones "
+                          "tú, y solo la segunda es opcional."),
+    ]),
+    h("Cómo se separan"),
+    pasos(
+        "Cuando algo duele, escribe el hecho en una sola frase, sin adjetivos y "
+        "sin consecuencias. «Han rechazado la propuesta.» Nada más.",
+        "Debajo, escribe todo lo demás: lo que significa, lo que anuncia, lo que "
+        "dice de ti. Todo, sin filtrar.",
+        "Lee las dos partes seguidas. La desproporción entre la primera línea y "
+        "el resto es el dato del ejercicio, y suele ser cómica.",
+        "Quédate con la primera línea. Lo de abajo no es información sobre el "
+        "mundo: es información sobre tu segunda capa, que también sirve, pero para "
+        "otra cosa.",
+    ),
+    h("La segunda capa tiene formas reconocibles"),
+    lista(
+        "La generalización: de «esto salió mal» a «siempre sale mal».",
+        "La anticipación: contar como ya ocurrido lo que solo es posible.",
+        "La identificación: de «he hecho algo mal» a «soy alguien que hace las "
+        "cosas mal». Es la más cara de todas.",
+        "La comparación: medir el hecho contra la versión imaginaria de otra "
+        "persona a la que no le pasa.",
+        "El deber retrospectivo: «debería haber», que es exigirle a quien no "
+        "tenía la información de ahora que actuara con la información de ahora.",
+    ),
+    nota("Lo que este capítulo no dice",
+         "No dice que el dolor sea opcional ni que sufrir sea un error. La "
+         "primera capa es legítima entera, y una pérdida real duele lo que dura y "
+         "no hay técnica que lo abrevie ni debería haberla. Lo que se examina "
+         "aquí es solo la segunda: la parte que se añade, se ensaya y se "
+         "prolonga. Confundir las dos —y despachar el dolor legítimo como si "
+         "fuera un error de pensamiento— es la peor versión posible de esta "
+         "práctica."),
+)
+
+C19 = cap(
+    "La sinceridad consigo mismo",
+    p("Es la condición de todo lo anterior y el punto donde esta práctica se gana "
+      "o se pierde. Un observador que se miente no obtiene información: obtiene "
+      "confirmación de lo que ya creía."),
+    h("Las mentiras habituales"),
+    ficha("Cinco que se dicen casi todos", [
+        ("«No me afectó»", "Se dice inmediatamente después de que algo afectara. "
+                           "La velocidad de la frase es la prueba."),
+        ("«Lo hice por ti»", "Casi siempre había un motivo propio que no se "
+                             "quiso mirar. Puede haber también generosidad; rara "
+                             "vez solo eso."),
+        ("«No tengo tiempo»", "En la mayoría de los casos significa que no es una "
+                              "prioridad, lo cual es legítimo y suena peor."),
+        ("«Ya lo sé»", "Dicho de algo que se sabe intelectualmente y no se hace. "
+                       "Saber sin hacer no es saber: es estar informado."),
+        ("«Estoy bien»", "La respuesta automática por excelencia. Se dice antes "
+                         "de haber mirado."),
+    ]),
+    h("Por qué mentimos hacia dentro"),
+    p("Porque protege. Cada una de esas frases evita un dato incómodo, y evitarlo "
+      "es funcional a corto plazo. El problema no es moral: es técnico. Un "
+      "instrumento de medida calibrado para dar el resultado que uno quiere no "
+      "sirve para medir, y toda esta práctica es un instrumento de medida."),
+    h("Las tres preguntas de calibración"),
+    pasos(
+        "¿Qué es lo que no quiero escribir hoy en el cuaderno? Es el campo más "
+        "útil del registro y el que más se deja en blanco.",
+        "¿De qué me estoy quejando repetidamente sin hacer nada? La queja "
+        "sostenida sin acción suele señalar una decisión que no se quiere tomar.",
+        "¿Qué diría de mí alguien que me conoce bien y no me tiene miedo? Y si no "
+        "hay nadie así, eso también es un dato.",
+    ),
+    h("La medida de la sinceridad"),
+    p("Hay un indicador bastante fiable, y es esto: cuando la observación de sí "
+      "se está haciendo con sinceridad, incomoda. No siempre y no todo el rato, "
+      "pero regularmente. Una práctica que solo produce sensaciones agradables "
+      "y confirmaciones halagadoras se ha convertido en otra cosa —normalmente en "
+      "un pasatiempo con vocabulario espiritual—, y conviene sospechar de ella."),
+    nota("Y el equilibrio, que también importa",
+         "Sinceridad no es dureza. El observador que se trata como un fiscal "
+         "obtiene tan poca información como el que se trata como un abogado "
+         "defensor: en los dos casos el dato queda sepultado bajo el juicio. El "
+         "tono correcto es el del que mira algo con interés genuino y sin nada "
+         "que defender. Cuesta, y es aprendible."),
+)
+
+
+# ══════════════════════════════════════════════════════════════════════
+#  PARTE V · SOSTENERLO
+# ══════════════════════════════════════════════════════════════════════
+
+C20 = cap(
+    "El cuerpo del observador",
+    p("Este capítulo existe porque casi ningún libro de esta materia lo escribe, y "
+      "porque sin él el resto no se sostiene. La atención no es una facultad "
+      "abstracta: es una función biológica con condiciones materiales bastante "
+      "concretas."),
+    nota("El encuadre de este capítulo",
+         "Lo que sigue son hábitos de sentido común orientados a tener atención "
+         "disponible. No es una pauta dietética individualizada ni un programa de "
+         "entrenamiento, y no considera patologías. Si tienes una condición "
+         "médica, tomas medicación, estás embarazada o tienes antecedentes de "
+         "trastorno alimentario, revísalo con tu profesional sanitario antes de "
+         "aplicar nada de aquí."),
+    h("El sueño, que va primero y con diferencia"),
+    p("No hay técnica de atención que compense dormir mal. Es el factor con más "
+      "peso de todo el libro y el que menos atractivo tiene, y por eso se "
+      "ignora. Un observador con cinco horas de sueño no tiene atención que "
+      "dividir: tiene un déficit, y lo que va a observar es sobre todo su propia "
+      "irritabilidad."),
+    lista(
+        "Hora fija de acostarse, incluido el fin de semana. La regularidad pesa "
+        "más que el total.",
+        "La última hora sin pantalla y sin trabajo. Si solo cambias una cosa de "
+        "este capítulo, cambia esta.",
+        "El inventario nocturno del capítulo 14 sustituye con ventaja al repaso "
+        "involuntario que se hace con los ojos abiertos a las tres de la mañana.",
+        "Habitación fresca y a oscuras. Barato y eficaz.",
+    ),
+    h("La mesa, en clave de atención"),
+    p("El criterio aquí no es la composición corporal: es la estabilidad. "
+      "Interesa evitar los dos estados que hacen imposible observar nada, que son "
+      "la somnolencia después de comer y la irritabilidad del hambre — y conviene "
+      "saber que la segunda se confunde con enfado moral con una facilidad "
+      "asombrosa."),
+    lista(
+        "Comer despacio y sin pantalla. Es, además, el mejor ejercicio de "
+        "atención dividida disponible tres veces al día.",
+        "Proteína y verdura en la comida principal; azúcar rápido, poco. El bajón "
+        "posterior cae justo en el recuerdo de media tarde y lo estropea.",
+        "Cafeína temprano y en cantidad fija. Es la sustancia que más distorsiona "
+        "la percepción del propio estado, y esta práctica consiste en percibir el "
+        "propio estado.",
+        "Alcohol, poco y nunca la noche anterior a un día que importe. Arrasa el "
+        "sueño profundo y el efecto se cobra al día siguiente.",
+        "Antes de comer fuera de horario, una pregunta escrita: ¿de qué tengo "
+        "hambre? El hambre emocional se reconoce en cuanto se le pregunta.",
+    ),
+    h("El movimiento"),
+    p("La tradición contemplativa suele ignorar el cuerpo o desconfiar de él, y "
+      "en eso se equivoca. El movimiento diario hace tres cosas que sirven "
+      "directamente a esta práctica: descarga la activación que si no se "
+      "convierte en rumiación, mejora el sueño, y da acceso a sensaciones "
+      "corporales claras, que son el material de la observación."),
+    lista(
+        "Caminar cuarenta minutos al día, y una parte de ellos sin auriculares. "
+        "El paseo en silencio es una de las mejores condiciones para observar que "
+        "existen.",
+        "Algo de fuerza dos veces por semana. Sostener una postura erguida "
+        "durante horas es una demanda de fuerza, no de buena intención.",
+        "Movilidad de cuello y hombros a diario: son los dos puntos donde casi "
+        "todo el mundo acumula la tensión que luego no sabe de dónde viene.",
+        "Nada de esto tiene que ser intenso. La constancia es la variable, como "
+        "en todo lo demás de este libro.",
+    ),
+    ficha("Las cuatro condiciones materiales de la atención", [
+        ("Sueño", "Suficiente y regular. Es la primera y no hay sustituto."),
+        ("Glucosa estable", "Comidas ordenadas. La atención es caro de mantener "
+                            "metabólicamente."),
+        ("Movimiento", "Diario y moderado. Descarga lo que si no se rumia."),
+        ("Silencio", "Ratos sin estímulo. No es un lujo espiritual: es la "
+                     "condición para oír algo."),
+    ]),
+    nota("El resumen",
+         "Duerme a la misma hora, come despacio y sin pantalla, camina todos los "
+         "días y reserva algún rato de silencio. No tiene nada de misterioso, es "
+         "el noventa por ciento del trabajo, y casi nadie lo hace — que es "
+         "también, si se piensa, el resumen de este libro entero."),
+)
+
+C21 = cap(
+    "Los errores del principiante",
+    p("Predecibles, y por tanto evitables."),
+    pasos(
+        "Querer hacerlo todo el día. Es imposible, produce agotamiento en una "
+        "semana y termina en abandono con la conclusión falsa de que no se puede. "
+        "Seis momentos de treinta segundos. Eso es todo, durante meses.",
+        "Convertir la observación en juicio. El error central: en cuanto aparece "
+        "el «qué mal lo hago», la práctica se ha transformado en el bucle del "
+        "capítulo 6, con vocabulario nuevo.",
+        "Buscar experiencias. Esperar estados inusuales, luces, sensaciones de "
+        "unidad. Esta práctica no produce nada de eso y quien lo busca acaba "
+        "convenciéndose de haberlo tenido. Lo que produce es más rato despierto, "
+        "que es menos vistoso y bastante más útil.",
+        "Leer en lugar de practicar. Diez libros y tres semanas de cuaderno. Es "
+        "el error más cómodo y el más difícil de reconocer, porque leer también "
+        "se siente como progreso.",
+        "No escribir. Sin registro no hay comparación, sin comparación no hay "
+        "corrección, y sin corrección esto es repetición, no práctica.",
+        "Contarlo. Explicarle a la gente lo que estás haciendo produce una "
+        "satisfacción inmediata que sustituye a la del trabajo, y de paso "
+        "convierte la práctica en identidad. Hazlo y no lo cuentes.",
+        "Practicar en crisis. La observación intensiva no es donde se resuelve una "
+        "crisis aguda; en el mejor caso no ayuda. En crisis se reduce a lo "
+        "mínimo, se cuida el sueño y se busca ayuda.",
+    ),
+    h("La prueba de realidad"),
+    p("Hay una manera muy simple de saber si esto está funcionando, y no tiene "
+      "nada que ver con lo que se sienta durante los ejercicios: pregúntale a "
+      "quien vive contigo si te nota distinto, y en qué. Si llevas seis meses y "
+      "nadie ha notado nada en ninguna dirección, algo no está ocurriendo donde "
+      "tendría que ocurrir."),
+    nota("Y la prueba inversa",
+         "Si lo que notan es que estás más raro, más aislado o más severo, la "
+         "práctica está haciendo daño y hay que parar y revisarla. Una disciplina "
+         "de atención bien llevada hace a la gente más presente y más fácil de "
+         "tratar. Cualquier camino que te aleje de los tuyos y te convenza de que "
+         "eso es progreso está mal construido, y ese diagnóstico vale para este "
+         "libro igual que para cualquier otro."),
+)
+
+C22 = cap(
+    "El año de observación",
+    p("Un plan de doce meses y un cuaderno. Con esto el libro termina."),
+    ficha("Los cuatro trimestres", [
+        ("Meses 1–3", "Solo dos cosas: los seis recuerdos del día y la entrada "
+                      "diaria del cuaderno. Nada más. Es deliberadamente poco."),
+        ("Meses 4–6", "Se añade el inventario nocturno y el ejercicio de los tres "
+                      "apoyos. Se empieza a trabajar la pausa."),
+        ("Meses 7–9", "Se añaden las dos columnas de Epicteto una vez por semana y "
+                      "el inventario de cuentas pendientes, una sola vez."),
+        ("Meses 10–12", "No se añade nada. El último trimestre sostiene lo "
+                        "anterior, y es el que prueba si hay práctica o hubo "
+                        "entusiasmo."),
+    ]),
+    h("Los tres indicadores"),
+    pasos(
+        "El número. Recuerdos hechos frente a previstos, sacado del cuaderno. "
+        "Por encima del setenta por ciento hay práctica.",
+        "La recuperación. Cuánto tardas en volver después de dejarlo una semana. "
+        "Al principio son semanas; con el hábito instalado, días. Es el indicador "
+        "más fiable de los tres.",
+        "El testimonio ajeno. Lo que nota la gente que convive contigo, "
+        "preguntado directamente."),
+    sep(),
+    h("Ficha de partida"),
+    ficha("Antes de empezar", [
+        ("Fecha de inicio", "________________________"),
+        ("Mis seis horas", "________________________"),
+        ("Mi reacción física característica", "________________________"),
+        ("El papel que más sostengo", "________________________"),
+        ("Lo que espero de esto", "________________________"),
+        ("Lo que no quiero mirar", "________________________"),
+    ]),
+    nota("Sobre la última línea",
+         "Escríbela. Es la más informativa de las seis y la que casi nadie "
+         "rellena. Dentro de un año, releerla explicará bastante de lo que haya "
+         "pasado en medio."),
+    h("Plantilla diaria"),
+    ficha("Se copia una por día", [
+        ("Fecha", "____________"),
+        ("Recuerdos hechos", "1 · 2 · 3 · 4 · 5 · 6"),
+        ("Estados del día", "____________"),
+        ("Una reacción observada", "____________"),
+        ("Dónde la noté en el cuerpo", "____________"),
+        ("Lo que no quiero escribir", "____________"),
+    ]),
+    h("Revisión trimestral"),
+    ficha("Cada tres meses", [
+        ("Recuerdos previstos / hechos", "________ / ________"),
+        ("El estado que más se repite", "____________"),
+        ("El disparador que más se repite", "____________"),
+        ("Lo que he dejado de anotar", "____________"),
+        ("Qué añado el trimestre que viene", "____________"),
+    ]),
+    h("Cierre del año"),
+    ficha("A los doce meses", [
+        ("Porcentaje de cumplimiento", "____________"),
+        ("Tiempo de recuperación tras una interrupción", "____________"),
+        ("Lo que ha dicho quien convive conmigo", "____________"),
+        ("Una cosa que creía de mí y era falsa", "____________"),
+        ("Lo que sigo haciendo un año después", "____________"),
+    ]),
+    sep(),
+    p("Esa penúltima pregunta es el objetivo de todo el libro, y conviene "
+      "decirlo al final para que no se pierda. No se practica la observación de "
+      "sí para llegar a ningún estado, ni para conseguir calma, ni para "
+      "pertenecer a nada. Se practica para averiguar cosas que uno tenía por "
+      "seguras sobre sí mismo y que no eran verdad. Cada una de esas correcciones "
+      "devuelve un pedazo de vida que estaba funcionando en automático."),
+    p("Y si al cabo del año tienes doce meses de cuaderno con tu letra, una "
+      "creencia menos sobre ti mismo y la gente de tu alrededor te encuentra "
+      "algo más presente, entonces esto ha funcionado. No hay nada más al final "
+      "del camino, y resulta que es bastante."),
+)
+
+
+
+C23 = cap(
+    "Las tres disciplinas",
+    p("Epicteto no enseñaba una lista de consejos. Tenía una estructura, la repetía "
+      "constantemente y es lo primero que se pierde cuando se le cita en frases "
+      "sueltas. Son tres campos de entrenamiento, en un orden que no es "
+      "intercambiable."),
+    fig("sm-disciplinas", "Lám. 7",
+        "Los tres campos con su término griego. El orden importa: cada uno se "
+        "apoya en el anterior."),
+    h("Primera · el deseo"),
+    p("El campo de lo que quiero y de lo que rechazo. Es donde se aplica la "
+      "distinción del capítulo 15: aprender a no querer lo que no depende de mí, y "
+      "a no rechazar lo que va a ocurrir de todos modos. Epicteto la pone primera "
+      "por una razón práctica muy clara — mientras el deseo esté puesto en lo que "
+      "no controlas, todo lo demás es imposible, porque vives en estado de "
+      "reclamación permanente."),
+    p("Es también la más difícil de las tres y la que produce el malentendido más "
+      "frecuente: no se trata de dejar de querer cosas. Se trata de dejar de "
+      "condicionar el estado propio a que ocurran."),
+    h("Segunda · la acción"),
+    p("El campo de lo que hago y de cómo me comporto con los demás. Aquí entra "
+      "todo lo que hoy llamaríamos ética práctica: cumplir lo que se dice, tratar "
+      "bien a quien depende de ti, hacer el trabajo que te toca. Y entra con una "
+      "condición que es la que la vuelve robusta: se hace bien con independencia "
+      "del resultado y con independencia de que el otro corresponda."),
+    p("Va segunda porque hasta que el deseo no está ordenado, la conducta con los "
+      "demás es un instrumento de negociación: se trata bien a quien puede darte "
+      "algo. Ordenado el primer campo, la conducta deja de ser transaccional."),
+    h("Tercera · el asentimiento"),
+    p("El campo más fino y el que más se parece a lo que este libro entero "
+      "practica: a qué impresiones le doy la razón. Ante cualquier cosa que pasa "
+      "aparece una impresión —una lectura automática, un «esto es malo», un «me "
+      "están faltando al respeto»— y hay un instante, brevísimo, en el que se le "
+      "concede o no el asentimiento."),
+    p("Ese instante es exactamente la pausa del capítulo 6. Que Epicteto lo situara "
+      "en el tercer lugar, como disciplina avanzada, es una advertencia útil: "
+      "examinar impresiones es un trabajo fino que requiere el deseo ya bastante "
+      "ordenado. Quien empieza por aquí acaba examinando impresiones para tener "
+      "razón, que es el uso contrario."),
+    ficha("Los tres campos en una línea cada uno", [
+        ("Deseo · órexis", "No querer lo que no depende de mí"),
+        ("Acción · hormé", "Hacer bien lo que me toca, pase lo que pase"),
+        ("Asentimiento · sunkatáthesis", "No dar por buena la primera impresión"),
+    ]),
+    nota("La utilidad de saber en qué campo estás",
+         "Cuando una dificultad se resiste, casi siempre es porque se está "
+         "trabajando en el campo equivocado. Si te desespera el comportamiento de "
+         "alguien, no es un problema de asentimiento: es de deseo, porque estás "
+         "queriendo que ese alguien sea distinto. Si te cuesta cumplir lo que "
+         "prometes, no es de deseo: es de acción. Localizar el campo ahorra meses."),
+)
+
+C24 = cap(
+    "El mapa del Manual",
+    p("El «Manual» de Epicteto —Enquiridión, «lo que se lleva en la mano»— son "
+      "cincuenta y tres capítulos brevísimos que su discípulo Arriano extrajo de "
+      "las clases. Cabe en veinte páginas, está en dominio público desde siempre y "
+      "sigue siendo el mejor manual práctico que existe. Lo que sigue es un mapa "
+      "para poder ir directo a lo que necesites, con el contenido de cada tramo "
+      "dicho en mis palabras y no en las suyas."),
+    ficha("Capítulos 1 al 10 · los cimientos", [
+        ("1", "La distinción entre lo que depende de nosotros y lo que no. Es el "
+              "capítulo del que sale todo el resto y el único imprescindible."),
+        ("2", "Qué hacer con el deseo y con el rechazo una vez hecha la "
+              "distinción."),
+        ("3", "El recordatorio incómodo: todo lo que amas es prestado. No es "
+              "pesimismo, es inventario."),
+        ("4", "Anticipar el estorbo antes de empezar algo, para que cuando llegue "
+              "no descoloque."),
+        ("5", "«No nos perturban las cosas, sino nuestras opiniones sobre ellas.» "
+              "La frase más citada del libro y la más maltratada."),
+        ("6–7", "No presumir de lo que no es tuyo. Y la imagen del barco: se baja "
+                "a coger conchas, y se vuelve cuando llaman."),
+        ("8–10", "Querer que las cosas sean como son. Y la pregunta de qué "
+                 "capacidad tienes disponible para cada dificultad."),
+    ]),
+    ficha("Capítulos 11 al 29 · la práctica", [
+        ("11", "Nada se pierde: se devuelve. Cambia el verbo y cambia la "
+                "experiencia."),
+        ("12–13", "El precio de la tranquilidad, y por qué conviene parecer torpe "
+                  "un tiempo mientras se aprende."),
+        ("14–18", "No exigir que los demás sean de otra forma. Y el aviso contra "
+                  "la superstición, que en Epicteto es explícito."),
+        ("17", "Eres actor en una obra cuyo papel no elegiste. Lo que sí eliges "
+               "es interpretarlo bien."),
+        ("20–21", "Nadie te ofende: eres tú quien acepta la ofensa. Y tener la "
+                  "muerte a la vista, no para angustiarse sino para ordenar "
+                  "prioridades."),
+        ("22–25", "Lo que cuesta la disciplina en reputación y en compañía. Es el "
+                  "tramo más honesto del libro y el que menos se cita."),
+        ("26–29", "Aplicar a lo propio el criterio que aplicas a lo ajeno. Y el "
+                  "capítulo 29, el más largo: no empieces nada sin haber mirado el "
+                  "precio entero."),
+    ]),
+    ficha("Capítulos 30 al 53 · el trato y el cierre", [
+        ("30–33", "Los deberes según el papel que ocupas. Y el 33, que es un "
+                  "código de conducta completo: hablar poco, no jurar, evitar el "
+                  "espectáculo, comer con medida."),
+        ("34–36", "Sobre el placer: examinarlo antes y después. Es el tramo que "
+                  "más se parece a lo que hoy llamaríamos trabajo con impulsos."),
+        ("37–41", "No aceptar un papel que te queda grande. Y no dedicar al cuerpo "
+                  "más tiempo del necesario, que en Epicteto es una advertencia "
+                  "contra la vanidad y no contra el cuidado."),
+        ("42–45", "Cuando alguien te trata mal, obra según lo que le parece "
+                  "correcto a él. Y no juzgues por lo que ves: no tienes los "
+                  "datos."),
+        ("46–48", "No hables de filosofía: practícala y que se note en los actos. "
+                  "El aviso más útil para cualquiera que lea libros como este."),
+        ("49–53", "Lo que importa no es interpretar los textos, es aplicarlos. Y "
+                  "el cierre, con las cuatro citas que Epicteto pedía tener "
+                  "siempre a mano."),
+    ]),
+    nota("Cómo usar este mapa",
+         "No leas el Manual de corrido esperando que te transforme: son notas de "
+         "clase y se notan. Úsalo como se usa un manual: cuando tengas un problema "
+         "concreto, busca el tramo. Si te desespera alguien, capítulos 14 y 42. Si "
+         "no consigues empezar algo, el 29. Si te han ofendido, el 20. Si te sobra "
+         "vanidad, el 46. Está en dominio público en cualquier idioma y en "
+         "cualquier formato: no hay excusa para no tenerlo a mano."),
+    nota("Y una advertencia sobre las traducciones",
+         "Hay traducciones antiguas de dominio público, hechas en un castellano "
+         "que hoy cuesta, y traducciones modernas mucho más legibles pero con "
+         "derechos. Ninguna es neutral: el vocabulario estoico —prohaíresis, "
+         "hormé, oikeíosis— no tiene equivalente limpio en castellano y cada "
+         "traductor decide. Si algo te suena raro, casi siempre es una decisión "
+         "del traductor y no de Epicteto."),
+)
+
+C25 = cap(
+    "La vista desde arriba",
+    p("Un último ejercicio, documentado en Marco Aurelio y practicado por los "
+      "estoicos como técnica formal. Es el más rápido de todos los de este libro y "
+      "el que produce el cambio de perspectiva más brusco."),
+    h("El ejercicio"),
+    pasos(
+        "Cierra los ojos y sitúate en la habitación donde estás. Sin adornos: la "
+        "habitación tal cual.",
+        "Sube. Mira el edificio desde encima, con tu habitación dentro y las demás "
+        "alrededor, cada una con alguien haciendo algo.",
+        "Sigue subiendo. El barrio, la ciudad entera, con toda la gente que en "
+        "este momento está discutiendo, durmiendo, naciendo y muriendo a la vez.",
+        "Sigue. El país, el continente, el planeta entero visto desde fuera, con "
+        "su noche y su día simultáneos.",
+        "Ahora añade el tiempo: la misma vista hace mil años, y dentro de mil. Las "
+        "mismas ciudades con otros nombres y otra gente haciendo exactamente lo "
+        "mismo.",
+        "Vuelve. Baja hasta tu habitación y abre los ojos. Dos minutos en total.",
+    ),
+    h("Qué hace"),
+    p("Reduce la escala del propio asunto, y lo hace por una vía que el "
+      "razonamiento no consigue. Decirse «esto no es tan importante» no funciona "
+      "porque es una afirmación y se puede discutir. Ver la escala sí funciona, "
+      "porque no argumenta nada: solo cambia el punto desde el que se mira."),
+    p("Marco Aurelio vuelve a esta operación una y otra vez en sus notas, y "
+      "siempre en el mismo contexto: cuando está molesto con alguien de su corte o "
+      "abrumado por un asunto de gobierno. Que el hombre más poderoso del "
+      "Mediterráneo necesitara recordarse el tamaño real de sus problemas es, "
+      "probablemente, el mejor argumento a favor del ejercicio."),
+    ficha("Cuándo usarlo", [
+        ("Sirve muy bien", "Para la ofensa reciente, la discusión que no se te va "
+                           "de la cabeza y la preocupación por lo que otros "
+                           "piensen de ti."),
+        ("Sirve regular", "Para una decisión práctica que hay que tomar: reducir "
+                          "la escala no ayuda a elegir."),
+        ("No sirve", "Para una pérdida real. Ahí empequeñecer el asunto es faltar "
+                     "al respeto a lo perdido, y el capítulo 18 ya explicó por "
+                     "qué no todo dolor es un error de perspectiva."),
+    ]),
+    nota("El malentendido que hay que evitar",
+         "La vista desde arriba no dice que nada importe. Dice que casi nada "
+         "importa TANTO como parece desde dentro, que es una afirmación distinta y "
+         "mucho más defendible. Si el ejercicio te deja indiferente ante lo que "
+         "deberías atender, lo has hecho de más: el objetivo es recuperar la "
+         "proporción, no perder el interés."),
+    sep(),
+    p("Y con esto se cierra el repertorio. Seis instrumentos, siete láminas, un "
+      "cuaderno y un año. No hay nada más, y quien practique la mitad de lo que "
+      "aquí se propone durante doce meses habrá hecho más trabajo sobre sí mismo "
+      "que la mayoría de la gente en una vida entera."),
+)
+
+
+# ══════════════════════════════════════════════════════════════════════
+LIBRO = {
+    "id": "codice-si-mismo",
+    "titulo": "Códice del Sí Mismo",
+    "subtitulo": "Manual de observación interior: la atención dividida, los tres centros y el trabajo de estar presente",
+    "autor": "Villuminations",
+    "fuente": "Obra original · Primera edición, 2026",
+    # Sobre qué material común se apoya ESTE libro y cómo debe leerse.
+    # Va por libro y no en la plantilla: cuando estaba en la plantilla,
+    # los libros de fitness citaban en sus créditos los decanatos.
+    "base": """El material del que parte pertenece a la <strong>tradición común</strong>:
+     los ejercicios clásicos de examen de conciencia, atención y registro
+     interior se transmiten por escrito desde hace siglos y no son propiedad
+     de nadie. Lo que aquí se ofrece —la redacción, la estructura de
+     capítulos, las prácticas, las fichas y las ilustraciones— es trabajo
+     propio y está protegido como tal.""",
+    "lectura": """<strong>Cómo leer este libro.</strong> Es un libro de
+     <em>trabajo interior</em>, escrito en un lenguaje simbólico. No es
+     psicología clínica ni terapia. Nada de lo que sigue diagnostica ni trata
+     ningún trastorno, y no sustituye la atención de un psicólogo o un
+     psiquiatra colegiado. Si atraviesas una crisis, busca ayuda profesional:
+     este libro puede acompañar ese camino, no reemplazarlo.""",
+    "mascota": "r-ojo",
+    "acento": "violeta",
+    "original": True,
+    "laminas": ["si-mismo.svg"],
+    "claves": ["observación de sí", "atención", "estoicismo", "Epicteto",
+               "Marco Aurelio", "Séneca", "hábitos", "villuminations"],
+    "capitulos": [
+        C1, C2, C3,                          # I · El problema
+        C4, C5, C6, C7,                      # II · Los instrumentos
+        C8, C9, C10, C11, C12, C13, C14, C15,  # III · La práctica
+        C16, C17, C18, C19,                  # IV · Lo que aparece
+        C23, C24, C25,                       # IV bis · La estructura estoica
+        C20, C21, C22,                       # V · Sostenerlo
+    ],
+}
+
+
+def main():
+    SRC.mkdir(parents=True, exist_ok=True)
+    destino = SRC / f"{LIBRO['id']}.json"
+    destino.write_text(json.dumps(LIBRO, ensure_ascii=False, indent=1))
+    palabras = sum(
+        len(b["x"].split()) if isinstance(b.get("x"), str) else
+        sum(len(" ".join(map(str, i)).split()) if isinstance(i, (list, tuple))
+            else len(str(i).split()) for i in b["x"])
+        if isinstance(b.get("x"), list) else 0
+        for c in LIBRO["capitulos"] for b in c["bloques"]
+    )
+    print(f"  {LIBRO['titulo']}: {len(LIBRO['capitulos'])} capítulos · "
+          f"{palabras:,} palabras · → {destino.relative_to(SRC.parent)}")
+
+
+if __name__ == "__main__":
+    main()

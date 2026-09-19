@@ -1,0 +1,18 @@
+---
+source_file: ".agents/skills/higgsfield-brandkit/references/qa-and-iteration.md"
+type: "document"
+community: "QA and iteration"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/QA_and_iteration
+---
+
+# qa-and-iteration.md
+
+## Connections
+- [[QA and iteration]] - `contains` [EXTRACTED]
+- [[higgsfield-brandkitSKILL]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/QA_and_iteration

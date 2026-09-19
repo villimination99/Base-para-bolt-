@@ -1,0 +1,41 @@
+# Carpeta de entrega: empaquetados que se arman al vuelo para mandar los PDF
+# (por ejemplo el zip de la edición de papel). Su contenido siempre se puede
+# reconstruir desde planes/dist y libros/dist, que sí están versionados, así
+# que versionarlo además sería duplicar binario en el historial.
+entrega/
+
+# Intermedios de composición. El HTML y los PDF por piezas que Chromium
+# necesita antes de unir cada documento; build.py los regenera enteros.
+planes/build/
+libros/build/
+
+# Basura del sistema y de los editores
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# El catálogo de traducción es un derivado: lo reconstruye
+# planes/tools/cargar-traducciones.py desde i18n/fuentes/, que sí se versiona.
+planes/i18n/catalogo.json
+
+# Igual que el de los planes: el catálogo de los libros es un derivado que
+# reconstruye libros/tools/cargar-traducciones.py desde i18n/fuentes/.
+libros/i18n/catalogo.json
+
+# Grafo de conocimiento: se regenera, no se versiona
+graphify-out/
+
+# El guion que portadas.py escribe para pilotar el navegador. Lleva dentro
+# rutas absolutas de la máquina donde se ejecutó, así que versionarlo solo
+# sirve para que `git status` salga sucio después de cada portada.
+tienda/portadas/_render.mjs
+
+# Los PNG a 300 ppp y el ZIP de estampación se rehacen con
+# `python3 ropa/tools/empaquetar.py`. Los SVG sí viajan: son el original.
+ropa/dist/png/
+ropa/dist/*.zip
+
+# Dependencias de Node. package.json sí viaja; los 12 MB de node_modules se
+# reinstalan con `npm install` y no aportan historia.
+node_modules/
