@@ -61,6 +61,7 @@ python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/calendario.py # los doce lanzamientos y sus fechas
 python3 ropa/tools/generar.py # rehace las doce láminas de espalda
 python3 ropa/tools/dibujar-espinas.py --hoja  # la serie de filigrana orgánica
+python3 ropa/tools/exportar-pod.py            # el PNG de impresión bajo demanda
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -124,6 +125,31 @@ cuatro salieron de comparar con la referencia y luego renderizar:
 El símbolo **no fija el acento**: lo heredaba del contenedor y lo fijaba a la
 vez, así que las tres columnas de la hoja salían cian. Los valores por defecto
 viven en el `<svg>` de fuera.
+
+**Un fichero para Printful no es un SVG bonito.** `ropa/tools/exportar-pod.py`
+traduce la lámina de pantalla al fichero de impresión, y las cinco reglas que
+hace cumplir son físicas, no de gusto: 300 ppp al tamaño real, fondo
+transparente, **ninguna opacidad parcial** —la DTG no hace medias tintas—,
+**ningún trazo por debajo de 1 mm impreso** y encaje dentro del área de
+12″ × 16″. Al exportar la dorsal saltaron las dos primeras a la vez: el halo
+iba al 0,92 y el arco y las marcas de decanato a 0,67 y **0,31 mm**, o sea que
+las marcas se habrían caído enteras de la plancha. `endurecer()` lo arregla en
+el fichero de impresión y deja el de pantalla como está: el destino impone sus
+mínimos, no el dibujo.
+
+La consecuencia visible es que **la lámina impresa lleva el arco más grueso que
+la de pantalla**. No es un descuido: por debajo de 1 mm no hay lámina.
+
+El PNG lleva su trozo `pHYs` escrito a mano —nueve bytes, `struct` y
+`zlib.crc32`— porque sin él el fichero solo dice cuántos píxeles tiene y quien
+lo abra decide el tamaño físico.
+
+**El color de pantalla no es el color impreso.** La DTG sobre prenda oscura
+imprime una base blanca y el color encima, y esa base levanta y desatura: el
+cian de neón de la marca (`#00f0ff`) sale pálido. El fichero lleva `#00C4D6`,
+más hondo, para compensar. Es compensación, no certeza: **hay que pedir muestra
+y cotejarla antes de una tirada**. Lo que el fichero garantiza es lo
+comprobable; el color lo dice la muestra.
 
 **Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
 publica si no señala su lámina dentro del repositorio: hay **110 láminas
