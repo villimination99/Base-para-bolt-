@@ -401,15 +401,15 @@
     "faq": {
       "f1": {
         "question": "Wie lange dauert der Versand?",
-        "answer_html": "<p>Zwischen 3 und 7 Werktagen.</p>"
+        "answer_html": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister je nach Ziel und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p>"
       },
       "f2": {
         "question": "Kann ich mein Abo kündigen?",
         "answer_html": "<p>Ja, jederzeit über dein Konto.</p>"
       },
       "f3": {
-        "question": "Haben die Produkte eine Garantie?",
-        "answer_html": "<p>Alle enthalten eine Zufriedenheitsgarantie.</p>"
+        "question": "Kann ich ein Produkt zurückgeben?",
+        "answer_html": "<p>Nein. Alle Verkäufe sind endgültig: keine Rückgabe, kein Umtausch und keine Stornierung, sobald die Zahlung bestätigt ist. So steht es in der <a href=\"/policies/refund-policy\">Rückerstattungsrichtlinie</a>, die man vor dem Kauf lesen sollte.</p>"
       }
     },
     "motivacion": {
@@ -592,17 +592,17 @@
     },
     "producto": {
       "t1": {
-        "text": "Schneller Versand, 3–7 Tage"
+        "text": "Versandfertig in 1–3 Tagen"
       },
       "t2": {
         "text": "100 % sichere Zahlung"
       },
       "t3": {
-        "text": "Zufriedenheitsgarantie"
+        "text": "Sendungsverfolgung"
       },
       "c1": {
         "title": "Versand und Rückgabe",
-        "content_html": "<p>Versand in 3–7 Werktagen. Kostenlose Rückgabe innerhalb von 30 Tagen.</p>"
+        "content_html": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p><p>Alle Verkäufe sind endgültig: keine Rückgabe und kein Umtausch.</p>"
       },
       "c2": {
         "title": "So wird es benutzt"

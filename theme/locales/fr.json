@@ -401,15 +401,15 @@
     "faq": {
       "f1": {
         "question": "Combien de temps prend la livraison ?",
-        "answer_html": "<p>Entre 3 et 7 jours ouvrables.</p>"
+        "answer_html": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur selon la destination et s’affiche au paiement, avec suivi.</p>"
       },
       "f2": {
         "question": "Puis-je annuler mon abonnement ?",
         "answer_html": "<p>Oui, quand tu veux, depuis ton compte.</p>"
       },
       "f3": {
-        "question": "Les produits sont-ils garantis ?",
-        "answer_html": "<p>Tous incluent une garantie satisfaction.</p>"
+        "question": "Puis-je retourner un produit ?",
+        "answer_html": "<p>Non. Toutes les ventes sont définitives : aucun retour, échange ou annulation une fois le paiement confirmé. C’est écrit ainsi dans la <a href=\"/policies/refund-policy\">politique de remboursement</a>, qu’il vaut mieux lire avant d’acheter.</p>"
       }
     },
     "motivacion": {
@@ -592,17 +592,17 @@
     },
     "producto": {
       "t1": {
-        "text": "Livraison rapide, 3 à 7 jours"
+        "text": "Préparation en 1 à 3 jours"
       },
       "t2": {
         "text": "Paiement 100 % sécurisé"
       },
       "t3": {
-        "text": "Garantie satisfaction"
+        "text": "Livraison suivie"
       },
       "c1": {
         "title": "Livraison et retours",
-        "content_html": "<p>Livraison en 3 à 7 jours ouvrés. Retours gratuits sous 30 jours.</p>"
+        "content_html": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur et s’affiche au paiement, avec suivi.</p><p>Toutes les ventes sont définitives : aucun retour ni échange.</p>"
       },
       "c2": {
         "title": "Comment l'utiliser"

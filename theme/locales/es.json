@@ -401,15 +401,15 @@
     "faq": {
       "f1": {
         "question": "¿Cuánto tarda el envío?",
-        "answer_html": "<p>Entre 3 y 7 días hábiles.</p>"
+        "answer_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista según el destino y lo ves en la caja, con seguimiento.</p>"
       },
       "f2": {
         "question": "¿Puedo cancelar mi suscripción?",
         "answer_html": "<p>Sí, cuando quieras desde tu cuenta.</p>"
       },
       "f3": {
-        "question": "¿Los productos tienen garantía?",
-        "answer_html": "<p>Todos incluyen garantía de satisfacción.</p>"
+        "question": "¿Puedo devolver un producto?",
+        "answer_html": "<p>No. Todas las ventas son definitivas: no se aceptan devoluciones, cambios ni cancelaciones una vez confirmado el pago. Está escrito así en la <a href=\"/policies/refund-policy\">política de reembolso</a>, y conviene leerla antes de comprar.</p>"
       }
     },
     "motivacion": {
@@ -592,17 +592,17 @@
     },
     "producto": {
       "t1": {
-        "text": "Envío rápido 3–7 días"
+        "text": "Preparación en 1–3 días"
       },
       "t2": {
         "text": "Pago 100% seguro"
       },
       "t3": {
-        "text": "Garantía de satisfacción"
+        "text": "Envío con seguimiento"
       },
       "c1": {
         "title": "Envío y devoluciones",
-        "content_html": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>"
+        "content_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista y lo ves en la caja, con seguimiento.</p><p>Todas las ventas son definitivas: no se aceptan devoluciones ni cambios.</p>"
       },
       "c2": {
         "title": "Cómo se usa"

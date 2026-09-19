@@ -523,11 +523,11 @@
         "ja": "配送にはどのくらいかかりますか？"
       },
       "answer_html": {
-        "es": "<p>Entre 3 y 7 días hábiles.</p>",
-        "en": "<p>Between 3 and 7 business days.</p>",
-        "fr": "<p>Entre 3 et 7 jours ouvrables.</p>",
-        "de": "<p>Zwischen 3 und 7 Werktagen.</p>",
-        "ja": "<p>3〜7営業日です。</p>"
+        "es": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista según el destino y lo ves en la caja, con seguimiento.</p>",
+        "en": "<p>We prepare your order in 1–3 business days. Delivery time is calculated by the carrier for your destination and shown at checkout, with tracking.</p>",
+        "fr": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur selon la destination et s’affiche au paiement, avec suivi.</p>",
+        "de": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister je nach Ziel und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p>",
+        "ja": "<p>ご注文は1〜3営業日で準備します。お届け日数は配送業者が配送先に応じて算出し、レジでご確認いただけます。追跡付きです。</p>"
       }
     },
     "f2": {
@@ -548,18 +548,18 @@
     },
     "f3": {
       "question": {
-        "es": "¿Los productos tienen garantía?",
-        "en": "Do the products have a guarantee?",
-        "fr": "Les produits sont-ils garantis ?",
-        "de": "Haben die Produkte eine Garantie?",
-        "ja": "製品に保証はありますか？"
+        "es": "¿Puedo devolver un producto?",
+        "en": "Can I return a product?",
+        "fr": "Puis-je retourner un produit ?",
+        "de": "Kann ich ein Produkt zurückgeben?",
+        "ja": "商品は返品できますか？"
       },
       "answer_html": {
-        "es": "<p>Todos incluyen garantía de satisfacción.</p>",
-        "en": "<p>They all include a satisfaction guarantee.</p>",
-        "fr": "<p>Tous incluent une garantie satisfaction.</p>",
-        "de": "<p>Alle enthalten eine Zufriedenheitsgarantie.</p>",
-        "ja": "<p>すべて満足保証付きです。</p>"
+        "es": "<p>No. Todas las ventas son definitivas: no se aceptan devoluciones, cambios ni cancelaciones una vez confirmado el pago. Está escrito así en la <a href=\"/policies/refund-policy\">política de reembolso</a>, y conviene leerla antes de comprar.</p>",
+        "en": "<p>No. All sales are final: no returns, exchanges or cancellations once payment is confirmed. It says so in the <a href=\"/policies/refund-policy\">refund policy</a>, which is worth reading before you buy.</p>",
+        "fr": "<p>Non. Toutes les ventes sont définitives : aucun retour, échange ou annulation une fois le paiement confirmé. C’est écrit ainsi dans la <a href=\"/policies/refund-policy\">politique de remboursement</a>, qu’il vaut mieux lire avant d’acheter.</p>",
+        "de": "<p>Nein. Alle Verkäufe sind endgültig: keine Rückgabe, kein Umtausch und keine Stornierung, sobald die Zahlung bestätigt ist. So steht es in der <a href=\"/policies/refund-policy\">Rückerstattungsrichtlinie</a>, die man vor dem Kauf lesen sollte.</p>",
+        "ja": "<p>いいえ。お支払い確定後の返品・交換・キャンセルはお受けしておりません。<a href=\"/policies/refund-policy\">返金ポリシー</a>に明記していますので、ご購入前にお読みください。</p>"
       }
     }
   },
@@ -1308,11 +1308,11 @@
   "producto": {
     "t1": {
       "text": {
-        "es": "Envío rápido 3–7 días",
-        "en": "Fast shipping, 3–7 days",
-        "fr": "Livraison rapide, 3 à 7 jours",
-        "de": "Schneller Versand, 3–7 Tage",
-        "ja": "3〜7日のスピード配送"
+        "es": "Preparación en 1–3 días",
+        "en": "Ready to ship in 1–3 days",
+        "fr": "Préparation en 1 à 3 jours",
+        "de": "Versandfertig in 1–3 Tagen",
+        "ja": "1〜3日で発送準備"
       }
     },
     "t2": {
@@ -1326,11 +1326,11 @@
     },
     "t3": {
       "text": {
-        "es": "Garantía de satisfacción",
-        "en": "Satisfaction guarantee",
-        "fr": "Garantie satisfaction",
-        "de": "Zufriedenheitsgarantie",
-        "ja": "満足保証"
+        "es": "Envío con seguimiento",
+        "en": "Tracked shipping",
+        "fr": "Livraison suivie",
+        "de": "Sendungsverfolgung",
+        "ja": "追跡付き配送"
       }
     },
     "c1": {
@@ -1342,11 +1342,11 @@
         "ja": "配送と返品"
       },
       "content_html": {
-        "es": "<p>Envío en 3–7 días hábiles. Devoluciones gratuitas dentro de los 30 días.</p>",
-        "en": "<p>Shipping in 3–7 business days. Free returns within 30 days.</p>",
-        "fr": "<p>Livraison en 3 à 7 jours ouvrés. Retours gratuits sous 30 jours.</p>",
-        "de": "<p>Versand in 3–7 Werktagen. Kostenlose Rückgabe innerhalb von 30 Tagen.</p>",
-        "ja": "<p>営業日3〜7日で発送。30日以内は返品無料。</p>"
+        "es": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista y lo ves en la caja, con seguimiento.</p><p>Todas las ventas son definitivas: no se aceptan devoluciones ni cambios.</p>",
+        "en": "<p>We prepare your order in 1–3 business days. Delivery time is calculated by the carrier and shown at checkout, with tracking.</p><p>All sales are final: no returns or exchanges.</p>",
+        "fr": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur et s’affiche au paiement, avec suivi.</p><p>Toutes les ventes sont définitives : aucun retour ni échange.</p>",
+        "de": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p><p>Alle Verkäufe sind endgültig: keine Rückgabe und kein Umtausch.</p>",
+        "ja": "<p>ご注文は1〜3営業日で準備します。お届け日数は配送業者が算出し、レジでご確認いただけます。追跡付きです。</p><p>すべてのご購入は最終です。返品・交換はお受けしておりません。</p>"
       }
     },
     "c2": {
