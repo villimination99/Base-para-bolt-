@@ -461,8 +461,14 @@ máquina nueva:
 
 ```
 uv tool install graphifyy && graphify install --platform claude
-graphify hook install     # post-commit: rehace el grafo al confirmar
+graphify update .         # CONSTRUYE el grafo: sin esto no hay graphify-out/
+graphify hook install     # post-commit: lo mantiene al día solo
 ```
+
+Los tres, y en ese orden. `graphify-out/` está en `.gitignore`, así que en un
+contenedor recién clonado **el grafo no existe** y las herramientas de consulta
+tampoco: `update` es el que lo construye, y no cuesta llamadas a ningún modelo.
+Faltaba decirlo aquí y se descubrió a la mala, con el grafo ausente.
 
 Los hooks de git viven en `.git/hooks/`, que git no versiona por diseño. El
 `.claude/settings.json` sí viaja, y está escrito para no romperse si graphify

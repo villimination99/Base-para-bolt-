@@ -2,12 +2,12 @@
 tags:
   - memoria
   - indice
-actualizado: 2026-08-08
+actualizado: 2026-09-19
 ---
 
 # VILLUMINATIONS — estado del proyecto
 
-Nota escrita a mano, no generada. Las otras 1277 notas de esta bóveda salen del
+Nota escrita a mano, no generada. Las otras 1280 notas de esta bóveda salen del
 grafo de `graphify` y se regeneran solas; esta no. Es la memoria: lo que hay que
 saber antes de tocar nada, y lo que quedó a medias.
 
@@ -76,31 +76,82 @@ Hay guardas que abortan la construcción, y conviene no desactivarlas:
 Números duros: **5027 segmentos** traducidos al inglés y al francés, **90 PDF**
 en 5 paquetes, 0 problemas de auditoría.
 
+**La ropa se añadió después y sigue la misma regla que los libros: se genera,
+no se dibuja a mano.** Hay **119 láminas propias** —vectoriales y de propiedad
+entera— y tres generadores: `generar.py` para los doce signos del calendario de
+lanzamientos, `dibujar-espinas.py` para la serie de filigrana orgánica y
+`dibujar-marca.py` para el monograma. En la serie de espina la **V y la I de
+VILLUMINATIONS son el esqueleto de la lámina**, no un sello encima, y lo que la
+hace legible a tres metros es el contraste de ritmo: armazón recto y macizo
+contra filigrana curva y fina.
+
+`exportar-pod.py` traduce esas láminas a ficheros de impresión y hace cumplir
+cinco reglas que son físicas y no de gusto: 300 ppp al tamaño real, fondo
+transparente, ninguna opacidad parcial, ningún trazo por debajo de 1 mm impreso
+y encaje dentro del área de **su** posición —que no es la misma en la espalda
+que en el pecho, la manga o la pernera—. Al exportar la primera lámina saltaron
+dos a la vez: el halo iba al 0,92 y las marcas de decanato medían 0,31 mm, o
+sea que se habrían caído enteras de la plancha. `verificar()` abre después el
+PNG escrito y le decodifica los píxeles, porque un metadato no prueba nada
+sobre el alfa.
+
 ## Lo que falta
 
-Por orden de urgencia real:
+Por orden de urgencia real. **Cuatro cosas de la lista de agosto ya están
+hechas** y se dejan dichas para que nadie las vuelva a abrir: el Diario está
+entero en tres lenguas —once artículos, veinticuatro versiones—, los 29
+productos de proveedor están traducidos, los jabones tienen colección y SEO, y
+el blog está publicado.
 
-1. **No hay app de descargas digitales.** Los once productos digitales están
-   publicados y cobran, y el comprador no recibe nada. Es lo único que separa
-   esto de una tienda que funciona. Se instala desde el panel; no se puede hacer
-   por API.
-2. **El blog está escrito y sin publicar.** Cinco artículos en
-   `tienda/articulos.py` con su publicador en `tienda/blog.py`, a la espera de
-   que vuelva el servidor de Shopify. Son la única puerta de entrada que tendrá
-   la tienda: hoy solo se llega buscando la marca por su nombre.
-3. **Los 29 productos de proveedor no tienen traducción.** La tienda va en tres
-   lenguas para lo propio y solo en castellano para el resto.
-4. **Precio provisional de 9,99 CAD** en los seis libros nuevos, puesto para que
-   no quedaran a cero estando publicados. Los decide el dueño.
-5. **Los dos jabones** están en UNLISTED y sin colección. Si se quieren vender
-   hacen falta las dos cosas.
+1. **No hay app de descargas digitales.** Los once productos digitales cobran y
+   el comprador no recibe nada. Es lo único que separa esto de una tienda que
+   funciona. Se instala desde el panel; no se puede por API.
+2. **El nombre de la tienda sigue siendo «VIllumination»**, y sale en la
+   pestaña, en el checkout y en cada correo. Ajustes → Detalles de la tienda.
+3. **Las políticas están mal**: la marca escrita con otro nombre, redactadas en
+   inglés bajo títulos franceses, con literales sin rellenar a la vista
+   (`[INSERT TRADING NAME]`), y una política de reembolso que niega remedio
+   incluso para producto defectuoso. En Quebec es dudoso que se sostenga.
+   `shopPolicyUpdate` pide un permiso que la app no tiene: es de panel.
+4. **La ropa espera la hoja del proveedor de estampación.** Los dieciséis
+   ficheros de impresión están hechos y verificados; lo que no se puede
+   inventar es la composición, el gramaje, las tallas y los colores de la
+   prenda blanca. `tienda/ropa.py` aborta sin ellos.
+5. **Falta pedir muestra impresa y cotejar el color.** El fichero compensa la
+   base blanca de la DTG con un acento más hondo, pero compensar no es
+   acertar, y eso solo lo dice una muestra en la mano.
+6. **`de` y `ja` publicados sin una sola traducción.** Shopify emite hreflang
+   a `/de/…` y `/ja/…` y sirve castellano: para el buscador son copias del
+   mismo contenido. O se traducen o se despublican.
+7. **El CRM está escrito y sin enchufar.** Las cinco secuencias, el formulario
+   de captura con el consentimiento de la CASL y la Ley 25, y con qué
+   plantilla se monta cada una. Falta pegarlo en el tema y crear las cuatro
+   automatizaciones activables. Sin píxel de Meta ni etiqueta de Google,
+   correr anuncios hoy sería pagar sin poder medir.
+8. **Precio provisional de 9,99 CAD** en los seis libros nuevos. Los planes sí
+   están decididos —9,99 / 19,99 / 34,99 al mes— y así lo dicen las 66
+   láminas; falta comprobar que Shopify cobre eso y que haya app de
+   suscripciones.
 
 ## Fiabilidad de esta bóveda
 
-El grafo del que sale tiene **1042 nodos y 1487 aristas**, y su diagnóstico
-avisa de **116 aristas que apuntan a nodos inexistentes** — identificadores que
-la extracción semántica inventó y que no casan con los del análisis del código.
-Las notas correspondientes tendrán enlaces rotos. No es un fallo del contenido,
-pero conviene saberlo antes de fiarse de un enlace concreto.
+El grafo tiene ahora **6672 nodos, 8678 aristas y 966 comunidades**, y su
+diagnóstico da **cero aristas que apunten a nodos inexistentes**. Las 116 que
+avisaba la versión de agosto venían de la extracción semántica, que inventaba
+identificadores que no casaban con los del análisis del código; esta
+construcción es solo AST y no los produce. A cambio pierde los enlaces
+conceptuales que la semántica sí veía: se gana en que ningún enlace miente, se
+pierde en alcance.
 
-Para regenerarla: `/graphify .` desde la raíz, y luego `graphify export obsidian`.
+**`graphify-out/` no viaja en el repositorio** —está en `.gitignore`— así que en
+cada máquina nueva hay que rehacerlo, y mientras no se haga las herramientas de
+consulta no existen:
+
+```
+uv tool install graphifyy && graphify install --platform claude
+graphify update .          # reconstruye el grafo, sin coste de LLM
+graphify hook install      # post-commit: lo mantiene al día solo
+```
+
+El gancho es lo que evita que esto vuelva a quedarse viejo: rehace el grafo en
+cada confirmación, sin que nadie tenga que acordarse.
