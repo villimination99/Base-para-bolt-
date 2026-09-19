@@ -473,28 +473,42 @@ def p_pierna():
 
 
 def p_pecho():
-    """El pecho: la misma gramática en pequeño, para que se lea a 11 cm."""
-    W, H = 360, 340
+    """El pecho: el mismo armazón, en pequeño.
+
+    A 10 cm no caben tres generaciones de rama: se empastan y sale un borrón.
+    Aquí la V manda todavía más que en la espalda —es lo único que tiene que
+    leerse a esta escala— y la filigrana se reduce a un plumaje corto colgado
+    de los brazos. La proporción del armazón respecto a la costilla es la
+    misma que en la dorsal, y `comprobar()` la vigila igual.
+    """
+    W, H = 380, 400
     eje = W / 2
-    hueso, acento = [], []
+    hueso, acento, celdas = [], [], []
+
+    alto, vertice = 42.0, 214.0
+    medio = W * 0.345
+    hueso += armazon_vi(eje, alto, vertice, H * 0.94, medio,
+                        GRUESO_ARMAZON * 0.42)
+
+    # plumaje corto, colgado del brazo y hacia afuera
     for lado in (-1, 1):
-        for i in range(3):
-            t = i / 2
-            ang = math.radians(-168 if lado < 0 else -12)
-            ang += lado * math.radians(-10 - 44 * t)
-            hueso += rama(eje + lado * 14, 132 - 20 * t, ang,
-                          W * (0.32 - 0.07 * t), 19 - 6 * t,
-                          lado * 0.6, 2, i * 2.2, lado)
-    hueso.append(cinta(espina(eje, 96, math.radians(90), H * 0.56, 0.0, 12), 19))
+        for i in range(4):
+            f = 0.10 + 0.62 * i / 3
+            ox = eje + lado * medio * (1 - f)
+            oy = alto + (vertice - alto) * f
+            ang = math.radians(-150 if lado < 0 else -30) - lado * math.radians(24 * f)
+            hueso += rama(ox, oy, ang, W * (0.155 - 0.05 * f),
+                          GRUESO_COSTILLA * 0.42 - 4 * f,
+                          lado * (0.62 + 0.3 * f), 2, i * 2.4, lado)
+
+    # dos hojas de acento a los lados de la I
     for lado in (-1, 1):
-        acento.append(cinta(espina(eje + lado * 7, 112, math.radians(90) +
-                                   lado * math.radians(10), H * 0.38,
-                                   lado * 0.14, 10), 10))
-    celdas = [hoja_celda(eje + lado * 44, 104, math.radians(-150 if lado < 0
-                                                            else -30),
-                         74, 1.0) for lado in (-1, 1)]
+        acento.append(cinta(espina(eje + lado * 6, vertice - 18,
+                                   math.radians(90) + lado * math.radians(9),
+                                   H * 0.30, lado * 0.13, 10), 8))
+
     return W, H, entintar(hueso, acento, celdas,
-                          arco(eje, 118, 88, -60, 60, 1.8, 18))
+                          arco(eje, 186, 104, -58, 58, 1.8, 18))
 
 
 PIEZAS = {

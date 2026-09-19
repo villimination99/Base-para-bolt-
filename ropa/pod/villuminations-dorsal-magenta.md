@@ -1,4 +1,4 @@
-# villuminations-dorsal-cian
+# villuminations-dorsal-magenta
 
 | Campo | Valor |
 |---|---|
@@ -9,7 +9,7 @@
 | Área disponible | 30.5 × 40.6 cm |
 | Fichero | 3307 × 3803 px · 300 ppp · PNG con alfa |
 | Tinta hueso | `#ECEFF6` |
-| Tinta acento | `#00C4D6` (cian) |
+| Tinta acento | `#D400BE` (magenta) |
 | Método | Impresión directa sobre prenda (DTG) |
 
 **El color de pantalla no es el color impreso.** La base blanca que la DTG pone

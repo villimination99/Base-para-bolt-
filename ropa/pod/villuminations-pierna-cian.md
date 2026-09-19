@@ -1,13 +1,13 @@
-# villuminations-dorsal-cian
+# villuminations-pierna-cian
 
 | Campo | Valor |
 |---|---|
-| Prenda | Camiseta negra |
-| Posición | Espalda de camiseta · 12″ × 16″ |
-| Colocación | Centrada, 8 cm bajo el cuello |
-| Tamaño impreso | 28.0 × 32.2 cm  (11.02" × 12.68") |
-| Área disponible | 30.5 × 40.6 cm |
-| Fichero | 3307 × 3803 px · 300 ppp · PNG con alfa |
+| Prenda | Pantalón de chándal negro |
+| Posición | Pernera de pantalón de chándal |
+| Colocación | Centrada, 18 cm bajo la cintura, pernera izquierda |
+| Tamaño impreso | 10.0 × 26.2 cm  (3.94" × 10.31") |
+| Área disponible | 24.0 × 30.0 cm |
+| Fichero | 1181 × 3093 px · 300 ppp · PNG con alfa |
 | Tinta hueso | `#ECEFF6` |
 | Tinta acento | `#00C4D6` (cian) |
 | Método | Impresión directa sobre prenda (DTG) |

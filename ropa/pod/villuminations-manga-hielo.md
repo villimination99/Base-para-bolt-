@@ -1,15 +1,15 @@
-# villuminations-dorsal-cian
+# villuminations-manga-hielo
 
 | Campo | Valor |
 |---|---|
-| Prenda | Camiseta negra |
-| Posición | Espalda de camiseta · 12″ × 16″ |
-| Colocación | Centrada, 8 cm bajo el cuello |
-| Tamaño impreso | 28.0 × 32.2 cm  (11.02" × 12.68") |
-| Área disponible | 30.5 × 40.6 cm |
-| Fichero | 3307 × 3803 px · 300 ppp · PNG con alfa |
+| Prenda | Sudadera negra |
+| Posición | Manga larga o sudadera |
+| Colocación | Centrada, 6 cm bajo la costura del hombro |
+| Tamaño impreso | 8.0 × 22.2 cm  (3.15" × 8.72") |
+| Área disponible | 10.0 × 40.0 cm |
+| Fichero | 945 × 2617 px · 300 ppp · PNG con alfa |
 | Tinta hueso | `#ECEFF6` |
-| Tinta acento | `#00C4D6` (cian) |
+| Tinta acento | `#8FA6C4` (hielo) |
 | Método | Impresión directa sobre prenda (DTG) |
 
 **El color de pantalla no es el color impreso.** La base blanca que la DTG pone

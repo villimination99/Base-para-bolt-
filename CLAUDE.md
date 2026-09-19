@@ -61,7 +61,7 @@ python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/calendario.py # los doce lanzamientos y sus fechas
 python3 ropa/tools/generar.py # rehace las doce láminas de espalda
 python3 ropa/tools/dibujar-espinas.py --hoja  # la serie de filigrana orgánica
-python3 ropa/tools/exportar-pod.py            # el PNG de impresión bajo demanda
+python3 ropa/tools/exportar-pod.py --todas    # los 16 PNG de impresión bajo demanda
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -164,6 +164,20 @@ mínimos, no el dibujo.
 
 La consecuencia visible es que **la lámina impresa lleva el arco más grueso que
 la de pantalla**. No es un descuido: por debajo de 1 mm no hay lámina.
+
+**El área no es la misma en toda la prenda.** `AREAS` la guarda por posición
+—espalda 30,5 × 40,6 cm, pecho 10,2 × 10,2, manga 10 × 40, pernera 24 × 30— y
+`COLOCACION` dice a qué tamaño va cada pieza en la suya. Darle a todas la de la
+espalda es la manera de mandar a producción una lámina que no cabe. Son las
+estándar del catálogo: **hay que cotejarlas con el producto concreto**, que
+varían entre modelos.
+
+**`verificar()` abre el PNG escrito y lo comprueba.** No basta con haberlo
+pedido: descomprime la primera fila de píxeles y deshace su filtro para mirar
+el alfa de verdad, porque el fondo transparente es el fallo más caro de este
+flujo y un metadato no prueba nada sobre los píxeles. Probada contra dos
+ficheros rotos a propósito —uno sin `pHYs` y otro con la fila 0 opaca—: caza
+los dos.
 
 El PNG lleva su trozo `pHYs` escrito a mano —nueve bytes, `struct` y
 `zlib.crc32`— porque sin él el fichero solo dice cuántos píxeles tiene y quien

@@ -63,7 +63,27 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 PPP = 300                       # puntos por pulgada del fichero de impresión
 MM_MINIMO = 1.0                 # trazo mínimo que la DTG sostiene, en mm
-AREA_PULGADAS = (12.0, 16.0)    # espalda de camiseta estándar
+# El área NO es la misma en toda la prenda, y darle a todas la de la espalda
+# es la manera de mandar a producción una lámina que no cabe. Estas son las
+# zonas estándar de un catálogo de impresión bajo demanda, en centímetros.
+# Antes de una tirada conviene cotejarlas con el producto concreto: varían
+# entre modelos y el catálogo las publica una por una.
+AREAS = {
+    "espalda": (30.5, 40.6, "Espalda de camiseta · 12″ × 16″"),
+    "pecho":   (10.2, 10.2, "Pecho izquierdo · 4″ × 4″"),
+    "manga":   (10.0, 40.0, "Manga larga o sudadera"),
+    "pierna":  (24.0, 30.0, "Pernera de pantalón de chándal"),
+}
+
+# pieza -> (posición, ancho impreso en cm, a cuánto del borde, prenda)
+COLOCACION = {
+    "es-dorsal": ("espalda", 28.0, "8 cm bajo el cuello", "Camiseta negra"),
+    "es-pecho":  ("pecho", 9.0, "14 cm bajo el hombro", "Camiseta negra"),
+    "es-manga":  ("manga", 8.0, "6 cm bajo la costura del hombro",
+                  "Sudadera negra"),
+    "es-pierna": ("pierna", 10.0, "18 cm bajo la cintura, pernera izquierda",
+                  "Pantalón de chándal negro"),
+}
 
 # --- la paleta de impresión ------------------------------------------------
 # El hueso es casi blanco: sobre negro es el máximo contraste que da la base.
@@ -78,7 +98,7 @@ ACENTOS_POD = {
 }
 
 # La lámina modelo: la que se manda a aprobar antes de hacer las demás.
-MODELO = ("es-dorsal", "cian", 28.0, "Camiseta negra · espalda")
+MODELO = ("es-dorsal", "cian")
 
 
 def _piezas():
@@ -124,21 +144,23 @@ def endurecer(svg: str, escala: float) -> tuple:
     return svg, tocado
 
 
-def comprobar(svg: str, W, H, ancho_cm) -> list:
+def comprobar(svg: str, W, H, ancho_cm, posicion="espalda") -> list:
     """Lo que impide mandar un fichero a la estampadora."""
     malos = []
     escala = px_por_unidad(ancho_cm, W)
     ancho_px = ancho_cm / 2.54 * PPP
     alto_px = ancho_px * H / W
+    alto_cm = ancho_cm * H / W
+    area_w, area_h, area_n = AREAS[posicion]
 
     if ancho_px / (ancho_cm / 2.54) < 150:
         malos.append("por debajo de 150 ppp: se vería pixelado en la prenda")
-    if ancho_cm / 2.54 > AREA_PULGADAS[0]:
-        malos.append(f"{ancho_cm} cm ({ancho_cm / 2.54:.1f}\") no cabe en el "
-                     f"área de {AREA_PULGADAS[0]}\" de ancho")
-    if alto_px / PPP > AREA_PULGADAS[1]:
-        malos.append(f"{alto_px / PPP:.1f}\" de alto no cabe en el área de "
-                     f"{AREA_PULGADAS[1]}\"")
+    if ancho_cm > area_w:
+        malos.append(f"{ancho_cm} cm de ancho no cabe en {area_n} "
+                     f"({area_w} cm)")
+    if alto_cm > area_h:
+        malos.append(f"{alto_cm:.1f} cm de alto no cabe en {area_n} "
+                     f"({area_h} cm)")
     if re.search(r'opacity="0\.\d+"', svg):
         malos.append("queda opacidad parcial: la DTG no hace medias tintas")
     for v in {float(x) for x in re.findall(r'stroke-width="([\d.]+)"', svg)}:
@@ -177,14 +199,15 @@ def sellar_ppp(ruta: Path, ppp: int = PPP) -> None:
     ruta.write_bytes(datos[:i] + trozo + datos[i:])
 
 
-def exportar(sid: str, acento: str, ancho_cm: float) -> dict:
+def exportar(sid: str, acento: str, ancho_cm: float,
+             posicion: str = "espalda") -> dict:
     """Saca el PNG de impresión de una pieza. Devuelve el parte."""
     m = _piezas()
     W, H, contenido = m.PIEZAS[sid][0]()
     escala = px_por_unidad(ancho_cm, W)
     contenido, tocado = endurecer(contenido, escala)
 
-    malos = comprobar(contenido, W, H, ancho_cm)
+    malos = comprobar(contenido, W, H, ancho_cm, posicion)
     ancho_px = int(round(ancho_cm / 2.54 * PPP))
     alto_px = int(round(ancho_px * H / W))
 
@@ -231,25 +254,79 @@ def exportar(sid: str, acento: str, ancho_cm: float) -> dict:
         "cm": (ancho_cm, round(ancho_cm * H / W, 1)),
         "pulgadas": (round(ancho_px / PPP, 2), round(alto_px / PPP, 2)),
         "kb": png.stat().st_size // 1024,
+        "posicion": posicion,
     }
 
 
-def ficha(p: dict, sid: str, acento: str, prenda: str) -> str:
-    """La hoja de especificación que se sube con el fichero.
+def verificar(png: Path) -> list:
+    """Abre el PNG escrito y comprueba lo que se ha prometido de él.
+
+    No basta con haberlo pedido: hay que mirar el fichero. Se decodifica la
+    primera fila de píxeles de verdad —descomprimiendo y deshaciendo el filtro
+    del PNG— porque el fondo transparente es el fallo más caro de este flujo y
+    un metadato no prueba nada sobre los píxeles.
+    """
+    d = png.read_bytes()
+    if d[:8] != b"\x89PNG\r\n\x1a\n":
+        return ["no es un PNG"]
+    malos, i, idat, ancho, color, tiene_phys = [], 8, b"", 0, None, False
+    while i < len(d):
+        n = struct.unpack(">I", d[i:i + 4])[0]
+        t = d[i + 4:i + 8]
+        if t == b"IHDR":
+            ancho, _alto, _p, color = struct.unpack(">IIBB", d[i + 8:i + 18])
+        elif t == b"pHYs":
+            ppm = struct.unpack(">I", d[i + 8:i + 12])[0]
+            tiene_phys = True
+            if abs(ppm * 0.0254 - PPP) > 1:
+                malos.append(f"declara {ppm * 0.0254:.0f} ppp y no {PPP}")
+        elif t == b"IDAT":
+            idat += d[i + 8:i + 8 + n]
+        elif t == b"IEND":
+            break
+        i += 12 + n
+
+    if color != 6:
+        malos.append("no tiene canal alfa: se estamparía con recuadro")
+        return malos
+    if not tiene_phys:
+        malos.append("sin pHYs: quien lo abra decidirá el tamaño físico")
+
+    cruda = zlib.decompress(idat)
+    bpp, paso = 4, ancho * 4 + 1
+    filtro, linea = cruda[0], bytearray(cruda[1:paso])
+    for x in range(len(linea)):                     # fila 0: prev son ceros
+        a = linea[x - bpp] if x >= bpp else 0
+        if filtro == 1:
+            linea[x] = (linea[x] + a) & 255
+        elif filtro in (3, 4):
+            linea[x] = (linea[x] + (a // 2 if filtro == 3 else a)) & 255
+    for x in (0, ancho // 2, ancho - 1):
+        if linea[x * 4 + 3] != 0:
+            malos.append(f"la fila 0 no es transparente en x={x}")
+            break
+    return malos
+
+
+def ficha(p: dict, sid: str, acento: str) -> str:
+    """La hoja de especificación que se sube junto al fichero.
 
     Una app de impresión bajo demanda pide colocación y tamaño aparte del
-    dibujo. Escribirlo aquí y no en un correo evita que la segunda tirada salga
-    a otro tamaño que la primera.
+    dibujo. Escribirlo aquí y no en un correo es lo que evita que la segunda
+    tirada salga a otro tamaño que la primera.
     """
+    posicion, _an, margen, prenda = COLOCACION[sid]
+    area_w, area_h, area_n = AREAS[posicion]
     return f"""# {p['base']}
 
 | Campo | Valor |
 |---|---|
 | Prenda | {prenda} |
-| Colocación | Espalda, centrada, a 8 cm por debajo del cuello |
+| Posición | {area_n} |
+| Colocación | Centrada, {margen} |
 | Tamaño impreso | {p['cm'][0]} × {p['cm'][1]} cm  ({p['pulgadas'][0]}" × {p['pulgadas'][1]}") |
+| Área disponible | {area_w} × {area_h} cm |
 | Fichero | {p['px'][0]} × {p['px'][1]} px · {PPP} ppp · PNG con alfa |
-| Área de la prenda | {AREA_PULGADAS[0]}" × {AREA_PULGADAS[1]}" |
 | Tinta hueso | `{HUESO_POD}` |
 | Tinta acento | `{ACENTOS_POD[acento]}` ({acento}) |
 | Método | Impresión directa sobre prenda (DTG) |
@@ -260,22 +337,22 @@ de la marca para que lo impreso caiga cerca. **Pedir una muestra y cotejarla
 antes de cualquier tirada.**
 
 Trazo mínimo del fichero: {MM_MINIMO} mm. Por debajo, la plancha lo pierde.
+El área es la estándar del catálogo; conviene cotejarla con el producto
+concreto, que varían entre modelos.
 """
 
 
 def main() -> int:
-    piezas = _piezas()
     if "--todas" in sys.argv:
-        trabajos = [(sid, "cian", 28.0 if sid == "es-dorsal" else 11.0
-                     if sid == "es-pecho" else 9.0)
-                    for sid in piezas.PIEZAS]
+        trabajos = [(sid, ac) for sid in COLOCACION for ac in ACENTOS_POD]
     else:
-        trabajos = [(MODELO[0], MODELO[1], MODELO[2])]
+        trabajos = [(MODELO[0], MODELO[1])]
 
     print(f"\n  IMPRESIÓN BAJO DEMANDA · {PPP} ppp · mínimo {MM_MINIMO} mm\n")
     fallos = 0
-    for sid, acento, ancho in trabajos:
-        p = exportar(sid, acento, ancho)
+    for sid, acento in trabajos:
+        posicion, ancho, _m, _pr = COLOCACION[sid]
+        p = exportar(sid, acento, ancho, posicion)
         print(f"  {p['base']}")
         for t in dict.fromkeys(p["tocado"]):
             print(f"      endurecido · {t}")
@@ -284,13 +361,17 @@ def main() -> int:
             for mal in p["malos"]:
                 print(f"      NO SE PUEDE MANDAR · {mal}")
             continue
+        area_w, area_h, area_n = AREAS[p["posicion"]]
         print(f"      {p['px'][0]} × {p['px'][1]} px  ·  "
-              f"{p['cm'][0]} × {p['cm'][1]} cm  ·  {p['kb']} KB")
-        if (sid, acento) == (MODELO[0], MODELO[1]):
-            (DESTINO / f"{p['base']}.md").write_text(
-                ficha(p, sid, acento, MODELO[3]), encoding="utf-8")
-            print(f"      ficha de especificación · {p['base']}.md")
-        print()
+              f"{p['cm'][0]} × {p['cm'][1]} cm en {area_w} × {area_h}  ·  "
+              f"{p['kb']} KB")
+        (DESTINO / f"{p['base']}.md").write_text(
+            ficha(p, sid, acento), encoding="utf-8")
+        for mal in verificar(DESTINO / f"{p['base']}.png"):
+            fallos += 1
+            print(f"      EL FICHERO ESCRITO NO CUMPLE · {mal}")
+    print(f"\n  {len(trabajos) - fallos} de {len(trabajos)} listos en "
+          f"{DESTINO.relative_to(RAIZ.parent)}/\n")
     return 1 if fallos else 0
 
 
