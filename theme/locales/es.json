@@ -409,7 +409,7 @@
       },
       "f3": {
         "question": "¿Puedo devolver un producto?",
-        "answer_html": "<p>No. Todas las ventas son definitivas: no se aceptan devoluciones, cambios ni cancelaciones una vez confirmado el pago. Está escrito así en la <a href=\"/policies/refund-policy\">política de reembolso</a>, y conviene leerla antes de comprar.</p>"
+        "answer_html": "<p>Si llega defectuoso, dañado o distinto al descrito, sí: lo sustituimos o lo reembolsamos, y el envío de vuelta lo pagamos nosotros. Por cambio de opinión, no.</p><p>Si compras desde la Unión Europea tienes además 14 días para desistir, salvo en los productos precintados que ya hayas abierto —suplementos y jabones— y en las descargas digitales. Todo el detalle en la <a href=\"/policies/refund-policy\">política de reembolso</a>.</p>"
       }
     },
     "motivacion": {
@@ -602,7 +602,7 @@
       },
       "c1": {
         "title": "Envío y devoluciones",
-        "content_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista y lo ves en la caja, con seguimiento.</p><p>Todas las ventas son definitivas: no se aceptan devoluciones ni cambios.</p>"
+        "content_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista y lo ves en la caja, con seguimiento.</p><p>Las compras son definitivas, salvo que el producto llegue defectuoso, dañado o distinto al descrito: en ese caso lo sustituimos o lo reembolsamos. Desde la Unión Europea tienes además 14 días para desistir, con excepciones para los productos precintados una vez abiertos y para las descargas digitales. Todo el detalle en la <a href=\"/policies/refund-policy\">política de reembolso</a>.</p>"
       },
       "c2": {
         "title": "Cómo se usa"

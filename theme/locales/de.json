@@ -409,7 +409,7 @@
       },
       "f3": {
         "question": "Kann ich ein Produkt zurückgeben?",
-        "answer_html": "<p>Nein. Alle Verkäufe sind endgültig: keine Rückgabe, kein Umtausch und keine Stornierung, sobald die Zahlung bestätigt ist. So steht es in der <a href=\"/policies/refund-policy\">Rückerstattungsrichtlinie</a>, die man vor dem Kauf lesen sollte.</p>"
+        "answer_html": "<p>Wenn es defekt, beschädigt oder nicht wie beschrieben ankommt: ja. Wir ersetzen es oder erstatten den Betrag, und die Rücksendung zahlen wir. Bei einer bloßen Meinungsänderung nicht.</p><p>Beim Kauf aus der Europäischen Union haben Sie zusätzlich 14 Tage Widerrufsrecht — außer bei versiegelten Produkten, die Sie bereits geöffnet haben (Nahrungsergänzung und Seifen), und bei digitalen Downloads. Alles Weitere in der <a href=\"/policies/refund-policy\">Rückerstattungsrichtlinie</a>.</p>"
       }
     },
     "motivacion": {
@@ -602,7 +602,7 @@
       },
       "c1": {
         "title": "Versand und Rückgabe",
-        "content_html": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p><p>Alle Verkäufe sind endgültig: keine Rückgabe und kein Umtausch.</p>"
+        "content_html": "<p>Wir bereiten die Bestellung in 1–3 Werktagen vor. Die Lieferzeit berechnet der Versanddienstleister und wird an der Kasse angezeigt, mit Sendungsverfolgung.</p><p>Käufe sind endgültig, es sei denn, das Produkt kommt defekt, beschädigt oder nicht wie beschrieben an: dann ersetzen oder erstatten wir es. Aus der Europäischen Union haben Sie zusätzlich 14 Tage Widerrufsrecht, mit Ausnahmen für geöffnete versiegelte Produkte und für digitale Downloads. Alles Weitere in der <a href=\"/policies/refund-policy\">Rückerstattungsrichtlinie</a>.</p>"
       },
       "c2": {
         "title": "So wird es benutzt"

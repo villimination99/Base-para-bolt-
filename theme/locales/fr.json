@@ -409,7 +409,7 @@
       },
       "f3": {
         "question": "Puis-je retourner un produit ?",
-        "answer_html": "<p>Non. Toutes les ventes sont définitives : aucun retour, échange ou annulation une fois le paiement confirmé. C’est écrit ainsi dans la <a href=\"/policies/refund-policy\">politique de remboursement</a>, qu’il vaut mieux lire avant d’acheter.</p>"
+        "answer_html": "<p>S’il arrive défectueux, endommagé ou non conforme à la description, oui : nous le remplaçons ou le remboursons, et le retour est à notre charge. Pour un simple changement d’avis, non.</p><p>Depuis l’Union européenne, vous disposez en plus de 14 jours pour vous rétracter, sauf pour les produits scellés déjà ouverts — compléments et savons — et pour les téléchargements numériques. Tout le détail dans la <a href=\"/policies/refund-policy\">politique de remboursement</a>.</p>"
       }
     },
     "motivacion": {
@@ -602,7 +602,7 @@
       },
       "c1": {
         "title": "Livraison et retours",
-        "content_html": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur et s’affiche au paiement, avec suivi.</p><p>Toutes les ventes sont définitives : aucun retour ni échange.</p>"
+        "content_html": "<p>Nous préparons la commande en 1 à 3 jours ouvrés. Le délai de livraison est calculé par le transporteur et s’affiche au paiement, avec suivi.</p><p>Les achats sont définitifs, sauf si le produit arrive défectueux, endommagé ou non conforme à la description : nous le remplaçons alors ou le remboursons. Depuis l’Union européenne, vous avez en plus 14 jours pour vous rétracter, avec des exceptions pour les produits scellés une fois ouverts et pour les téléchargements numériques. Tout le détail dans la <a href=\"/policies/refund-policy\">politique de remboursement</a>.</p>"
       },
       "c2": {
         "title": "Comment l'utiliser"
