@@ -1,0 +1,51 @@
+{%- comment -%}
+  Color de acento de cada Codice.
+
+  Del mapa del sistema: "Cada libro tiene su color de acento, y ese color no se
+  elige dos veces: sale de libros/assets/libro.css, asi que la cubierta del PDF
+  y la portada de la tienda no pueden separarse nunca."
+
+  El tema no tenia forma de saberlo, asi que hasta ahora los ocho libros salian
+  todos con el cian de la marca y la ficha de la tienda no se parecia a su
+  cubierta. Esto lo arregla.
+
+  Orden de preferencia, y el motivo:
+
+  1. El metafield villumination.acento, si existe. Es el camino bueno: el color
+     se genera desde libro.css y viaja con el producto, de modo que sigue
+     habiendo UNA sola fuente. Hoy ese metafield no esta creado.
+  2. La tabla de abajo, indexada por handle. Es un puente, no un destino: si
+     alguien cambia un color en libro.css y no lo cambia aqui, las dos cosas se
+     separan, que es justo lo que la regla prohibe. Por eso lo primero que se
+     mira es el metafield: el dia que exista, esta tabla se puede borrar entera.
+
+  Un producto que no sea uno de los ocho no devuelve nada, y quien llame se
+  queda con el color que ya tuviera.
+
+  Uso: {%- capture acento -%}{%- render 'acento-libro', product: product -%}{%- endcapture -%}
+{%- endcomment -%}
+{%- liquid
+  assign meta = product.metafields.villumination.acento.value
+  if meta != blank
+    echo meta
+  else
+    case product.handle
+      when 'codice-de-la-mesa'
+        echo '#00ff88'
+      when 'codice-de-la-carga'
+        echo '#ff7a3c'
+      when 'codice-del-descanso'
+        echo '#00e5c0'
+      when 'codice-de-la-voluntad'
+        echo '#ff4fd8'
+      when 'codice-de-los-arcanos'
+        echo '#ff5c8a'
+      when 'codice-del-si-mismo'
+        echo '#a97bff'
+      when 'codice-zodiacal'
+        echo '#00f0ff'
+      when 'codice-de-las-invocaciones'
+        echo '#ffd75c'
+    endcase
+  endif
+-%}

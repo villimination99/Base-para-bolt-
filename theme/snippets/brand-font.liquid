@@ -1,0 +1,20 @@
+{%- comment -%}
+  Tipografía de marca (Orbitron), ahora servida por el CDN de Shopify en vez
+  de Google Fonts. Es la misma fuente variable (pesos 400-900, 11 KB) pero:
+  ahorra dos conexiones a un tercero, aparece antes porque no hay que esperar
+  a descargar una hoja de estilos externa, y no envía la IP de cada visitante
+  a Google, cosa que la justicia europea considera incompatible con el RGPD.
+{%- endcomment -%}
+{%- if settings.use_display_font -%}
+  {%- comment -%} type: el navegador descarta el precargado si no soporta el formato. preload_tag ya pone crossorigin="anonymous" solo cuando as es font: anadirlo a mano lo duplicaria. {%- endcomment -%}
+  {{ 'orbitron-variable.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2' }}
+  {%- style -%}
+    @font-face {
+      font-family: 'Orbitron';
+      src: url({{ 'orbitron-variable.woff2' | asset_url }}) format('woff2');
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  {%- endstyle -%}
+{%- endif -%}

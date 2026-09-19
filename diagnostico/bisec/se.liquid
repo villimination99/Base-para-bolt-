@@ -1,0 +1,272 @@
+<p>bisec se</p>
+{% schema %}
+{
+  "name": "Secuencia de marca",
+  "tag": "section",
+  "class": "shopify-section--secuencia",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "marca",
+      "name": "Nombre de marca",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "default": "VILLUMINATION"
+        }
+      ]
+    },
+    {
+      "type": "lema",
+      "name": "Lema",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "text",
+          "id": "linea1",
+          "label": "Primera línea",
+          "default": "NO TE"
+        },
+        {
+          "type": "text",
+          "id": "linea2",
+          "label": "Segunda línea (en color)",
+          "default": "CONFORMES"
+        }
+      ]
+    },
+    {
+      "type": "pilares",
+      "name": "Tres pilares",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono1",
+          "label": "Icono 1",
+          "default": "dumbbell",
+          "options": [
+            {
+              "value": "dumbbell",
+              "label": "Mancuerna"
+            },
+            {
+              "value": "supplement",
+              "label": "Suplemento"
+            },
+            {
+              "value": "shirt",
+              "label": "Camiseta"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo"
+            },
+            {
+              "value": "brain",
+              "label": "Mente"
+            },
+            {
+              "value": "book",
+              "label": "Libro"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "body3d",
+              "label": "Cuerpo"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo1",
+          "label": "Título 1",
+          "default": "FUERZA"
+        },
+        {
+          "type": "text",
+          "id": "sub1",
+          "label": "Subtítulo 1",
+          "default": "EQUIPO Y ACCESORIOS"
+        },
+        {
+          "type": "select",
+          "id": "icono2",
+          "label": "Icono 2",
+          "default": "supplement",
+          "options": [
+            {
+              "value": "dumbbell",
+              "label": "Mancuerna"
+            },
+            {
+              "value": "supplement",
+              "label": "Suplemento"
+            },
+            {
+              "value": "shirt",
+              "label": "Camiseta"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo"
+            },
+            {
+              "value": "brain",
+              "label": "Mente"
+            },
+            {
+              "value": "book",
+              "label": "Libro"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "body3d",
+              "label": "Cuerpo"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo2",
+          "label": "Título 2",
+          "default": "NUTRICIÓN"
+        },
+        {
+          "type": "text",
+          "id": "sub2",
+          "label": "Subtítulo 2",
+          "default": "SUPLEMENTOS"
+        },
+        {
+          "type": "select",
+          "id": "icono3",
+          "label": "Icono 3",
+          "default": "book",
+          "options": [
+            {
+              "value": "dumbbell",
+              "label": "Mancuerna"
+            },
+            {
+              "value": "supplement",
+              "label": "Suplemento"
+            },
+            {
+              "value": "shirt",
+              "label": "Camiseta"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo"
+            },
+            {
+              "value": "brain",
+              "label": "Mente"
+            },
+            {
+              "value": "book",
+              "label": "Libro"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "body3d",
+              "label": "Cuerpo"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo3",
+          "label": "Título 3",
+          "default": "CONSTANCIA"
+        },
+        {
+          "type": "text",
+          "id": "sub3",
+          "label": "Subtítulo 3",
+          "default": "PLANES Y CÓDICES"
+        }
+      ]
+    },
+    {
+      "type": "cifra",
+      "name": "Cifra",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "numero",
+          "label": "Número (vacío = se cuenta solo)",
+          "default": "",
+          "info": "Déjalo vacío y pone el número real de productos del catálogo, que se actualiza solo. Escribe algo aquí únicamente si quieres destacar otra cifra."
+        },
+        {
+          "type": "text",
+          "id": "pie",
+          "label": "Texto debajo",
+          "default": "PRODUCTOS · UNA SOLA META"
+        }
+      ]
+    },
+    {
+      "type": "cierre",
+      "name": "Cierre",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "VILLUMINATIONS.COM"
+        },
+        {
+          "type": "text",
+          "id": "boton",
+          "label": "Texto del botón",
+          "default": "VER CATÁLOGO"
+        },
+        {
+          "type": "url",
+          "id": "enlace",
+          "label": "Enlace del botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Secuencia de marca",
+      "blocks": [
+        {
+          "type": "marca"
+        },
+        {
+          "type": "lema"
+        },
+        {
+          "type": "pilares"
+        },
+        {
+          "type": "cifra"
+        },
+        {
+          "type": "cierre"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

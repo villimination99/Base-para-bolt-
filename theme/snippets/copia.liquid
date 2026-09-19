@@ -1,0 +1,45 @@
+{%- comment -%}
+  COPIA DE LA PORTADA: el ajuste manda, y si esta vacio manda el idioma.
+  ------------------------------------------------------------------
+  Shopify traduce el contenido que el comerciante escribe en el editor con
+  registros POR TEMA. Esos registros NO sobreviven a subir un tema nuevo, y
+  aqui se sube uno en cada version. Comprobado contra la tienda: los tres
+  temas de septiembre tenian translations:[] y un visitante en frances veia
+  la interfaz en frances y la portada entera en espanol.
+
+  Los archivos de locales SI son del tema y viajan dentro del zip. Asi que
+  la copia de la portada vive ahi (rama "inicio", generada desde
+  marca/copia-portada.json) y este ayudante la trae.
+
+  El orden es deliberado:
+    1. Si el comerciante ha escrito algo en el editor, MANDA lo suyo. Nadie
+       quiere escribir un titulo y que la tienda lo ignore.
+    2. Si el campo esta vacio, se busca inicio.<grupo>.<bloque>.<ajuste>.
+    3. Si esa clave tampoco existe -- un bloque nuevo que el comerciante
+       acaba de anadir y todavia no tiene copia -- no se pinta nada. NUNCA
+       se deja salir el "Translation missing: fr.inicio..." que devuelve
+       Shopify, que es lo que se veria si esto no lo filtrara.
+
+  Se comprueban las dos formas del fallo porque no son la misma: Shopify
+  devuelve el aviso "Translation missing", y el motor de las baterias
+  devuelve la clave tal cual. Si solo se mirara una, la prueba pasaria en
+  verde y la tienda sacaria basura por pantalla.
+
+  Uso:  {%- render 'copia', g: 'marquee', b: block.id, a: 'text',
+                            v: block.settings.text -%}
+{%- endcomment -%}
+{%- liquid
+  assign salida = v
+
+  if salida == blank
+    assign clave = 'inicio.' | append: g | append: '.' | append: b | append: '.' | append: a
+    capture traducido
+      echo clave | t
+    endcapture
+    unless traducido contains 'Translation missing' or traducido == clave
+      assign salida = traducido
+    endunless
+  endif
+
+  echo salida
+-%}
