@@ -470,6 +470,26 @@ contenedor recién clonado **el grafo no existe** y las herramientas de consulta
 tampoco: `update` es el que lo construye, y no cuesta llamadas a ningún modelo.
 Faltaba decirlo aquí y se descubrió a la mala, con el grafo ausente.
 
+**El gancho mantiene al día el grafo, no las notas.** Las de `boveda/` salen de
+`graphify export obsidian --dir boveda` y hay que pedirlo. Llevaban desde
+agosto sin rehacerse —solo 2 de 1280 mencionaban la capa entera de ropa— y por
+eso la bóveda mintió un mes. El exportador respeta los ficheros que no ha
+creado él, así que la nota escrita a mano sobrevive; aun así conviene copiarla
+antes, porque es la única que no se puede rehacer.
+
+**`.graphifyignore` excluye `boveda/`, y no es opcional.** Las notas salen del
+grafo: si además entran en él se realimenta. Al regenerarlas el grafo pasó de
+6672 nodos a **26 689, de los que 23 981 —el 90 %— eran las propias notas**.
+Cada exportación lo multiplicaría por su reflejo y las consultas dejarían de
+hablar del código para hablar de su documentación. Excluida la bóveda son 2676
+nodos, todos de código. **El grafo es del código; la bóveda es cómo se lee.**
+
+**El gancho revienta en confirmaciones enormes.** Mete la lista de ficheros
+cambiados en una variable de entorno, y con los 6000 de la bóveda regenerada
+falla con `Argument list too long` y no reconstruye nada. No avisa más que en
+esa línea, así que tras un commit masivo hay que ejecutar `graphify update .`
+a mano. Se descubrió confirmando la bóveda entera.
+
 Los hooks de git viven en `.git/hooks/`, que git no versiona por diseño. El
 `.claude/settings.json` sí viaja, y está escrito para no romperse si graphify
 no está instalado: comprueba antes de llamar.

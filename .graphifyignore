@@ -1,0 +1,14 @@
+# La bóveda SALE del grafo: si además entra en él, se realimenta.
+#
+# Comprobado en septiembre de 2026: al regenerar las notas con
+# `graphify export obsidian --dir boveda` el grafo pasó de 6672 nodos a 26 689,
+# y 23 981 de ellos —el 90 %— eran las propias notas. Cada exportación
+# multiplicaría el grafo por su propio reflejo, y las consultas dejarían de
+# hablar del código para hablar de la documentación del código.
+#
+# El grafo es del código. La bóveda es cómo se lee.
+boveda/
+
+# Las láminas y los ficheros de impresión son binarios o dibujo generado.
+ropa/dist/
+ropa/pod/
