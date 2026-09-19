@@ -60,6 +60,7 @@ python3 tienda/menus.py      # la navegación, con sus traducciones
 python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/calendario.py # los doce lanzamientos y sus fechas
 python3 ropa/tools/generar.py # rehace las doce láminas de espalda
+python3 ropa/tools/dibujar-espinas.py --hoja  # la serie de filigrana orgánica
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -99,6 +100,30 @@ Los cinco correos automáticos viven en `tienda/correos.py`, en tres lenguas y
 con las mismas prohibiciones que las fichas. **No se publican por API**: las
 automatizaciones se montan en Marketing → Automatizaciones y el texto se pega
 allí. `--texto` los saca en claro.
+
+**La serie espina** (`ropa/tools/dibujar-espinas.py`) es la que sigue el género
+de filigrana orgánica que pidió el dueño. Cuatro cosas la sostienen, y las
+cuatro salieron de comparar con la referencia y luego renderizar:
+
+· **Cinta, no trazo.** Cada nervio es una banda rellena calculada desplazando
+  una línea central; un `stroke` de grosor constante da dibujo de cable.
+· **Perfil de hoja, punta en los dos extremos.** El primer perfil arrancaba a
+  plena anchura y dejaba cortes romos: los troncos de manga y pantalón salían
+  como barras cortadas a sierra. Ahora el ancho es un seno que vale cero en
+  los dos extremos.
+· **El acento va DEBAJO y más ancho**, no encima. Encima son dos tintas
+  planas; debajo asoma por el canto y parece que algo brilla dentro. Con
+  `stroke-width` 7 se comía el hueso y con 2,6 seguía borrando el afilado —un
+  trazo fijo sobre una forma que se afila a cero acaba siendo toda la forma—.
+  A 1,2 asoma y no manda. `comprobar()` aborta si el hueso se dibuja antes que
+  el acento.
+· **La separación tiene que superar al grueso.** Tres troncos de 21 a 22 de
+  distancia se solapaban en una plancha de borde escalonado. No es un dibujo,
+  es un fallo de composición, y solo se ve renderizando.
+
+El símbolo **no fija el acento**: lo heredaba del contenedor y lo fijaba a la
+vez, así que las tres columnas de la hoja salían cian. Los valores por defecto
+viven en el `<svg>` de fuera.
 
 **Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
 publica si no señala su lámina dentro del repositorio: hay **110 láminas
