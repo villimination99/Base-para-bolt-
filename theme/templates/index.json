@@ -609,6 +609,7 @@
     "products",
     "flowingmenu",
     "benefits",
+    "newsletter",
     "showcase3d",
     "productcarousel3d",
     "video3d",
@@ -617,7 +618,6 @@
     "diario",
     "motivation",
     "haces",
-    "faq",
-    "newsletter"
+    "faq"
   ]
 }
