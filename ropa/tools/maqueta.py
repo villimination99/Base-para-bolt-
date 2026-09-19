@@ -24,13 +24,17 @@ Por qué el estampado no se pega encima y ya
 Una lámina pegada sobre un dibujo de camiseta se ve pegada: flota. Aquí pasa
 por tres cosas que la meten dentro de la tela:
 
-1. **`mix-blend-mode: screen`.** Sobre prenda oscura la tinta clara se suma a
-   lo que hay debajo en vez de taparlo, así que los pliegues y la sombra de la
-   tela **atraviesan** el estampado, que es exactamente lo que hace la tinta
-   de verdad.
-2. **La sombra va encima, no debajo.** Los pliegues se pintan como una capa de
-   degradados por encima del conjunto y en `multiply`, de modo que oscurecen
-   prenda y tinta a la vez.
+1. **La sombra va encima, no debajo.** Los pliegues se pintan como una capa
+   de degradados por encima del conjunto, de modo que oscurecen prenda y
+   tinta a la vez y **atraviesan** el estampado, que es lo que hace la tela
+   de verdad. Una lámina pegada encima de todo se ve pegada.
+2. **La tinta va en normal, no en `screen`.** La primera versión la ponía en
+   `screen` por lo mismo —para que los pliegues la atravesaran—, pero eso ya
+   lo hace la capa de sombra de arriba, así que `screen` solo sumaba: sumaba
+   el tono de la tela al de la tinta y **aclaraba todos los acentos oscuros**.
+   El rojo cardenal `#BC1733` salía en la maqueta como `#C63A57`, o sea
+   frambuesa, y la maqueta enseñaba un color que la plancha no imprime. Con
+   la tinta en normal, lo que se ve es el valor del fichero.
 3. **La lámina va a su tamaño real**, calculado desde los centímetros de
    `exportar-pod.COLOCACION`, no a ojo. Una maqueta con el estampado más
    grande de lo que se imprime es publicidad engañosa barata.
@@ -71,6 +75,13 @@ PRENDAS = {
 # Fondo claro, como las composiciones del género. El contraste lo pone la
 # prenda oscura contra él, no el estampado contra la prenda.
 FONDO = "#ececed"
+
+# A qué altura de la prenda empieza el área de estampación, en centímetros
+# bajo el cuello. Es lo único que la maqueta pone de su parte: el fichero de
+# impresión mide desde el borde del área y no tiene por qué saber dónde cae
+# ese borde sobre la tela. Es aproximado y depende del modelo.
+AREA_BAJO_CUELLO = {"espalda": 5.0, "frontal": 5.0, "manga": 0.0,
+                    "pierna": 0.0}
 
 
 def _tela(W, H, tipo, p):
@@ -116,9 +127,9 @@ def _pliegues(W, H, p):
 def maqueta(sid, acento, prenda="camiseta", px=13.0) -> str:
     pod = _pod()
     esp = pod._piezas()
-    posicion, ancho_cm, margen, _pr = pod.COLOCACION[sid]
+    area, ancho_cm, x_frac, y_cm, _pr = pod.COLOCACION[sid]
     pw, ph, cont = esp.PIEZAS[sid][0]()
-    cont, _ = pod.endurecer(cont, pod.px_por_unidad(ancho_cm, pw))
+    cont, _ = pod.endurecer(cont, (ancho_cm / 2.54 * pod.PPP) / pw)
     cont = (cont.replace("var(--acento)", pod.ACENTOS_POD[acento])
                 .replace("var(--hueso)", pod.HUESO_POD))
 
@@ -131,8 +142,14 @@ def maqueta(sid, acento, prenda="camiseta", px=13.0) -> str:
     LW, LH = W * (1 + MARGEN * 2), H * (1 + MARGEN * 2)
     ox, oy = W * MARGEN, H * MARGEN
     ancho = ancho_cm * px
-    x = (W - ancho) / 2 if sid != "es-pecho" else W * 0.585
-    y = H * 0.07 + (8 if sid == "es-dorsal" else 14) * px
+    # La maqueta coloca la lámina donde la coloca el fichero de impresión, y
+    # no con sus propios números: si los dos sitios tuvieran su constante,
+    # llegaría el día en que la maqueta enseña un estampado en un sitio y la
+    # prenda sale con él en otro. Lo único que la maqueta añade es a qué
+    # altura de la prenda empieza el área de estampación, que el fichero no
+    # sabe porque es cosa del producto.
+    x = (W - ancho) / 2 + (x_frac - 0.5) * pod.AREAS[area][0] * px
+    y = H * 0.07 + (AREA_BAJO_CUELLO[area] + y_cm) * px
 
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {LW} {LH}"
  width="{int(LW)}" height="{int(LH)}">
@@ -155,8 +172,7 @@ def maqueta(sid, acento, prenda="camiseta", px=13.0) -> str:
 <rect width="{LW}" height="{LH}" fill="{FONDO}"/>
 <g transform="translate({ox},{oy})">
 {_tela(W, H, prenda, p)}
-<g transform="translate({x},{y}) scale({ancho/pw})"
-   style="mix-blend-mode:screen">{cont}</g>
+<g transform="translate({x},{y}) scale({ancho/pw})">{cont}</g>
 {_pliegues(W, H, p)}
 </g>
 </svg>"""
@@ -168,10 +184,13 @@ def maqueta(sid, acento, prenda="camiseta", px=13.0) -> str:
 # como una marca.
 # ---------------------------------------------------------------------------
 CATALOGO = [
+    ("es-dorsal", "cardenal", "camiseta"),
     ("es-dorsal", "cian", "camiseta"),
+    ("es-dorsal", "oro", "camiseta"),
     ("es-dorsal", "hielo", "camiseta"),
     ("es-dorsal", "purpura", "sudadera"),
     ("es-dorsal", "magenta", "camiseta"),
+    ("es-pecho", "cardenal", "camiseta"),
     ("es-pecho", "cian", "camiseta"),
     ("es-pecho", "hielo", "camiseta"),
 ]

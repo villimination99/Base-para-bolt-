@@ -56,6 +56,8 @@ DIST = RAIZ / "dist"
 HUESO = "#d8dae4"
 ACENTOS = {
     "cian": "#00f0ff", "purpura": "#7b2fff", "magenta": "#ff00e5",
+    "cardenal": "#e01b3d",       # rojo cardenal, el único cálido saturado
+    "oro": "#ffc21a",            # oro viejo: el que mejor aguanta la base
     "verde": "#00ff88", "naranja": "#ff6600", "hielo": "#8fa6c4",
     "hueso": "#6d7080",          # monocromo: acento gris para prenda oscura
 }

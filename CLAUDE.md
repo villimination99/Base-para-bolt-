@@ -61,8 +61,9 @@ python3 tienda/ropa.py       # láminas propias disponibles para estampar
 python3 tienda/calendario.py # los doce lanzamientos y sus fechas
 python3 ropa/tools/generar.py # rehace las doce láminas de espalda
 python3 ropa/tools/dibujar-espinas.py --hoja  # la serie de filigrana orgánica
-python3 ropa/tools/exportar-pod.py --todas    # los 16 PNG de impresión bajo demanda
+python3 ropa/tools/exportar-pod.py --todas    # los 24 PNG de impresión bajo demanda
 python3 ropa/tools/maqueta.py                 # las maquetas de prenda para anuncios
+python3 ropa/tools/paquete-pod.py             # el catálogo, el LEEME y el ZIP
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -153,25 +154,75 @@ costilla mayor; si algún día se engorda la filigrana sin mirar esto, la marca
 se pierde y nadie se entera hasta ver la prenda impresa.
 
 **Un fichero para Printful no es un SVG bonito.** `ropa/tools/exportar-pod.py`
-traduce la lámina de pantalla al fichero de impresión, y las cinco reglas que
-hace cumplir son físicas, no de gusto: 300 ppp al tamaño real, fondo
-transparente, **ninguna opacidad parcial** —la DTG no hace medias tintas—,
-**ningún trazo por debajo de 1 mm impreso** y encaje dentro del área de
-12″ × 16″. Al exportar la dorsal saltaron las dos primeras a la vez: el halo
-iba al 0,92 y el arco y las marcas de decanato a 0,67 y **0,31 mm**, o sea que
-las marcas se habrían caído enteras de la plancha. `endurecer()` lo arregla en
-el fichero de impresión y deja el de pantalla como está: el destino impone sus
-mínimos, no el dibujo.
+traduce la lámina de pantalla al fichero de impresión, y las reglas que hace
+cumplir son físicas, no de gusto: 300 ppp, fondo transparente, **ninguna
+opacidad parcial** —la DTG no hace medias tintas—, **ningún rasgo por debajo de
+1 mm impreso**, ningún hueco interior que se empaste y encaje en el área. Al
+exportar la dorsal saltaron las dos primeras a la vez: el halo iba al 0,92 y el
+arco y las marcas de decanato a 0,67 y **0,31 mm**, o sea que las marcas se
+habrían caído enteras de la plancha. `endurecer()` lo arregla en el fichero de
+impresión y deja el de pantalla como está: el destino impone sus mínimos, no el
+dibujo.
 
 La consecuencia visible es que **la lámina impresa lleva el arco más grueso que
 la de pantalla**. No es un descuido: por debajo de 1 mm no hay lámina.
 
+**EL LIENZO ES EL ÁREA DE ESTAMPACIÓN, NO EL DIBUJO.** Es la regla que manda
+sobre las demás y la que costó una tirada mal escalada. La primera versión
+sacaba el PNG **al tamaño del dibujo**: el pecho salía a 9 cm, 1063 píxeles. Al
+subirlo, la aplicación lo encaja en su área —30,5 × 40,6 cm en el frente— y al
+estirar 1063 píxeles a 30,5 cm quedan **88 ppp**, así que avisa de resolución
+insuficiente y hay que encogerlo a mano hasta que calle. Eso no es un fichero,
+es una negociación, y la segunda tirada sale a otro tamaño que la primera
+porque nadie apuntó cuánto se encogió. Ahora el PNG mide **exactamente el área
+a 300 ppp** y el dibujo va dentro con transparencia alrededor: encajar al área
+—que es lo que la aplicación hace sola— deja el dibujo en su sitio y a 300 ppp
+exactos. `verificar()` aborta si el lienzo no mide lo que mide el área.
+
+**En DTG el pecho no es un área, es un sitio dentro del área frontal.**
+Tratarlo como un área de 10 × 10 cm es justo lo que producía el aviso. Y va
+**centrado a propósito**: «pecho izquierdo» se coloca en la industria unas
+veces a la izquierda de lo que se ve y otras a la del que lleva la prenda, que
+son lados contrarios; centrado no tiene lado que equivocar.
+
 **El área no es la misma en toda la prenda.** `AREAS` la guarda por posición
-—espalda 30,5 × 40,6 cm, pecho 10,2 × 10,2, manga 10 × 40, pernera 24 × 30— y
-`COLOCACION` dice a qué tamaño va cada pieza en la suya. Darle a todas la de la
-espalda es la manera de mandar a producción una lámina que no cabe. Son las
-estándar del catálogo: **hay que cotejarlas con el producto concreto**, que
-varían entre modelos.
+—espalda y frente 30,5 × 40,6 cm, manga 10 × 40, pernera 24 × 30— y
+`COLOCACION` dice a qué tamaño y en qué punto del área va cada pieza. Darle a
+todas la de la espalda es la manera de mandar a producción una lámina que no
+cabe. La pernera iba a 10 cm de ancho y 4 del borde: 26,2 + 4 son 30,2 en un
+área de 30 y **se salía por dos milímetros**; lo cazó la guarda de encaje.
+Son las estándar del catálogo: **hay que cotejarlas con el producto concreto**,
+que varían entre modelos.
+
+**Los `stroke-width` no dicen nada del dibujo.** La serie espina está hecha de
+**cintas rellenas** —siluetas calculadas, no trazos—, así que la comprobación
+por atributo no veía el 90 % de lo que se imprime: podía dar por bueno un
+nervio de medio milímetro porque no era un `stroke`. `medir()` rasteriza y mide
+**píxel a píxel**: para cada punto de tinta el grosor local es el menor de su
+recorrido horizontal y su vertical, que estima la anchura de una forma sin
+saber su geometría. El hueco se mide igual y solo cuenta el interior —un claro
+con tinta a los dos lados—, porque un hueco de medio milímetro se cierra en la
+plancha y dos nervios salen como mancha.
+
+Se vigila la **fracción**, no el mínimo: el hueco más estrecho sale siempre en
+torno a un píxel porque en algún cruce dos cintas se rozan, y eso es un empalme,
+no un defecto. Medido sobre la serie: tinta fina del 0,98 % al 1,8 %, hueco fino
+del 0,7 % al 1,2 %. Los umbrales están a dos veces y media el peor.
+
+**La paleta de impresión se deriva, no se retecléa.** `_compensar()` baja el
+valor un 16 % y deja tono y saturación donde estaban; por debajo de 0,85 de
+valor la tinta ya es honda y se deja. La regla no es un invento: reproduce
+—dentro de dos o tres pasos— los tres acentos que se habían ajustado a ojo
+antes de que existiera, y por eso se puede confiar en ella para los que vengan.
+Un acento nuevo se añade **una sola vez**, en `dibujar-espinas.ACENTOS`, y el
+de impresión sale solo. Son seis a impresión: cian, **cardenal**, **oro**,
+púrpura, magenta y hielo.
+
+**El hueso es la excepción y va al revés.** No se compensa hacia abajo: se
+empuja hacia arriba (`#ECEFF6`), porque la base blanca levantándolo es justo lo
+que se quiere de él —es quien pone el contraste contra la prenda negra, mientras
+el acento solo asoma por el canto—. Compensar los dos igual sería aplicar la
+regla sin mirar para qué está cada tinta.
 
 **`verificar()` abre el PNG escrito y lo comprueba.** No basta con haberlo
 pedido: descomprime la primera fila de píxeles y deshace su filtro para mirar
@@ -197,12 +248,16 @@ gratis: **para la ficha de producto, esas**. `ropa/tools/maqueta.py` hace lo
 otro, lo que Printful no da: la composición de marca para anuncio, publicación
 y cabecera de colección. Tres cosas la sostienen:
 
-· **`mix-blend-mode: screen`** sobre prenda oscura: la tinta clara se suma a lo
-  que hay debajo en vez de taparlo, así que los pliegues **atraviesan** el
-  estampado, que es lo que hace la tinta de verdad. Pegarlo encima y ya se ve
-  pegado: flota.
-· **La sombra va encima y en `multiply`**, para que oscurezca prenda y tinta a
-  la vez.
+· **La sombra va encima**, en una capa de pliegues por arriba de todo, para que
+  oscurezca prenda y tinta a la vez y **atraviese** el estampado, que es lo que
+  hace la tela de verdad. Pegarlo encima y ya se ve pegado: flota.
+· **La tinta va en normal, no en `screen`.** Iba en `screen` por lo mismo —para
+  que los pliegues la atravesaran—, pero eso ya lo hace la capa de arriba, así
+  que `screen` solo sumaba: sumaba el tono de la tela al de la tinta y
+  **aclaraba todos los acentos oscuros**. El rojo cardenal `#BC1733` salía en
+  la maqueta como `#C63A57`, o sea frambuesa, y **la maqueta enseñaba un color
+  que la plancha no imprime**. Se ve al añadir el primer acento oscuro; con
+  cianes y magentas no se notaba.
 · **Un negro fotografiado no es negro.** La tela va entre `#26262d` y `#3a3a44`
   sobre fondo claro. En la primera pasada iba a `#141419` sobre fondo casi
   negro y la prenda **desaparecía**: solo se veía el estampado flotando.
@@ -210,8 +265,23 @@ y cabecera de colección. Tres cosas la sostienen:
   negros y se comían la silueta. Un pliegue es una línea de sombra, no media
   prenda.
 
+Y la maqueta **coloca la lámina donde la coloca el fichero de impresión**, no
+con sus propios números: si los dos sitios tuvieran su constante, llegaría el
+día en que la maqueta enseña el estampado en un sitio y la prenda sale con él
+en otro. Lo único que pone de su parte es `AREA_BAJO_CUELLO`, a qué altura de
+la prenda empieza el área, que el fichero no sabe porque es cosa del producto.
+
+**El paquete lo monta `ropa/tools/paquete-pod.py`, no una mano.** El anterior se
+montó a mano y así tiene dos maneras de mentir y ninguna de avisar: manda
+ficheros viejos —un PNG de la semana pasada se abre igual de bien— y su LEEME
+lleva números retecleados que dejan de ser verdad. Ahora el LEEME **se genera**
+de `exportar-pod.py` y `comprobar()` aborta si falta una lámina, sobra una, o
+alguna es **más vieja que el generador**. Un ZIP que no se puede montar es
+mejor que uno que miente.
+
 **`ropa/VILLUMINATIONS-print-on-demand.zip`** es el paquete que se descarga: los
-16 ficheros de impresión con su ficha, las maquetas, el catálogo y un LEEME.
+24 ficheros de impresión con su ficha y su vectorial, las maquetas, el catálogo
+y el LEEME.
 
 **Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
 publica si no señala su lámina dentro del repositorio: hay **110 láminas

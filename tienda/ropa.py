@@ -84,6 +84,33 @@ PRENDAS = {
 # El texto NO habla del tejido —ni transpirable, ni de secado rápido, ni
 # nada—: eso sale de la hoja y no de la imaginación. Habla del dibujo, que es
 # lo que sí es nuestro y lo que de verdad se compra.
+def _exportador():
+    """El módulo que sabe a qué tamaño y en qué sitio se imprime cada pieza."""
+    import importlib.util
+    ruta = (Path(__file__).resolve().parent.parent / "ropa" / "tools"
+            / "exportar-pod.py")
+    spec = importlib.util.spec_from_file_location("pod", ruta)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def colocacion(sid: str) -> str:
+    """La colocación, dicha por el fichero de impresión y no por la memoria.
+
+    Estaba escrita a mano —«a 8 cm del cuello», «9 cm de ancho»— al lado de
+    un exportador que tenía sus propios números, y en cuanto los suyos
+    cambiaron esta frase pasó a describir una prenda que ya no se fabrica.
+    Una ficha que miente sobre dónde va el estampado es una devolución.
+    """
+    m = _exportador()
+    area, ancho, x_frac, y_cm, _pr = m.COLOCACION[sid]
+    aw, ah, an = m.AREAS[area]
+    donde = "centrado" if abs(x_frac - 0.5) < 1e-6 else f"a {x_frac:.0%} del ancho"
+    return (f"{an.split(' · ')[0].lower()}, {donde}, {ancho} cm de ancho, "
+            f"a {y_cm} cm del borde superior del área de estampación")
+
+
 DISENOS = {
     "espina-dorsal": {
         "lamina": "ropa/partials/espinas.svg#es-dorsal",
@@ -107,7 +134,7 @@ DISENOS = {
             "qu'à trois mètres on lit la marque et de près le dessin. À "
             "l'intérieur, l'arc des trente-six décans, que l'on peut compter."),
         "prenda": "PENDIENTE-hoja-del-proveedor",
-        "colocacion": "espalda centrada, 28 cm de ancho, a 8 cm del cuello",
+        "pieza": "es-dorsal",
     },
     "espina-pecho": {
         "lamina": "ropa/partials/espinas.svg#es-pecho",
@@ -128,7 +155,7 @@ DISENOS = {
             "réduit à ce que l'échelle supporte. C'est la pièce de tous les "
             "jours : elle se lit à un mètre et ne crie pas."),
         "prenda": "PENDIENTE-hoja-del-proveedor",
-        "colocacion": "pecho izquierdo, 9 cm de ancho, a 14 cm del hombro",
+        "pieza": "es-pecho",
     },
 }
 
@@ -192,6 +219,10 @@ def comprobar() -> list:
             malos.append(f"{mango} · la lámina «{d.get('lamina')}» no está en "
                          f"el repositorio: un diseño sin dibujo propio no se "
                          f"publica")
+        if d.get("pieza") not in _exportador().COLOCACION:
+            malos.append(f"{mango} · la pieza «{d.get('pieza')}» no la exporta "
+                         f"ropa/tools/exportar-pod.py: sin eso la ficha no "
+                         f"puede decir a qué tamaño va el estampado")
         if d.get("prenda") not in PRENDAS:
             malos.append(f"{mango} · la prenda «{d.get('prenda')}» no está "
                          f"especificada")
