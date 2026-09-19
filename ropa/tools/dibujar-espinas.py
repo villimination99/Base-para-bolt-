@@ -240,6 +240,60 @@ def rombos(cx, y0, y1, cuantos=5):
 
 
 # ---------------------------------------------------------------------------
+# El armazón: la marca dentro del dibujo
+# ---------------------------------------------------------------------------
+def armazon_vi(eje, y_alto, y_vertice, y_pie, medio_ancho, grueso=58.0):
+    """La **V** y la **I** de VILLUMINATIONS, como esqueleto y no como sello.
+
+    Un logotipo pegado encima de una filigrana se ve pegado encima. Aquí la
+    marca es la estructura: dos hojas rectas y gruesas bajan de los hombros y
+    se juntan en un vértice —esa es la V—, y del vértice cae la columna, que
+    es la I. Todo lo demás de la lámina crece colgado de ellas.
+
+    Lo que lo hace legible a distancia no es el tamaño, es el **contraste de
+    ritmo**: el armazón es recto y macizo, la filigrana es curva y fina. El
+    ojo separa las dos cosas antes de leer ninguna, y por eso la V aparece a
+    tres metros y desaparece a medio metro, que es justo lo que se pedía.
+
+    `comprobar()` exige que el armazón sea al menos un tercio más grueso que
+    la costilla mayor que lo rodea. Si algún día se engorda la filigrana sin
+    mirar esto, la marca se pierde dentro y nadie se entera.
+    """
+    piezas = []
+    for lado in (-1, 1):
+        # El brazo: casi recto, con apenas curvatura para que no parezca un
+        # triángulo dibujado con regla.
+        pts = espina(eje + lado * medio_ancho, y_alto,
+                     math.atan2(y_vertice - y_alto, -lado * medio_ancho),
+                     math.hypot(medio_ancho, y_vertice - y_alto),
+                     lado * 0.13, 14)
+        piezas.append(cinta(pts, grueso, grueso * 0.12))
+    # Púas finas en el canto interior. El brazo liso se leía como hoja de
+    # cuchillo y no como filigrana; estas le devuelven el carácter y **no
+    # llenan el hueco**, que es la condición para que la letra siga viéndose:
+    # pesan poco y mueren enseguida.
+    for lado in (-1, 1):
+        for i in range(7):
+            f = 0.16 + 0.62 * i / 6
+            ox = eje + lado * medio_ancho * (1 - f)
+            oy = y_alto + (y_vertice - y_alto) * f
+            ang = math.radians(-118 if lado < 0 else -62) + lado * math.radians(24 * f)
+            piezas.append(cinta(espina(ox, oy, ang, 62 - 26 * f,
+                                       -lado * 0.55, 9), 13 - 5 * f))
+
+    # La I: del vértice al pie, con el mismo grueso que los brazos.
+    piezas.append(cinta(espina(eje, y_vertice - grueso * 0.32,
+                               math.radians(90), y_pie - y_vertice, 0.0, 12),
+                        grueso * 0.86))
+    return piezas
+
+
+ARMAZON_MINIMO = 1.33      # veces la costilla mayor de alrededor
+GRUESO_ARMAZON = 62.0      # el de los brazos de la V en la pieza dorsal
+GRUESO_COSTILLA = 27.0     # el de la costilla mayor que lo rodea
+
+
+# ---------------------------------------------------------------------------
 # Las piezas
 # ---------------------------------------------------------------------------
 def _esqueleto_dorsal(W, H):
@@ -253,18 +307,28 @@ def _esqueleto_dorsal(W, H):
     hombro = H * 0.235
     hueso, acento = [], []
 
-    # --- la envergadura: cinco nervios mayores por lado ------------------
+    # --- la envergadura, colgada POR FUERA del armazón -------------------
+    # Este es el cambio que hace que la marca se lea. Antes las costillas
+    # salían del centro y barrían hacia afuera, o sea que llenaban justo el
+    # hueco entre los brazos de la V: la letra quedaba tapada por dentro y a
+    # tres metros el conjunto se leía como un ala, no como una V.
+    #
+    # Ahora cada costilla nace **sobre el brazo** y crece hacia afuera y hacia
+    # arriba, alejándose del interior. El hueco de la V queda limpio, y un
+    # hueco limpio es lo único que convierte dos trazos en una letra.
+    ax, ay = W * 0.325, hombro - 76          # punta alta del brazo
+    vx, vy = 0.0, hombro + 322               # vértice
     for lado in (-1, 1):
-        for i in range(7):
-            t = i / 6
-            ang = math.radians(-172 if lado < 0 else -8)
-            ang += lado * math.radians(-4 - 58 * (t ** 1.15))
-            largo = W * (0.34 - 0.11 * (t ** 1.6))
-            grueso = 52 - 27 * t
-            hueso += rama(eje + lado * (18 + 10 * t),
-                          hombro + 30 - 54 * (t ** 0.9),
-                          ang, largo, grueso,
-                          lado * (0.55 + 0.45 * t), 3, i * 1.9, lado)
+        for i in range(8):
+            f = 0.06 + 0.70 * i / 7          # fracción recorrida del brazo
+            ox = eje + lado * (ax + (vx - ax) * f)
+            oy = ay + (vy - ay) * f
+            # hacia afuera y arriba: perpendicular al brazo, no hacia el eje
+            ang = math.radians(-152 if lado < 0 else -28) - lado * math.radians(26 * f)
+            largo = W * (0.20 - 0.085 * f)
+            grueso = GRUESO_COSTILLA - 11 * f
+            hueso += rama(ox, oy, ang, largo, grueso,
+                          lado * (0.62 + 0.34 * f), 3, i * 1.9, lado)
 
     # --- la columna ------------------------------------------------------
     # Nueve pares iguales bajando a paso constante se leían como cremallera.
@@ -274,9 +338,9 @@ def _esqueleto_dorsal(W, H):
     # arriba.
     for i in range(7):
         t = i / 6
-        y = hombro + 88 + (H * 0.58) * (t ** 1.28)
+        y = hombro + 268 + (H * 0.44) * (t ** 1.22)
         vaiven = 1.0 + 0.30 * math.sin(i * 2.4)
-        largo = W * (0.21 - 0.155 * (t ** 0.70)) * vaiven
+        largo = W * (0.165 - 0.115 * (t ** 0.70)) * vaiven
         grueso = 46 * (1 - 0.76 * t) + 4
         for lado in (-1, 1):
             ang = (math.pi if lado < 0 else 0) + lado * math.radians(
@@ -284,9 +348,17 @@ def _esqueleto_dorsal(W, H):
             hueso += rama(eje + lado * (5 + 3 * i), y, ang, largo, grueso,
                           lado * (0.52 + 0.28 * t), 2, i * 2.3, lado)
 
-    # --- el filo central: una hoja larga a plomo -------------------------
-    hueso.append(cinta(espina(eje, hombro - 10, math.radians(90),
-                              H * 0.70, 0.0, 14), 26))
+    # --- el armazón: la V y la I de la marca -----------------------------
+    # Va el último de los de hueso, así que se dibuja encima de la filigrana
+    # y manda. Sustituye al filo central suelto que había aquí: aquel era una
+    # hoja a plomo sin significado, esta es la I.
+    # La V tiene que ser MÁS ANCHA que la filigrana, no caber dentro. En la
+    # primera prueba de bizco los brazos medían 0,205 de ancho y la filigrana
+    # llegaba a 0,34: la marca quedaba enterrada en el bulto. Ahora los brazos
+    # salen a 0,325 y sus puntas asoman por encima del nudo, que es lo único
+    # que hace que una forma se separe del fondo a tres metros.
+    hueso += armazon_vi(eje, hombro - 76, hombro + 322, H * 0.93,
+                        W * 0.325, GRUESO_ARMAZON)
 
     # --- las hojas de acento: las que salen solas en color ---------------
     for lado in (-1, 1):
@@ -343,8 +415,9 @@ def entintar(hueso, acento, celdas, instrumento=""):
 
 def p_dorsal():
     W, H = 1000, 1150
+    hombro = H * 0.235
     hueso, acento, celdas = _esqueleto_dorsal(W, H)
-    inst = (arco(W / 2, H * 0.235 + 18, 236, -74, 74, 2.4)
+    inst = (arco(W / 2, hombro + 268, 178, -66, 66, 2.4)
             + rombos(W / 2, H * 0.62, H * 0.90, 5))
     return W, H, entintar(hueso, acento, celdas, inst)
 
@@ -505,6 +578,14 @@ def sueltos() -> int:
 
 def comprobar() -> list:
     malos = []
+    # Lo que hace legible la marca a tres metros no es su tamaño: es que el
+    # armazón sea claramente más macizo que la filigrana que lo rodea. Si
+    # algún día se engorda la costilla sin mirar esto, la V se pierde dentro
+    # del bulto y nadie se entera hasta ver la prenda impresa.
+    if GRUESO_ARMAZON < GRUESO_COSTILLA * ARMAZON_MINIMO:
+        malos.append(
+            f"el armazón ({GRUESO_ARMAZON}) no llega a {ARMAZON_MINIMO}× la "
+            f"costilla mayor ({GRUESO_COSTILLA}): la V dejaría de leerse")
     torso = ANCHO_CM * (1 - 0.19 * 2)
     for clave, (sid, ancho_cm, _a, _t) in PRENDA.items():
         if ancho_cm > torso - 2:

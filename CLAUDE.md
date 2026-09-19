@@ -126,6 +126,31 @@ El símbolo **no fija el acento**: lo heredaba del contenedor y lo fijaba a la
 vez, así que las tres columnas de la hoja salían cian. Los valores por defecto
 viven en el `<svg>` de fuera.
 
+**La marca va dentro del dibujo, y no como sello.** `armazon_vi()` dibuja la
+**V** y la **I** de VILLUMINATIONS como esqueleto de la lámina dorsal: dos hojas
+rectas bajan de los hombros y se juntan en un vértice, y del vértice cae la
+columna. Todo lo demás crece colgado de ellas. Lo que la hace legible a tres
+metros no es el tamaño sino el **contraste de ritmo** —armazón recto y macizo
+contra filigrana curva y fina—, y por eso la V aparece de lejos y desaparece de
+cerca, que es lo que se pidió.
+
+Costó tres intentos y los tres fallos son la misma lección:
+
+· Los brazos medían menos que la filigrana y la marca quedaba **enterrada
+  dentro del bulto**. Tienen que ser lo más ancho de la lámina.
+· Con el hueco entre los brazos lleno de costillas, la forma se lee como
+  **ala, no como letra**. Una V solo es una V si su interior está limpio: las
+  costillas nacen ahora **sobre el brazo** y crecen hacia afuera.
+· Con el brazo liso la pieza perdía carácter, así que lleva púas finas en el
+  canto interior: pesan poco y no vuelven a llenar el hueco.
+
+**La prueba de bizco es la que decide.** Se mira la lámina a 110 px y con dos
+píxeles de desenfoque: si la V no aparece ahí, no aparece a tres metros, y eso
+no se juzga a tamaño completo. Está en la hoja de aprobación.
+`comprobar()` exige además que el armazón sea `ARMAZON_MINIMO` veces la
+costilla mayor; si algún día se engorda la filigrana sin mirar esto, la marca
+se pierde y nadie se entera hasta ver la prenda impresa.
+
 **Un fichero para Printful no es un SVG bonito.** `ropa/tools/exportar-pod.py`
 traduce la lámina de pantalla al fichero de impresión, y las cinco reglas que
 hace cumplir son físicas, no de gusto: 300 ppp al tamaño real, fondo
