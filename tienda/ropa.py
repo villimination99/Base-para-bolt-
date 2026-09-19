@@ -76,14 +76,60 @@ PRENDAS = {
 # ---------------------------------------------------------------------------
 # Los diseños. Cada uno señala la lámina propia de la que sale.
 # ---------------------------------------------------------------------------
+# Lo que se puede decir ya está escrito; lo que depende de la prenda, no.
+# `prenda` apunta a una clave que NO existe en PRENDAS a propósito: mientras
+# falte la hoja del proveedor, `comprobar()` sigue fallando y estos diseños no
+# se publican. No es un descuido, es el freno.
+#
+# El texto NO habla del tejido —ni transpirable, ni de secado rápido, ni
+# nada—: eso sale de la hoja y no de la imaginación. Habla del dibujo, que es
+# lo que sí es nuestro y lo que de verdad se compra.
 DISENOS = {
-    # "rueda-zodiacal": {
-    #     "lamina": "libros/partials/zodiaco.svg#z-rueda",
-    #     "titulo": ("Rueda zodiacal", "Zodiac wheel", "Roue zodiacale"),
-    #     "concepto": ("Los doce signos …", "The twelve signs …", "Les douze …"),
-    #     "prenda": "camiseta-algodon",
-    #     "colocacion": "pecho centrado, 28 cm de ancho",
-    # },
+    "espina-dorsal": {
+        "lamina": "ropa/partials/espinas.svg#es-dorsal",
+        "titulo": ("Espina · pieza de espalda",
+                   "Thorn · back piece",
+                   "Épine · pièce de dos"),
+        "concepto": (
+            "Filigrana de espalda dibujada entera para esta serie. La V y la "
+            "I de VILLUMINATIONS no van estampadas encima: son el esqueleto "
+            "del que cuelga todo lo demás, así que a tres metros se lee la "
+            "marca y de cerca se lee el dibujo. Dentro va el arco de los "
+            "treinta y seis decanatos, que se puede contar con el dedo.",
+            "A back filigree drawn from scratch for this series. The V and "
+            "the I of VILLUMINATIONS are not printed on top of it: they are "
+            "the armature everything else hangs from, so from three metres "
+            "you read the mark and up close you read the drawing. Inside sits "
+            "the arc of the thirty-six decans, and you can count them.",
+            "Une filigrane de dos dessinée entièrement pour cette série. Le V "
+            "et le I de VILLUMINATIONS ne sont pas imprimés par-dessus : ils "
+            "sont l'ossature à laquelle tout le reste est suspendu, de sorte "
+            "qu'à trois mètres on lit la marque et de près le dessin. À "
+            "l'intérieur, l'arc des trente-six décans, que l'on peut compter."),
+        "prenda": "PENDIENTE-hoja-del-proveedor",
+        "colocacion": "espalda centrada, 28 cm de ancho, a 8 cm del cuello",
+    },
+    "espina-pecho": {
+        "lamina": "ropa/partials/espinas.svg#es-pecho",
+        "titulo": ("Espina · pecho",
+                   "Thorn · chest",
+                   "Épine · poitrine"),
+        "concepto": (
+            "La misma gramática en nueve centímetros. A este tamaño no cabe "
+            "la filigrana entera, así que manda la V y el plumaje se reduce a "
+            "lo que aguanta la escala. Es la pieza de diario: se ve a un "
+            "metro y no grita.",
+            "The same grammar in nine centimetres. At this size the full "
+            "filigree does not fit, so the V leads and the feathering is cut "
+            "back to what the scale can hold. It is the everyday piece: it "
+            "reads at one metre and it does not shout.",
+            "La même grammaire en neuf centimètres. À cette taille la "
+            "filigrane entière ne tient pas : le V commande et le plumage se "
+            "réduit à ce que l'échelle supporte. C'est la pièce de tous les "
+            "jours : elle se lit à un mètre et ne crie pas."),
+        "prenda": "PENDIENTE-hoja-del-proveedor",
+        "colocacion": "pecho izquierdo, 9 cm de ancho, a 14 cm del hombro",
+    },
 }
 
 TIPO = "Ropa deportiva"          # ya traducido: Sportswear · Vêtements de sport

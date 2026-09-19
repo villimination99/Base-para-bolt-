@@ -62,6 +62,7 @@ python3 tienda/calendario.py # los doce lanzamientos y sus fechas
 python3 ropa/tools/generar.py # rehace las doce láminas de espalda
 python3 ropa/tools/dibujar-espinas.py --hoja  # la serie de filigrana orgánica
 python3 ropa/tools/exportar-pod.py --todas    # los 16 PNG de impresión bajo demanda
+python3 ropa/tools/maqueta.py                 # las maquetas de prenda para anuncios
 python3 tienda/hero.py       # el vídeo de 5 s de la cabecera y su póster
 python3 tienda/visibilidad.py # superficie indexable, datos estructurados y CRM
 python3 libros/tools/faltan.py
@@ -189,6 +190,28 @@ cian de neón de la marca (`#00f0ff`) sale pálido. El fichero lleva `#00C4D6`,
 más hondo, para compensar. Es compensación, no certeza: **hay que pedir muestra
 y cotejarla antes de una tirada**. Lo que el fichero garantiza es lo
 comprobable; el color lo dice la muestra.
+
+**Las maquetas no son fotografías y no compiten con Printful.** Printful genera
+maquetas fotográficas solas desde el fichero de impresión, con la prenda real y
+gratis: **para la ficha de producto, esas**. `ropa/tools/maqueta.py` hace lo
+otro, lo que Printful no da: la composición de marca para anuncio, publicación
+y cabecera de colección. Tres cosas la sostienen:
+
+· **`mix-blend-mode: screen`** sobre prenda oscura: la tinta clara se suma a lo
+  que hay debajo en vez de taparlo, así que los pliegues **atraviesan** el
+  estampado, que es lo que hace la tinta de verdad. Pegarlo encima y ya se ve
+  pegado: flota.
+· **La sombra va encima y en `multiply`**, para que oscurezca prenda y tinta a
+  la vez.
+· **Un negro fotografiado no es negro.** La tela va entre `#26262d` y `#3a3a44`
+  sobre fondo claro. En la primera pasada iba a `#141419` sobre fondo casi
+  negro y la prenda **desaparecía**: solo se veía el estampado flotando.
+  Y los pliegues eran tres elipses enormes en `multiply` que salían como óvalos
+  negros y se comían la silueta. Un pliegue es una línea de sombra, no media
+  prenda.
+
+**`ropa/VILLUMINATIONS-print-on-demand.zip`** es el paquete que se descarga: los
+16 ficheros de impresión con su ficha, las maquetas, el catálogo y un LEEME.
 
 **Antes de dar de alta ropa estampada**, `tienda/ropa.py`. Un diseño no se
 publica si no señala su lámina dentro del repositorio: hay **110 láminas
