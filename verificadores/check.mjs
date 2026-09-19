@@ -189,6 +189,57 @@ check('Traducciones completas', () => {
   return [...new Set(bad)];
 });
 
+/* 11b — Los cinco idiomas, con el MISMO juego de claves
+   ------------------------------------------------------------------
+   La comprobacion de arriba solo mira las claves escritas LITERALMENTE en
+   el Liquid, del estilo {{ 'general.x' | t }}. Pero la copia entera de la
+   portada no se escribe asi: la construye copia.liquid en tiempo de
+   ejecucion, 'inicio.' + grupo + '.' + bloque + '.' + ajuste. Son 173 de
+   las 353 claves del tema, y ninguna busqueda literal las encuentra.
+
+   Eso importa porque copia.liquid, cuando la clave no existe, NO PINTA
+   NADA -- y con razon: lo contrario seria soltar por pantalla el
+   "Translation missing: fr.inicio..." de Shopify. Pero significa que una
+   clave que este en es.json y falte en fr.json no da error, ni aviso, ni
+   rastro: deja el texto EN BLANCO en la portada francesa.
+
+   Es el mismo mecanismo que ya salio a produccion una vez, con la portada
+   entera en castellano para cuatro idiomas. Aqui se exige que los cinco
+   ficheros tengan exactamente las mismas claves y que ninguna este vacia.
+   Comparar juegos de claves no depende de como se nombren, asi que cubre
+   las 353, se construyan como se construyan. */
+check('Los cinco idiomas con las mismas claves', () => {
+  const flat = (o, p = '', out = {}) => {
+    for (const k in o) {
+      const key = p ? `${p}.${k}` : k;
+      if (o[k] && typeof o[k] === 'object' && !Array.isArray(o[k])) flat(o[k], key, out);
+      else out[key] = o[k];
+    }
+    return out;
+  };
+  const arch = fs.readdirSync(`${T}/locales`).filter(x => x.endsWith('.json') && !x.includes('schema'));
+  const M = {};
+  for (const f of arch) M[f] = flat(JSON.parse(read(`${T}/locales/${f}`)));
+
+  const REF = 'es.json';
+  if (!M[REF]) return ['no existe locales/es.json, que es la referencia'];
+  const base = Object.keys(M[REF]);
+  const bad = [];
+  for (const f of arch) {
+    if (f === REF) continue;
+    const faltan = base.filter(k => !(k in M[f]));
+    const sobran = Object.keys(M[f]).filter(k => !(k in M[REF]));
+    const vacias = Object.keys(M[f]).filter(k => typeof M[f][k] === 'string' && !M[f][k].trim());
+    /* Se nombran pocas y se dice cuantas hay: una lista de 173 no se lee. */
+    if (faltan.length) bad.push(`${f}: faltan ${faltan.length} clave(s) que si estan en es.json -- ${faltan.slice(0, 5).join(', ')}${faltan.length > 5 ? ', ...' : ''}`);
+    if (sobran.length) bad.push(`${f}: sobran ${sobran.length} clave(s) que no estan en es.json -- ${sobran.slice(0, 5).join(', ')}${sobran.length > 5 ? ', ...' : ''}`);
+    if (vacias.length) bad.push(`${f}: ${vacias.length} clave(s) vacias -- ${vacias.slice(0, 5).join(', ')}${vacias.length > 5 ? ', ...' : ''}`);
+  }
+  const vaciasEs = base.filter(k => typeof M[REF][k] === 'string' && !M[REF][k].trim());
+  if (vaciasEs.length) bad.push(`${REF}: ${vaciasEs.length} clave(s) vacias -- ${vaciasEs.slice(0, 5).join(', ')}`);
+  return bad;
+});
+
 /* 12 — Traducciones con hueco ({{ count }}) a las que no se pasa el valor */
 check('Variables de traduccion', () => {
   const flat = (o, p = '', out = {}) => {
