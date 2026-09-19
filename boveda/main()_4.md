@@ -1,24 +1,17 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
+source_file: "libros/tools/escribir-codice-arcanos.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
-location: "L451"
+community: "escribir-codice-arcanos.py"
+location: "L1100"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/escribir-codice-arcanospy
 ---
 
 # main()
 
 ## Connections
-- [[comprobar()_2]] - `calls` [EXTRACTED]
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[lamina_decanatos()]] - `calls` [EXTRACTED]
-- [[lamina_estructura()]] - `calls` [EXTRACTED]
-- [[lamina_mayores()]] - `calls` [EXTRACTED]
-- [[lamina_palos()]] - `calls` [EXTRACTED]
-- [[lamina_tiradas()]] - `calls` [EXTRACTED]
-- [[simbolo_cubierta()]] - `calls` [EXTRACTED]
+- [[escribir-codice-arcanos.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-arcanospy

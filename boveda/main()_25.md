@@ -1,22 +1,20 @@
 ---
-source_file: "tienda/portadas.py"
+source_file: ".agents/skills/higgsfield-websites/scripts/rig_transfer.py"
 type: "code"
-community: "Generador de portadas"
-location: "L226"
+community: "rig_transfer.py"
+location: "L58"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/rig_transferpy
 ---
 
 # main()
 
 ## Connections
-- [[acentos()]] - `calls` [EXTRACTED]
-- [[css()]] - `calls` [EXTRACTED]
-- [[cubierta_png()]] - `calls` [EXTRACTED]
-- [[disparar()]] - `calls` [EXTRACTED]
-- [[portadas.py]] - `contains` [EXTRACTED]
-- [[rgb()]] - `calls` [EXTRACTED]
+- [[clean_action_name()_1]] - `calls` [EXTRACTED]
+- [[get_args()_3]] - `calls` [EXTRACTED]
+- [[rig_transfer.py]] - `contains` [EXTRACTED]
+- [[world_bbox()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/code #graphify/EXTRACTED #community/rig_transferpy

@@ -1,16 +1,19 @@
 ---
-source_file: "planes/src/01-basico-guia-rapida-volumen.html"
-type: "concept"
-community: "Cálculo de macros y errores"
+source_file: "boveda/Los 8 errores que frenan el progreso.md"
+type: "document"
+community: "_COMMUNITY_Cálculo de macros y errores.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Clculo_de_macros_y_errores
+  - community/_COMMUNITY_Cálculo_de_macros_y_erroresmd
 ---
 
-# Los 8 errores que frenan el progreso
+# Los 8 errores que frenan el progreso.md
 
 ## Connections
 - [[Calculadora de macros en 3 pasos (Mifflin-St Jeor)]] - `references` [EXTRACTED]
+- [[Los 8 errores que frenan el progreso_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Cálculo de macros y errores]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Clculo_de_macros_y_errores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Cálculo_de_macros_y_erroresmd

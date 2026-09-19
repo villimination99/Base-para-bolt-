@@ -1,16 +1,19 @@
 ---
-source_file: "planes/src/01-basico-guia-rapida-volumen.html"
-type: "rationale"
-community: "Procedencia de los libros recuperados"
+source_file: "boveda/Autoverificación módulo de datos comprobado antes de componer.md"
+type: "document"
+community: "_COMMUNITY_Procedencia de los libros recuperados.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Procedencia_de_los_libros_recuperados
+  - community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd
 ---
 
-# Autoverificación: módulo de datos comprobado antes de componer
+# Autoverificación módulo de datos comprobado antes de componer.md
 
 ## Connections
-- [[Página de fuentes verificadas (dominio público federal)]] - `rationale_for` [EXTRACTED]
+- [[Autoverificación módulo de datos comprobado antes de componer_1]] - `contains` [EXTRACTED]
+- [[Página de fuentes verificadas (dominio público federal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Procedencia de los libros recuperados]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Procedencia_de_los_libros_recuperados
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd

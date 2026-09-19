@@ -1,20 +1,23 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 6
 ---
 
 # Respiración diafragmática
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 6 nodes
 
 ## Members
-- [[Respiración diafragmática (base)]] - concept - planes/src/09-elite-meditacion-mindfulness.html
+- [[Live Query (requires Dataview plugin)_21]] - document - boveda/_COMMUNITY_Respiración diafragmática.md
+- [[Members_21]] - document - boveda/_COMMUNITY_Respiración diafragmática.md
+- [[Respiración diafragmática]] - document - boveda/_COMMUNITY_Respiración diafragmática.md
+- [[Respiración diafragmática (base)_1]] - document - boveda/Respiración diafragmática (base).md
+- [[Respiración diafragmática (base)]] - document - boveda/Respiración diafragmática (base).md
+- [[_COMMUNITY_Respiración diafragmática]] - document - boveda/_COMMUNITY_Respiración diafragmática.md
 
 ## Live Query (requires Dataview plugin)
 
 ```dataview
-TABLE source_file, type FROM #community/Respiracin_diafragmtica
+TABLE source_file, type FROM #community/Respiración_diafragmática
 SORT file.name ASC
 ```

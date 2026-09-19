@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/auditar.py"
-type: "rationale"
-community: "Auditoría de PDFs"
-location: "L79"
+source_file: "boveda/Cuenta el árbol de marcadores entero, no solo su primer nivel. Un plan trae una….md"
+type: "document"
+community: "auditar().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/auditarmd
 ---
 
-# Cuenta el árbol de marcadores entero, no solo su primer nivel. Un plan trae una…
+# Cuenta el árbol de marcadores entero, no solo su primer nivel. Un plan trae una….md
 
 ## Connections
-- [[contar_marcadores()]] - `rationale_for` [EXTRACTED]
+- [[Cuenta el árbol de marcadores entero, no solo su primer nivel. Un plan trae una…_1]] - `contains` [EXTRACTED]
+- [[contar_marcadores()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/document #graphify/EXTRACTED #community/auditarmd

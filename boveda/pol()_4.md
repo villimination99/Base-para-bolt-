@@ -1,23 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
+source_file: "libros/tools/dibujar-si-mismo.py"
 type: "code"
-community: "Láminas del zodiaco (generador)"
-location: "L126"
+community: "dibujar-emblemas.py"
+location: "L36"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/dibujar-emblemaspy
 ---
 
 # pol()
 
 ## Connections
-- [[Punto polar. 0° = arriba, sentido horario (como se lee un reloj).]] - `rationale_for` [EXTRACTED]
-- [[dibujar-zodiaco.py]] - `contains` [EXTRACTED]
-- [[lamina_aspectos()]] - `calls` [EXTRACTED]
-- [[lamina_precesion()]] - `calls` [EXTRACTED]
-- [[lamina_rueda()]] - `calls` [EXTRACTED]
-- [[medallon()]] - `calls` [EXTRACTED]
-- [[sector()]] - `calls` [EXTRACTED]
+- [[dibujar-si-mismo.py_2]] - `contains` [EXTRACTED]
+- [[lamina_reloj()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-emblemaspy

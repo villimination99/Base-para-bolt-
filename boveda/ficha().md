@@ -1,18 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-arcanos.py"
+source_file: "libros/tools/escribir-codice-carga.py"
 type: "code"
-community: "Texto del Códice de los Arcanos"
-location: "L43"
+community: "escribir-codice-carga.py"
+location: "L38"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_los_Arcanos
+  - community/escribir-codice-cargapy
 ---
 
 # ficha()
 
 ## Connections
-- [[arcano()]] - `calls` [EXTRACTED]
-- [[escribir-codice-arcanos.py]] - `contains` [EXTRACTED]
+- [[escribir-codice-carga.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_los_Arcanos
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-cargapy

@@ -1,20 +1,23 @@
 ---
-source_file: "libros/partials/alta-magia.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Las cuatro armas vara, copa, espada y disco.md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Repertorio_grfico_de_alta_magia
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Las cuatro armas: vara, copa, espada y disco
+# Las cuatro armas vara, copa, espada y disco.md
 
 ## Connections
 - [[Alta Magia — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Círculo mágico y los cuatro cuartos (norte, este, sur, oeste)]] - `conceptually_related_to` [INFERRED]
-- [[Estructura de la baraja 22 + 4 × 14 = 78]] - `semantically_similar_to` [INFERRED]
-- [[Los cuatro palos y el elemento de cada figura]] - `semantically_similar_to` [INFERRED]
-- [[Pentagrama invocar y despedir los elementos]] - `conceptually_related_to` [INFERRED]
+- [[Círculo mágico y los cuatro cuartos (norte, este, sur, oeste)]] - `references` [EXTRACTED]
+- [[Estructura de la baraja 22 + 4 × 14 = 78]] - `references` [EXTRACTED]
+- [[Las cuatro armas vara, copa, espada y disco_1]] - `contains` [EXTRACTED]
+- [[Los cuatro palos y el elemento de cada figura]] - `references` [EXTRACTED]
+- [[Pentagrama invocar y despedir los elementos]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/i18n.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L176"
+source_file: "boveda/Reescribe el HTML al idioma pedido. Devuelve (html, traducidos, totales). La….md"
+type: "document"
+community: "planestoolsi18n.py.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planestoolsi18npymd
 ---
 
-# Reescribe el HTML al idioma pedido. Devuelve (html, traducidos, totales). La…
+# Reescribe el HTML al idioma pedido. Devuelve (html, traducidos, totales). La….md
 
 ## Connections
-- [[traducir()_1]] - `rationale_for` [EXTRACTED]
+- [[Reescribe el HTML al idioma pedido. Devuelve (html, traducidos, totales). La…_1]] - `contains` [EXTRACTED]
+- [[traducir()_1_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/planestoolsi18npymd

@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "paper"
-community: "Fuentes verificadas"
-location: "pág. 09, tabla de fuentes"
+source_file: "boveda/CDCNIOSH · Ecuación de levantamiento.md"
+type: "document"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
-  - graphify/paper
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Fuentes_verificadas
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# CDC/NIOSH · Ecuación de levantamiento
+# CDCNIOSH · Ecuación de levantamiento.md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `cites` [EXTRACTED]
+- [[CDCNIOSH · Ecuación de levantamiento_1]] - `contains` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Fuentes verificadas]] - `references` [EXTRACTED]
 
-#graphify/paper #graphify/EXTRACTED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

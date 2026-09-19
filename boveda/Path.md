@@ -1,17 +1,18 @@
 ---
 source_file: ""
 type: "code"
-community: "Empaquetado de entregas"
+community: "planes/build.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Empaquetado_de_entregas
+  - community/planes/buildpy
 ---
 
 # Path
 
 ## Connections
-- [[escribir()]] - `references` [EXTRACTED]
-- [[recoger()]] - `references` [EXTRACTED]
+- [[page_count()]] - `references` [EXTRACTED]
+- [[render()]] - `references` [EXTRACTED]
+- [[stamp_metadata()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Empaquetado_de_entregas
+#graphify/code #graphify/EXTRACTED #community/planes/buildpy

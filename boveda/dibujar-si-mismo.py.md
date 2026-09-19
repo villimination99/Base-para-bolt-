@@ -1,28 +1,29 @@
 ---
-source_file: "libros/tools/dibujar-si-mismo.py"
-type: "code"
-community: "Láminas del Sí Mismo (generador)"
+source_file: "boveda/dibujar-si-mismo.py.md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo (generador).md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo_generador
+  - community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd
 ---
 
-# dibujar-si-mismo.py
+# dibujar-si-mismo.py.md
 
 ## Connections
-- [[f()_3]] - `contains` [EXTRACTED]
-- [[flecha()_1]] - `contains` [EXTRACTED]
-- [[lamina_atencion()]] - `contains` [EXTRACTED]
-- [[lamina_centros()]] - `contains` [EXTRACTED]
-- [[lamina_disciplinas()]] - `contains` [EXTRACTED]
-- [[lamina_emociones()]] - `contains` [EXTRACTED]
-- [[lamina_identificacion()]] - `contains` [EXTRACTED]
-- [[lamina_reloj()]] - `contains` [EXTRACTED]
-- [[lamina_respiracion()]] - `contains` [EXTRACTED]
-- [[main()_6]] - `contains` [EXTRACTED]
-- [[pol()_3]] - `contains` [EXTRACTED]
-- [[txt()_3]] - `contains` [EXTRACTED]
+- [[dibujar-si-mismo.py_1]] - `contains` [EXTRACTED]
+- [[f()_3_1]] - `references` [EXTRACTED]
+- [[flecha()_1_1]] - `references` [EXTRACTED]
+- [[lamina_atencion()_1]] - `references` [EXTRACTED]
+- [[lamina_centros()_1]] - `references` [EXTRACTED]
+- [[lamina_disciplinas()_1]] - `references` [EXTRACTED]
+- [[lamina_emociones()_1]] - `references` [EXTRACTED]
+- [[lamina_identificacion()_1]] - `references` [EXTRACTED]
+- [[lamina_reloj()_1]] - `references` [EXTRACTED]
+- [[lamina_respiracion()_1]] - `references` [EXTRACTED]
+- [[main()_6_1]] - `references` [EXTRACTED]
+- [[pol()_3_1]] - `references` [EXTRACTED]
+- [[txt()_3_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_S_Mismo_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd

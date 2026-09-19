@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L427"
+source_file: "boveda/Reparte los 36 decanatos en orden caldeo empezando en Marte (Aries 0°)..md"
+type: "document"
+community: "decanatos().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/decanatosmd
 ---
 
-# Reparte los 36 decanatos en orden caldeo empezando en Marte (Aries 0°).
+# Reparte los 36 decanatos en orden caldeo empezando en Marte (Aries 0°)..md
 
 ## Connections
-- [[decanatos()]] - `rationale_for` [EXTRACTED]
+- [[Reparte los 36 decanatos en orden caldeo empezando en Marte (Aries 0°)._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del zodiaco (generador)]] - `references` [EXTRACTED]
+- [[decanatos()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/decanatosmd

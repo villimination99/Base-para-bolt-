@@ -1,22 +1,23 @@
 ---
-source_file: "libros/tools/dibujar-fitness.py"
+source_file: "libros/tools/dibujar-zodiaco.py"
 type: "code"
-community: "Láminas de fitness (generador)"
-location: "L57"
+community: "dibujar-zodiaco.py"
+location: "L126"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-zodiacopy
 ---
 
 # pol()
 
 ## Connections
-- [[cubierta_mesa()]] - `calls` [EXTRACTED]
-- [[cubierta_voluntad()]] - `calls` [EXTRACTED]
-- [[dibujar-fitness.py]] - `contains` [EXTRACTED]
-- [[me_plato()]] - `calls` [EXTRACTED]
-- [[simbolo_cubierta()_1]] - `calls` [EXTRACTED]
-- [[vo_dominios()]] - `calls` [EXTRACTED]
+- [[Punto polar. 0° = arriba, sentido horario (como se lee un reloj)._1]] - `rationale_for` [EXTRACTED]
+- [[dibujar-zodiaco.py_1]] - `contains` [EXTRACTED]
+- [[lamina_aspectos()]] - `calls` [EXTRACTED]
+- [[lamina_precesion()]] - `calls` [EXTRACTED]
+- [[lamina_rueda()]] - `calls` [EXTRACTED]
+- [[medallon()]] - `calls` [EXTRACTED]
+- [[sector()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-zodiacopy

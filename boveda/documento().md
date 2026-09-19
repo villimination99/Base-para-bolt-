@@ -1,24 +1,21 @@
 ---
-source_file: "libros/build.py"
+source_file: "planes/tools/cargar-traducciones.py"
 type: "code"
-community: "Generador de libros"
-location: "L407"
+community: "planes/tools/i18n.py"
+location: "L35"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # documento()
 
 ## Connections
-- [[_documentos_es()]] - `calls` [EXTRACTED]
-- [[cabecera()]] - `calls` [EXTRACTED]
-- [[capitulo_html()]] - `calls` [EXTRACTED]
-- [[construir()]] - `calls` [EXTRACTED]
-- [[esc()]] - `calls` [EXTRACTED]
-- [[indice_html()]] - `calls` [EXTRACTED]
-- [[librosbuild.py]] - `contains` [EXTRACTED]
-- [[librostoolsi18n.py]] - `imports` [EXTRACTED]
+- [[El HTML tal y como lo verá el comprador, con las láminas dentro.]] - `rationale_for` [EXTRACTED]
+- [[Path_4]] - `references` [EXTRACTED]
+- [[assemble()]] - `calls` [EXTRACTED]
+- [[main()_23]] - `calls` [EXTRACTED]
+- [[planestoolscargar-traducciones.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

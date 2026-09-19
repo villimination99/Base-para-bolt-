@@ -1,14 +1,19 @@
 ---
-source_file: "planes/i18n/fuentes/plan-04-recomposicion.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_plan-04-recomposicion.py.md"
+type: "document"
 community: "plan-04-recomposicion.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/plan-04-recomposicionpy
 ---
 
 # plan-04-recomposicion.py
 
-#graphify/code #graphify/EXTRACTED #community/plan-04-recomposicionpy
+## Connections
+- [[Live Query (requires Dataview plugin)_144]] - `contains` [EXTRACTED]
+- [[Members_144]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_plan-04-recomposicion.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/plan-04-recomposicionpy

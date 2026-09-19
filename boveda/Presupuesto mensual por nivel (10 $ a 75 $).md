@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Presupuesto de suplementación"
-location: "pág. 07 · Presupuesto mensual realista"
+source_file: "boveda/Presupuesto mensual por nivel (10 $ a 75 $).md"
+type: "document"
+community: "_COMMUNITY_Presupuesto de suplementación.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Presupuesto_de_suplementacin
+  - community/_COMMUNITY_Presupuesto_de_suplementaciónmd
 ---
 
-# Presupuesto mensual por nivel (10 $ a 75 $)
+# Presupuesto mensual por nivel (10 $ a 75 $).md
 
 ## Connections
-- [[Citrulina malato]] - `shares_data_with` [EXTRACTED]
-- [[Orden de compra con presupuesto limitado]] - `rationale_for` [EXTRACTED]
+- [[Citrulina malato]] - `references` [EXTRACTED]
+- [[Orden de compra con presupuesto limitado]] - `references` [EXTRACTED]
+- [[Presupuesto mensual por nivel (10 $ a 75 $)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Presupuesto de suplementación]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Presupuesto_de_suplementacin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Presupuesto_de_suplementaciónmd

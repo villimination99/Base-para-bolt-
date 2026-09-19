@@ -1,26 +1,41 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
+source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
-location: "L61"
+community: "dibujar-fitness.py"
+location: "L46"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-fitnesspy
 ---
 
 # f()
 
 ## Connections
-- [[cuadro()]] - `calls` [EXTRACTED]
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[lamina_alfabeto()]] - `calls` [EXTRACTED]
-- [[lamina_circulo()]] - `calls` [EXTRACTED]
-- [[lamina_hexagrama()]] - `calls` [EXTRACTED]
-- [[lamina_horas()]] - `calls` [EXTRACTED]
-- [[lamina_pentagrama()]] - `calls` [EXTRACTED]
-- [[marca()]] - `calls` [EXTRACTED]
-- [[sigilo()]] - `calls` [EXTRACTED]
+- [[barra()]] - `calls` [EXTRACTED]
+- [[ca_descarga()]] - `calls` [EXTRACTED]
+- [[ca_dosis()]] - `calls` [EXTRACTED]
+- [[ca_met()]] - `calls` [EXTRACTED]
+- [[cubierta_carga()]] - `calls` [EXTRACTED]
+- [[cubierta_descanso()]] - `calls` [EXTRACTED]
+- [[cubierta_mesa()]] - `calls` [EXTRACTED]
+- [[cubierta_voluntad()]] - `calls` [EXTRACTED]
+- [[de_cafeina()]] - `calls` [EXTRACTED]
+- [[de_deuda()]] - `calls` [EXTRACTED]
+- [[de_hipnograma()]] - `calls` [EXTRACTED]
+- [[de_reloj()]] - `calls` [EXTRACTED]
+- [[dibujar-fitness.py]] - `contains` [EXTRACTED]
+- [[flecha()]] - `calls` [EXTRACTED]
+- [[me_amdr()]] - `calls` [EXTRACTED]
+- [[me_gasto()]] - `calls` [EXTRACTED]
+- [[me_inocuidad()]] - `calls` [EXTRACTED]
+- [[me_margen()]] - `calls` [EXTRACTED]
+- [[me_micro()]] - `calls` [EXTRACTED]
+- [[me_plato()]] - `calls` [EXTRACTED]
+- [[simbolo_cubierta()]] - `calls` [EXTRACTED]
 - [[txt()]] - `calls` [EXTRACTED]
+- [[vo_adherencia()]] - `calls` [EXTRACTED]
+- [[vo_dominios()]] - `calls` [EXTRACTED]
+- [[vo_habito()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

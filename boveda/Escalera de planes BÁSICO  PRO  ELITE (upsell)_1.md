@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Escalera de planes y dominio público"
-location: "bloque .upsell del CTA final"
+source_file: "boveda/Escalera de planes BÁSICO  PRO  ELITE (upsell)_1.md"
+type: "document"
+community: "_COMMUNITY_Escalera de planes y dominio público.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Escalera_de_planes_y_dominio_pblico
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd
 ---
 
-# Escalera de planes BÁSICO / PRO / ELITE (upsell)
+# Escalera de planes BÁSICO  PRO  ELITE (upsell)_1.md
 
 ## Connections
-- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)]] - `shares_data_with` [INFERRED]
+- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)]] - `references` [EXTRACTED]
+- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)_3]] - `contains` [EXTRACTED]
 - [[Plan Definición + Volumen 8 semanas (Plan Pro)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalera de planes y dominio público]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Escalera_de_planes_y_dominio_pblico
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd

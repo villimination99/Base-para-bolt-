@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/alta-magia.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Círculo mágico y los cuatro cuartos (norte, este, sur, oeste).md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Repertorio_grfico_de_alta_magia
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Círculo mágico y los cuatro cuartos (norte, este, sur, oeste)
+# Círculo mágico y los cuatro cuartos (norte, este, sur, oeste).md
 
 ## Connections
 - [[Alta Magia — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Las cuatro armas vara, copa, espada y disco]] - `conceptually_related_to` [INFERRED]
+- [[Círculo mágico y los cuatro cuartos (norte, este, sur, oeste)_1]] - `contains` [EXTRACTED]
+- [[Las cuatro armas vara, copa, espada y disco]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

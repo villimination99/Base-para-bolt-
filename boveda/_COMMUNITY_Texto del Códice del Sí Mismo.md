@@ -1,31 +1,28 @@
 ---
-type: community
-cohesion: 0.17
-members: 12
+source_file: "boveda/_COMMUNITY_Texto del Códice del Sí Mismo.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice del Sí Mismo.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Texto_del_Códice_del_Sí_Mismomd
 ---
 
-# Texto del Códice del Sí Mismo
+# _COMMUNITY_Texto del Códice del Sí Mismo.md
 
-**Cohesion:** 0.17 - loosely connected
-**Members:** 12 nodes
+## Connections
+- [[Texto del Códice del Sí Mismo]] - `contains` [EXTRACTED]
+- [[cap()_5_1]] - `references` [EXTRACTED]
+- [[ficha()_5_1]] - `references` [EXTRACTED]
+- [[fig()_5_1]] - `references` [EXTRACTED]
+- [[h()_5_1]] - `references` [EXTRACTED]
+- [[lista()_5_1]] - `references` [EXTRACTED]
+- [[main()_13_1]] - `references` [EXTRACTED]
+- [[nota()_5_1]] - `references` [EXTRACTED]
+- [[p()_5_1]] - `references` [EXTRACTED]
+- [[pasos()_5_1]] - `references` [EXTRACTED]
+- [[ritual()_3_1]] - `references` [EXTRACTED]
+- [[sep()_5_1]] - `references` [EXTRACTED]
 
-## Members
-- [[cap()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[escribir-codice-si-mismo.py]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[ficha()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[fig()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[h()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[lista()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[main()_13]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[nota()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[p()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[pasos()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[ritual()_3]] - code - libros/tools/escribir-codice-si-mismo.py
-- [[sep()_5]] - code - libros/tools/escribir-codice-si-mismo.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Texto_del_Cdice_del_S_Mismo
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_del_Sí_Mismomd

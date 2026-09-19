@@ -1,26 +1,23 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "code"
-community: "Generador de libros"
-location: "L106"
+community: "planes/tools/i18n.py"
+location: "L120"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # segmentar()
 
 ## Connections
-- [[Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las…]] - `rationale_for` [EXTRACTED]
+- [[Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las…_2]] - `rationale_for` [EXTRACTED]
 - [[_dentro()]] - `calls` [EXTRACTED]
 - [[_tramos_opacos()]] - `calls` [EXTRACTED]
-- [[claves_de_lamina()]] - `calls` [INFERRED]
-- [[inventario()]] - `calls` [INFERRED]
-- [[inventario()_1]] - `calls` [EXTRACTED]
-- [[planestoolsi18n.py]] - `contains` [EXTRACTED]
+- [[inventario()]] - `calls` [EXTRACTED]
+- [[planestoolsi18n.py_2]] - `contains` [EXTRACTED]
 - [[traducible()]] - `calls` [EXTRACTED]
-- [[traducir()]] - `calls` [INFERRED]
-- [[traducir()_1]] - `calls` [EXTRACTED]
+- [[traducir()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

@@ -1,14 +1,18 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "concept"
+source_file: "boveda/Respiración diafragmática (base).md"
+type: "document"
 community: "Respiración diafragmática"
-location: "pág. 06, técnica 3"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Respiracin_diafragmtica
+  - community/Respiración_diafragmática
 ---
 
-# Respiración diafragmática (base)
+# Respiración diafragmática (base).md
 
-#graphify/concept #graphify/EXTRACTED #community/Respiracin_diafragmtica
+## Connections
+- [[Respiración diafragmática (base)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Respiración diafragmática]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/Respiración_diafragmática

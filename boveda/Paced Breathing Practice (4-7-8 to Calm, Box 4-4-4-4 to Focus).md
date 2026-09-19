@@ -1,19 +1,22 @@
 ---
-source_file: "planes/partials/figuras.svg"
-type: "concept"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Paced Breathing Practice (4-7-8 to Calm, Box 4-4-4-4 to Focus).md"
+type: "document"
+community: "Breathing Techniques 4-7-8 for Sleep and Box 4-4-4-4 for Focus.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Lminas_del_S_Mismo
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Breathing_Techniques_4-7-8_for_Sleep_and_Box_4-4-4-4_for_Focusmd
 ---
 
-# Paced Breathing Practice (4-7-8 to Calm, Box 4-4-4-4 to Focus)
+# Paced Breathing Practice (4-7-8 to Calm, Box 4-4-4-4 to Focus).md
 
 ## Connections
-- [[Breathing Patterns 4-7-8 to Calm, 4-4-4-4 to Sustain]] - `conceptually_related_to` [INFERRED]
-- [[Breathing Techniques 4-7-8 for Sleep and Box 4-4-4-4 for Focus]] - `conceptually_related_to` [INFERRED]
-- [[Paced Breathing Emblem 4-7-8 (21 Days)]] - `conceptually_related_to` [INFERRED]
-- [[Square Breathing Compass 4-4-4-4]] - `conceptually_related_to` [INFERRED]
+- [[Breathing Patterns 4-7-8 to Calm, 4-4-4-4 to Sustain]] - `references` [EXTRACTED]
+- [[Breathing Techniques 4-7-8 for Sleep and Box 4-4-4-4 for Focus]] - `references` [EXTRACTED]
+- [[Paced Breathing Emblem 4-7-8 (21 Days)]] - `references` [EXTRACTED]
+- [[Paced Breathing Practice (4-7-8 to Calm, Box 4-4-4-4 to Focus)_1]] - `contains` [EXTRACTED]
+- [[Square Breathing Compass 4-4-4-4]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Breathing_Techniques_4-7-8_for_Sleep_and_Box_4-4-4-4_for_Focusmd

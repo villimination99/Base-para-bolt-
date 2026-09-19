@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 06"
+source_file: "boveda/Semana 4 · Mantenimiento (2.600 kcal).md"
+type: "document"
+community: "Semana 4 · Mantenimiento (2.600 kcal).md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/Semana_4__Mantenimiento_2600_kcalmd
 ---
 
-# Semana 4 · Mantenimiento (2.600 kcal)
+# Semana 4 · Mantenimiento (2.600 kcal).md
 
 ## Connections
 - [[Ajustes por objetivo sobre la semana 4]] - `references` [EXTRACTED]
+- [[Semana 4 · Mantenimiento (2.600 kcal)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/Semana_4__Mantenimiento_2600_kcalmd

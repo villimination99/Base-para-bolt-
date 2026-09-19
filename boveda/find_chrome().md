@@ -1,19 +1,18 @@
 ---
 source_file: "planes/build.py"
 type: "code"
-community: "Traducción y armado de planes"
+community: "planes/build.py"
 location: "L48"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/buildpy
 ---
 
 # find_chrome()
 
 ## Connections
-- [[Path_2]] - `calls` [EXTRACTED]
-- [[main()_18]] - `calls` [EXTRACTED]
+- [[main()_5]] - `calls` [EXTRACTED]
 - [[planesbuild.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/planes/buildpy

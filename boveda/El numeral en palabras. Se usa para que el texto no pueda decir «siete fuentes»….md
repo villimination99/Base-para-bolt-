@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/escribir-codice-mesa.py"
-type: "rationale"
-community: "Texto del Códice de la Mesa"
-location: "L70"
+source_file: "boveda/El numeral en palabras. Se usa para que el texto no pueda decir «siete fuentes»….md"
+type: "document"
+community: "letras().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Mesa
+  - community/letrasmd
 ---
 
-# El numeral en palabras. Se usa para que el texto no pueda decir «siete fuentes»…
+# El numeral en palabras. Se usa para que el texto no pueda decir «siete fuentes»….md
 
 ## Connections
-- [[letras()]] - `rationale_for` [EXTRACTED]
+- [[El numeral en palabras. Se usa para que el texto no pueda decir «siete fuentes»…_1]] - `contains` [EXTRACTED]
+- [[letras()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Mesa
+#graphify/document #graphify/EXTRACTED #community/letrasmd

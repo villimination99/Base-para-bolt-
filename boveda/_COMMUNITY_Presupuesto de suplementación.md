@@ -1,22 +1,20 @@
 ---
-type: community
-cohesion: 0.67
-members: 3
+source_file: "boveda/_COMMUNITY_Presupuesto de suplementación.md"
+type: "document"
+community: "_COMMUNITY_Presupuesto de suplementación.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Presupuesto_de_suplementaciónmd
 ---
 
-# Presupuesto de suplementación
+# _COMMUNITY_Presupuesto de suplementación.md
 
-**Cohesion:** 0.67 - moderately connected
-**Members:** 3 nodes
+## Connections
+- [[Citrulina malato]] - `references` [EXTRACTED]
+- [[Orden de compra con presupuesto limitado]] - `references` [EXTRACTED]
+- [[Presupuesto de suplementación]] - `contains` [EXTRACTED]
+- [[Presupuesto mensual por nivel (10 $ a 75 $)]] - `references` [EXTRACTED]
 
-## Members
-- [[Citrulina malato]] - concept - planes/src/03-pro-guia-suplementacion.html
-- [[Orden de compra con presupuesto limitado]] - rationale - planes/src/03-pro-guia-suplementacion.html
-- [[Presupuesto mensual por nivel (10 $ a 75 $)]] - concept - planes/src/03-pro-guia-suplementacion.html
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Presupuesto_de_suplementacin
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Presupuesto_de_suplementaciónmd

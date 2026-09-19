@@ -1,17 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-zodiacal.py"
+source_file: "libros/tools/escribir-codice-mesa.py"
 type: "code"
-community: "Texto del Códice Zodiacal"
-location: "L27"
+community: "escribir-codice-mesa.py"
+location: "L44"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_Zodiacal
+  - community/escribir-codice-mesapy
 ---
 
 # sep()
 
 ## Connections
-- [[escribir-codice-zodiacal.py]] - `contains` [EXTRACTED]
+- [[escribir-codice-mesa.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_Zodiacal
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-mesapy

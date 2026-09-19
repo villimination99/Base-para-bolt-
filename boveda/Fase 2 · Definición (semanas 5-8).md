@@ -1,22 +1,24 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 05 · Semanas 5-8"
+source_file: "boveda/Fase 2 · Definición (semanas 5-8).md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Fase 2 · Definición (semanas 5-8)
+# Fase 2 · Definición (semanas 5-8).md
 
 ## Connections
-- [[Cardio HIIT de alta intensidad]] - `shares_data_with` [EXTRACTED]
-- [[Escalado de macros por kilo de peso corporal]] - `shares_data_with` [EXTRACTED]
+- [[Cardio HIIT de alta intensidad]] - `references` [EXTRACTED]
+- [[Escalado de macros por kilo de peso corporal]] - `references` [EXTRACTED]
 - [[Evaluación final y elección del siguiente bloque]] - `references` [EXTRACTED]
-- [[Los 5 días de transición entre fases]] - `shares_data_with` [EXTRACTED]
-- [[Lógica de la recomposición por fases encadenadas]] - `rationale_for` [EXTRACTED]
-- [[Protección del músculo en déficit]] - `rationale_for` [EXTRACTED]
+- [[Fase 2 · Definición (semanas 5-8)_1]] - `contains` [EXTRACTED]
+- [[Los 5 días de transición entre fases]] - `references` [EXTRACTED]
+- [[Lógica de la recomposición por fases encadenadas]] - `references` [EXTRACTED]
+- [[Protección del músculo en déficit]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

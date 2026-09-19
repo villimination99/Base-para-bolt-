@@ -1,19 +1,18 @@
 ---
-source_file: "planes/README.md"
-type: "concept"
-community: "Arquitectura de los generadores"
+source_file: "boveda/planesbuild.py — generador de PDFs (pantallaimpresión).md"
+type: "document"
+community: "planesbuild.py — generador de PDFs (pantallaimpresión).md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/planesbuildpy__generador_de_PDFs_pantallaimpresiónmd
 ---
 
-# planes/build.py — generador de PDFs (pantalla/impresión)
+# planesbuild.py — generador de PDFs (pantallaimpresión).md
 
 ## Connections
-- [[Dos ediciones pantalla (neón) e impresión (papel)]] - `implements` [EXTRACTED]
-- [[Orbitron variable e instancias estáticas (preparar-fuentes.py)]] - `rationale_for` [EXTRACTED]
-- [[Verificación de paginación y desbordes (verificar.mjs)]] - `implements` [EXTRACTED]
-- [[librosbuild.py — generador de los tres libros]] - `semantically_similar_to` [INFERRED]
+- [[Dos ediciones pantalla (neón) e impresión (papel)]] - `references` [EXTRACTED]
+- [[planesbuild.py — generador de PDFs (pantallaimpresión)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/planesbuildpy__generador_de_PDFs_pantallaimpresiónmd

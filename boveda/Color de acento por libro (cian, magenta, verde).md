@@ -1,16 +1,19 @@
 ---
-source_file: "libros/README.md"
-type: "rationale"
-community: "Arquitectura de los generadores"
+source_file: "boveda/Color de acento por libro (cian, magenta, verde).md"
+type: "document"
+community: "_COMMUNITY_Arquitectura de los generadores.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/_COMMUNITY_Arquitectura_de_los_generadoresmd
 ---
 
-# Color de acento por libro (cian, magenta, verde)
+# Color de acento por libro (cian, magenta, verde).md
 
 ## Connections
-- [[Cubierta neón a sangre, interior en papel hueso]] - `conceptually_related_to` [EXTRACTED]
+- [[Color de acento por libro (cian, magenta, verde)_1]] - `contains` [EXTRACTED]
+- [[Cubierta neón a sangre, interior en papel hueso]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Arquitectura de los generadores]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Arquitectura_de_los_generadoresmd

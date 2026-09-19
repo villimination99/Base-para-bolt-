@@ -1,17 +1,17 @@
 ---
 source_file: "libros/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
+community: "pathlib"
 location: "L88"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/pathlib
 ---
 
 # Todos los segmentos de un conjunto de documentos ya compuestos.
 
 ## Connections
-- [[inventario()]] - `rationale_for` [EXTRACTED]
+- [[inventario()_2]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/pathlib

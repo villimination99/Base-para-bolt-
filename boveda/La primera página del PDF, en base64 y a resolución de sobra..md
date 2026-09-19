@@ -1,17 +1,19 @@
 ---
-source_file: "tienda/portadas.py"
-type: "rationale"
-community: "Generador de portadas"
-location: "L205"
+source_file: "boveda/La primera página del PDF, en base64 y a resolución de sobra..md"
+type: "document"
+community: "_COMMUNITY_Generador de portadas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/_COMMUNITY_Generador_de_portadasmd
 ---
 
-# La primera página del PDF, en base64 y a resolución de sobra.
+# La primera página del PDF, en base64 y a resolución de sobra..md
 
 ## Connections
-- [[cubierta_png()]] - `rationale_for` [EXTRACTED]
+- [[La primera página del PDF, en base64 y a resolución de sobra._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Generador de portadas]] - `references` [EXTRACTED]
+- [[cubierta_png()]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_portadasmd

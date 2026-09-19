@@ -1,16 +1,19 @@
 ---
-source_file: ""
-type: "code"
-community: "Generador de libros"
+source_file: "boveda/Exception.md"
+type: "document"
+community: "_COMMUNITY_Generador de libros.md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/_COMMUNITY_Generador_de_librosmd
 ---
 
-# Exception
+# Exception.md
 
 ## Connections
-- [[Incompleto]] - `inherits` [EXTRACTED]
+- [[Exception_1]] - `contains` [EXTRACTED]
+- [[Incompleto_1]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Generador de libros]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_librosmd

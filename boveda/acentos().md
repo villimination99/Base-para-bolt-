@@ -1,19 +1,21 @@
 ---
-source_file: "tienda/portadas.py"
-type: "code"
-community: "Generador de portadas"
-location: "L176"
+source_file: "boveda/acentos().md"
+type: "document"
+community: "_COMMUNITY_Generador de portadas.md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/_COMMUNITY_Generador_de_portadasmd
 ---
 
-# acentos()
+# acentos().md
 
 ## Connections
-- [[El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí…]] - `rationale_for` [EXTRACTED]
-- [[main()_25]] - `calls` [EXTRACTED]
-- [[portadas.py]] - `contains` [EXTRACTED]
+- [[El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí…]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Generador de portadas]] - `references` [EXTRACTED]
+- [[acentos()_1]] - `contains` [EXTRACTED]
+- [[main()_25_1]] - `references` [EXTRACTED]
+- [[portadas.py]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_portadasmd

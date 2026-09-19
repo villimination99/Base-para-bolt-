@@ -1,14 +1,19 @@
 ---
-source_file: "planes/i18n/fuentes/titulos.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_titulos.py.md"
+type: "document"
 community: "titulos.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/titulospy
 ---
 
 # titulos.py
 
-#graphify/code #graphify/EXTRACTED #community/titulospy
+## Connections
+- [[Live Query (requires Dataview plugin)_175]] - `contains` [EXTRACTED]
+- [[Members_175]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_titulos.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/titulospy

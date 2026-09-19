@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-10-sueno.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-10-sueno.py]] - code - planes/i18n/fuentes/plan-10-sueno.py
+- [[Live Query (requires Dataview plugin)_150]] - document - boveda/_COMMUNITY_plan-10-sueno.py.md
+- [[Members_150]] - document - boveda/_COMMUNITY_plan-10-sueno.py.md
+- [[_COMMUNITY_plan-10-sueno.py]] - document - boveda/_COMMUNITY_plan-10-sueno.py.md
+- [[plan-10-sueno.py]] - document - boveda/_COMMUNITY_plan-10-sueno.py.md
 
 ## Live Query (requires Dataview plugin)
 

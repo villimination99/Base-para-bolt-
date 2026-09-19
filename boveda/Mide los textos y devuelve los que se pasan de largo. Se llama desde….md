@@ -1,17 +1,18 @@
 ---
-source_file: "tienda/seo.py"
-type: "rationale"
-community: "Publicador de la tienda"
-location: "L279"
+source_file: "boveda/Mide los textos y devuelve los que se pasan de largo. Se llama desde….md"
+type: "document"
+community: "comprobar()_3.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/comprobar_3md
 ---
 
-# Mide los textos y devuelve los que se pasan de largo. Se llama desde…
+# Mide los textos y devuelve los que se pasan de largo. Se llama desde….md
 
 ## Connections
-- [[comprobar()_3]] - `rationale_for` [EXTRACTED]
+- [[Mide los textos y devuelve los que se pasan de largo. Se llama desde…_1]] - `contains` [EXTRACTED]
+- [[comprobar()_3_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/comprobar_3md

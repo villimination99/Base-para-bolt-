@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/voluntad.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Adherence Curves One Diet at 90  60  30 Percent Compliance.md"
+type: "document"
+community: "Voluntad Sprite Sheet (Willpower Diagrams).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd
 ---
 
-# Adherence Curves: One Diet at 90 / 60 / 30 Percent Compliance
+# Adherence Curves One Diet at 90  60  30 Percent Compliance.md
 
 ## Connections
-- [[Lapse vs Relapse The Branch After the Failure]] - `conceptually_related_to` [INFERRED]
+- [[Adherence Curves One Diet at 90  60  30 Percent Compliance_1]] - `contains` [EXTRACTED]
+- [[Lapse vs Relapse The Branch After the Failure]] - `references` [EXTRACTED]
 - [[Voluntad Sprite Sheet (Willpower Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd

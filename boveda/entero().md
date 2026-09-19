@@ -1,18 +1,18 @@
 ---
 source_file: "libros/tools/faltan.py"
 type: "code"
-community: "Segmentos sin traducir"
+community: "pathlib"
 location: "L24"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Segmentos_sin_traducir
+  - community/pathlib
 ---
 
 # entero()
 
 ## Connections
-- [[librostoolsfaltan.py]] - `contains` [EXTRACTED]
-- [[main()_16]] - `calls` [EXTRACTED]
+- [[librostoolsfaltan.py_2]] - `contains` [EXTRACTED]
+- [[main()_44]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Segmentos_sin_traducir
+#graphify/code #graphify/EXTRACTED #community/pathlib

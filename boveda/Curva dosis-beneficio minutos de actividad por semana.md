@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/carga.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Curva dosis-beneficio minutos de actividad por semana.md"
+type: "document"
+community: "Curva dosis-beneficio minutos de actividad por semana.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Curva_dosis-beneficio_minutos_de_actividad_por_semanamd
 ---
 
-# Curva dosis-beneficio: minutos de actividad por semana
+# Curva dosis-beneficio minutos de actividad por semana.md
 
 ## Connections
 - [[Carga — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Desentrenamiento pérdidas por reposo en cama y vuelo espacial]] - `conceptually_related_to` [INFERRED]
-- [[Escala MET coste metabólico de actividades comunes]] - `semantically_similar_to` [INFERRED]
+- [[Curva dosis-beneficio minutos de actividad por semana_1]] - `contains` [EXTRACTED]
+- [[Desentrenamiento pérdidas por reposo en cama y vuelo espacial]] - `references` [EXTRACTED]
+- [[Escala MET coste metabólico de actividades comunes]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Curva_dosis-beneficio_minutos_de_actividad_por_semanamd

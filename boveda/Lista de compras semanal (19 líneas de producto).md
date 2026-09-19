@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Jerarquía del suplemento y batch cooking"
-location: "pág. 09"
+source_file: "boveda/Lista de compras semanal (19 líneas de producto).md"
+type: "document"
+community: "_COMMUNITY_Jerarquía del suplemento y batch cooking.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd
 ---
 
-# Lista de compras semanal (19 líneas de producto)
+# Lista de compras semanal (19 líneas de producto).md
 
 ## Connections
-- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `shares_data_with` [INFERRED]
-- [[Regla mediterránea de la etiqueta (máx. 5 ingredientes)]] - `rationale_for` [EXTRACTED]
+- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `references` [EXTRACTED]
+- [[Lista de compras semanal (19 líneas de producto)_1]] - `contains` [EXTRACTED]
+- [[Regla mediterránea de la etiqueta (máx. 5 ingredientes)]] - `references` [EXTRACTED]
 - [[Semana 2 · Consolidación (2.500 kcal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Jerarquía del suplemento y batch cooking]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd

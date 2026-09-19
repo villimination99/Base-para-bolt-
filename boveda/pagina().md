@@ -1,19 +1,19 @@
 ---
-source_file: "planes/tools/pagina-fuentes.py"
+source_file: "tienda/hero.py"
 type: "code"
-community: "Página de fuentes"
-location: "L60"
+community: "re"
+location: "L107"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/re
 ---
 
 # pagina()
 
 ## Connections
-- [[Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes…]] - `rationale_for` [EXTRACTED]
-- [[main()_23]] - `calls` [EXTRACTED]
-- [[pagina-fuentes.py]] - `contains` [EXTRACTED]
+- [[hero.py]] - `contains` [EXTRACTED]
+- [[lamina()_1]] - `calls` [EXTRACTED]
+- [[main()_34]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/code #graphify/EXTRACTED #community/re

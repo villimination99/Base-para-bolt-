@@ -1,17 +1,20 @@
 ---
-source_file: "planes/partials/figuras.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Weekly Carb Cycling Chart (gkg by Training Day).md"
+type: "document"
+community: "Carb Cycling Emblem (Seven Days).md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Lminas_del_S_Mismo
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Carb_Cycling_Emblem_Seven_Daysmd
 ---
 
-# Weekly Carb Cycling Chart (g/kg by Training Day)
+# Weekly Carb Cycling Chart (gkg by Training Day).md
 
 ## Connections
-- [[Carb Cycling Emblem (Seven Days)]] - `semantically_similar_to` [INFERRED]
+- [[Carb Cycling Emblem (Seven Days)]] - `references` [EXTRACTED]
 - [[Figuras Sprite Sheet (Anatomical and Training Diagrams)]] - `references` [EXTRACTED]
+- [[Weekly Carb Cycling Chart (gkg by Training Day)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Carb_Cycling_Emblem_Seven_Daysmd

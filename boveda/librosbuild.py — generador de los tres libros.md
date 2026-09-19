@@ -1,18 +1,18 @@
 ---
-source_file: "libros/README.md"
-type: "concept"
-community: "Arquitectura de los generadores"
+source_file: "boveda/librosbuild.py — generador de los tres libros.md"
+type: "document"
+community: "Formato JSON de bloques (p, h2, ritual, fechas, sep).md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/Formato_JSON_de_bloques_p_h2_ritual_fechas_sepmd
 ---
 
-# libros/build.py — generador de los tres libros
+# librosbuild.py — generador de los tres libros.md
 
 ## Connections
-- [[Formato JSON de bloques (p, h2, ritual, fechas, sep)]] - `shares_data_with` [EXTRACTED]
-- [[planesbuild.py — generador de PDFs (pantallaimpresión)]] - `semantically_similar_to` [INFERRED]
-- [[render.mjs con Playwright y footerTemplate]] - `references` [EXTRACTED]
+- [[Formato JSON de bloques (p, h2, ritual, fechas, sep)]] - `references` [EXTRACTED]
+- [[librosbuild.py — generador de los tres libros_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/Formato_JSON_de_bloques_p_h2_ritual_fechas_sepmd

@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/mesa.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/El plato y las medidas de la mano.md"
+type: "document"
+community: "Mesa — repertorio gráfico (biblioteca de láminas).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - community/Mesa__repertorio_gráfico_biblioteca_de_láminasmd
 ---
 
-# El plato y las medidas de la mano
+# El plato y las medidas de la mano.md
 
 ## Connections
+- [[El plato y las medidas de la mano_1]] - `contains` [EXTRACTED]
 - [[Mesa — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Rangos AMDR reparto de hidratos, grasas y proteínas]] - `conceptually_related_to` [INFERRED]
+- [[Rangos AMDR reparto de hidratos, grasas y proteínas]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Mesa__repertorio_gráfico_biblioteca_de_láminasmd

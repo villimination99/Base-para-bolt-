@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/zodiacal-32.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_zodiacal-32.py.md"
+type: "document"
 community: "zodiacal-32.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/zodiacal-32py
 ---
 
 # zodiacal-32.py
 
-#graphify/code #graphify/EXTRACTED #community/zodiacal-32py
+## Connections
+- [[Live Query (requires Dataview plugin)_217]] - `contains` [EXTRACTED]
+- [[Members_217]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_zodiacal-32.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/zodiacal-32py

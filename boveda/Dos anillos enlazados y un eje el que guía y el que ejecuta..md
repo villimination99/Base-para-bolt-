@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L303"
+source_file: "boveda/Dos anillos enlazados y un eje el que guía y el que ejecuta..md"
+type: "document"
+community: "txt()_5.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/txt_5md
 ---
 
-# Dos anillos enlazados y un eje: el que guía y el que ejecuta.
+# Dos anillos enlazados y un eje el que guía y el que ejecuta..md
 
 ## Connections
-- [[nucleo_coaching()]] - `rationale_for` [EXTRACTED]
+- [[Dos anillos enlazados y un eje el que guía y el que ejecuta._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_coaching()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/txt_5md

@@ -1,19 +1,22 @@
 ---
-source_file: "libros/partials/carga.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Roseta emblema de Carga.md"
+type: "document"
+community: "Roseta emblema de Carga.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Roseta_emblema_de_Cargamd
 ---
 
-# Roseta emblema de Carga
+# Roseta emblema de Carga.md
 
 ## Connections
 - [[Carga — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Roseta emblema de Descanso]] - `semantically_similar_to` [INFERRED]
-- [[Roseta emblema de Mesa]] - `semantically_similar_to` [INFERRED]
-- [[Roseta emblema de los Arcanos (cartas en abanico)]] - `semantically_similar_to` [INFERRED]
+- [[Roseta emblema de Carga_1]] - `contains` [EXTRACTED]
+- [[Roseta emblema de Descanso]] - `references` [EXTRACTED]
+- [[Roseta emblema de Mesa]] - `references` [EXTRACTED]
+- [[Roseta emblema de los Arcanos (cartas en abanico)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Roseta_emblema_de_Cargamd

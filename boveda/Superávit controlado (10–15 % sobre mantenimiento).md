@@ -1,17 +1,20 @@
 ---
-source_file: "planes/src/01-basico-guia-rapida-volumen.html"
-type: "rationale"
-community: "Principios del volumen limpio"
+source_file: "boveda/Superávit controlado (10–15 % sobre mantenimiento).md"
+type: "document"
+community: "_COMMUNITY_Principios del volumen limpio.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Principios_del_volumen_limpio
+  - community/_COMMUNITY_Principios_del_volumen_limpiomd
 ---
 
-# Superávit controlado (10–15 % sobre mantenimiento)
+# Superávit controlado (10–15 % sobre mantenimiento).md
 
 ## Connections
 - [[Los 10 principios del volumen limpio]] - `references` [EXTRACTED]
-- [[Regla de oro del ajuste (±200 kcal según báscula)]] - `rationale_for` [EXTRACTED]
+- [[Regla de oro del ajuste (±200 kcal según báscula)]] - `references` [EXTRACTED]
+- [[Superávit controlado (10–15 % sobre mantenimiento)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Principios del volumen limpio]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Principios_del_volumen_limpio
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Principios_del_volumen_limpiomd

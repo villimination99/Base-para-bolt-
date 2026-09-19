@@ -1,17 +1,23 @@
 ---
 type: community
-cohesion: 1.00
-members: 2
+members: 10
 ---
 
 # Render con Playwright
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 2 nodes
+**Members:** 10 nodes
 
 ## Members
-- [[html, pdf, color = '7c766c', titulillo = '', modo = '']] - code - libros/tools/render.mjs
-- [[render.mjs]] - code - libros/tools/render.mjs
+- [[Connections_157]] - document - boveda/html, pdf, color = '7c766c', titulillo = '', modo = ''.md
+- [[Connections_158]] - document - boveda/render.mjs.md
+- [[Live Query (requires Dataview plugin)_13]] - document - boveda/_COMMUNITY_Render con Playwright.md
+- [[Members_13]] - document - boveda/_COMMUNITY_Render con Playwright.md
+- [[Render con Playwright]] - document - boveda/_COMMUNITY_Render con Playwright.md
+- [[html, pdf, color = '7c766c', titulillo = '', modo = ''_1]] - document - boveda/html, pdf, color = '7c766c', titulillo = '', modo = ''.md
+- [[_COMMUNITY_Render con Playwright]] - document - boveda/_COMMUNITY_Render con Playwright.md
+- [[html, pdf, color = '7c766c', titulillo = '', modo = '']] - document - boveda/html, pdf, color = '7c766c', titulillo = '', modo = ''.md
+- [[render.mjs_1]] - document - boveda/render.mjs.md
+- [[render.mjs]] - document - boveda/render.mjs.md
 
 ## Live Query (requires Dataview plugin)
 

@@ -1,17 +1,19 @@
 ---
-source_file: "tienda/publicar.py"
-type: "rationale"
-community: "Publicador de la tienda"
-location: "L277"
+source_file: "boveda/Crea o actualiza la colección, con su SEO y sus dos traducciones..md"
+type: "document"
+community: "Crea o actualiza la colección, con su SEO y sus dos traducciones..md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/Crea_o_actualiza_la_colección_con_su_SEO_y_sus_dos_traduccionesmd
 ---
 
-# Crea o actualiza la colección, con su SEO y sus dos traducciones.
+# Crea o actualiza la colección, con su SEO y sus dos traducciones..md
 
 ## Connections
-- [[coleccion()]] - `rationale_for` [EXTRACTED]
+- [[Crea o actualiza la colección, con su SEO y sus dos traducciones._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Publicador de la tienda]] - `references` [EXTRACTED]
+- [[coleccion()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/Crea_o_actualiza_la_colección_con_su_SEO_y_sus_dos_traduccionesmd

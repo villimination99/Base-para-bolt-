@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "rationale"
-community: "Jerarquía del suplemento y batch cooking"
-location: "sección 2 · Jerarquía"
+source_file: "boveda/Jerarquía del resultado (los suplementos son el 5 %).md"
+type: "document"
+community: "Jerarquía del resultado (los suplementos son el 5 %).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - community/Jerarquía_del_resultado_los_suplementos_son_el_5_md
 ---
 
-# Jerarquía del resultado (los suplementos son el 5 %)
+# Jerarquía del resultado (los suplementos son el 5 %).md
 
 ## Connections
-- [[Criterio del metaanálisis a dosis del producto]] - `rationale_for` [EXTRACTED]
+- [[Criterio del metaanálisis a dosis del producto]] - `references` [EXTRACTED]
 - [[Guía de Suplementación (Plan Pro)]] - `references` [EXTRACTED]
-- [[Patrón mediterráneo para atletas]] - `conceptually_related_to` [INFERRED]
+- [[Jerarquía del resultado (los suplementos son el 5 %)_1]] - `contains` [EXTRACTED]
+- [[Patrón mediterráneo para atletas]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Jerarquía del suplemento y batch cooking]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/Jerarquía_del_resultado_los_suplementos_son_el_5_md

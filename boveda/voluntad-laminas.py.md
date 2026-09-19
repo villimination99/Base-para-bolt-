@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/voluntad-laminas.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_voluntad-laminas.py.md"
+type: "document"
 community: "voluntad-laminas.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/voluntad-laminaspy
 ---
 
 # voluntad-laminas.py
 
-#graphify/code #graphify/EXTRACTED #community/voluntad-laminaspy
+## Connections
+- [[Live Query (requires Dataview plugin)_185]] - `contains` [EXTRACTED]
+- [[Members_185]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_voluntad-laminas.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/voluntad-laminaspy

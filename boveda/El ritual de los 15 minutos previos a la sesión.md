@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/11-elite-coaching-semanal.html"
-type: "rationale"
-community: "Registros y guiones de práctica"
-location: "pág. 02"
+source_file: "boveda/El ritual de los 15 minutos previos a la sesión.md"
+type: "document"
+community: "_COMMUNITY_Registros y guiones de práctica.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Registros_y_guiones_de_prctica
+  - community/_COMMUNITY_Registros_y_guiones_de_prácticamd
 ---
 
-# El ritual de los 15 minutos previos a la sesión
+# El ritual de los 15 minutos previos a la sesión.md
 
 ## Connections
 - [[Coaching Semanal 1 a 1 (formularios de sesión, Plan Elite)]] - `references` [EXTRACTED]
-- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `rationale_for` [EXTRACTED]
+- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `references` [EXTRACTED]
+- [[El ritual de los 15 minutos previos a la sesión_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Registros y guiones de práctica]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Registros_y_guiones_de_prctica
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Registros_y_guiones_de_prácticamd

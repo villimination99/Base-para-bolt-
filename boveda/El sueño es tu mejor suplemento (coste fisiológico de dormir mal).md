@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "rationale"
-community: "Arquitectura del sueño"
-location: "pág. 02"
+source_file: "boveda/El sueño es tu mejor suplemento (coste fisiológico de dormir mal).md"
+type: "document"
+community: "_COMMUNITY_Arquitectura del sueño.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_del_sueo
+  - community/_COMMUNITY_Arquitectura_del_sueñomd
 ---
 
-# El sueño es tu mejor suplemento (coste fisiológico de dormir mal)
+# El sueño es tu mejor suplemento (coste fisiológico de dormir mal).md
 
 ## Connections
-- [[Arquitectura de la noche (N1–N2, N3 profundo, REM)]] - `rationale_for` [EXTRACTED]
-- [[Criterios de contraindicación cuándo NO hacer HIIT]] - `conceptually_related_to` [INFERRED]
+- [[Arquitectura de la noche (N1–N2, N3 profundo, REM)]] - `references` [EXTRACTED]
+- [[Criterios de contraindicación cuándo NO hacer HIIT]] - `references` [EXTRACTED]
+- [[El sueño es tu mejor suplemento (coste fisiológico de dormir mal)_1]] - `contains` [EXTRACTED]
 - [[Protocolo de Sueño Elite]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Arquitectura del sueño]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Arquitectura_del_sueñomd

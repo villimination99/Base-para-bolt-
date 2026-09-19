@@ -1,31 +1,28 @@
 ---
-type: community
-cohesion: 0.18
-members: 12
+source_file: "boveda/_COMMUNITY_Texto del Códice del Descanso.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice del Descanso.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Texto_del_Códice_del_Descansomd
 ---
 
-# Texto del Códice del Descanso
+# _COMMUNITY_Texto del Códice del Descanso.md
 
-**Cohesion:** 0.18 - loosely connected
-**Members:** 12 nodes
+## Connections
+- [[Texto del Códice del Descanso]] - `contains` [EXTRACTED]
+- [[cap()_2_1]] - `references` [EXTRACTED]
+- [[ficha()_2_1]] - `references` [EXTRACTED]
+- [[fig()_2_1]] - `references` [EXTRACTED]
+- [[h()_2_1]] - `references` [EXTRACTED]
+- [[hh()_1]] - `references` [EXTRACTED]
+- [[lista()_2_1]] - `references` [EXTRACTED]
+- [[main()_10_1]] - `references` [EXTRACTED]
+- [[nota()_2_1]] - `references` [EXTRACTED]
+- [[p()_2_1]] - `references` [EXTRACTED]
+- [[pasos()_2_1]] - `references` [EXTRACTED]
+- [[sep()_2_1]] - `references` [EXTRACTED]
 
-## Members
-- [[cap()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[escribir-codice-descanso.py]] - code - libros/tools/escribir-codice-descanso.py
-- [[ficha()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[fig()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[h()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[hh()]] - code - libros/tools/escribir-codice-descanso.py
-- [[lista()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[main()_10]] - code - libros/tools/escribir-codice-descanso.py
-- [[nota()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[p()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[pasos()_2]] - code - libros/tools/escribir-codice-descanso.py
-- [[sep()_2]] - code - libros/tools/escribir-codice-descanso.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Texto_del_Cdice_del_Descanso
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_del_Descansomd

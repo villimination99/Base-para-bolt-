@@ -1,18 +1,21 @@
 ---
-source_file: "planes/README.md"
-type: "rationale"
-community: "Maquetación de los planes"
+source_file: "boveda/Aviso legal y sanitario con contraindicaciones.md"
+type: "document"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Aviso legal y sanitario con contraindicaciones
+# Aviso legal y sanitario con contraindicaciones.md
 
 ## Connections
-- [[Aviso importante (descargo médico y copyright)]] - `implements` [EXTRACTED]
-- [[Aviso importante (descargo médico, diabetes y copyright)]] - `implements` [EXTRACTED]
-- [[Planes VILLUMINATIONS — 11 PDFs descargables]] - `rationale_for` [EXTRACTED]
+- [[Aviso importante (descargo médico y copyright)]] - `references` [EXTRACTED]
+- [[Aviso importante (descargo médico, diabetes y copyright)]] - `references` [EXTRACTED]
+- [[Aviso legal y sanitario con contraindicaciones_1]] - `contains` [EXTRACTED]
+- [[Planes VILLUMINATIONS — 11 PDFs descargables]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

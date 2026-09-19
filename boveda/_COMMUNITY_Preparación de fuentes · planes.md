@@ -1,22 +1,19 @@
 ---
-type: community
-cohesion: 1.00
-members: 3
+source_file: "boveda/_COMMUNITY_Preparación de fuentes · planes.md"
+type: "document"
+community: "fetch()_1.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/fetch_1md
 ---
 
-# Preparación de fuentes · planes
+# _COMMUNITY_Preparación de fuentes · planes.md
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 3 nodes
+## Connections
+- [[Preparación de fuentes · planes]] - `contains` [EXTRACTED]
+- [[fetch()_1_1]] - `references` [EXTRACTED]
+- [[main()_24_1]] - `references` [EXTRACTED]
 
-## Members
-- [[fetch()_1]] - code - planes/tools/preparar-fuentes.py
-- [[main()_24]] - code - planes/tools/preparar-fuentes.py
-- [[planestoolspreparar-fuentes.py]] - code - planes/tools/preparar-fuentes.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Preparacin_de_fuentes__planes
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/fetch_1md

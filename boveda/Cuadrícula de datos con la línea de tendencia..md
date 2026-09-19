@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L173"
+source_file: "boveda/Cuadrícula de datos con la línea de tendencia..md"
+type: "document"
+community: "nucleo_registro().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/nucleo_registromd
 ---
 
-# Cuadrícula de datos con la línea de tendencia.
+# Cuadrícula de datos con la línea de tendencia..md
 
 ## Connections
-- [[nucleo_registro()]] - `rationale_for` [EXTRACTED]
+- [[Cuadrícula de datos con la línea de tendencia._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_registro()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/nucleo_registromd

@@ -1,28 +1,17 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
+source_file: "libros/tools/escribir-codice-carga.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
-location: "L607"
+community: "escribir-codice-carga.py"
+location: "L1175"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/escribir-codice-cargapy
 ---
 
 # main()
 
 ## Connections
-- [[comprobar()_1]] - `calls` [EXTRACTED]
-- [[comprobar_horas()]] - `calls` [EXTRACTED]
-- [[comprobar_letras()]] - `calls` [EXTRACTED]
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[lamina_alfabeto()]] - `calls` [EXTRACTED]
-- [[lamina_arbol()]] - `calls` [EXTRACTED]
-- [[lamina_armas()]] - `calls` [EXTRACTED]
-- [[lamina_circulo()]] - `calls` [EXTRACTED]
-- [[lamina_hexagrama()]] - `calls` [EXTRACTED]
-- [[lamina_horas()]] - `calls` [EXTRACTED]
-- [[lamina_kameas()]] - `calls` [EXTRACTED]
-- [[lamina_pentagrama()]] - `calls` [EXTRACTED]
+- [[escribir-codice-carga.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-cargapy

@@ -1,20 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
+source_file: "tienda/articulos.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
-location: "L166"
+community: "blog.py"
+location: "L1385"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/blogpy
 ---
 
 # comprobar()
 
 ## Connections
-- [[Un cuadrado mágico que no suma no es un cuadrado mágico. Si algún algoritmo…]] - `rationale_for` [EXTRACTED]
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[kamea()]] - `calls` [EXTRACTED]
-- [[main()_3]] - `calls` [EXTRACTED]
+- [[Lo que se pasa de medida o le falta un campo. Vacío es lo correcto.]] - `rationale_for` [EXTRACTED]
+- [[articulos.py]] - `contains` [EXTRACTED]
+- [[main()_2]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/blogpy

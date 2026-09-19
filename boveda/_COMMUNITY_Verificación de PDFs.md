@@ -1,21 +1,18 @@
 ---
-type: community
-cohesion: 1.00
-members: 2
+source_file: "boveda/_COMMUNITY_Verificación de PDFs.md"
+type: "document"
+community: "archivos.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/archivosmd
 ---
 
-# Verificación de PDFs
+# _COMMUNITY_Verificación de PDFs.md
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 2 nodes
+## Connections
+- [[Verificación de PDFs]] - `contains` [EXTRACTED]
+- [[archivos]] - `references` [EXTRACTED]
 
-## Members
-- [[archivos]] - code - planes/tools/verificar.mjs
-- [[verificar.mjs]] - code - planes/tools/verificar.mjs
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Verificacin_de_PDFs
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/archivosmd

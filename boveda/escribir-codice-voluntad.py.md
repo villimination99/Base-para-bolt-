@@ -1,27 +1,28 @@
 ---
-source_file: "libros/tools/escribir-codice-voluntad.py"
-type: "code"
-community: "Texto del Códice de la Voluntad"
+source_file: "boveda/escribir-codice-voluntad.py.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice de la Voluntad.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Voluntad
+  - community/_COMMUNITY_Texto_del_Códice_de_la_Voluntadmd
 ---
 
-# escribir-codice-voluntad.py
+# escribir-codice-voluntad.py.md
 
 ## Connections
-- [[cap()_6]] - `contains` [EXTRACTED]
-- [[ficha()_6]] - `contains` [EXTRACTED]
-- [[fig()_6]] - `contains` [EXTRACTED]
-- [[h()_6]] - `contains` [EXTRACTED]
-- [[lista()_6]] - `contains` [EXTRACTED]
-- [[main()_14]] - `contains` [EXTRACTED]
-- [[nota()_6]] - `contains` [EXTRACTED]
-- [[p()_6]] - `contains` [EXTRACTED]
-- [[pasos()_6]] - `contains` [EXTRACTED]
-- [[ritual()_4]] - `contains` [EXTRACTED]
-- [[sep()_6]] - `contains` [EXTRACTED]
+- [[cap()_6_1]] - `references` [EXTRACTED]
+- [[escribir-codice-voluntad.py_1]] - `contains` [EXTRACTED]
+- [[ficha()_6_1]] - `references` [EXTRACTED]
+- [[fig()_6_1]] - `references` [EXTRACTED]
+- [[h()_6_1]] - `references` [EXTRACTED]
+- [[lista()_6_1]] - `references` [EXTRACTED]
+- [[main()_14_1]] - `references` [EXTRACTED]
+- [[nota()_6_1]] - `references` [EXTRACTED]
+- [[p()_6_1]] - `references` [EXTRACTED]
+- [[pasos()_6_1]] - `references` [EXTRACTED]
+- [[ritual()_4_1]] - `references` [EXTRACTED]
+- [[sep()_6_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Voluntad
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_de_la_Voluntadmd

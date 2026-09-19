@@ -1,29 +1,26 @@
 ---
-type: community
-cohesion: 0.49
-members: 10
+source_file: "boveda/_COMMUNITY_Portadas de los tres niveles.md"
+type: "document"
+community: "_COMMUNITY_Portadas de los tres niveles.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Portadas_de_los_tres_nivelesmd
 ---
 
-# Portadas de los tres niveles
+# _COMMUNITY_Portadas de los tres niveles.md
 
-**Cohesion:** 0.49 - moderately connected
-**Members:** 10 nodes
+## Connections
+- [[Counts Strip - 'N documentos  N paginas' inventory line]] - `references` [EXTRACTED]
+- [[Per-Tier Accent Colour Coding - cyan  magenta  green neon glow]] - `references` [EXTRACTED]
+- [[Plan Basico Cover - BASICO  Volumen Limpio (cyan, 1 documento, 8 paginas)]] - `references` [EXTRACTED]
+- [[Plan Card vs Book Cover - square 11 spec sheet with no titleauthorillustration, unlike the brand's book covers]] - `references` [EXTRACTED]
+- [[Plan Elite Cover - ELITE  Todo Incluido + Coaching (green, 11 documentos, 106 paginas)]] - `references` [EXTRACTED]
+- [[Plan Pro Cover - PRO  Definicion + Volumen (magenta, 5 documentos, 44 paginas)]] - `references` [EXTRACTED]
+- [[Portadas de los tres niveles]] - `contains` [EXTRACTED]
+- [[Tier Ladder - Basico to Pro to Elite progression]] - `references` [EXTRACTED]
+- [[Typographic Plan-Card Template - dark grid ground, centered neon tier word, white subtitle, hairline rule, counts, language badge, footer imprint]] - `references` [EXTRACTED]
+- [[VILLUMINATIONS Imprint Wordmark (letterspaced footer lockup)]] - `references` [EXTRACTED]
 
-## Members
-- [[Counts Strip - 'N documentos  N paginas' inventory line]] - concept - tienda/portadas/plan-basico.png
-- [[Per-Tier Accent Colour Coding - cyan  magenta  green neon glow]] - concept - tienda/portadas/plan-elite.png
-- [[Plan Basico Cover - BASICO  Volumen Limpio (cyan, 1 documento, 8 paginas)]] - image - tienda/portadas/plan-basico.png
-- [[Plan Card vs Book Cover - square 11 spec sheet with no titleauthorillustration, unlike the brand's book covers]] - rationale - tienda/portadas/plan-elite.png
-- [[Plan Elite Cover - ELITE  Todo Incluido + Coaching (green, 11 documentos, 106 paginas)]] - image - tienda/portadas/plan-elite.png
-- [[Plan Pro Cover - PRO  Definicion + Volumen (magenta, 5 documentos, 44 paginas)]] - image - tienda/portadas/plan-pro.png
-- [[Three-Language Badge - ES . EN . FR]] - concept - tienda/portadas/plan-basico.png
-- [[Tier Ladder - Basico to Pro to Elite progression]] - concept - tienda/portadas/plan-basico.png
-- [[Typographic Plan-Card Template - dark grid ground, centered neon tier word, white subtitle, hairline rule, counts, language badge, footer imprint]] - concept - tienda/portadas/plan-pro.png
-- [[VILLUMINATIONS Imprint Wordmark (letterspaced footer lockup)]] - concept - tienda/portadas/plan-basico.png
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Portadas_de_los_tres_niveles
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Portadas_de_los_tres_nivelesmd

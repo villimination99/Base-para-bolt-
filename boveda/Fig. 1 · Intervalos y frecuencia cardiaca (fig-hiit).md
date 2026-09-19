@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "image"
-community: "Las diez rutinas HIIT"
-location: "pág. 02, svg use href=#fig-hiit"
+source_file: "boveda/Fig. 1 · Intervalos y frecuencia cardiaca (fig-hiit).md"
+type: "document"
+community: "_COMMUNITY_Las diez rutinas HIIT.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Las_diez_rutinas_HIIT
+  - community/_COMMUNITY_Las_diez_rutinas_HIITmd
 ---
 
-# Fig. 1 · Intervalos y frecuencia cardiaca (#fig-hiit)
+# Fig. 1 · Intervalos y frecuencia cardiaca (fig-hiit).md
 
 ## Connections
-- [[Las cinco reglas del HIIT inteligente]] - `cites` [EXTRACTED]
+- [[Fig. 1 · Intervalos y frecuencia cardiaca (fig-hiit)_1]] - `contains` [EXTRACTED]
+- [[Las cinco reglas del HIIT inteligente]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Las_diez_rutinas_HIIT
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_diez_rutinas_HIITmd

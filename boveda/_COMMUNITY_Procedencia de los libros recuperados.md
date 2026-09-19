@@ -1,23 +1,18 @@
 ---
 type: community
-cohesion: 0.25
-members: 8
+members: 5
 ---
 
 # Procedencia de los libros recuperados
 
-**Cohesion:** 0.25 - loosely connected
-**Members:** 8 nodes
+**Members:** 5 nodes
 
 ## Members
-- [[Autoverificación módulo de datos comprobado antes de componer]] - rationale - planes/src/01-basico-guia-rapida-volumen.html
-- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - document - libros/README.md
-- [[Conocimiento de Sí Mismo (Fase B)]] - document - libros/README.md
-- [[Curso Zodiacal (Samael Aun Weor)]] - document - libros/README.md
-- [[Derechos de las obras gnósticas y uso no comercial]] - rationale - libros/README.md
-- [[Las Conjuraciones y la Invocación del Sabio Salomón]] - document - libros/README.md
-- [[Página de fuentes verificadas (dominio público federal)]] - rationale - planes/src/01-basico-guia-rapida-volumen.html
-- [[Página de fuentes verificadas (dominio público federal)_1]] - rationale - planes/src/02-pro-ciclado-carbohidratos.html
+- [[Connections to other communities_17]] - document - boveda/_COMMUNITY_Procedencia de los libros recuperados.md
+- [[Live Query (requires Dataview plugin)_37]] - document - boveda/_COMMUNITY_Procedencia de los libros recuperados.md
+- [[Members_37]] - document - boveda/_COMMUNITY_Procedencia de los libros recuperados.md
+- [[Procedencia de los libros recuperados]] - document - boveda/_COMMUNITY_Procedencia de los libros recuperados.md
+- [[Top bridge nodes_17]] - document - boveda/_COMMUNITY_Procedencia de los libros recuperados.md
 
 ## Live Query (requires Dataview plugin)
 
@@ -27,8 +22,7 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 1 edge to [[_COMMUNITY_Arquitectura de los generadores]]
-- 1 edge to [[_COMMUNITY_Cálculo de macros y errores]]
+- 1 edge to [[_COMMUNITY__COMMUNITY_Procedencia de los libros recuperados]]
 
 ## Top bridge nodes
-- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - degree 6, connects to 2 communities
+- [[Procedencia de los libros recuperados]] - degree 5, connects to 1 community

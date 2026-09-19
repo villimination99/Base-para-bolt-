@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/05-pro-registro-progreso-semanal.html"
-type: "concept"
-community: "Ergogénicos y peso semanal"
-location: "páginas 03-06 · Adherencia nutricional"
+source_file: "boveda/Tabla diaria de adherencia nutricional.md"
+type: "document"
+community: "_COMMUNITY_Ergogénicos y peso semanal.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Ergognicos_y_peso_semanal
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Ergogénicos_y_peso_semanalmd
 ---
 
-# Tabla diaria de adherencia nutricional
+# Tabla diaria de adherencia nutricional.md
 
 ## Connections
-- [[Gráfica SVG de tendencia del peso medio]] - `shares_data_with` [EXTRACTED]
-- [[Protocolo diario de toma de suplementos]] - `shares_data_with` [INFERRED]
+- [[Gráfica SVG de tendencia del peso medio]] - `references` [EXTRACTED]
+- [[Protocolo diario de toma de suplementos]] - `references` [EXTRACTED]
+- [[Tabla diaria de adherencia nutricional_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Ergogénicos y peso semanal]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Ergognicos_y_peso_semanal
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Ergogénicos_y_peso_semanalmd

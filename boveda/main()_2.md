@@ -1,19 +1,22 @@
 ---
-source_file: "libros/tools/cargar-traducciones.py"
+source_file: "tienda/blog.py"
 type: "code"
-community: "Traducción y armado de planes"
-location: "L50"
+community: "blog.py"
+location: "L191"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/blogpy
 ---
 
 # main()
 
 ## Connections
-- [[etiquetas()]] - `calls` [EXTRACTED]
-- [[librostoolscargar-traducciones.py]] - `contains` [EXTRACTED]
-- [[pegado()]] - `calls` [EXTRACTED]
+- [[blog()]] - `calls` [EXTRACTED]
+- [[blog.py]] - `contains` [EXTRACTED]
+- [[comprobar()_1]] - `calls` [EXTRACTED]
+- [[esquema()]] - `calls` [EXTRACTED]
+- [[pedir()]] - `calls` [EXTRACTED]
+- [[publicar()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/blogpy

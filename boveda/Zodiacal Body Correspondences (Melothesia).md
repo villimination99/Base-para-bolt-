@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Zodiacal Body Correspondences (Melothesia).md"
+type: "document"
+community: "Zodiacal Body Correspondences (Melothesia).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/Zodiacal_Body_Correspondences_Melothesiamd
 ---
 
-# Zodiacal Body Correspondences (Melothesia)
+# Zodiacal Body Correspondences (Melothesia).md
 
 ## Connections
-- [[Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)]] - `conceptually_related_to` [INFERRED]
+- [[Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)]] - `references` [EXTRACTED]
 - [[Reusable Column Half for the Body-Correspondence Diagram]] - `references` [EXTRACTED]
+- [[Zodiacal Body Correspondences (Melothesia)_1]] - `contains` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/Zodiacal_Body_Correspondences_Melothesiamd

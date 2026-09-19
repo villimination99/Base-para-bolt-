@@ -1,16 +1,19 @@
 ---
-source_file: "planes/README.md"
-type: "concept"
-community: "Maquetación de los planes"
+source_file: "boveda/Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal).md"
+type: "document"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal)
+# Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal).md
 
 ## Connections
-- [[Estructura de página section.page + pg-headmainpg-foot]] - `conceptually_related_to` [EXTRACTED]
+- [[Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal)_1]] - `contains` [EXTRACTED]
+- [[Estructura de página section.page + pg-headmainpg-foot]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

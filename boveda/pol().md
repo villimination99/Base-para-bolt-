@@ -1,20 +1,22 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
+source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
-location: "L65"
+community: "dibujar-fitness.py"
+location: "L57"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-fitnesspy
 ---
 
 # pol()
 
 ## Connections
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[lamina_circulo()]] - `calls` [EXTRACTED]
-- [[lamina_hexagrama()]] - `calls` [EXTRACTED]
-- [[lamina_pentagrama()]] - `calls` [EXTRACTED]
+- [[cubierta_mesa()]] - `calls` [EXTRACTED]
+- [[cubierta_voluntad()]] - `calls` [EXTRACTED]
+- [[dibujar-fitness.py]] - `contains` [EXTRACTED]
+- [[me_plato()]] - `calls` [EXTRACTED]
+- [[simbolo_cubierta()]] - `calls` [EXTRACTED]
+- [[vo_dominios()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

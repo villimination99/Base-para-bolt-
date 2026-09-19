@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Capricorn Glyph (The Sea-Goat).md"
+type: "document"
+community: "Zodiac Small Glow Filter.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/Zodiac_Small_Glow_Filtermd
 ---
 
-# Capricorn Glyph (The Sea-Goat)
+# Capricorn Glyph (The Sea-Goat).md
 
 ## Connections
+- [[Capricorn Glyph (The Sea-Goat)_1]] - `contains` [EXTRACTED]
 - [[Zodiac Small Glow Filter]] - `references` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/Zodiac_Small_Glow_Filtermd

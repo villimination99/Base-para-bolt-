@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # libros/i18n/fuentes/comun.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[librosi18nfuentescomun.py]] - code - libros/i18n/fuentes/comun.py
+- [[Live Query (requires Dataview plugin)_123]] - document - boveda/_COMMUNITY_librosi18nfuentescomun.py.md
+- [[Members_123]] - document - boveda/_COMMUNITY_librosi18nfuentescomun.py.md
+- [[_COMMUNITY_librosi18nfuentescomun.py]] - document - boveda/_COMMUNITY_librosi18nfuentescomun.py.md
+- [[librosi18nfuentescomun.py]] - document - boveda/_COMMUNITY_librosi18nfuentescomun.py.md
 
 ## Live Query (requires Dataview plugin)
 

@@ -1,20 +1,22 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
+source_file: "boveda/Plan Definición + Volumen 8 semanas (Plan Pro).md"
 type: "document"
-community: "Escalera de planes y dominio público"
-location: "líneas 1-46 · portada"
+community: "_COMMUNITY_Escalera de planes y dominio público.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Escalera_de_planes_y_dominio_pblico
+  - community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd
 ---
 
-# Plan Definición + Volumen 8 semanas (Plan Pro)
+# Plan Definición + Volumen 8 semanas (Plan Pro).md
 
 ## Connections
 - [[Escalera de planes BÁSICO  PRO  ELITE (upsell)_1]] - `references` [EXTRACTED]
-- [[Fuentes verificadas — Plan Definición + Volumen]] - `cites` [EXTRACTED]
+- [[Fuentes verificadas — Plan Definición + Volumen]] - `references` [EXTRACTED]
 - [[Lógica de la recomposición por fases encadenadas]] - `references` [EXTRACTED]
-- [[Registro de Progreso Semanal (Plan Pro)]] - `conceptually_related_to` [AMBIGUOUS]
+- [[Plan Definición + Volumen 8 semanas (Plan Pro)_1]] - `contains` [EXTRACTED]
+- [[Registro de Progreso Semanal (Plan Pro)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalera de planes y dominio público]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Escalera_de_planes_y_dominio_pblico
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd

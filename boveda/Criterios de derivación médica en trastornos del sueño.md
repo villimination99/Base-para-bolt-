@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "rationale"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 06, callout warn"
+source_file: "boveda/Criterios de derivación médica en trastornos del sueño.md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Criterios de derivación médica en trastornos del sueño
+# Criterios de derivación médica en trastornos del sueño.md
 
 ## Connections
-- [[Tabla de solución de problemas del sueño (latencia, despertares, turnos, jet lag)]] - `rationale_for` [EXTRACTED]
+- [[Criterios de derivación médica en trastornos del sueño_1]] - `contains` [EXTRACTED]
+- [[Tabla de solución de problemas del sueño (latencia, despertares, turnos, jet lag)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

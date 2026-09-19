@@ -1,20 +1,23 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "concept"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree).md"
+type: "document"
+community: "_COMMUNITY_Doctrina zodiacal ilustrada.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Doctrina_zodiacal_ilustrada
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Doctrina_zodiacal_ilustradamd
 ---
 
-# Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)
+# Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree).md
 
 ## Connections
-- [[Ladder of Planetary Rulers and Their Metals]] - `conceptually_related_to` [INFERRED]
-- [[Table of Decans (0-10, 10-20, 20-30 Degrees)]] - `conceptually_related_to` [INFERRED]
-- [[Table of Essential Dignities Domicile, Exaltation, Exile, Fall]] - `conceptually_related_to` [INFERRED]
-- [[Table of Terms (Bounds) by Degree Across Each Sign]] - `conceptually_related_to` [INFERRED]
-- [[Zodiacal Body Correspondences (Melothesia)]] - `conceptually_related_to` [INFERRED]
+- [[Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)_1]] - `contains` [EXTRACTED]
+- [[Ladder of Planetary Rulers and Their Metals]] - `references` [EXTRACTED]
+- [[Table of Decans (0-10, 10-20, 20-30 Degrees)]] - `references` [EXTRACTED]
+- [[Table of Essential Dignities Domicile, Exaltation, Exile, Fall]] - `references` [EXTRACTED]
+- [[Table of Terms (Bounds) by Degree Across Each Sign]] - `references` [EXTRACTED]
+- [[Zodiacal Body Correspondences (Melothesia)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Doctrina_zodiacal_ilustradamd

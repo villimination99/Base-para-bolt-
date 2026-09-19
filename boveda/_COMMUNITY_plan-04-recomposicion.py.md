@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-04-recomposicion.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-04-recomposicion.py]] - code - planes/i18n/fuentes/plan-04-recomposicion.py
+- [[Live Query (requires Dataview plugin)_144]] - document - boveda/_COMMUNITY_plan-04-recomposicion.py.md
+- [[Members_144]] - document - boveda/_COMMUNITY_plan-04-recomposicion.py.md
+- [[_COMMUNITY_plan-04-recomposicion.py]] - document - boveda/_COMMUNITY_plan-04-recomposicion.py.md
+- [[plan-04-recomposicion.py]] - document - boveda/_COMMUNITY_plan-04-recomposicion.py.md
 
 ## Live Query (requires Dataview plugin)
 

@@ -1,26 +1,23 @@
 ---
-source_file: "libros/build.py"
+source_file: "tablero.py"
 type: "code"
-community: "Generador de libros"
-location: "L521"
+community: "tablero.py"
+location: "L302"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/tableropy
 ---
 
 # construir()
 
 ## Connections
-- [[comprobar_laminas()]] - `calls` [EXTRACTED]
-- [[cubierta()]] - `calls` [EXTRACTED]
-- [[documento()]] - `calls` [EXTRACTED]
-- [[librosbuild.py]] - `contains` [EXTRACTED]
-- [[main()_1]] - `calls` [EXTRACTED]
-- [[marcadores()]] - `calls` [EXTRACTED]
-- [[paginas_de_capitulos()]] - `calls` [EXTRACTED]
-- [[render()]] - `calls` [EXTRACTED]
-- [[reordenar_vocabulario()]] - `calls` [EXTRACTED]
-- [[unir()]] - `calls` [EXTRACTED]
+- [[_texto()]] - `calls` [EXTRACTED]
+- [[catalogo()]] - `calls` [EXTRACTED]
+- [[documentos()]] - `calls` [EXTRACTED]
+- [[grafo()]] - `calls` [EXTRACTED]
+- [[marca()]] - `calls` [EXTRACTED]
+- [[svg_grafo()]] - `calls` [EXTRACTED]
+- [[tablero.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/tableropy

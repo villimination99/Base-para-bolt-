@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L594"
+source_file: "boveda/Domicilio, exaltación, exilio y caída de un signo. Solo el domicilio y la….md"
+type: "document"
+community: "lamina_dignidades().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_dignidadesmd
 ---
 
-# Domicilio, exaltación, exilio y caída de un signo. Solo el domicilio y la…
+# Domicilio, exaltación, exilio y caída de un signo. Solo el domicilio y la….md
 
 ## Connections
-- [[dignidades()]] - `rationale_for` [EXTRACTED]
+- [[Domicilio, exaltación, exilio y caída de un signo. Solo el domicilio y la…_1]] - `contains` [EXTRACTED]
+- [[dignidades()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_dignidadesmd

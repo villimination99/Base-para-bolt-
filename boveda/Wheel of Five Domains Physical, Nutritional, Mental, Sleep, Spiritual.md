@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/voluntad.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Wheel of Five Domains Physical, Nutritional, Mental, Sleep, Spiritual.md"
+type: "document"
+community: "Voluntad Sprite Sheet (Willpower Diagrams).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd
 ---
 
-# Wheel of Five Domains: Physical, Nutritional, Mental, Sleep, Spiritual
+# Wheel of Five Domains Physical, Nutritional, Mental, Sleep, Spiritual.md
 
 ## Connections
-- [[Emblemas Sprite Sheet (Plan Cover Emblems)]] - `conceptually_related_to` [AMBIGUOUS]
+- [[Emblemas Sprite Sheet (Plan Cover Emblems)]] - `references` [EXTRACTED]
 - [[Voluntad Sprite Sheet (Willpower Diagrams)]] - `references` [EXTRACTED]
+- [[Wheel of Five Domains Physical, Nutritional, Mental, Sleep, Spiritual_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd

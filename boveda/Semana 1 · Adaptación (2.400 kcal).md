@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Escalado de macros y recetario"
-location: "pág. 03"
+source_file: "boveda/Semana 1 · Adaptación (2.400 kcal).md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Escalado_de_macros_y_recetario
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Semana 1 · Adaptación (2.400 kcal)
+# Semana 1 · Adaptación (2.400 kcal).md
 
 ## Connections
-- [[Atleta de referencia de 75 kg]] - `shares_data_with` [EXTRACTED]
+- [[Atleta de referencia de 75 kg]] - `references` [EXTRACTED]
+- [[Semana 1 · Adaptación (2.400 kcal)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

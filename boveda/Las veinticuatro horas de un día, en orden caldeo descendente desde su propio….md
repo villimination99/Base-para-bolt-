@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
-type: "rationale"
-community: "Láminas de alta magia (generador)"
-location: "L473"
+source_file: "boveda/Las veinticuatro horas de un día, en orden caldeo descendente desde su propio….md"
+type: "document"
+community: "horas_del_dia().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/horas_del_diamd
 ---
 
-# Las veinticuatro horas de un día, en orden caldeo descendente desde su propio…
+# Las veinticuatro horas de un día, en orden caldeo descendente desde su propio….md
 
 ## Connections
-- [[horas_del_dia()]] - `rationale_for` [EXTRACTED]
+- [[Las veinticuatro horas de un día, en orden caldeo descendente desde su propio…_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de alta magia (generador)]] - `references` [EXTRACTED]
+- [[horas_del_dia()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/document #graphify/EXTRACTED #community/horas_del_diamd

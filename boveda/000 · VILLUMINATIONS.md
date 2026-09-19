@@ -7,7 +7,7 @@ actualizado: 2026-09-19
 
 # VILLUMINATIONS — estado del proyecto
 
-Nota escrita a mano, no generada. Las otras 1280 notas de esta bóveda salen del
+Nota escrita a mano, no generada. Las otras **7443 notas** de esta bóveda salen del
 grafo de `graphify` y se regeneran solas; esta no. Es la memoria: lo que hay que
 saber antes de tocar nada, y lo que quedó a medias.
 
@@ -153,5 +153,15 @@ graphify update .          # reconstruye el grafo, sin coste de LLM
 graphify hook install      # post-commit: lo mantiene al día solo
 ```
 
-El gancho es lo que evita que esto vuelva a quedarse viejo: rehace el grafo en
+El gancho es lo que evita que el **grafo** vuelva a quedarse viejo: lo rehace en
 cada confirmación, sin que nadie tenga que acordarse.
+
+Las **notas** son otra cosa y no las rehace el gancho: salen de
+`graphify export obsidian --dir boveda` y hay que pedirlo. En septiembre se
+descubrió que llevaban desde agosto sin regenerar —solo 2 de 1280 mencionaban
+la capa entera de ropa— y se rehicieron: pasaron a 7443. Si el código ha
+cambiado mucho y las notas no cuadran, es esto.
+
+El exportador **respeta los ficheros que no ha creado él**: al regenerar avisó
+de que se saltaba esta nota para no pisarla. Aun así conviene copiarla antes,
+porque es la única que no se puede rehacer.

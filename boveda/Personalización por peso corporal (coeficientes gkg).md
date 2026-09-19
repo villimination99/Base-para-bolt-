@@ -1,18 +1,21 @@
 ---
-source_file: "planes/README.md"
-type: "rationale"
-community: "Cálculo de macros y errores"
+source_file: "boveda/Personalización por peso corporal (coeficientes gkg).md"
+type: "document"
+community: "_COMMUNITY_Cálculo de macros y errores.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Clculo_de_macros_y_errores
+  - community/_COMMUNITY_Cálculo_de_macros_y_erroresmd
 ---
 
-# Personalización por peso corporal (coeficientes g/kg)
+# Personalización por peso corporal (coeficientes gkg).md
 
 ## Connections
-- [[Calculadora de macros en 3 pasos (Mifflin-St Jeor)]] - `implements` [EXTRACTED]
-- [[Conversión del protocolo a gkg de peso corporal]] - `implements` [EXTRACTED]
-- [[Corrección de errores de los PDFs originales]] - `rationale_for` [EXTRACTED]
+- [[Calculadora de macros en 3 pasos (Mifflin-St Jeor)]] - `references` [EXTRACTED]
+- [[Conversión del protocolo a gkg de peso corporal]] - `references` [EXTRACTED]
+- [[Corrección de errores de los PDFs originales]] - `references` [EXTRACTED]
+- [[Personalización por peso corporal (coeficientes gkg)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Cálculo de macros y errores]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Clculo_de_macros_y_errores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Cálculo_de_macros_y_erroresmd

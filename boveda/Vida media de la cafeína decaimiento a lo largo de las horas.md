@@ -1,17 +1,18 @@
 ---
-source_file: "libros/partials/descanso.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Vida media de la cafeína decaimiento a lo largo de las horas.md"
+type: "document"
+community: "Vida media de la cafeína: decaimiento a lo largo de las horas"
+location: "L11"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - community/Vida_media_de_la_cafeína_decaimiento_a_lo_largo_de_las_horas
 ---
 
 # Vida media de la cafeína: decaimiento a lo largo de las horas
 
 ## Connections
-- [[Descanso — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Ventana de acostarse cuenta atrás desde la hora de dormir]] - `semantically_similar_to` [INFERRED]
+- [[Connections_731]] - `contains` [EXTRACTED]
+- [[Vida media de la cafeína decaimiento a lo largo de las horas_1]] - `contains` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Vida_media_de_la_cafeína_decaimiento_a_lo_largo_de_las_horas

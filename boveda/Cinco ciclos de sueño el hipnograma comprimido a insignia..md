@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L279"
+source_file: "boveda/Cinco ciclos de sueño el hipnograma comprimido a insignia..md"
+type: "document"
+community: "nucleo_sueno().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/nucleo_suenomd
 ---
 
-# Cinco ciclos de sueño: el hipnograma comprimido a insignia.
+# Cinco ciclos de sueño el hipnograma comprimido a insignia..md
 
 ## Connections
-- [[nucleo_sueno()]] - `rationale_for` [EXTRACTED]
+- [[Cinco ciclos de sueño el hipnograma comprimido a insignia._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_sueno()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/nucleo_suenomd

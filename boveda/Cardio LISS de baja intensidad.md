@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 07 · LISS y HIIT"
+source_file: "boveda/Cardio LISS de baja intensidad.md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Cardio LISS de baja intensidad
+# Cardio LISS de baja intensidad.md
 
 ## Connections
-- [[Cardio HIIT de alta intensidad]] - `conceptually_related_to` [EXTRACTED]
-- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `shares_data_with` [EXTRACTED]
+- [[Cardio HIIT de alta intensidad]] - `references` [EXTRACTED]
+- [[Cardio LISS de baja intensidad_1]] - `contains` [EXTRACTED]
+- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

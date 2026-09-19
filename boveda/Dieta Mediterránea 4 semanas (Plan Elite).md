@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
+source_file: "boveda/Dieta Mediterránea 4 semanas (Plan Elite).md"
 type: "document"
-community: "Dieta mediterránea"
-location: "líneas 1-46 · portada"
+community: "_COMMUNITY_Dieta mediterránea.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Dieta_mediterrnea
+  - community/_COMMUNITY_Dieta_mediterráneamd
 ---
 
-# Dieta Mediterránea 4 semanas (Plan Elite)
+# Dieta Mediterránea 4 semanas (Plan Elite).md
 
 ## Connections
-- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)_3]] - `references` [EXTRACTED]
-- [[Fuentes verificadas — Dieta Mediterránea]] - `cites` [EXTRACTED]
+- [[Dieta Mediterránea 4 semanas (Plan Elite)_1]] - `contains` [EXTRACTED]
+- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)_3_1]] - `references` [EXTRACTED]
+- [[Fuentes verificadas — Dieta Mediterránea]] - `references` [EXTRACTED]
 - [[Patrón mediterráneo para atletas]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Dieta mediterránea]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Dieta_mediterrnea
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Dieta_mediterráneamd

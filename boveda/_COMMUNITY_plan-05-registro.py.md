@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-05-registro.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-05-registro.py]] - code - planes/i18n/fuentes/plan-05-registro.py
+- [[Live Query (requires Dataview plugin)_145]] - document - boveda/_COMMUNITY_plan-05-registro.py.md
+- [[Members_145]] - document - boveda/_COMMUNITY_plan-05-registro.py.md
+- [[_COMMUNITY_plan-05-registro.py]] - document - boveda/_COMMUNITY_plan-05-registro.py.md
+- [[plan-05-registro.py]] - document - boveda/_COMMUNITY_plan-05-registro.py.md
 
 ## Live Query (requires Dataview plugin)
 

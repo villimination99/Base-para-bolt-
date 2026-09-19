@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Jerarquía del suplemento y batch cooking"
-location: "pág. 03 · Imprescindibles"
+source_file: "boveda/Proteína en polvo (whey o vegetal).md"
+type: "document"
+community: "_COMMUNITY_Jerarquía del suplemento y batch cooking.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd
 ---
 
-# Proteína en polvo (whey o vegetal)
+# Proteína en polvo (whey o vegetal).md
 
 ## Connections
-- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `semantically_similar_to` [INFERRED]
+- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `references` [EXTRACTED]
 - [[Guía de Suplementación (Plan Pro)]] - `references` [EXTRACTED]
-- [[Protección del músculo en déficit]] - `conceptually_related_to` [INFERRED]
+- [[Protección del músculo en déficit]] - `references` [EXTRACTED]
+- [[Proteína en polvo (whey o vegetal)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Jerarquía del suplemento y batch cooking]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd

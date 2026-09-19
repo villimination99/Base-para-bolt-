@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L439"
+source_file: "boveda/Los treinta y seis en columna tres franjas de 10° por signo..md"
+type: "document"
+community: "lamina_decanos().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_decanosmd
 ---
 
-# Los treinta y seis en columna: tres franjas de 10° por signo.
+# Los treinta y seis en columna tres franjas de 10° por signo..md
 
 ## Connections
-- [[lamina_decanos()]] - `rationale_for` [EXTRACTED]
+- [[Los treinta y seis en columna tres franjas de 10° por signo._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del zodiaco (generador)]] - `references` [EXTRACTED]
+- [[lamina_decanos()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_decanosmd

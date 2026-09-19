@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/verificar.mjs"
-type: "code"
-community: "Verificación de PDFs"
-location: "L13"
+source_file: "boveda/archivos.md"
+type: "document"
+community: "archivos.md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Verificacin_de_PDFs
+  - community/archivosmd
 ---
 
-# archivos
+# archivos.md
 
 ## Connections
-- [[verificar.mjs]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Verificación de PDFs]] - `references` [EXTRACTED]
+- [[archivos_1]] - `contains` [EXTRACTED]
+- [[verificar.mjs]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Verificacin_de_PDFs
+#graphify/document #graphify/EXTRACTED #community/archivosmd

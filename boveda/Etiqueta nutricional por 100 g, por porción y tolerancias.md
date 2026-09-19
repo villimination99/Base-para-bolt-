@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/mesa.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Etiqueta nutricional por 100 g, por porción y tolerancias.md"
+type: "document"
+community: "Etiqueta nutricional por 100 g, por porción y tolerancias.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Etiqueta_nutricional_por_100_g_por_porción_y_toleranciasmd
 ---
 
-# Etiqueta nutricional: por 100 g, por porción y tolerancias
+# Etiqueta nutricional por 100 g, por porción y tolerancias.md
 
 ## Connections
-- [[Inocuidad alimentaria zona de peligro y temperaturas seguras]] - `conceptually_related_to` [INFERRED]
+- [[Etiqueta nutricional por 100 g, por porción y tolerancias_1]] - `contains` [EXTRACTED]
+- [[Inocuidad alimentaria zona de peligro y temperaturas seguras]] - `references` [EXTRACTED]
 - [[Mesa — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Tabla de micronutrientes recomendación por sexo y techo UL]] - `conceptually_related_to` [INFERRED]
+- [[Tabla de micronutrientes recomendación por sexo y techo UL]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Etiqueta_nutricional_por_100_g_por_porción_y_toleranciasmd

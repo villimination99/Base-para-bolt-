@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Progresión de cargas"
-location: "pág. 04 · Progresión de cargas"
+source_file: "boveda/Progresión de cargas semana a semana (RIR, series).md"
+type: "document"
+community: "_COMMUNITY_Progresión de cargas.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_de_cargas
+  - community/_COMMUNITY_Progresión_de_cargasmd
 ---
 
-# Progresión de cargas semana a semana (RIR, series)
+# Progresión de cargas semana a semana (RIR, series).md
 
 ## Connections
-- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `shares_data_with` [EXTRACTED]
-- [[Registro de cargas como dato que decide]] - `rationale_for` [EXTRACTED]
+- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `references` [EXTRACTED]
+- [[Progresión de cargas semana a semana (RIR, series)_1]] - `contains` [EXTRACTED]
+- [[Registro de cargas como dato que decide]] - `references` [EXTRACTED]
 - [[Semana de descarga (semanas 4 y 8)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Progresión de cargas]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Progresin_de_cargas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_de_cargasmd

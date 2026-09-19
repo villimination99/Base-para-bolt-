@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/descanso.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Arquitectura del sueño N1, N2, N3 y REM.md"
+type: "document"
+community: "_COMMUNITY_Figuras de carga y acondicionamiento.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - community/_COMMUNITY_Figuras_de_carga_y_acondicionamientomd
 ---
 
-# Arquitectura del sueño: N1, N2, N3 y REM
+# Arquitectura del sueño N1, N2, N3 y REM.md
 
 ## Connections
-- [[Descanso — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Hipnograma cuatro a seis ciclos de unos 90 minutos]] - `semantically_similar_to` [INFERRED]
+- [[Arquitectura del sueño N1, N2, N3 y REM_1]] - `contains` [EXTRACTED]
+- [[Descanso — repertorio gráfico (biblioteca de láminas)_1]] - `references` [EXTRACTED]
+- [[Hipnograma cuatro a seis ciclos de unos 90 minutos]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Figuras_de_carga_y_acondicionamientomd

@@ -1,18 +1,18 @@
 ---
 source_file: "planes/tools/preparar-fuentes.py"
 type: "code"
-community: "Preparación de fuentes · planes"
+community: "re"
 location: "L39"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Preparacin_de_fuentes__planes
+  - community/re
 ---
 
 # fetch()
 
 ## Connections
-- [[main()_24]] - `calls` [EXTRACTED]
-- [[planestoolspreparar-fuentes.py]] - `contains` [EXTRACTED]
+- [[main()_33]] - `calls` [EXTRACTED]
+- [[planestoolspreparar-fuentes.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Preparacin_de_fuentes__planes
+#graphify/code #graphify/EXTRACTED #community/re

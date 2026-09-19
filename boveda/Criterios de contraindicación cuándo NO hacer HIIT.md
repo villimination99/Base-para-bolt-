@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "rationale"
-community: "Arquitectura del sueño"
-location: "pág. 02"
+source_file: "boveda/Criterios de contraindicación cuándo NO hacer HIIT.md"
+type: "document"
+community: "_COMMUNITY_Arquitectura del sueño.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_del_sueo
+  - community/_COMMUNITY_Arquitectura_del_sueñomd
 ---
 
-# Criterios de contraindicación: cuándo NO hacer HIIT
+# Criterios de contraindicación cuándo NO hacer HIIT.md
 
 ## Connections
 - [[10 Rutinas HIIT (Plan Elite, edición 2026)]] - `references` [EXTRACTED]
-- [[El sueño es tu mejor suplemento (coste fisiológico de dormir mal)]] - `conceptually_related_to` [INFERRED]
+- [[Criterios de contraindicación cuándo NO hacer HIIT_1]] - `contains` [EXTRACTED]
+- [[El sueño es tu mejor suplemento (coste fisiológico de dormir mal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Arquitectura del sueño]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Arquitectura_del_sueñomd

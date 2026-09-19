@@ -1,28 +1,32 @@
 ---
 source_file: "libros/tools/escribir-codice-arcanos.py"
 type: "code"
-community: "Texto del Códice de los Arcanos"
+community: "escribir-codice-arcanos.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_los_Arcanos
+  - community/escribir-codice-arcanospy
 ---
 
 # escribir-codice-arcanos.py
 
 ## Connections
+- [[CÓDICE DE LOS ARCANOS — obra original de VILLUMINATIONS…]] - `rationale_for` [EXTRACTED]
 - [[arcano()]] - `contains` [EXTRACTED]
-- [[cap()]] - `contains` [EXTRACTED]
-- [[ficha()]] - `contains` [EXTRACTED]
-- [[fig()]] - `contains` [EXTRACTED]
-- [[h()]] - `contains` [EXTRACTED]
-- [[lista()]] - `contains` [EXTRACTED]
-- [[main()_8]] - `contains` [EXTRACTED]
-- [[nota()]] - `contains` [EXTRACTED]
-- [[p()]] - `contains` [EXTRACTED]
-- [[pasos()]] - `contains` [EXTRACTED]
+- [[cap()_1]] - `contains` [EXTRACTED]
+- [[ficha()_1]] - `contains` [EXTRACTED]
+- [[fig()_1]] - `contains` [EXTRACTED]
+- [[h()_1]] - `contains` [EXTRACTED]
+- [[importlib_util]] - `imports` [EXTRACTED]
+- [[json]] - `imports` [EXTRACTED]
+- [[lista()_1]] - `contains` [EXTRACTED]
+- [[main()_4]] - `contains` [EXTRACTED]
+- [[nota()_1]] - `contains` [EXTRACTED]
+- [[p()_1]] - `contains` [EXTRACTED]
+- [[pasos()_1]] - `contains` [EXTRACTED]
+- [[pathlib]] - `imports_from` [EXTRACTED]
 - [[ritual()]] - `contains` [EXTRACTED]
-- [[sep()]] - `contains` [EXTRACTED]
+- [[sep()_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_los_Arcanos
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-arcanospy

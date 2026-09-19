@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/11-elite-coaching-semanal.html"
-type: "concept"
-community: "Progresión semanal y cierre de mes"
-location: "pág. 07"
+source_file: "boveda/El mes en una página (evolución de las cuatro semanas y récords personales).md"
+type: "document"
+community: "_COMMUNITY_Progresión semanal y cierre de mes.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_semanal_y_cierre_de_mes
+  - community/_COMMUNITY_Progresión_semanal_y_cierre_de_mesmd
 ---
 
-# El mes en una página (evolución de las cuatro semanas y récords personales)
+# El mes en una página (evolución de las cuatro semanas y récords personales).md
 
 ## Connections
-- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `shares_data_with` [EXTRACTED]
-- [[Registro de cargas 8 semanas y récords personales del ciclo]] - `shares_data_with` [INFERRED]
-- [[Sesión 4 · Consolidación (qué se queda para siempre)]] - `shares_data_with` [EXTRACTED]
+- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `references` [EXTRACTED]
+- [[El mes en una página (evolución de las cuatro semanas y récords personales)_1]] - `contains` [EXTRACTED]
+- [[Registro de cargas 8 semanas y récords personales del ciclo]] - `references` [EXTRACTED]
+- [[Sesión 4 · Consolidación (qué se queda para siempre)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Progresión semanal y cierre de mes]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Progresin_semanal_y_cierre_de_mes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_semanal_y_cierre_de_mesmd

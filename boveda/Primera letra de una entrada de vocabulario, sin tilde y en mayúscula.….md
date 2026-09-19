@@ -1,12 +1,12 @@
 ---
 source_file: "libros/build.py"
 type: "rationale"
-community: "Generador de libros"
+community: "libros/build.py"
 location: "L126"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/libros/buildpy
 ---
 
 # Primera letra de una entrada de vocabulario, sin tilde y en mayúscula.…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[inicial()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/libros/buildpy

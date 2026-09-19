@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/arcanos.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Tres tiradas las tres, la cruz de cuatro y el espejo.md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Repertorio_grfico_de_alta_magia
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Tres tiradas: las tres, la cruz de cuatro y el espejo
+# Tres tiradas las tres, la cruz de cuatro y el espejo.md
 
 ## Connections
 - [[Arcanos — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Estructura de la baraja 22 + 4 × 14 = 78]] - `conceptually_related_to` [INFERRED]
+- [[Estructura de la baraja 22 + 4 × 14 = 78]] - `references` [EXTRACTED]
+- [[Tres tiradas las tres, la cruz de cuatro y el espejo_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

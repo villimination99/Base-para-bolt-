@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/voluntad-02.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_voluntad-02.py.md"
+type: "document"
 community: "voluntad-02.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/voluntad-02py
 ---
 
 # voluntad-02.py
 
-#graphify/code #graphify/EXTRACTED #community/voluntad-02py
+## Connections
+- [[Live Query (requires Dataview plugin)_177]] - `contains` [EXTRACTED]
+- [[Members_177]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_voluntad-02.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/voluntad-02py

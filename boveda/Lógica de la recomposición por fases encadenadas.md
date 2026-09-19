@@ -1,20 +1,22 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "rationale"
-community: "Recomposición por fases"
-location: "pág. 02 · Fundamentos"
+source_file: "boveda/Lógica de la recomposición por fases encadenadas.md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Lógica de la recomposición por fases encadenadas
+# Lógica de la recomposición por fases encadenadas.md
 
 ## Connections
-- [[Ajustes por objetivo sobre la semana 4]] - `semantically_similar_to` [INFERRED]
-- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `rationale_for` [EXTRACTED]
-- [[Fase 2 · Definición (semanas 5-8)]] - `rationale_for` [EXTRACTED]
+- [[Ajustes por objetivo sobre la semana 4]] - `references` [EXTRACTED]
+- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `references` [EXTRACTED]
+- [[Fase 2 · Definición (semanas 5-8)]] - `references` [EXTRACTED]
+- [[Lógica de la recomposición por fases encadenadas_1]] - `contains` [EXTRACTED]
 - [[Plan Definición + Volumen 8 semanas (Plan Pro)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

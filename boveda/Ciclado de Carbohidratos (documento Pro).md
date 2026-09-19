@@ -1,20 +1,23 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
+source_file: "boveda/Ciclado de Carbohidratos (documento Pro).md"
 type: "document"
-community: "Maquetación de los planes"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Ciclado de Carbohidratos (documento Pro)
+# Ciclado de Carbohidratos (documento Pro).md
 
 ## Connections
-- [[Estructura de página section.page + pg-headmainpg-foot]] - `implements` [EXTRACTED]
+- [[Ciclado de Carbohidratos (documento Pro)_1]] - `contains` [EXTRACTED]
+- [[Estructura de página section.page + pg-headmainpg-foot]] - `references` [EXTRACTED]
 - [[Los tres tipos de día (alto, medio, bajo)]] - `references` [EXTRACTED]
 - [[Planes VILLUMINATIONS — 11 PDFs descargables]] - `references` [EXTRACTED]
-- [[Tier PRO (magenta ff00e5, 19,99 $)]] - `implements` [EXTRACTED]
+- [[Tier PRO (magenta ff00e5, 19,99 $)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 - [[fig-ciclado — la semana de ciclado en barras gkg]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

@@ -1,0 +1,17 @@
+---
+source_file: ".agents/skills/higgsfield-websites/references/design-recipe.md"
+type: "document"
+community: "design-recipe — the distilled craft playbook (read on EVERY build)"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/design-recipe__the_distilled_craft_playbook_read_on_EVERY_build
+---
+
+# design-recipe.md
+
+## Connections
+- [[design-recipe — the distilled craft playbook (read on EVERY build)]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/design-recipe__the_distilled_craft_playbook_read_on_EVERY_build

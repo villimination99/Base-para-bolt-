@@ -1,20 +1,18 @@
 ---
-source_file: ""
-type: "code"
-community: "Generador de libros"
+source_file: "boveda/Path_5.md"
+type: "document"
+community: "documentos().md"
+location: "L11"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/documentosmd
 ---
 
 # Path
 
 ## Connections
-- [[fondo()]] - `references` [EXTRACTED]
-- [[marcadores()]] - `references` [EXTRACTED]
-- [[paginas_de_capitulos()]] - `references` [EXTRACTED]
-- [[render()]] - `references` [EXTRACTED]
-- [[unir()]] - `references` [EXTRACTED]
+- [[Connections_133]] - `contains` [EXTRACTED]
+- [[Path_5]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/documentosmd

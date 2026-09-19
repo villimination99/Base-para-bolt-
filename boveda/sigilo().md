@@ -1,21 +1,25 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
+source_file: "libros/tools/dibujar-zodiaco.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
-location: "L75"
+community: "dibujar-zodiaco.py"
+location: "L169"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-zodiacopy
 ---
 
 # sigilo()
 
 ## Connections
-- [[cuadro()]] - `calls` [EXTRACTED]
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[f()]] - `calls` [EXTRACTED]
-- [[lamina_hexagrama()]] - `calls` [EXTRACTED]
-- [[lamina_horas()]] - `calls` [EXTRACTED]
+- [[Los sigilos son dibujos más simples que los glifos aguantan —y piden— algo más…_1]] - `rationale_for` [EXTRACTED]
+- [[dibujar-zodiaco.py_1]] - `contains` [EXTRACTED]
+- [[f()_2]] - `calls` [EXTRACTED]
+- [[lamina_decanos()]] - `calls` [EXTRACTED]
+- [[lamina_dignidades()]] - `calls` [EXTRACTED]
+- [[lamina_regentes()]] - `calls` [EXTRACTED]
+- [[lamina_rueda()]] - `calls` [EXTRACTED]
+- [[lamina_terminos()]] - `calls` [EXTRACTED]
+- [[medallon()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-zodiacopy

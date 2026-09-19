@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Escalado de macros y recetario"
-location: "pág. 05"
+source_file: "boveda/Semana 3 · Variedad (2.500 kcal).md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Escalado_de_macros_y_recetario
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Semana 3 · Variedad (2.500 kcal)
+# Semana 3 · Variedad (2.500 kcal).md
 
 ## Connections
 - [[Recetario de 20 recetas premium]] - `references` [EXTRACTED]
+- [[Semana 3 · Variedad (2.500 kcal)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

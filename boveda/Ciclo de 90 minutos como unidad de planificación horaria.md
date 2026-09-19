@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "concept"
-community: "Descarga, siesta y coaching"
-location: "pág. 03, callout info"
+source_file: "boveda/Ciclo de 90 minutos como unidad de planificación horaria.md"
+type: "document"
+community: "_COMMUNITY_Descarga, siesta y coaching.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Descarga_siesta_y_coaching
+  - community/_COMMUNITY_Descarga_siesta_y_coachingmd
 ---
 
-# Ciclo de 90 minutos como unidad de planificación horaria
+# Ciclo de 90 minutos como unidad de planificación horaria.md
 
 ## Connections
-- [[Arquitectura de la noche (N1–N2, N3 profundo, REM)]] - `conceptually_related_to` [EXTRACTED]
+- [[Arquitectura de la noche (N1–N2, N3 profundo, REM)]] - `references` [EXTRACTED]
+- [[Ciclo de 90 minutos como unidad de planificación horaria_1]] - `contains` [EXTRACTED]
 - [[La siesta bien usada (10–20 min, 30–60 min, 90 min)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Descarga, siesta y coaching]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Descarga_siesta_y_coaching
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Descarga_siesta_y_coachingmd

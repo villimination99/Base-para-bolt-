@@ -1,17 +1,20 @@
 ---
-source_file: "libros/README.md"
-type: "rationale"
-community: "Arquitectura de los generadores"
+source_file: "boveda/Tipografía Orbitron titulares, EB Garamond cuerpo.md"
+type: "document"
+community: "_COMMUNITY_Arquitectura de los generadores.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/_COMMUNITY_Arquitectura_de_los_generadoresmd
 ---
 
-# Tipografía: Orbitron titulares, EB Garamond cuerpo
+# Tipografía Orbitron titulares, EB Garamond cuerpo.md
 
 ## Connections
-- [[Cubierta neón a sangre, interior en papel hueso]] - `conceptually_related_to` [EXTRACTED]
-- [[Orbitron variable e instancias estáticas (preparar-fuentes.py)]] - `semantically_similar_to` [INFERRED]
+- [[Cubierta neón a sangre, interior en papel hueso]] - `references` [EXTRACTED]
+- [[Orbitron variable e instancias estáticas (preparar-fuentes.py)]] - `references` [EXTRACTED]
+- [[Tipografía Orbitron titulares, EB Garamond cuerpo_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Arquitectura de los generadores]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Arquitectura_de_los_generadoresmd

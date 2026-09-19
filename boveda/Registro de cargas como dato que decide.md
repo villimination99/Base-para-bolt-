@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "rationale"
-community: "Progresión de cargas"
-location: "callout info pág. 07"
+source_file: "boveda/Registro de cargas como dato que decide.md"
+type: "document"
+community: "_COMMUNITY_Progresión de cargas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_de_cargas
+  - community/_COMMUNITY_Progresión_de_cargasmd
 ---
 
-# Registro de cargas como dato que decide
+# Registro de cargas como dato que decide.md
 
 ## Connections
-- [[Progresión de cargas semana a semana (RIR, series)]] - `rationale_for` [EXTRACTED]
-- [[Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño)]] - `implements` [INFERRED]
+- [[Progresión de cargas semana a semana (RIR, series)]] - `references` [EXTRACTED]
+- [[Registro de cargas como dato que decide_1]] - `contains` [EXTRACTED]
+- [[Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Progresión de cargas]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Progresin_de_cargas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_de_cargasmd

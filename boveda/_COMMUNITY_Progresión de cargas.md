@@ -1,33 +1,28 @@
 ---
 type: community
-cohesion: 0.29
-members: 7
+members: 5
 ---
 
 # Progresión de cargas
 
-**Cohesion:** 0.29 - loosely connected
-**Members:** 7 nodes
+**Members:** 5 nodes
 
 ## Members
-- [[Corrige la ejecución antes de tocar el plan]] - rationale - planes/src/05-pro-registro-progreso-semanal.html
-- [[Matriz de interpretación peso  cintura  fuerza → acción]] - concept - planes/src/05-pro-registro-progreso-semanal.html
-- [[Progresión de cargas semana a semana (RIR, series)]] - concept - planes/src/04-pro-plan-definicion-volumen.html
-- [[Registro de cargas como dato que decide]] - rationale - planes/src/04-pro-plan-definicion-volumen.html
-- [[Semana de descarga (semanas 4 y 8)]] - concept - planes/src/04-pro-plan-definicion-volumen.html
-- [[Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño)]] - concept - planes/src/05-pro-registro-progreso-semanal.html
-- [[Un solo cambio por semana (decisión del lunes)]] - rationale - planes/src/05-pro-registro-progreso-semanal.html
+- [[Connections to other communities_18]] - document - boveda/_COMMUNITY_Progresión de cargas.md
+- [[Live Query (requires Dataview plugin)_38]] - document - boveda/_COMMUNITY_Progresión de cargas.md
+- [[Members_38]] - document - boveda/_COMMUNITY_Progresión de cargas.md
+- [[Progresión de cargas]] - document - boveda/_COMMUNITY_Progresión de cargas.md
+- [[Top bridge nodes_18]] - document - boveda/_COMMUNITY_Progresión de cargas.md
 
 ## Live Query (requires Dataview plugin)
 
 ```dataview
-TABLE source_file, type FROM #community/Progresin_de_cargas
+TABLE source_file, type FROM #community/Progresión_de_cargas
 SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 2 edges to [[_COMMUNITY_Recomposición por fases]]
+- 1 edge to [[_COMMUNITY__COMMUNITY_Progresión de cargas]]
 
 ## Top bridge nodes
-- [[Matriz de interpretación peso  cintura  fuerza → acción]] - degree 4, connects to 1 community
-- [[Progresión de cargas semana a semana (RIR, series)]] - degree 3, connects to 1 community
+- [[Progresión de cargas]] - degree 5, connects to 1 community

@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L240"
+source_file: "boveda/Barra y discos reducidos a geometría la única figura que sí es objeto..md"
+type: "document"
+community: "_COMMUNITY_Emblemas de los planes (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/_COMMUNITY_Emblemas_de_los_planes_generadormd
 ---
 
-# Barra y discos reducidos a geometría: la única figura que sí es objeto.
+# Barra y discos reducidos a geometría la única figura que sí es objeto..md
 
 ## Connections
-- [[nucleo_barra()]] - `rationale_for` [EXTRACTED]
+- [[Barra y discos reducidos a geometría la única figura que sí es objeto._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_barra()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Emblemas_de_los_planes_generadormd

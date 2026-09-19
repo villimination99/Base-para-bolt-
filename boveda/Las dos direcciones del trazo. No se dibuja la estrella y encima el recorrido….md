@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
-type: "rationale"
-community: "Láminas de alta magia (generador)"
-location: "L194"
+source_file: "boveda/Las dos direcciones del trazo. No se dibuja la estrella y encima el recorrido….md"
+type: "document"
+community: "lamina_pentagrama().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/lamina_pentagramamd
 ---
 
-# Las dos direcciones del trazo. No se dibuja la estrella y encima el recorrido:…
+# Las dos direcciones del trazo. No se dibuja la estrella y encima el recorrido….md
 
 ## Connections
-- [[lamina_pentagrama()]] - `rationale_for` [EXTRACTED]
+- [[Las dos direcciones del trazo. No se dibuja la estrella y encima el recorrido…_1]] - `contains` [EXTRACTED]
+- [[lamina_pentagrama()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_pentagramamd

@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Ergogénicos y peso semanal"
-location: "pág. 07 · Protocolo diario"
+source_file: "boveda/Protocolo diario de toma de suplementos.md"
+type: "document"
+community: "_COMMUNITY_Ergogénicos y peso semanal.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Ergognicos_y_peso_semanal
+  - community/_COMMUNITY_Ergogénicos_y_peso_semanalmd
 ---
 
-# Protocolo diario de toma de suplementos
+# Protocolo diario de toma de suplementos.md
 
 ## Connections
-- [[Beta-alanina]] - `shares_data_with` [EXTRACTED]
-- [[Cafeína como ayuda ergogénica]] - `shares_data_with` [EXTRACTED]
-- [[Tabla diaria de adherencia nutricional]] - `shares_data_with` [INFERRED]
+- [[Beta-alanina]] - `references` [EXTRACTED]
+- [[Cafeína como ayuda ergogénica]] - `references` [EXTRACTED]
+- [[Protocolo diario de toma de suplementos_1]] - `contains` [EXTRACTED]
+- [[Tabla diaria de adherencia nutricional]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Ergogénicos y peso semanal]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Ergognicos_y_peso_semanal
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Ergogénicos_y_peso_semanalmd

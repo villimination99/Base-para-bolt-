@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Suplementos que funcionan"
-location: "pág. 04 · Salud y recuperación"
+source_file: "boveda/Magnesio (bisglicinato o citrato).md"
+type: "document"
+community: "_COMMUNITY_Suplementos que funcionan.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Suplementos_que_funcionan
+  - community/_COMMUNITY_Suplementos_que_funcionanmd
 ---
 
-# Magnesio (bisglicinato o citrato)
+# Magnesio (bisglicinato o citrato).md
 
 ## Connections
 - [[Guía de Suplementación (Plan Pro)]] - `references` [EXTRACTED]
+- [[Magnesio (bisglicinato o citrato)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Suplementos que funcionan]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Suplementos_que_funcionan
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Suplementos_que_funcionanmd

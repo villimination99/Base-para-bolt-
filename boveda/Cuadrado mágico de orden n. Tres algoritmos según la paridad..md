@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-alta-magia.py"
 type: "rationale"
-community: "Láminas de alta magia (generador)"
+community: "dibujar-alta-magia.py"
 location: "L96"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-alta-magiapy
 ---
 
 # Cuadrado mágico de orden n. Tres algoritmos según la paridad.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[kamea()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-alta-magiapy

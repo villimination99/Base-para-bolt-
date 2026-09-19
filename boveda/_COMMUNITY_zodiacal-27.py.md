@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # zodiacal-27.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[zodiacal-27.py]] - code - libros/i18n/fuentes/zodiacal-27.py
+- [[Live Query (requires Dataview plugin)_212]] - document - boveda/_COMMUNITY_zodiacal-27.py.md
+- [[Members_212]] - document - boveda/_COMMUNITY_zodiacal-27.py.md
+- [[_COMMUNITY_zodiacal-27.py]] - document - boveda/_COMMUNITY_zodiacal-27.py.md
+- [[zodiacal-27.py]] - document - boveda/_COMMUNITY_zodiacal-27.py.md
 
 ## Live Query (requires Dataview plugin)
 

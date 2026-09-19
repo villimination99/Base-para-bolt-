@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 10"
+source_file: "boveda/Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 40/60/80 %)
+# Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %).md
 
 ## Connections
-- [[Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla)]] - `cites` [EXTRACTED]
-- [[Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa)]] - `conceptually_related_to` [INFERRED]
+- [[Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %)_1]] - `contains` [EXTRACTED]
+- [[Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla)]] - `references` [EXTRACTED]
+- [[Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

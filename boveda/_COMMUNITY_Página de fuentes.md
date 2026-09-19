@@ -1,26 +1,22 @@
 ---
-type: community
-cohesion: 0.43
-members: 7
+source_file: "boveda/_COMMUNITY_Página de fuentes.md"
+type: "document"
+community: "_COMMUNITY_Página de fuentes.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Página_de_fuentesmd
 ---
 
-# Página de fuentes
+# _COMMUNITY_Página de fuentes.md
 
-**Cohesion:** 0.43 - moderately connected
-**Members:** 7 nodes
+## Connections
+- [[Los folios están escritos a mano en cada sección se recalculan.]] - `references` [EXTRACTED]
+- [[Página de fuentes]] - `contains` [EXTRACTED]
+- [[main()_23_1]] - `references` [EXTRACTED]
+- [[pagina()_2]] - `references` [EXTRACTED]
+- [[quitar()_1]] - `references` [EXTRACTED]
+- [[renumerar()_1]] - `references` [EXTRACTED]
 
-## Members
-- [[Los folios están escritos a mano en cada sección se recalculan.]] - rationale - planes/tools/pagina-fuentes.py
-- [[Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes…]] - rationale - planes/tools/pagina-fuentes.py
-- [[main()_23]] - code - planes/tools/pagina-fuentes.py
-- [[pagina()]] - code - planes/tools/pagina-fuentes.py
-- [[pagina-fuentes.py]] - code - planes/tools/pagina-fuentes.py
-- [[quitar()]] - code - planes/tools/pagina-fuentes.py
-- [[renumerar()]] - code - planes/tools/pagina-fuentes.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Pgina_de_fuentes
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Página_de_fuentesmd

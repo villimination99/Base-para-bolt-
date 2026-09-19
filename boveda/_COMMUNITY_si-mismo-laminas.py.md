@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # si-mismo-laminas.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[si-mismo-laminas.py]] - code - libros/i18n/fuentes/si-mismo-laminas.py
+- [[Live Query (requires Dataview plugin)_174]] - document - boveda/_COMMUNITY_si-mismo-laminas.py.md
+- [[Members_174]] - document - boveda/_COMMUNITY_si-mismo-laminas.py.md
+- [[_COMMUNITY_si-mismo-laminas.py]] - document - boveda/_COMMUNITY_si-mismo-laminas.py.md
+- [[si-mismo-laminas.py]] - document - boveda/_COMMUNITY_si-mismo-laminas.py.md
 
 ## Live Query (requires Dataview plugin)
 

@@ -1,12 +1,12 @@
 ---
 source_file: "libros/build.py"
 type: "code"
-community: "Generador de libros"
+community: "libros/build.py"
 location: "L125"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/libros/buildpy
 ---
 
 # inicial()
@@ -16,4 +16,4 @@ tags:
 - [[librosbuild.py]] - `contains` [EXTRACTED]
 - [[reordenar_vocabulario()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/libros/buildpy

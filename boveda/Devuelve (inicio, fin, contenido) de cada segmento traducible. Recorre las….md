@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/i18n.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L107"
+source_file: "boveda/Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las….md"
+type: "document"
+community: "planestoolsi18n.py.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planestoolsi18npymd
 ---
 
-# Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las…
+# Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las….md
 
 ## Connections
-- [[segmentar()]] - `rationale_for` [EXTRACTED]
+- [[Devuelve (inicio, fin, contenido) de cada segmento traducible. Recorre las…_1]] - `contains` [EXTRACTED]
+- [[segmentar()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/planestoolsi18npymd

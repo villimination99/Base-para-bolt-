@@ -1,22 +1,20 @@
 ---
-source_file: "planes/tools/auditar.py"
+source_file: "auditar.py"
 type: "code"
-community: "Auditoría de PDFs"
-location: "L91"
+community: "tools/auditar.py"
+location: "L134"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/tools/auditarpy
 ---
 
 # auditar()
 
 ## Connections
-- [[Path_3]] - `references` [EXTRACTED]
-- [[auditar.py]] - `contains` [EXTRACTED]
-- [[contar_marcadores()]] - `calls` [EXTRACTED]
-- [[fuentes()]] - `calls` [EXTRACTED]
-- [[main()_19]] - `calls` [EXTRACTED]
-- [[texto()]] - `calls` [EXTRACTED]
+- [[auditar.py_2]] - `contains` [EXTRACTED]
+- [[enlaces()]] - `calls` [EXTRACTED]
+- [[precios_incoherentes()]] - `calls` [EXTRACTED]
+- [[recoger()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/code #graphify/EXTRACTED #community/tools/auditarpy

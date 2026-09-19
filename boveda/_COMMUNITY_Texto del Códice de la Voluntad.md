@@ -1,31 +1,28 @@
 ---
-type: community
-cohesion: 0.17
-members: 12
+source_file: "boveda/_COMMUNITY_Texto del Códice de la Voluntad.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice de la Voluntad.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Texto_del_Códice_de_la_Voluntadmd
 ---
 
-# Texto del Códice de la Voluntad
+# _COMMUNITY_Texto del Códice de la Voluntad.md
 
-**Cohesion:** 0.17 - loosely connected
-**Members:** 12 nodes
+## Connections
+- [[Texto del Códice de la Voluntad]] - `contains` [EXTRACTED]
+- [[cap()_6_1]] - `references` [EXTRACTED]
+- [[ficha()_6_1]] - `references` [EXTRACTED]
+- [[fig()_6_1]] - `references` [EXTRACTED]
+- [[h()_6_1]] - `references` [EXTRACTED]
+- [[lista()_6_1]] - `references` [EXTRACTED]
+- [[main()_14_1]] - `references` [EXTRACTED]
+- [[nota()_6_1]] - `references` [EXTRACTED]
+- [[p()_6_1]] - `references` [EXTRACTED]
+- [[pasos()_6_1]] - `references` [EXTRACTED]
+- [[ritual()_4_1]] - `references` [EXTRACTED]
+- [[sep()_6_1]] - `references` [EXTRACTED]
 
-## Members
-- [[cap()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[escribir-codice-voluntad.py]] - code - libros/tools/escribir-codice-voluntad.py
-- [[ficha()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[fig()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[h()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[lista()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[main()_14]] - code - libros/tools/escribir-codice-voluntad.py
-- [[nota()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[p()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[pasos()_6]] - code - libros/tools/escribir-codice-voluntad.py
-- [[ritual()_4]] - code - libros/tools/escribir-codice-voluntad.py
-- [[sep()_6]] - code - libros/tools/escribir-codice-voluntad.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Texto_del_Cdice_de_la_Voluntad
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_de_la_Voluntadmd

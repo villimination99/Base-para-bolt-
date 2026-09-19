@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/escribir-codice-arcanos.py"
+source_file: "libros/tools/escribir-codice-descanso.py"
 type: "code"
-community: "Texto del Códice de los Arcanos"
-location: "L1100"
+community: "escribir-codice-descanso.py"
+location: "L991"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_los_Arcanos
+  - community/escribir-codice-descansopy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-arcanos.py]] - `contains` [EXTRACTED]
+- [[escribir-codice-descanso.py]] - `contains` [EXTRACTED]
+- [[hh()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_los_Arcanos
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-descansopy

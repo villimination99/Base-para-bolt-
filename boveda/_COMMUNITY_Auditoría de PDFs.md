@@ -1,29 +1,24 @@
 ---
-type: community
-cohesion: 0.40
-members: 10
+source_file: "boveda/_COMMUNITY_Auditoría de PDFs.md"
+type: "document"
+community: "auditar().md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/auditarmd
 ---
 
-# Auditoría de PDFs
+# _COMMUNITY_Auditoría de PDFs.md
 
-**Cohesion:** 0.40 - moderately connected
-**Members:** 10 nodes
+## Connections
+- [[Auditoría de PDFs]] - `contains` [EXTRACTED]
+- [[Path_3_1]] - `references` [EXTRACTED]
+- [[auditar()_2]] - `references` [EXTRACTED]
+- [[contar_marcadores()_1]] - `references` [EXTRACTED]
+- [[fuentes()_2]] - `references` [EXTRACTED]
+- [[main()_19_1]] - `references` [EXTRACTED]
+- [[raiz_dist()_1]] - `references` [EXTRACTED]
+- [[texto()_1]] - `references` [EXTRACTED]
 
-## Members
-- [[Cuenta el árbol de marcadores entero, no solo su primer nivel. Un plan trae una…]] - rationale - planes/tools/auditar.py
-- [[El dist que contiene a este PDF, sea el de planes o el de libros. Se busca…]] - rationale - planes/tools/auditar.py
-- [[Path_3]] - code
-- [[auditar()]] - code - planes/tools/auditar.py
-- [[auditar.py]] - code - planes/tools/auditar.py
-- [[contar_marcadores()]] - code - planes/tools/auditar.py
-- [[fuentes()]] - code - planes/tools/auditar.py
-- [[main()_19]] - code - planes/tools/auditar.py
-- [[raiz_dist()]] - code - planes/tools/auditar.py
-- [[texto()]] - code - planes/tools/auditar.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Auditora_de_PDFs
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/auditarmd

@@ -1,16 +1,19 @@
 ---
-source_file: "libros/README.md"
-type: "concept"
-community: "Extracción del PDF original"
+source_file: "boveda/Párrafos partidos por saltos de maquetación.md"
+type: "document"
+community: "_COMMUNITY_Extracción del PDF original.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Extraccin_del_PDF_original
+  - community/_COMMUNITY_Extracción_del_PDF_originalmd
 ---
 
-# Párrafos partidos por saltos de maquetación
+# Párrafos partidos por saltos de maquetación.md
 
 ## Connections
+- [[Párrafos partidos por saltos de maquetación_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Extracción del PDF original]] - `references` [EXTRACTED]
 - [[extraer.py — PDF original a JSON limpio]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Extraccin_del_PDF_original
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Extracción_del_PDF_originalmd

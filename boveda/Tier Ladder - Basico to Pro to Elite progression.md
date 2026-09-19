@@ -1,19 +1,22 @@
 ---
-source_file: "tienda/portadas/plan-basico.png"
-type: "concept"
-community: "Portadas de los tres niveles"
+source_file: "boveda/Tier Ladder - Basico to Pro to Elite progression.md"
+type: "document"
+community: "_COMMUNITY_Portadas de los tres niveles.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Portadas_de_los_tres_niveles
+  - community/_COMMUNITY_Portadas_de_los_tres_nivelesmd
 ---
 
-# Tier Ladder - Basico to Pro to Elite progression
+# Tier Ladder - Basico to Pro to Elite progression.md
 
 ## Connections
-- [[Counts Strip - 'N documentos  N paginas' inventory line]] - `shares_data_with` [INFERRED]
-- [[Plan Basico Cover - BASICO  Volumen Limpio (cyan, 1 documento, 8 paginas)]] - `conceptually_related_to` [EXTRACTED]
-- [[Plan Elite Cover - ELITE  Todo Incluido + Coaching (green, 11 documentos, 106 paginas)]] - `conceptually_related_to` [EXTRACTED]
-- [[Plan Pro Cover - PRO  Definicion + Volumen (magenta, 5 documentos, 44 paginas)]] - `conceptually_related_to` [EXTRACTED]
+- [[Counts Strip - 'N documentos  N paginas' inventory line]] - `references` [EXTRACTED]
+- [[Plan Basico Cover - BASICO  Volumen Limpio (cyan, 1 documento, 8 paginas)]] - `references` [EXTRACTED]
+- [[Plan Elite Cover - ELITE  Todo Incluido + Coaching (green, 11 documentos, 106 paginas)]] - `references` [EXTRACTED]
+- [[Plan Pro Cover - PRO  Definicion + Volumen (magenta, 5 documentos, 44 paginas)]] - `references` [EXTRACTED]
+- [[Tier Ladder - Basico to Pro to Elite progression_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Portadas de los tres niveles]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Portadas_de_los_tres_niveles
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Portadas_de_los_tres_nivelesmd

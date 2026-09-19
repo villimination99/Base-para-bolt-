@@ -1,19 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
+source_file: "tienda/catalogo.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
-location: "L203"
+community: "lecturas.py"
+location: "L1177"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/lecturaspy
 ---
 
 # comprobar()
 
 ## Connections
-- [[Si una deducción no cierra, el fichero no se escribe.]] - `rationale_for` [EXTRACTED]
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[main()_4]] - `calls` [EXTRACTED]
+- [[Las cadenas que se pasan de largo. Vacío es lo que hay que ver.]] - `rationale_for` [EXTRACTED]
+- [[catalogo.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/lecturaspy

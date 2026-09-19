@@ -1,17 +1,18 @@
 ---
-source_file: "tienda/publicar.py"
-type: "rationale"
-community: "Publicador de la tienda"
-location: "L59"
+source_file: "boveda/El handle que le toca a un título traducido. Shopify solo admite letras sin….md"
+type: "document"
+community: "rebanada().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/rebanadamd
 ---
 
-# El handle que le toca a un título traducido. Shopify solo admite letras sin…
+# El handle que le toca a un título traducido. Shopify solo admite letras sin….md
 
 ## Connections
-- [[rebanada()]] - `rationale_for` [EXTRACTED]
+- [[El handle que le toca a un título traducido. Shopify solo admite letras sin…_1]] - `contains` [EXTRACTED]
+- [[rebanada()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/rebanadamd

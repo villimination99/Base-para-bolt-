@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L116"
+source_file: "boveda/Onda de siete días tres altos, tres bajos y uno medio..md"
+type: "document"
+community: "f()_5.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/f_5md
 ---
 
-# Onda de siete días: tres altos, tres bajos y uno medio.
+# Onda de siete días tres altos, tres bajos y uno medio..md
 
 ## Connections
-- [[nucleo_ciclado()]] - `rationale_for` [EXTRACTED]
+- [[Onda de siete días tres altos, tres bajos y uno medio._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_ciclado()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/f_5md

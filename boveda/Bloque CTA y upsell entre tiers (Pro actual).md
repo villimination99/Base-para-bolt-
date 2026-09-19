@@ -1,17 +1,20 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
-type: "concept"
-community: "Identidad visual y precio por nivel"
+source_file: "boveda/Bloque CTA y upsell entre tiers (Pro actual).md"
+type: "document"
+community: "_COMMUNITY_Identidad visual y precio por nivel.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Identidad_visual_y_precio_por_nivel
+  - community/_COMMUNITY_Identidad_visual_y_precio_por_nivelmd
 ---
 
-# Bloque CTA y upsell entre tiers (Pro actual)
+# Bloque CTA y upsell entre tiers (Pro actual).md
 
 ## Connections
-- [[Bloque CTA y upsell entre tiers (Básico actual)]] - `semantically_similar_to` [INFERRED]
+- [[Bloque CTA y upsell entre tiers (Básico actual)]] - `references` [EXTRACTED]
+- [[Bloque CTA y upsell entre tiers (Pro actual)_1]] - `contains` [EXTRACTED]
 - [[Tier ELITE (verde 00ff88, 34,99 $)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Identidad visual y precio por nivel]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Identidad_visual_y_precio_por_nivel
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Identidad_visual_y_precio_por_nivelmd

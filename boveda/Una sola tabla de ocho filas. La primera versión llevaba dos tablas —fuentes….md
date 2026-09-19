@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/pagina-fuentes.py"
-type: "rationale"
-community: "Página de fuentes"
-location: "L61"
+source_file: "boveda/Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes….md"
+type: "document"
+community: "_COMMUNITY_Página de fuentes.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/_COMMUNITY_Página_de_fuentesmd
 ---
 
-# Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes…
+# Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes….md
 
 ## Connections
-- [[pagina()]] - `rationale_for` [EXTRACTED]
+- [[Una sola tabla de ocho filas. La primera versión llevaba dos tablas —fuentes…_1]] - `contains` [EXTRACTED]
+- [[pagina()_2]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Página_de_fuentesmd

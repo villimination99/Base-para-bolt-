@@ -1,19 +1,18 @@
 ---
-source_file: "planes/tools/auditar.py"
+source_file: "tienda/articulos_en_fr.py"
 type: "code"
-community: "Auditoría de PDFs"
-location: "L66"
+community: "articulos_en_fr.py"
+location: "L159"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/articulos_en_frpy
 ---
 
 # fuentes()
 
 ## Connections
-- [[Path_3]] - `references` [EXTRACTED]
-- [[auditar()]] - `calls` [EXTRACTED]
-- [[auditar.py]] - `contains` [EXTRACTED]
+- [[articulos_en_fr.py]] - `contains` [EXTRACTED]
+- [[cuerpo()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/code #graphify/EXTRACTED #community/articulos_en_frpy

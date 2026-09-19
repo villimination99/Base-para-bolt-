@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Las cuatro fases del entrenamiento"
-location: "pág. 05"
+source_file: "boveda/Split Torso  Pierna de 5 días con día de puntos débiles.md"
+type: "document"
+community: "_COMMUNITY_Las cuatro fases del entrenamiento.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Las_cuatro_fases_del_entrenamiento
+  - community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd
 ---
 
-# Split Torso / Pierna de 5 días con día de puntos débiles
+# Split Torso  Pierna de 5 días con día de puntos débiles.md
 
 ## Connections
-- [[Fase 3 · Intensificación (sem. 5–6, TorsoPierna 5 días, 75–85 % 1RM, RIR 1–2)]] - `implements` [EXTRACTED]
+- [[Fase 3 · Intensificación (sem. 5–6, TorsoPierna 5 días, 75–85 % 1RM, RIR 1–2)]] - `references` [EXTRACTED]
+- [[Split Torso  Pierna de 5 días con día de puntos débiles_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Las cuatro fases del entrenamiento]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Las_cuatro_fases_del_entrenamiento
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd

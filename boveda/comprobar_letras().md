@@ -1,18 +1,18 @@
 ---
 source_file: "libros/tools/dibujar-alta-magia.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
+community: "dibujar-alta-magia.py"
 location: "L559"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-alta-magiapy
 ---
 
 # comprobar_letras()
 
 ## Connections
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[main()_3]] - `calls` [EXTRACTED]
+- [[dibujar-alta-magia.py_2]] - `contains` [EXTRACTED]
+- [[main()_26]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-alta-magiapy

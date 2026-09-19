@@ -1,19 +1,22 @@
 ---
-source_file: "libros/partials/descanso.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Hipnograma cuatro a seis ciclos de unos 90 minutos.md"
+type: "document"
+community: "_COMMUNITY_Figuras de carga y acondicionamiento.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Figuras_de_carga_y_acondicionamientomd
 ---
 
-# Hipnograma: cuatro a seis ciclos de unos 90 minutos
+# Hipnograma cuatro a seis ciclos de unos 90 minutos.md
 
 ## Connections
-- [[Arquitectura del sueño N1, N2, N3 y REM]] - `semantically_similar_to` [INFERRED]
-- [[Descanso — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Deuda de sueño acumulada en la semana]] - `conceptually_related_to` [INFERRED]
-- [[Reloj circadiano de 24 horas cortisol, temperatura y bajón de tarde]] - `conceptually_related_to` [INFERRED]
+- [[Arquitectura del sueño N1, N2, N3 y REM]] - `references` [EXTRACTED]
+- [[Descanso — repertorio gráfico (biblioteca de láminas)_1]] - `references` [EXTRACTED]
+- [[Deuda de sueño acumulada en la semana_1]] - `references` [EXTRACTED]
+- [[Hipnograma cuatro a seis ciclos de unos 90 minutos_1]] - `contains` [EXTRACTED]
+- [[Reloj circadiano de 24 horas cortisol, temperatura y bajón de tarde_1]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Figuras_de_carga_y_acondicionamientomd

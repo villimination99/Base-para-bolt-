@@ -1,19 +1,19 @@
 ---
 source_file: "planes/tools/dibujar-emblemas.py"
 type: "code"
-community: "Emblemas de los planes (generador)"
+community: "dibujar-emblemas.py"
 location: "L302"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/dibujar-emblemaspy
 ---
 
 # nucleo_coaching()
 
 ## Connections
-- [[Dos anillos enlazados y un eje el que guía y el que ejecuta.]] - `rationale_for` [EXTRACTED]
-- [[dibujar-emblemas.py]] - `indirect_call` [INFERRED]
-- [[txt()_5]] - `calls` [EXTRACTED]
+- [[Dos anillos enlazados y un eje el que guía y el que ejecuta._2]] - `rationale_for` [EXTRACTED]
+- [[dibujar-emblemas.py_2]] - `indirect_call` [INFERRED]
+- [[txt()_4]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-emblemaspy

@@ -1,27 +1,28 @@
 ---
-source_file: "planes/tools/i18n.py"
-type: "code"
-community: "Generador de libros"
+source_file: "boveda/planestoolsi18n.py.md"
+type: "document"
+community: "planestoolsi18n.py.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planestoolsi18npymd
 ---
 
-# planes/tools/i18n.py
+# planestoolsi18n.py.md
 
 ## Connections
-- [[_dentro()]] - `contains` [EXTRACTED]
-- [[_tramos_opacos()]] - `contains` [EXTRACTED]
-- [[assemble()]] - `imports` [EXTRACTED]
-- [[atributos()]] - `contains` [EXTRACTED]
-- [[cargar()_1]] - `contains` [EXTRACTED]
-- [[clave()_1]] - `contains` [EXTRACTED]
-- [[guardar()_1]] - `contains` [EXTRACTED]
-- [[inventario()_1]] - `contains` [EXTRACTED]
-- [[segmentar()]] - `contains` [EXTRACTED]
-- [[traducible()]] - `contains` [EXTRACTED]
-- [[traducir()_1]] - `contains` [EXTRACTED]
+- [[_dentro()_1]] - `references` [EXTRACTED]
+- [[_tramos_opacos()_1]] - `references` [EXTRACTED]
+- [[assemble()_1]] - `references` [EXTRACTED]
+- [[atributos()_1]] - `references` [EXTRACTED]
+- [[cargar()_1_1]] - `references` [EXTRACTED]
+- [[clave()_1_1]] - `references` [EXTRACTED]
+- [[guardar()_1_1]] - `references` [EXTRACTED]
+- [[inventario()_1_1]] - `references` [EXTRACTED]
+- [[planestoolsi18n.py_1]] - `contains` [EXTRACTED]
+- [[segmentar()_1]] - `references` [EXTRACTED]
+- [[traducible()_1]] - `references` [EXTRACTED]
+- [[traducir()_1_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/planestoolsi18npymd

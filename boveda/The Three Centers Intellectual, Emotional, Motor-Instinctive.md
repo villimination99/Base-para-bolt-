@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/si-mismo.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/The Three Centers Intellectual, Emotional, Motor-Instinctive.md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/_COMMUNITY_Láminas_del_Sí_Mismomd
 ---
 
-# The Three Centers: Intellectual, Emotional, Motor-Instinctive
+# The Three Centers Intellectual, Emotional, Motor-Instinctive.md
 
 ## Connections
 - [[Reusable Half-Panel Template for the Centers Diagram]] - `references` [EXTRACTED]
 - [[Si Mismo Sprite Sheet (Self-Observation Diagrams)]] - `references` [EXTRACTED]
-- [[The Three Stoic Disciplines Desire (orexis), Action (horme), Assent]] - `conceptually_related_to` [INFERRED]
+- [[The Three Centers Intellectual, Emotional, Motor-Instinctive_1]] - `contains` [EXTRACTED]
+- [[The Three Stoic Disciplines Desire (orexis), Action (horme), Assent]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismomd

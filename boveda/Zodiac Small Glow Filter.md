@@ -1,14 +1,15 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "code"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Zodiac Small Glow Filter.md"
+type: "document"
+community: "Zodiac Small Glow Filter.md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/Zodiac_Small_Glow_Filtermd
 ---
 
-# Zodiac Small Glow Filter
+# Zodiac Small Glow Filter.md
 
 ## Connections
 - [[Aquarius Glyph (The Water-Bearer)]] - `references` [EXTRACTED]
@@ -23,6 +24,8 @@ tags:
 - [[Scorpio Glyph (The Scorpion)]] - `references` [EXTRACTED]
 - [[Taurus Glyph (The Bull)]] - `references` [EXTRACTED]
 - [[Virgo Glyph (The Maiden)]] - `references` [EXTRACTED]
+- [[Zodiac Small Glow Filter_1]] - `contains` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/Zodiac_Small_Glow_Filtermd

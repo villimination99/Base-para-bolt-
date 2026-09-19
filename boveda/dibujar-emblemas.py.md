@@ -1,34 +1,35 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "code"
-community: "Emblemas de los planes (generador)"
+source_file: "boveda/dibujar-emblemas.py.md"
+type: "document"
+community: "dibujar-emblemas.py.md"
 location: "L1"
 tags:
-  - graphify/code
-  - graphify/INFERRED
-  - community/Emblemas_de_los_planes_generador
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/dibujar-emblemaspymd
 ---
 
-# dibujar-emblemas.py
+# dibujar-emblemas.py.md
 
 ## Connections
-- [[bisel()]] - `contains` [EXTRACTED]
-- [[emblema()]] - `contains` [EXTRACTED]
-- [[f()_5]] - `contains` [EXTRACTED]
-- [[main()_21]] - `contains` [EXTRACTED]
-- [[nucleo_barra()]] - `indirect_call` [INFERRED]
-- [[nucleo_ciclado()]] - `indirect_call` [INFERRED]
-- [[nucleo_coaching()]] - `indirect_call` [INFERRED]
-- [[nucleo_dos_fases()]] - `indirect_call` [INFERRED]
-- [[nucleo_hiit()]] - `indirect_call` [INFERRED]
-- [[nucleo_plato()]] - `indirect_call` [INFERRED]
-- [[nucleo_registro()]] - `indirect_call` [INFERRED]
-- [[nucleo_respiracion()]] - `indirect_call` [INFERRED]
-- [[nucleo_sueno()]] - `indirect_call` [INFERRED]
-- [[nucleo_suplementacion()]] - `indirect_call` [INFERRED]
-- [[nucleo_volumen()]] - `indirect_call` [INFERRED]
-- [[pol()_5]] - `contains` [EXTRACTED]
-- [[rotulo()]] - `contains` [EXTRACTED]
-- [[txt()_5]] - `contains` [EXTRACTED]
+- [[bisel()_1]] - `references` [EXTRACTED]
+- [[dibujar-emblemas.py_1]] - `contains` [EXTRACTED]
+- [[emblema()_1]] - `references` [EXTRACTED]
+- [[f()_5_1]] - `references` [EXTRACTED]
+- [[main()_21_1]] - `references` [EXTRACTED]
+- [[nucleo_barra()_1]] - `references` [EXTRACTED]
+- [[nucleo_ciclado()_1]] - `references` [EXTRACTED]
+- [[nucleo_coaching()_1]] - `references` [EXTRACTED]
+- [[nucleo_dos_fases()_1]] - `references` [EXTRACTED]
+- [[nucleo_hiit()_1]] - `references` [EXTRACTED]
+- [[nucleo_plato()_1]] - `references` [EXTRACTED]
+- [[nucleo_registro()_1]] - `references` [EXTRACTED]
+- [[nucleo_respiracion()_1]] - `references` [EXTRACTED]
+- [[nucleo_sueno()_1]] - `references` [EXTRACTED]
+- [[nucleo_suplementacion()_1]] - `references` [EXTRACTED]
+- [[nucleo_volumen()_1]] - `references` [EXTRACTED]
+- [[pol()_5_1]] - `references` [EXTRACTED]
+- [[rotulo()_1]] - `references` [EXTRACTED]
+- [[txt()_5_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/INFERRED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/dibujar-emblemaspymd

@@ -1,20 +1,19 @@
 ---
-source_file: "libros/build.py"
+source_file: "planes/build.py"
 type: "code"
-community: "Generador de libros"
-location: "L452"
+community: "planes/build.py"
+location: "L79"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/buildpy
 ---
 
 # render()
 
 ## Connections
-- [[Path_1]] - `references` [EXTRACTED]
-- [[construir()]] - `calls` [EXTRACTED]
-- [[fondo()]] - `calls` [EXTRACTED]
-- [[librosbuild.py]] - `contains` [EXTRACTED]
+- [[Path]] - `references` [EXTRACTED]
+- [[planesbuild.py]] - `contains` [EXTRACTED]
+- [[run()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/planes/buildpy

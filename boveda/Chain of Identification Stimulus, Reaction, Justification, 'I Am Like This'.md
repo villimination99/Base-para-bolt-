@@ -1,16 +1,19 @@
 ---
-source_file: "libros/partials/si-mismo.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Chain of Identification Stimulus, Reaction, Justification, 'I Am Like This'.md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/_COMMUNITY_Láminas_del_Sí_Mismomd
 ---
 
-# Chain of Identification: Stimulus, Reaction, Justification, 'I Am Like This'
+# Chain of Identification Stimulus, Reaction, Justification, 'I Am Like This'.md
 
 ## Connections
+- [[Chain of Identification Stimulus, Reaction, Justification, 'I Am Like This'_1]] - `contains` [EXTRACTED]
 - [[Si Mismo Sprite Sheet (Self-Observation Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismomd

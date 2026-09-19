@@ -1,19 +1,20 @@
 ---
-source_file: "planes/README.md"
-type: "concept"
-community: "Maquetación de los planes"
+source_file: "boveda/Estructura de página section.page + pg-headmainpg-foot.md"
+type: "document"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Estructura de página: section.page + pg-head/main/pg-foot
+# Estructura de página section.page + pg-headmainpg-foot.md
 
 ## Connections
-- [[Ciclado de Carbohidratos (documento Pro)]] - `implements` [EXTRACTED]
-- [[Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal)]] - `conceptually_related_to` [EXTRACTED]
-- [[Guía Rápida — Volumen Limpio (documento Básico)]] - `implements` [EXTRACTED]
-- [[Verificación de paginación y desbordes (verificar.mjs)]] - `references` [EXTRACTED]
+- [[Ciclado de Carbohidratos (documento Pro)]] - `references` [EXTRACTED]
+- [[Clases de componentes (card, callout, metric, tag, fill, cta, upsell, legal)]] - `references` [EXTRACTED]
+- [[Estructura de página section.page + pg-headmainpg-foot_1]] - `contains` [EXTRACTED]
+- [[Guía Rápida — Volumen Limpio (documento Básico)]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

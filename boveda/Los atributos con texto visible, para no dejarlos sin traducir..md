@@ -1,12 +1,12 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
-location: "L150"
+community: "planes/tools/i18n.py"
+location: "L164"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # Los atributos con texto visible, para no dejarlos sin traducir.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[atributos()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

@@ -1,12 +1,12 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
-location: "L78"
+community: "planes/tools/i18n.py"
+location: "L86"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # ¿Este contenido tiene algo que traducir? Descarta lo que es solo marcado,…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[traducible()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "rationale"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L712"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # La cuenta atrás de la noche: qué se corta y cuándo.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[de_ventana()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-fitnesspy

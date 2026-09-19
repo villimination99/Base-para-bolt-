@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/descanso-05.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_descanso-05.py.md"
+type: "document"
 community: "descanso-05.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/descanso-05py
 ---
 
 # descanso-05.py
 
-#graphify/code #graphify/EXTRACTED #community/descanso-05py
+## Connections
+- [[Live Query (requires Dataview plugin)_87]] - `contains` [EXTRACTED]
+- [[Members_87]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_descanso-05.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/descanso-05py

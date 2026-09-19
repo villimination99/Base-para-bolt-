@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
-type: "rationale"
-community: "Láminas de alta magia (generador)"
-location: "L480"
+source_file: "boveda/La prueba de que el reparto explica la semana la hora 25 —la primera del día….md"
+type: "document"
+community: "comprobar_horas().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/comprobar_horasmd
 ---
 
-# La prueba de que el reparto explica la semana: la hora 25 —la primera del día…
+# La prueba de que el reparto explica la semana la hora 25 —la primera del día….md
 
 ## Connections
-- [[comprobar_horas()]] - `rationale_for` [EXTRACTED]
+- [[La prueba de que el reparto explica la semana la hora 25 —la primera del día…_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de alta magia (generador)]] - `references` [EXTRACTED]
+- [[comprobar_horas()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/document #graphify/EXTRACTED #community/comprobar_horasmd

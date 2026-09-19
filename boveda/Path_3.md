@@ -1,20 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "Auditoría de PDFs"
+community: "build_brandbook.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/build_brandbookpy
 ---
 
 # Path
 
 ## Connections
-- [[auditar()]] - `references` [EXTRACTED]
-- [[fuentes()]] - `references` [EXTRACTED]
-- [[main()_19]] - `calls` [EXTRACTED]
-- [[raiz_dist()]] - `references` [EXTRACTED]
-- [[texto()]] - `references` [EXTRACTED]
+- [[write_archive()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/code #graphify/EXTRACTED #community/build_brandbookpy

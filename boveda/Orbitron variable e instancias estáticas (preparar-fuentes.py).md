@@ -1,17 +1,18 @@
 ---
-source_file: "planes/README.md"
-type: "rationale"
-community: "Arquitectura de los generadores"
+source_file: "boveda/Orbitron variable e instancias estáticas (preparar-fuentes.py).md"
+type: "document"
+community: "Orbitron variable e instancias estáticas (preparar-fuentes.py).md"
+location: "L1"
 tags:
-  - graphify/rationale
-  - graphify/INFERRED
-  - community/Arquitectura_de_los_generadores
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Orbitron_variable_e_instancias_estáticas_preparar-fuentespymd
 ---
 
-# Orbitron variable e instancias estáticas (preparar-fuentes.py)
+# Orbitron variable e instancias estáticas (preparar-fuentes.py).md
 
 ## Connections
-- [[Tipografía Orbitron titulares, EB Garamond cuerpo]] - `semantically_similar_to` [INFERRED]
-- [[planesbuild.py — generador de PDFs (pantallaimpresión)]] - `rationale_for` [EXTRACTED]
+- [[Orbitron variable e instancias estáticas (preparar-fuentes.py)_1]] - `contains` [EXTRACTED]
+- [[Tipografía Orbitron titulares, EB Garamond cuerpo]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/INFERRED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/Orbitron_variable_e_instancias_estáticas_preparar-fuentespymd

@@ -1,18 +1,18 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L107"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # sprite()
 
 ## Connections
 - [[dibujar-fitness.py]] - `contains` [EXTRACTED]
-- [[main()_5]] - `calls` [EXTRACTED]
+- [[main()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

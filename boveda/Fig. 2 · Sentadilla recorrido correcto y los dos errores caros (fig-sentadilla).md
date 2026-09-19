@@ -1,18 +1,19 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "image"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 10, svg use href=#fig-sentadilla"
+source_file: "boveda/Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Fig. 2 · Sentadilla: recorrido correcto y los dos errores caros (#fig-sentadilla)
+# Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla).md
 
 ## Connections
-- [[Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %)]] - `cites` [EXTRACTED]
-- [[Los 30 ejercicios, uno a uno (técnica, error común, consejo clave)]] - `conceptually_related_to` [EXTRACTED]
+- [[Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %)]] - `references` [EXTRACTED]
+- [[Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla)_1]] - `contains` [EXTRACTED]
+- [[Los 30 ejercicios, uno a uno (técnica, error común, consejo clave)]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

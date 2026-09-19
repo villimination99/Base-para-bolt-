@@ -1,12 +1,12 @@
 ---
-source_file: "tienda/publicar.py"
+source_file: "tienda/blog.py"
 type: "rationale"
-community: "Publicador de la tienda"
-location: "L70"
+community: "blog.py"
+location: "L52"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/blogpy
 ---
 
 # Una llamada a la Admin API. Los errores se levantan, no se cuentan. GraphQL…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[pedir()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/rationale #graphify/EXTRACTED #community/blogpy

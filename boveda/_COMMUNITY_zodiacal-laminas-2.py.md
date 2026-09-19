@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # zodiacal-laminas-2.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[zodiacal-laminas-2.py]] - code - libros/i18n/fuentes/zodiacal-laminas-2.py
+- [[Live Query (requires Dataview plugin)_219]] - document - boveda/_COMMUNITY_zodiacal-laminas-2.py.md
+- [[Members_219]] - document - boveda/_COMMUNITY_zodiacal-laminas-2.py.md
+- [[_COMMUNITY_zodiacal-laminas-2.py]] - document - boveda/_COMMUNITY_zodiacal-laminas-2.py.md
+- [[zodiacal-laminas-2.py]] - document - boveda/_COMMUNITY_zodiacal-laminas-2.py.md
 
 ## Live Query (requires Dataview plugin)
 

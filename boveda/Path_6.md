@@ -1,17 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "Generador de portadas"
+community: "planes/tools/i18n.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/planes/tools/i18npy
 ---
 
 # Path
 
 ## Connections
-- [[cubierta_png()]] - `references` [EXTRACTED]
-- [[disparar()]] - `references` [EXTRACTED]
+- [[documentos()_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

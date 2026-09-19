@@ -1,22 +1,23 @@
 ---
-source_file: "planes/tools/auditar.py"
-type: "code"
-community: "Auditoría de PDFs"
+source_file: "boveda/auditar.py.md"
+type: "document"
+community: "auditar().md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/auditarmd
 ---
 
-# auditar.py
+# auditar.py.md
 
 ## Connections
-- [[auditar()]] - `contains` [EXTRACTED]
-- [[contar_marcadores()]] - `contains` [EXTRACTED]
-- [[fuentes()]] - `contains` [EXTRACTED]
-- [[main()_19]] - `contains` [EXTRACTED]
-- [[raiz_dist()]] - `contains` [EXTRACTED]
-- [[texto()]] - `contains` [EXTRACTED]
+- [[auditar()_2]] - `references` [EXTRACTED]
+- [[auditar.py_1]] - `contains` [EXTRACTED]
+- [[contar_marcadores()_1]] - `references` [EXTRACTED]
+- [[fuentes()_2]] - `references` [EXTRACTED]
+- [[main()_19_1]] - `references` [EXTRACTED]
+- [[raiz_dist()_1]] - `references` [EXTRACTED]
+- [[texto()_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/document #graphify/EXTRACTED #community/auditarmd

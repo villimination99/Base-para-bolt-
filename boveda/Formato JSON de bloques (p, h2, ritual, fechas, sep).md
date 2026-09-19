@@ -1,18 +1,21 @@
 ---
-source_file: "libros/README.md"
-type: "concept"
-community: "Arquitectura de los generadores"
+source_file: "boveda/Formato JSON de bloques (p, h2, ritual, fechas, sep).md"
+type: "document"
+community: "Formato JSON de bloques (p, h2, ritual, fechas, sep).md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/Formato_JSON_de_bloques_p_h2_ritual_fechas_sepmd
 ---
 
-# Formato JSON de bloques (p, h2, ritual, fechas, sep)
+# Formato JSON de bloques (p, h2, ritual, fechas, sep).md
 
 ## Connections
 - [[Bloques rituales destacados (conjuraciones e invocaciones)]] - `references` [EXTRACTED]
-- [[extraer.py — PDF original a JSON limpio]] - `shares_data_with` [EXTRACTED]
-- [[librosbuild.py — generador de los tres libros]] - `shares_data_with` [EXTRACTED]
+- [[Formato JSON de bloques (p, h2, ritual, fechas, sep)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Arquitectura de los generadores]] - `references` [EXTRACTED]
+- [[extraer.py — PDF original a JSON limpio]] - `references` [EXTRACTED]
+- [[librosbuild.py — generador de los tres libros]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/Formato_JSON_de_bloques_p_h2_ritual_fechas_sepmd

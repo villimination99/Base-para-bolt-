@@ -1,18 +1,21 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
+source_file: "ropa/tools/dibujar-espinas.py"
 type: "code"
-community: "Emblemas de los planes (generador)"
-location: "L337"
+community: "dibujar-espinas.py"
+location: "L669"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/dibujar-espinaspy
 ---
 
 # main()
 
 ## Connections
-- [[dibujar-emblemas.py]] - `contains` [EXTRACTED]
-- [[emblema()]] - `calls` [EXTRACTED]
+- [[comprobar()_6]] - `calls` [EXTRACTED]
+- [[construir()_2]] - `calls` [EXTRACTED]
+- [[dibujar-espinas.py]] - `contains` [EXTRACTED]
+- [[hoja()_2]] - `calls` [EXTRACTED]
+- [[sueltos()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-espinaspy

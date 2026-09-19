@@ -1,16 +1,16 @@
 ---
 source_file: ""
 type: "code"
-community: "Traducción y armado de planes"
+community: "planes/tools/i18n.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/tools/i18npy
 ---
 
 # Path
 
 ## Connections
-- [[documento()_1]] - `references` [EXTRACTED]
+- [[documento()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

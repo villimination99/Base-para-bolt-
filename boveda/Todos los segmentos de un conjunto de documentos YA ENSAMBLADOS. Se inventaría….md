@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/i18n.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L198"
+source_file: "boveda/Todos los segmentos de un conjunto de documentos YA ENSAMBLADOS. Se inventaría….md"
+type: "document"
+community: "planestoolsi18n.py.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planestoolsi18npymd
 ---
 
-# Todos los segmentos de un conjunto de documentos YA ENSAMBLADOS. Se inventaría…
+# Todos los segmentos de un conjunto de documentos YA ENSAMBLADOS. Se inventaría….md
 
 ## Connections
-- [[inventario()_1]] - `rationale_for` [EXTRACTED]
+- [[Todos los segmentos de un conjunto de documentos YA ENSAMBLADOS. Se inventaría…_1]] - `contains` [EXTRACTED]
+- [[inventario()_1_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/planestoolsi18npymd

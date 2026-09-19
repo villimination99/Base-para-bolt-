@@ -1,17 +1,20 @@
 ---
-source_file: "planes/partials/emblemas.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Barbell Progression Emblem Load and Deload (8 Weeks).md"
+type: "document"
+community: "Squat Technique Three Positions and Two Errors (Knee Valgus, Rounded Lumbar).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/Squat_Technique_Three_Positions_and_Two_Errors_Knee_Valgus_Rounded_Lumbarmd
 ---
 
-# Barbell Progression Emblem: Load and Deload (8 Weeks)
+# Barbell Progression Emblem Load and Deload (8 Weeks).md
 
 ## Connections
+- [[Barbell Progression Emblem Load and Deload (8 Weeks)_1]] - `contains` [EXTRACTED]
 - [[Emblemas Sprite Sheet (Plan Cover Emblems)]] - `references` [EXTRACTED]
-- [[Squat Technique Three Positions and Two Errors (Knee Valgus, Rounded Lumbar)]] - `conceptually_related_to` [INFERRED]
+- [[Squat Technique Three Positions and Two Errors (Knee Valgus, Rounded Lumbar)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Squat_Technique_Three_Positions_and_Two_Errors_Knee_Valgus_Rounded_Lumbarmd

@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L153"
+source_file: "boveda/Coloca un glifo escalando su caja de 200 al lado pedido. El grosor se deduce….md"
+type: "document"
+community: "glifo().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/glifomd
 ---
 
-# Coloca un glifo escalando su caja de 200 al lado pedido. El grosor se deduce…
+# Coloca un glifo escalando su caja de 200 al lado pedido. El grosor se deduce….md
 
 ## Connections
-- [[glifo()]] - `rationale_for` [EXTRACTED]
+- [[Coloca un glifo escalando su caja de 200 al lado pedido. El grosor se deduce…_1]] - `contains` [EXTRACTED]
+- [[glifo()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/glifomd

@@ -1,19 +1,19 @@
 ---
-source_file: "planes/tools/faltan.py"
+source_file: "tablero.py"
 type: "code"
-community: "Traducción y armado de planes"
-location: "L26"
+community: "tablero.py"
+location: "L182"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/tableropy
 ---
 
 # documentos()
 
 ## Connections
-- [[Path_5]] - `references` [EXTRACTED]
-- [[main()_22]] - `calls` [EXTRACTED]
-- [[planestoolsfaltan.py]] - `contains` [EXTRACTED]
+- [[Cuenta PDFs compuestos y sus páginas, por idioma.]] - `rationale_for` [EXTRACTED]
+- [[construir()]] - `calls` [EXTRACTED]
+- [[tablero.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/tableropy

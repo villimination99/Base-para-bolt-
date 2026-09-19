@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "rationale"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L784"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # Un bucle con su salida: la figura del libro.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[cubierta_voluntad()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-fitnesspy

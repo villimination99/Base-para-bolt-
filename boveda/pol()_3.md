@@ -1,18 +1,20 @@
 ---
-source_file: "libros/tools/dibujar-si-mismo.py"
+source_file: "libros/tools/dibujar-alta-magia.py"
 type: "code"
-community: "Láminas del Sí Mismo (generador)"
-location: "L36"
+community: "dibujar-alta-magia.py"
+location: "L65"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo_generador
+  - community/dibujar-alta-magiapy
 ---
 
 # pol()
 
 ## Connections
-- [[dibujar-si-mismo.py]] - `contains` [EXTRACTED]
-- [[lamina_reloj()]] - `calls` [EXTRACTED]
+- [[dibujar-alta-magia.py_2]] - `contains` [EXTRACTED]
+- [[lamina_circulo()]] - `calls` [EXTRACTED]
+- [[lamina_hexagrama()]] - `calls` [EXTRACTED]
+- [[lamina_pentagrama()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_S_Mismo_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-alta-magiapy

@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L216"
+source_file: "boveda/Escalón de trabajo y descanso con la curva de pulso encima..md"
+type: "document"
+community: "nucleo_hiit().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/nucleo_hiitmd
 ---
 
-# Escalón de trabajo y descanso con la curva de pulso encima.
+# Escalón de trabajo y descanso con la curva de pulso encima..md
 
 ## Connections
-- [[nucleo_hiit()]] - `rationale_for` [EXTRACTED]
+- [[Escalón de trabajo y descanso con la curva de pulso encima._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_hiit()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/nucleo_hiitmd

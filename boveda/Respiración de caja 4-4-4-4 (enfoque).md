@@ -1,20 +1,22 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "concept"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 06, técnica 2"
+source_file: "boveda/Respiración de caja 4-4-4-4 (enfoque).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Respiración de caja 4-4-4-4 (enfoque)
+# Respiración de caja 4-4-4-4 (enfoque).md
 
 ## Connections
 - [[Fig. 1 · Las dos respiraciones del programa (fig-respiracion)]] - `references` [EXTRACTED]
 - [[Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa)]] - `references` [EXTRACTED]
-- [[Precaución con las retenciones respiratorias]] - `rationale_for` [EXTRACTED]
+- [[Precaución con las retenciones respiratorias]] - `references` [EXTRACTED]
 - [[Programa de 21 días (técnica, duración y descripción por jornada)]] - `references` [EXTRACTED]
+- [[Respiración de caja 4-4-4-4 (enfoque)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

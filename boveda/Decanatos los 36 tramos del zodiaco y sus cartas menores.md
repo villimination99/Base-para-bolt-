@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/arcanos.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Decanatos los 36 tramos del zodiaco y sus cartas menores.md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Repertorio_grfico_de_alta_magia
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Decanatos: los 36 tramos del zodiaco y sus cartas menores
+# Decanatos los 36 tramos del zodiaco y sus cartas menores.md
 
 ## Connections
-- [[Alfabeto hebreo letra, valor y correspondencia]] - `conceptually_related_to` [INFERRED]
+- [[Alfabeto hebreo letra, valor y correspondencia]] - `references` [EXTRACTED]
 - [[Arcanos — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Los cuatro palos y el elemento de cada figura]] - `conceptually_related_to` [INFERRED]
+- [[Decanatos los 36 tramos del zodiaco y sus cartas menores_1]] - `contains` [EXTRACTED]
+- [[Los cuatro palos y el elemento de cada figura]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

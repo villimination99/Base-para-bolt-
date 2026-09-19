@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/05-pro-registro-progreso-semanal.html"
-type: "concept"
-community: "Progresión de cargas"
-location: "páginas 03-06 · Entrenamiento y recuperación"
+source_file: "boveda/Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño).md"
+type: "document"
+community: "_COMMUNITY_Progresión de cargas.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Progresin_de_cargas
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Progresión_de_cargasmd
 ---
 
-# Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño)
+# Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño).md
 
 ## Connections
-- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `shares_data_with` [EXTRACTED]
-- [[Registro de cargas como dato que decide]] - `implements` [INFERRED]
+- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `references` [EXTRACTED]
+- [[Registro de cargas como dato que decide]] - `references` [EXTRACTED]
+- [[Tabla de entrenamiento y recuperación (carga × reps, RIR, sueño)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Progresión de cargas]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Progresin_de_cargas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_de_cargasmd

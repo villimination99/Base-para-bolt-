@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
+source_file: "boveda/Fuentes verificadas — Plan Definición + Volumen.md"
 type: "document"
-community: "Escalera de planes y dominio público"
-location: "bloque @fuentes-verificadas, pág. 08"
+community: "_COMMUNITY_Escalera de planes y dominio público.md"
+location: "L1"
 tags:
   - graphify/document
-  - graphify/INFERRED
-  - community/Escalera_de_planes_y_dominio_pblico
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd
 ---
 
-# Fuentes verificadas — Plan Definición + Volumen
+# Fuentes verificadas — Plan Definición + Volumen.md
 
 ## Connections
-- [[Fuentes verificadas — Guía de Suplementación]] - `shares_data_with` [INFERRED]
-- [[Plan Definición + Volumen 8 semanas (Plan Pro)]] - `cites` [EXTRACTED]
+- [[Fuentes verificadas — Guía de Suplementación]] - `references` [EXTRACTED]
+- [[Fuentes verificadas — Plan Definición + Volumen_1]] - `contains` [EXTRACTED]
+- [[Plan Definición + Volumen 8 semanas (Plan Pro)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalera de planes y dominio público]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/INFERRED #community/Escalera_de_planes_y_dominio_pblico
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd

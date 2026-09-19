@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/carga-laminas.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_carga-laminas.py.md"
+type: "document"
 community: "carga-laminas.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/carga-laminaspy
 ---
 
 # carga-laminas.py
 
-#graphify/code #graphify/EXTRACTED #community/carga-laminaspy
+## Connections
+- [[Live Query (requires Dataview plugin)_81]] - `contains` [EXTRACTED]
+- [[Members_81]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_carga-laminas.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/carga-laminaspy

@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L47"
+source_file: "boveda/Armazón común dos circunferencias, marcas de grado y anillo de conteo.….md"
+type: "document"
+community: "bisel().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/biselmd
 ---
 
-# Armazón común: dos circunferencias, marcas de grado y anillo de conteo.…
+# Armazón común dos circunferencias, marcas de grado y anillo de conteo.….md
 
 ## Connections
-- [[bisel()]] - `rationale_for` [EXTRACTED]
+- [[Armazón común dos circunferencias, marcas de grado y anillo de conteo.…_1]] - `contains` [EXTRACTED]
+- [[bisel()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/biselmd

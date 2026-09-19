@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/si-mismo-19.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_si-mismo-19.py.md"
+type: "document"
 community: "si-mismo-19.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/si-mismo-19py
 ---
 
 # si-mismo-19.py
 
-#graphify/code #graphify/EXTRACTED #community/si-mismo-19py
+## Connections
+- [[Live Query (requires Dataview plugin)_171]] - `contains` [EXTRACTED]
+- [[Members_171]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_si-mismo-19.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/si-mismo-19py

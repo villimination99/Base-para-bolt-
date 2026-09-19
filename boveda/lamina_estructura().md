@@ -1,21 +1,21 @@
 ---
 source_file: "libros/tools/dibujar-arcanos.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
+community: "dibujar-arcanos.py"
 location: "L235"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/dibujar-arcanospy
 ---
 
 # lamina_estructura()
 
 ## Connections
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[f()_1]] - `calls` [EXTRACTED]
-- [[main()_4]] - `calls` [EXTRACTED]
+- [[dibujar-arcanos.py_2]] - `contains` [EXTRACTED]
+- [[f()_6]] - `calls` [EXTRACTED]
+- [[main()_51]] - `calls` [EXTRACTED]
 - [[marca_palo()]] - `calls` [EXTRACTED]
-- [[txt()_1]] - `calls` [EXTRACTED]
+- [[txt()_5]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-arcanospy

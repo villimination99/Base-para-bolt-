@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/voluntad.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Sigil of the Will (Graduated Circle, Broken Arc, Escaping Ray).md"
+type: "document"
+community: "Voluntad Sprite Sheet (Willpower Diagrams).md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Lminas_del_S_Mismo
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd
 ---
 
-# Sigil of the Will (Graduated Circle, Broken Arc, Escaping Ray)
+# Sigil of the Will (Graduated Circle, Broken Arc, Escaping Ray).md
 
 ## Connections
+- [[Sigil of the Will (Graduated Circle, Broken Arc, Escaping Ray)_1]] - `contains` [EXTRACTED]
 - [[Voluntad Sprite Sheet (Willpower Diagrams)]] - `references` [EXTRACTED]
-- [[Zodiacal Wheel Roundel with Sun-Moon Core]] - `conceptually_related_to` [INFERRED]
+- [[Zodiacal Wheel Roundel with Sun-Moon Core]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Voluntad_Sprite_Sheet_Willpower_Diagramsmd

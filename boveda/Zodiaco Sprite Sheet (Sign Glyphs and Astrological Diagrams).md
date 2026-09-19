@@ -1,14 +1,15 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams).md"
+type: "document"
+community: "Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/Zodiaco_Sprite_Sheet_Sign_Glyphs_and_Astrological_Diagramsmd
 ---
 
-# Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)
+# Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams).md
 
 ## Connections
 - [[Aquarius Glyph (The Water-Bearer)]] - `references` [EXTRACTED]
@@ -35,5 +36,7 @@ tags:
 - [[Zodiac Small Glow Filter]] - `references` [EXTRACTED]
 - [[Zodiac Wheel Diagram with Signs, Elements and Modalities]] - `references` [EXTRACTED]
 - [[Zodiacal Body Correspondences (Melothesia)]] - `references` [EXTRACTED]
+- [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/Zodiaco_Sprite_Sheet_Sign_Glyphs_and_Astrological_Diagramsmd

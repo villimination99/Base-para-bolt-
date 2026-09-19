@@ -1,17 +1,24 @@
 ---
-source_file: "libros/tools/escribir-codice-mesa.py"
+source_file: ".agents/skills/higgsfield-brandkit/scripts/brandkit.py"
 type: "code"
-community: "Texto del Códice de la Mesa"
-location: "L1383"
+community: "brandkit.py"
+location: "L1446"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Mesa
+  - community/brandkitpy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-mesa.py]] - `contains` [EXTRACTED]
+- [[brandkit.py]] - `contains` [EXTRACTED]
+- [[build()]] - `calls` [EXTRACTED]
+- [[compact()]] - `calls` [EXTRACTED]
+- [[parse_args()]] - `calls` [EXTRACTED]
+- [[run_logo()]] - `calls` [EXTRACTED]
+- [[run_logo_inspect()]] - `calls` [EXTRACTED]
+- [[run_preview()]] - `calls` [EXTRACTED]
+- [[run_state()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Mesa
+#graphify/code #graphify/EXTRACTED #community/brandkitpy

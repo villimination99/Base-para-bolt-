@@ -1,39 +1,40 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "code"
-community: "Láminas del zodiaco (generador)"
+source_file: "boveda/dibujar-zodiaco.py.md"
+type: "document"
+community: "_COMMUNITY_Láminas del zodiaco (generador).md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/_COMMUNITY_Láminas_del_zodiaco_generadormd
 ---
 
-# dibujar-zodiaco.py
+# dibujar-zodiaco.py.md
 
 ## Connections
-- [[cara_iluminada()]] - `contains` [EXTRACTED]
-- [[comprobar_datos()]] - `contains` [EXTRACTED]
-- [[decanatos()]] - `contains` [EXTRACTED]
-- [[dignidades()]] - `contains` [EXTRACTED]
-- [[f()_4]] - `contains` [EXTRACTED]
-- [[glifo()]] - `contains` [EXTRACTED]
-- [[lamina_aspectos()]] - `contains` [EXTRACTED]
-- [[lamina_casillas()]] - `contains` [EXTRACTED]
-- [[lamina_cuerpo()]] - `contains` [EXTRACTED]
-- [[lamina_decanos()]] - `contains` [EXTRACTED]
-- [[lamina_dignidades()]] - `contains` [EXTRACTED]
-- [[lamina_lunar()]] - `contains` [EXTRACTED]
-- [[lamina_precesion()]] - `contains` [EXTRACTED]
-- [[lamina_regentes()]] - `contains` [EXTRACTED]
-- [[lamina_rueda()]] - `contains` [EXTRACTED]
-- [[lamina_terminos()]] - `contains` [EXTRACTED]
-- [[main()_7]] - `contains` [EXTRACTED]
-- [[marca_elemento()]] - `contains` [EXTRACTED]
-- [[medallon()]] - `contains` [EXTRACTED]
-- [[pol()_4]] - `contains` [EXTRACTED]
-- [[sector()]] - `contains` [EXTRACTED]
-- [[sigilo()_1]] - `contains` [EXTRACTED]
-- [[txt()_4]] - `contains` [EXTRACTED]
+- [[cara_iluminada()_1]] - `references` [EXTRACTED]
+- [[comprobar_datos()_1]] - `references` [EXTRACTED]
+- [[decanatos()_1]] - `references` [EXTRACTED]
+- [[dibujar-zodiaco.py_2]] - `contains` [EXTRACTED]
+- [[dignidades()_1]] - `references` [EXTRACTED]
+- [[f()_4_1]] - `references` [EXTRACTED]
+- [[glifo()_1]] - `references` [EXTRACTED]
+- [[lamina_aspectos()_1]] - `references` [EXTRACTED]
+- [[lamina_casillas()_1]] - `references` [EXTRACTED]
+- [[lamina_cuerpo()_1]] - `references` [EXTRACTED]
+- [[lamina_decanos()_1]] - `references` [EXTRACTED]
+- [[lamina_dignidades()_1]] - `references` [EXTRACTED]
+- [[lamina_lunar()_1]] - `references` [EXTRACTED]
+- [[lamina_precesion()_1]] - `references` [EXTRACTED]
+- [[lamina_regentes()_1]] - `references` [EXTRACTED]
+- [[lamina_rueda()_1]] - `references` [EXTRACTED]
+- [[lamina_terminos()_1]] - `references` [EXTRACTED]
+- [[main()_7_1]] - `references` [EXTRACTED]
+- [[marca_elemento()_1]] - `references` [EXTRACTED]
+- [[medallon()_1]] - `references` [EXTRACTED]
+- [[pol()_4_1]] - `references` [EXTRACTED]
+- [[sector()_1]] - `references` [EXTRACTED]
+- [[sigilo()_1_1]] - `references` [EXTRACTED]
+- [[txt()_4_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_zodiaco_generadormd

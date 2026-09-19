@@ -1,21 +1,21 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
+source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
-location: "L416"
+community: "dibujar-fitness.py"
+location: "L87"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/dibujar-fitnesspy
 ---
 
 # simbolo_cubierta()
 
 ## Connections
-- [[Tres cartas abiertas en abanico dentro de una orla de veintidós marcas.]] - `rationale_for` [EXTRACTED]
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[f()_1]] - `calls` [EXTRACTED]
-- [[main()_4]] - `calls` [EXTRACTED]
-- [[pol()_1]] - `calls` [EXTRACTED]
+- [[Bisel común de cubierta la colección se lee como serie.]] - `rationale_for` [EXTRACTED]
+- [[dibujar-fitness.py]] - `contains` [EXTRACTED]
+- [[f()]] - `calls` [EXTRACTED]
+- [[main()]] - `calls` [EXTRACTED]
+- [[pol()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

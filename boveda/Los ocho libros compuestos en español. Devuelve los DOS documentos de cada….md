@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/i18n.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L119"
+source_file: "boveda/Los ocho libros compuestos en español. Devuelve los DOS documentos de cada….md"
+type: "document"
+community: "_documentos_es().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/_documentos_esmd
 ---
 
-# Los ocho libros compuestos en español. Devuelve los DOS documentos de cada…
+# Los ocho libros compuestos en español. Devuelve los DOS documentos de cada….md
 
 ## Connections
-- [[_documentos_es()]] - `rationale_for` [EXTRACTED]
+- [[Los ocho libros compuestos en español. Devuelve los DOS documentos de cada…_1]] - `contains` [EXTRACTED]
+- [[_documentos_es()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/_documentos_esmd

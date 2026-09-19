@@ -1,18 +1,17 @@
 ---
-source_file: "planes/README.md"
-type: "rationale"
-community: "Arquitectura de los generadores"
+source_file: "boveda/Verificación de paginación y desbordes (verificar.mjs).md"
+type: "document"
+community: "Verificación de paginación y desbordes (verificar.mjs)"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/Verificación_de_paginación_y_desbordes_verificarmjs
 ---
 
-# Verificación de paginación y desbordes (verificar.mjs)
+# Verificación de paginación y desbordes (verificar.mjs).md
 
 ## Connections
-- [[Estructura de página section.page + pg-headmainpg-foot]] - `references` [EXTRACTED]
-- [[planesbuild.py — generador de PDFs (pantallaimpresión)]] - `implements` [EXTRACTED]
-- [[render.mjs con Playwright y footerTemplate]] - `semantically_similar_to` [INFERRED]
+- [[Verificación de paginación y desbordes (verificar.mjs)_1]] - `contains` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/Verificación_de_paginación_y_desbordes_verificarmjs

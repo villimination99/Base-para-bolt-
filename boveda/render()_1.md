@@ -1,19 +1,20 @@
 ---
-source_file: "planes/build.py"
+source_file: "libros/build.py"
 type: "code"
-community: "Traducción y armado de planes"
-location: "L79"
+community: "libros/build.py"
+location: "L452"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/libros/buildpy
 ---
 
 # render()
 
 ## Connections
-- [[Path_2]] - `references` [EXTRACTED]
-- [[planesbuild.py]] - `contains` [EXTRACTED]
-- [[run()]] - `calls` [EXTRACTED]
+- [[Path_9]] - `references` [EXTRACTED]
+- [[construir()_3]] - `calls` [EXTRACTED]
+- [[fondo()]] - `calls` [EXTRACTED]
+- [[librosbuild.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/libros/buildpy

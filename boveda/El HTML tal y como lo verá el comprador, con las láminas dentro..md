@@ -1,17 +1,17 @@
 ---
 source_file: "planes/tools/cargar-traducciones.py"
 type: "rationale"
-community: "Traducción y armado de planes"
+community: "planes/tools/i18n.py"
 location: "L36"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/tools/i18npy
 ---
 
 # El HTML tal y como lo verá el comprador, con las láminas dentro.
 
 ## Connections
-- [[documento()_1]] - `rationale_for` [EXTRACTED]
+- [[documento()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

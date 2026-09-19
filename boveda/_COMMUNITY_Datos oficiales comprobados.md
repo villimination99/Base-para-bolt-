@@ -1,22 +1,18 @@
 ---
-type: community
-cohesion: 0.67
-members: 3
+source_file: "boveda/_COMMUNITY_Datos oficiales comprobados.md"
+type: "document"
+community: "comprobar().md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/comprobarmd
 ---
 
-# Datos oficiales comprobados
+# _COMMUNITY_Datos oficiales comprobados.md
 
-**Cohesion:** 0.67 - moderately connected
-**Members:** 3 nodes
+## Connections
+- [[Datos oficiales comprobados]] - `contains` [EXTRACTED]
+- [[comprobar()_20]] - `references` [EXTRACTED]
 
-## Members
-- [[Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas…]] - rationale - libros/tools/datos_oficiales.py
-- [[comprobar()]] - code - libros/tools/datos_oficiales.py
-- [[datos_oficiales.py]] - code - libros/tools/datos_oficiales.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Datos_oficiales_comprobados
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/comprobarmd

@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/escribir-codice-zodiacal.py"
-type: "rationale"
-community: "Texto del Códice Zodiacal"
-location: "L32"
+source_file: "boveda/Lámina del repertorio gráfico (ver toolsdibujar-zodiaco.py)..md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice Zodiacal.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_Zodiacal
+  - community/_COMMUNITY_Texto_del_Códice_Zodiacalmd
 ---
 
-# Lámina del repertorio gráfico (ver tools/dibujar-zodiaco.py).
+# Lámina del repertorio gráfico (ver toolsdibujar-zodiaco.py)..md
 
 ## Connections
-- [[fig()_7]] - `rationale_for` [EXTRACTED]
+- [[Lámina del repertorio gráfico (ver toolsdibujar-zodiaco.py)._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Texto del Códice Zodiacal]] - `references` [EXTRACTED]
+- [[fig()_7_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Texto_del_Cdice_Zodiacal
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_Zodiacalmd

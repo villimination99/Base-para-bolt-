@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "image"
-community: "Volumen efectivo e higiene del sueño"
-location: "pág. 07, svg use href=#fig-musculos"
+source_file: "boveda/Fig. 1 · Los dieciséis grupos del plan (fig-musculos).md"
+type: "document"
+community: "_COMMUNITY_Volumen efectivo e higiene del sueño.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Volumen_efectivo_e_higiene_del_sueo
+  - community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd
 ---
 
-# Fig. 1 · Los dieciséis grupos del plan (#fig-musculos)
+# Fig. 1 · Los dieciséis grupos del plan (fig-musculos).md
 
 ## Connections
-- [[Mapa muscular de referencia (16 grupos) y cobertura semanal mínima]] - `cites` [EXTRACTED]
+- [[Fig. 1 · Los dieciséis grupos del plan (fig-musculos)_1]] - `contains` [EXTRACTED]
+- [[Mapa muscular de referencia (16 grupos) y cobertura semanal mínima]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Volumen_efectivo_e_higiene_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd

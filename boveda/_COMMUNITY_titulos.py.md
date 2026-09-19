@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # titulos.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[titulos.py]] - code - planes/i18n/fuentes/titulos.py
+- [[Live Query (requires Dataview plugin)_175]] - document - boveda/_COMMUNITY_titulos.py.md
+- [[Members_175]] - document - boveda/_COMMUNITY_titulos.py.md
+- [[_COMMUNITY_titulos.py]] - document - boveda/_COMMUNITY_titulos.py.md
+- [[titulos.py]] - document - boveda/_COMMUNITY_titulos.py.md
 
 ## Live Query (requires Dataview plugin)
 

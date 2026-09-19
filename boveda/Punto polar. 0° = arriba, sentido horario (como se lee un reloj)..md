@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L127"
+source_file: "boveda/Punto polar. 0° = arriba, sentido horario (como se lee un reloj)..md"
+type: "document"
+community: "_COMMUNITY_Láminas del zodiaco (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/_COMMUNITY_Láminas_del_zodiaco_generadormd
 ---
 
-# Punto polar. 0° = arriba, sentido horario (como se lee un reloj).
+# Punto polar. 0° = arriba, sentido horario (como se lee un reloj)..md
 
 ## Connections
-- [[pol()_4]] - `rationale_for` [EXTRACTED]
+- [[Punto polar. 0° = arriba, sentido horario (como se lee un reloj)._2]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del zodiaco (generador)]] - `references` [EXTRACTED]
+- [[pol()_4_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_zodiaco_generadormd

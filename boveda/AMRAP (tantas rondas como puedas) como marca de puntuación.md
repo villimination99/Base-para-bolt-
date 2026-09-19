@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "concept"
-community: "Registros y guiones de práctica"
-location: "pág. 07, callout «Cómo puntuar tu sesión»"
+source_file: "boveda/AMRAP (tantas rondas como puedas) como marca de puntuación.md"
+type: "document"
+community: "_COMMUNITY_Registros y guiones de práctica.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Registros_y_guiones_de_prctica
+  - community/_COMMUNITY_Registros_y_guiones_de_prácticamd
 ---
 
-# AMRAP (tantas rondas como puedas) como marca de puntuación
+# AMRAP (tantas rondas como puedas) como marca de puntuación.md
 
 ## Connections
-- [[Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones)]] - `shares_data_with` [EXTRACTED]
-- [[Rutina 09 · Metabolic Circuit (28 min, 5 bloques AMRAP de 4 min)]] - `implements` [EXTRACTED]
+- [[AMRAP (tantas rondas como puedas) como marca de puntuación_1]] - `contains` [EXTRACTED]
+- [[Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones)]] - `references` [EXTRACTED]
+- [[Rutina 09 · Metabolic Circuit (28 min, 5 bloques AMRAP de 4 min)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Registros y guiones de práctica]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Registros_y_guiones_de_prctica
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Registros_y_guiones_de_prácticamd

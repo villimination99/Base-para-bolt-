@@ -1,16 +1,19 @@
 ---
-source_file: "libros/README.md"
+source_file: "boveda/Conocimiento de Sí Mismo (Fase B).md"
 type: "document"
-community: "Procedencia de los libros recuperados"
+community: "_COMMUNITY_Procedencia de los libros recuperados.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Procedencia_de_los_libros_recuperados
+  - community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd
 ---
 
-# Conocimiento de Sí Mismo (Fase B)
+# Conocimiento de Sí Mismo (Fase B).md
 
 ## Connections
 - [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `references` [EXTRACTED]
+- [[Conocimiento de Sí Mismo (Fase B)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Procedencia de los libros recuperados]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Procedencia_de_los_libros_recuperados
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd

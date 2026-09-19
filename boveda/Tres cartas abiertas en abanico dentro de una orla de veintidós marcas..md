@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
-type: "rationale"
-community: "Láminas de los arcanos (generador)"
-location: "L417"
+source_file: "boveda/Tres cartas abiertas en abanico dentro de una orla de veintidós marcas..md"
+type: "document"
+community: "_COMMUNITY_Láminas de los arcanos (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/_COMMUNITY_Láminas_de_los_arcanos_generadormd
 ---
 
-# Tres cartas abiertas en abanico dentro de una orla de veintidós marcas.
+# Tres cartas abiertas en abanico dentro de una orla de veintidós marcas..md
 
 ## Connections
-- [[simbolo_cubierta()]] - `rationale_for` [EXTRACTED]
+- [[Tres cartas abiertas en abanico dentro de una orla de veintidós marcas._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de los arcanos (generador)]] - `references` [EXTRACTED]
+- [[simbolo_cubierta()_2]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_de_los_arcanos_generadormd

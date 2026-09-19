@@ -1,27 +1,25 @@
 ---
-source_file: "tienda/publicar.py"
-type: "code"
-community: "Publicador de la tienda"
+source_file: "boveda/publicar.py.md"
+type: "document"
+community: "publicar.py.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/publicarpymd
 ---
 
-# publicar.py
+# publicar.py.md
 
 ## Connections
-- [[canales()]] - `contains` [EXTRACTED]
-- [[coleccion()]] - `contains` [EXTRACTED]
-- [[descripciones.py]] - `imports` [EXTRACTED]
-- [[fichas_libros.py]] - `imports` [EXTRACTED]
-- [[main()_26]] - `contains` [EXTRACTED]
-- [[multipart()]] - `contains` [EXTRACTED]
-- [[pedir()]] - `contains` [EXTRACTED]
-- [[portada()]] - `contains` [EXTRACTED]
-- [[publicar()]] - `contains` [EXTRACTED]
-- [[rebanada()]] - `contains` [EXTRACTED]
-- [[seo.py]] - `imports` [EXTRACTED]
+- [[canales()_1]] - `references` [EXTRACTED]
+- [[coleccion()_1]] - `references` [EXTRACTED]
+- [[main()_26_1]] - `references` [EXTRACTED]
+- [[multipart()_1]] - `references` [EXTRACTED]
+- [[pedir()_9]] - `references` [EXTRACTED]
+- [[portada()_1]] - `references` [EXTRACTED]
+- [[publicar()_3]] - `references` [EXTRACTED]
+- [[publicar.py_1]] - `contains` [EXTRACTED]
+- [[rebanada()_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/publicarpymd

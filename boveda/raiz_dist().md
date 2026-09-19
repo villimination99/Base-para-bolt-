@@ -1,20 +1,20 @@
 ---
 source_file: "planes/tools/auditar.py"
 type: "code"
-community: "Auditoría de PDFs"
+community: "tools/auditar.py"
 location: "L141"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/tools/auditarpy
 ---
 
 # raiz_dist()
 
 ## Connections
-- [[El dist que contiene a este PDF, sea el de planes o el de libros. Se busca…]] - `rationale_for` [EXTRACTED]
-- [[Path_3]] - `references` [EXTRACTED]
-- [[auditar.py]] - `contains` [EXTRACTED]
-- [[main()_19]] - `calls` [EXTRACTED]
+- [[El dist que contiene a este PDF, sea el de planes o el de libros. Se busca…_2]] - `rationale_for` [EXTRACTED]
+- [[Path_16]] - `references` [EXTRACTED]
+- [[main()_45]] - `calls` [EXTRACTED]
+- [[toolsauditar.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/code #graphify/EXTRACTED #community/tools/auditarpy

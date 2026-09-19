@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/escribir-codice-zodiacal.py"
+source_file: ".agents/skills/higgsfield-brandkit/scripts/build_brandbook.py"
 type: "code"
-community: "Texto del Códice Zodiacal"
-location: "L2257"
+community: "build_brandbook.py"
+location: "L975"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_Zodiacal
+  - community/build_brandbookpy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-zodiacal.py]] - `contains` [EXTRACTED]
+- [[build()]] - `calls` [EXTRACTED]
+- [[build_brandbook.py]] - `contains` [EXTRACTED]
+- [[parse_args()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_Zodiacal
+#graphify/code #graphify/EXTRACTED #community/build_brandbookpy

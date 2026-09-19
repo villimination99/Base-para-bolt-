@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Ergogénicos y peso semanal"
-location: "pág. 05 · Rendimiento"
+source_file: "boveda/Cafeína como ayuda ergogénica.md"
+type: "document"
+community: "_COMMUNITY_Ergogénicos y peso semanal.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Ergognicos_y_peso_semanal
+  - community/_COMMUNITY_Ergogénicos_y_peso_semanalmd
 ---
 
-# Cafeína como ayuda ergogénica
+# Cafeína como ayuda ergogénica.md
 
 ## Connections
-- [[Protocolo diario de toma de suplementos]] - `shares_data_with` [EXTRACTED]
+- [[Cafeína como ayuda ergogénica_1]] - `contains` [EXTRACTED]
+- [[Protocolo diario de toma de suplementos]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Ergogénicos y peso semanal]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Ergognicos_y_peso_semanal
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Ergogénicos_y_peso_semanalmd

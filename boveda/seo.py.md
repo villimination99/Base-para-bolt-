@@ -1,18 +1,18 @@
 ---
-source_file: "tienda/seo.py"
-type: "code"
-community: "Publicador de la tienda"
+source_file: "boveda/seo.py.md"
+type: "document"
+community: "comprobar()_3.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/comprobar_3md
 ---
 
-# seo.py
+# seo.py.md
 
 ## Connections
-- [[comprobar()_3]] - `contains` [EXTRACTED]
-- [[publicar.py]] - `imports` [EXTRACTED]
+- [[comprobar()_3_1]] - `references` [EXTRACTED]
+- [[seo.py_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/comprobar_3md

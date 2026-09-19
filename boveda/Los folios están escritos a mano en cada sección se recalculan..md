@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/pagina-fuentes.py"
-type: "rationale"
-community: "Página de fuentes"
-location: "L145"
+source_file: "boveda/Los folios están escritos a mano en cada sección se recalculan..md"
+type: "document"
+community: "_COMMUNITY_Página de fuentes.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/_COMMUNITY_Página_de_fuentesmd
 ---
 
-# Los folios están escritos a mano en cada sección: se recalculan.
+# Los folios están escritos a mano en cada sección se recalculan..md
 
 ## Connections
-- [[renumerar()]] - `rationale_for` [EXTRACTED]
+- [[Los folios están escritos a mano en cada sección se recalculan._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Página de fuentes]] - `references` [EXTRACTED]
+- [[renumerar()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Página_de_fuentesmd

@@ -1,20 +1,17 @@
 ---
-source_file: "libros/tools/cargar-traducciones.py"
+source_file: "planes/tools/cargar-traducciones.py"
 type: "code"
-community: "Traducción y armado de planes"
-location: "L39"
+community: "planes/tools/i18n.py"
+location: "L59"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/tools/i18npy
 ---
 
 # pegado()
 
 ## Connections
-- [[El texto con los espacios entre etiquetas colapsados. Al copiar un original es…]] - `rationale_for` [EXTRACTED]
-- [[librostoolscargar-traducciones.py]] - `contains` [EXTRACTED]
-- [[main()_2]] - `calls` [EXTRACTED]
-- [[main()_20]] - `calls` [INFERRED]
+- [[main()_23]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

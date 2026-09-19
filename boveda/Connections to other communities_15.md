@@ -1,0 +1,17 @@
+---
+source_file: "boveda/_COMMUNITY_Láminas del Sí Mismo.md"
+type: "document"
+community: "Láminas del Sí Mismo"
+location: "L71"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Láminas_del_Sí_Mismo
+---
+
+# Connections to other communities
+
+## Connections
+- [[Láminas del Sí Mismo]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/Láminas_del_Sí_Mismo

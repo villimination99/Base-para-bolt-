@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Progresión semanal y cierre de mes"
-location: "pág. 04"
+source_file: "boveda/Tabla de decisión de progresión semana a semana.md"
+type: "document"
+community: "_COMMUNITY_Progresión semanal y cierre de mes.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_semanal_y_cierre_de_mes
+  - community/_COMMUNITY_Progresión_semanal_y_cierre_de_mesmd
 ---
 
-# Tabla de decisión de progresión semana a semana
+# Tabla de decisión de progresión semana a semana.md
 
 ## Connections
-- [[Protocolo de Sueño Elite]] - `references` [INFERRED]
-- [[Sobrecarga progresiva]] - `implements` [EXTRACTED]
+- [[Protocolo de Sueño Elite]] - `references` [EXTRACTED]
+- [[Sobrecarga progresiva]] - `references` [EXTRACTED]
+- [[Tabla de decisión de progresión semana a semana_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Progresión semanal y cierre de mes]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Progresin_semanal_y_cierre_de_mes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_semanal_y_cierre_de_mesmd

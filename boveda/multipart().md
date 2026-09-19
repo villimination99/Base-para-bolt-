@@ -1,19 +1,19 @@
 ---
 source_file: "tienda/publicar.py"
 type: "code"
-community: "Publicador de la tienda"
+community: "json"
 location: "L223"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/json
 ---
 
 # multipart()
 
 ## Connections
-- [[Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a…]] - `rationale_for` [EXTRACTED]
+- [[Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a…_2]] - `rationale_for` [EXTRACTED]
 - [[portada()]] - `calls` [EXTRACTED]
-- [[publicar.py]] - `contains` [EXTRACTED]
+- [[publicar.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/code #graphify/EXTRACTED #community/json

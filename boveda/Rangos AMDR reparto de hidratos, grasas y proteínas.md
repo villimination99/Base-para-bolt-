@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/mesa.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Rangos AMDR reparto de hidratos, grasas y proteínas.md"
+type: "document"
+community: "Mesa — repertorio gráfico (biblioteca de láminas).md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Mesa__repertorio_gráfico_biblioteca_de_láminasmd
 ---
 
-# Rangos AMDR: reparto de hidratos, grasas y proteínas
+# Rangos AMDR reparto de hidratos, grasas y proteínas.md
 
 ## Connections
-- [[Componentes del gasto energético diario]] - `semantically_similar_to` [INFERRED]
-- [[El plato y las medidas de la mano]] - `conceptually_related_to` [INFERRED]
+- [[Componentes del gasto energético diario]] - `references` [EXTRACTED]
+- [[El plato y las medidas de la mano]] - `references` [EXTRACTED]
 - [[Mesa — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
+- [[Rangos AMDR reparto de hidratos, grasas y proteínas_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Mesa__repertorio_gráfico_biblioteca_de_láminasmd

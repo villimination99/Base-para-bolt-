@@ -1,31 +1,28 @@
 ---
 type: community
-cohesion: 0.33
-members: 6
+members: 5
 ---
 
 # Ergogénicos y peso semanal
 
-**Cohesion:** 0.33 - loosely connected
-**Members:** 6 nodes
+**Members:** 5 nodes
 
 ## Members
-- [[Beta-alanina]] - concept - planes/src/03-pro-guia-suplementacion.html
-- [[Cafeína como ayuda ergogénica]] - concept - planes/src/03-pro-guia-suplementacion.html
-- [[Gráfica SVG de tendencia del peso medio]] - image - planes/src/05-pro-registro-progreso-semanal.html
-- [[Promedio semanal de peso frente al dato del día]] - rationale - planes/src/05-pro-registro-progreso-semanal.html
-- [[Protocolo diario de toma de suplementos]] - concept - planes/src/03-pro-guia-suplementacion.html
-- [[Tabla diaria de adherencia nutricional]] - concept - planes/src/05-pro-registro-progreso-semanal.html
+- [[Connections to other communities_7]] - document - boveda/_COMMUNITY_Ergogénicos y peso semanal.md
+- [[Ergogénicos y peso semanal]] - document - boveda/_COMMUNITY_Ergogénicos y peso semanal.md
+- [[Live Query (requires Dataview plugin)_27]] - document - boveda/_COMMUNITY_Ergogénicos y peso semanal.md
+- [[Members_27]] - document - boveda/_COMMUNITY_Ergogénicos y peso semanal.md
+- [[Top bridge nodes_7]] - document - boveda/_COMMUNITY_Ergogénicos y peso semanal.md
 
 ## Live Query (requires Dataview plugin)
 
 ```dataview
-TABLE source_file, type FROM #community/Ergognicos_y_peso_semanal
+TABLE source_file, type FROM #community/Ergogénicos_y_peso_semanal
 SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 1 edge to [[_COMMUNITY_Recomposición por fases]]
+- 1 edge to [[_COMMUNITY__COMMUNITY_Ergogénicos y peso semanal]]
 
 ## Top bridge nodes
-- [[Promedio semanal de peso frente al dato del día]] - degree 2, connects to 1 community
+- [[Ergogénicos y peso semanal]] - degree 5, connects to 1 community

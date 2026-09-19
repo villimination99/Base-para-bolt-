@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/05-pro-registro-progreso-semanal.html"
-type: "rationale"
-community: "Progresión de cargas"
-location: "pág. 02 · Cómo usar este registro"
+source_file: "boveda/Un solo cambio por semana (decisión del lunes).md"
+type: "document"
+community: "_COMMUNITY_Progresión de cargas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_de_cargas
+  - community/_COMMUNITY_Progresión_de_cargasmd
 ---
 
-# Un solo cambio por semana (decisión del lunes)
+# Un solo cambio por semana (decisión del lunes).md
 
 ## Connections
-- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `rationale_for` [EXTRACTED]
+- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `references` [EXTRACTED]
+- [[Un solo cambio por semana (decisión del lunes)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Progresión de cargas]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Progresin_de_cargas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_de_cargasmd

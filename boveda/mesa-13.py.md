@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/mesa-13.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_mesa-13.py.md"
+type: "document"
 community: "mesa-13.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/mesa-13py
 ---
 
 # mesa-13.py
 
-#graphify/code #graphify/EXTRACTED #community/mesa-13py
+## Connections
+- [[Live Query (requires Dataview plugin)_136]] - `contains` [EXTRACTED]
+- [[Members_136]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_mesa-13.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/mesa-13py

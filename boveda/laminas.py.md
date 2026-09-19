@@ -1,14 +1,19 @@
 ---
-source_file: "planes/i18n/fuentes/laminas.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_laminas.py.md"
+type: "document"
 community: "laminas.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/laminaspy
 ---
 
 # laminas.py
 
-#graphify/code #graphify/EXTRACTED #community/laminaspy
+## Connections
+- [[Live Query (requires Dataview plugin)_122]] - `contains` [EXTRACTED]
+- [[Members_122]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_laminas.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/laminaspy

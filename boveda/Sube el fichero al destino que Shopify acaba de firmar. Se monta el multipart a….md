@@ -1,17 +1,18 @@
 ---
-source_file: "tienda/publicar.py"
-type: "rationale"
-community: "Publicador de la tienda"
-location: "L224"
+source_file: "boveda/Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a….md"
+type: "document"
+community: "multipart().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/multipartmd
 ---
 
-# Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a…
+# Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a….md
 
 ## Connections
-- [[multipart()]] - `rationale_for` [EXTRACTED]
+- [[Sube el fichero al destino que Shopify acaba de firmar. Se monta el multipart a…_1]] - `contains` [EXTRACTED]
+- [[multipart()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/multipartmd

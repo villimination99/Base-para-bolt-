@@ -1,17 +1,18 @@
 ---
-source_file: "libros/build.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L76"
+source_file: "boveda/El texto no puede prometer más láminas de las que hay dibujadas. Los libros se….md"
+type: "document"
+community: "comprobar_laminas().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/comprobar_laminasmd
 ---
 
-# El texto no puede prometer más láminas de las que hay dibujadas. Los libros se…
+# El texto no puede prometer más láminas de las que hay dibujadas. Los libros se….md
 
 ## Connections
-- [[comprobar_laminas()]] - `rationale_for` [EXTRACTED]
+- [[El texto no puede prometer más láminas de las que hay dibujadas. Los libros se…_1]] - `contains` [EXTRACTED]
+- [[comprobar_laminas()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/comprobar_laminasmd

@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/render.mjs"
-type: "code"
+source_file: "boveda/html, pdf, color = '7c766c', titulillo = '', modo = ''.md"
+type: "document"
 community: "Render con Playwright"
-location: "L11"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/Render_con_Playwright
 ---
 
-# [html, pdf, color = '#7c766c', titulillo = '', modo = '']
+# html, pdf, color = '7c766c', titulillo = '', modo = ''.md
 
 ## Connections
-- [[render.mjs]] - `contains` [EXTRACTED]
+- [[html, pdf, color = '7c766c', titulillo = '', modo = ''_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Render con Playwright]] - `references` [EXTRACTED]
+- [[render.mjs]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Render_con_Playwright
+#graphify/document #graphify/EXTRACTED #community/Render_con_Playwright

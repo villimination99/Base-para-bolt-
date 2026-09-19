@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-03-suplementacion.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-03-suplementacion.py]] - code - planes/i18n/fuentes/plan-03-suplementacion.py
+- [[Live Query (requires Dataview plugin)_143]] - document - boveda/_COMMUNITY_plan-03-suplementacion.py.md
+- [[Members_143]] - document - boveda/_COMMUNITY_plan-03-suplementacion.py.md
+- [[_COMMUNITY_plan-03-suplementacion.py]] - document - boveda/_COMMUNITY_plan-03-suplementacion.py.md
+- [[plan-03-suplementacion.py]] - document - boveda/_COMMUNITY_plan-03-suplementacion.py.md
 
 ## Live Query (requires Dataview plugin)
 

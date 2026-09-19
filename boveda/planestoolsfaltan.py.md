@@ -1,19 +1,20 @@
 ---
-source_file: "planes/tools/faltan.py"
-type: "code"
-community: "Traducción y armado de planes"
+source_file: "boveda/planestoolsfaltan.py.md"
+type: "document"
+community: "documentos().md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/documentosmd
 ---
 
-# planes/tools/faltan.py
+# planestoolsfaltan.py.md
 
 ## Connections
-- [[assemble()]] - `imports` [EXTRACTED]
-- [[documentos()]] - `contains` [EXTRACTED]
-- [[main()_22]] - `contains` [EXTRACTED]
+- [[assemble()_1]] - `references` [EXTRACTED]
+- [[documentos()_2]] - `references` [EXTRACTED]
+- [[main()_22_1]] - `references` [EXTRACTED]
+- [[planestoolsfaltan.py_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/document #graphify/EXTRACTED #community/documentosmd

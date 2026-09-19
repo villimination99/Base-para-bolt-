@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/alta-magia.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Árbol de la Vida las diez sefirot y los tres pilares.md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Repertorio_grfico_de_alta_magia
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Árbol de la Vida: las diez sefirot y los tres pilares
+# Árbol de la Vida las diez sefirot y los tres pilares.md
 
 ## Connections
-- [[Alfabeto hebreo letra, valor y correspondencia]] - `conceptually_related_to` [INFERRED]
+- [[Alfabeto hebreo letra, valor y correspondencia]] - `references` [EXTRACTED]
 - [[Alta Magia — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Tabla de los 22 arcanos mayores letra y regente]] - `conceptually_related_to` [INFERRED]
+- [[Tabla de los 22 arcanos mayores letra y regente]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
+- [[Árbol de la Vida las diez sefirot y los tres pilares_1]] - `contains` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

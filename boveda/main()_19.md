@@ -1,20 +1,20 @@
 ---
-source_file: "planes/tools/auditar.py"
+source_file: ".agents/skills/higgsfield-websites/scripts/glb_inspect.py"
 type: "code"
-community: "Auditoría de PDFs"
-location: "L153"
+community: "glb_inspect.py"
+location: "L76"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/glb_inspectpy
 ---
 
 # main()
 
 ## Connections
-- [[Path_3]] - `calls` [EXTRACTED]
-- [[auditar()]] - `calls` [EXTRACTED]
-- [[auditar.py]] - `contains` [EXTRACTED]
-- [[raiz_dist()]] - `calls` [EXTRACTED]
+- [[accessor_values()]] - `calls` [EXTRACTED]
+- [[find_skeleton_roots()]] - `calls` [EXTRACTED]
+- [[glb_inspect.py]] - `contains` [EXTRACTED]
+- [[read_glb()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/code #graphify/EXTRACTED #community/glb_inspectpy

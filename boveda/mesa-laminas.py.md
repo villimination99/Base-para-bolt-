@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/mesa-laminas.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_mesa-laminas.py.md"
+type: "document"
 community: "mesa-laminas.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/mesa-laminaspy
 ---
 
 # mesa-laminas.py
 
-#graphify/code #graphify/EXTRACTED #community/mesa-laminaspy
+## Connections
+- [[Live Query (requires Dataview plugin)_140]] - `contains` [EXTRACTED]
+- [[Members_140]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_mesa-laminas.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/mesa-laminaspy

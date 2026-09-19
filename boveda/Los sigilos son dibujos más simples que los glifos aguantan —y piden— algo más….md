@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L170"
+source_file: "boveda/Los sigilos son dibujos más simples que los glifos aguantan —y piden— algo más….md"
+type: "document"
+community: "_COMMUNITY_Láminas del zodiaco (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/_COMMUNITY_Láminas_del_zodiaco_generadormd
 ---
 
-# Los sigilos son dibujos más simples que los glifos: aguantan —y piden— algo más…
+# Los sigilos son dibujos más simples que los glifos aguantan —y piden— algo más….md
 
 ## Connections
-- [[sigilo()_1]] - `rationale_for` [EXTRACTED]
+- [[Los sigilos son dibujos más simples que los glifos aguantan —y piden— algo más…_2]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del zodiaco (generador)]] - `references` [EXTRACTED]
+- [[sigilo()_1_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_zodiaco_generadormd

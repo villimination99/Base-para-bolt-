@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # arcanos-09.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[arcanos-09.py]] - code - libros/i18n/fuentes/arcanos-09.py
+- [[Live Query (requires Dataview plugin)_51]] - document - boveda/_COMMUNITY_arcanos-09.py.md
+- [[Members_51]] - document - boveda/_COMMUNITY_arcanos-09.py.md
+- [[_COMMUNITY_arcanos-09.py]] - document - boveda/_COMMUNITY_arcanos-09.py.md
+- [[arcanos-09.py]] - document - boveda/_COMMUNITY_arcanos-09.py.md
 
 ## Live Query (requires Dataview plugin)
 

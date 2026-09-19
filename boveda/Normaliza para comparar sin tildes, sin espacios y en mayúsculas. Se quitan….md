@@ -1,17 +1,17 @@
 ---
 source_file: "libros/build.py"
 type: "rationale"
-community: "Generador de libros"
+community: "libros/build.py"
 location: "L56"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/libros/buildpy
 ---
 
 # Normaliza para comparar: sin tildes, sin espacios y en mayúsculas. Se quitan…
 
 ## Connections
-- [[clave()]] - `rationale_for` [EXTRACTED]
+- [[clave()_1]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/libros/buildpy

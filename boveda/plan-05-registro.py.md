@@ -1,14 +1,19 @@
 ---
-source_file: "planes/i18n/fuentes/plan-05-registro.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_plan-05-registro.py.md"
+type: "document"
 community: "plan-05-registro.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/plan-05-registropy
 ---
 
 # plan-05-registro.py
 
-#graphify/code #graphify/EXTRACTED #community/plan-05-registropy
+## Connections
+- [[Live Query (requires Dataview plugin)_145]] - `contains` [EXTRACTED]
+- [[Members_145]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_plan-05-registro.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/plan-05-registropy

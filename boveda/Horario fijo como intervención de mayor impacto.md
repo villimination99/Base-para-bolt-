@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "rationale"
-community: "Volumen efectivo e higiene del sueño"
-location: "pág. 05, callout «Si solo puedes cambiar una cosa»"
+source_file: "boveda/Horario fijo como intervención de mayor impacto.md"
+type: "document"
+community: "_COMMUNITY_Volumen efectivo e higiene del sueño.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Volumen_efectivo_e_higiene_del_sueo
+  - community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd
 ---
 
-# Horario fijo como intervención de mayor impacto
+# Horario fijo como intervención de mayor impacto.md
 
 ## Connections
-- [[10 reglas de higiene del sueño para atletas]] - `rationale_for` [EXTRACTED]
+- [[10 reglas de higiene del sueño para atletas]] - `references` [EXTRACTED]
+- [[Horario fijo como intervención de mayor impacto_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Volumen efectivo e higiene del sueño]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Volumen_efectivo_e_higiene_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd

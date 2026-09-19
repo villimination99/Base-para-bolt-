@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L370"
+source_file: "boveda/Melotesia los doce signos repartidos de la cabeza a los pies. El reparto de….md"
+type: "document"
+community: "lamina_cuerpo().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_cuerpomd
 ---
 
-# Melotesia: los doce signos repartidos de la cabeza a los pies. El reparto de…
+# Melotesia los doce signos repartidos de la cabeza a los pies. El reparto de….md
 
 ## Connections
-- [[lamina_cuerpo()]] - `rationale_for` [EXTRACTED]
+- [[Melotesia los doce signos repartidos de la cabeza a los pies. El reparto de…_1]] - `contains` [EXTRACTED]
+- [[lamina_cuerpo()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_cuerpomd

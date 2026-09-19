@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L157"
+source_file: "boveda/Dos triángulos opuestos definición y volumen en la misma pieza..md"
+type: "document"
+community: "nucleo_dos_fases().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/nucleo_dos_fasesmd
 ---
 
-# Dos triángulos opuestos: definición y volumen en la misma pieza.
+# Dos triángulos opuestos definición y volumen en la misma pieza..md
 
 ## Connections
-- [[nucleo_dos_fases()]] - `rationale_for` [EXTRACTED]
+- [[Dos triángulos opuestos definición y volumen en la misma pieza._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_dos_fases()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/nucleo_dos_fasesmd

@@ -1,19 +1,19 @@
 ---
 source_file: "libros/tools/dibujar-alta-magia.py"
 type: "code"
-community: "Láminas de alta magia (generador)"
+community: "dibujar-alta-magia.py"
 location: "L479"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/dibujar-alta-magiapy
 ---
 
 # comprobar_horas()
 
 ## Connections
-- [[La prueba de que el reparto explica la semana la hora 25 —la primera del día…]] - `rationale_for` [EXTRACTED]
-- [[dibujar-alta-magia.py]] - `contains` [EXTRACTED]
-- [[main()_3]] - `calls` [EXTRACTED]
+- [[La prueba de que el reparto explica la semana la hora 25 —la primera del día…_2]] - `rationale_for` [EXTRACTED]
+- [[dibujar-alta-magia.py_2]] - `contains` [EXTRACTED]
+- [[main()_26]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-alta-magiapy

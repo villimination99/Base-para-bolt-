@@ -1,20 +1,21 @@
 ---
-source_file: "planes/tools/pagina-fuentes.py"
-type: "code"
-community: "Página de fuentes"
+source_file: "boveda/pagina-fuentes.py.md"
+type: "document"
+community: "_COMMUNITY_Página de fuentes.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/_COMMUNITY_Página_de_fuentesmd
 ---
 
-# pagina-fuentes.py
+# pagina-fuentes.py.md
 
 ## Connections
-- [[main()_23]] - `contains` [EXTRACTED]
-- [[pagina()]] - `contains` [EXTRACTED]
-- [[quitar()]] - `contains` [EXTRACTED]
-- [[renumerar()]] - `contains` [EXTRACTED]
+- [[main()_23_1]] - `references` [EXTRACTED]
+- [[pagina()_2]] - `references` [EXTRACTED]
+- [[pagina-fuentes.py_1]] - `contains` [EXTRACTED]
+- [[quitar()_1]] - `references` [EXTRACTED]
+- [[renumerar()_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Página_de_fuentesmd

@@ -1,17 +1,18 @@
 ---
-source_file: "libros/build.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L345"
+source_file: "boveda/Inyecta los sprites de láminas que declare el libro. Va en línea y no por….md"
+type: "document"
+community: "laminas_svg().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/laminas_svgmd
 ---
 
-# Inyecta los sprites de láminas que declare el libro. Va en línea y no por…
+# Inyecta los sprites de láminas que declare el libro. Va en línea y no por….md
 
 ## Connections
-- [[laminas_svg()]] - `rationale_for` [EXTRACTED]
+- [[Inyecta los sprites de láminas que declare el libro. Va en línea y no por…_1]] - `contains` [EXTRACTED]
+- [[laminas_svg()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/laminas_svgmd

@@ -1,19 +1,23 @@
 ---
 source_file: "empaquetar.py"
 type: "code"
-community: "Empaquetado de entregas"
+community: "entregas.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Empaquetado_de_entregas
+  - community/entregaspy
 ---
 
 # empaquetar.py
 
 ## Connections
+- [[VILLUMINATIONS — Empaquetado de entrega ---------------------------------------…]] - `rationale_for` [EXTRACTED]
 - [[escribir()]] - `contains` [EXTRACTED]
-- [[main()]] - `contains` [EXTRACTED]
+- [[main()_39]] - `contains` [EXTRACTED]
+- [[pathlib]] - `imports_from` [EXTRACTED]
 - [[recoger()]] - `contains` [EXTRACTED]
+- [[sys]] - `imports` [EXTRACTED]
+- [[zipfile]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Empaquetado_de_entregas
+#graphify/code #graphify/EXTRACTED #community/entregaspy

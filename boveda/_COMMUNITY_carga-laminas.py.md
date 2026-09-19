@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # carga-laminas.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[carga-laminas.py]] - code - libros/i18n/fuentes/carga-laminas.py
+- [[Live Query (requires Dataview plugin)_81]] - document - boveda/_COMMUNITY_carga-laminas.py.md
+- [[Members_81]] - document - boveda/_COMMUNITY_carga-laminas.py.md
+- [[_COMMUNITY_carga-laminas.py]] - document - boveda/_COMMUNITY_carga-laminas.py.md
+- [[carga-laminas.py]] - document - boveda/_COMMUNITY_carga-laminas.py.md
 
 ## Live Query (requires Dataview plugin)
 

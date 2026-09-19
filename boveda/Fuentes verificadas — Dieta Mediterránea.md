@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
+source_file: "boveda/Fuentes verificadas — Dieta Mediterránea.md"
 type: "document"
-community: "Dieta mediterránea"
-location: "bloque @fuentes-verificadas, pág. 10"
+community: "_COMMUNITY_Dieta mediterránea.md"
+location: "L1"
 tags:
   - graphify/document
-  - graphify/INFERRED
-  - community/Dieta_mediterrnea
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Dieta_mediterráneamd
 ---
 
-# Fuentes verificadas — Dieta Mediterránea
+# Fuentes verificadas — Dieta Mediterránea.md
 
 ## Connections
-- [[Dieta Mediterránea 4 semanas (Plan Elite)]] - `cites` [EXTRACTED]
-- [[Fuentes verificadas — Guía de Suplementación]] - `shares_data_with` [INFERRED]
+- [[Dieta Mediterránea 4 semanas (Plan Elite)]] - `references` [EXTRACTED]
+- [[Fuentes verificadas — Dieta Mediterránea_1]] - `contains` [EXTRACTED]
+- [[Fuentes verificadas — Guía de Suplementación]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Dieta mediterránea]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/INFERRED #community/Dieta_mediterrnea
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Dieta_mediterráneamd

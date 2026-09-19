@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/carga-12.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_carga-12.py.md"
+type: "document"
 community: "carga-12.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/carga-12py
 ---
 
 # carga-12.py
 
-#graphify/code #graphify/EXTRACTED #community/carga-12py
+## Connections
+- [[Live Query (requires Dataview plugin)_76]] - `contains` [EXTRACTED]
+- [[Members_76]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_carga-12.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/carga-12py

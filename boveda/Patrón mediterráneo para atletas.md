@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Dieta mediterránea"
-location: "pág. 02 · Introducción"
+source_file: "boveda/Patrón mediterráneo para atletas.md"
+type: "document"
+community: "_COMMUNITY_Dieta mediterránea.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Dieta_mediterrnea
+  - community/_COMMUNITY_Dieta_mediterráneamd
 ---
 
-# Patrón mediterráneo para atletas
+# Patrón mediterráneo para atletas.md
 
 ## Connections
 - [[Dieta Mediterránea 4 semanas (Plan Elite)]] - `references` [EXTRACTED]
-- [[Jerarquía del resultado (los suplementos son el 5 %)]] - `conceptually_related_to` [INFERRED]
-- [[Los 6 pilares del patrón mediterráneo]] - `implements` [EXTRACTED]
+- [[Jerarquía del resultado (los suplementos son el 5 %)]] - `references` [EXTRACTED]
+- [[Los 6 pilares del patrón mediterráneo]] - `references` [EXTRACTED]
+- [[Patrón mediterráneo para atletas_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Dieta mediterránea]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Dieta_mediterrnea
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Dieta_mediterráneamd

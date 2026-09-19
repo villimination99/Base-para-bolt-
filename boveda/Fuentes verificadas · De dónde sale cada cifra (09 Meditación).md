@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
+source_file: "boveda/Fuentes verificadas · De dónde sale cada cifra (09 Meditación).md"
 type: "document"
-community: "Fuentes verificadas"
-location: "pág. 08, bloque @fuentes-verificadas"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
   - graphify/document
-  - graphify/INFERRED
-  - community/Fuentes_verificadas
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# Fuentes verificadas · De dónde sale cada cifra (09 Meditación)
+# Fuentes verificadas · De dónde sale cada cifra (09 Meditación).md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `shares_data_with` [INFERRED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (09 Meditación)_1]] - `contains` [EXTRACTED]
 - [[Meditación y Mindfulness — 21 Días (Plan Elite)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Fuentes verificadas]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/INFERRED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # mesa-laminas.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[mesa-laminas.py]] - code - libros/i18n/fuentes/mesa-laminas.py
+- [[Live Query (requires Dataview plugin)_140]] - document - boveda/_COMMUNITY_mesa-laminas.py.md
+- [[Members_140]] - document - boveda/_COMMUNITY_mesa-laminas.py.md
+- [[_COMMUNITY_mesa-laminas.py]] - document - boveda/_COMMUNITY_mesa-laminas.py.md
+- [[mesa-laminas.py]] - document - boveda/_COMMUNITY_mesa-laminas.py.md
 
 ## Live Query (requires Dataview plugin)
 

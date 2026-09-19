@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 06 · Transición"
+source_file: "boveda/Los 5 días de transición entre fases.md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Los 5 días de transición entre fases
+# Los 5 días de transición entre fases.md
 
 ## Connections
-- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `shares_data_with` [EXTRACTED]
-- [[Fase 2 · Definición (semanas 5-8)]] - `shares_data_with` [EXTRACTED]
+- [[Fase 1 · Volumen controlado (semanas 1-4)]] - `references` [EXTRACTED]
+- [[Fase 2 · Definición (semanas 5-8)]] - `references` [EXTRACTED]
+- [[Los 5 días de transición entre fases_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

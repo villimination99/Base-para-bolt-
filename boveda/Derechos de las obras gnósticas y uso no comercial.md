@@ -1,17 +1,20 @@
 ---
-source_file: "libros/README.md"
-type: "rationale"
-community: "Procedencia de los libros recuperados"
+source_file: "boveda/Derechos de las obras gnósticas y uso no comercial.md"
+type: "document"
+community: "_COMMUNITY_Procedencia de los libros recuperados.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Procedencia_de_los_libros_recuperados
+  - community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd
 ---
 
-# Derechos de las obras gnósticas y uso no comercial
+# Derechos de las obras gnósticas y uso no comercial.md
 
 ## Connections
-- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `rationale_for` [EXTRACTED]
-- [[Página de fuentes verificadas (dominio público federal)]] - `semantically_similar_to` [INFERRED]
+- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `references` [EXTRACTED]
+- [[Derechos de las obras gnósticas y uso no comercial_1]] - `contains` [EXTRACTED]
+- [[Página de fuentes verificadas (dominio público federal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Procedencia de los libros recuperados]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Procedencia_de_los_libros_recuperados
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd

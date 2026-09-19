@@ -1,19 +1,19 @@
 ---
 source_file: "planes/build.py"
 type: "code"
-community: "Traducción y armado de planes"
+community: "planes/build.py"
 location: "L114"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/buildpy
 ---
 
 # stamp_metadata()
 
 ## Connections
-- [[Path_2]] - `references` [EXTRACTED]
+- [[Path]] - `references` [EXTRACTED]
 - [[planesbuild.py]] - `contains` [EXTRACTED]
-- [[run()]] - `calls` [EXTRACTED]
+- [[run()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/planes/buildpy

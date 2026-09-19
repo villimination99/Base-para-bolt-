@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Escalado de macros y recetario"
-location: "págs. 07-08"
+source_file: "boveda/Recetario de 20 recetas premium.md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Escalado_de_macros_y_recetario
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Recetario de 20 recetas premium
+# Recetario de 20 recetas premium.md
 
 ## Connections
-- [[Ajuste de macros por receta (carbohidrato y aceite como mandos)]] - `rationale_for` [EXTRACTED]
+- [[Ajuste de macros por receta (carbohidrato y aceite como mandos)]] - `references` [EXTRACTED]
+- [[Recetario de 20 recetas premium_1]] - `contains` [EXTRACTED]
 - [[Semana 3 · Variedad (2.500 kcal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalado de macros y recetario]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

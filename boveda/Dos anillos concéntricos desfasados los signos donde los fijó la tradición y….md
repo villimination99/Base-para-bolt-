@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L700"
+source_file: "boveda/Dos anillos concéntricos desfasados los signos donde los fijó la tradición y….md"
+type: "document"
+community: "lamina_precesion().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_precesionmd
 ---
 
-# Dos anillos concéntricos desfasados: los signos donde los fijó la tradición y…
+# Dos anillos concéntricos desfasados los signos donde los fijó la tradición y….md
 
 ## Connections
-- [[lamina_precesion()]] - `rationale_for` [EXTRACTED]
+- [[Dos anillos concéntricos desfasados los signos donde los fijó la tradición y…_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del zodiaco (generador)]] - `references` [EXTRACTED]
+- [[lamina_precesion()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_precesionmd

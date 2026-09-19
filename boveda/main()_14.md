@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/escribir-codice-voluntad.py"
+source_file: ".agents/skills/higgsfield-websites/scripts/proc_weights.py"
 type: "code"
-community: "Texto del Códice de la Voluntad"
-location: "L982"
+community: "bpy"
+location: "L31"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Voluntad
+  - community/bpy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-voluntad.py]] - `contains` [EXTRACTED]
+- [[proc_weights.py]] - `contains` [EXTRACTED]
+- [[seg_dist()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Voluntad
+#graphify/code #graphify/EXTRACTED #community/bpy

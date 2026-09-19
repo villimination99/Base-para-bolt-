@@ -1,18 +1,21 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
-type: "concept"
-community: "Maquetación de los planes"
+source_file: "boveda/Los tres tipos de día (alto, medio, bajo).md"
+type: "document"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Los tres tipos de día (alto, medio, bajo)
+# Los tres tipos de día (alto, medio, bajo).md
 
 ## Connections
 - [[Calendario de 4 semanas de ciclado]] - `references` [EXTRACTED]
 - [[Ciclado de Carbohidratos (documento Pro)]] - `references` [EXTRACTED]
-- [[Conversión del protocolo a gkg de peso corporal]] - `shares_data_with` [EXTRACTED]
+- [[Conversión del protocolo a gkg de peso corporal]] - `references` [EXTRACTED]
+- [[Los tres tipos de día (alto, medio, bajo)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

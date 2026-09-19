@@ -1,18 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-zodiacal.py"
+source_file: "libros/tools/escribir-codice-voluntad.py"
 type: "code"
-community: "Texto del Códice Zodiacal"
-location: "L23"
+community: "escribir-codice-voluntad.py"
+location: "L38"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_Zodiacal
+  - community/escribir-codice-voluntadpy
 ---
 
 # ficha()
 
 ## Connections
-- [[escribir-codice-zodiacal.py]] - `contains` [EXTRACTED]
-- [[signo()]] - `calls` [EXTRACTED]
+- [[escribir-codice-voluntad.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_Zodiacal
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-voluntadpy

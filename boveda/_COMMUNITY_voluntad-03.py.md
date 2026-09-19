@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # voluntad-03.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[voluntad-03.py]] - code - libros/i18n/fuentes/voluntad-03.py
+- [[Live Query (requires Dataview plugin)_178]] - document - boveda/_COMMUNITY_voluntad-03.py.md
+- [[Members_178]] - document - boveda/_COMMUNITY_voluntad-03.py.md
+- [[_COMMUNITY_voluntad-03.py]] - document - boveda/_COMMUNITY_voluntad-03.py.md
+- [[voluntad-03.py]] - document - boveda/_COMMUNITY_voluntad-03.py.md
 
 ## Live Query (requires Dataview plugin)
 

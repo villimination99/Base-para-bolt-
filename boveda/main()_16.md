@@ -1,18 +1,21 @@
 ---
-source_file: "libros/tools/faltan.py"
+source_file: "ropa/tools/dibujar-gotico.py"
 type: "code"
-community: "Segmentos sin traducir"
-location: "L30"
+community: "dibujar-gotico.py"
+location: "L679"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Segmentos_sin_traducir
+  - community/dibujar-goticopy
 ---
 
 # main()
 
 ## Connections
-- [[entero()]] - `calls` [EXTRACTED]
-- [[librostoolsfaltan.py]] - `contains` [EXTRACTED]
+- [[comprobar()_5]] - `calls` [EXTRACTED]
+- [[construir()_1]] - `calls` [EXTRACTED]
+- [[dibujar-gotico.py]] - `contains` [EXTRACTED]
+- [[hoja()_1]] - `calls` [EXTRACTED]
+- [[sueltos()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Segmentos_sin_traducir
+#graphify/code #graphify/EXTRACTED #community/dibujar-goticopy

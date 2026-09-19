@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/cargar-traducciones.py"
-type: "rationale"
-community: "Traducción y armado de planes"
-location: "L44"
+source_file: "boveda/Las etiquetas de un segmento, en orden, sin atributos volátiles._1.md"
+type: "document"
+community: "Las etiquetas de un segmento, en orden, sin atributos volátiles._1.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/Las_etiquetas_de_un_segmento_en_orden_sin_atributos_volátiles_1md
 ---
 
-# Las etiquetas de un segmento, en orden, sin atributos volátiles.
+# Las etiquetas de un segmento, en orden, sin atributos volátiles._1.md
 
 ## Connections
-- [[etiquetas()_1]] - `rationale_for` [EXTRACTED]
+- [[Las etiquetas de un segmento, en orden, sin atributos volátiles._2]] - `contains` [EXTRACTED]
+- [[etiquetas()_1_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/document #graphify/EXTRACTED #community/Las_etiquetas_de_un_segmento_en_orden_sin_atributos_volátiles_1md

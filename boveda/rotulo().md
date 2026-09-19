@@ -1,19 +1,19 @@
 ---
 source_file: "planes/tools/dibujar-emblemas.py"
 type: "code"
-community: "Emblemas de los planes (generador)"
+community: "dibujar-emblemas.py"
 location: "L81"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/dibujar-emblemaspy
 ---
 
 # rotulo()
 
 ## Connections
-- [[dibujar-emblemas.py]] - `contains` [EXTRACTED]
+- [[dibujar-emblemas.py_2]] - `contains` [EXTRACTED]
 - [[emblema()]] - `calls` [EXTRACTED]
-- [[txt()_5]] - `calls` [EXTRACTED]
+- [[txt()_4]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-emblemaspy

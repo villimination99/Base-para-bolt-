@@ -1,12 +1,12 @@
 ---
 source_file: "planes/build.py"
 type: "rationale"
-community: "Traducción y armado de planes"
+community: "planes/tools/i18n.py"
 location: "L62"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/tools/i18npy
 ---
 
 # Inyecta el sistema de diseno y las ilustraciones en el HTML.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[assemble()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/invocaciones-laminas.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_invocaciones-laminas.py.md"
+type: "document"
 community: "invocaciones-laminas.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/invocaciones-laminaspy
 ---
 
 # invocaciones-laminas.py
 
-#graphify/code #graphify/EXTRACTED #community/invocaciones-laminaspy
+## Connections
+- [[Live Query (requires Dataview plugin)_121]] - `contains` [EXTRACTED]
+- [[Members_121]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_invocaciones-laminas.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/invocaciones-laminaspy

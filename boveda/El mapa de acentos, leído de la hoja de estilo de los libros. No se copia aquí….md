@@ -1,17 +1,18 @@
 ---
-source_file: "tienda/portadas.py"
-type: "rationale"
-community: "Generador de portadas"
-location: "L177"
+source_file: "boveda/El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí….md"
+type: "document"
+community: "_COMMUNITY_Generador de portadas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/_COMMUNITY_Generador_de_portadasmd
 ---
 
-# El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí:…
+# El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí….md
 
 ## Connections
-- [[acentos()]] - `rationale_for` [EXTRACTED]
+- [[El mapa de acentos, leído de la hoja de estilo de los libros. No se copia aquí…_1]] - `contains` [EXTRACTED]
+- [[acentos()]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_portadasmd

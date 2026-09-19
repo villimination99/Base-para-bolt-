@@ -1,20 +1,19 @@
 ---
 source_file: ""
 type: "code"
-community: "Traducción y armado de planes"
+community: "brandkit.py"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/brandkitpy
 ---
 
 # Path
 
 ## Connections
-- [[find_chrome()]] - `calls` [EXTRACTED]
-- [[page_count()]] - `references` [EXTRACTED]
-- [[render()_1]] - `references` [EXTRACTED]
-- [[run()]] - `calls` [EXTRACTED]
-- [[stamp_metadata()]] - `references` [EXTRACTED]
+- [[load_json()]] - `references` [EXTRACTED]
+- [[read_state()]] - `references` [EXTRACTED]
+- [[write_logo_pair()]] - `references` [EXTRACTED]
+- [[write_state()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/code #graphify/EXTRACTED #community/brandkitpy

@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L83"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # pie()
@@ -29,11 +29,11 @@ tags:
 - [[me_margen()]] - `calls` [EXTRACTED]
 - [[me_micro()]] - `calls` [EXTRACTED]
 - [[me_plato()]] - `calls` [EXTRACTED]
-- [[txt()_2]] - `calls` [EXTRACTED]
+- [[txt()]] - `calls` [EXTRACTED]
 - [[vo_adherencia()]] - `calls` [EXTRACTED]
 - [[vo_dominios()]] - `calls` [EXTRACTED]
 - [[vo_habito()]] - `calls` [EXTRACTED]
 - [[vo_recaida()]] - `calls` [EXTRACTED]
 - [[vo_respiracion()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

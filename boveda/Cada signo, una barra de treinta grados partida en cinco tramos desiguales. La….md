@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L662"
+source_file: "boveda/Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La….md"
+type: "document"
+community: "lamina_terminos().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_terminosmd
 ---
 
-# Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La…
+# Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La….md
 
 ## Connections
-- [[lamina_terminos()]] - `rationale_for` [EXTRACTED]
+- [[Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La…_1]] - `contains` [EXTRACTED]
+- [[lamina_terminos()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_terminosmd

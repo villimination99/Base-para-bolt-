@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
-type: "rationale"
-community: "Láminas de los arcanos (generador)"
-location: "L204"
+source_file: "boveda/Si una deducción no cierra, el fichero no se escribe..md"
+type: "document"
+community: "_COMMUNITY_Láminas de los arcanos (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/_COMMUNITY_Láminas_de_los_arcanos_generadormd
 ---
 
-# Si una deducción no cierra, el fichero no se escribe.
+# Si una deducción no cierra, el fichero no se escribe..md
 
 ## Connections
-- [[comprobar()_2]] - `rationale_for` [EXTRACTED]
+- [[Si una deducción no cierra, el fichero no se escribe._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de los arcanos (generador)]] - `references` [EXTRACTED]
+- [[comprobar()_2_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_de_los_arcanos_generadormd

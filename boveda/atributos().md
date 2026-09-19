@@ -1,12 +1,12 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "code"
-community: "Generador de libros"
-location: "L149"
+community: "planes/tools/i18n.py"
+location: "L163"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # atributos()
@@ -15,11 +15,9 @@ tags:
 - [[Los atributos con texto visible, para no dejarlos sin traducir.]] - `rationale_for` [EXTRACTED]
 - [[_dentro()]] - `calls` [EXTRACTED]
 - [[_tramos_opacos()]] - `calls` [EXTRACTED]
-- [[inventario()]] - `calls` [INFERRED]
-- [[inventario()_1]] - `calls` [EXTRACTED]
-- [[planestoolsi18n.py]] - `contains` [EXTRACTED]
+- [[inventario()]] - `calls` [EXTRACTED]
+- [[planestoolsi18n.py_2]] - `contains` [EXTRACTED]
 - [[traducible()]] - `calls` [EXTRACTED]
-- [[traducir()]] - `calls` [INFERRED]
-- [[traducir()_1]] - `calls` [EXTRACTED]
+- [[traducir()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

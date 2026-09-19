@@ -1,17 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-invocaciones.py"
+source_file: "tienda/despegue.py"
 type: "code"
-community: "Texto del Códice de las Invocaciones"
-location: "L1575"
+community: "despegue.py"
+location: "L185"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_las_Invocaciones
+  - community/despeguepy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-invocaciones.py]] - `contains` [EXTRACTED]
+- [[despegue.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_las_Invocaciones
+#graphify/code #graphify/EXTRACTED #community/despeguepy

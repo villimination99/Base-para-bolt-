@@ -1,17 +1,17 @@
 ---
 source_file: "planes/build.py"
 type: "rationale"
-community: "Traducción y armado de planes"
+community: "planes/build.py"
 location: "L158"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/buildpy
 ---
 
 # Genera una edicion completa (pantalla o impresion) en un idioma. Un PDF en…
 
 ## Connections
-- [[run()]] - `rationale_for` [EXTRACTED]
+- [[run()_1]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/rationale #graphify/EXTRACTED #community/planes/buildpy

@@ -1,12 +1,12 @@
 ---
-source_file: "libros/tools/cargar-traducciones.py"
+source_file: "planes/tools/cargar-traducciones.py"
 type: "rationale"
-community: "Traducción y armado de planes"
-location: "L35"
+community: "planes/tools/i18n.py"
+location: "L44"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/planes/tools/i18npy
 ---
 
 # Las etiquetas de un segmento, en orden, sin atributos volátiles.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[etiquetas()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

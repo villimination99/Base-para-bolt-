@@ -1,22 +1,18 @@
 ---
 type: community
-cohesion: 0.29
-members: 7
+members: 5
 ---
 
 # Escalado de macros y recetario
 
-**Cohesion:** 0.29 - loosely connected
-**Members:** 7 nodes
+**Members:** 5 nodes
 
 ## Members
-- [[Ajuste de macros por receta (carbohidrato y aceite como mandos)]] - rationale - planes/src/06-elite-dieta-mediterranea.html
-- [[Atleta de referencia de 75 kg]] - concept - planes/src/06-elite-dieta-mediterranea.html
-- [[Atleta de referencia de 80 kg]] - concept - planes/src/04-pro-plan-definicion-volumen.html
-- [[Escalado de macros por kilo de peso corporal]] - concept - planes/src/04-pro-plan-definicion-volumen.html
-- [[Recetario de 20 recetas premium]] - concept - planes/src/06-elite-dieta-mediterranea.html
-- [[Semana 1 · Adaptación (2.400 kcal)]] - concept - planes/src/06-elite-dieta-mediterranea.html
-- [[Semana 3 · Variedad (2.500 kcal)]] - concept - planes/src/06-elite-dieta-mediterranea.html
+- [[Connections to other communities_8]] - document - boveda/_COMMUNITY_Escalado de macros y recetario.md
+- [[Escalado de macros y recetario]] - document - boveda/_COMMUNITY_Escalado de macros y recetario.md
+- [[Live Query (requires Dataview plugin)_28]] - document - boveda/_COMMUNITY_Escalado de macros y recetario.md
+- [[Members_28]] - document - boveda/_COMMUNITY_Escalado de macros y recetario.md
+- [[Top bridge nodes_8]] - document - boveda/_COMMUNITY_Escalado de macros y recetario.md
 
 ## Live Query (requires Dataview plugin)
 
@@ -26,7 +22,7 @@ SORT file.name ASC
 ```
 
 ## Connections to other communities
-- 2 edges to [[_COMMUNITY_Recomposición por fases]]
+- 1 edge to [[_COMMUNITY__COMMUNITY_Escalado de macros y recetario]]
 
 ## Top bridge nodes
-- [[Escalado de macros por kilo de peso corporal]] - degree 4, connects to 1 community
+- [[Escalado de macros y recetario]] - degree 5, connects to 1 community

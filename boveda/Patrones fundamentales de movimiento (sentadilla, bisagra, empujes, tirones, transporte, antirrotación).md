@@ -1,19 +1,22 @@
 ---
-source_file: "libros/partials/carga.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación).md"
+type: "document"
+community: "Carga — repertorio gráfico (biblioteca de láminas).md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Carga__repertorio_gráfico_biblioteca_de_láminasmd
 ---
 
-# Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación)
+# Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación).md
 
 ## Connections
-- [[ACFT seis pruebas de condición física y sus cualidades]] - `conceptually_related_to` [INFERRED]
+- [[ACFT seis pruebas de condición física y sus cualidades]] - `references` [EXTRACTED]
 - [[Carga — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Ecuación NIOSH 23 kg por seis factores de levantamiento]] - `conceptually_related_to` [INFERRED]
-- [[Seis variables de la progresión intensidad, volumen, frecuencia, densidad, recorrido, tempo]] - `conceptually_related_to` [INFERRED]
+- [[Ecuación NIOSH 23 kg por seis factores de levantamiento]] - `references` [EXTRACTED]
+- [[Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación)_1]] - `contains` [EXTRACTED]
+- [[Seis variables de la progresión intensidad, volumen, frecuencia, densidad, recorrido, tempo]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Carga__repertorio_gráfico_biblioteca_de_láminasmd

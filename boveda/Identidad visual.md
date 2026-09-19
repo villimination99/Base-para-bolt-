@@ -1,0 +1,17 @@
+---
+source_file: "planes/README.md"
+type: "document"
+community: "Planes VILLUMINATIONS — PDFs optimizados"
+location: "L58"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Planes_VILLUMINATIONS__PDFs_optimizados
+---
+
+# Identidad visual
+
+## Connections
+- [[Planes VILLUMINATIONS — PDFs optimizados]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/Planes_VILLUMINATIONS__PDFs_optimizados

@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # laminas.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[laminas.py]] - code - planes/i18n/fuentes/laminas.py
+- [[Live Query (requires Dataview plugin)_122]] - document - boveda/_COMMUNITY_laminas.py.md
+- [[Members_122]] - document - boveda/_COMMUNITY_laminas.py.md
+- [[_COMMUNITY_laminas.py]] - document - boveda/_COMMUNITY_laminas.py.md
+- [[laminas.py]] - document - boveda/_COMMUNITY_laminas.py.md
 
 ## Live Query (requires Dataview plugin)
 

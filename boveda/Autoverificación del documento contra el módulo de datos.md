@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "rationale"
-community: "Fuentes verificadas"
-location: "pág. 09, callout «Cómo se comprueba este documento a sí mismo»"
+source_file: "boveda/Autoverificación del documento contra el módulo de datos.md"
+type: "document"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Fuentes_verificadas
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# Autoverificación del documento contra el módulo de datos
+# Autoverificación del documento contra el módulo de datos.md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `rationale_for` [EXTRACTED]
-- [[Fuentes verificadas · De dónde sale cada cifra (08 Entrenamiento)]] - `rationale_for` [INFERRED]
+- [[Autoverificación del documento contra el módulo de datos_1]] - `contains` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (08 Entrenamiento)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Fuentes verificadas]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

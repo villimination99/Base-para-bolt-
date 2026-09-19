@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "rationale"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L213"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # Los nutrientes ordenados por estrechez de margen. Es un cálculo, no una tabla…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[me_margen()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-fitnesspy

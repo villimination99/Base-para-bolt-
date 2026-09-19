@@ -1,16 +1,19 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
-type: "rationale"
-community: "Ventana peri-entreno"
+source_file: "boveda/Ventana peri-entreno y sensibilidad a la insulina.md"
+type: "document"
+community: "_COMMUNITY_Ventana peri-entreno.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Ventana_peri-entreno
+  - community/_COMMUNITY_Ventana_peri-entrenomd
 ---
 
-# Ventana peri-entreno y sensibilidad a la insulina
+# Ventana peri-entreno y sensibilidad a la insulina.md
 
 ## Connections
-- [[Menú del día ALTO (366 g carbos · 2.850 kcal)]] - `rationale_for` [EXTRACTED]
+- [[Menú del día ALTO (366 g carbos · 2.850 kcal)]] - `references` [EXTRACTED]
+- [[Ventana peri-entreno y sensibilidad a la insulina_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Ventana peri-entreno]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Ventana_peri-entreno
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Ventana_peri-entrenomd

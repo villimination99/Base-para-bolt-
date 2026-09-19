@@ -1,34 +1,29 @@
 ---
-type: community
-cohesion: 0.13
-members: 15
+source_file: "boveda/_COMMUNITY_Texto del Códice de la Carga.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice de la Carga.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Texto_del_Códice_de_la_Cargamd
 ---
 
-# Texto del Códice de la Carga
+# _COMMUNITY_Texto del Códice de la Carga.md
 
-**Cohesion:** 0.13 - loosely connected
-**Members:** 15 nodes
+## Connections
+- [[Texto del Códice de la Carga]] - `contains` [EXTRACTED]
+- [[cap()_1_1]] - `references` [EXTRACTED]
+- [[dec()_1]] - `references` [EXTRACTED]
+- [[ficha()_1_1]] - `references` [EXTRACTED]
+- [[fig()_1_1]] - `references` [EXTRACTED]
+- [[h()_1_1]] - `references` [EXTRACTED]
+- [[kcal()_1]] - `references` [EXTRACTED]
+- [[lista()_1_1]] - `references` [EXTRACTED]
+- [[main()_9_1]] - `references` [EXTRACTED]
+- [[nota()_1_1]] - `references` [EXTRACTED]
+- [[p()_1_1]] - `references` [EXTRACTED]
+- [[pasos()_1_1]] - `references` [EXTRACTED]
+- [[sep()_1_1]] - `references` [EXTRACTED]
 
-## Members
-- [[Coma decimal, que es la que corresponde en español. Sin esto los MET salían…]] - rationale - libros/tools/escribir-codice-carga.py
-- [[Gasto aproximado un MET es una kcal por kilo y hora. Se calcula, no se teclea,…]] - rationale - libros/tools/escribir-codice-carga.py
-- [[cap()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[dec()]] - code - libros/tools/escribir-codice-carga.py
-- [[escribir-codice-carga.py]] - code - libros/tools/escribir-codice-carga.py
-- [[ficha()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[fig()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[h()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[kcal()]] - code - libros/tools/escribir-codice-carga.py
-- [[lista()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[main()_9]] - code - libros/tools/escribir-codice-carga.py
-- [[nota()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[p()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[pasos()_1]] - code - libros/tools/escribir-codice-carga.py
-- [[sep()_1]] - code - libros/tools/escribir-codice-carga.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Texto_del_Cdice_de_la_Carga
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_de_la_Cargamd

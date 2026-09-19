@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
-type: "concept"
-community: "Cálculo de macros y errores"
+source_file: "boveda/Menú del día MEDIO (240 g carbos · 2.500 kcal).md"
+type: "document"
+community: "_COMMUNITY_Cálculo de macros y errores.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Clculo_de_macros_y_errores
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Cálculo_de_macros_y_erroresmd
 ---
 
-# Menú del día MEDIO (240 g carbos · 2.500 kcal)
+# Menú del día MEDIO (240 g carbos · 2.500 kcal).md
 
 ## Connections
-- [[Conversión del protocolo a gkg de peso corporal]] - `shares_data_with` [EXTRACTED]
-- [[Corrección de errores de los PDFs originales]] - `references` [INFERRED]
-- [[Tabla de intercambios rápidos de alimentos]] - `semantically_similar_to` [INFERRED]
+- [[Conversión del protocolo a gkg de peso corporal]] - `references` [EXTRACTED]
+- [[Corrección de errores de los PDFs originales]] - `references` [EXTRACTED]
+- [[Menú del día MEDIO (240 g carbos · 2.500 kcal)_1]] - `contains` [EXTRACTED]
+- [[Tabla de intercambios rápidos de alimentos]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Clculo_de_macros_y_errores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Cálculo_de_macros_y_erroresmd

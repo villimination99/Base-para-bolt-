@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Escalado de macros y recetario"
-location: "nota pág. 02 y CTA final"
+source_file: "boveda/Atleta de referencia de 75 kg.md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Escalado_de_macros_y_recetario
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Atleta de referencia de 75 kg
+# Atleta de referencia de 75 kg.md
 
 ## Connections
-- [[Atleta de referencia de 80 kg]] - `semantically_similar_to` [INFERRED]
-- [[Semana 1 · Adaptación (2.400 kcal)]] - `shares_data_with` [EXTRACTED]
+- [[Atleta de referencia de 75 kg_1]] - `contains` [EXTRACTED]
+- [[Atleta de referencia de 80 kg]] - `references` [EXTRACTED]
+- [[Semana 1 · Adaptación (2.400 kcal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalado de macros y recetario]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

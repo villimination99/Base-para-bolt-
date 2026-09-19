@@ -1,17 +1,20 @@
 ---
-source_file: "libros/README.md"
-type: "rationale"
-community: "Cálculo de macros y errores"
+source_file: "boveda/Recuperación tipográfica A4→A5.md"
+type: "document"
+community: "_COMMUNITY_Cálculo de macros y errores.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Clculo_de_macros_y_errores
+  - community/_COMMUNITY_Cálculo_de_macros_y_erroresmd
 ---
 
-# Recuperación tipográfica A4→A5
+# Recuperación tipográfica A4→A5.md
 
 ## Connections
-- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `rationale_for` [EXTRACTED]
-- [[Corrección de errores de los PDFs originales]] - `semantically_similar_to` [INFERRED]
+- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `references` [EXTRACTED]
+- [[Corrección de errores de los PDFs originales]] - `references` [EXTRACTED]
+- [[Recuperación tipográfica A4→A5_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Cálculo de macros y errores]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Clculo_de_macros_y_errores
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Cálculo_de_macros_y_erroresmd

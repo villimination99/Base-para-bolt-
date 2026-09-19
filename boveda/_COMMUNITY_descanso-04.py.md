@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # descanso-04.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[descanso-04.py]] - code - libros/i18n/fuentes/descanso-04.py
+- [[Live Query (requires Dataview plugin)_86]] - document - boveda/_COMMUNITY_descanso-04.py.md
+- [[Members_86]] - document - boveda/_COMMUNITY_descanso-04.py.md
+- [[_COMMUNITY_descanso-04.py]] - document - boveda/_COMMUNITY_descanso-04.py.md
+- [[descanso-04.py]] - document - boveda/_COMMUNITY_descanso-04.py.md
 
 ## Live Query (requires Dataview plugin)
 

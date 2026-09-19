@@ -1,24 +1,21 @@
 ---
-source_file: "libros/tools/dibujar-si-mismo.py"
+source_file: ".agents/skills/higgsfield-websites/scripts/glb_merge_anims.py"
 type: "code"
-community: "Láminas del Sí Mismo (generador)"
-location: "L393"
+community: "glb_merge_anims.py"
+location: "L182"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo_generador
+  - community/glb_merge_animspy
 ---
 
 # main()
 
 ## Connections
-- [[dibujar-si-mismo.py]] - `contains` [EXTRACTED]
-- [[lamina_atencion()]] - `calls` [EXTRACTED]
-- [[lamina_centros()]] - `calls` [EXTRACTED]
-- [[lamina_disciplinas()]] - `calls` [EXTRACTED]
-- [[lamina_emociones()]] - `calls` [EXTRACTED]
-- [[lamina_identificacion()]] - `calls` [EXTRACTED]
-- [[lamina_reloj()]] - `calls` [EXTRACTED]
-- [[lamina_respiracion()]] - `calls` [EXTRACTED]
+- [[fix_root_scale()]] - `calls` [EXTRACTED]
+- [[glb_merge_anims.py]] - `contains` [EXTRACTED]
+- [[merge_clip()]] - `calls` [EXTRACTED]
+- [[read_glb()]] - `calls` [EXTRACTED]
+- [[write_glb()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_S_Mismo_generador
+#graphify/code #graphify/EXTRACTED #community/glb_merge_animspy

@@ -1,18 +1,23 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
+source_file: "ropa/tools/dibujar-marca.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
-location: "L133"
+community: "dibujar-marca.py"
+location: "L63"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/dibujar-marcapy
 ---
 
 # pol()
 
 ## Connections
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[simbolo_cubierta()]] - `calls` [EXTRACTED]
+- [[abanico()]] - `calls` [EXTRACTED]
+- [[arco()]] - `calls` [EXTRACTED]
+- [[dibujar-marca.py]] - `contains` [EXTRACTED]
+- [[esquirlas()]] - `calls` [EXTRACTED]
+- [[roseta()]] - `calls` [EXTRACTED]
+- [[vi_dorsal()]] - `calls` [EXTRACTED]
+- [[vi_manga()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-marcapy

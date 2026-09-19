@@ -1,33 +1,30 @@
 ---
-type: community
-cohesion: 0.18
-members: 14
+source_file: "boveda/_COMMUNITY_Texto del Códice de los Arcanos.md"
+type: "document"
+community: "_COMMUNITY_Texto del Códice de los Arcanos.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Texto_del_Códice_de_los_Arcanosmd
 ---
 
-# Texto del Códice de los Arcanos
+# _COMMUNITY_Texto del Códice de los Arcanos.md
 
-**Cohesion:** 0.18 - loosely connected
-**Members:** 14 nodes
+## Connections
+- [[Texto del Códice de los Arcanos]] - `contains` [EXTRACTED]
+- [[Un arcano mayor. La ficha se rellena con la deducción, no a mano._1]] - `references` [EXTRACTED]
+- [[arcano()_1]] - `references` [EXTRACTED]
+- [[cap()_15]] - `references` [EXTRACTED]
+- [[ficha()_17]] - `references` [EXTRACTED]
+- [[fig()_15]] - `references` [EXTRACTED]
+- [[h()_15]] - `references` [EXTRACTED]
+- [[lista()_15]] - `references` [EXTRACTED]
+- [[main()_8_1]] - `references` [EXTRACTED]
+- [[nota()_15]] - `references` [EXTRACTED]
+- [[p()_16]] - `references` [EXTRACTED]
+- [[pasos()_15]] - `references` [EXTRACTED]
+- [[ritual()_9]] - `references` [EXTRACTED]
+- [[sep()_15]] - `references` [EXTRACTED]
 
-## Members
-- [[Un arcano mayor. La ficha se rellena con la deducción, no a mano.]] - rationale - libros/tools/escribir-codice-arcanos.py
-- [[arcano()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[cap()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[escribir-codice-arcanos.py]] - code - libros/tools/escribir-codice-arcanos.py
-- [[ficha()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[fig()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[h()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[lista()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[main()_8]] - code - libros/tools/escribir-codice-arcanos.py
-- [[nota()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[p()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[pasos()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[ritual()]] - code - libros/tools/escribir-codice-arcanos.py
-- [[sep()]] - code - libros/tools/escribir-codice-arcanos.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Texto_del_Cdice_de_los_Arcanos
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Texto_del_Códice_de_los_Arcanosmd

@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-zodiaco.py"
 type: "rationale"
-community: "Láminas del zodiaco (generador)"
+community: "dibujar-zodiaco.py"
 location: "L137"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/dibujar-zodiacopy
 ---
 
 # Sector anular entre los radios r1 (interior) y r2 (exterior).
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[sector()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-zodiacopy

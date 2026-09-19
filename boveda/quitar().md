@@ -1,18 +1,18 @@
 ---
 source_file: "planes/tools/pagina-fuentes.py"
 type: "code"
-community: "Página de fuentes"
+community: "escribir-codice-voluntad.py"
 location: "L139"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/escribir-codice-voluntadpy
 ---
 
 # quitar()
 
 ## Connections
-- [[main()_23]] - `calls` [EXTRACTED]
-- [[pagina-fuentes.py]] - `contains` [EXTRACTED]
+- [[main()_47]] - `calls` [EXTRACTED]
+- [[pagina-fuentes.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-voluntadpy

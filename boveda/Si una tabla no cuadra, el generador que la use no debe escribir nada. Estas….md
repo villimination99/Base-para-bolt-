@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/datos_oficiales.py"
-type: "rationale"
-community: "Datos oficiales comprobados"
-location: "L446"
+source_file: "boveda/Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas….md"
+type: "document"
+community: "comprobar().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Datos_oficiales_comprobados
+  - community/comprobarmd
 ---
 
-# Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas…
+# Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas….md
 
 ## Connections
-- [[comprobar()]] - `rationale_for` [EXTRACTED]
+- [[Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas…_1]] - `contains` [EXTRACTED]
+- [[comprobar()_20]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Datos_oficiales_comprobados
+#graphify/document #graphify/EXTRACTED #community/comprobarmd

@@ -1,17 +1,20 @@
 ---
-source_file: "planes/partials/emblemas.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Mediterranean Plate Emblem (Half, Quarter, Quarter).md"
+type: "document"
+community: "Hand Portion Guide (Palm, Fist, Thumb) and the Divided Plate.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/Hand_Portion_Guide_Palm_Fist_Thumb_and_the_Divided_Platemd
 ---
 
-# Mediterranean Plate Emblem (Half, Quarter, Quarter)
+# Mediterranean Plate Emblem (Half, Quarter, Quarter).md
 
 ## Connections
 - [[Emblemas Sprite Sheet (Plan Cover Emblems)]] - `references` [EXTRACTED]
-- [[Hand Portion Guide (Palm, Fist, Thumb) and the Divided Plate]] - `semantically_similar_to` [INFERRED]
+- [[Hand Portion Guide (Palm, Fist, Thumb) and the Divided Plate]] - `references` [EXTRACTED]
+- [[Mediterranean Plate Emblem (Half, Quarter, Quarter)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/Hand_Portion_Guide_Palm_Fist_Thumb_and_the_Divided_Platemd

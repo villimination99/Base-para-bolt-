@@ -1,18 +1,18 @@
 ---
 source_file: "libros/tools/escribir-codice-descanso.py"
 type: "code"
-community: "Texto del Códice del Descanso"
+community: "escribir-codice-descanso.py"
 location: "L62"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_del_Descanso
+  - community/escribir-codice-descansopy
 ---
 
 # hh()
 
 ## Connections
 - [[escribir-codice-descanso.py]] - `contains` [EXTRACTED]
-- [[main()_10]] - `calls` [EXTRACTED]
+- [[main()_8]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_del_Descanso
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-descansopy

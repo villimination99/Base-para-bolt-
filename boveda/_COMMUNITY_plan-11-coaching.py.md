@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-11-coaching.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-11-coaching.py]] - code - planes/i18n/fuentes/plan-11-coaching.py
+- [[Live Query (requires Dataview plugin)_151]] - document - boveda/_COMMUNITY_plan-11-coaching.py.md
+- [[Members_151]] - document - boveda/_COMMUNITY_plan-11-coaching.py.md
+- [[_COMMUNITY_plan-11-coaching.py]] - document - boveda/_COMMUNITY_plan-11-coaching.py.md
+- [[plan-11-coaching.py]] - document - boveda/_COMMUNITY_plan-11-coaching.py.md
 
 ## Live Query (requires Dataview plugin)
 

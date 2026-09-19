@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Jerarquía del suplemento y batch cooking"
-location: "pág. 11 · Conservación segura"
+source_file: "boveda/Conservación segura de los táperes.md"
+type: "document"
+community: "_COMMUNITY_Jerarquía del suplemento y batch cooking.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd
 ---
 
-# Conservación segura de los táperes
+# Conservación segura de los táperes.md
 
 ## Connections
-- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `rationale_for` [EXTRACTED]
+- [[Batch cooking del domingo (2 horas, 8 bloques)]] - `references` [EXTRACTED]
+- [[Conservación segura de los táperes_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Jerarquía del suplemento y batch cooking]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd

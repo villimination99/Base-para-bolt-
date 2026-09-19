@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # plan-06-mediterranea.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[plan-06-mediterranea.py]] - code - planes/i18n/fuentes/plan-06-mediterranea.py
+- [[Live Query (requires Dataview plugin)_146]] - document - boveda/_COMMUNITY_plan-06-mediterranea.py.md
+- [[Members_146]] - document - boveda/_COMMUNITY_plan-06-mediterranea.py.md
+- [[_COMMUNITY_plan-06-mediterranea.py]] - document - boveda/_COMMUNITY_plan-06-mediterranea.py.md
+- [[plan-06-mediterranea.py]] - document - boveda/_COMMUNITY_plan-06-mediterranea.py.md
 
 ## Live Query (requires Dataview plugin)
 

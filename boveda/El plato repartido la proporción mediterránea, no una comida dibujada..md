@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L194"
+source_file: "boveda/El plato repartido la proporción mediterránea, no una comida dibujada..md"
+type: "document"
+community: "nucleo_plato().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/nucleo_platomd
 ---
 
-# El plato repartido: la proporción mediterránea, no una comida dibujada.
+# El plato repartido la proporción mediterránea, no una comida dibujada..md
 
 ## Connections
-- [[nucleo_plato()]] - `rationale_for` [EXTRACTED]
+- [[El plato repartido la proporción mediterránea, no una comida dibujada._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_plato()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/nucleo_platomd

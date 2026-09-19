@@ -1,22 +1,19 @@
 ---
-type: community
-cohesion: 1.00
-members: 3
+source_file: "boveda/_COMMUNITY_Segmentos sin traducir.md"
+type: "document"
+community: "entero().md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/enteromd
 ---
 
-# Segmentos sin traducir
+# _COMMUNITY_Segmentos sin traducir.md
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 3 nodes
+## Connections
+- [[Segmentos sin traducir]] - `contains` [EXTRACTED]
+- [[entero()_1]] - `references` [EXTRACTED]
+- [[main()_16_1]] - `references` [EXTRACTED]
 
-## Members
-- [[entero()]] - code - libros/tools/faltan.py
-- [[librostoolsfaltan.py]] - code - libros/tools/faltan.py
-- [[main()_16]] - code - libros/tools/faltan.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Segmentos_sin_traducir
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/enteromd

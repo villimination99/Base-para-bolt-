@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "paper"
-community: "Fuentes verificadas"
-location: "pág. 09, tabla de fuentes"
+source_file: "boveda/Registro de declaraciones de salud de la Comisión Europea.md"
+type: "document"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
-  - graphify/paper
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Fuentes_verificadas
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# Registro de declaraciones de salud de la Comisión Europea
+# Registro de declaraciones de salud de la Comisión Europea.md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `cites` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[Registro de declaraciones de salud de la Comisión Europea_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Fuentes verificadas]] - `references` [EXTRACTED]
 
-#graphify/paper #graphify/EXTRACTED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

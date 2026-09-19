@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
-type: "rationale"
-community: "Láminas de alta magia (generador)"
-location: "L344"
+source_file: "boveda/La rueda no puede ocupar el ancho entero el triángulo va fuera del círculo, al….md"
+type: "document"
+community: "lamina_circulo().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/lamina_circulomd
 ---
 
-# La rueda no puede ocupar el ancho entero: el triángulo va fuera del círculo, al…
+# La rueda no puede ocupar el ancho entero el triángulo va fuera del círculo, al….md
 
 ## Connections
-- [[lamina_circulo()]] - `rationale_for` [EXTRACTED]
+- [[La rueda no puede ocupar el ancho entero el triángulo va fuera del círculo, al…_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de alta magia (generador)]] - `references` [EXTRACTED]
+- [[lamina_circulo()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_circulomd

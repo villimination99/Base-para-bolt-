@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "rationale"
-community: "Escalado de macros y recetario"
-location: "callout pág. 08"
+source_file: "boveda/Ajuste de macros por receta (carbohidrato y aceite como mandos).md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/rationale
-  - graphify/INFERRED
-  - community/Escalado_de_macros_y_recetario
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Ajuste de macros por receta (carbohidrato y aceite como mandos)
+# Ajuste de macros por receta (carbohidrato y aceite como mandos).md
 
 ## Connections
-- [[Escalado de macros por kilo de peso corporal]] - `semantically_similar_to` [INFERRED]
-- [[Recetario de 20 recetas premium]] - `rationale_for` [EXTRACTED]
+- [[Ajuste de macros por receta (carbohidrato y aceite como mandos)_1]] - `contains` [EXTRACTED]
+- [[Escalado de macros por kilo de peso corporal]] - `references` [EXTRACTED]
+- [[Recetario de 20 recetas premium]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalado de macros y recetario]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/INFERRED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

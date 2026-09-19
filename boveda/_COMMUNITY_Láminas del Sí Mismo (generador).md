@@ -1,33 +1,29 @@
 ---
-type: community
-cohesion: 0.41
-members: 14
+source_file: "boveda/_COMMUNITY_Láminas del Sí Mismo (generador).md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo (generador).md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd
 ---
 
-# Láminas del Sí Mismo (generador)
+# _COMMUNITY_Láminas del Sí Mismo (generador).md
 
-**Cohesion:** 0.41 - moderately connected
-**Members:** 14 nodes
+## Connections
+- [[Láminas del Sí Mismo (generador)]] - `contains` [EXTRACTED]
+- [[f()_3_1]] - `references` [EXTRACTED]
+- [[flecha()_1_1]] - `references` [EXTRACTED]
+- [[lamina_atencion()_1]] - `references` [EXTRACTED]
+- [[lamina_centros()_1]] - `references` [EXTRACTED]
+- [[lamina_disciplinas()_1]] - `references` [EXTRACTED]
+- [[lamina_emociones()_1]] - `references` [EXTRACTED]
+- [[lamina_identificacion()_1]] - `references` [EXTRACTED]
+- [[lamina_reloj()_1]] - `references` [EXTRACTED]
+- [[lamina_respiracion()_1]] - `references` [EXTRACTED]
+- [[main()_6_1]] - `references` [EXTRACTED]
+- [[pol()_3_1]] - `references` [EXTRACTED]
+- [[txt()_3_1]] - `references` [EXTRACTED]
 
-## Members
-- [[El bucle en cadena vertical. Se probó en anillo, con los cuatro nodos en cruz,…]] - rationale - libros/tools/dibujar-si-mismo.py
-- [[dibujar-si-mismo.py]] - code - libros/tools/dibujar-si-mismo.py
-- [[f()_3]] - code - libros/tools/dibujar-si-mismo.py
-- [[flecha()_1]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_atencion()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_centros()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_disciplinas()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_emociones()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_identificacion()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_reloj()]] - code - libros/tools/dibujar-si-mismo.py
-- [[lamina_respiracion()]] - code - libros/tools/dibujar-si-mismo.py
-- [[main()_6]] - code - libros/tools/dibujar-si-mismo.py
-- [[pol()_3]] - code - libros/tools/dibujar-si-mismo.py
-- [[txt()_3]] - code - libros/tools/dibujar-si-mismo.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Lminas_del_S_Mismo_generador
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd

@@ -1,16 +1,19 @@
 ---
-source_file: "libros/README.md"
-type: "concept"
-community: "Extracción del PDF original"
+source_file: "boveda/Encabezados repetidos incrustados en el texto.md"
+type: "document"
+community: "_COMMUNITY_Extracción del PDF original.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Extraccin_del_PDF_original
+  - community/_COMMUNITY_Extracción_del_PDF_originalmd
 ---
 
-# Encabezados repetidos incrustados en el texto
+# Encabezados repetidos incrustados en el texto.md
 
 ## Connections
+- [[Encabezados repetidos incrustados en el texto_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Extracción del PDF original]] - `references` [EXTRACTED]
 - [[extraer.py — PDF original a JSON limpio]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Extraccin_del_PDF_original
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Extracción_del_PDF_originalmd

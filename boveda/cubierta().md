@@ -1,12 +1,12 @@
 ---
 source_file: "libros/build.py"
 type: "code"
-community: "Generador de libros"
+community: "libros/build.py"
 location: "L356"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/libros/buildpy
 ---
 
 # cubierta()
@@ -15,9 +15,9 @@ tags:
 - [[La cubierta es un documento aparte para poder ir a sangre Chromium no pinta…]] - `rationale_for` [EXTRACTED]
 - [[_documentos_es()]] - `calls` [EXTRACTED]
 - [[cabecera()]] - `calls` [EXTRACTED]
-- [[construir()]] - `calls` [EXTRACTED]
+- [[construir()_3]] - `calls` [EXTRACTED]
 - [[esc()]] - `calls` [EXTRACTED]
 - [[librosbuild.py]] - `contains` [EXTRACTED]
 - [[librostoolsi18n.py]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/libros/buildpy

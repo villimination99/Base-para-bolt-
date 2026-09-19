@@ -1,0 +1,17 @@
+---
+source_file: "libros/i18n/fuentes/si-mismo-10.py"
+type: "code"
+community: "si-mismo-10.py"
+location: "L1"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/si-mismo-10py
+---
+
+# si-mismo-10.py
+
+## Connections
+- [[CÓDICE DEL SÍ MISMO · la postura y las cuatro emociones difíciles…]] - `rationale_for` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/si-mismo-10py

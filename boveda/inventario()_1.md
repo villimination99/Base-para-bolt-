@@ -1,21 +1,20 @@
 ---
-source_file: "planes/tools/i18n.py"
+source_file: "tienda/ropa.py"
 type: "code"
-community: "Generador de libros"
-location: "L197"
+community: "re"
+location: "L117"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/re
 ---
 
 # inventario()
 
 ## Connections
-- [[Todos los segmentos de un conjunto de documentos YA ENSAMBLADOS. Se inventaría…]] - `rationale_for` [EXTRACTED]
-- [[atributos()]] - `calls` [EXTRACTED]
-- [[clave()_1]] - `calls` [EXTRACTED]
-- [[planestoolsi18n.py]] - `contains` [EXTRACTED]
-- [[segmentar()]] - `calls` [EXTRACTED]
+- [[Las láminas propias disponibles fichero - identificadores.]] - `rationale_for` [EXTRACTED]
+- [[comprobar()_9]] - `calls` [EXTRACTED]
+- [[resumen()]] - `calls` [EXTRACTED]
+- [[ropa.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/re

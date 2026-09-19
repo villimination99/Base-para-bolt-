@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "concept"
-community: "Volumen efectivo e higiene del sueño"
-location: "pág. 04"
+source_file: "boveda/Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h).md"
+type: "document"
+community: "_COMMUNITY_Volumen efectivo e higiene del sueño.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Volumen_efectivo_e_higiene_del_sueo
+  - community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd
 ---
 
-# Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h)
+# Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h).md
 
 ## Connections
-- [[10 reglas de higiene del sueño para atletas]] - `conceptually_related_to` [EXTRACTED]
+- [[10 reglas de higiene del sueño para atletas]] - `references` [EXTRACTED]
+- [[Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Volumen efectivo e higiene del sueño]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Volumen_efectivo_e_higiene_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd

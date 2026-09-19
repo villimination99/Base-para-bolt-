@@ -1,18 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-descanso.py"
+source_file: "libros/tools/escribir-codice-si-mismo.py"
 type: "code"
-community: "Texto del Códice del Descanso"
-location: "L991"
+community: "escribir-codice-si-mismo.py"
+location: "L1400"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_del_Descanso
+  - community/escribir-codice-si-mismopy
 ---
 
 # main()
 
 ## Connections
-- [[escribir-codice-descanso.py]] - `contains` [EXTRACTED]
-- [[hh()]] - `calls` [EXTRACTED]
+- [[escribir-codice-si-mismo.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_del_Descanso
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-si-mismopy

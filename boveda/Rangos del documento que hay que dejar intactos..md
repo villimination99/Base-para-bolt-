@@ -1,12 +1,12 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
-location: "L94"
+community: "planes/tools/i18n.py"
+location: "L108"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # Rangos del documento que hay que dejar intactos.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[_tramos_opacos()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

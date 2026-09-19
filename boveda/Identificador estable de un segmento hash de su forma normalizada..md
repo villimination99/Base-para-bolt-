@@ -1,17 +1,17 @@
 ---
 source_file: "planes/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
-location: "L72"
+community: "planes/tools/i18n.py"
+location: "L80"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/planes/tools/i18npy
 ---
 
 # Identificador estable de un segmento: hash de su forma normalizada.
 
 ## Connections
-- [[clave()_1]] - `rationale_for` [EXTRACTED]
+- [[clave()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/planes/tools/i18npy

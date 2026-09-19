@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/03-pro-guia-suplementacion.html"
-type: "concept"
-community: "Presupuesto de suplementación"
-location: "pág. 05 · Rendimiento"
+source_file: "boveda/Citrulina malato.md"
+type: "document"
+community: "_COMMUNITY_Presupuesto de suplementación.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Presupuesto_de_suplementacin
+  - community/_COMMUNITY_Presupuesto_de_suplementaciónmd
 ---
 
-# Citrulina malato
+# Citrulina malato.md
 
 ## Connections
-- [[Presupuesto mensual por nivel (10 $ a 75 $)]] - `shares_data_with` [EXTRACTED]
+- [[Citrulina malato_1]] - `contains` [EXTRACTED]
+- [[Presupuesto mensual por nivel (10 $ a 75 $)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Presupuesto de suplementación]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Presupuesto_de_suplementacin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Presupuesto_de_suplementaciónmd

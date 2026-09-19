@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "paper"
-community: "Fuentes verificadas"
-location: "pág. 09, tabla de fuentes"
+source_file: "boveda/health.gov · Guías de actividad física y guías alimentarias.md"
+type: "document"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
-  - graphify/paper
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Fuentes_verificadas
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# health.gov · Guías de actividad física y guías alimentarias
+# health.gov · Guías de actividad física y guías alimentarias.md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `cites` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[health.gov · Guías de actividad física y guías alimentarias_1]] - `contains` [EXTRACTED]
 
-#graphify/paper #graphify/EXTRACTED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

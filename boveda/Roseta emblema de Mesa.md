@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/mesa.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Roseta emblema de Mesa.md"
+type: "document"
+community: "Roseta emblema de Carga.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Roseta_emblema_de_Cargamd
 ---
 
-# Roseta emblema de Mesa
+# Roseta emblema de Mesa.md
 
 ## Connections
 - [[Mesa — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Roseta emblema de Carga]] - `semantically_similar_to` [INFERRED]
-- [[Roseta emblema de Descanso]] - `semantically_similar_to` [INFERRED]
+- [[Roseta emblema de Carga]] - `references` [EXTRACTED]
+- [[Roseta emblema de Descanso]] - `references` [EXTRACTED]
+- [[Roseta emblema de Mesa_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Roseta_emblema_de_Cargamd

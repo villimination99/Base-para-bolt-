@@ -1,18 +1,18 @@
 ---
-source_file: "libros/partials/descanso.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Reloj circadiano de 24 horas cortisol, temperatura y bajón de tarde.md"
+type: "document"
+community: "Reloj circadiano de 24 horas: cortisol, temperatura y bajón de tarde"
+location: "L11"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Reloj_circadiano_de_24_horas_cortisol_temperatura_y_bajón_de_tarde
 ---
 
 # Reloj circadiano de 24 horas: cortisol, temperatura y bajón de tarde
 
 ## Connections
-- [[Descanso — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Hipnograma cuatro a seis ciclos de unos 90 minutos]] - `conceptually_related_to` [INFERRED]
-- [[Ventana de acostarse cuenta atrás desde la hora de dormir]] - `conceptually_related_to` [INFERRED]
+- [[Connections_714]] - `contains` [EXTRACTED]
+- [[Reloj circadiano de 24 horas cortisol, temperatura y bajón de tarde_1]] - `contains` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Reloj_circadiano_de_24_horas_cortisol_temperatura_y_bajón_de_tarde

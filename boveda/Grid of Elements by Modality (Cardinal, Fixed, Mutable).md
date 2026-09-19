@@ -1,18 +1,21 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Grid of Elements by Modality (Cardinal, Fixed, Mutable).md"
+type: "document"
+community: "Grid of Elements by Modality (Cardinal, Fixed, Mutable).md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Doctrina_zodiacal_ilustrada
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Grid_of_Elements_by_Modality_Cardinal_Fixed_Mutablemd
 ---
 
-# Grid of Elements by Modality (Cardinal, Fixed, Mutable)
+# Grid of Elements by Modality (Cardinal, Fixed, Mutable).md
 
 ## Connections
-- [[Aspects Diagram Opposition, Trine, Square, Sextile]] - `conceptually_related_to` [INFERRED]
-- [[Zodiac Wheel Diagram with Signs, Elements and Modalities]] - `conceptually_related_to` [INFERRED]
+- [[Aspects Diagram Opposition, Trine, Square, Sextile]] - `references` [EXTRACTED]
+- [[Grid of Elements by Modality (Cardinal, Fixed, Mutable)_1]] - `contains` [EXTRACTED]
+- [[Zodiac Wheel Diagram with Signs, Elements and Modalities]] - `references` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/Grid_of_Elements_by_Modality_Cardinal_Fixed_Mutablemd

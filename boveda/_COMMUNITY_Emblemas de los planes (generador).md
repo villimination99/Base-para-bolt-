@@ -1,50 +1,46 @@
 ---
-type: community
-cohesion: 0.12
-members: 31
+source_file: "boveda/_COMMUNITY_Emblemas de los planes (generador).md"
+type: "document"
+community: "_COMMUNITY_Emblemas de los planes (generador).md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Emblemas_de_los_planes_generadormd
 ---
 
-# Emblemas de los planes (generador)
+# _COMMUNITY_Emblemas de los planes (generador).md
 
-**Cohesion:** 0.12 - loosely connected
-**Members:** 31 nodes
+## Connections
+- [[Barra y discos reducidos a geometría la única figura que sí es objeto.]] - `references` [EXTRACTED]
+- [[Cinco ciclos de sueño el hipnograma comprimido a insignia.]] - `references` [EXTRACTED]
+- [[Cuadrícula de datos con la línea de tendencia.]] - `references` [EXTRACTED]
+- [[Dos anillos enlazados y un eje el que guía y el que ejecuta.]] - `references` [EXTRACTED]
+- [[Dos triángulos opuestos definición y volumen en la misma pieza.]] - `references` [EXTRACTED]
+- [[El plato repartido la proporción mediterránea, no una comida dibujada.]] - `references` [EXTRACTED]
+- [[Emblemas de los planes (generador)]] - `contains` [EXTRACTED]
+- [[Escalera ascendente la progresión de carga en superávit.]] - `references` [EXTRACTED]
+- [[Escalón de trabajo y descanso con la curva de pulso encima.]] - `references` [EXTRACTED]
+- [[Espiral de la respiración pautada, con los cuatro tiempos marcados.]] - `references` [EXTRACTED]
+- [[Onda de siete días tres altos, tres bajos y uno medio.]] - `references` [EXTRACTED]
+- [[Retícula hexagonal con la cápsula en el centro forma y dosis.]] - `references` [EXTRACTED]
+- [[bisel()_1]] - `references` [EXTRACTED]
+- [[emblema()_1]] - `references` [EXTRACTED]
+- [[f()_5_1]] - `references` [EXTRACTED]
+- [[main()_21_1]] - `references` [EXTRACTED]
+- [[nucleo_barra()_1]] - `references` [EXTRACTED]
+- [[nucleo_ciclado()_1]] - `references` [EXTRACTED]
+- [[nucleo_coaching()_1]] - `references` [EXTRACTED]
+- [[nucleo_dos_fases()_1]] - `references` [EXTRACTED]
+- [[nucleo_hiit()_1]] - `references` [EXTRACTED]
+- [[nucleo_plato()_1]] - `references` [EXTRACTED]
+- [[nucleo_registro()_1]] - `references` [EXTRACTED]
+- [[nucleo_respiracion()_1]] - `references` [EXTRACTED]
+- [[nucleo_sueno()_1]] - `references` [EXTRACTED]
+- [[nucleo_suplementacion()_1]] - `references` [EXTRACTED]
+- [[nucleo_volumen()_1]] - `references` [EXTRACTED]
+- [[pol()_5_1]] - `references` [EXTRACTED]
+- [[rotulo()_1]] - `references` [EXTRACTED]
+- [[txt()_5_1]] - `references` [EXTRACTED]
 
-## Members
-- [[Armazón común dos circunferencias, marcas de grado y anillo de conteo.…]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Barra y discos reducidos a geometría la única figura que sí es objeto.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Cinco ciclos de sueño el hipnograma comprimido a insignia.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Cuadrícula de datos con la línea de tendencia.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Dos anillos enlazados y un eje el que guía y el que ejecuta.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Dos triángulos opuestos definición y volumen en la misma pieza.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[El plato repartido la proporción mediterránea, no una comida dibujada.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Escalera ascendente la progresión de carga en superávit.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Escalón de trabajo y descanso con la curva de pulso encima.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Espiral de la respiración pautada, con los cuatro tiempos marcados.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Onda de siete días tres altos, tres bajos y uno medio.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[Retícula hexagonal con la cápsula en el centro forma y dosis.]] - rationale - planes/tools/dibujar-emblemas.py
-- [[bisel()]] - code - planes/tools/dibujar-emblemas.py
-- [[dibujar-emblemas.py]] - code - planes/tools/dibujar-emblemas.py
-- [[emblema()]] - code - planes/tools/dibujar-emblemas.py
-- [[f()_5]] - code - planes/tools/dibujar-emblemas.py
-- [[main()_21]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_barra()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_ciclado()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_coaching()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_dos_fases()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_hiit()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_plato()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_registro()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_respiracion()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_sueno()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_suplementacion()]] - code - planes/tools/dibujar-emblemas.py
-- [[nucleo_volumen()]] - code - planes/tools/dibujar-emblemas.py
-- [[pol()_5]] - code - planes/tools/dibujar-emblemas.py
-- [[rotulo()]] - code - planes/tools/dibujar-emblemas.py
-- [[txt()_5]] - code - planes/tools/dibujar-emblemas.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Emblemas_de_los_planes_generador
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Emblemas_de_los_planes_generadormd

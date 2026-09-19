@@ -1,23 +1,28 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
+source_file: "libros/tools/dibujar-zodiaco.py"
 type: "code"
-community: "Láminas de los arcanos (generador)"
-location: "L138"
+community: "dibujar-zodiaco.py"
+location: "L190"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/dibujar-zodiacopy
 ---
 
 # txt()
 
 ## Connections
-- [[dibujar-arcanos.py]] - `contains` [EXTRACTED]
-- [[f()_1]] - `calls` [EXTRACTED]
-- [[lamina_decanatos()]] - `calls` [EXTRACTED]
-- [[lamina_estructura()]] - `calls` [EXTRACTED]
-- [[lamina_mayores()]] - `calls` [EXTRACTED]
-- [[lamina_palos()]] - `calls` [EXTRACTED]
-- [[lamina_tiradas()]] - `calls` [EXTRACTED]
+- [[dibujar-zodiaco.py_1]] - `contains` [EXTRACTED]
+- [[f()_2]] - `calls` [EXTRACTED]
+- [[lamina_aspectos()]] - `calls` [EXTRACTED]
+- [[lamina_casillas()]] - `calls` [EXTRACTED]
+- [[lamina_cuerpo()]] - `calls` [EXTRACTED]
+- [[lamina_decanos()]] - `calls` [EXTRACTED]
+- [[lamina_dignidades()]] - `calls` [EXTRACTED]
+- [[lamina_lunar()]] - `calls` [EXTRACTED]
+- [[lamina_precesion()]] - `calls` [EXTRACTED]
+- [[lamina_regentes()]] - `calls` [EXTRACTED]
+- [[lamina_rueda()]] - `calls` [EXTRACTED]
+- [[lamina_terminos()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-zodiacopy

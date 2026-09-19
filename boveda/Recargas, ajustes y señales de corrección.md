@@ -1,17 +1,20 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
-type: "concept"
-community: "Principios del volumen limpio"
+source_file: "boveda/Recargas, ajustes y señales de corrección.md"
+type: "document"
+community: "_COMMUNITY_Principios del volumen limpio.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Principios_del_volumen_limpio
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Principios_del_volumen_limpiomd
 ---
 
-# Recargas, ajustes y señales de corrección
+# Recargas, ajustes y señales de corrección.md
 
 ## Connections
 - [[Calendario de 4 semanas de ciclado]] - `references` [EXTRACTED]
-- [[Regla de oro del ajuste (±200 kcal según báscula)]] - `semantically_similar_to` [INFERRED]
+- [[Recargas, ajustes y señales de corrección_1]] - `contains` [EXTRACTED]
+- [[Regla de oro del ajuste (±200 kcal según báscula)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Principios del volumen limpio]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Principios_del_volumen_limpio
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Principios_del_volumen_limpiomd

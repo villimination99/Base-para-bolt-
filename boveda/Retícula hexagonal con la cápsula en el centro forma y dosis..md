@@ -1,17 +1,19 @@
 ---
-source_file: "planes/tools/dibujar-emblemas.py"
-type: "rationale"
-community: "Emblemas de los planes (generador)"
-location: "L137"
+source_file: "boveda/Retícula hexagonal con la cápsula en el centro forma y dosis..md"
+type: "document"
+community: "pol()_5.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Emblemas_de_los_planes_generador
+  - community/pol_5md
 ---
 
-# Retícula hexagonal con la cápsula en el centro: forma y dosis.
+# Retícula hexagonal con la cápsula en el centro forma y dosis..md
 
 ## Connections
-- [[nucleo_suplementacion()]] - `rationale_for` [EXTRACTED]
+- [[Retícula hexagonal con la cápsula en el centro forma y dosis._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Emblemas de los planes (generador)]] - `references` [EXTRACTED]
+- [[nucleo_suplementacion()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Emblemas_de_los_planes_generador
+#graphify/document #graphify/EXTRACTED #community/pol_5md

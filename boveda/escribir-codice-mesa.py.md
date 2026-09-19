@@ -1,30 +1,31 @@
 ---
-source_file: "libros/tools/escribir-codice-mesa.py"
-type: "code"
-community: "Texto del Códice de la Mesa"
+source_file: "boveda/escribir-codice-mesa.py.md"
+type: "document"
+community: "escribir-codice-mesa.py.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Mesa
+  - community/escribir-codice-mesapymd
 ---
 
-# escribir-codice-mesa.py
+# escribir-codice-mesa.py.md
 
 ## Connections
-- [[cap()_4]] - `contains` [EXTRACTED]
-- [[ficha()_4]] - `contains` [EXTRACTED]
-- [[fig()_4]] - `contains` [EXTRACTED]
-- [[fila_micro()]] - `contains` [EXTRACTED]
-- [[h()_4]] - `contains` [EXTRACTED]
-- [[letras()]] - `contains` [EXTRACTED]
-- [[lista()_4]] - `contains` [EXTRACTED]
-- [[main()_12]] - `contains` [EXTRACTED]
-- [[nota()_4]] - `contains` [EXTRACTED]
-- [[num()]] - `contains` [EXTRACTED]
-- [[p()_4]] - `contains` [EXTRACTED]
-- [[pasos()_4]] - `contains` [EXTRACTED]
-- [[ritual()_2]] - `contains` [EXTRACTED]
-- [[sep()_4]] - `contains` [EXTRACTED]
+- [[cap()_4_1]] - `references` [EXTRACTED]
+- [[escribir-codice-mesa.py_1]] - `contains` [EXTRACTED]
+- [[ficha()_4_1]] - `references` [EXTRACTED]
+- [[fig()_4_1]] - `references` [EXTRACTED]
+- [[fila_micro()_1]] - `references` [EXTRACTED]
+- [[h()_4_1]] - `references` [EXTRACTED]
+- [[letras()_1]] - `references` [EXTRACTED]
+- [[lista()_4_1]] - `references` [EXTRACTED]
+- [[main()_12_1]] - `references` [EXTRACTED]
+- [[nota()_4_1]] - `references` [EXTRACTED]
+- [[num()_1]] - `references` [EXTRACTED]
+- [[p()_4_1]] - `references` [EXTRACTED]
+- [[pasos()_4_1]] - `references` [EXTRACTED]
+- [[ritual()_2_1]] - `references` [EXTRACTED]
+- [[sep()_4_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Mesa
+#graphify/document #graphify/EXTRACTED #community/escribir-codice-mesapymd

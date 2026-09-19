@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/escribir-codice-mesa.py"
-type: "rationale"
-community: "Texto del Códice de la Mesa"
-location: "L76"
+source_file: "boveda/Una entrada de la tabla oficial, formateada para una ficha..md"
+type: "document"
+community: "fila_micro().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_de_la_Mesa
+  - community/fila_micromd
 ---
 
-# Una entrada de la tabla oficial, formateada para una ficha.
+# Una entrada de la tabla oficial, formateada para una ficha..md
 
 ## Connections
-- [[fila_micro()]] - `rationale_for` [EXTRACTED]
+- [[Una entrada de la tabla oficial, formateada para una ficha._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Texto del Códice de la Mesa]] - `references` [EXTRACTED]
+- [[fila_micro()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Texto_del_Cdice_de_la_Mesa
+#graphify/document #graphify/EXTRACTED #community/fila_micromd

@@ -1,18 +1,18 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Dieta mediterránea"
-location: "bloque .upsell del CTA final"
+source_file: "boveda/Escalera de planes BÁSICO  PRO  ELITE (upsell)_1.md"
+type: "document"
+community: "_COMMUNITY_Escalera de planes y dominio público.md"
+location: "L12"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Dieta_mediterrnea
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd
 ---
 
 # Escalera de planes BÁSICO / PRO / ELITE (upsell)
 
 ## Connections
-- [[Dieta Mediterránea 4 semanas (Plan Elite)]] - `references` [EXTRACTED]
-- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)]] - `shares_data_with` [INFERRED]
+- [[Connections_446]] - `contains` [EXTRACTED]
+- [[Escalera de planes BÁSICO  PRO  ELITE (upsell)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Dieta_mediterrnea
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalera_de_planes_y_dominio_públicomd

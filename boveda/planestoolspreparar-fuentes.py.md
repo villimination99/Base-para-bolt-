@@ -1,18 +1,19 @@
 ---
-source_file: "planes/tools/preparar-fuentes.py"
-type: "code"
-community: "Preparación de fuentes · planes"
+source_file: "boveda/planestoolspreparar-fuentes.py.md"
+type: "document"
+community: "fetch()_1.md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Preparacin_de_fuentes__planes
+  - community/fetch_1md
 ---
 
-# planes/tools/preparar-fuentes.py
+# planestoolspreparar-fuentes.py.md
 
 ## Connections
-- [[fetch()_1]] - `contains` [EXTRACTED]
-- [[main()_24]] - `contains` [EXTRACTED]
+- [[fetch()_1_1]] - `references` [EXTRACTED]
+- [[main()_24_1]] - `references` [EXTRACTED]
+- [[planestoolspreparar-fuentes.py_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Preparacin_de_fuentes__planes
+#graphify/document #graphify/EXTRACTED #community/fetch_1md

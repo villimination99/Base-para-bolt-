@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
-type: "rationale"
-community: "Láminas de los arcanos (generador)"
-location: "L165"
+source_file: "boveda/Cada mayor recibe su letra por posición y de ella hereda su atribución. I va….md"
+type: "document"
+community: "_COMMUNITY_Láminas de los arcanos (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/_COMMUNITY_Láminas_de_los_arcanos_generadormd
 ---
 
-# Cada mayor recibe su letra por posición y de ella hereda su atribución. I va…
+# Cada mayor recibe su letra por posición y de ella hereda su atribución. I va….md
 
 ## Connections
-- [[arcanos_con_letra()]] - `rationale_for` [EXTRACTED]
+- [[Cada mayor recibe su letra por posición y de ella hereda su atribución. I va…_1]] - `contains` [EXTRACTED]
+- [[arcanos_con_letra()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_de_los_arcanos_generadormd

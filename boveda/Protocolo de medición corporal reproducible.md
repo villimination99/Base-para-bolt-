@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/05-pro-registro-progreso-semanal.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 02 · Protocolo de medición"
+source_file: "boveda/Protocolo de medición corporal reproducible.md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Recomposicin_por_fases
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Protocolo de medición corporal reproducible
+# Protocolo de medición corporal reproducible.md
 
 ## Connections
-- [[Evaluación final y elección del siguiente bloque]] - `shares_data_with` [INFERRED]
-- [[Promedio semanal de peso frente al dato del día]] - `rationale_for` [EXTRACTED]
+- [[Evaluación final y elección del siguiente bloque]] - `references` [EXTRACTED]
+- [[Promedio semanal de peso frente al dato del día]] - `references` [EXTRACTED]
+- [[Protocolo de medición corporal reproducible_1]] - `contains` [EXTRACTED]
 - [[Registro de Progreso Semanal (Plan Pro)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/datos_oficiales.py"
-type: "code"
-community: "Datos oficiales comprobados"
+source_file: "boveda/datos_oficiales.py.md"
+type: "document"
+community: "comprobar().md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Datos_oficiales_comprobados
+  - community/comprobarmd
 ---
 
-# datos_oficiales.py
+# datos_oficiales.py.md
 
 ## Connections
-- [[comprobar()]] - `contains` [EXTRACTED]
+- [[comprobar()_20]] - `references` [EXTRACTED]
+- [[datos_oficiales.py_1]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Datos_oficiales_comprobados
+#graphify/document #graphify/EXTRACTED #community/comprobarmd

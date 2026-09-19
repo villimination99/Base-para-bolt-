@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "concept"
-community: "Las cuatro fases del entrenamiento"
-location: "pág. 08"
+source_file: "boveda/Tabla de escalado por nivel (principiante  intermedio  avanzado).md"
+type: "document"
+community: "_COMMUNITY_Las cuatro fases del entrenamiento.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Las_cuatro_fases_del_entrenamiento
+  - community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd
 ---
 
-# Tabla de escalado por nivel (principiante / intermedio / avanzado)
+# Tabla de escalado por nivel (principiante  intermedio  avanzado).md
 
 ## Connections
-- [[Escala de RIR 0–5 y su fase de aplicación]] - `semantically_similar_to` [INFERRED]
-- [[Tabla de progresión HIIT de 8 semanas (sesiones y rutinas recomendadas)]] - `conceptually_related_to` [EXTRACTED]
+- [[Escala de RIR 0–5 y su fase de aplicación]] - `references` [EXTRACTED]
+- [[Tabla de escalado por nivel (principiante  intermedio  avanzado)_1]] - `contains` [EXTRACTED]
+- [[Tabla de progresión HIIT de 8 semanas (sesiones y rutinas recomendadas)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Las cuatro fases del entrenamiento]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Las_cuatro_fases_del_entrenamiento
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd

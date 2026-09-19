@@ -1,31 +1,32 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
-type: "code"
-community: "Láminas de los arcanos (generador)"
+source_file: "boveda/dibujar-arcanos.py.md"
+type: "document"
+community: "_COMMUNITY_Láminas de los arcanos (generador).md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/_COMMUNITY_Láminas_de_los_arcanos_generadormd
 ---
 
-# dibujar-arcanos.py
+# dibujar-arcanos.py.md
 
 ## Connections
-- [[arcanos_con_letra()]] - `contains` [EXTRACTED]
-- [[comprobar()_2]] - `contains` [EXTRACTED]
-- [[f()_1]] - `contains` [EXTRACTED]
-- [[glifo_signo()]] - `contains` [EXTRACTED]
-- [[lamina_decanatos()]] - `contains` [EXTRACTED]
-- [[lamina_estructura()]] - `contains` [EXTRACTED]
-- [[lamina_mayores()]] - `contains` [EXTRACTED]
-- [[lamina_palos()]] - `contains` [EXTRACTED]
-- [[lamina_tiradas()]] - `contains` [EXTRACTED]
-- [[main()_4]] - `contains` [EXTRACTED]
-- [[marca_palo()]] - `contains` [EXTRACTED]
-- [[menores_con_decanato()]] - `contains` [EXTRACTED]
-- [[pol()_1]] - `contains` [EXTRACTED]
-- [[simbolo_cubierta()]] - `contains` [EXTRACTED]
-- [[txt()_1]] - `contains` [EXTRACTED]
+- [[arcanos_con_letra()_1]] - `references` [EXTRACTED]
+- [[comprobar()_2_1]] - `references` [EXTRACTED]
+- [[dibujar-arcanos.py_1]] - `contains` [EXTRACTED]
+- [[f()_1_1]] - `references` [EXTRACTED]
+- [[glifo_signo()_1]] - `references` [EXTRACTED]
+- [[lamina_decanatos()_1]] - `references` [EXTRACTED]
+- [[lamina_estructura()_1]] - `references` [EXTRACTED]
+- [[lamina_mayores()_1]] - `references` [EXTRACTED]
+- [[lamina_palos()_1]] - `references` [EXTRACTED]
+- [[lamina_tiradas()_1]] - `references` [EXTRACTED]
+- [[main()_4_1]] - `references` [EXTRACTED]
+- [[marca_palo()_1]] - `references` [EXTRACTED]
+- [[menores_con_decanato()_1]] - `references` [EXTRACTED]
+- [[pol()_1_1]] - `references` [EXTRACTED]
+- [[simbolo_cubierta()_2]] - `references` [EXTRACTED]
+- [[txt()_1_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_de_los_arcanos_generadormd

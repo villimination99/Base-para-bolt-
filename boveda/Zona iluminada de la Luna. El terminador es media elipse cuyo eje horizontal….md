@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-zodiaco.py"
-type: "rationale"
-community: "Láminas del zodiaco (generador)"
-location: "L481"
+source_file: "boveda/Zona iluminada de la Luna. El terminador es media elipse cuyo eje horizontal….md"
+type: "document"
+community: "lamina_lunar().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/lamina_lunarmd
 ---
 
-# Zona iluminada de la Luna. El terminador es media elipse cuyo eje horizontal…
+# Zona iluminada de la Luna. El terminador es media elipse cuyo eje horizontal….md
 
 ## Connections
-- [[cara_iluminada()]] - `rationale_for` [EXTRACTED]
+- [[Zona iluminada de la Luna. El terminador es media elipse cuyo eje horizontal…_1]] - `contains` [EXTRACTED]
+- [[cara_iluminada()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_lunarmd

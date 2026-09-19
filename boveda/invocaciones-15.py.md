@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/invocaciones-15.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_invocaciones-15.py.md"
+type: "document"
 community: "invocaciones-15.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/invocaciones-15py
 ---
 
 # invocaciones-15.py
 
-#graphify/code #graphify/EXTRACTED #community/invocaciones-15py
+## Connections
+- [[Live Query (requires Dataview plugin)_110]] - `contains` [EXTRACTED]
+- [[Members_110]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_invocaciones-15.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/invocaciones-15py

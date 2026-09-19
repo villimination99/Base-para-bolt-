@@ -1,19 +1,21 @@
 ---
-source_file: "tienda/portadas.py"
-type: "code"
-community: "Generador de portadas"
-location: "L196"
+source_file: "boveda/css().md"
+type: "document"
+community: "_COMMUNITY_Generador de portadas.md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_portadas
+  - community/_COMMUNITY_Generador_de_portadasmd
 ---
 
-# css()
+# css().md
 
 ## Connections
-- [[main()_25]] - `calls` [EXTRACTED]
-- [[portadas.py]] - `contains` [EXTRACTED]
-- [[rgb()]] - `calls` [EXTRACTED]
+- [[_COMMUNITY_Generador de portadas]] - `references` [EXTRACTED]
+- [[css()_1]] - `contains` [EXTRACTED]
+- [[main()_25_1]] - `references` [EXTRACTED]
+- [[portadas.py]] - `references` [EXTRACTED]
+- [[rgb()]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_portadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_portadasmd

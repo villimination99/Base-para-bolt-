@@ -1,17 +1,17 @@
 ---
-source_file: "libros/tools/escribir-codice-si-mismo.py"
+source_file: "libros/tools/escribir-codice-zodiacal.py"
 type: "code"
-community: "Texto del Códice del Sí Mismo"
-location: "L30"
+community: "escribir-codice-zodiacal.py"
+location: "L27"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_del_S_Mismo
+  - community/escribir-codice-zodiacalpy
 ---
 
 # sep()
 
 ## Connections
-- [[escribir-codice-si-mismo.py]] - `contains` [EXTRACTED]
+- [[escribir-codice-zodiacal.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_del_S_Mismo
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-zodiacalpy

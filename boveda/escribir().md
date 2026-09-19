@@ -1,20 +1,20 @@
 ---
 source_file: "empaquetar.py"
 type: "code"
-community: "Empaquetado de entregas"
+community: "entregas.py"
 location: "L75"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Empaquetado_de_entregas
+  - community/entregaspy
 ---
 
 # escribir()
 
 ## Connections
-- [[Path]] - `references` [EXTRACTED]
+- [[Path_13]] - `references` [EXTRACTED]
 - [[empaquetar.py]] - `contains` [EXTRACTED]
-- [[main()]] - `calls` [EXTRACTED]
+- [[main()_39]] - `calls` [EXTRACTED]
 - [[recoger()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Empaquetado_de_entregas
+#graphify/code #graphify/EXTRACTED #community/entregaspy

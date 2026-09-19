@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "rationale"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L645"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # Las cuatro fases con lo que hace cada una.
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[de_fases()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/rationale #graphify/EXTRACTED #community/dibujar-fitnesspy

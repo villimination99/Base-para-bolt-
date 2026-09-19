@@ -1,14 +1,19 @@
 ---
-source_file: "libros/i18n/fuentes/arcanos-06.py"
-type: "code"
+source_file: "boveda/_COMMUNITY_arcanos-06.py.md"
+type: "document"
 community: "arcanos-06.py"
-location: "L1"
+location: "L7"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
   - community/arcanos-06py
 ---
 
 # arcanos-06.py
 
-#graphify/code #graphify/EXTRACTED #community/arcanos-06py
+## Connections
+- [[Live Query (requires Dataview plugin)_47]] - `contains` [EXTRACTED]
+- [[Members_47]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_arcanos-06.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/arcanos-06py

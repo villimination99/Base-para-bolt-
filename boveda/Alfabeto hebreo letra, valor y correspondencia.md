@@ -1,19 +1,22 @@
 ---
-source_file: "libros/partials/alta-magia.svg"
-type: "image"
-community: "Repertorio gráfico de alta magia"
+source_file: "boveda/Alfabeto hebreo letra, valor y correspondencia.md"
+type: "document"
+community: "_COMMUNITY_Repertorio gráfico de alta magia.md"
+location: "L1"
 tags:
-  - graphify/image
-  - graphify/INFERRED
-  - community/Repertorio_grfico_de_alta_magia
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd
 ---
 
-# Alfabeto hebreo: letra, valor y correspondencia
+# Alfabeto hebreo letra, valor y correspondencia.md
 
 ## Connections
+- [[Alfabeto hebreo letra, valor y correspondencia_1]] - `contains` [EXTRACTED]
 - [[Alta Magia — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Decanatos los 36 tramos del zodiaco y sus cartas menores]] - `conceptually_related_to` [INFERRED]
-- [[Tabla de los 22 arcanos mayores letra y regente]] - `semantically_similar_to` [INFERRED]
-- [[Árbol de la Vida las diez sefirot y los tres pilares]] - `conceptually_related_to` [INFERRED]
+- [[Decanatos los 36 tramos del zodiaco y sus cartas menores]] - `references` [EXTRACTED]
+- [[Tabla de los 22 arcanos mayores letra y regente]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Repertorio gráfico de alta magia]] - `references` [EXTRACTED]
+- [[Árbol de la Vida las diez sefirot y los tres pilares]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/INFERRED #community/Repertorio_grfico_de_alta_magia
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Repertorio_gráfico_de_alta_magiamd

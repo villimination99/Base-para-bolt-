@@ -1,21 +1,22 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
+source_file: "boveda/10 Rutinas HIIT (Plan Elite, edición 2026).md"
 type: "document"
-community: "Las diez rutinas HIIT"
-location: "portada, 10 páginas"
+community: "_COMMUNITY_Las diez rutinas HIIT.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Las_diez_rutinas_HIIT
+  - community/_COMMUNITY_Las_diez_rutinas_HIITmd
 ---
 
-# 10 Rutinas HIIT (Plan Elite, edición 2026)
+# 10 Rutinas HIIT (Plan Elite, edición 2026).md
 
 ## Connections
+- [[10 Rutinas HIIT (Plan Elite, edición 2026)_1]] - `contains` [EXTRACTED]
 - [[Criterios de contraindicación cuándo NO hacer HIIT]] - `references` [EXTRACTED]
 - [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
 - [[Las cinco reglas del HIIT inteligente]] - `references` [EXTRACTED]
-- [[Los seis frentes de un mes bien llevado]] - `references` [INFERRED]
+- [[Los seis frentes de un mes bien llevado]] - `references` [EXTRACTED]
 - [[Rutina 01 · Tabata Clásico (20 min, 20 s10 s × 8, nivel medio)]] - `references` [EXTRACTED]
 - [[Rutina 02 · HIIT 4020 (24 min, 40 s20 s × 6, nivel alto)]] - `references` [EXTRACTED]
 - [[Rutina 03 · EMOM Every Minute On the Minute (20 min, nivel medio)]] - `references` [EXTRACTED]
@@ -27,5 +28,6 @@ tags:
 - [[Rutina 09 · Metabolic Circuit (28 min, 5 bloques AMRAP de 4 min)]] - `references` [EXTRACTED]
 - [[Rutina 10 · Finisher Express (15 min, 8 ejercicios formato Tabata, nivel máximo)]] - `references` [EXTRACTED]
 - [[Tabla de técnica de los movimientos clave y error que causa lesión]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Las diez rutinas HIIT]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Las_diez_rutinas_HIIT
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_diez_rutinas_HIITmd

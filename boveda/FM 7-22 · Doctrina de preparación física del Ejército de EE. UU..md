@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "paper"
-community: "Fuentes verificadas"
-location: "pág. 09, tabla de fuentes"
+source_file: "boveda/FM 7-22 · Doctrina de preparación física del Ejército de EE. UU..md"
+type: "document"
+community: "_COMMUNITY_Fuentes verificadas.md"
+location: "L1"
 tags:
-  - graphify/paper
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Fuentes_verificadas
+  - community/_COMMUNITY_Fuentes_verificadasmd
 ---
 
-# FM 7-22 · Doctrina de preparación física del Ejército de EE. UU.
+# FM 7-22 · Doctrina de preparación física del Ejército de EE. UU..md
 
 ## Connections
-- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `cites` [EXTRACTED]
+- [[FM 7-22 · Doctrina de preparación física del Ejército de EE. UU._1]] - `contains` [EXTRACTED]
+- [[Fuentes verificadas · De dónde sale cada cifra (07 HIIT)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Fuentes verificadas]] - `references` [EXTRACTED]
 
-#graphify/paper #graphify/EXTRACTED #community/Fuentes_verificadas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Fuentes_verificadasmd

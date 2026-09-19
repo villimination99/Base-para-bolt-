@@ -1,23 +1,23 @@
 ---
 source_file: "libros/tools/dibujar-zodiaco.py"
 type: "code"
-community: "Láminas del zodiaco (generador)"
+community: "dibujar-zodiaco.py"
 location: "L661"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_del_zodiaco_generador
+  - community/dibujar-zodiacopy
 ---
 
 # lamina_terminos()
 
 ## Connections
-- [[Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La…]] - `rationale_for` [EXTRACTED]
-- [[dibujar-zodiaco.py]] - `contains` [EXTRACTED]
-- [[f()_4]] - `calls` [EXTRACTED]
+- [[Cada signo, una barra de treinta grados partida en cinco tramos desiguales. La…_2]] - `rationale_for` [EXTRACTED]
+- [[dibujar-zodiaco.py_1]] - `contains` [EXTRACTED]
+- [[f()_2]] - `calls` [EXTRACTED]
 - [[glifo()]] - `calls` [EXTRACTED]
-- [[main()_7]] - `calls` [EXTRACTED]
-- [[sigilo()_1]] - `calls` [EXTRACTED]
-- [[txt()_4]] - `calls` [EXTRACTED]
+- [[main()_22]] - `calls` [EXTRACTED]
+- [[sigilo()]] - `calls` [EXTRACTED]
+- [[txt()_1]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_zodiaco_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-zodiacopy

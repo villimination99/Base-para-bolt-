@@ -1,33 +1,24 @@
 ---
-type: community
-cohesion: 0.40
-members: 6
+source_file: "boveda/_COMMUNITY_Identidad visual y precio por nivel.md"
+type: "document"
+community: "_COMMUNITY_Identidad visual y precio por nivel.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Identidad_visual_y_precio_por_nivelmd
 ---
 
-# Identidad visual y precio por nivel
+# _COMMUNITY_Identidad visual y precio por nivel.md
 
-**Cohesion:** 0.40 - moderately connected
-**Members:** 6 nodes
+## Connections
+- [[Bloque CTA y upsell entre tiers (Básico actual)]] - `references` [EXTRACTED]
+- [[Bloque CTA y upsell entre tiers (Pro actual)]] - `references` [EXTRACTED]
+- [[Identidad visual neón (paleta y tipografías de marca)]] - `references` [EXTRACTED]
+- [[Identidad visual y precio por nivel]] - `contains` [EXTRACTED]
+- [[Tier BÁSICO (cian 00f0ff, 9,99 $)]] - `references` [EXTRACTED]
+- [[Tier ELITE (verde 00ff88, 34,99 $)]] - `references` [EXTRACTED]
+- [[Tier PRO (magenta ff00e5, 19,99 $)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 
-## Members
-- [[Bloque CTA y upsell entre tiers (Básico actual)]] - concept - planes/src/01-basico-guia-rapida-volumen.html
-- [[Bloque CTA y upsell entre tiers (Pro actual)]] - concept - planes/src/02-pro-ciclado-carbohidratos.html
-- [[Identidad visual neón (paleta y tipografías de marca)]] - concept - planes/README.md
-- [[Tier BÁSICO (cian 00f0ff, 9,99 $)]] - concept - planes/README.md
-- [[Tier ELITE (verde 00ff88, 34,99 $)]] - concept - planes/README.md
-- [[Tier PRO (magenta ff00e5, 19,99 $)]] - concept - planes/README.md
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Identidad_visual_y_precio_por_nivel
-SORT file.name ASC
-```
-
-## Connections to other communities
-- 3 edges to [[_COMMUNITY_Maquetación de los planes]]
-
-## Top bridge nodes
-- [[Identidad visual neón (paleta y tipografías de marca)]] - degree 4, connects to 1 community
-- [[Tier PRO (magenta ff00e5, 19,99 $)]] - degree 3, connects to 1 community
-- [[Tier BÁSICO (cian 00f0ff, 9,99 $)]] - degree 2, connects to 1 community
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Identidad_visual_y_precio_por_nivelmd

@@ -1,17 +1,18 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # dibujar-fitness.py
 
 ## Connections
+- [[CÓDICES DE FITNESS — generador del repertorio gráfico…]] - `rationale_for` [EXTRACTED]
 - [[_partir()]] - `contains` [EXTRACTED]
 - [[barra()]] - `contains` [EXTRACTED]
 - [[ca_acft()]] - `contains` [EXTRACTED]
@@ -32,9 +33,11 @@ tags:
 - [[de_hipnograma()]] - `contains` [EXTRACTED]
 - [[de_reloj()]] - `contains` [EXTRACTED]
 - [[de_ventana()]] - `contains` [EXTRACTED]
-- [[f()_2]] - `contains` [EXTRACTED]
+- [[f()]] - `contains` [EXTRACTED]
 - [[flecha()]] - `contains` [EXTRACTED]
-- [[main()_5]] - `contains` [EXTRACTED]
+- [[importlib_util]] - `imports` [EXTRACTED]
+- [[main()]] - `contains` [EXTRACTED]
+- [[math]] - `imports` [EXTRACTED]
 - [[me_amdr()]] - `contains` [EXTRACTED]
 - [[me_etiqueta()]] - `contains` [EXTRACTED]
 - [[me_gasto()]] - `contains` [EXTRACTED]
@@ -42,16 +45,17 @@ tags:
 - [[me_margen()]] - `contains` [EXTRACTED]
 - [[me_micro()]] - `contains` [EXTRACTED]
 - [[me_plato()]] - `contains` [EXTRACTED]
+- [[pathlib]] - `imports_from` [EXTRACTED]
 - [[pie()]] - `contains` [EXTRACTED]
-- [[pol()_2]] - `contains` [EXTRACTED]
+- [[pol()]] - `contains` [EXTRACTED]
 - [[recortar()]] - `contains` [EXTRACTED]
-- [[simbolo_cubierta()_1]] - `contains` [EXTRACTED]
+- [[simbolo_cubierta()]] - `contains` [EXTRACTED]
 - [[sprite()]] - `contains` [EXTRACTED]
-- [[txt()_2]] - `contains` [EXTRACTED]
+- [[txt()]] - `contains` [EXTRACTED]
 - [[vo_adherencia()]] - `contains` [EXTRACTED]
 - [[vo_dominios()]] - `contains` [EXTRACTED]
 - [[vo_habito()]] - `contains` [EXTRACTED]
 - [[vo_recaida()]] - `contains` [EXTRACTED]
 - [[vo_respiracion()]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

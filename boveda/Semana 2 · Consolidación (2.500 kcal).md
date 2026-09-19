@@ -1,17 +1,18 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Jerarquía del suplemento y batch cooking"
-location: "pág. 04"
+source_file: "boveda/Semana 2 · Consolidación (2.500 kcal).md"
+type: "document"
+community: "_COMMUNITY_Jerarquía del suplemento y batch cooking.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd
 ---
 
-# Semana 2 · Consolidación (2.500 kcal)
+# Semana 2 · Consolidación (2.500 kcal).md
 
 ## Connections
 - [[Lista de compras semanal (19 líneas de producto)]] - `references` [EXTRACTED]
+- [[Semana 2 · Consolidación (2.500 kcal)_1]] - `contains` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd

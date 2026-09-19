@@ -1,17 +1,18 @@
 ---
-source_file: "tienda/publicar.py"
-type: "rationale"
-community: "Publicador de la tienda"
-location: "L309"
+source_file: "boveda/Crea o actualiza la ficha, y devuelve qué hizo. Si el producto cambia de handle….md"
+type: "document"
+community: "publicar().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/publicarmd
 ---
 
-# Crea o actualiza la ficha, y devuelve qué hizo. Si el producto cambia de handle…
+# Crea o actualiza la ficha, y devuelve qué hizo. Si el producto cambia de handle….md
 
 ## Connections
-- [[publicar()]] - `rationale_for` [EXTRACTED]
+- [[Crea o actualiza la ficha, y devuelve qué hizo. Si el producto cambia de handle…_1]] - `contains` [EXTRACTED]
+- [[publicar()_3]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/document #graphify/EXTRACTED #community/publicarmd

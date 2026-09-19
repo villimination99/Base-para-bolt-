@@ -1,20 +1,23 @@
 ---
-source_file: "planes/tools/i18n.py"
+source_file: "libros/build.py"
 type: "code"
-community: "Generador de libros"
-location: "L71"
+community: "libros/build.py"
+location: "L55"
 tags:
   - graphify/code
-  - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - graphify/INFERRED
+  - community/libros/buildpy
 ---
 
 # clave()
 
 ## Connections
-- [[Identificador estable de un segmento hash de su forma normalizada.]] - `rationale_for` [EXTRACTED]
-- [[inventario()_1]] - `calls` [EXTRACTED]
-- [[planestoolsi18n.py]] - `contains` [EXTRACTED]
-- [[traducir()_1]] - `calls` [EXTRACTED]
+- [[Normaliza para comparar sin tildes, sin espacios y en mayúsculas. Se quitan…]] - `rationale_for` [EXTRACTED]
+- [[cadena()]] - `calls` [INFERRED]
+- [[claves_de_lamina()]] - `calls` [INFERRED]
+- [[inventario()_2]] - `calls` [INFERRED]
+- [[librosbuild.py]] - `contains` [EXTRACTED]
+- [[paginas_de_capitulos()]] - `calls` [EXTRACTED]
+- [[traducir()_1]] - `calls` [INFERRED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/INFERRED #community/libros/buildpy

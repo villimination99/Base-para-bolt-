@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "concept"
-community: "Escalado de macros y recetario"
-location: "callout info pág. 02"
+source_file: "boveda/Atleta de referencia de 80 kg.md"
+type: "document"
+community: "_COMMUNITY_Escalado de macros y recetario.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Escalado_de_macros_y_recetario
+  - community/_COMMUNITY_Escalado_de_macros_y_recetariomd
 ---
 
-# Atleta de referencia de 80 kg
+# Atleta de referencia de 80 kg.md
 
 ## Connections
-- [[Atleta de referencia de 75 kg]] - `semantically_similar_to` [INFERRED]
+- [[Atleta de referencia de 75 kg]] - `references` [EXTRACTED]
+- [[Atleta de referencia de 80 kg_1]] - `contains` [EXTRACTED]
 - [[Escalado de macros por kilo de peso corporal]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Escalado de macros y recetario]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Escalado_de_macros_y_recetario
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Escalado_de_macros_y_recetariomd

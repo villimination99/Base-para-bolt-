@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
+community: "pathlib"
 location: "L74"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/pathlib
 ---
 
 # Traduce una cadena suelta (título del libro, título de capítulo). El titulillo…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[cadena()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/pathlib

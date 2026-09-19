@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/07-elite-rutinas-hiit.html"
-type: "concept"
-community: "Registros y guiones de práctica"
-location: "pág. 08"
+source_file: "boveda/Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones).md"
+type: "document"
+community: "_COMMUNITY_Registros y guiones de práctica.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Registros_y_guiones_de_prctica
+  - community/_COMMUNITY_Registros_y_guiones_de_prácticamd
 ---
 
-# Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones)
+# Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones).md
 
 ## Connections
-- [[AMRAP (tantas rondas como puedas) como marca de puntuación]] - `shares_data_with` [EXTRACTED]
-- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `shares_data_with` [INFERRED]
+- [[AMRAP (tantas rondas como puedas) como marca de puntuación]] - `references` [EXTRACTED]
+- [[Datos que hay que llevar a cada sesión (nutrición, entrenamiento y recuperación)]] - `references` [EXTRACTED]
+- [[Registro de sesiones HIIT (fecha, rutina, rondas, RPE 1-10, sensaciones)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Registros y guiones de práctica]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Registros_y_guiones_de_prctica
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Registros_y_guiones_de_prácticamd

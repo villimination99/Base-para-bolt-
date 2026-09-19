@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Las cuatro fases del entrenamiento"
-location: "pág. 04"
+source_file: "boveda/Split Push  Pull  Legs de 4 días.md"
+type: "document"
+community: "_COMMUNITY_Las cuatro fases del entrenamiento.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Las_cuatro_fases_del_entrenamiento
+  - community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd
 ---
 
-# Split Push / Pull / Legs de 4 días
+# Split Push  Pull  Legs de 4 días.md
 
 ## Connections
-- [[Fase 2 · Desarrollo (sem. 3–4, PushPullLegs 4 días, 65–75 % 1RM, RIR 2–3)]] - `implements` [EXTRACTED]
+- [[Fase 2 · Desarrollo (sem. 3–4, PushPullLegs 4 días, 65–75 % 1RM, RIR 2–3)]] - `references` [EXTRACTED]
+- [[Split Push  Pull  Legs de 4 días_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Las cuatro fases del entrenamiento]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Las_cuatro_fases_del_entrenamiento
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd

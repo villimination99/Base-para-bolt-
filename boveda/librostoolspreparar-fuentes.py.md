@@ -1,18 +1,19 @@
 ---
-source_file: "libros/tools/preparar-fuentes.py"
-type: "code"
-community: "Preparación de fuentes · libros"
+source_file: "boveda/librostoolspreparar-fuentes.py.md"
+type: "document"
+community: "fetch().md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Preparacin_de_fuentes__libros
+  - community/fetchmd
 ---
 
-# libros/tools/preparar-fuentes.py
+# librostoolspreparar-fuentes.py.md
 
 ## Connections
-- [[fetch()]] - `contains` [EXTRACTED]
-- [[main()_17]] - `contains` [EXTRACTED]
+- [[fetch()_2]] - `references` [EXTRACTED]
+- [[librostoolspreparar-fuentes.py_1]] - `contains` [EXTRACTED]
+- [[main()_17_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Preparacin_de_fuentes__libros
+#graphify/document #graphify/EXTRACTED #community/fetchmd

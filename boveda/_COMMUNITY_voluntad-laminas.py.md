@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # voluntad-laminas.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[voluntad-laminas.py]] - code - libros/i18n/fuentes/voluntad-laminas.py
+- [[Live Query (requires Dataview plugin)_185]] - document - boveda/_COMMUNITY_voluntad-laminas.py.md
+- [[Members_185]] - document - boveda/_COMMUNITY_voluntad-laminas.py.md
+- [[_COMMUNITY_voluntad-laminas.py]] - document - boveda/_COMMUNITY_voluntad-laminas.py.md
+- [[voluntad-laminas.py]] - document - boveda/_COMMUNITY_voluntad-laminas.py.md
 
 ## Live Query (requires Dataview plugin)
 

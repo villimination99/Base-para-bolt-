@@ -1,16 +1,19 @@
 ---
-source_file: ""
-type: "code"
-community: "Traducción y armado de planes"
+source_file: "boveda/Path_5.md"
+type: "document"
+community: "documentos().md"
+location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Traduccin_y_armado_de_planes
+  - community/documentosmd
 ---
 
-# Path
+# Path_5.md
 
 ## Connections
-- [[documentos()]] - `references` [EXTRACTED]
+- [[Path_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Traducción y armado de planes]] - `references` [EXTRACTED]
+- [[documentos()_2]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Traduccin_y_armado_de_planes
+#graphify/document #graphify/EXTRACTED #community/documentosmd

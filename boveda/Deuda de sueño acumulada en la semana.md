@@ -1,18 +1,18 @@
 ---
-source_file: "libros/partials/descanso.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/Deuda de sueño acumulada en la semana.md"
+type: "document"
+community: "Deuda de sueño acumulada en la semana"
+location: "L11"
 tags:
-  - graphify/image
-  - graphify/AMBIGUOUS
-  - community/Figuras_de_carga_y_acondicionamiento
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Deuda_de_sueño_acumulada_en_la_semana
 ---
 
 # Deuda de sueño acumulada en la semana
 
 ## Connections
-- [[Descanso — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Desentrenamiento pérdidas por reposo en cama y vuelo espacial]] - `conceptually_related_to` [AMBIGUOUS]
-- [[Hipnograma cuatro a seis ciclos de unos 90 minutos]] - `conceptually_related_to` [INFERRED]
+- [[Connections_685]] - `contains` [EXTRACTED]
+- [[Deuda de sueño acumulada en la semana_1]] - `contains` [EXTRACTED]
 
-#graphify/image #graphify/AMBIGUOUS #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Deuda_de_sueño_acumulada_en_la_semana

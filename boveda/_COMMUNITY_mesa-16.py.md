@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # mesa-16.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[mesa-16.py]] - code - libros/i18n/fuentes/mesa-16.py
+- [[Live Query (requires Dataview plugin)_139]] - document - boveda/_COMMUNITY_mesa-16.py.md
+- [[Members_139]] - document - boveda/_COMMUNITY_mesa-16.py.md
+- [[_COMMUNITY_mesa-16.py]] - document - boveda/_COMMUNITY_mesa-16.py.md
+- [[mesa-16.py]] - document - boveda/_COMMUNITY_mesa-16.py.md
 
 ## Live Query (requires Dataview plugin)
 

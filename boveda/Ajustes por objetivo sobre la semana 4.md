@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Recomposición por fases"
-location: "pág. 06 · Cómo continuar a partir de aquí"
+source_file: "boveda/Ajustes por objetivo sobre la semana 4.md"
+type: "document"
+community: "_COMMUNITY_Recomposición por fases.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Recomposicin_por_fases
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Recomposición_por_fasesmd
 ---
 
-# Ajustes por objetivo sobre la semana 4
+# Ajustes por objetivo sobre la semana 4.md
 
 ## Connections
-- [[Lógica de la recomposición por fases encadenadas]] - `semantically_similar_to` [INFERRED]
+- [[Ajustes por objetivo sobre la semana 4_1]] - `contains` [EXTRACTED]
+- [[Lógica de la recomposición por fases encadenadas]] - `references` [EXTRACTED]
 - [[Semana 4 · Mantenimiento (2.600 kcal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Recomposición por fases]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Recomposicin_por_fases
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Recomposición_por_fasesmd

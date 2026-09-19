@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Técnica de ejercicio y respiración"
-location: "págs. 08–09"
+source_file: "boveda/Los 30 ejercicios, uno a uno (técnica, error común, consejo clave).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Los 30 ejercicios, uno a uno (técnica, error común, consejo clave)
+# Los 30 ejercicios, uno a uno (técnica, error común, consejo clave).md
 
 ## Connections
-- [[Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla)]] - `conceptually_related_to` [EXTRACTED]
+- [[Fig. 2 · Sentadilla recorrido correcto y los dos errores caros (fig-sentadilla)]] - `references` [EXTRACTED]
+- [[Los 30 ejercicios, uno a uno (técnica, error común, consejo clave)_1]] - `contains` [EXTRACTED]
 - [[Mapa muscular de referencia (16 grupos) y cobertura semanal mínima]] - `references` [EXTRACTED]
-- [[Script · Visualización atlética (12 min)]] - `semantically_similar_to` [INFERRED]
+- [[Script · Visualización atlética (12 min)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

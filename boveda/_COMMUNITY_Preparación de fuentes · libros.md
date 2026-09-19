@@ -1,22 +1,19 @@
 ---
-type: community
-cohesion: 1.00
-members: 3
+source_file: "boveda/_COMMUNITY_Preparación de fuentes · libros.md"
+type: "document"
+community: "fetch().md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/fetchmd
 ---
 
-# Preparación de fuentes · libros
+# _COMMUNITY_Preparación de fuentes · libros.md
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 3 nodes
+## Connections
+- [[Preparación de fuentes · libros]] - `contains` [EXTRACTED]
+- [[fetch()_2]] - `references` [EXTRACTED]
+- [[main()_17_1]] - `references` [EXTRACTED]
 
-## Members
-- [[fetch()]] - code - libros/tools/preparar-fuentes.py
-- [[librostoolspreparar-fuentes.py]] - code - libros/tools/preparar-fuentes.py
-- [[main()_17]] - code - libros/tools/preparar-fuentes.py
-
-## Live Query (requires Dataview plugin)
-
-```dataview
-TABLE source_file, type FROM #community/Preparacin_de_fuentes__libros
-SORT file.name ASC
-```
+#graphify/document #graphify/EXTRACTED #community/fetchmd

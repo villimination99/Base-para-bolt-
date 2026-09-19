@@ -1,20 +1,20 @@
 ---
 source_file: "libros/tools/dibujar-si-mismo.py"
 type: "code"
-community: "Láminas del Sí Mismo (generador)"
+community: "dibujar-emblemas.py"
 location: "L363"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo_generador
+  - community/dibujar-emblemaspy
 ---
 
 # lamina_disciplinas()
 
 ## Connections
-- [[dibujar-si-mismo.py]] - `contains` [EXTRACTED]
+- [[dibujar-si-mismo.py_2]] - `contains` [EXTRACTED]
 - [[flecha()_1]] - `calls` [EXTRACTED]
-- [[main()_6]] - `calls` [EXTRACTED]
+- [[main()_30]] - `calls` [EXTRACTED]
 - [[txt()_3]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_del_S_Mismo_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-emblemaspy

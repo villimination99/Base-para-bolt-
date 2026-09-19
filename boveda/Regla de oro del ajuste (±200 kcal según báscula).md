@@ -1,18 +1,21 @@
 ---
-source_file: "planes/src/01-basico-guia-rapida-volumen.html"
-type: "rationale"
-community: "Principios del volumen limpio"
+source_file: "boveda/Regla de oro del ajuste (±200 kcal según báscula).md"
+type: "document"
+community: "_COMMUNITY_Principios del volumen limpio.md"
+location: "L1"
 tags:
-  - graphify/rationale
-  - graphify/INFERRED
-  - community/Principios_del_volumen_limpio
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Principios_del_volumen_limpiomd
 ---
 
-# Regla de oro del ajuste (±200 kcal según báscula)
+# Regla de oro del ajuste (±200 kcal según báscula).md
 
 ## Connections
-- [[Checklist semanal de cada lunes]] - `implements` [INFERRED]
-- [[Recargas, ajustes y señales de corrección]] - `semantically_similar_to` [INFERRED]
-- [[Superávit controlado (10–15 % sobre mantenimiento)]] - `rationale_for` [EXTRACTED]
+- [[Checklist semanal de cada lunes]] - `references` [EXTRACTED]
+- [[Recargas, ajustes y señales de corrección]] - `references` [EXTRACTED]
+- [[Regla de oro del ajuste (±200 kcal según báscula)_1]] - `contains` [EXTRACTED]
+- [[Superávit controlado (10–15 % sobre mantenimiento)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Principios del volumen limpio]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/INFERRED #community/Principios_del_volumen_limpio
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Principios_del_volumen_limpiomd

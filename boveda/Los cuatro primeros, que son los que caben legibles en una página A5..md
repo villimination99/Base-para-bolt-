@@ -1,17 +1,19 @@
 ---
-source_file: "libros/tools/dibujar-alta-magia.py"
-type: "rationale"
-community: "Láminas de alta magia (generador)"
-location: "L443"
+source_file: "boveda/Los cuatro primeros, que son los que caben legibles en una página A5..md"
+type: "document"
+community: "lamina_kameas().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_alta_magia_generador
+  - community/lamina_kameasmd
 ---
 
-# Los cuatro primeros, que son los que caben legibles en una página A5.
+# Los cuatro primeros, que son los que caben legibles en una página A5..md
 
 ## Connections
-- [[lamina_kameas()]] - `rationale_for` [EXTRACTED]
+- [[Los cuatro primeros, que son los que caben legibles en una página A5._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Láminas de alta magia (generador)]] - `references` [EXTRACTED]
+- [[lamina_kameas()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_alta_magia_generador
+#graphify/document #graphify/EXTRACTED #community/lamina_kameasmd

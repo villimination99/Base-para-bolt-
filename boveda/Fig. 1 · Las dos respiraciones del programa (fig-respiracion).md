@@ -1,18 +1,19 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "image"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 06, svg use href=#fig-respiracion"
+source_file: "boveda/Fig. 1 · Las dos respiraciones del programa (fig-respiracion).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Fig. 1 · Las dos respiraciones del programa (#fig-respiracion)
+# Fig. 1 · Las dos respiraciones del programa (fig-respiracion).md
 
 ## Connections
+- [[Fig. 1 · Las dos respiraciones del programa (fig-respiracion)_1]] - `contains` [EXTRACTED]
 - [[Respiración 4-7-8 (anti-estrés)]] - `references` [EXTRACTED]
 - [[Respiración de caja 4-4-4-4 (enfoque)]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

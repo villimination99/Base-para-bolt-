@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/i18n.py"
 type: "rationale"
-community: "Generador de libros"
+community: "pathlib"
 location: "L99"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/pathlib
 ---
 
 # Los segmentos que viven DENTRO de una lámina, con su ancho original. Un rótulo…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[claves_de_lamina()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/pathlib

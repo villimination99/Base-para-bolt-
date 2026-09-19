@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # carga-11.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[carga-11.py]] - code - libros/i18n/fuentes/carga-11.py
+- [[Live Query (requires Dataview plugin)_75]] - document - boveda/_COMMUNITY_carga-11.py.md
+- [[Members_75]] - document - boveda/_COMMUNITY_carga-11.py.md
+- [[_COMMUNITY_carga-11.py]] - document - boveda/_COMMUNITY_carga-11.py.md
+- [[carga-11.py]] - document - boveda/_COMMUNITY_carga-11.py.md
 
 ## Live Query (requires Dataview plugin)
 

@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/auditar.py"
-type: "rationale"
-community: "Auditoría de PDFs"
-location: "L142"
+source_file: "boveda/El dist que contiene a este PDF, sea el de planes o el de libros. Se busca….md"
+type: "document"
+community: "auditar().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Auditora_de_PDFs
+  - community/auditarmd
 ---
 
-# El dist/ que contiene a este PDF, sea el de planes o el de libros. Se busca…
+# El dist que contiene a este PDF, sea el de planes o el de libros. Se busca….md
 
 ## Connections
-- [[raiz_dist()]] - `rationale_for` [EXTRACTED]
+- [[El dist que contiene a este PDF, sea el de planes o el de libros. Se busca…_1]] - `contains` [EXTRACTED]
+- [[raiz_dist()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Auditora_de_PDFs
+#graphify/document #graphify/EXTRACTED #community/auditarmd

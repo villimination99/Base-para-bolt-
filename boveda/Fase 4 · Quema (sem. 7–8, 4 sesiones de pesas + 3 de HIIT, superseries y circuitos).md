@@ -1,23 +1,24 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Las diez rutinas HIIT"
-location: "pág. 06"
+source_file: "boveda/Fase 4 · Quema (sem. 7–8, 4 sesiones de pesas + 3 de HIIT, superseries y circuitos).md"
+type: "document"
+community: "_COMMUNITY_Las diez rutinas HIIT.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Las_diez_rutinas_HIIT
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Las_diez_rutinas_HIITmd
 ---
 
-# Fase 4 · Quema (sem. 7–8, 4 sesiones de pesas + 3 de HIIT, superseries y circuitos)
+# Fase 4 · Quema (sem. 7–8, 4 sesiones de pesas + 3 de HIIT, superseries y circuitos).md
 
 ## Connections
 - [[Criterios de descarga (deload)]] - `references` [EXTRACTED]
 - [[Estructura de cuatro fases progresivas]] - `references` [EXTRACTED]
-- [[Formatos de densidad superserie antagonista, circuito y serie compuesta]] - `implements` [EXTRACTED]
-- [[Las cinco reglas del HIIT inteligente]] - `conceptually_related_to` [INFERRED]
-- [[Rutina 02 · HIIT 4020 (24 min, 40 s20 s × 6, nivel alto)]] - `references` [INFERRED]
-- [[Rutina 04 · Full Body Fury (25 min, 30 s15 s, 5 vueltas)]] - `references` [INFERRED]
-- [[Rutina 07 · Core Destroyer (18 min, 30 s10 s, 6 vueltas)]] - `references` [INFERRED]
+- [[Fase 4 · Quema (sem. 7–8, 4 sesiones de pesas + 3 de HIIT, superseries y circuitos)_1]] - `contains` [EXTRACTED]
+- [[Formatos de densidad superserie antagonista, circuito y serie compuesta]] - `references` [EXTRACTED]
+- [[Las cinco reglas del HIIT inteligente]] - `references` [EXTRACTED]
+- [[Rutina 02 · HIIT 4020 (24 min, 40 s20 s × 6, nivel alto)]] - `references` [EXTRACTED]
+- [[Rutina 04 · Full Body Fury (25 min, 30 s15 s, 5 vueltas)]] - `references` [EXTRACTED]
+- [[Rutina 07 · Core Destroyer (18 min, 30 s10 s, 6 vueltas)]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Las_diez_rutinas_HIIT
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_diez_rutinas_HIITmd

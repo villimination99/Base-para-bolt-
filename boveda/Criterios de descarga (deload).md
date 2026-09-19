@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Descarga, siesta y coaching"
-location: "pág. 10 y pág. 06"
+source_file: "boveda/Criterios de descarga (deload).md"
+type: "document"
+community: "_COMMUNITY_Descarga, siesta y coaching.md"
+location: "L1"
 tags:
-  - graphify/concept
-  - graphify/INFERRED
-  - community/Descarga_siesta_y_coaching
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Descarga_siesta_y_coachingmd
 ---
 
-# Criterios de descarga (deload)
+# Criterios de descarga (deload).md
 
 ## Connections
+- [[Criterios de descarga (deload)_1]] - `contains` [EXTRACTED]
 - [[Fase 4 · Quema (sem. 7–8, 4 sesiones de pesas + 3 de HIIT, superseries y circuitos)]] - `references` [EXTRACTED]
-- [[La siesta bien usada (10–20 min, 30–60 min, 90 min)]] - `semantically_similar_to` [INFERRED]
-- [[Sesión 3 · Intensificación (margen de recuperación)]] - `conceptually_related_to` [INFERRED]
+- [[La siesta bien usada (10–20 min, 30–60 min, 90 min)]] - `references` [EXTRACTED]
+- [[Sesión 3 · Intensificación (margen de recuperación)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Descarga, siesta y coaching]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/INFERRED #community/Descarga_siesta_y_coaching
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Descarga_siesta_y_coachingmd

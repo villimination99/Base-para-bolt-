@@ -1,18 +1,19 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "rationale"
-community: "Jerarquía del suplemento y batch cooking"
-location: "callout pág. 09"
+source_file: "boveda/Regla mediterránea de la etiqueta (máx. 5 ingredientes).md"
+type: "document"
+community: "Jerarquía del resultado (los suplementos son el 5 %).md"
+location: "L1"
 tags:
-  - graphify/rationale
-  - graphify/INFERRED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/Jerarquía_del_resultado_los_suplementos_son_el_5_md
 ---
 
-# Regla mediterránea de la etiqueta (máx. 5 ingredientes)
+# Regla mediterránea de la etiqueta (máx. 5 ingredientes).md
 
 ## Connections
-- [[Criterio del metaanálisis a dosis del producto]] - `semantically_similar_to` [INFERRED]
-- [[Lista de compras semanal (19 líneas de producto)]] - `rationale_for` [EXTRACTED]
+- [[Criterio del metaanálisis a dosis del producto]] - `references` [EXTRACTED]
+- [[Lista de compras semanal (19 líneas de producto)]] - `references` [EXTRACTED]
+- [[Regla mediterránea de la etiqueta (máx. 5 ingredientes)_1]] - `contains` [EXTRACTED]
 
-#graphify/rationale #graphify/INFERRED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/Jerarquía_del_resultado_los_suplementos_son_el_5_md

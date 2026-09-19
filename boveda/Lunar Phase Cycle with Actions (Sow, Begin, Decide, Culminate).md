@@ -1,16 +1,19 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Lunar Phase Cycle with Actions (Sow, Begin, Decide, Culminate).md"
+type: "document"
+community: "_COMMUNITY_Doctrina zodiacal ilustrada.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/_COMMUNITY_Doctrina_zodiacal_ilustradamd
 ---
 
-# Lunar Phase Cycle with Actions (Sow, Begin, Decide, Culminate)
+# Lunar Phase Cycle with Actions (Sow, Begin, Decide, Culminate).md
 
 ## Connections
+- [[Lunar Phase Cycle with Actions (Sow, Begin, Decide, Culminate)_1]] - `contains` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Doctrina_zodiacal_ilustradamd

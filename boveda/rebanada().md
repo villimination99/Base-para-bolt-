@@ -1,19 +1,19 @@
 ---
 source_file: "tienda/publicar.py"
 type: "code"
-community: "Publicador de la tienda"
+community: "json"
 location: "L58"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/json
 ---
 
 # rebanada()
 
 ## Connections
-- [[El handle que le toca a un título traducido. Shopify solo admite letras sin…]] - `rationale_for` [EXTRACTED]
-- [[publicar()]] - `calls` [EXTRACTED]
-- [[publicar.py]] - `contains` [EXTRACTED]
+- [[El handle que le toca a un título traducido. Shopify solo admite letras sin…_2]] - `rationale_for` [EXTRACTED]
+- [[publicar()_2]] - `calls` [EXTRACTED]
+- [[publicar.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/code #graphify/EXTRACTED #community/json

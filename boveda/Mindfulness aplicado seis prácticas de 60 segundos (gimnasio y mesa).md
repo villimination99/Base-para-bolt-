@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "concept"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 07"
+source_file: "boveda/Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa).md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Mindfulness aplicado: seis prácticas de 60 segundos (gimnasio y mesa)
+# Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa).md
 
 ## Connections
-- [[Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %)]] - `conceptually_related_to` [INFERRED]
+- [[Calentamiento estándar de 8 minutos (cardio, movilidad, aproximaciones 406080 %)]] - `references` [EXTRACTED]
+- [[Mindfulness aplicado seis prácticas de 60 segundos (gimnasio y mesa)_1]] - `contains` [EXTRACTED]
 - [[Respiración 4-7-8 (anti-estrés)]] - `references` [EXTRACTED]
 - [[Respiración de caja 4-4-4-4 (enfoque)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

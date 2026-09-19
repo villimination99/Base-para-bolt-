@@ -1,16 +1,19 @@
 ---
-source_file: "planes/src/02-pro-ciclado-carbohidratos.html"
+source_file: "boveda/Aviso importante (descargo médico, diabetes y copyright).md"
 type: "document"
-community: "Maquetación de los planes"
+community: "_COMMUNITY_Maquetación de los planes.md"
+location: "L1"
 tags:
   - graphify/document
   - graphify/EXTRACTED
-  - community/Maquetacin_de_los_planes
+  - community/_COMMUNITY_Maquetación_de_los_planesmd
 ---
 
-# Aviso importante (descargo médico, diabetes y copyright)
+# Aviso importante (descargo médico, diabetes y copyright).md
 
 ## Connections
-- [[Aviso legal y sanitario con contraindicaciones]] - `implements` [EXTRACTED]
+- [[Aviso importante (descargo médico, diabetes y copyright)_1]] - `contains` [EXTRACTED]
+- [[Aviso legal y sanitario con contraindicaciones]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Maquetación de los planes]] - `references` [EXTRACTED]
 
-#graphify/document #graphify/EXTRACTED #community/Maquetacin_de_los_planes
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Maquetación_de_los_planesmd

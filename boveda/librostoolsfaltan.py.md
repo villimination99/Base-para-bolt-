@@ -1,18 +1,19 @@
 ---
-source_file: "libros/tools/faltan.py"
-type: "code"
-community: "Segmentos sin traducir"
+source_file: "boveda/librostoolsfaltan.py.md"
+type: "document"
+community: "entero().md"
 location: "L1"
 tags:
-  - graphify/code
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Segmentos_sin_traducir
+  - community/enteromd
 ---
 
-# libros/tools/faltan.py
+# librostoolsfaltan.py.md
 
 ## Connections
-- [[entero()]] - `contains` [EXTRACTED]
-- [[main()_16]] - `contains` [EXTRACTED]
+- [[entero()_1]] - `references` [EXTRACTED]
+- [[librostoolsfaltan.py_1]] - `contains` [EXTRACTED]
+- [[main()_16_1]] - `references` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Segmentos_sin_traducir
+#graphify/document #graphify/EXTRACTED #community/enteromd

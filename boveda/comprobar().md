@@ -1,18 +1,22 @@
 ---
-source_file: "libros/tools/datos_oficiales.py"
+source_file: "tienda/calendario.py"
 type: "code"
-community: "Datos oficiales comprobados"
-location: "L445"
+community: "calendario.py"
+location: "L192"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Datos_oficiales_comprobados
+  - community/calendariopy
 ---
 
 # comprobar()
 
 ## Connections
-- [[Si una tabla no cuadra, el generador que la use no debe escribir nada. Estas…]] - `rationale_for` [EXTRACTED]
-- [[datos_oficiales.py]] - `contains` [EXTRACTED]
+- [[Guardas que abortan la construcción a propósito]] - `references` [INFERRED]
+- [[Lo que impide anunciar el calendario. Vacío es lo correcto.]] - `rationale_for` [EXTRACTED]
+- [[calendario.py]] - `contains` [EXTRACTED]
+- [[dias()]] - `calls` [EXTRACTED]
+- [[main()_1]] - `calls` [EXTRACTED]
+- [[temporadas()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Datos_oficiales_comprobados
+#graphify/code #graphify/EXTRACTED #community/calendariopy

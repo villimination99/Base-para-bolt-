@@ -1,16 +1,17 @@
 ---
 type: community
-cohesion: 1.00
-members: 1
+members: 4
 ---
 
 # invocaciones-22.py
 
-**Cohesion:** 1.00 - tightly connected
-**Members:** 1 nodes
+**Members:** 4 nodes
 
 ## Members
-- [[invocaciones-22.py]] - code - libros/i18n/fuentes/invocaciones-22.py
+- [[Live Query (requires Dataview plugin)_117]] - document - boveda/_COMMUNITY_invocaciones-22.py.md
+- [[Members_117]] - document - boveda/_COMMUNITY_invocaciones-22.py.md
+- [[_COMMUNITY_invocaciones-22.py]] - document - boveda/_COMMUNITY_invocaciones-22.py.md
+- [[invocaciones-22.py]] - document - boveda/_COMMUNITY_invocaciones-22.py.md
 
 ## Live Query (requires Dataview plugin)
 

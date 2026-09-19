@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/escribir-codice-descanso.py"
 type: "code"
-community: "Texto del Códice del Descanso"
+community: "escribir-codice-descanso.py"
 location: "L44"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Texto_del_Cdice_del_Descanso
+  - community/escribir-codice-descansopy
 ---
 
 # nota()
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[escribir-codice-descanso.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Texto_del_Cdice_del_Descanso
+#graphify/code #graphify/EXTRACTED #community/escribir-codice-descansopy

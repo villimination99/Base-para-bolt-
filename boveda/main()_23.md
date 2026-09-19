@@ -1,20 +1,22 @@
 ---
-source_file: "planes/tools/pagina-fuentes.py"
+source_file: "planes/tools/cargar-traducciones.py"
 type: "code"
-community: "Página de fuentes"
-location: "L157"
+community: "planes/tools/i18n.py"
+location: "L48"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Pgina_de_fuentes
+  - community/planes/tools/i18npy
 ---
 
 # main()
 
 ## Connections
-- [[pagina()]] - `calls` [EXTRACTED]
-- [[pagina-fuentes.py]] - `contains` [EXTRACTED]
-- [[quitar()]] - `calls` [EXTRACTED]
-- [[renumerar()]] - `calls` [EXTRACTED]
+- [[documento()]] - `calls` [EXTRACTED]
+- [[etiquetas()]] - `calls` [EXTRACTED]
+- [[guardar()]] - `calls` [EXTRACTED]
+- [[inventario()]] - `calls` [EXTRACTED]
+- [[pegado()]] - `contains` [EXTRACTED]
+- [[planestoolscargar-traducciones.py]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Pgina_de_fuentes
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

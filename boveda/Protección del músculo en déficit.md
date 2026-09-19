@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/04-pro-plan-definicion-volumen.html"
-type: "rationale"
-community: "Jerarquía del suplemento y batch cooking"
-location: "pág. 05 · Cómo proteger el músculo en déficit"
+source_file: "boveda/Protección del músculo en déficit.md"
+type: "document"
+community: "_COMMUNITY_Jerarquía del suplemento y batch cooking.md"
+location: "L1"
 tags:
-  - graphify/rationale
-  - graphify/INFERRED
-  - community/Jerarqua_del_suplemento_y_batch_cooking
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd
 ---
 
-# Protección del músculo en déficit
+# Protección del músculo en déficit.md
 
 ## Connections
-- [[Fase 2 · Definición (semanas 5-8)]] - `rationale_for` [EXTRACTED]
-- [[Proteína en polvo (whey o vegetal)]] - `conceptually_related_to` [INFERRED]
+- [[Fase 2 · Definición (semanas 5-8)]] - `references` [EXTRACTED]
+- [[Protección del músculo en déficit_1]] - `contains` [EXTRACTED]
+- [[Proteína en polvo (whey o vegetal)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Jerarquía del suplemento y batch cooking]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/INFERRED #community/Jerarqua_del_suplemento_y_batch_cooking
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Jerarquía_del_suplemento_y_batch_cookingmd

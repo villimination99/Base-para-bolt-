@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/05-pro-registro-progreso-semanal.html"
-type: "rationale"
-community: "Progresión de cargas"
-location: "pág. 09 · Antes de cambiar el plan"
+source_file: "boveda/Corrige la ejecución antes de tocar el plan.md"
+type: "document"
+community: "_COMMUNITY_Progresión de cargas.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Progresin_de_cargas
+  - community/_COMMUNITY_Progresión_de_cargasmd
 ---
 
-# Corrige la ejecución antes de tocar el plan
+# Corrige la ejecución antes de tocar el plan.md
 
 ## Connections
-- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `rationale_for` [EXTRACTED]
+- [[Corrige la ejecución antes de tocar el plan_1]] - `contains` [EXTRACTED]
+- [[Matriz de interpretación peso  cintura  fuerza → acción]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Progresión de cargas]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Progresin_de_cargas
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Progresión_de_cargasmd

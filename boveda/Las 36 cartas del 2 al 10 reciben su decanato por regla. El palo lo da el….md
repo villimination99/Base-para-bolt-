@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-arcanos.py"
-type: "rationale"
-community: "Láminas de los arcanos (generador)"
-location: "L176"
+source_file: "boveda/Las 36 cartas del 2 al 10 reciben su decanato por regla. El palo lo da el….md"
+type: "document"
+community: "_COMMUNITY_Láminas de los arcanos (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_de_los_arcanos_generador
+  - community/_COMMUNITY_Láminas_de_los_arcanos_generadormd
 ---
 
-# Las 36 cartas del 2 al 10 reciben su decanato por regla. El palo lo da el…
+# Las 36 cartas del 2 al 10 reciben su decanato por regla. El palo lo da el….md
 
 ## Connections
-- [[menores_con_decanato()]] - `rationale_for` [EXTRACTED]
+- [[Las 36 cartas del 2 al 10 reciben su decanato por regla. El palo lo da el…_1]] - `contains` [EXTRACTED]
+- [[menores_con_decanato()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_de_los_arcanos_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_de_los_arcanos_generadormd

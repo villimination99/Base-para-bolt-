@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/carga.svg"
-type: "image"
-community: "Figuras de carga y acondicionamiento"
+source_file: "boveda/ACFT seis pruebas de condición física y sus cualidades.md"
+type: "document"
+community: "Carga — repertorio gráfico (biblioteca de láminas).md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Figuras_de_carga_y_acondicionamiento
+  - community/Carga__repertorio_gráfico_biblioteca_de_láminasmd
 ---
 
-# ACFT: seis pruebas de condición física y sus cualidades
+# ACFT seis pruebas de condición física y sus cualidades.md
 
 ## Connections
+- [[ACFT seis pruebas de condición física y sus cualidades_1]] - `contains` [EXTRACTED]
 - [[Carga — repertorio gráfico (biblioteca de láminas)]] - `references` [EXTRACTED]
-- [[Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación)]] - `conceptually_related_to` [INFERRED]
+- [[Patrones fundamentales de movimiento (sentadilla, bisagra, empujes, tirones, transporte, antirrotación)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Figuras de carga y acondicionamiento]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Figuras_de_carga_y_acondicionamiento
+#graphify/document #graphify/EXTRACTED #community/Carga__repertorio_gráfico_biblioteca_de_láminasmd

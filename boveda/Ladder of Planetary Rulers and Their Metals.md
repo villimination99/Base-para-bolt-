@@ -1,17 +1,20 @@
 ---
-source_file: "libros/partials/zodiaco.svg"
-type: "image"
-community: "Doctrina zodiacal ilustrada"
+source_file: "boveda/Ladder of Planetary Rulers and Their Metals.md"
+type: "document"
+community: "_COMMUNITY_Doctrina zodiacal ilustrada.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Doctrina_zodiacal_ilustrada
+  - community/_COMMUNITY_Doctrina_zodiacal_ilustradamd
 ---
 
-# Ladder of Planetary Rulers and Their Metals
+# Ladder of Planetary Rulers and Their Metals.md
 
 ## Connections
-- [[Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)]] - `conceptually_related_to` [INFERRED]
+- [[Doctrine of Zodiacal Correspondence (Sign to Body, Planet, Metal, Degree)]] - `references` [EXTRACTED]
+- [[Ladder of Planetary Rulers and Their Metals_1]] - `contains` [EXTRACTED]
 - [[Zodiaco Sprite Sheet (Sign Glyphs and Astrological Diagrams)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Doctrina zodiacal ilustrada]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Doctrina_zodiacal_ilustrada
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Doctrina_zodiacal_ilustradamd

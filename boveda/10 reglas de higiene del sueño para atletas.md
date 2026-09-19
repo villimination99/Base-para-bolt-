@@ -1,21 +1,23 @@
 ---
-source_file: "planes/src/10-elite-protocolo-sueno.html"
-type: "concept"
-community: "Volumen efectivo e higiene del sueño"
-location: "pág. 05"
+source_file: "boveda/10 reglas de higiene del sueño para atletas.md"
+type: "document"
+community: "_COMMUNITY_Volumen efectivo e higiene del sueño.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Volumen_efectivo_e_higiene_del_sueo
+  - community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd
 ---
 
-# 10 reglas de higiene del sueño para atletas
+# 10 reglas de higiene del sueño para atletas.md
 
 ## Connections
-- [[Banco de 30 preguntas para el coach (nutrición, entrenamiento, recuperación, suplementación)]] - `references` [INFERRED]
-- [[Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h)]] - `conceptually_related_to` [EXTRACTED]
-- [[Horario fijo como intervención de mayor impacto]] - `rationale_for` [EXTRACTED]
+- [[10 reglas de higiene del sueño para atletas_1]] - `contains` [EXTRACTED]
+- [[Banco de 30 preguntas para el coach (nutrición, entrenamiento, recuperación, suplementación)]] - `references` [EXTRACTED]
+- [[Cronograma de las últimas horas del día (cafeína 8–10 h, entreno 3–4 h, pantallas 1 h)]] - `references` [EXTRACTED]
+- [[Horario fijo como intervención de mayor impacto]] - `references` [EXTRACTED]
 - [[Suplementos para dormir mejor (magnesio, melatonina, L-teanina, glicina, ashwagandha)]] - `references` [EXTRACTED]
 - [[Tabla de solución de problemas del sueño (latencia, despertares, turnos, jet lag)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Volumen efectivo e higiene del sueño]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Volumen_efectivo_e_higiene_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd

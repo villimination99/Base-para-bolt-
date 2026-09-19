@@ -1,19 +1,21 @@
 ---
-source_file: "planes/src/08-elite-plan-entrenamiento-8-semanas.html"
-type: "concept"
-community: "Volumen efectivo e higiene del sueño"
-location: "pág. 02, tarjeta"
+source_file: "boveda/Volumen efectivo (10–20 series por grupo y semana cerca del fallo).md"
+type: "document"
+community: "_COMMUNITY_Volumen efectivo e higiene del sueño.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Volumen_efectivo_e_higiene_del_sueo
+  - community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd
 ---
 
-# Volumen efectivo (10–20 series por grupo y semana cerca del fallo)
+# Volumen efectivo (10–20 series por grupo y semana cerca del fallo).md
 
 ## Connections
-- [[Banco de 30 preguntas para el coach (nutrición, entrenamiento, recuperación, suplementación)]] - `references` [INFERRED]
+- [[Banco de 30 preguntas para el coach (nutrición, entrenamiento, recuperación, suplementación)]] - `references` [EXTRACTED]
 - [[Estructura de cuatro fases progresivas]] - `references` [EXTRACTED]
-- [[Mapa muscular de referencia (16 grupos) y cobertura semanal mínima]] - `shares_data_with` [EXTRACTED]
+- [[Mapa muscular de referencia (16 grupos) y cobertura semanal mínima]] - `references` [EXTRACTED]
+- [[Volumen efectivo (10–20 series por grupo y semana cerca del fallo)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Volumen efectivo e higiene del sueño]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Volumen_efectivo_e_higiene_del_sueo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Volumen_efectivo_e_higiene_del_sueñomd

@@ -1,18 +1,20 @@
 ---
-source_file: "tienda/seo.py"
+source_file: "tienda/cuerpos_en_fr.py"
 type: "code"
-community: "Publicador de la tienda"
-location: "L278"
+community: "lecturas.py"
+location: "L380"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/lecturaspy
 ---
 
 # comprobar()
 
 ## Connections
-- [[Mide los textos y devuelve los que se pasan de largo. Se llama desde…]] - `rationale_for` [EXTRACTED]
-- [[seo.py]] - `contains` [EXTRACTED]
+- [[Handles que no existen, lenguas descuadradas y promesas de salud.]] - `rationale_for` [EXTRACTED]
+- [[_redactado()]] - `calls` [EXTRACTED]
+- [[cuerpos_en_fr.py]] - `contains` [EXTRACTED]
+- [[main()_7]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/code #graphify/EXTRACTED #community/lecturaspy

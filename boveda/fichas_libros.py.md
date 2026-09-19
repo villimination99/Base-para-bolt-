@@ -1,17 +1,19 @@
 ---
 source_file: "tienda/fichas_libros.py"
 type: "code"
-community: "Publicador de la tienda"
+community: "lecturas.py"
 location: "L1"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Publicador_de_la_tienda
+  - community/lecturaspy
 ---
 
 # fichas_libros.py
 
 ## Connections
-- [[publicar.py]] - `imports` [EXTRACTED]
+- [[VILLUMINATIONS — Fichas de los seis códices que faltaban en la tienda…]] - `rationale_for` [EXTRACTED]
+- [[lecturas.py]] - `imports` [EXTRACTED]
+- [[publicar.py_2]] - `imports` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Publicador_de_la_tienda
+#graphify/code #graphify/EXTRACTED #community/lecturaspy

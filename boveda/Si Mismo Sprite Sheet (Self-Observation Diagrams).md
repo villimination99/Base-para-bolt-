@@ -1,14 +1,15 @@
 ---
-source_file: "libros/partials/si-mismo.svg"
-type: "image"
-community: "Láminas del Sí Mismo"
+source_file: "boveda/Si Mismo Sprite Sheet (Self-Observation Diagrams).md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo.md"
+location: "L1"
 tags:
-  - graphify/image
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo
+  - community/_COMMUNITY_Láminas_del_Sí_Mismomd
 ---
 
-# Si Mismo Sprite Sheet (Self-Observation Diagrams)
+# Si Mismo Sprite Sheet (Self-Observation Diagrams).md
 
 ## Connections
 - [[Attention Diagram Ordinary vs Divided Attention]] - `references` [EXTRACTED]
@@ -17,8 +18,10 @@ tags:
 - [[Clock of Six Daily Self-Remembering Moments]] - `references` [EXTRACTED]
 - [[Emotions Table Fear and Anger in the Body]] - `references` [EXTRACTED]
 - [[Reusable Half-Panel Template for the Centers Diagram]] - `references` [EXTRACTED]
-- [[Section-Divider Filigree (Rule with Lozenge)]] - `conceptually_related_to` [AMBIGUOUS]
+- [[Section-Divider Filigree (Rule with Lozenge)]] - `references` [EXTRACTED]
+- [[Si Mismo Sprite Sheet (Self-Observation Diagrams)_1]] - `contains` [EXTRACTED]
 - [[The Three Centers Intellectual, Emotional, Motor-Instinctive]] - `references` [EXTRACTED]
 - [[The Three Stoic Disciplines Desire (orexis), Action (horme), Assent]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Láminas del Sí Mismo]] - `references` [EXTRACTED]
 
-#graphify/image #graphify/EXTRACTED #community/Lminas_del_S_Mismo
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismomd

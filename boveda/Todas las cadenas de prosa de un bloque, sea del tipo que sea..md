@@ -1,17 +1,19 @@
 ---
-source_file: "libros/build.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L112"
+source_file: "boveda/Todas las cadenas de prosa de un bloque, sea del tipo que sea..md"
+type: "document"
+community: "comprobar_laminas().md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/comprobar_laminasmd
 ---
 
-# Todas las cadenas de prosa de un bloque, sea del tipo que sea.
+# Todas las cadenas de prosa de un bloque, sea del tipo que sea..md
 
 ## Connections
-- [[_textos()]] - `rationale_for` [EXTRACTED]
+- [[Todas las cadenas de prosa de un bloque, sea del tipo que sea._1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Generador de libros]] - `references` [EXTRACTED]
+- [[_textos()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/comprobar_laminasmd

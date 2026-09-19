@@ -1,18 +1,21 @@
 ---
-source_file: "planes/tools/preparar-fuentes.py"
+source_file: "planes/tools/faltan.py"
 type: "code"
-community: "Preparación de fuentes · planes"
-location: "L48"
+community: "planes/tools/i18n.py"
+location: "L30"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Preparacin_de_fuentes__planes
+  - community/planes/tools/i18npy
 ---
 
 # main()
 
 ## Connections
-- [[fetch()_1]] - `calls` [EXTRACTED]
-- [[planestoolspreparar-fuentes.py]] - `contains` [EXTRACTED]
+- [[assemble()]] - `calls` [EXTRACTED]
+- [[cargar()]] - `calls` [EXTRACTED]
+- [[documentos()_1]] - `calls` [EXTRACTED]
+- [[inventario()]] - `calls` [EXTRACTED]
+- [[planestoolsfaltan.py_2]] - `contains` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Preparacin_de_fuentes__planes
+#graphify/code #graphify/EXTRACTED #community/planes/tools/i18npy

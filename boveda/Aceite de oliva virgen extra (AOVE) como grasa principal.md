@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/06-elite-dieta-mediterranea.html"
-type: "concept"
-community: "Dieta mediterránea"
-location: "callout info pág. 07"
+source_file: "boveda/Aceite de oliva virgen extra (AOVE) como grasa principal.md"
+type: "document"
+community: "_COMMUNITY_Dieta mediterránea.md"
+location: "L1"
 tags:
-  - graphify/concept
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Dieta_mediterrnea
+  - community/_COMMUNITY_Dieta_mediterráneamd
 ---
 
-# Aceite de oliva virgen extra (AOVE) como grasa principal
+# Aceite de oliva virgen extra (AOVE) como grasa principal.md
 
 ## Connections
-- [[Los 6 pilares del patrón mediterráneo]] - `implements` [EXTRACTED]
+- [[Aceite de oliva virgen extra (AOVE) como grasa principal_1]] - `contains` [EXTRACTED]
+- [[Los 6 pilares del patrón mediterráneo]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Dieta mediterránea]] - `references` [EXTRACTED]
 
-#graphify/concept #graphify/EXTRACTED #community/Dieta_mediterrnea
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Dieta_mediterráneamd

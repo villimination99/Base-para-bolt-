@@ -1,17 +1,18 @@
 ---
-source_file: "libros/build.py"
-type: "rationale"
-community: "Generador de libros"
-location: "L42"
+source_file: "boveda/Un libro sin traducir del todo. No es un error del generador es la puerta que….md"
+type: "document"
+community: "_COMMUNITY_Generador de libros.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/_COMMUNITY_Generador_de_librosmd
 ---
 
-# Un libro sin traducir del todo. No es un error del generador: es la puerta que…
+# Un libro sin traducir del todo. No es un error del generador es la puerta que….md
 
 ## Connections
-- [[Incompleto]] - `rationale_for` [EXTRACTED]
+- [[Incompleto_1]] - `references` [EXTRACTED]
+- [[Un libro sin traducir del todo. No es un error del generador es la puerta que…_1]] - `contains` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Generador_de_librosmd

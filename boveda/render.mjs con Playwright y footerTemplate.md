@@ -1,18 +1,18 @@
 ---
-source_file: "libros/README.md"
-type: "rationale"
-community: "Arquitectura de los generadores"
+source_file: "boveda/render.mjs con Playwright y footerTemplate.md"
+type: "document"
+community: "Índice navegable con página real y marcadores PDF.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Arquitectura_de_los_generadores
+  - community/Índice_navegable_con_página_real_y_marcadores_PDFmd
 ---
 
-# render.mjs con Playwright y footerTemplate
+# render.mjs con Playwright y footerTemplate.md
 
 ## Connections
-- [[Verificación de paginación y desbordes (verificar.mjs)]] - `semantically_similar_to` [INFERRED]
-- [[librosbuild.py — generador de los tres libros]] - `references` [EXTRACTED]
-- [[Índice navegable con página real y marcadores PDF]] - `rationale_for` [EXTRACTED]
+- [[render.mjs con Playwright y footerTemplate_1]] - `contains` [EXTRACTED]
+- [[Índice navegable con página real y marcadores PDF]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Arquitectura_de_los_generadores
+#graphify/document #graphify/EXTRACTED #community/Índice_navegable_con_página_real_y_marcadores_PDFmd

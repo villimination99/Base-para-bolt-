@@ -1,12 +1,12 @@
 ---
 source_file: "libros/build.py"
 type: "rationale"
-community: "Generador de libros"
+community: "libros/build.py"
 location: "L138"
 tags:
   - graphify/rationale
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/libros/buildpy
 ---
 
 # Clave de ordenación: sin tildes y en minúsculas, con los espacios. Los espacios…
@@ -14,4 +14,4 @@ tags:
 ## Connections
 - [[orden_alfabetico()]] - `rationale_for` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/rationale #graphify/EXTRACTED #community/libros/buildpy

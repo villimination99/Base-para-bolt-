@@ -1,17 +1,18 @@
 ---
-source_file: "libros/tools/dibujar-si-mismo.py"
-type: "rationale"
-community: "Láminas del Sí Mismo (generador)"
-location: "L156"
+source_file: "boveda/El bucle en cadena vertical. Se probó en anillo, con los cuatro nodos en cruz,….md"
+type: "document"
+community: "_COMMUNITY_Láminas del Sí Mismo (generador).md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Lminas_del_S_Mismo_generador
+  - community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd
 ---
 
-# El bucle en cadena vertical. Se probó en anillo, con los cuatro nodos en cruz,…
+# El bucle en cadena vertical. Se probó en anillo, con los cuatro nodos en cruz,….md
 
 ## Connections
-- [[lamina_identificacion()]] - `rationale_for` [EXTRACTED]
+- [[El bucle en cadena vertical. Se probó en anillo, con los cuatro nodos en cruz,…_1]] - `contains` [EXTRACTED]
+- [[lamina_identificacion()_1]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Lminas_del_S_Mismo_generador
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Láminas_del_Sí_Mismo_generadormd

@@ -1,17 +1,19 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "rationale"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 07, callout info"
+source_file: "boveda/Indicador honesto de progreso en la práctica.md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Indicador honesto de progreso en la práctica
+# Indicador honesto de progreso en la práctica.md
 
 ## Connections
-- [[Registro de 21 días (tres semanas × siete días + notas)]] - `rationale_for` [EXTRACTED]
+- [[Indicador honesto de progreso en la práctica_1]] - `contains` [EXTRACTED]
+- [[Registro de 21 días (tres semanas × siete días + notas)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd

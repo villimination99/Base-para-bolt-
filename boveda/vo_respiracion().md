@@ -1,12 +1,12 @@
 ---
 source_file: "libros/tools/dibujar-fitness.py"
 type: "code"
-community: "Láminas de fitness (generador)"
+community: "dibujar-fitness.py"
 location: "L1112"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Lminas_de_fitness_generador
+  - community/dibujar-fitnesspy
 ---
 
 # vo_respiracion()
@@ -15,8 +15,8 @@ tags:
 - [[El compás cuadrado cuatro tiempos iguales recorriendo un cuadrado.]] - `rationale_for` [EXTRACTED]
 - [[dibujar-fitness.py]] - `contains` [EXTRACTED]
 - [[flecha()]] - `calls` [EXTRACTED]
-- [[main()_5]] - `calls` [EXTRACTED]
+- [[main()]] - `calls` [EXTRACTED]
 - [[pie()]] - `calls` [EXTRACTED]
-- [[txt()_2]] - `calls` [EXTRACTED]
+- [[txt()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Lminas_de_fitness_generador
+#graphify/code #graphify/EXTRACTED #community/dibujar-fitnesspy

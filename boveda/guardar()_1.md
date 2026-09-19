@@ -1,17 +1,18 @@
 ---
-source_file: "planes/tools/i18n.py"
+source_file: "libros/tools/i18n.py"
 type: "code"
-community: "Generador de libros"
-location: "L168"
+community: "pathlib"
+location: "L51"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/pathlib
 ---
 
 # guardar()
 
 ## Connections
-- [[planestoolsi18n.py]] - `contains` [EXTRACTED]
+- [[librostoolsi18n.py]] - `contains` [EXTRACTED]
+- [[main()_43]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/pathlib

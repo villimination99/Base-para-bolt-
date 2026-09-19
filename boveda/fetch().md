@@ -1,18 +1,18 @@
 ---
 source_file: "libros/tools/preparar-fuentes.py"
 type: "code"
-community: "Preparación de fuentes · libros"
+community: "re"
 location: "L44"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Preparacin_de_fuentes__libros
+  - community/re
 ---
 
 # fetch()
 
 ## Connections
-- [[librostoolspreparar-fuentes.py]] - `contains` [EXTRACTED]
-- [[main()_17]] - `calls` [EXTRACTED]
+- [[librostoolspreparar-fuentes.py_2]] - `contains` [EXTRACTED]
+- [[main()_32]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Preparacin_de_fuentes__libros
+#graphify/code #graphify/EXTRACTED #community/re

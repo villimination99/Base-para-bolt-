@@ -1,18 +1,24 @@
 ---
-source_file: "libros/build.py"
+source_file: "tienda/calendario.py"
 type: "code"
-community: "Generador de libros"
-location: "L635"
+community: "calendario.py"
+location: "L314"
 tags:
   - graphify/code
   - graphify/EXTRACTED
-  - community/Generador_de_libros
+  - community/calendariopy
 ---
 
 # main()
 
 ## Connections
-- [[construir()]] - `calls` [EXTRACTED]
-- [[librosbuild.py]] - `contains` [EXTRACTED]
+- [[anuncio()]] - `calls` [EXTRACTED]
+- [[calendario.py]] - `contains` [EXTRACTED]
+- [[comprobar()]] - `calls` [EXTRACTED]
+- [[dibujo()]] - `calls` [EXTRACTED]
+- [[fecha()]] - `calls` [EXTRACTED]
+- [[ical()]] - `calls` [EXTRACTED]
+- [[temporadas()]] - `calls` [EXTRACTED]
+- [[vivo()]] - `calls` [EXTRACTED]
 
-#graphify/code #graphify/EXTRACTED #community/Generador_de_libros
+#graphify/code #graphify/EXTRACTED #community/calendariopy

@@ -1,18 +1,20 @@
 ---
-source_file: "planes/src/09-elite-meditacion-mindfulness.html"
-type: "rationale"
-community: "Técnica de ejercicio y respiración"
-location: "pág. 06, callout warn"
+source_file: "boveda/Precaución con las retenciones respiratorias.md"
+type: "document"
+community: "_COMMUNITY_Técnica de ejercicio y respiración.md"
+location: "L1"
 tags:
-  - graphify/rationale
+  - graphify/document
   - graphify/EXTRACTED
-  - community/Tcnica_de_ejercicio_y_respiracin
+  - community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
 ---
 
-# Precaución con las retenciones respiratorias
+# Precaución con las retenciones respiratorias.md
 
 ## Connections
-- [[Respiración 4-7-8 (anti-estrés)]] - `rationale_for` [EXTRACTED]
-- [[Respiración de caja 4-4-4-4 (enfoque)]] - `rationale_for` [EXTRACTED]
+- [[Precaución con las retenciones respiratorias_1]] - `contains` [EXTRACTED]
+- [[Respiración 4-7-8 (anti-estrés)]] - `references` [EXTRACTED]
+- [[Respiración de caja 4-4-4-4 (enfoque)]] - `references` [EXTRACTED]
+- [[_COMMUNITY_Técnica de ejercicio y respiración]] - `references` [EXTRACTED]
 
-#graphify/rationale #graphify/EXTRACTED #community/Tcnica_de_ejercicio_y_respiracin
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Técnica_de_ejercicio_y_respiraciónmd
