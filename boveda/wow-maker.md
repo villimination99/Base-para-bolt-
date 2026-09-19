@@ -1,0 +1,17 @@
+---
+source_file: ".agents/skills/higgsfield-websites/references/wow-maker.md"
+type: "document"
+community: "5. Component & block directory (copy-paste; the source lands in the repo)"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/5_Component__block_directory_copy-paste_the_source_lands_in_the_repo
+---
+
+# wow-maker.md
+
+## Connections
+- [[wow-maker — everything you need to make a website wow]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/5_Component__block_directory_copy-paste_the_source_lands_in_the_repo

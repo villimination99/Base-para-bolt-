@@ -1,0 +1,18 @@
+---
+source_file: ".agents/skills/higgsfield-websites/scripts/proc_rig_dragon.py"
+type: "code"
+community: "bpy"
+location: "L77"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/bpy
+---
+
+# B()
+
+## Connections
+- [[P()_5]] - `calls` [EXTRACTED]
+- [[main()_13]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/bpy

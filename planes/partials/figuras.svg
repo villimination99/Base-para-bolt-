@@ -1,0 +1,579 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+<defs>
+  <marker id="flecha" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="var(--accent)"/>
+  </marker>
+  <marker id="flecha-err" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+    <path d="M0 0 L10 5 L0 10 z" fill="#ff6600"/>
+  </marker>
+  <marker id="punto" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="3.4" markerHeight="3.4">
+    <circle cx="3" cy="3" r="3" fill="var(--accent)"/>
+  </marker>
+</defs>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 1 · MAPA MUSCULAR — vista anterior y posterior
+     Esquema numerado: cada grupo lleva su número y su leyenda.
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-musculos" viewBox="0 0 460 300">
+  <style>
+    .cuerpo{ fill:none; stroke:var(--accent); stroke-width:1.2; opacity:.5;
+             stroke-linejoin:round; stroke-linecap:round }
+    .musc  { fill:rgba(var(--a-rgb),.22); stroke:var(--accent); stroke-width:.8 }
+    .musc-b{ fill:rgba(var(--a-rgb),.40); stroke:var(--accent); stroke-width:.8 }
+    .num   { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.8px;
+             fill:var(--ink); text-anchor:middle }
+    .rot   { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.6px;
+             fill:var(--ink-3); text-anchor:middle; letter-spacing:.14em }
+    .ley   { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:7.6px; fill:var(--ink-2) }
+    .leyn  { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.6px; fill:var(--accent) }
+  </style>
+
+  <defs>
+    <!-- Media silueta. Se dibuja una vez y se refleja: así la figura queda
+         perfectamente simétrica y solo hay que mantener un lado. -->
+    <g id="mitad-frontal">
+      <path class="cuerpo" d="M72 30 L52 36 L42 44 L36 74 L30 114 L35 120 L43 80 L49 50
+                              L47 96 L43 128 L39 180 L43 197 L41 243 L53 248 L55 243
+                              L59 197 L63 151 L72 139"/>
+      <path class="musc"   d="M72 31 L52 37 L58 46 L72 40 Z"/>
+      <ellipse class="musc-b" cx="44" cy="48" rx="8" ry="10"/>
+      <path class="musc-b" d="M70 46 L70 70 C56 70 48 62 50 54 C52 48 60 46 70 46 Z"/>
+      <ellipse class="musc"   cx="39" cy="74" rx="6" ry="13"/>
+      <ellipse class="musc"   cx="34" cy="108" rx="5.5" ry="14"/>
+      <g class="musc-b">
+        <rect x="62" y="74" width="9" height="9" rx="1.6"/>
+        <rect x="62" y="85" width="9" height="9" rx="1.6"/>
+        <rect x="62" y="96" width="9" height="9" rx="1.6"/>
+        <rect x="62" y="107" width="9" height="11" rx="2"/>
+      </g>
+      <path class="musc" d="M60 76 C54 88 54 104 58 118 L61 114 C58 102 58 88 61 78 Z"/>
+      <path class="musc-b" d="M45 133 C40 153 41 173 45 190 L57 190 C59 170 58 150 55 133 Z"/>
+      <ellipse class="musc" cx="49" cy="218" rx="5.5" ry="16"/>
+    </g>
+
+    <g id="mitad-dorsal">
+      <path class="cuerpo" d="M72 30 L52 36 L42 44 L36 74 L30 114 L35 120 L43 80 L49 50
+                              L47 96 L43 128 L39 180 L43 197 L41 243 L53 248 L55 243
+                              L59 197 L63 151 L72 139"/>
+      <path class="musc-b" d="M72 31 L51 37 L57 48 L64 66 L72 70 Z"/>
+      <path class="musc-b" d="M52 60 L70 74 L70 106 L52 96 C48 84 48 72 52 60 Z"/>
+      <rect class="musc" x="63" y="106" width="8" height="18" rx="1.6"/>
+      <ellipse class="musc" cx="39" cy="74" rx="6" ry="13"/>
+      <path class="musc-b" d="M46 126 C40 134 40 146 47 152 L72 152 L72 126 Z"/>
+      <path class="musc-b" d="M46 157 C42 175 43 191 47 202 L58 202 C60 186 59 172 56 157 Z"/>
+      <ellipse class="musc-b" cx="49" cy="222" rx="6" ry="15"/>
+    </g>
+  </defs>
+
+  <!-- ───────── VISTA ANTERIOR ───────── -->
+  <g transform="translate(16,22)">
+    <text class="rot" x="72" y="-8">VISTA ANTERIOR</text>
+    <circle class="cuerpo" cx="72" cy="17" r="11"/>
+    <use href="#mitad-frontal"/>
+    <use href="#mitad-frontal" transform="translate(144,0) scale(-1,1)"/>
+    <g class="num">
+      <text x="72" y="39">01</text>
+      <text x="44" y="51">02</text>
+      <text x="60" y="60">03</text>
+      <text x="39" y="77">04</text>
+      <text x="34" y="111">05</text>
+      <text x="72" y="93">06</text>
+      <text x="57" y="112">07</text>
+      <text x="51" y="165">08</text>
+      <text x="49" y="221">09</text>
+    </g>
+  </g>
+
+  <!-- ───────── VISTA POSTERIOR ───────── -->
+  <g transform="translate(160,22)">
+    <text class="rot" x="72" y="-8">VISTA POSTERIOR</text>
+    <circle class="cuerpo" cx="72" cy="17" r="11"/>
+    <use href="#mitad-dorsal"/>
+    <use href="#mitad-dorsal" transform="translate(144,0) scale(-1,1)"/>
+    <g class="num">
+      <text x="72" y="52">10</text>
+      <text x="60" y="88">11</text>
+      <text x="72" y="118">12</text>
+      <text x="39" y="77">13</text>
+      <text x="72" y="144">14</text>
+      <text x="52" y="180">15</text>
+      <text x="49" y="225">16</text>
+    </g>
+  </g>
+
+  <!-- ───────── LEYENDA ───────── -->
+  <g transform="translate(322,24)">
+    <text class="rot" x="0" y="-10" text-anchor="start">ANTERIOR</text>
+    <text class="leyn" x="0" y="2">01</text><text class="ley" x="16" y="2">Trapecio superior</text>
+    <text class="leyn" x="0" y="14">02</text><text class="ley" x="16" y="14">Deltoides</text>
+    <text class="leyn" x="0" y="26">03</text><text class="ley" x="16" y="26">Pectoral mayor</text>
+    <text class="leyn" x="0" y="38">04</text><text class="ley" x="16" y="38">Bíceps braquial</text>
+    <text class="leyn" x="0" y="50">05</text><text class="ley" x="16" y="50">Antebrazo</text>
+    <text class="leyn" x="0" y="62">06</text><text class="ley" x="16" y="62">Recto abdominal</text>
+    <text class="leyn" x="0" y="74">07</text><text class="ley" x="16" y="74">Oblicuos</text>
+    <text class="leyn" x="0" y="86">08</text><text class="ley" x="16" y="86">Cuádriceps</text>
+    <text class="leyn" x="0" y="98">09</text><text class="ley" x="16" y="98">Tibial anterior</text>
+    <text class="rot" x="0" y="120" text-anchor="start">POSTERIOR</text>
+    <text class="leyn" x="0" y="132">10</text><text class="ley" x="16" y="132">Trapecio y romboides</text>
+    <text class="leyn" x="0" y="144">11</text><text class="ley" x="16" y="144">Dorsal ancho</text>
+    <text class="leyn" x="0" y="156">12</text><text class="ley" x="16" y="156">Erector lumbar</text>
+    <text class="leyn" x="0" y="168">13</text><text class="ley" x="16" y="168">Tríceps braquial</text>
+    <text class="leyn" x="0" y="180">14</text><text class="ley" x="16" y="180">Glúteo mayor</text>
+    <text class="leyn" x="0" y="192">15</text><text class="ley" x="16" y="192">Isquiotibiales</text>
+    <text class="leyn" x="0" y="204">16</text><text class="ley" x="16" y="204">Gemelo y sóleo</text>
+  </g>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 2 · SENTADILLA — técnica correcta y los dos errores caros
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-sentadilla" viewBox="0 0 460 250">
+  <style>
+    .fig-l  { fill:none; stroke:var(--accent); stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round }
+    .fig-fina{ fill:none; stroke:var(--accent); stroke-width:1; opacity:.5 }
+    .barra  { fill:none; stroke:var(--accent-2); stroke-width:3; stroke-linecap:round }
+    .plomada{ fill:none; stroke:var(--accent); stroke-width:.9; stroke-dasharray:3 3; opacity:.65 }
+    .mal    { fill:none; stroke:#ff6600; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round }
+    .arco   { fill:none; stroke:var(--accent); stroke-width:.9; opacity:.8 }
+    .ang    { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.4px; fill:var(--accent) }
+    .cap    { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:8px;
+              fill:var(--ink-2); text-anchor:middle; letter-spacing:.08em }
+    .nota   { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:7px; fill:var(--ink-3) }
+    .notamal{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7px; fill:#ff6600 }
+    .ok     { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.4px; fill:var(--accent) }
+  </style>
+
+  <!-- ① DE PIE -->
+  <g transform="translate(14,26)">
+    <text class="cap" x="46" y="196">1 · SALIDA</text>
+    <line class="plomada" x1="46" y1="4" x2="46" y2="182"/>
+    <line class="barra" x1="26" y1="26" x2="66" y2="26"/>
+    <circle class="fig-l" cx="46" cy="14" r="8"/>
+    <path class="fig-l" d="M46 26 v52"/>            <!-- torso -->
+    <path class="fig-l" d="M46 78 v46"/>            <!-- muslo -->
+    <path class="fig-l" d="M46 124 v50"/>           <!-- tibia -->
+    <path class="fig-l" d="M40 176 h18"/>           <!-- pie -->
+    <path class="fig-l" d="M46 30 l-14 24"/>        <!-- brazo -->
+    <path class="fig-l" d="M46 30 l14 24"/>
+    <text class="nota" x="62" y="60">Barra sobre</text>
+    <text class="nota" x="62" y="69">el trapecio</text>
+  </g>
+
+  <!-- ② MEDIO RECORRIDO -->
+  <g transform="translate(120,26)">
+    <text class="cap" x="46" y="196">2 · PARALELO</text>
+    <line class="plomada" x1="46" y1="4" x2="46" y2="182"/>
+    <line class="barra" x1="26" y1="34" x2="66" y2="34"/>
+    <circle class="fig-l" cx="42" cy="22" r="8"/>
+    <path class="fig-l" d="M44 34 L58 84"/>         <!-- torso inclinado -->
+    <path class="fig-l" d="M58 84 L30 116"/>        <!-- fémur atrás -->
+    <path class="fig-l" d="M30 116 L46 174"/>       <!-- tibia -->
+    <path class="fig-l" d="M40 176 h18"/>
+    <path class="fig-l" d="M46 40 l-16 20"/>
+    <path class="fig-l" d="M46 40 l14 22"/>
+    <!-- ángulos -->
+    <path class="arco" d="M50 90 a12 12 0 0 1 -14 8"/>
+    <text class="ang" x="24" y="86">90°</text>
+    <path class="arco" d="M36 112 a12 12 0 0 0 8 12"/>
+    <text class="ang" x="0" y="132">rodilla</text>
+    <text class="nota" x="66" y="112">Cadera atrás,</text>
+    <text class="nota" x="66" y="121">pecho arriba</text>
+  </g>
+
+  <!-- ③ PROFUNDO -->
+  <g transform="translate(226,26)">
+    <text class="cap" x="46" y="196">3 · PROFUNDO</text>
+    <line class="plomada" x1="46" y1="4" x2="46" y2="182"/>
+    <line class="barra" x1="26" y1="52" x2="66" y2="52"/>
+    <circle class="fig-l" cx="40" cy="40" r="8"/>
+    <path class="fig-l" d="M42 52 L60 104"/>
+    <path class="fig-l" d="M60 104 L24 126"/>
+    <path class="fig-l" d="M24 126 L46 174"/>
+    <path class="fig-l" d="M40 176 h18"/>
+    <path class="fig-l" d="M46 58 l-18 16"/>
+    <path class="fig-l" d="M46 58 l14 20"/>
+    <path class="arco" d="M54 110 a14 14 0 0 1 -18 6"/>
+    <text class="ang" x="16" y="118">&lt;90°</text>
+    <text class="nota" x="66" y="140">Lumbar neutra</text>
+    <text class="nota" x="66" y="149">en todo el rango</text>
+  </g>
+
+  <!-- ④ LOS DOS ERRORES -->
+  <g transform="translate(336,26)">
+    <text class="cap" x="52" y="196" style="fill:#ff6600">4 · ERRORES</text>
+    <!-- error A: valgo de rodilla, vista frontal -->
+    <g transform="translate(0,0)">
+      <circle class="mal" cx="30" cy="16" r="7"/>
+      <path class="mal" d="M30 26 v34"/>
+      <path class="mal" d="M22 60 L34 88"/>          <!-- fémur hacia dentro -->
+      <path class="mal" d="M34 88 L20 118"/>
+      <path class="mal" d="M38 60 L28 88"/>
+      <path class="mal" d="M28 88 L40 118"/>
+      <path class="mal" d="M14 120 h14 M34 120 h14"/>
+      <path class="mal" d="M34 88 l10 -6" marker-end="url(#flecha-err)"/>
+      <text class="notamal" x="48" y="86">Rodilla</text>
+      <text class="notamal" x="48" y="95">hacia dentro</text>
+    </g>
+    <!-- error B: lumbar redondeada -->
+    <g transform="translate(0,126)">
+      <circle class="mal" cx="28" cy="12" r="7"/>
+      <path class="mal" d="M30 22 C44 34 46 44 40 52"/>   <!-- espalda curvada -->
+      <path class="mal" d="M40 52 L14 62"/>
+      <path class="mal" d="M14 62 L30 90"/>
+      <path class="mal" d="M24 92 h16"/>
+      <text class="notamal" x="48" y="34">Lumbar</text>
+      <text class="notamal" x="48" y="43">redondeada</text>
+    </g>
+  </g>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 3 · ARQUITECTURA DEL SUEÑO — hipnograma de una noche
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-hipnograma" viewBox="0 0 460 230">
+  <style>
+    .eje  { stroke:var(--ink-3); stroke-width:.9; opacity:.6 }
+    .rej  { stroke:var(--ink-3); stroke-width:.5; opacity:.22 }
+    .fase { fill:none; stroke:var(--accent); stroke-width:2.2; stroke-linejoin:round }
+    .zona-p{ fill:rgba(var(--a-rgb),.16) }
+    .zona-r{ fill:rgba(123,47,255,.20) }
+    .etq  { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.4px; fill:var(--ink-2) }
+    .hora { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.4px;
+            fill:var(--ink-3); text-anchor:middle }
+    .anot { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:7px; fill:var(--ink-3) }
+    .dest { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.2px; fill:var(--accent) }
+  </style>
+
+  <!-- franjas de fase -->
+  <rect class="zona-p" x="62" y="128" width="374" height="34"/>
+  <rect class="zona-r" x="62" y="56"  width="374" height="24"/>
+
+  <!-- rejilla y ejes -->
+  <g class="rej">
+    <line x1="62" y1="44" x2="436" y2="44"/><line x1="62" y1="68" x2="436" y2="68"/>
+    <line x1="62" y1="92" x2="436" y2="92"/><line x1="62" y1="116" x2="436" y2="116"/>
+    <line x1="62" y1="140" x2="436" y2="140"/>
+  </g>
+  <line class="eje" x1="62" y1="30" x2="62" y2="168"/>
+  <line class="eje" x1="62" y1="168" x2="436" y2="168"/>
+
+  <!-- niveles -->
+  <g class="etq">
+    <text x="4" y="34">DESPIERTO</text>
+    <text x="30" y="70">REM</text>
+    <text x="6" y="106">LIGERO N1-N2</text>
+    <text x="2" y="148">PROFUNDO N3</text>
+  </g>
+
+  <!-- horas -->
+  <g class="hora">
+    <text x="62" y="180">0 h</text><text x="109" y="180">1</text><text x="156" y="180">2</text>
+    <text x="203" y="180">3</text><text x="250" y="180">4</text><text x="297" y="180">5</text>
+    <text x="344" y="180">6</text><text x="391" y="180">7</text><text x="436" y="180">8 h</text>
+  </g>
+
+  <!-- hipnograma: 5 ciclos de ~90 min. Profundo al principio, REM al final -->
+  <polyline class="fase" points="
+    62,32 70,32 74,104 82,104 86,144 122,144 126,104 138,104 142,68 156,68
+    160,104 172,104 176,144 200,144 204,104 216,104 220,68 240,68
+    244,104 258,104 262,140 278,140 282,104 296,104 300,68 326,68
+    330,104 344,104 348,116 360,116 364,68 396,68
+    400,104 412,104 416,68 428,68 432,32 436,32"/>
+
+  <!-- anotaciones -->
+  <path class="eje" d="M104 144 L104 200" stroke-dasharray="3 3"/>
+  <text class="dest" x="66" y="212">Sueño profundo · primera mitad de la noche</text>
+  <text class="anot" x="66" y="222">Hormona de crecimiento y reparación muscular</text>
+
+  <path class="eje" d="M380 68 L380 44" stroke-dasharray="3 3"/>
+  <text class="dest" x="262" y="40" style="fill:var(--accent-2)">REM · segunda mitad</text>
+  <text class="anot" x="262" y="50">Memoria y regulación emocional</text>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 4 · VENTANA PERI-ENTRENO — qué comer y cuándo
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-perientreno" viewBox="0 0 460 200">
+  <style>
+    .lin  { stroke:var(--ink-3); stroke-width:1; opacity:.55 }
+    .blq  { stroke:var(--accent); stroke-width:1; fill:rgba(var(--a-rgb),.14) }
+    .blq-e{ stroke:var(--accent-2); stroke-width:1.4; fill:rgba(123,47,255,.22) }
+    .hito { fill:var(--accent) }
+    .t-tit{ font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.8px; fill:var(--accent) }
+    .t-txt{ font-family:'Rajdhani',sans-serif; font-weight:600; font-size:7.2px; fill:var(--ink-2) }
+    .t-sub{ font-family:'Rajdhani',sans-serif; font-weight:600; font-size:6.6px; fill:var(--ink-3) }
+    .t-hor{ font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.4px;
+            fill:var(--ink-3); text-anchor:middle }
+  </style>
+
+  <!-- eje temporal -->
+  <line class="lin" x1="24" y1="104" x2="440" y2="104"/>
+  <g class="t-hor">
+    <text x="60"  y="120">−3 h</text><text x="140" y="120">−2 h</text>
+    <text x="216" y="120">0</text><text x="300" y="120">+1 h</text><text x="392" y="120">+3 h</text>
+  </g>
+  <g class="hito">
+    <circle cx="60" cy="104" r="2.4"/><circle cx="140" cy="104" r="2.4"/>
+    <circle cx="216" cy="104" r="2.4"/><circle cx="300" cy="104" r="2.4"/>
+    <circle cx="392" cy="104" r="2.4"/>
+  </g>
+
+  <!-- bloque: comida pre -->
+  <rect class="blq" x="34" y="52" width="104" height="42" rx="3"/>
+  <text class="t-tit" x="42" y="64">COMIDA PRE</text>
+  <text class="t-txt" x="42" y="76">1,5 g/kg carbos</text>
+  <text class="t-sub" x="42" y="86">+ 0,4 g/kg proteína · poca grasa</text>
+
+  <!-- bloque: entreno -->
+  <rect class="blq-e" x="150" y="42" width="66" height="62" rx="3"/>
+  <text class="t-tit" x="158" y="56" style="fill:var(--accent-2)">ENTRENO</text>
+  <text class="t-txt" x="158" y="68">60–90 min</text>
+  <text class="t-sub" x="158" y="78">Intra: 30–40 g</text>
+  <text class="t-sub" x="158" y="87">si supera 75 min</text>
+
+  <!-- bloque: ventana post -->
+  <rect class="blq" x="228" y="52" width="98" height="42" rx="3"/>
+  <text class="t-tit" x="236" y="64">POST 0–90 min</text>
+  <text class="t-txt" x="236" y="76">1 g/kg carbos</text>
+  <text class="t-sub" x="236" y="86">+ 0,4 g/kg proteína rápida</text>
+
+  <!-- bloque: resto del día -->
+  <rect class="blq" x="338" y="52" width="102" height="42" rx="3"/>
+  <text class="t-tit" x="346" y="64">RESTO DEL DÍA</text>
+  <text class="t-txt" x="346" y="76">Completa el total</text>
+  <text class="t-sub" x="346" y="86">Fibra, fruta y verdura</text>
+
+  <!-- curva de sensibilidad a la insulina -->
+  <path fill="none" stroke="var(--accent)" stroke-width="1.6" opacity=".75"
+        d="M34 168 C120 168 150 150 183 138 C210 130 240 132 300 146 C350 158 400 166 440 168"/>
+  <text class="t-tit" x="34" y="152">SENSIBILIDAD A LA INSULINA</text>
+  <text class="t-sub" x="34" y="188">El músculo capta glucosa con más eficacia justo después de entrenar:
+    ahí van los carbohidratos de digestión rápida.</text>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 5 · PORCIONES CON LA MANO — medir sin báscula
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-porciones" viewBox="0 0 460 190">
+  <style>
+    .mano { fill:rgba(var(--a-rgb),.16); stroke:var(--accent); stroke-width:1.2 }
+    .p-tit{ font-family:'Orbitron',sans-serif; font-weight:700; font-size:7px;
+            fill:var(--accent); text-anchor:middle }
+    .p-txt{ font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.6px;
+            fill:var(--ink); text-anchor:middle }
+    .p-sub{ font-family:'Rajdhani',sans-serif; font-weight:600; font-size:6.8px;
+            fill:var(--ink-3); text-anchor:middle }
+    .plato{ fill:none; stroke:var(--accent); stroke-width:1.4 }
+  </style>
+
+  <!-- ① palma = proteína -->
+  <g transform="translate(20,16)">
+    <path class="mano" d="M18 58 v-30 a4 4 0 0 1 8 0 v-12 a4 4 0 0 1 8 0 v10 a4 4 0 0 1 8 0 v4
+                          a4 4 0 0 1 8 0 v24 c0 14 -8 22 -20 22 -12 0 -20 -8 -20 -18z"/>
+    <text class="p-tit" x="35" y="98">PALMA</text>
+    <text class="p-txt" x="35" y="112">Proteína</text>
+    <text class="p-sub" x="35" y="124">120–150 g de carne</text>
+    <text class="p-sub" x="35" y="134">o pescado · ≈30 g prot.</text>
+  </g>
+
+  <!-- ② puño = carbohidrato -->
+  <g transform="translate(128,16)">
+    <path class="mano" d="M14 44 c0 -12 8 -20 22 -20 14 0 22 8 22 20 v14 c0 12 -8 20 -22 20
+                          -14 0 -22 -8 -22 -20z"/>
+    <path fill="none" stroke="var(--accent)" stroke-width=".8" opacity=".6"
+          d="M20 40 h32 M20 50 h32 M20 60 h32"/>
+    <text class="p-tit" x="36" y="98">PUÑO</text>
+    <text class="p-txt" x="36" y="112">Carbohidrato</text>
+    <text class="p-sub" x="36" y="124">180 g cocido de arroz</text>
+    <text class="p-sub" x="36" y="134">o pasta · ≈45 g carbos</text>
+  </g>
+
+  <!-- ③ pulgar = grasa -->
+  <g transform="translate(236,16)">
+    <path class="mano" d="M28 74 v-28 c0 -8 4 -14 10 -14 6 0 10 6 10 14 v28 c0 6 -4 10 -10 10
+                          -6 0 -10 -4 -10 -10z"/>
+    <text class="p-tit" x="38" y="98">PULGAR</text>
+    <text class="p-txt" x="38" y="112">Grasa</text>
+    <text class="p-sub" x="38" y="124">1 cucharada de aceite</text>
+    <text class="p-sub" x="38" y="134">o 20 g frutos secos ≈14 g</text>
+  </g>
+
+  <!-- ④ plato dividido -->
+  <g transform="translate(346,14)">
+    <circle class="plato" cx="46" cy="46" r="42"/>
+    <line class="plato" x1="46" y1="4" x2="46" y2="88"/>
+    <line class="plato" x1="46" y1="46" x2="88" y2="46"/>
+    <path fill="rgba(var(--a-rgb),.20)" d="M46 46 L46 4 A42 42 0 0 0 4 46 z"/>
+    <path fill="rgba(var(--a-rgb),.34)" d="M46 46 L88 46 A42 42 0 0 0 46 4 z"/>
+    <path fill="rgba(123,47,255,.24)"   d="M46 46 L46 88 A42 42 0 0 0 88 46 z"/>
+    <text class="p-sub" x="24" y="30" style="fill:var(--ink-2)">Verdura</text>
+    <text class="p-sub" x="66" y="26" style="fill:var(--ink-2)">Prot.</text>
+    <text class="p-sub" x="66" y="70" style="fill:var(--ink-2)">Carbos</text>
+    <text class="p-tit" x="46" y="106">EL PLATO</text>
+    <text class="p-sub" x="46" y="118">Media verdura, un cuarto</text>
+    <text class="p-sub" x="46" y="128">proteína, un cuarto carbos</text>
+  </g>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 6 · INTERVALOS HIIT — trabajo, descanso y frecuencia cardiaca
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-hiit" viewBox="0 0 460 210">
+  <style>
+    .h-eje{ stroke:var(--ink-3); stroke-width:.9; opacity:.6 }
+    .h-rej{ stroke:var(--ink-3); stroke-width:.5; opacity:.2 }
+    .trab { fill:rgba(255,102,0,.30); stroke:var(--naranja, #ff6600); stroke-width:.9 }
+    .desc { fill:rgba(var(--a-rgb),.13); stroke:var(--accent); stroke-width:.7 }
+    .fc   { fill:none; stroke:var(--accent); stroke-width:2 }
+    .zona { fill:rgba(255,102,0,.10) }
+    .h-t  { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.4px; fill:var(--ink-3) }
+    .h-l  { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.2px; fill:var(--ink-2) }
+    .h-n  { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:6.8px; fill:var(--ink-3) }
+  </style>
+
+  <!-- zona objetivo 85-95 % -->
+  <rect class="zona" x="46" y="30" width="392" height="30"/>
+  <text class="h-t" x="440" y="42" text-anchor="end" style="fill:#ff6600">85–95 % FC máx.</text>
+
+  <g class="h-rej">
+    <line x1="46" y1="30" x2="438" y2="30"/><line x1="46" y1="60" x2="438" y2="60"/>
+    <line x1="46" y1="90" x2="438" y2="90"/><line x1="46" y1="120" x2="438" y2="120"/>
+  </g>
+  <line class="h-eje" x1="46" y1="22" x2="46" y2="150"/>
+  <line class="h-eje" x1="46" y1="150" x2="438" y2="150"/>
+  <text class="h-l" x="2" y="34">FC máx.</text>
+  <text class="h-l" x="2" y="124">Reposo</text>
+
+  <!-- bloques trabajo / descanso: 40 s / 20 s × 6 -->
+  <g>
+    <rect class="trab" x="52"  y="150" width="42" height="14"/>
+    <rect class="desc" x="94"  y="150" width="21" height="14"/>
+    <rect class="trab" x="115" y="150" width="42" height="14"/>
+    <rect class="desc" x="157" y="150" width="21" height="14"/>
+    <rect class="trab" x="178" y="150" width="42" height="14"/>
+    <rect class="desc" x="220" y="150" width="21" height="14"/>
+    <rect class="trab" x="241" y="150" width="42" height="14"/>
+    <rect class="desc" x="283" y="150" width="21" height="14"/>
+    <rect class="trab" x="304" y="150" width="42" height="14"/>
+    <rect class="desc" x="346" y="150" width="21" height="14"/>
+    <rect class="trab" x="367" y="150" width="42" height="14"/>
+    <rect class="desc" x="409" y="150" width="21" height="14"/>
+  </g>
+  <text class="h-t" x="60"  y="160" style="fill:#ff6600">40 s</text>
+  <text class="h-t" x="96"  y="160">20 s</text>
+  <text class="h-n" x="52"  y="180">Trabajo al máximo</text>
+  <text class="h-n" x="252" y="180">Descanso activo: camina y respira por la nariz</text>
+
+  <!-- curva de FC: sube en cada intervalo, no baja del todo -->
+  <path class="fc" d="M46 122 L60 66 L78 40 L94 44 L110 58 L120 40 L138 34 L157 40
+                      L172 52 L182 34 L200 30 L220 38 L236 50 L246 32 L264 28 L283 36
+                      L298 48 L308 30 L326 26 L346 34 L360 46 L370 28 L390 24 L409 32
+                      L424 46 L438 60"/>
+  <text class="h-n" x="46" y="200">La frecuencia cardiaca no vuelve a reposo entre intervalos: esa deuda acumulada
+    es la que produce el efecto metabólico del HIIT.</text>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 7 · RESPIRACIÓN — 4-7-8 y respiración de caja
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-respiracion" viewBox="0 0 460 180">
+  <style>
+    .r-in { fill:rgba(var(--a-rgb),.30); stroke:var(--accent); stroke-width:1 }
+    .r-ret{ fill:rgba(123,47,255,.26); stroke:var(--accent-2); stroke-width:1 }
+    .r-ex { fill:rgba(var(--a-rgb),.14); stroke:var(--accent); stroke-width:1 }
+    .r-t  { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.6px; fill:var(--accent) }
+    .r-l  { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:7.4px; fill:var(--ink-2) }
+    .r-n  { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:6.8px; fill:var(--ink-3) }
+    .caja { fill:none; stroke:var(--accent); stroke-width:1.6 }
+  </style>
+
+  <!-- 4-7-8 en barras proporcionales al tiempo -->
+  <text class="r-t" x="16" y="18">TÉCNICA 4-7-8 · ANTES DE DORMIR</text>
+  <rect class="r-in"  x="16"  y="26" width="48"  height="26" rx="2"/>
+  <rect class="r-ret" x="66"  y="26" width="84"  height="26" rx="2"/>
+  <rect class="r-ex"  x="152" y="26" width="96"  height="26" rx="2"/>
+  <text class="r-l" x="24"  y="43">INHALA 4 s</text>
+  <text class="r-l" x="76"  y="43">RETÉN 7 s</text>
+  <text class="r-l" x="162" y="43">EXHALA 8 s</text>
+  <text class="r-n" x="16"  y="64">Por la nariz</text>
+  <text class="r-n" x="66"  y="64">Sin tensión</text>
+  <text class="r-n" x="152" y="64">Por la boca, con sonido</text>
+  <line stroke="var(--accent)" stroke-width=".8" opacity=".5" stroke-dasharray="3 3"
+        x1="16" y1="74" x2="248" y2="74"/>
+  <text class="r-n" x="16" y="86">4 ciclos · activa el sistema parasimpático en menos de un minuto</text>
+
+  <!-- respiración de caja -->
+  <g transform="translate(300,16)">
+    <text class="r-t" x="0" y="2">CAJA 4-4-4-4 · ENFOQUE</text>
+    <rect class="caja" x="20" y="14" width="76" height="76" rx="3"/>
+    <path fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#flecha)"
+          d="M20 90 L20 16"/>
+    <path fill="none" stroke="var(--accent-2)" stroke-width="1.6" marker-end="url(#flecha)"
+          d="M22 14 L94 14"/>
+    <path fill="none" stroke="var(--accent)" stroke-width="1.6" marker-end="url(#flecha)"
+          d="M96 16 L96 88"/>
+    <path fill="none" stroke="var(--accent-2)" stroke-width="1.6" marker-end="url(#flecha)"
+          d="M94 90 L22 90"/>
+    <text class="r-n" x="-16" y="56" transform="rotate(-90 -16 56)">INHALA 4</text>
+    <text class="r-n" x="34"  y="10">RETÉN 4</text>
+    <text class="r-n" x="102" y="56" transform="rotate(90 102 56)">EXHALA 4</text>
+    <text class="r-n" x="34"  y="102">RETÉN VACÍO 4</text>
+    <text class="r-n" x="0" y="122">5–10 ciclos antes de una serie máxima</text>
+  </g>
+</symbol>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIG. 8 · CICLADO DE CARBOHIDRATOS — la semana de un vistazo
+     ═══════════════════════════════════════════════════════════════ -->
+<symbol id="fig-ciclado" viewBox="0 0 460 200">
+  <style>
+    .c-alto { fill:rgba(255,102,0,.28); stroke:#ff6600; stroke-width:1 }
+    .c-medio{ fill:rgba(255,221,0,.22); stroke:#ffdd00; stroke-width:1 }
+    .c-bajo { fill:rgba(var(--a-rgb),.20); stroke:var(--accent); stroke-width:1 }
+    .c-dia  { font-family:'Orbitron',sans-serif; font-weight:700; font-size:6.6px;
+              fill:var(--ink-3); text-anchor:middle }
+    .c-g    { font-family:'Orbitron',sans-serif; font-weight:700; font-size:7px;
+              fill:var(--ink); text-anchor:middle }
+    .c-lbl  { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:6.6px;
+              text-anchor:middle }
+    .c-eje  { stroke:var(--ink-3); stroke-width:.8; opacity:.5 }
+    .c-n    { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:6.8px; fill:var(--ink-3) }
+  </style>
+
+  <line class="c-eje" x1="34" y1="132" x2="440" y2="132"/>
+  <text class="c-n" x="2" y="46">g/kg</text>
+
+  <!-- Lunes ALTO -->
+  <rect class="c-alto"  x="42"  y="42"  width="44" height="90"/>
+  <text class="c-g" x="64" y="54">5,0</text><text class="c-lbl" x="64" y="122" style="fill:#ff6600">ALTO</text>
+  <text class="c-dia" x="64" y="146">LUN</text><text class="c-n" x="46" y="158">Piernas</text>
+  <!-- Martes MEDIO -->
+  <rect class="c-medio" x="98"  y="76"  width="44" height="56"/>
+  <text class="c-g" x="120" y="88">3,2</text><text class="c-lbl" x="120" y="122" style="fill:#ffdd00">MEDIO</text>
+  <text class="c-dia" x="120" y="146">MAR</text><text class="c-n" x="102" y="158">Torso</text>
+  <!-- Miércoles ALTO -->
+  <rect class="c-alto"  x="154" y="42"  width="44" height="90"/>
+  <text class="c-g" x="176" y="54">5,0</text><text class="c-lbl" x="176" y="122" style="fill:#ff6600">ALTO</text>
+  <text class="c-dia" x="176" y="146">MIÉ</text><text class="c-n" x="158" y="158">Espalda</text>
+  <!-- Jueves BAJO -->
+  <rect class="c-bajo"  x="210" y="108" width="44" height="24"/>
+  <text class="c-g" x="232" y="104">1,3</text><text class="c-lbl" x="232" y="124" style="fill:var(--accent)">BAJO</text>
+  <text class="c-dia" x="232" y="146">JUE</text><text class="c-n" x="214" y="158">Descanso</text>
+  <!-- Viernes ALTO -->
+  <rect class="c-alto"  x="266" y="42"  width="44" height="90"/>
+  <text class="c-g" x="288" y="54">5,0</text><text class="c-lbl" x="288" y="122" style="fill:#ff6600">ALTO</text>
+  <text class="c-dia" x="288" y="146">VIE</text><text class="c-n" x="270" y="158">Full body</text>
+  <!-- Sábado MEDIO -->
+  <rect class="c-medio" x="322" y="76"  width="44" height="56"/>
+  <text class="c-g" x="344" y="88">3,2</text><text class="c-lbl" x="344" y="122" style="fill:#ffdd00">MEDIO</text>
+  <text class="c-dia" x="344" y="146">SÁB</text><text class="c-n" x="326" y="158">Torso</text>
+  <!-- Domingo BAJO -->
+  <rect class="c-bajo"  x="378" y="108" width="44" height="24"/>
+  <text class="c-g" x="400" y="104">1,3</text><text class="c-lbl" x="400" y="124" style="fill:var(--accent)">BAJO</text>
+  <text class="c-dia" x="400" y="146">DOM</text><text class="c-n" x="382" y="158">LISS</text>
+
+  <text class="c-n" x="34" y="180">La regla que no cambia: el día alto va donde está el mayor volumen de
+    entrenamiento. La media semanal queda en déficit aunque tres días estén en superávit.</text>
+</symbol>
+</svg>

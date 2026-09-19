@@ -1,0 +1,18 @@
+---
+source_file: "boveda/Sube la portada, si la hay y si no está ya puesta. El alt describe la imagen….md"
+type: "document"
+community: "portada().md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/portadamd
+---
+
+# Sube la portada, si la hay y si no está ya puesta. El alt describe la imagen….md
+
+## Connections
+- [[Sube la portada, si la hay y si no está ya puesta. El alt describe la imagen…_1]] - `contains` [EXTRACTED]
+- [[portada()_1]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/portadamd

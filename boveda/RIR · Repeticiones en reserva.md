@@ -1,0 +1,20 @@
+---
+source_file: "boveda/RIR · Repeticiones en reserva.md"
+type: "document"
+community: "_COMMUNITY_Las cuatro fases del entrenamiento.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd
+---
+
+# RIR · Repeticiones en reserva.md
+
+## Connections
+- [[Escala de RIR 0–5 y su fase de aplicación]] - `references` [EXTRACTED]
+- [[Fase 1 · Activación (sem. 1–2, full body 3 días, 60–70 % 1RM, RIR 3)]] - `references` [EXTRACTED]
+- [[RIR · Repeticiones en reserva_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Las cuatro fases del entrenamiento]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Las_cuatro_fases_del_entrenamientomd

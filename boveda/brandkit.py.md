@@ -1,0 +1,87 @@
+---
+source_file: ".agents/skills/higgsfield-brandkit/scripts/brandkit.py"
+type: "code"
+community: "brandkit.py"
+location: "L1"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/brandkitpy
+---
+
+# brandkit.py
+
+## Connections
+- [[Deterministic Brandkit operations for a local agent workspace. This script…]] - `rationale_for` [EXTRACTED]
+- [[NoRedirect]] - `contains` [EXTRACTED]
+- [[alpha_channel()]] - `contains` [EXTRACTED]
+- [[argparse]] - `imports` [EXTRACTED]
+- [[assert_public_host()]] - `contains` [EXTRACTED]
+- [[attribute_value()]] - `contains` [EXTRACTED]
+- [[build()]] - `imports` [EXTRACTED]
+- [[build_brandbook.py]] - `imports_from` [EXTRACTED]
+- [[build_review_html()]] - `contains` [EXTRACTED]
+- [[color_channel()]] - `contains` [EXTRACTED]
+- [[color_distance()]] - `contains` [EXTRACTED]
+- [[compact()]] - `contains` [EXTRACTED]
+- [[dependency_key()]] - `contains` [EXTRACTED]
+- [[empty_state()]] - `contains` [EXTRACTED]
+- [[font_css()]] - `contains` [EXTRACTED]
+- [[full_canvas_path()]] - `contains` [EXTRACTED]
+- [[geometry_fingerprint()]] - `contains` [EXTRACTED]
+- [[hashlib]] - `imports` [EXTRACTED]
+- [[html]] - `imports` [EXTRACTED]
+- [[invalidate_brandbook()]] - `contains` [EXTRACTED]
+- [[ipaddress]] - `imports` [EXTRACTED]
+- [[json]] - `imports` [EXTRACTED]
+- [[load_json()]] - `contains` [EXTRACTED]
+- [[logo_markup()]] - `contains` [EXTRACTED]
+- [[main()_12]] - `contains` [EXTRACTED]
+- [[make_element_transparent()]] - `contains` [EXTRACTED]
+- [[matches_dimension()]] - `contains` [EXTRACTED]
+- [[monochrome_svg()]] - `contains` [EXTRACTED]
+- [[nearest_paint()]] - `contains` [EXTRACTED]
+- [[next_revision()]] - `contains` [EXTRACTED]
+- [[normalize_asset()]] - `contains` [EXTRACTED]
+- [[normalize_font()]] - `contains` [EXTRACTED]
+- [[normalize_hex()]] - `contains` [EXTRACTED]
+- [[normalize_slot()]] - `contains` [EXTRACTED]
+- [[ordered_paint_colors()]] - `contains` [EXTRACTED]
+- [[os]] - `imports` [EXTRACTED]
+- [[parse_args()]] - `contains` [EXTRACTED]
+- [[parse_paint()]] - `contains` [EXTRACTED]
+- [[path_bounds()]] - `contains` [EXTRACTED]
+- [[pathlib]] - `imports_from` [EXTRACTED]
+- [[re]] - `imports` [EXTRACTED]
+- [[read_state()]] - `contains` [EXTRACTED]
+- [[read_svg()]] - `contains` [EXTRACTED]
+- [[recolor_svg()]] - `contains` [EXTRACTED]
+- [[replacement_paint()]] - `contains` [EXTRACTED]
+- [[require_object()]] - `contains` [EXTRACTED]
+- [[run_logo()]] - `contains` [EXTRACTED]
+- [[run_logo_inspect()]] - `contains` [EXTRACTED]
+- [[run_preview()]] - `contains` [EXTRACTED]
+- [[run_state()]] - `contains` [EXTRACTED]
+- [[safe_fetch_svg()]] - `contains` [EXTRACTED]
+- [[save_slot()]] - `contains` [EXTRACTED]
+- [[shutil]] - `imports` [EXTRACTED]
+- [[slug()]] - `contains` [EXTRACTED]
+- [[socket]] - `imports` [EXTRACTED]
+- [[source_colors()]] - `contains` [EXTRACTED]
+- [[ssl]] - `imports` [EXTRACTED]
+- [[state_status()]] - `contains` [EXTRACTED]
+- [[strip_full_canvas_background()]] - `contains` [EXTRACTED]
+- [[subprocess]] - `imports` [EXTRACTED]
+- [[tempfile]] - `imports` [EXTRACTED]
+- [[tls_context()]] - `contains` [EXTRACTED]
+- [[tonal_monochrome_svg()]] - `contains` [EXTRACTED]
+- [[typing]] - `imports_from` [EXTRACTED]
+- [[unicodedata]] - `imports` [EXTRACTED]
+- [[urllib_error]] - `imports_from` [EXTRACTED]
+- [[urllib_parse]] - `imports_from` [EXTRACTED]
+- [[urllib_request]] - `imports_from` [EXTRACTED]
+- [[validate_svg()]] - `contains` [EXTRACTED]
+- [[write_logo_pair()]] - `contains` [EXTRACTED]
+- [[write_state()]] - `contains` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/brandkitpy

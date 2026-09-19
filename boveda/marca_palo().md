@@ -1,0 +1,21 @@
+---
+source_file: "libros/tools/dibujar-arcanos.py"
+type: "code"
+community: "dibujar-arcanos.py"
+location: "L153"
+tags:
+  - graphify/code
+  - graphify/EXTRACTED
+  - community/dibujar-arcanospy
+---
+
+# marca_palo()
+
+## Connections
+- [[dibujar-arcanos.py_2]] - `contains` [EXTRACTED]
+- [[f()_6]] - `calls` [EXTRACTED]
+- [[lamina_decanatos()]] - `calls` [EXTRACTED]
+- [[lamina_estructura()]] - `calls` [EXTRACTED]
+- [[lamina_palos()]] - `calls` [EXTRACTED]
+
+#graphify/code #graphify/EXTRACTED #community/dibujar-arcanospy

@@ -1,0 +1,19 @@
+---
+source_file: "boveda/Curso Zodiacal (Samael Aun Weor).md"
+type: "document"
+community: "_COMMUNITY_Procedencia de los libros recuperados.md"
+location: "L1"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd
+---
+
+# Curso Zodiacal (Samael Aun Weor).md
+
+## Connections
+- [[Biblioteca VILLUMINATIONS (libros recuperados)]] - `references` [EXTRACTED]
+- [[Curso Zodiacal (Samael Aun Weor)_1]] - `contains` [EXTRACTED]
+- [[_COMMUNITY_Procedencia de los libros recuperados]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/_COMMUNITY_Procedencia_de_los_libros_recuperadosmd

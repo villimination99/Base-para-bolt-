@@ -1,0 +1,17 @@
+---
+source_file: "boveda/_COMMUNITY_si-mismo-19.py.md"
+type: "document"
+community: "si-mismo-19.py"
+location: "L12"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/si-mismo-19py
+---
+
+# Members
+
+## Connections
+- [[si-mismo-19.py]] - `contains` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/si-mismo-19py
