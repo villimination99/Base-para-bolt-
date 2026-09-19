@@ -38,7 +38,17 @@ PUBLICADOS = ("es", "en", "fr", "de", "ja")
 
 # Locales con traducción escrita de verdad. Los que están publicados y no
 # están aquí sirven castellano bajo una URL que dice otra cosa.
-TRADUCIDOS = ("es", "en", "fr")
+#
+# Eran tres hasta septiembre. La **sesión del tema** tradujo los doce artículos
+# publicados y las páginas al alemán y al japonés, así que ya son cinco:
+# comprobado contra la tienda el 19/09 sobre el artículo 558097170481, las
+# cinco claves en `de` y en `ja` con `outdated: false`.
+#
+# Esto vivía solo en la memoria de aquella sesión. Mientras esta constante
+# decía tres, `problemas()` denunciaba un agujero tapado hace días y habría
+# mandado a alguien a traducir lo ya traducido o a despublicar dos locales
+# legítimos. Es el coste exacto de que dos sesiones no compartan lo que saben.
+TRADUCIDOS = ("es", "en", "fr", "de", "ja")
 
 
 def superficie() -> dict:

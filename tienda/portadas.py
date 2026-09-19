@@ -113,9 +113,39 @@ p{{margin-top:20px;font-size:25px;letter-spacing:.05em;opacity:.66}}
 <div class=regla></div>"""
 
 
+# ---------------------------------------------------------------------------
+# SUPERADO POR LA SESIÓN DEL TEMA — no ejecutar sin leer esto
+# ---------------------------------------------------------------------------
+# Este generador quema el nombre de la colección DENTRO del PNG. En septiembre
+# la sesión del tema sustituyó las seis portadas por versiones **sin una sola
+# letra**, y señaló precisamente a la de `planes` —la que escribe este
+# fichero— porque su propio texto alternativo lo confesaba: «con el nombre de
+# la colección Planes de entrenamiento».
+#
+# La razón es dura y no se discute: **una imagen de colección en Shopify es UNA
+# sola para los cinco idiomas.** No existe versión francesa del archivo. Lo que
+# se escribe dentro de una imagen no se puede traducir, así que sale en
+# castellano a un comprador alemán o japonés.
+#
+#     REGLA: lo que no se puede traducir no se escribe dentro de una imagen.
+#
+# Volver a ejecutar esto **desharía** esa corrección. Se deja el fichero porque
+# aquí no se borra nada y porque el andamiaje —la silueta, el render, la guarda
+# del texto alternativo— vale para otras cosas; pero aborta.
+#
+# Si algún día hace falta rehacer portadas, el generador bueno es
+# `marca/generar-colecciones.mjs` de la rama del tema
+# (`claude/impulse-shopify-theme-a6mb8w`): 1600×1200, color de familia, glifo
+# SVG y constelación sembrada con el handle, ni una letra. Y mide con Playwright
+# que el glifo caiga dentro del cuadrado central de 1200×1200, porque el
+# megamenú recorta a 160×160 y de un lienzo 4:3 solo sobrevive el 75 % central.
+SUPERADO = ("la sesión del tema sustituyó las seis portadas por versiones sin "
+            "texto; esto volvería a quemar el nombre dentro del PNG")
+
+
 def comprobar() -> list:
     """Lo que impide dar una portada por buena."""
-    malos = []
+    malos = [f"SUPERADO · {SUPERADO}"]
     disponibles = set()
     for r in LAMINAS:
         disponibles |= set(re.findall(r'<symbol[^>]*\bid="([^"]+)"',

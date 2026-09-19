@@ -299,6 +299,92 @@ regenere ni comprobación que los mida, y por eso el fallo de los enlaces vivió
 en ellos sin que nadie lo viera. `cotejar.py` los enumera al final para que
 conste de qué no responde el repositorio.
 
+## Dos sesiones, una tienda: cómo no perderse información
+
+Sobre villuminations.com trabajan **dos sesiones de Claude Code a la vez**:
+
+| | rama | de qué responde |
+|---|---|---|
+| esta | `claude/shopify-diet-plans-9k0wti` | lo que la tienda **vende**: libros, planes, fichas, Diario, FAQ, CRM, ropa |
+| la del tema | `claude/impulse-shopify-theme-a6mb8w` | el **tema**: plantillas, secuencia de portada, imágenes, i18n del tema |
+
+Corren en contenedores distintos y **no comparten disco**: ni el grafo, ni la
+bóveda, ni los ficheros. Lo único común es la tienda y **Mem0**.
+
+**Antes de dar nada por pendiente, leer Mem0.** El 19/09 esta sesión tenía en
+su lista «traducir o despublicar `de` y `ja`» cuando la otra los había
+traducido **cinco días antes**, y mantenía un generador que deshacía una
+corrección suya. Nada avisaba: los dos repositorios estaban en verde.
+
+```
+mcp__Mem0__list_entities                       # quién tiene memorias
+mcp__Mem0__get_memories  filters={"AND":[{"user_id":"villumination"}]}
+mcp__Mem0__search_memories  query="..."        # búsqueda semántica
+```
+
+**Escribir siempre con `user_id: "villumination"`, explícito.** Hay **cuatro
+identidades** con memorias —`villumination`, `villimination99`, `mem0-mcp` y
+`villimination`— todas con el mismo propietario, creadas por variantes de
+escritura y por el identificador por defecto del servidor. La memoria está
+repartida entre ellas y por eso no se encuentra. No se fusionan desde aquí
+—borrar no se deshace—, pero **todo lo nuevo va a `villumination`**.
+
+**Y escribir al terminar algo que la otra sesión pueda tropezar.** No el diario
+de la sesión: lo que cambia sus decisiones. Un fichero que quedó obsoleto, una
+trampa de la API, una regla que salió de un fallo real.
+
+## Lo que sabe la otra sesión y aquí no se sabía
+
+Este repositorio es **una de dos sesiones** sobre la misma tienda. La otra
+trabaja el tema (rama `claude/impulse-shopify-theme-a6mb8w`) y guarda lo suyo
+en **Mem0**. Sin leerlo, esta sesión daba por pendiente cosas ya hechas y
+generaba ficheros que deshacían sus correcciones. Lo traído el 19/09:
+
+**Una imagen es UNA para los cinco idiomas.** No existe versión francesa de un
+PNG de colección. De ahí la regla: **lo que no se puede traducir no se escribe
+dentro de una imagen**. Sustituyeron las seis portadas y la `og:image` por
+versiones sin una sola letra. `tienda/portadas.py` quemaba el nombre dentro y
+**está marcado como superado y aborta**: ejecutarlo desharía su arreglo.
+
+**La marca ya está unificada en el tema**, a `VILLUMINATIONS` en plural, vía
+`settings.brand_display_name` — de ahí salen el alt del logotipo, el
+`aria-label`, el título de página, `og:site_name` y el nombre de los datos
+estructurados. Lo que sigue en «VIllumination» es `shop.name` del panel, y eso
+solo lo cambia el dueño porque Shopify lo usa en el checkout y en los correos.
+
+**Printful ya está configurado** como uno de los tres perfiles de envío
+(general, Supliful, Printful), con tarifas para Canadá, EE. UU., Francia,
+Alemania y Japón. Los dieciséis ficheros de `ropa/pod/` tienen a dónde ir.
+
+**Trampas de la API que descubrieron ellos** y que aquí habrían costado lo
+mismo:
+
+- `themeFilesUpsert` con `body {type: URL}` **acepta la llamada, devuelve
+  `userErrors` vacío y no escribe nada**. Silencioso. Hay que usar
+  `{type: BASE64}`, que devuelve `filename`, `size` y `checksumMd5`.
+- La importación de un zip **se come `templates/robots.txt.liquid`**.
+  Confirmado ocho veces; el zip demostrablemente lo contiene.
+- **Las traducciones van pegadas a cada tema**: un tema nuevo hereda las que
+  existían al arrastrarlo, pero no las registradas a mano después. Hay que
+  volver a llamar a `translationsRegister` contra el gid nuevo. Los digests
+  se reutilizan, porque el digest es del valor de origen y no del tema.
+- `collectionUpdate` sobre una colección que **ya tiene imagen conserva el
+  nombre de archivo viejo** y solo cambia el `?v=`. Para cambiarlo hacen falta
+  dos pasos: `image: null` y luego la nueva.
+- Shopify **antepone una cabecera de 363 bytes** a todo fichero `.json` de un
+  tema. Hay que quitarla antes de comparar byte a byte; el campo `size` que
+  devuelve la API sí es el tamaño original.
+- `media(first: 12)` ocultó cinco imágenes de un producto que tenía 17.
+  **Consultar siempre `mediaCount { count }`** antes de dar por barrido un
+  catálogo.
+
+**Bloqueos de publicidad que ellos encontraron** y que esta sesión no veía: la
+política de reembolso dice «ALL SALES ARE FINAL», lo que choca con el derecho
+de desistimiento de 14 días de la UE y con la ley de Quebec y **arriesga el
+rechazo de Meta y de Google Merchant**; la dirección de contacto está
+incompleta («quebec,Canada») y falta teléfono, que Meta exige para verificar; y
+los canales de Facebook e Instagram **no están instalados**.
+
 ## La API de Shopify, en corto
 
 Lo que costó descubrir y no está en ningún sitio evidente:
@@ -413,11 +499,16 @@ Lo que costó descubrir y no está en ningún sitio evidente:
 6. **Los dos jabones siguen en UNLISTED.** Ya tienen colección, SEO y variantes
    corregidas; solo falta decidir si se venden. Piden envío y no llevan control
    de existencias, así que activarlos significa poder vender sin stock.
-7. **Dos locales publicados sin una sola traducción: `de` y `ja`.** Shopify
-   emite hreflang apuntando a `/de/…` y `/ja/…` y sirve castellano, así que
-   para el buscador son copias del mismo contenido bajo URL distintas. O se
-   traducen o se despublican; dejarlos así reparte la fuerza entre cinco
-   direcciones que dicen lo mismo. Lo cuenta `tienda/visibilidad.py`.
+7. ~~Dos locales publicados sin una sola traducción: `de` y `ja`.~~
+   **RESUELTO por la sesión del tema, no por esta.** Los doce artículos
+   publicados están completos en inglés, francés, **alemán y japonés**, sin
+   ninguna caducada. Comprobado contra la tienda el 19/09 sobre
+   `gid://shopify/Article/558097170481`: las cinco claves en `de` y en `ja`
+   con `outdated: false`.
+
+   **`tienda/visibilidad.py` sigue diciendo lo contrario**: su constante
+   `TRADUCIDOS = ("es","en","fr")` es de agosto y hay que subirla a cinco.
+   Mientras no se haga, cuenta un problema que ya no existe.
 8. **El CRM está escrito y falta enchufarlo.** Ya está todo el texto: las
    cinco secuencias de `correos.py`, con qué plantilla de Shopify se monta
    cada una (`AUTOMATIZACION`), y el formulario de captura de `captura.py` en
