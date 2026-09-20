@@ -48,3 +48,18 @@ apellido tiene que inscribirse en el Registraire des entreprises y recibe un
 NEQ; la inscripcion a la TPS/TVQ solo es obligatoria al pasar de 30 000 $ de
 ventas en cuatro trimestres. Cuando esos numeros existan, se anaden aqui y se
 vuelve a pegar. Un hueco, nunca.
+
+## Traducciones
+
+Las seis politicas estan registradas en **ingles, frances, aleman y japones**
+(24 traducciones, key `body`, via `translationsRegister`). Todas se leyeron de
+vuelta desde la tienda con `outdated: false`.
+
+Importante: el digest de Shopify se calcula sobre el texto ESPANOL. Si se
+cambia una sola letra del espanol, las cuatro traducciones de esa politica
+quedan marcadas como `outdated` y hay que volver a registrarlas. Por eso el
+orden es siempre: primero el espanol definitivo, despues las traducciones.
+
+En ingles las comillas son "...", en aleman „...", en frances « ... » y en
+japones 「...」. El espanol usa «...». No se copian las comillas de un idioma a
+otro: es el fallo que hubo que corregir en ingles y aleman.
