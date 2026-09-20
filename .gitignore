@@ -20,10 +20,21 @@ tcrun.mjs
 villumination-3d-theme-*.zip
 villumination-3d-theme.zip
 
-# Skills instaladas en el contenedor (no forman parte del tema)
+# Skills instaladas en el contenedor (no forman parte del tema).
+#
+# El CODIGO de las skills no entra: .agents/ son 111 MB de repositorios
+# ajenos vendorizados y no tienen nada que ver con el tema. Se reinstalan
+# solos con una orden.
+#
+# Lo que SI entra son las dos cosas que hacen falta para reconstruirlas:
+#   skills-lock.json      la lista de que skill viene de que repositorio
+#   .claude/settings.json la configuracion del proyecto, con la salida de
+#                         la telemetria de Shopify (ver LEEME-skills.md)
+# Sin estos dos, cada contenedor nuevo arranca sin skills y sin memoria de
+# cuales habia.
 .agents/
-.claude/
-skills-lock.json
+.claude/*
+!.claude/settings.json
 
 # Temporales de las herramientas: el renderizador acumula los fotogramas en un
 # archivo antes de pasarlos a ffmpeg, y los verificadores escriben su pagina de
