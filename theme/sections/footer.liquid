@@ -80,19 +80,42 @@
     {%- if section.settings.show_newsletter -%}
       <div class="footer-newsletter">
         <h3>{{ cx_newsletter_title }}</h3>
+        {%- comment -%}
+          El pie captura correos en TODAS las paginas, asi que es la puerta de
+          entrada mas usada del boletin. Antes se quedaba a medias: decia
+          "gracias" y nada mas, mientras que la seccion de la portada entregaba
+          el cupon. Quien se apuntaba desde aqui se quedaba sin el descuento que
+          la propia tienda le acababa de prometer, y sin forma de saber por que.
+
+          Ahora hace lo mismo que la portada: al enviarse bien, el formulario se
+          sustituye por el agradecimiento y el codigo copiable. Se sustituye, no
+          se anade: dejar el campo de correo despues de suscribirse invita a
+          escribirlo otra vez, y el segundo envio no da nada nuevo.
+        {%- endcomment -%}
         {%- form 'customer', class: 'footer-newsletter-form' -%}
-          <input type="hidden" name="contact[tags]" value="newsletter,pie">
-          <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
-          <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
-          {%- if form.posted_successfully? -%}<p class="form-success">{{ 'general.newsletter.success' | t }}</p>{%- endif -%}
-          {%- if form.errors -%}
-            <div class="form-errors" role="alert">
-              <ul>
-                {%- for field in form.errors -%}
-                  <li>{{ form.errors.messages[field] }}</li>
-                {%- endfor -%}
-              </ul>
+          {%- if form.posted_successfully? -%}
+            <div class="nl-success">
+              <p class="form-success">{{ 'general.newsletter.success' | t }}</p>
+              {%- if section.settings.coupon_code != blank -%}
+                <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code | escape }}">
+                  <span class="nl-code-val">{{ section.settings.coupon_code }}</span>
+                  <span class="nl-code-hint">{{ 'general.copy_hint' | t }}</span>
+                </button>
+              {%- endif -%}
             </div>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,pie">
+            <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+            <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
+            {%- if form.errors -%}
+              <div class="form-errors" role="alert">
+                <ul>
+                  {%- for field in form.errors -%}
+                    <li>{{ form.errors.messages[field] }}</li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
           {%- endif -%}
         {%- endform -%}
       </div>
@@ -228,6 +251,13 @@
       "type": "text",
       "id": "newsletter_title",
       "label": "Título del boletín"
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Código del cupón",
+      "default": "BIENVENIDO10",
+      "info": "Se muestra (copiable) tras suscribirse desde el pie. Tiene que ser EL MISMO que el de la sección Boletín de la portada y existir en Shopify → Descuentos."
     }
   ],
   "blocks": [
