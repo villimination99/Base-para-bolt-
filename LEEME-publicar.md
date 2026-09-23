@@ -71,3 +71,35 @@ Las respuestas de estas consultas pesan 1-2 MB, asi que conviene pedir solo
 - [ ] `config/settings_data.json` con el codigo de Google dentro
 - [ ] Las 16 traducciones de ajustes, registradas
 - [ ] Los cuatro idiomas con el mismo recuento de claves que el tema anterior
+
+## Si la API de Shopify no responde
+
+El 23 de septiembre de 2026 la API empezo a devolver:
+
+    This shop is unavailable for API access.
+    The merchant may need to resolve a billing issue or upgrade their plan.
+
+Con ese error **no se puede subir ningun tema**: `stagedUploadsCreate`,
+`themeCreate` y `themeFilesUpsert` pasan todos por la misma puerta. Tampoco se
+puede leer nada de la tienda.
+
+Se resuelve en el panel, mirando el aviso de facturacion. Mientras tanto, el
+tema se sube **a mano**, y entonces hay un paso mas:
+
+1. `Tienda online` → `Temas` → `Añadir tema` → `Subir archivo zip`.
+2. Subir `villumination-3d-theme-<version>.zip`. **NO publicar todavia.**
+3. En el tema recien subido: `⋯` → `Editar codigo`.
+4. `templates` → `Añadir una plantilla nueva` → tipo `robots.txt`.
+   Shopify la crea con su contenido por defecto.
+5. Seleccionar todo lo que haya dentro y pegar encima el contenido de
+   `theme/templates/robots.txt.liquid` de este repositorio. Guardar.
+6. Ahora si: publicar.
+7. Reparar las 16 traducciones de ajustes (ver mas arriba). Sin la API esto
+   tambien es a mano, en `Configuracion` → `Idiomas` → el idioma → buscar
+   `brand_tagline`, `splash_tagline`, `splash_frases` y
+   `cart_cross_sell_title`.
+
+El paso 4 y 5 no son opcionales. Sin ellos la tienda sirve el robots.txt por
+defecto de Shopify y se pierden los permisos explicitos a los rastreadores de
+IA, que es justo lo que hace que la tienda aparezca en ChatGPT, Claude,
+Perplexity y Gemini.

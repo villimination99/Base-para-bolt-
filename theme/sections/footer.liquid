@@ -107,6 +107,24 @@
             <input type="hidden" name="contact[tags]" value="newsletter,pie">
             <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
             <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
+            {%- comment -%}
+              El mismo aviso que lleva la portada, y por la misma razon: quien
+              deja su correo tiene que saber a que se apunta EN EL MOMENTO de
+              dejarlo. La politica de privacidad dice que solo se hace
+              marketing "cuando nos has dado tu consentimiento", y un
+              consentimiento solo vale si es informado. Este formulario sale en
+              todas las paginas y hasta ahora no decia nada.
+
+              Se reutiliza la clave de la seccion de la portada en vez de crear
+              una nueva: el texto ya esta traducido a los cinco idiomas, no hay
+              que regenerar los locales y las dos puertas de entrada dicen
+              exactamente lo mismo, que es lo que se quiere.
+            {%- endcomment -%}
+            {%- capture cx_nl_aviso -%}
+              {%- render 'copia', g: 'sec', b: 'newsletter', a: 'privacy_note', v: '' -%}
+            {%- endcapture -%}
+            {%- assign cx_nl_aviso = cx_nl_aviso | strip -%}
+            {%- if cx_nl_aviso != blank -%}<p class="nl-privacy">{{ cx_nl_aviso }}</p>{%- endif -%}
             {%- if form.errors -%}
               <div class="form-errors" role="alert">
                 <ul>
