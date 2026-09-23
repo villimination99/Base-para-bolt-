@@ -1,0 +1,36 @@
+Copyright (c) 2026 Villumination99 (villuminations.com)
+
+All rights reserved.
+
+This Shopify theme ("Villumination 3D") and its source code are the exclusive
+property of Villumination99. It is provided for use on stores owned and operated
+by the copyright holder.
+
+You MAY:
+  - Install, modify and use this theme on Shopify stores you own.
+  - Create derivative works for your own stores.
+
+You MAY NOT, without prior written permission from the copyright holder:
+  - Redistribute, resell, sublicense or publish this theme or substantial
+    portions of it.
+  - Use it on stores you do not own or operate.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--------------------------------------------------------------------------------
+Third-party assets
+--------------------------------------------------------------------------------
+This theme contains no bundled third-party libraries. All CSS and JavaScript is
+original and dependency-free.
+
+Fonts are loaded at runtime from Google Fonts (Orbitron, SIL Open Font License
+1.1) and from Shopify's own font library via the font_picker setting. Neither is
+redistributed with this theme.
+
+3D and AR viewing uses Shopify's native model-viewer integration; no third-party
+3D library is bundled.

@@ -1,0 +1,625 @@
+{
+  "general": {
+    "404": {
+      "title": "Página no encontrada",
+      "subtext": "La página que buscas no existe o fue movida."
+    },
+    "home": "Inicio",
+    "shop": "Tienda",
+    "enter": "Entrar",
+    "meta": {
+      "tags": "Etiquetado \"{{ tags }}\"",
+      "page": "Página {{ page }}"
+    },
+    "pagination": {
+      "label": "Paginación"
+    },
+    "search": {
+      "title": "Buscar",
+      "placeholder": "Buscar productos...",
+      "results_with_count": "{{ count }} resultados para \"{{ terms }}\"",
+      "no_results": "No se encontraron resultados para \"{{ terms }}\".",
+      "no_results_short": "Sin resultados para",
+      "view_all": "Ver todos los resultados",
+      "error": "No se pudo buscar ahora mismo. Prueba la página de búsqueda completa.",
+      "voice": "Buscar por voz",
+      "listening": "Escuchando…"
+    },
+    "cart": {
+      "title": "Carrito"
+    },
+    "newsletter": {
+      "email": "Correo electrónico",
+      "submit": "Suscribirme",
+      "success": "¡Gracias por suscribirte!"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados."
+    },
+    "password_page": {
+      "password_label": "Contraseña",
+      "admin_link_html": "¿Eres el dueño de la tienda?"
+    },
+    "view_all": "Ver todo",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "language": "Idioma",
+    "explore": "Explorar",
+    "countdown": {
+      "days": "días",
+      "hours": "horas",
+      "minutes": "min",
+      "seconds": "seg"
+    },
+    "copy_hint": "Toca para copiar",
+    "copied": "¡Copiado!",
+    "video_placeholder": "Elige un video en el editor del tema.",
+    "play_video": "Reproducir el video",
+    "sequence_hint": "Muévete sobre la animación",
+    "collections": "Ver colección",
+    "skip": "SALTAR",
+    "accessibility": {
+      "close": "Cerrar",
+      "zoom_image": "Ampliar imagen"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Saltar al contenido",
+    "main_nav": "Navegación principal",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "back_to_top": "Volver arriba",
+    "scrollable_row": "Fila desplazable — usa las flechas del teclado"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Agregar al carrito",
+      "sold_out": "Agotado",
+      "new": "Nuevo",
+      "few_left": "Últimas unidades",
+      "unavailable": "No disponible",
+      "quantity": "Cantidad",
+      "increase": "Aumentar cantidad",
+      "decrease": "Disminuir cantidad",
+      "view_in_space": "Míralo en tu espacio (3D / RA)",
+      "media": "Medio",
+      "share": "Compartir",
+      "example": "Producto de ejemplo",
+      "reviews": "reseñas",
+      "drag_to_rotate": "Arrastra para girar",
+      "save": "Ahorras"
+    },
+    "recommendations": {
+      "related": "También te puede gustar",
+      "complementary": "Combínalo con"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Colecciones",
+      "items_count": "{{ count }} productos",
+      "no_matches": "No se encontraron productos",
+      "no_matches_filter": "Ningún producto coincide con los filtros"
+    },
+    "sorting": {
+      "title": "Ordenar por"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Tu carrito",
+      "subtotal": "Subtotal",
+      "taxes_and_shipping": "Impuestos y envío calculados al finalizar la compra.",
+      "checkout": "Finalizar compra",
+      "update": "Actualizar",
+      "view_cart": "Ver carrito completo",
+      "remove": "Eliminar",
+      "empty": "Tu carrito está vacío",
+      "note": "Nota del pedido"
+    },
+    "free_shipping": {
+      "remaining_html": "Te faltan <b>{{ amount }}</b> para <span class=\"cart-ship-hl\">ENVÍO GRATIS</span>",
+      "unlocked_html": "<b>¡Envío GRATIS desbloqueado!</b>"
+    }
+  },
+  "blogs": {
+    "article": {
+      "by": "por",
+      "comments": "{{ count }} comentarios",
+      "comment_title": "Deja un comentario",
+      "comment_name": "Nombre",
+      "comment_email": "Correo",
+      "comment_message": "Comentario",
+      "comment_submit": "Publicar comentario",
+      "comment_success": "Tu comentario se publicó.",
+      "comment_moderated": "¡Gracias! Tu comentario aparecerá en cuanto se apruebe.",
+      "no_comments": "Todavía no hay comentarios.",
+      "reading_time": "{{ minutes }} min de lectura",
+      "tags": "Etiquetas",
+      "share": "Compartir",
+      "share_x": "Compartir en X",
+      "share_fb": "Compartir en Facebook",
+      "share_wa": "Compartir en WhatsApp",
+      "copy_link": "Copiar enlace",
+      "link_copied": "Enlace copiado",
+      "related": "Sigue leyendo",
+      "back_to_blog": "Todos los artículos"
+    },
+    "general": {
+      "no_articles": "Todavía no hay artículos publicados.",
+      "featured": "Destacado",
+      "filter_tag": "Filtrado por",
+      "clear_filter": "Ver todos"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Mi cuenta",
+      "details": "Detalles de la cuenta",
+      "view_addresses": "Ver direcciones",
+      "return": "Volver a la cuenta",
+      "log_out": "Cerrar sesión",
+      "no_address": "Todavía no has guardado ninguna dirección."
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo",
+      "password": "Contraseña",
+      "sign_in": "Entrar",
+      "forgot_password": "¿Olvidaste tu contraseña?",
+      "no_account": "¿Cliente nuevo?"
+    },
+    "orders": {
+      "title": "Historial de pedidos",
+      "order_number": "Pedido",
+      "date": "Fecha",
+      "total": "Total",
+      "fulfillment_status": "Estado",
+      "none": "Aún no has realizado ningún pedido."
+    },
+    "order": {
+      "title": "Pedido {{ name }}",
+      "date": "Realizado el {{ date }}",
+      "product": "Producto",
+      "quantity": "Cant.",
+      "total": "Total",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "tax": "Impuestos",
+      "status": "Estado",
+      "payment": "Pago",
+      "shipping_address": "Dirección de envío"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "email": "Correo",
+      "password": "Contraseña",
+      "submit": "Crear",
+      "has_account": "¿Ya tienes cuenta?"
+    },
+    "recover_password": {
+      "email": "Correo",
+      "submit": "Restablecer contraseña",
+      "success": "Te enviamos un correo con un enlace para restablecer tu contraseña.",
+      "title": "Restablecer tu contraseña"
+    },
+    "reset_password": {
+      "title": "Restablecer contraseña",
+      "password": "Nueva contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Restablecer"
+    },
+    "activate_account": {
+      "title": "Activar cuenta",
+      "password": "Contraseña",
+      "password_confirm": "Confirmar contraseña",
+      "submit": "Activar",
+      "decline": "Rechazar"
+    },
+    "addresses": {
+      "title": "Direcciones",
+      "add_new": "Agregar dirección",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "address1": "Dirección",
+      "city": "Ciudad",
+      "country": "País",
+      "province": "Provincia / Región",
+      "zip": "Código postal",
+      "phone": "Teléfono",
+      "add": "Agregar dirección",
+      "edit": "Editar"
+    }
+  },
+  "gift_cards": {
+    "issued": {
+      "title": "Tarjeta de regalo",
+      "subtext": "¡Aquí está tu tarjeta de regalo!",
+      "shop_link": "Ir a la tienda",
+      "expired": "Esta tarjeta de regalo ha caducado.",
+      "expires_on": "Caduca el {{ date }}",
+      "disabled": "Esta tarjeta de regalo ya no está activa.",
+      "remaining": "Quedan {{ balance }} de {{ initial }}",
+      "code_label": "Código de la tarjeta"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "Nombre",
+      "email": "Correo",
+      "message": "Mensaje",
+      "send": "Enviar",
+      "post_success": "¡Gracias! Te responderemos pronto."
+    }
+  },
+  "inicio": {
+    "marquee": {
+      "w1": {
+        "text": "FUERZA"
+      },
+      "w2": {
+        "text": "DISCIPLINA"
+      },
+      "w3": {
+        "text": "PODER"
+      },
+      "w4": {
+        "text": "SIN LÍMITES"
+      }
+    },
+    "secuencia": {
+      "b2": {
+        "linea1": "NO TE",
+        "linea2": "CONFORMES"
+      },
+      "b3": {
+        "titulo1": "FUERZA",
+        "sub1": "EQUIPO Y ACCESORIOS",
+        "titulo2": "NUTRICIÓN",
+        "sub2": "SUPLEMENTOS",
+        "titulo3": "CONSTANCIA",
+        "sub3": "PLANES Y CÓDICES"
+      },
+      "b4": {
+        "pie": "PRODUCTOS · UNA SOLA META"
+      },
+      "b5": {
+        "boton": "VER CATÁLOGO"
+      }
+    },
+    "categorias": {
+      "c1": {
+        "title": "Ropa",
+        "text": "Estilo que entrena contigo."
+      },
+      "c2": {
+        "title": "Equipo",
+        "text": "Herramientas de poder."
+      },
+      "c3": {
+        "title": "Suplementos",
+        "text": "Combustible de élite."
+      },
+      "c4": {
+        "title": "Conocimiento",
+        "text": "Entrena tu mente."
+      }
+    },
+    "menu": {
+      "r1": {
+        "label": "Ropa"
+      },
+      "r2": {
+        "label": "Equipo"
+      },
+      "r3": {
+        "label": "Suplementos"
+      },
+      "r4": {
+        "label": "Conocimiento"
+      }
+    },
+    "beneficios": {
+      "b1": {
+        "title": "Míralo antes de comprarlo",
+        "text": "Los productos con modelo se giran en 3D y se ven en tu propia habitación desde el móvil. Es nativo de Shopify: no hace falta instalar nada."
+      },
+      "b2": {
+        "title": "Códices en PDF",
+        "text": "Ocho libros con sus láminas y su cuaderno. Cada cifra que aparece lleva la fuente pública de la que sale."
+      },
+      "b3": {
+        "title": "El cobro no pasa por nosotros",
+        "text": "El pago lo procesa Shopify de principio a fin. Tus datos de tarjeta no tocan esta tienda en ningún momento."
+      }
+    },
+    "vip": {
+      "t1": {
+        "title": "Mapa Muscular 3D",
+        "text": "Toca un músculo y ve sus ejercicios"
+      },
+      "t2": {
+        "title": "Entrenamiento",
+        "text": "27 ejercicios con calorías reales"
+      },
+      "t3": {
+        "title": "Nutrición IA",
+        "text": "Escanea tu plato con la cámara"
+      },
+      "t4": {
+        "title": "Planes Dietarios",
+        "text": "4 planes · menús todo el año"
+      },
+      "t5": {
+        "title": "Meditación",
+        "text": "Respiración guiada + 21 días"
+      },
+      "t6": {
+        "title": "Frecuencias",
+        "text": "Solfeggio, binaurales y duales"
+      },
+      "t7": {
+        "title": "Nivel de Atleta",
+        "text": "De Principiante a Predator"
+      },
+      "t8": {
+        "title": "Progreso y Sueño",
+        "text": "Tu salud entera en gráficos"
+      },
+      "s1": {
+        "label": "Ejercicios"
+      },
+      "s2": {
+        "label": "Frecuencias"
+      },
+      "s3": {
+        "label": "Zonas 3D"
+      },
+      "s4": {
+        "label": "Alimentos"
+      },
+      "s5": {
+        "label": "Niveles"
+      }
+    },
+    "planes": {
+      "p1": {
+        "name": "Básico",
+        "tagline": "Volumen Limpio"
+      },
+      "p2": {
+        "name": "Pro",
+        "tagline": "Definición + Volumen"
+      },
+      "p3": {
+        "name": "Elite",
+        "tagline": "Full Coaching"
+      }
+    },
+    "faq": {
+      "f1": {
+        "question": "¿Cuánto tarda el envío?",
+        "answer_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista según el destino y lo ves en la caja, con seguimiento.</p>"
+      },
+      "f2": {
+        "question": "¿Puedo cancelar mi suscripción?",
+        "answer_html": "<p>Sí, cuando quieras desde tu cuenta.</p>"
+      },
+      "f3": {
+        "question": "¿Puedo devolver un producto?",
+        "answer_html": "<p>Si llega defectuoso, dañado o distinto al descrito, sí: lo sustituimos o lo reembolsamos, y el envío de vuelta lo pagamos nosotros. Por cambio de opinión, no.</p><p>Si compras desde la Unión Europea tienes además 14 días para desistir, salvo en los productos precintados que ya hayas abierto —suplementos y jabones— y en las descargas digitales. Todo el detalle en la <a href=\"/policies/refund-policy\">política de reembolso</a>.</p>"
+      }
+    },
+    "motivacion": {
+      "cab": {
+        "eyebrow": "MOTIVACIÓN",
+        "heading": "Frases que te mueven",
+        "subheading": "Arrastra para girar el anillo",
+        "hint": "Arrastra o desliza"
+      },
+      "m1": {
+        "title": "Sin excusas, solo resultados",
+        "caption": "VILLUMINATIONS"
+      },
+      "m2": {
+        "title": "Tu única competencia eres tú de ayer",
+        "caption": "MINDSET"
+      },
+      "m3": {
+        "title": "La disciplina vence al talento",
+        "caption": "FUERZA"
+      },
+      "m4": {
+        "title": "El dolor es temporal, la gloria eterna",
+        "caption": "PODER"
+      },
+      "m5": {
+        "title": "Domina tu mente, domina tu cuerpo",
+        "caption": "ENFOQUE"
+      },
+      "m6": {
+        "title": "Cada repetición te acerca",
+        "caption": "PROGRESO"
+      }
+    },
+    "video": {
+      "cab": {
+        "eyebrow": "EN MOVIMIENTO",
+        "title": "VIVE LA EXPERIENCIA",
+        "subtitle": "Muévete sobre el vídeo: el marco te sigue."
+      }
+    },
+    "diario": {
+      "cab": {
+        "eyebrow": "EL DIARIO",
+        "title": "LO QUE HAY DETRÁS DE CADA PRODUCTO",
+        "subtitle": "Artículos con la fuente pública de cada cifra. Sin promesas y sin humo.",
+        "texto_boton": "VER TODOS LOS ARTÍCULOS"
+      }
+    },
+    "sec": {
+      "hero-shader": {
+        "eyebrow": "VILLUMINATIONS",
+        "title": "TRANSFORMA TU CUERPO",
+        "subtitle": "Domina tu mente. Equipo, ropa y suplementos para quienes no se conforman.",
+        "button_label": "VER CATÁLOGO"
+      },
+      "best-sellers": {
+        "title": "LOS SUPLEMENTOS MÁS PEDIDOS",
+        "subtitle": "Proteína, creatina y preentreno. Cada ficha dice qué lleva y cuánto, sin prometer nada sobre tu salud."
+      },
+      "category-icons": {
+        "title": "¿QUÉ BUSCAS HOY?"
+      },
+      "faq": {
+        "title": "PREGUNTAS FRECUENTES"
+      },
+      "featured-products": {
+        "title": "MONTA TU GIMNASIO",
+        "subtitle": "Bancos, barras, cajones, chalecos y bandas. Lo que aguanta el uso diario, no lo que luce en la foto.",
+        "view_all_label": "Ver todo el equipo",
+        "eyebrow": "EQUIPO"
+      },
+      "flowing-menu": {
+        "eyebrow": "CATEGORÍAS",
+        "heading": "Explora el universo VILLUMINATIONS"
+      },
+      "multicolumn": {
+        "title": "LA DIFERENCIA VILLUMINATIONS"
+      },
+      "newsletter": {
+        "title": "ÚNETE AL MOVIMIENTO",
+        "text": "Recibe ofertas, rutinas y contenido exclusivo.",
+        "button_label": "Suscribirme",
+        "incentive": "−10% EN TU PRIMERA COMPRA",
+        "success_text": "¡Bienvenido! Usa tu código:",
+        "privacy_note": "Sin spam. Cancela cuando quieras."
+      },
+      "product-carousel-3d": {
+        "eyebrow": "CONOCIMIENTO",
+        "heading": "Ocho libros, ocho temas",
+        "subheading": "Nutrición, carga, descanso, voluntad y práctica interior. Cada cifra con su fuente pública.",
+        "hint": "Arrastra para girar"
+      },
+      "product-showcase-3d": {
+        "title": "LA ROPA, EN 3D",
+        "subtitle": "Gírala y mira el corte, la costura y el tejido antes de pedir tu talla."
+      },
+      "subscription-plans": {
+        "eyebrow": "Membresía Mensual",
+        "title": "PLANES DIETARIOS",
+        "subtitle": "Suscríbete y obtén acceso inmediato a planes de nutrición personalizados.",
+        "button_label": "Suscribirme",
+        "period": "/mes",
+        "badge": "Más elegido",
+        "features_html": "<ul><li>Plan de volumen</li><li>Macros optimizados</li><li>Lista de compras semanal</li></ul>"
+      },
+      "video-grid": {
+        "eyebrow": "YouTube",
+        "title": "CONTENIDO EXCLUSIVO",
+        "subtitle": "Entrena conmigo, aprende y transfórmate con cada video.",
+        "button_label": "Ver más Shorts"
+      },
+      "vip-banner": {
+        "badge": "VI.P · GRATIS, SIN REGISTRO",
+        "title": "TOCA UN MÚSCULO Y VE QUÉ ENTRENAR",
+        "subtitle": "Tu gimnasio digital VI.P: anatomía 3D, rutinas con calorías y nutrición.",
+        "text": "Tu peso, tus rutinas y tus comidas se quedan en tu propio dispositivo.",
+        "button_label": "ABRIR VI.P GRATIS",
+        "note": "Sin registro · Sin instalar nada · ES / EN / FR"
+      },
+      "footer": {
+        "about": "Tienda fitness para atletas que no se conforman con lo ordinario.",
+        "payment_label": "Pago 100% seguro y cifrado",
+        "newsletter_title": "Únete a la comunidad",
+        "quotes": "El cuerpo logra lo que la mente cree.\nHoy, 1% mejor que ayer.\nLa disciplina pesa gramos; el arrepentimiento, toneladas.\nTu único rival es el de ayer.\nEntrena · Come · Duerme · Repite."
+      },
+      "header": {
+        "collections_trigger": "Colecciones"
+      },
+      "announcement-bar": {
+        "countdown_prefix": "Termina en",
+        "countdown_expired": "¡Oferta terminada!",
+        "text": "Envío con seguimiento en todos los pedidos 🚀"
+      },
+      "recently-viewed": {
+        "eyebrow": "TU HISTORIAL",
+        "heading": "Vistos recientemente"
+      },
+      "main-list-collections": {
+        "eyebrow": "CATÁLOGO",
+        "heading": "Explora el universo VILLUMINATIONS",
+        "subheading": "Elige tu categoría y entra en modo élite.",
+        "cta_text": "Explorar"
+      }
+    },
+    "pie": {
+      "menu": {
+        "title": "Información"
+      },
+      "g1": {
+        "titulo": "Envío con seguimiento",
+        "texto": "Recibes el número de rastreo en cuanto tu pedido sale."
+      },
+      "g2": {
+        "titulo": "Pago cifrado",
+        "texto": "Lo procesa Shopify: tus datos de tarjeta no pasan por nosotros."
+      },
+      "g3": {
+        "titulo": "Devoluciones",
+        "texto": "Consulta la política de reembolso antes de comprar."
+      },
+      "g4": {
+        "titulo": "Te responde una persona",
+        "texto": "Escríbenos y te contesta alguien de verdad, no un robot."
+      }
+    },
+    "cabecera": {
+      "m1": {
+        "subtitle": "Estilo que entrena contigo"
+      },
+      "m2": {
+        "subtitle": "Herramientas de poder"
+      },
+      "m3": {
+        "subtitle": "Combustible de élite"
+      },
+      "m4": {
+        "subtitle": "Entrena tu mente"
+      }
+    },
+    "producto": {
+      "t1": {
+        "text": "Preparación en 1–3 días"
+      },
+      "t2": {
+        "text": "Pago 100% seguro"
+      },
+      "t3": {
+        "text": "Envío con seguimiento"
+      },
+      "c1": {
+        "title": "Envío y devoluciones",
+        "content_html": "<p>Preparamos el pedido en 1–3 días hábiles. El plazo de entrega lo calcula el transportista y lo ves en la caja, con seguimiento.</p><p>Las compras son definitivas, salvo que el producto llegue defectuoso, dañado o distinto al descrito: en ese caso lo sustituimos o lo reembolsamos. Desde la Unión Europea tienes además 14 días para desistir, con excepciones para los productos precintados una vez abiertos y para las descargas digitales. Todo el detalle en la <a href=\"/policies/refund-policy\">política de reembolso</a>.</p>"
+      },
+      "c2": {
+        "title": "Cómo se usa"
+      },
+      "sec": {
+        "related_heading": "También te puede gustar",
+        "low_stock_text": "¡Solo quedan [n]! Date prisa",
+        "rec_eyebrow": "Para ti",
+        "related_eyebrow": "COMPLETA TU ARSENAL"
+      }
+    }
+  },
+  "onboarding": {
+    "app_block": "Añade aquí el bloque de tu app 3D/AR o probador virtual desde el editor.",
+    "add_cards": "Añade tarjetas desde el editor.",
+    "add_rows": "Añade filas desde el editor.",
+    "add_pdf": "Añade la URL de un PDF o flipbook.",
+    "pick_collection": "Elige una colección con productos en el editor."
+  }
+}

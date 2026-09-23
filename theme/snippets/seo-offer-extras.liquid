@@ -1,0 +1,76 @@
+{%- comment -%}
+  Envío y devoluciones dentro de la oferta (JSON-LD).
+
+  Google usa estos datos para las insignias de "envío gratis" y "devolución
+  gratuita" en los resultados de compra, que son de lo que más sube la tasa de
+  clic frente a la competencia.
+
+  Todo es OPCIONAL a propósito: declarar un plazo de devolución o un envío que
+  luego no cumples es peor que no declarar nada, porque Google penaliza el
+  desajuste. Solo se emite lo que el comerciante haya rellenado en
+  Parámetros del tema → SEO.
+
+  Se renderiza DENTRO del objeto "offers", así que empieza siempre por coma.
+{%- endcomment -%}
+{%- comment -%}
+  Un producto descargable NO se envia ni se devuelve por correo. Declararle un
+  destino de envio y una devolucion por mensajeria es informacion falsa: Google
+  puede retirar el resultado enriquecido entero por desajuste, y con once PDF
+  en el catalogo eso son once fichas afectadas. Aqui se comprueba antes.
+
+  requires_shipping vive en la variante, no en el producto. Se mira la
+  seleccionada y, si por lo que sea no hay, la primera: basta una que no se
+  envie para tratar la ficha como digital.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant | default: product.variants.first
+  assign se_envia = true
+  if v and v.requires_shipping == false
+    assign se_envia = false
+  endif
+
+  assign ship_country = settings.seo_ship_country | strip
+  assign free_from = settings.cart_free_shipping_threshold | default: 0
+  assign return_days = settings.seo_return_days | default: 0
+
+  unless se_envia
+    assign ship_country = ''
+    assign return_days = 0
+  endunless
+-%}
+
+{%- if ship_country != blank -%},
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": {{ ship_country | json }}
+      }
+      {%- if free_from > 0 -%},
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": 0,
+        "currency": {{ cart.currency.iso_code | json }}
+      },
+      "freeShippingThreshold": {
+        "@type": "DeliveryChargeSpecification",
+        "eligibleTransactionVolume": {
+          "@type": "PriceSpecification",
+          "price": {{ free_from | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }}
+        }
+      }
+      {%- endif -%}
+    }
+{%- endif -%}
+
+{%- if return_days > 0 and ship_country != blank -%},
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": {{ ship_country | json }},
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": {{ return_days }},
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": {% if settings.seo_return_free %}"https://schema.org/FreeReturn"{% else %}"https://schema.org/ReturnShippingFees"{% endif %}
+    }
+{%- endif -%}

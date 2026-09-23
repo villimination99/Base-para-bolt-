@@ -1,0 +1,101 @@
+{
+  "_leeme": [
+    "TODO TEXTO DE CLIENTE QUE SE ESCRIBE EN EL EDITOR DE SHOPIFY VIVE AQUI.",
+    "",
+    "Los ficheros de idioma del tema (theme/locales/*.json) los vigila la",
+    "bateria de idiomas. Pero lo que el comerciante teclea en el editor NO esta",
+    "ahi: vive en config/settings_data.json y sus traducciones viven en Shopify,",
+    "fuera del repositorio. Ninguna bateria podia verlo.",
+    "",
+    "Eso dejo salir a produccion el lema de la intro -- lo PRIMERO que lee",
+    "quien llega -- en castellano para el visitante frances, aleman y japones.",
+    "Cuatro idiomas, en la primera pantalla, con dinero de anuncios detras.",
+    "",
+    "Este fichero es el registro de esos textos, y verificadores/ajustes/ lo",
+    "compara con lo que hay de verdad en los ajustes:",
+    "",
+    "  - Si aparece un texto nuevo que no esta aqui, la compuerta se pone roja.",
+    "    Nadie puede escribir un lema en el editor y olvidarse de traducirlo.",
+    "  - Si el castellano de aqui deja de coincidir con el del tema, tambien:",
+    "    significa que alguien cambio la frase y las traducciones se quedaron",
+    "    hablando de otra cosa.",
+    "  - Lo que no se traduce -- el nombre de la marca, un codigo de",
+    "    verificacion -- se declara con traduce:false y su motivo. Callarlo no",
+    "    vale: hay que decir POR QUE no se traduce.",
+    "",
+    "Las traducciones de aqui son las que se registran en Shopify con",
+    "translationsRegister, contra el gid del tema que toque. OJO: las",
+    "traducciones van pegadas a CADA tema, y un tema nuevo no hereda las que se",
+    "registraron a mano en el anterior."
+  ],
+
+  "general.splash_tagline": {
+    "traduce": true,
+    "donde": "El lema de la intro. La segunda linea de la primera pantalla.",
+    "es": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
+    "en": "TRANSFORM YOUR BODY. MASTER YOUR MIND.",
+    "fr": "TRANSFORMEZ VOTRE CORPS. MAÎTRISEZ VOTRE ESPRIT.",
+    "de": "KÖRPER FORMEN. GEIST MEISTERN.",
+    "ja": "カラダを変える。ココロを制する。"
+  },
+
+  "general.splash_frases": {
+    "traduce": true,
+    "donde": "La frase que cruza la intro mientras corre la secuencia.",
+    "es": "EL LÍMITE LO PONES TÚ",
+    "en": "YOU SET THE LIMIT",
+    "fr": "LA LIMITE, C'EST VOUS QUI LA FIXEZ",
+    "de": "IHRE GRENZE BESTIMMEN SIE",
+    "ja": "限界を決めるのは、あなた。"
+  },
+
+  "general.brand_tagline": {
+    "traduce": true,
+    "donde": "El lema de marca. Sale en el pie y en los datos estructurados.",
+    "es": "Transforma tu cuerpo. Domina tu mente.",
+    "en": "Transform your body. Master your mind.",
+    "fr": "Transformez votre corps. Maîtrisez votre esprit.",
+    "de": "Körper formen. Geist meistern.",
+    "ja": "カラダを変える。ココロを制する。"
+  },
+
+  "general.cart_cross_sell_title": {
+    "traduce": true,
+    "donde": "El titulo de los productos sugeridos en el cajon del carrito.",
+    "es": "Completa tu compra",
+    "en": "Complete your order",
+    "fr": "Complétez votre commande",
+    "de": "Bestellung vervollständigen",
+    "ja": "お買い物を仕上げる"
+  },
+
+  "general.brand_display_name": {
+    "traduce": false,
+    "porque": "Es el nombre de la marca, en plural y como la pagina web. Un nombre propio no se traduce: en aleman y en japones tambien se dice VILLUMINATIONS.",
+    "es": "VILLUMINATIONS"
+  },
+
+  "general.splash_title": {
+    "traduce": false,
+    "porque": "El mismo nombre de la marca, para cuando no hay logotipo cargado.",
+    "es": "VILLUMINATIONS"
+  },
+
+  "general.seo_google_verification": {
+    "traduce": false,
+    "porque": "Es el codigo de propiedad de Google Search Console, no un texto. Traducirlo romperia la verificacion del dominio.",
+    "es": "ztSaLwg9MkIRvDsQj1HvTPsFg-kxZIdRXYlS-6lNFQE"
+  },
+
+  "general.social_youtube": {
+    "traduce": false,
+    "porque": "Es una direccion de internet, no una frase. El canal es el mismo para los cinco idiomas.",
+    "es": "https://www.youtube.com/@villumination99"
+  },
+
+  "general.social_instagram": {
+    "traduce": false,
+    "porque": "Es una direccion de internet, no una frase. La cuenta es la misma para los cinco idiomas.",
+    "es": "https://www.instagram.com/villumination99"
+  }
+}
