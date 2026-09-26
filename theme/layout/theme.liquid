@@ -86,10 +86,17 @@
     if meta_desc == blank
       assign meta_desc = shop.description
     endif
-    if meta_desc == blank
-      assign meta_desc = settings.brand_tagline
-    endif
   -%}
+  {%- comment -%}
+    Ultimo escalon de la escalera: el eslogan de la marca. Pasa por 'copia'
+    igual que el resto, porque el ajuste va vacio a proposito y el texto vive
+    en los archivos de idioma -- si se leyera el ajuste crudo, la description
+    de respaldo saldria vacia en las cinco lenguas.
+  {%- endcomment -%}
+  {%- if meta_desc == blank -%}
+    {%- capture meta_desc -%}{%- render 'copia', g: 'marca', b: 'tienda', a: 'lema', v: settings.brand_tagline -%}{%- endcapture -%}
+    {%- assign meta_desc = meta_desc | strip -%}
+  {%- endif -%}
   {%- if meta_desc != blank -%}
     <meta name="description" content="{{ meta_desc | strip_html | truncate: 300 | escape }}">
   {%- endif -%}

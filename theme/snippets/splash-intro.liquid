@@ -129,8 +129,10 @@
       decorativas: lo que importa anunciar es el título y el botón de entrar.
       assets/intro.js va marcando cuál toca con data-frase.
     {%- endcomment -%}
-    {%- assign frases = settings.splash_frases | newline_to_br | split: '<br />' -%}
-    {%- if settings.splash_frases != blank -%}
+    {%- capture cx_frases -%}{%- render 'copia', g: 'marca', b: 'intro', a: 'frases', v: settings.splash_frases -%}{%- endcapture -%}
+    {%- assign cx_frases = cx_frases | strip -%}
+    {%- assign frases = cx_frases | newline_to_br | split: '<br />' -%}
+    {%- if cx_frases != blank -%}
       <div class="splash-frases" data-splash-frases aria-hidden="true">
         {%- for f in frases limit: 3 -%}
           {%- assign texto = f | strip -%}
@@ -167,8 +169,10 @@
     {%- elsif settings.splash_title != blank -%}
       <h1 class="splash-title">{{ settings.splash_title }}</h1>
     {%- endif -%}
-    {%- if settings.splash_tagline != blank -%}
-      <p class="splash-tagline">{{ settings.splash_tagline }}</p>
+    {%- capture cx_lema_intro -%}{%- render 'copia', g: 'marca', b: 'intro', a: 'lema', v: settings.splash_tagline -%}{%- endcapture -%}
+    {%- assign cx_lema_intro = cx_lema_intro | strip -%}
+    {%- if cx_lema_intro != blank -%}
+      <p class="splash-tagline">{{ cx_lema_intro }}</p>
     {%- endif -%}
 
     <button id="splash-enter" class="splash-enter-btn btn-neon" type="button">

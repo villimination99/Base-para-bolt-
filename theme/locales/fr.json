@@ -613,6 +613,18 @@
         "rec_eyebrow": "Pour toi",
         "related_eyebrow": "COMPLÈTE TON ARSENAL"
       }
+    },
+    "marca": {
+      "tienda": {
+        "lema": "Transformez votre corps. Maîtrisez votre esprit."
+      },
+      "intro": {
+        "lema": "TRANSFORMEZ VOTRE CORPS. MAÎTRISEZ VOTRE ESPRIT.",
+        "frases": "LA LIMITE, C'EST VOUS QUI LA FIXEZ"
+      },
+      "carrito": {
+        "cruzada": "Complétez votre commande"
+      }
     }
   },
   "onboarding": {

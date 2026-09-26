@@ -26,48 +26,29 @@
     "Las traducciones de aqui son las que se registran en Shopify con",
     "translationsRegister, contra el gid del tema que toque. OJO: las",
     "traducciones van pegadas a CADA tema, y un tema nuevo no hereda las que se",
-    "registraron a mano en el anterior."
+    "registraron a mano en el anterior.",
+    "",
+    "CUATRO QUE YA NO ESTAN, Y NO HAY QUE VOLVER A METERLOS (v4.74.0):",
+    "general.brand_tagline, general.splash_tagline, general.splash_frases y",
+    "general.cart_cross_sell_title. Se registraban a mano en cada publicacion",
+    "-- dieciseis traducciones -- y en cada publicacion se perdian: eso es",
+    "exactamente lo que le paso al tema 4.72.0.",
+    "",
+    "Ahora esos cuatro textos viven en los archivos de idioma del tema, en la",
+    "rama inicio.marca (fuente: marca/copia-portada.json), que viajan dentro",
+    "del zip y no se pierden nunca. Los cuatro ajustes siguen existiendo en el",
+    "editor y VACIOS: si el comerciante escribe algo, lo suyo manda -- y",
+    "entonces la regla 1 de esta bateria se pone roja y pide declararlo aqui,",
+    "que es justo lo que tiene que pasar.",
+    "",
+    "La regla para decidir donde va un texto nuevo: si lo escribe el",
+    "comerciante y cambia de tienda en tienda, va aqui. Si es copia de la",
+    "marca, va a marca/copia-portada.json y se corre node marca/generar-copia.mjs."
   ],
 
-  "general.splash_tagline": {
-    "traduce": true,
-    "donde": "El lema de la intro. La segunda linea de la primera pantalla.",
-    "es": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
-    "en": "TRANSFORM YOUR BODY. MASTER YOUR MIND.",
-    "fr": "TRANSFORMEZ VOTRE CORPS. MAÎTRISEZ VOTRE ESPRIT.",
-    "de": "KÖRPER FORMEN. GEIST MEISTERN.",
-    "ja": "カラダを変える。ココロを制する。"
-  },
 
-  "general.splash_frases": {
-    "traduce": true,
-    "donde": "La frase que cruza la intro mientras corre la secuencia.",
-    "es": "EL LÍMITE LO PONES TÚ",
-    "en": "YOU SET THE LIMIT",
-    "fr": "LA LIMITE, C'EST VOUS QUI LA FIXEZ",
-    "de": "IHRE GRENZE BESTIMMEN SIE",
-    "ja": "限界を決めるのは、あなた。"
-  },
 
-  "general.brand_tagline": {
-    "traduce": true,
-    "donde": "El lema de marca. Sale en el pie y en los datos estructurados.",
-    "es": "Transforma tu cuerpo. Domina tu mente.",
-    "en": "Transform your body. Master your mind.",
-    "fr": "Transformez votre corps. Maîtrisez votre esprit.",
-    "de": "Körper formen. Geist meistern.",
-    "ja": "カラダを変える。ココロを制する。"
-  },
 
-  "general.cart_cross_sell_title": {
-    "traduce": true,
-    "donde": "El titulo de los productos sugeridos en el cajon del carrito.",
-    "es": "Completa tu compra",
-    "en": "Complete your order",
-    "fr": "Complétez votre commande",
-    "de": "Bestellung vervollständigen",
-    "ja": "お買い物を仕上げる"
-  },
 
   "general.brand_display_name": {
     "traduce": false,

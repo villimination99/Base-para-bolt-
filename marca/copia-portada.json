@@ -1388,5 +1388,41 @@
         "ja": "装備を完成させる"
       }
     }
+  },
+  "marca": {
+    "tienda": {
+      "lema": {
+        "es": "Transforma tu cuerpo. Domina tu mente.",
+        "en": "Transform your body. Master your mind.",
+        "fr": "Transformez votre corps. Maîtrisez votre esprit.",
+        "de": "Körper formen. Geist meistern.",
+        "ja": "カラダを変える。ココロを制する。"
+      }
+    },
+    "intro": {
+      "lema": {
+        "es": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
+        "en": "TRANSFORM YOUR BODY. MASTER YOUR MIND.",
+        "fr": "TRANSFORMEZ VOTRE CORPS. MAÎTRISEZ VOTRE ESPRIT.",
+        "de": "KÖRPER FORMEN. GEIST MEISTERN.",
+        "ja": "カラダを変える。ココロを制する。"
+      },
+      "frases": {
+        "es": "EL LÍMITE LO PONES TÚ",
+        "en": "YOU SET THE LIMIT",
+        "fr": "LA LIMITE, C'EST VOUS QUI LA FIXEZ",
+        "de": "IHRE GRENZE BESTIMMEN SIE",
+        "ja": "限界を決めるのは、あなた。"
+      }
+    },
+    "carrito": {
+      "cruzada": {
+        "es": "Completa tu compra",
+        "en": "Complete your order",
+        "fr": "Complétez votre commande",
+        "de": "Bestellung vervollständigen",
+        "ja": "お買い物を仕上げる"
+      }
+    }
   }
 }

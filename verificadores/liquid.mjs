@@ -311,6 +311,11 @@ e.registerTag('form', bloque('form', '<form>', '</form>'));
 e.registerTag('paginate', bloque('paginate', '', ''));
 e.registerTag('section', { parse() {}, render() { return ''; } });
 e.registerTag('sections', { parse() {}, render() { return ''; } });
+/* {% layout %} elige el esqueleto en Shopify y no pinta nada por si mismo.
+   Sin registrarlo, cargar templates/password.liquid reventaba con "tag layout
+   not found" -- o sea que la pagina de contraseña, que es LA PRIMERA que ve
+   cualquiera mientras la tienda esta cerrada, no entraba en ninguna bateria. */
+e.registerTag('layout', { parse() {}, render() { return ''; } });
 
 /* {% render block %} es el bloque de aplicacion de Shopify: el argumento no
    es el nombre de un snippet sino un objeto, y liquidjs no sabe resolverlo.

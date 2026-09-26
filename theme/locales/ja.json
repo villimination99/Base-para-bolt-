@@ -613,6 +613,18 @@
         "rec_eyebrow": "あなたに",
         "related_eyebrow": "装備を完成させる"
       }
+    },
+    "marca": {
+      "tienda": {
+        "lema": "カラダを変える。ココロを制する。"
+      },
+      "intro": {
+        "lema": "カラダを変える。ココロを制する。",
+        "frases": "限界を決めるのは、あなた。"
+      },
+      "carrito": {
+        "cruzada": "お買い物を仕上げる"
+      }
     }
   },
   "onboarding": {

@@ -79,7 +79,9 @@
       {%- endcapture -%}
       {%- if xs_shown > 0 -%}
         <div class="cart-xs">
-          <p class="cart-xs-head">{%- render 'icon', name: 'bolt' -%} {{ settings.cart_cross_sell_title | default: 'Completa tu compra' }}</p>
+          {%- capture cx_cruzada -%}{%- render 'copia', g: 'marca', b: 'carrito', a: 'cruzada', v: settings.cart_cross_sell_title -%}{%- endcapture -%}
+          {%- assign cx_cruzada = cx_cruzada | strip -%}
+          <p class="cart-xs-head">{%- render 'icon', name: 'bolt' -%} {{ cx_cruzada }}</p>
           <ul class="cart-xs-list" role="list">{{ xs_html }}</ul>
         </div>
       {%- endif -%}

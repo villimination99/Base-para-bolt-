@@ -613,6 +613,18 @@
         "rec_eyebrow": "Für dich",
         "related_eyebrow": "VERVOLLSTÄNDIGE DEIN ARSENAL"
       }
+    },
+    "marca": {
+      "tienda": {
+        "lema": "Körper formen. Geist meistern."
+      },
+      "intro": {
+        "lema": "KÖRPER FORMEN. GEIST MEISTERN.",
+        "frases": "IHRE GRENZE BESTIMMEN SIE"
+      },
+      "carrito": {
+        "cruzada": "Bestellung vervollständigen"
+      }
     }
   },
   "onboarding": {

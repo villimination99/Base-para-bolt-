@@ -613,6 +613,18 @@
         "rec_eyebrow": "Para ti",
         "related_eyebrow": "COMPLETA TU ARSENAL"
       }
+    },
+    "marca": {
+      "tienda": {
+        "lema": "Transforma tu cuerpo. Domina tu mente."
+      },
+      "intro": {
+        "lema": "TRANSFORMA TU CUERPO. DOMINA TU MENTE.",
+        "frases": "EL LÍMITE LO PONES TÚ"
+      },
+      "carrito": {
+        "cruzada": "Completa tu compra"
+      }
     }
   },
   "onboarding": {

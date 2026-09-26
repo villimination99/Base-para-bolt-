@@ -613,6 +613,18 @@
         "rec_eyebrow": "For you",
         "related_eyebrow": "COMPLETE YOUR ARSENAL"
       }
+    },
+    "marca": {
+      "tienda": {
+        "lema": "Transform your body. Master your mind."
+      },
+      "intro": {
+        "lema": "TRANSFORM YOUR BODY. MASTER YOUR MIND.",
+        "frases": "YOU SET THE LIMIT"
+      },
+      "carrito": {
+        "cruzada": "Complete your order"
+      }
     }
   },
   "onboarding": {

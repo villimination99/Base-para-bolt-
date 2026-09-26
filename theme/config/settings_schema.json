@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Villumination 3D",
-    "theme_version": "4.73.0",
+    "theme_version": "4.74.0",
     "theme_author": "Villumination99",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://help.shopify.com/manual/online-store/themes"
@@ -480,9 +480,18 @@
         "id": "coleccion_rotulo",
         "label": "Dónde va el nombre de la colección",
         "options": [
-          { "value": "encima", "label": "Encima de la imagen (clásico)" },
-          { "value": "debajo", "label": "Debajo de la imagen — para fotos que YA llevan texto" },
-          { "value": "en_la_foto", "label": "Solo la foto — el nombre lo pone la imagen" }
+          {
+            "value": "encima",
+            "label": "Encima de la imagen (clásico)"
+          },
+          {
+            "value": "debajo",
+            "label": "Debajo de la imagen — para fotos que YA llevan texto"
+          },
+          {
+            "value": "en_la_foto",
+            "label": "Solo la foto — el nombre lo pone la imagen"
+          }
         ],
         "default": "encima",
         "info": "Si las imágenes de tus colecciones ya llevan el nombre escrito dentro, con «Encima» se ven DOS textos superpuestos. Con «Debajo» la foto queda limpia y el nombre va bajo ella; con «Solo la foto» el tema no lo dibuja. En los tres casos el nombre sigue estando en el código para Google y para los lectores de pantalla: no se pierde nada de posicionamiento. Afecta a la lista de colecciones, al mosaico, a la página de todas las colecciones y a la portada de cada colección."
@@ -669,7 +678,7 @@
         "type": "text",
         "id": "brand_tagline",
         "label": "Eslogan",
-        "default": "Transforma tu cuerpo. Domina tu mente."
+        "info": "Vacío = sale el eslogan traducido de los archivos de idioma del tema (locales/*.json, clave inicio.marca.tienda.lema), que viaja dentro del zip y no se pierde al publicar. Si escribes algo aquí, lo tuyo manda, pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
       }
     ]
   },
@@ -710,7 +719,7 @@
         "type": "text",
         "id": "splash_tagline",
         "label": "Eslogan",
-        "default": "TRANSFORMA TU CUERPO. DOMINA TU MENTE."
+        "info": "Vacío = sale el eslogan traducido de los archivos de idioma del tema (locales/*.json, clave inicio.marca.intro.lema), que viaja dentro del zip y no se pierde al publicar. Si escribes algo aquí, lo tuyo manda, pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
       },
       {
         "type": "image_picker",
@@ -745,8 +754,7 @@
         "type": "textarea",
         "id": "splash_frases",
         "label": "Frases de motivación",
-        "info": "Una por línea (máximo 3). Aparecen debajo de la esfera, mientras gira el núcleo, y se van antes de que la marca ocupe el centro. SOLO con la duración completa: en los 2,4 s de la corta no caben tres frases con sus fundidos, y media frase es peor que ninguna, así que ahí no se muestran. Deja el campo vacío para no mostrar ninguna.",
-        "default": "EL LÍMITE LO PONES TÚ"
+        "info": "Una por línea (máximo 3). Aparecen debajo de la esfera, mientras gira el núcleo, y se van antes de que la marca ocupe el centro. SOLO con la duración completa: en los 2,4 s de la corta no caben tres frases con sus fundidos, y media frase es peor que ninguna, así que ahí no se muestran. Vacío = salen las frases traducidas de los archivos de idioma del tema (locales/*.json, clave inicio.marca.intro.frases), que viajan dentro del zip y no se pierden al publicar. Si escribes algo aquí, lo tuyo manda, pero en todos los idiomas a la vez. Para cambiar la copia traducida, o para no mostrar ninguna frase, se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
       }
     ]
   },
@@ -814,7 +822,7 @@
         "type": "text",
         "id": "cart_cross_sell_title",
         "label": "Título de las sugerencias",
-        "default": "Completa tu compra"
+        "info": "Vacío = sale el título traducido de los archivos de idioma del tema (locales/*.json, clave inicio.marca.carrito.cruzada), que viaja dentro del zip y no se pierde al publicar. Si escribes algo aquí, lo tuyo manda, pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
       },
       {
         "type": "header",

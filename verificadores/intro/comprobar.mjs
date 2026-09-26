@@ -43,7 +43,16 @@ const PIEZAS = ['splash-canvas', 'splash-emblem', 'splash-enter-btn', 'data-spla
 const AJUSTES = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_schema.json'), 'utf8'));
 const DATOS = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/config/settings_data.json'), 'utf8')).current;
 
-const FRASES = String(DATOS.splash_frases || '').split('\n').map(s => s.trim()).filter(Boolean);
+/* Las frases se resuelven COMO LAS RESUELVE EL TEMA, no leyendo el ajuste a
+   pelo: snippets/copia.liquid manda lo que haya escrito el comerciante en el
+   editor y, si el campo esta vacio -- que es como viaja el tema, para que las
+   traducciones no se pierdan en cada publicacion --, cae en la clave
+   inicio.marca.intro.frases de los archivos de idioma. Leyendo solo el ajuste,
+   esta bateria media una intro SIN frases que no existe en ninguna tienda. */
+const ES = JSON.parse(fs.readFileSync(path.join(RAIZ, 'theme/locales/es.json'), 'utf8'));
+const FRASES_COPIA = ((ES.inicio || {}).marca || {}).intro || {};
+const FRASES = String(DATOS.splash_frases || FRASES_COPIA.frases || '')
+  .split('\n').map(s => s.trim()).filter(Boolean);
 
 /* Una foto sintetica para la sala. No hace falta que sea la de la tienda: lo
    que esta prueba mide de ella es su COSTE y su sitio en la pila de capas --

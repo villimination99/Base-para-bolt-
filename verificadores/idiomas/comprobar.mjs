@@ -27,7 +27,7 @@
    Uso:  node verificadores/idiomas/comprobar.mjs                          */
 import fs from 'fs';
 import path from 'path';
-import { e, prepararFuente, contextoDeSeccion } from '../liquid.mjs';
+import { e, prepararFuente, contextoDeSeccion, ctxBase } from '../liquid.mjs';
 
 const RAIZ = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const T = process.env.TEMA || path.join(RAIZ, 'theme');
@@ -69,6 +69,33 @@ for (const grupo of ['header-group', 'footer-group']) {
 /* COPIA QUE ESTA PRUEBA NO PUEDE VER, Y POR QUE.
    Cada exencion lleva su motivo escrito: una lista de exenciones sin motivo
    acaba siendo el sitio donde se esconden los fallos de verdad. */
+/* TRES SUPERFICIES QUE NO SON SECCIONES, Y QUE NADIE MIRABA.
+   Esta bateria recorre las secciones de las plantillas, y por ahi no pasan ni
+   la intro, ni la pagina de contraseña, ni el cajon del carrito: son un
+   fragmento y una plantilla suelta. Cuando el eslogan, las frases de la intro
+   y el titulo de la venta cruzada se mudaron a los idiomas, sus cuatro claves
+   quedaron sin nadie que las viera -- y exentarlas habria sido justo eso,
+   dejar de mirarlas. Asi que se pintan aqui, con el contexto que hace falta
+   para que cada una entre en su rama:
+     - la intro y la contraseña se pintan solas;
+     - el cajon necesita un carrito CON articulos, y ademas que el primero
+       pertenezca a una coleccion con hermanos, que es la unica puerta por la
+       que se pinta el titulo de la venta cruzada. */
+const SUELTAS = [
+  { ruta: 'snippets/splash-intro.liquid', ctx: () => ctxBase },
+  { ruta: 'templates/password.liquid', ctx: () => ctxBase },
+  { ruta: 'snippets/cart-drawer-items.liquid', ctx: () => {
+      const p = ctxBase.product;
+      const linea = { key: 'k1', quantity: 1, title: p.title, url: p.url, image: null,
+        variant: { title: 'Único' }, properties: {}, product: p,
+        line_level_discount_allocations: [], original_line_price: p.price, final_line_price: p.price };
+      return Object.assign({}, ctxBase, {
+        cart: { item_count: 1, items: [linea], total_price: p.price,
+                original_total_price: p.price, cart_level_discount_applications: [],
+                currency: ctxBase.cart.currency, note: '' } });
+    } },
+];
+
 const CONDICIONALES = {
   'diario.cab': 'la seccion entera se pinta solo si el blog elegido existe y tiene articulos, y aqui no hay blog',
   'sec.newsletter.success_text': 'se pinta solo despues de enviar el formulario con exito (form.posted_successfully?)',
@@ -155,6 +182,17 @@ for (const [idioma, archivo] of Object.entries(LOC)) {
     const datos = [...html.matchAll(/<script[^>]*type="application\/json"[^>]*>([\s\S]*?)<\/script>/g)]
       .map(m => m[1]).join(' ');
     todo += ' ' + datos.replace(/\\u([\da-f]{4})/gi, (_, c) => String.fromCharCode(parseInt(c, 16)));
+    todo += ' ' + html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ')
+                      .replace(/<[^>]*>/g, ' ');
+  }
+  for (const suelta of SUELTAS) {
+    const ruta = `${T}/${suelta.ruta}`;
+    if (!fs.existsSync(ruta)) { console.log(`  FALLA ${idioma}: falta ${suelta.ruta}`); fallos++; continue; }
+    const ctx = suelta.ctx();
+    e.options.globals = ctx;
+    let html;
+    try { html = await e.parseAndRender(prepararFuente(fs.readFileSync(ruta, 'utf8')), ctx); }
+    catch (err) { console.log(`  FALLA ${idioma}/${suelta.ruta}: ${err.message}`); fallos++; continue; }
     todo += ' ' + html.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ')
                       .replace(/<[^>]*>/g, ' ');
   }
