@@ -1,0 +1,50 @@
+<section class="section-padding search-page">
+  <div class="container">
+    <h1 class="section-title">{{ 'general.search.title' | t }}</h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+      {%- comment -%}
+        Sin options[prefix]=last, Shopify solo encuentra palabras completas:
+        buscar "prote" no devolvía nada aunque hubiera "proteína". Es la opción
+        que recomienda Shopify y la que usan sus temas oficiales.
+      {%- endcomment -%}
+      <input type="hidden" name="options[prefix]" value="last">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}" autocomplete="off">
+      <button type="submit" class="btn btn-primary" aria-label="{{ 'general.search.title' | t }}">{%- render 'icon', name: 'search' -%}</button>
+    </form>
+
+    {%- if search.performed -%}
+      <p class="search-count">{{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}</p>
+      {%- paginate search.results by 20 -%}
+        {%- comment -%} Las tarjetas usan h3; este h2 evita el salto h1→h3 sin alterar el diseño. {%- endcomment -%}
+        <h2 class="visually-hidden">{{ 'general.search.title' | t }}</h2>
+        <div class="product-grid">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {%- render 'product-card', product: item -%}
+            {%- else -%}
+              <a href="{{ item.url }}" class="search-result-card">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.content | strip_html | truncatewords: 25 }}</p>
+              </a>
+            {%- endif -%}
+          {%- else -%}
+            <p class="collection-empty">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}<a href="{{ part.url }}" class="pagination-num">{{ part.title }}</a>
+              {%- else -%}<span class="pagination-num is-current">{{ part.title }}</span>{%- endif -%}
+            {%- endfor -%}
+          </nav>
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Búsqueda", "settings": [] }
+{% endschema %}

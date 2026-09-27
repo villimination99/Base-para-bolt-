@@ -1,0 +1,50 @@
+<p>bisec sc</p>
+{% schema %}
+{
+  "name": "Secuencia de marca",
+  "tag": "section",
+  "class": "shopify-section--secuencia",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color",
+      "id": "acento",
+      "label": "Color de acento",
+      "default": "#00f0ff"
+    },
+    {
+      "type": "color",
+      "id": "fondo",
+      "label": "Color de fondo",
+      "default": "#05060a"
+    },
+    {
+      "type": "range",
+      "id": "alto",
+      "min": 380,
+      "max": 760,
+      "step": 20,
+      "unit": "px",
+      "label": "Alto",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "duracion",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "unit": "s",
+      "label": "Duración del ciclo",
+      "default": 14,
+      "info": "El tiempo se reparte entre las escenas que tengas."
+    },
+    {
+      "type": "checkbox",
+      "id": "compacta",
+      "label": "Menos espacio arriba y abajo",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

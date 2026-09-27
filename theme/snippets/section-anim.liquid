@@ -1,0 +1,6 @@
+{%- comment -%}
+  Returns reveal attribute + class string for a section's animation setting.
+  Usage: <div class="... {% render 'section-anim', anim: section.settings.animation %}" {% render 'section-anim', anim: section.settings.animation, attr: true %}>
+  Simpler: use the two helper renders below inline. Here we just emit classes.
+{%- endcomment -%}
+{%- if settings.enable_scroll_reveal and anim != 'none' and anim != blank -%}reveal-{{ anim }}{%- endif -%}

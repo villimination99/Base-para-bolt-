@@ -1,0 +1,1347 @@
+/* ===== RESET & GLOBALES ===== */
+    #vill-hub, #vill-hub *, #vill-hub *::before, #vill-hub *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* Ojo con los selectores sueltos: esto se pega DENTRO de una tienda que
+       ya tiene su hoja de estilos. 'html' cambiaba el desplazamiento de la
+       tienda entera, no solo del hub. */
+    #vill-hub { scroll-behavior: smooth; }
+    #vill-hub {
+      background: #0A0A0A; color: #EEEEEE;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+      position: relative; width: 100%;
+    }
+    #vill-hub a { color: #05D9E8; text-decoration: none; }
+    #vill-hub section { padding: 60px 16px; max-width: 1200px; margin: 0 auto; }
+
+    /* ===== BLINDAJE PARA TEMA SHOPIFY ===== */
+    #vill-hub section div { min-width: 0; }
+    #vill-hub .hero-stat { min-width: 104px; }
+    #vill-hub img, #vill-hub canvas, #vill-hub svg, #vill-hub video { max-width: 100%; }
+    #vill-hub table { border-collapse: collapse; }
+    #vill-hub input, #vill-hub select, #vill-hub button, #vill-hub textarea { font-family: inherit; }
+    /* límites de gráficos dentro del tema */
+    #vill-hub #macro-chart { max-width: 300px; max-height: 300px; margin: 0 auto; display: block; }
+    #vill-hub #progress-chart { max-height: 320px; }
+
+    /* ===== ARMADURA v12: tipografía, botones e inputs a prueba de tema ===== */
+    #vill-hub #hero-section { position: relative; }
+    #vill-hub h1, #vill-hub h2, #vill-hub h3, #vill-hub h4, #vill-hub h5 {
+      font-family: 'Segoe UI', system-ui, sans-serif !important;
+      text-transform: none !important; letter-spacing: normal !important;
+    }
+    #vill-hub .hero-tag { text-transform: uppercase !important; letter-spacing: 3px !important; }
+    #vill-hub .btn {
+      display: inline-flex !important; align-items: center !important; gap: 8px;
+      padding: 10px 20px !important; border-radius: 10px !important;
+      font-family: 'Segoe UI', system-ui, sans-serif !important;
+      font-size: 0.9rem !important; font-weight: 600 !important; line-height: 1.25 !important;
+      letter-spacing: normal !important; text-transform: none !important;
+      text-decoration: none !important; min-height: 0 !important; box-shadow: none;
+    }
+    #vill-hub .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8) !important; color: #0d0d12 !important; border: none !important; }
+    #vill-hub .btn-outline { background: transparent !important; border: 1px solid #05D9E8 !important; color: #05D9E8 !important; }
+    #vill-hub .btn-pink { background: transparent !important; border: 1px solid #FF2A6D !important; color: #FF2A6D !important; }
+    #vill-hub a { text-decoration: none !important; border-bottom: none !important; }
+    #vill-hub strong { border-bottom: none !important; text-decoration: none !important; }
+    #vill-hub input, #vill-hub select, #vill-hub textarea { font-size: 16px !important; -webkit-appearance: none; appearance: none; }
+    #vill-hub .w-input { width: 74px; }
+    #vill-hub .freq-ios-tip {
+      margin: 10px 0 26px; padding: 10px 14px; border-radius: 10px;
+      background: rgba(5,217,232,0.05); border: 1px solid rgba(5,217,232,0.22);
+      font-size: 0.74rem; color: #8a94a0; line-height: 1.55;
+    }
+
+    /* ===== HERO v12: lema + idioma ===== */
+    .hero-motto {
+      color: #86d3de; font-style: italic; font-size: .95rem; margin: 0; padding-left: 14px;
+      max-width: 34em; min-height: 1.5em; cursor: pointer; line-height: 1.5;
+      border-left: 2px solid rgba(5,217,232,.35);
+      transition: opacity .35s ease;
+    }
+    .hero-motto.fade { opacity: 0; }
+    .i18n-note { font-size: .68rem; color: #6a7480; margin: 12px 0 0; }
+    /* --vip-tope-superior lo pone el TEMA, y existe por un fallo que se veia en
+       un iPhone: dentro de la tienda hay una barra de navegacion fija de 80 px
+       encima de todo, y esta pildora, pegada a 14 px del borde del heroe,
+       quedaba justo debajo. No era solo que no se viera: al tocarla el toque se
+       lo llevaba el boton del menu, asi que el selector de idioma era
+       INTOCABLE. Medido con elementFromPoint sobre la pagina montada.
+       En el archivo suelto no hay barra, la variable no existe y vale 0. */
+    .lang-switch {
+      position: absolute; top: calc(14px + var(--vip-tope-superior, 0px)); right: 14px; z-index: 5;
+      background: rgba(10,10,16,0.7); border: 1px solid #2a2a3a; border-radius: 20px;
+      padding: 4px 6px; display: flex; gap: 2px; backdrop-filter: blur(8px);
+    }
+    .lang-switch button {
+      background: transparent; border: none; color: #7a8290; font-size: 0.72rem; font-weight: 700;
+      padding: 4px 8px; border-radius: 14px; cursor: pointer; font-family: inherit;
+    }
+    .lang-switch button.active { background: rgba(5,217,232,0.15); color: #05D9E8; }
+    .mm-clear { border-color: #3a3a4a !important; color: #8890a0 !important; }
+
+
+    .section-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 800;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 8px;
+    }
+    .section-sub { color: #888899; margin-bottom: 32px; font-size: 0.95rem; }
+    .card {
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 16px;
+      padding: 20px; transition: border-color .2s;
+    }
+    .card:hover { border-color: rgba(5,217,232,0.3); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      transition: opacity .2s, transform .1s; touch-action: manipulation;
+      font-family: inherit;
+    }
+    .btn:active { transform: scale(0.97); opacity: 0.85; }
+    /* Texto oscuro, no blanco, y no es una preferencia. El degradado va de
+       magenta a cian, y el cian #05D9E8 es un color muy claro: el blanco
+       encima da 1,74:1. Eso no es "poco contraste", es la mitad de la
+       palabra ilegible en cuanto el degradado pasa del medio. En oscuro son
+       5,36:1 sobre el magenta y 11,17:1 sobre el cian.
+       Ninguna auditoria lo canta: axe, ante un linear-gradient, no calcula
+       contraste y lo deja como "no concluyente". Se pillo a mano y ahora lo
+       vigila check.mjs. */
+    .btn-primary { background: linear-gradient(135deg, #FF2A6D, #05D9E8); color: #0d0d12; }
+    .btn-outline { background: transparent; border: 1px solid #05D9E8; color: #05D9E8; }
+    .btn-pink { background: transparent; border: 1px solid #FF2A6D; color: #FF2A6D; }
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700;
+    }
+    .badge-pink { background: rgba(255,42,109,0.15); color: #ff447f; border: 1px solid rgba(255,42,109,0.3); }
+
+    /* ===== BOTÓN FLOTANTE DE PERFIL ===== */
+    /* Sube por encima de la esquina donde casi todos los temas de Shopify
+       ponen el carrito flotante o el chat de atencion, y respeta la franja
+       segura de los iPhone con notch. */
+    #profile-btn {
+      position: fixed; right: 16px; z-index: 998;
+      bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+      width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+      font-size: 1.45rem; color: #fff;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      box-shadow: 0 8px 24px rgba(5,217,232,0.35), 0 4px 14px rgba(255,42,109,0.3);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .15s;
+    }
+    #profile-btn:active { transform: scale(0.92); }
+    /* La etiqueta va a la izquierda del boton y a su misma altura. Mismo hueco
+       de seguridad abajo, para que en un iPhone con barra inferior no quede
+       debajo de ella. */
+    #profile-hint {
+      position: fixed; right: 82px; z-index: 998;
+      bottom: calc(106px + env(safe-area-inset-bottom, 0px));
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(10,10,16,0.92); border: 1px solid rgba(5,217,232,0.35);
+      border-radius: 999px; padding: 7px 8px 7px 13px;
+      font-size: 0.76rem; color: #d9f7ff; white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+      animation: hintEntra .5s cubic-bezier(.16,1,.3,1) both;
+    }
+    #profile-hint[hidden] { display: none; }
+    #profile-hint button {
+      background: none; border: none; color: #7a8ea0; cursor: pointer;
+      font-family: inherit; font-size: 0.8rem; line-height: 1; padding: 4px;
+      min-width: 24px; min-height: 24px;
+    }
+    #profile-hint button:hover { color: #fff; }
+    @keyframes hintEntra { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { #profile-hint { animation: none; } }
+
+    /* ================== EL BANNER ==================
+       Lo que habia y por que se rehizo, medido:
+
+       - Ocupaba 662 px de los 852 de un iPhone -- el 92 % de la pantalla --
+         PARA 385 px de contenido. O sea 278 px de nada: 154 arriba y 124
+         abajo. El visitante gastaba una pantalla entera de scroll para leer
+         seis lineas. Ahora el alto lo marca el contenido.
+       - Todo iba centrado en una sola columna: antetitulo, titular, subtitulo,
+         lema, aviso, dos botones y cuatro cifras, uno debajo de otro y todos
+         al centro. Es la composicion mas vista que existe. Ahora el texto va
+         alineado a la izquierda y en pantalla ancha las cifras se ponen al
+         lado, no debajo: dos bloques que se sostienen en vez de una pila.
+       - El degradado del titular iba de magenta a cian de punta a punta, y en
+         una linea larga el punto medio caia en un GRIS SUCIO -- en "Cuerpo y
+         Mente", la "y" salia gris. Ahora pasa por el violeta de la marca, que
+         es un punto medio elegido y no el promedio de dos colores.
+       - De animacion habia dos manchas borrosas al 16 % de opacidad, que
+         practicamente no se veian, y una flecha que botaba. Ahora hay una
+         entrada escalonada al cargar, un haz de luz que barre, la luz de
+         fondo que respira y las cifras que suben contando.
+
+       Todo el movimiento es transform y opacity, que los compone la tarjeta
+       grafica; y con "menos movimiento" activado no se mueve nada. */
+    #hero-section {
+      position: relative; overflow: hidden; isolation: isolate;
+      padding: clamp(54px, 8vh, 88px) 20px clamp(40px, 6vh, 68px);
+    }
+
+    /* La luz de fondo. Antes eran dos circulos desenfocados al 16 %: a esa
+       opacidad, sobre negro, no se veian. Ahora son manchas de color de
+       verdad, y se mueven lo bastante despacio para no distraer al leer. */
+    .hero-aurora { position: absolute; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; }
+    .hero-aurora-a {
+      width: min(560px, 92vw); aspect-ratio: 1; background: #FF2A6D; opacity: .30;
+      top: -22%; left: -18%; animation: auroraA 19s ease-in-out infinite alternate;
+    }
+    .hero-aurora-b {
+      width: min(620px, 98vw); aspect-ratio: 1; background: #05D9E8; opacity: .26;
+      bottom: -30%; right: -22%; animation: auroraB 23s ease-in-out infinite alternate;
+    }
+    @keyframes auroraA { to { transform: translate(14%, 12%) scale(1.22); } }
+    @keyframes auroraB { to { transform: translate(-16%, -10%) scale(1.16); } }
+
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 28% 42%, #000 10%, transparent 78%);
+      mask-image: radial-gradient(ellipse 80% 70% at 28% 42%, #000 10%, transparent 78%);
+    }
+
+    /* Un haz de luz que cruza el banner cada nueve segundos. Es un solo
+       elemento con un degradado en diagonal moviendose: cuesta una
+       transformacion y da la sensacion de que el sitio esta encendido. */
+    .hero-rays {
+      position: absolute; inset: -40% -10%; pointer-events: none; z-index: 0;
+      background: linear-gradient(104deg, transparent 42%, rgba(5,217,232,.11) 49%,
+                  rgba(255,255,255,.06) 51%, rgba(255,42,109,.09) 53%, transparent 60%);
+      animation: heroBarrido 9s ease-in-out infinite;
+    }
+    @keyframes heroBarrido {
+      0%, 100% { transform: translateX(-38%); opacity: 0; }
+      12% { opacity: 1; }
+      50% { transform: translateX(38%); opacity: .9; }
+      70% { opacity: 0; }
+    }
+
+    /* La vineta ya no oscurece el centro: ahora ilumina detras del texto y
+       apaga los bordes, que es lo que hace que el titular se despegue. */
+    .hero-veil {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 62% 58% at 26% 40%, rgba(120,60,255,.14) 0%, transparent 62%),
+        linear-gradient(to bottom, rgba(10,10,14,.28) 0%, transparent 26%, transparent 62%, #0A0A0A 100%);
+    }
+
+    /* Dos bloques: el texto manda y las cifras acompanan. En movil se apilan;
+       a partir de 900 px se ponen lado a lado. */
+    .hero-inner {
+      position: relative; z-index: 1; width: 100%; max-width: 1120px; margin: 0 auto;
+      display: grid; gap: clamp(28px, 4vw, 52px); align-items: center;
+      text-align: left;
+    }
+    @media (min-width: 900px) { .hero-inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); } }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: .72rem; letter-spacing: .2em; color: #7fe9f4; text-transform: uppercase;
+      font-weight: 700; margin-bottom: 18px;
+      background: rgba(5,217,232,.07); border: 1px solid rgba(5,217,232,.24);
+      border-radius: 999px; padding: 7px 15px 7px 12px;
+    }
+    /* Un punto que late delante del antetitulo: dice "esto esta vivo" con un
+       elemento de nueve pixeles. */
+    .hero-tag::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%; background: #05D9E8;
+      box-shadow: 0 0 0 0 rgba(5,217,232,.7); animation: heroLate 2.1s ease-out infinite; flex: 0 0 auto;
+    }
+    @keyframes heroLate {
+      0% { box-shadow: 0 0 0 0 rgba(5,217,232,.65); }
+      70% { box-shadow: 0 0 0 9px rgba(5,217,232,0); }
+      100% { box-shadow: 0 0 0 0 rgba(5,217,232,0); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 7.2vw, 4.4rem); font-weight: 900; line-height: 1.02;
+      letter-spacing: -.025em; margin-bottom: 18px; text-wrap: balance;
+      text-shadow: 0 6px 44px rgba(0,0,0,.75);
+    }
+    /* El violeta del medio no es decoracion: sin el, el punto medio de un
+       degradado magenta-cian es gris, y en una linea larga la palabra central
+       salia apagada. */
+    .hero-title span {
+      background: linear-gradient(100deg, #FF2A6D 0%, #b23cff 44%, #05D9E8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      color: #a9bbc9; max-width: 34em; margin: 0 0 14px; font-size: clamp(.98rem, 2.4vw, 1.08rem);
+      line-height: 1.62;
+    }
+    .hero-btns { display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap; margin-top: 30px; }
+    #vill-hub .hero-btns .btn { padding: 14px 24px !important; font-size: .95rem !important; }
+
+    /* Las cifras: una rejilla de dos por dos que en pantalla ancha se pone al
+       lado del texto. Antes eran cuatro pastillas apretadas contra los
+       botones. */
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+      margin: 0; justify-content: initial;
+    }
+    .hero-stat {
+      background: linear-gradient(160deg, rgba(20,22,32,.86), rgba(12,13,19,.86));
+      border: 1px solid rgba(5,217,232,.2); border-radius: 16px;
+      padding: 18px 16px; min-width: 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.04);
+      transition: border-color .25s, transform .25s;
+    }
+    .hero-stat:hover { border-color: rgba(5,217,232,.45); transform: translateY(-3px); }
+    .hero-stat strong {
+      display: block; font-size: clamp(1.8rem, 5vw, 2.3rem); font-weight: 900; color: #05D9E8;
+      line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+    }
+    .hero-stat:nth-child(even) strong { color: #FF2A6D; }
+    .hero-stat span { display: block; font-size: .74rem; color: #8fa1b0; margin-top: 7px; line-height: 1.35; }
+
+    /* La flecha que botaba se cambia por una linea que se llena: dice "sigue
+       bajando" sin el gesto de siempre. */
+    .hero-scroll {
+      display: flex; align-items: center; gap: 10px; margin-top: 30px;
+      color: #6d7d8c; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+      font-weight: 700; grid-column: 1 / -1;
+    }
+    .hero-scroll::after {
+      content: ''; height: 1px; flex: 1; max-width: 190px;
+      background: linear-gradient(90deg, #05D9E8, transparent);
+      transform-origin: left; animation: heroLinea 2.6s ease-in-out infinite;
+    }
+    @keyframes heroLinea {
+      0%, 100% { transform: scaleX(.25); opacity: .45; }
+      50% { transform: scaleX(1); opacity: 1; }
+    }
+
+    /* LA ENTRADA. Un solo momento al cargar, escalonado de arriba abajo. No
+       espera a que nadie haga scroll: si algo tiene que leerse, esta ahi. */
+    .hero-ent { animation: heroEntra .78s cubic-bezier(.22,.8,.28,1) both; }
+    .hero-ent-1 { animation-delay: .04s } .hero-ent-2 { animation-delay: .12s }
+    .hero-ent-3 { animation-delay: .21s } .hero-ent-4 { animation-delay: .30s }
+    .hero-ent-5 { animation-delay: .39s } .hero-ent-6 { animation-delay: .50s }
+    @keyframes heroEntra { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 899px) {
+      #hero-section { text-align: left; }
+      .hero-scroll { display: none; }
+    }
+    /* Quien pide menos movimiento no pierde nada: lo ve todo, quieto. */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-aurora, .hero-rays, .hero-tag::before, .hero-scroll::after, .hero-ent { animation: none !important; }
+      .hero-ent { opacity: 1 !important; transform: none !important; }
+      .hero-stat:hover { transform: none; }
+    }
+
+    /* ===== MUSCLE MAP ===== */
+    /* El alto sale de la pantalla, no de un 540 fijo: en un escritorio ancho
+       el lienzo era una franja apaisada con una figura de pie en medio y el
+       resto negro. */
+    #muscle-canvas {
+      width: 100%; height: clamp(430px, 64vh, 660px); border-radius: 16px; display: block; cursor: grab;
+      box-shadow: 0 0 60px rgba(30,80,255,0.10), inset 0 0 120px rgba(10,20,60,0.4);
+      background: radial-gradient(ellipse at 50% 35%, #101a3a 0%, #070812 65%, #05060d 100%);
+    }
+    @media (max-width: 640px) { #muscle-canvas { height: clamp(400px, 58vh, 520px); } }
+    /* En pantallas anchas el cuerpo no necesita mil pixeles de ancho: se limita
+       la caja y se centra, que es como se presenta una figura. */
+    @media (min-width: 900px) { #muscle-canvas { max-width: 720px; margin: 0 auto; } }
+    #muscle-canvas:active { cursor: grabbing; }
+    #mm-selected-label {
+      text-align: center; margin-top: 12px; min-height: 26px;
+      font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.95rem;
+      background: linear-gradient(135deg, #FF2A6D, #FF8C60);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .muscle-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: center; }
+    .muscle-btn {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: #1a1a28; color: #fff; cursor: pointer; font-size: 0.8rem; font-family: inherit;
+      transition: border-color .2s, color .2s, transform .1s, box-shadow .2s;
+    }
+    .muscle-btn:hover, .muscle-btn.active {
+      border-color: #FF2A6D; color: #FF2A6D; transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,42,109,0.18);
+    }
+    .mm-hint { font-size: 0.78rem; color: #888899; margin-top: 12px; text-align: center; }
+
+    #mm-loading {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #05D9E8; font-size: 0.85rem; letter-spacing: 1px; font-weight: 600;
+      pointer-events: none; text-align: center; text-shadow: 0 0 12px rgba(5,217,232,0.5);
+    }
+
+    /* ===== ENTRENAMIENTO: PLANNER + LIBRERÍA ===== */
+    .planner-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+    @media (max-width: 640px) { .planner-cols { grid-template-columns: minmax(0, 1fr); } }
+    .planner-col h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 12px; color: #05D9E8; letter-spacing: 1px; text-transform: uppercase; }
+    #routine-list { max-height: 330px; overflow-y: auto; padding-right: 4px; }
+    #unit-toggle {
+      background: #101019; color: #ccd; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 8px 10px; font-size: 0.8rem; outline: none; font-family: inherit; cursor: pointer;
+    }
+    #unit-toggle { color: #05D9E8; border-color: rgba(5,217,232,0.4); font-weight: 700; min-width: 58px; }
+    .routine-done { border-color: rgba(46,204,113,0.45) !important; background: rgba(46,204,113,0.06); }
+    .routine-done .ex-name-t { color: #2ECC71; }
+
+    /* Recomendación dietaria tras guardar */
+    #diet-reco { display: none; margin-top: 18px; }
+    #diet-reco.show { display: block; animation: recoIn .4s ease; }
+    @keyframes recoIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .reco-head {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      background: linear-gradient(135deg, rgba(255,42,109,0.10), rgba(5,217,232,0.10));
+      border: 1px solid rgba(5,217,232,0.28); border-radius: 14px; padding: 14px 16px;
+    }
+    .reco-head .r-num { font-size: 1.6rem; font-weight: 900; color: #05D9E8; }
+    .reco-head .r-txt { font-size: 0.85rem; color: #bcc; line-height: 1.5; flex: 1; min-width: 200px; }
+    .reco-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-top: 14px; }
+    .reco-card {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px;
+      font-size: 0.8rem; transition: border-color .2s;
+    }
+    .reco-card:hover { border-color: rgba(5,217,232,0.4); }
+    .reco-card .rc-title { font-weight: 800; color: #FF2A6D; margin-bottom: 4px; font-size: 0.88rem; }
+    .reco-card .rc-macros { color: #889; font-size: 0.72rem; margin: 6px 0 8px; }
+    .reco-card .rc-kcal { display: inline-block; background: rgba(5,217,232,0.12); color: #05D9E8; border-radius: 20px; padding: 2px 10px; font-size: 0.72rem; font-weight: 700; }
+    .reco-card ul { padding-left: 16px; margin-top: 8px; color: #99a; line-height: 1.6; font-size: 0.74rem; }
+    .ex-item {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 14px; margin-bottom: 8px; display: flex;
+      justify-content: space-between; align-items: center; font-size: 0.875rem;
+      transition: border-color .2s;
+    }
+    .ex-item:hover { border-color: #05D9E8; }
+    .ex-item .ex-meta { font-size: 0.75rem; color: #888899; margin-top: 2px; }
+    .ex-remove { background: none; border: none; color: #888899; cursor: pointer; font-size: 1.1rem; padding: 2px 8px; font-family: inherit; }
+    .ex-remove:hover { color: #FF2A6D; }
+    .planner-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+    #planner-save-msg { font-size: 0.8rem; color: #05D9E8; display: none; margin-top: 8px; }
+    .planner-total-cal {
+      margin-top: 12px; padding: 12px 14px; background: #16161f; border-radius: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.9rem; border: 1px solid #2a2a3a;
+    }
+    .planner-total-cal strong { color: #05D9E8; font-size: 1.3rem; }
+    .planner-total-cal .cal-note { display: block; font-size: 0.7rem; color: #82828f; }
+
+    .lib-chips { display: flex; gap: 8px; flex-wrap: wrap; margin: 28px 0 16px; }
+    .lib-chip {
+      padding: 7px 14px; border-radius: 20px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.78rem; font-family: inherit;
+      transition: all .2s;
+    }
+    .lib-chip.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+    .ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 14px; }
+    @media (max-width: 480px) { .ex-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .ex-card {
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 14px;
+      overflow: hidden; cursor: pointer; transition: border-color .2s, transform .2s;
+    }
+    .ex-card:hover { border-color: #05D9E8; transform: translateY(-4px); box-shadow: 0 8px 20px rgba(5,217,232,0.1); }
+    .ex-icon { height: 74px; display: flex; align-items: center; justify-content: center; font-size: 2.1rem; background: #16161f; }
+    .ex-info { padding: 12px; }
+    .ex-name { font-size: 0.82rem; font-weight: 700; margin-bottom: 3px; }
+    .ex-muscle { font-size: 0.7rem; color: #888899; margin-bottom: 5px; }
+    .ex-cal { font-size: 0.72rem; color: #05D9E8; font-weight: 600; margin-bottom: 6px; }
+    .ex-diff { font-size: 0.68rem; font-weight: 700; }
+    .add-routine-btn {
+      width: 100%; margin-top: 8px; padding: 7px 4px; border-radius: 8px; border: none;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      background: rgba(5,217,232,0.12); color: #05D9E8;
+    }
+    .add-routine-btn.in-routine { background: rgba(46,204,113,0.15); color: #2ECC71; }
+
+    /* ===== NUTRITION ===== */
+    .nutrition-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+    @media (max-width: 640px) { .nutrition-grid { grid-template-columns: minmax(0, 1fr); } }
+    #macro-chart-wrap { position: relative; max-width: 260px; margin: 0 auto; }
+    .macro-legend { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+    .macro-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; }
+    .macro-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+    .food-search-wrap { display: flex; gap: 8px; margin-bottom: 12px; }
+    #food-input {
+      flex: 1; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 14px; color: #fff; font-size: 0.875rem; outline: none; font-family: inherit;
+    }
+    #food-input:focus { border-color: #05D9E8; }
+    #food-suggestions { background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 10px; max-height: 160px; overflow-y: auto; display: none; }
+    #food-suggestions div { padding: 10px 14px; cursor: pointer; font-size: 0.875rem; border-bottom: 1px solid #2a2a3a; }
+    #food-suggestions div:hover { background: #16161f; color: #05D9E8; }
+    #food-log { margin-top: 12px; max-height: 180px; overflow-y: auto; }
+    .food-log-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #2a2a3a; font-size: 0.82rem; }
+    #cam-video { width: 100%; border-radius: 10px; display: none; margin-top: 10px; background: #000; }
+    .cam-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    #scan-result {
+      margin-top: 10px; padding: 12px 14px; background: rgba(5,217,232,0.06);
+      border: 1px solid rgba(5,217,232,0.2); border-radius: 10px; font-size: 0.85rem; display: none;
+    }
+    .scan-candidates { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .scan-cand {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid #2a2a3a;
+      background: #16161f; color: #fff; cursor: pointer; font-size: 0.78rem; font-family: inherit;
+      transition: border-color .2s;
+    }
+    .scan-cand:hover { border-color: #05D9E8; color: #05D9E8; }
+    .portion-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+    .portion-btn {
+      padding: 6px 12px; border-radius: 8px; border: 1px solid #05D9E8;
+      background: transparent; color: #05D9E8; cursor: pointer; font-size: 0.75rem; font-family: inherit;
+    }
+    .scan-note { font-size: 0.7rem; color: #82828f; margin-top: 8px; }
+    #scan-canvas { display: none; }
+
+    /* ===== SLIDERS PREMIUM ===== */
+    #vill-hub input[type="range"] {
+      -webkit-appearance: none; appearance: none; height: 7px; border-radius: 999px;
+      background: linear-gradient(90deg, #FF2A6D 0%, #8a2be2 50%, #05D9E8 100%);
+      outline: none; border: 1px solid rgba(255,255,255,0.08); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #bfeefc 60%, #05D9E8);
+      border: 2px solid #0A0A0A; box-shadow: 0 0 12px rgba(5,217,232,0.75); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffffff, #bfeefc 60%, #05D9E8);
+      border: 2px solid #0A0A0A; box-shadow: 0 0 12px rgba(5,217,232,0.75); cursor: pointer;
+    }
+    #vill-hub input[type="range"]::-moz-range-track {
+      height: 7px; border-radius: 999px;
+      background: linear-gradient(90deg, #FF2A6D 0%, #8a2be2 50%, #05D9E8 100%);
+    }
+    /* ===== MODAL LEGIBLE (vive fuera de #vill-hub) ===== */
+    #modal-overlay, #modal-content { color: #c9cbe0; }
+    #modal-content h3, #modal-content h4, #modal-content strong { color: #ffffff; }
+    #modal-content ol, #modal-content ul { color: #b9bcd4; }
+
+    /* ===== EX GIF (demostración) — tarjeta de estudio premium ===== */
+    #vill-hub .exgif-stage, #modal-content .exgif-stage {
+      position: relative; width: 100%; max-width: 300px; margin: 12px auto 0;
+      border-radius: 18px; overflow: hidden; cursor: zoom-in;
+      background: #ffffff;
+      border: 1px solid rgba(5,217,232,0.35);
+      box-shadow: 0 0 0 3px rgba(5,217,232,0.10), 0 10px 30px rgba(0,0,0,0.5),
+                  inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+    /* Franja superior de marca sobre la tarjeta */
+    #vill-hub .exgif-stage::before, #modal-content .exgif-stage::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; z-index: 2;
+      background: linear-gradient(90deg, #FF2A6D, #8a2be2, #05D9E8);
+    }
+    #vill-hub .exgif-stage::after, #modal-content .exgif-stage::after {
+      content: '⤢'; position: absolute; right: 9px; bottom: 8px; z-index: 3;
+      font-size: 0.9rem; color: #0d0d12;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.35); pointer-events: none;
+    }
+    #vill-hub .exgif-pad, #modal-content .exgif-pad { position: relative; width: 100%; padding-top: 84%; }
+    #vill-hub .exgif-img, #modal-content .exgif-img {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+      opacity: 0; transition: opacity .4s ease; padding: 10px 10px 6px;
+    }
+    #vill-hub .exgif-badge, #modal-content .exgif-badge {
+      position: absolute; left: 9px; top: 11px; z-index: 3; display: flex; gap: 5px;
+    }
+    #vill-hub .exgif-dot, #modal-content .exgif-dot {
+      width: 25px; height: 25px; border-radius: 8px; border: none; cursor: pointer;
+      font-size: 0.66rem; font-weight: 800; color: #fff;
+      background: linear-gradient(135deg, rgba(255,42,109,0.85), rgba(138,43,226,0.85));
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    #vill-hub .exgif-dot.on, #modal-content .exgif-dot.on {
+      background: linear-gradient(135deg, #05D9E8, #05a9c8); color: #041014;
+    }
+    #vill-hub .exgif-spin, #modal-content .exgif-spin {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #05646f; font-size: 0.82rem; font-weight: 600; gap: 8px; background: #ffffff;
+    }
+    #vill-hub .exgif-spin::before, #modal-content .exgif-spin::before {
+      content: ''; width: 16px; height: 16px; border-radius: 50%;
+      border: 2px solid rgba(5,100,111,0.25); border-top-color: #05646f;
+      animation: exgifspin 0.7s linear infinite;
+    }
+    @keyframes exgifspin { to { transform: rotate(360deg); } }
+    #vill-hub .exgif-cap, #modal-content .exgif-cap {
+      text-align: center; font-size: 0.66rem; color: #8a8ea8; margin-top: 7px; letter-spacing: 0.02em;
+    }
+    /* Lightbox — gif original */
+    #exgif-lb {
+      position: fixed; inset: 0; z-index: 3000; background: rgba(0,0,0,0.93);
+      display: none; align-items: center; justify-content: center; padding: 20px; cursor: zoom-out;
+    }
+    #exgif-lb.on { display: flex; }
+    #exgif-lb img { max-width: 92vw; max-height: 84vh; object-fit: contain; display: block; border-radius: 10px; background: #fff; }
+    #exgif-lb .lb-x {
+      position: absolute; top: 18px; right: 22px; color: #fff; font-size: 2rem; cursor: pointer;
+      width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.12); border-radius: 50%;
+    }
+    /* ===== DIET PLANS ===== */
+    .diet-tabs, .freq-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .diet-tab, .freq-tab {
+      padding: 8px 16px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.82rem; font-family: inherit;
+      transition: all .2s;
+    }
+    .diet-tab.active, .freq-tab.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+    .diet-content { display: none; }
+    .diet-content.active { display: block; }
+    .diet-macros { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin: 16px 0; }
+    .diet-macro-card { background: #16161f; border-radius: 10px; padding: 12px; text-align: center; }
+    .diet-macro-card .num { font-size: 1.6rem; font-weight: 800; color: #05D9E8; }
+    .diet-menu { font-size: 0.85rem; }
+    .diet-menu td, .diet-menu th { padding: 8px 10px; border-bottom: 1px solid #2a2a3a; }
+    .diet-menu th { color: #05D9E8; font-weight: 600; text-align: left; }
+
+    /* ===== v14: tablas de menú con aire (a prueba de tema) ===== */
+    #vill-hub .diet-menu { border-collapse: separate !important; border-spacing: 0; }
+    #vill-hub .diet-menu thead th {
+      font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+      color: #05D9E8; padding: 10px 14px; white-space: nowrap;
+      background: rgba(5,217,232,0.06); border-bottom: 2px solid rgba(5,217,232,0.35);
+    }
+    #vill-hub .diet-menu td {
+      padding: 12px 14px; font-size: 0.82rem; line-height: 1.55; color: #ccd3da;
+      border-bottom: 1px solid #23232f; vertical-align: top; min-width: 132px;
+    }
+    #vill-hub .diet-menu td:first-child {
+      color: #FF2A6D; font-weight: 800; white-space: nowrap; min-width: 64px;
+      border-right: 1px solid #23232f; background: rgba(255,42,109,0.04);
+    }
+    #vill-hub .diet-menu tbody tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+    #vill-hub .diet-menu tbody tr:nth-child(even) td:first-child { background: rgba(255,42,109,0.06); }
+    #vill-hub .diet-menu tbody tr:last-child td { border-bottom: none; }
+
+    /* ===== v14: técnica en el modal + badge de ayuda ===== */
+    .ex-tech { margin-top: 14px; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 14px; font-size: 0.82rem; }
+    .ex-tech .et-title { font-weight: 800; color: #05D9E8; margin-bottom: 6px; }
+    .ex-tech .et-warn { color: #FF2A6D; margin-top: 10px; }
+    .ex-tech ol, .ex-tech ul { padding-left: 18px; line-height: 1.65; color: #c6ccd4; }
+    .ex-tech li { margin-bottom: 4px; }
+    .ex-tech .et-note { margin-top: 10px; font-size: 0.72rem; color: #7a8290; }
+    .hydro-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-size: 0.82rem; }
+    .hydro-btns { display: flex; gap: 6px; }
+    .cta-card {
+      text-align: center; padding: 40px 22px; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,42,109,0.12), rgba(5,217,232,0.12));
+      border: 1px solid rgba(5,217,232,0.3);
+    }
+    .cta-card h2 { font-size: clamp(1.4rem, 4.5vw, 2rem); margin-bottom: 10px; }
+    .cta-card p { color: #aab4bd; max-width: 560px; margin: 0 auto 22px; font-size: 0.92rem; line-height: 1.6; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ===== ÍNDICE DEL HUB ===== */
+    .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(154px, 1fr)); gap: 10px; }
+    .hub-card {
+      background: #14141d; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px 12px;
+      display: flex; flex-direction: column; gap: 3px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .hub-card:hover { border-color: rgba(5,217,232,0.45); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
+    .hub-card:active { transform: scale(0.98); }
+    .hc-emoji { font-size: 1.45rem; line-height: 1.1; }
+    #vill-hub .hc-name { font-weight: 800; color: #fff !important; font-size: 0.85rem; line-height: 1.3; }
+    #vill-hub .hc-desc { font-size: 0.71rem; color: #8892a0 !important; line-height: 1.45; }
+    @media (prefers-reduced-motion: reduce) { .hub-card:hover { transform: none; } }
+
+    /* ===== Programa 21 días ===== */
+    .med-program { margin-top: 16px; background: #14141d; border: 1px solid #2a2a3a; border-radius: 14px; padding: 16px; }
+    .mp-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .mp-head h3 { font-size: 0.95rem; }
+    .mp-progress { font-size: 0.78rem; color: #9aa; min-width: 150px; }
+    .mp-progress strong { color: #05D9E8; }
+    .mp-bar { height: 8px; background: #22222e; border-radius: 6px; overflow: hidden; margin-top: 5px; }
+    #mp-fill { height: 100%; width: 0%; border-radius: 6px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .5s ease; }
+    .mp-sub { font-size: 0.76rem; color: #889; margin: 8px 0 12px; }
+    .mp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 8px; }
+    .mp-day {
+      background: #1a1a26; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 8px;
+      text-align: left; cursor: pointer; font-family: inherit; color: #ccd;
+      display: flex; flex-direction: column; gap: 2px; transition: border-color .2s;
+    }
+    .mp-day:hover { border-color: rgba(5,217,232,0.4); }
+    .mp-day .d-num { font-size: 0.62rem; color: #82828f; letter-spacing: 1px; }
+    .mp-day .d-name { font-size: 0.74rem; font-weight: 700; color: #fff; line-height: 1.25; }
+    .mp-day .d-min { font-size: 0.66rem; color: #05D9E8; }
+    .mp-day.done { border-color: rgba(46,204,113,0.5); background: rgba(46,204,113,0.06); }
+    .mp-day.done .d-num::after { content: ' ✓'; color: #2ECC71; }
+    #vill-hub .ex-card { position: relative; }
+    .ex-help {
+      position: absolute; top: 6px; right: 8px; z-index: 2; font-size: 0.8rem;
+      background: rgba(10,10,16,0.7); border: 1px solid rgba(5,217,232,0.35);
+      border-radius: 50%; width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .diet-recipes { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 12px; margin-top: 12px; }
+    .diet-recipe-card { background: #16161f; border-radius: 10px; padding: 12px; font-size: 0.82rem; }
+    .diet-recipe-card .title { font-weight: 700; color: #FF2A6D; margin-bottom: 4px; }
+
+    /* ===== MEDITACIÓN: CRONÓMETRO VISUAL DE RESPIRACIÓN ===== */
+    .meditation-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+    @media (max-width: 720px) { .meditation-grid { grid-template-columns: minmax(0, 1fr); } }
+    .breath-stage {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 300px; position: relative;
+    }
+    .breath-ring {
+      width: 240px; height: 240px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: conic-gradient(#2a2a3a 0deg, #2a2a3a 360deg);
+      transition: background .1s linear;
+    }
+    .breath-ring-inner {
+      width: 224px; height: 224px; border-radius: 50%; background: #14141f;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .breath-circle {
+      width: 190px; height: 190px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.10), transparent 55%),
+                  linear-gradient(135deg, rgba(255,42,109,0.35), rgba(5,217,232,0.35));
+      border: 2px solid rgba(5,217,232,0.5);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transform: scale(0.62);
+      box-shadow: 0 0 40px rgba(5,217,232,0.18), inset 0 0 30px rgba(5,217,232,0.10);
+      will-change: transform;
+    }
+    .breath-count { font-size: 3.4rem; font-weight: 900; line-height: 1; color: #fff; }
+    .breath-phase { font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: #cdd; margin-top: 6px; font-weight: 700; }
+    .breath-cycle-label { position: absolute; bottom: 8px; font-size: 0.75rem; color: #82828f; }
+    .breath-patterns { display: flex; flex-direction: column; gap: 8px; }
+    .breath-pattern {
+      text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid #2a2a3a;
+      background: #16161f; color: #ccc; cursor: pointer; font-size: 0.85rem; font-family: inherit;
+      transition: border-color .2s;
+    }
+    .breath-pattern strong { color: #fff; display: block; font-size: 0.9rem; }
+    .breath-pattern span { color: #888899; font-size: 0.75rem; }
+    .breath-pattern.active { border-color: #05D9E8; }
+    .breath-pattern.active strong { color: #05D9E8; }
+    .breath-controls { display: flex; gap: 10px; align-items: center; margin-top: 14px; flex-wrap: wrap; }
+    .breath-controls select {
+      background: #1a1a28; color: #fff; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 8px 10px; font-size: 0.82rem; outline: none; font-family: inherit;
+    }
+    .breath-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 14px; font-size: 0.75rem; color: #888899; }
+    .breath-legend b { font-weight: 700; }
+
+    /* ===== FRECUENCIAS ===== */
+    #frequencies .freq-intro {
+      display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+      background: rgba(5,217,232,0.06); border: 1px solid rgba(5,217,232,0.18);
+      border-radius: 12px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.85rem; color: #aab;
+    }
+    .freq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+    @media (max-width: 480px) { .freq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .freq-card {
+      position: relative; overflow: hidden; background: #14141f;
+      border: 1px solid #2a2a3a; border-radius: 16px; padding: 18px 12px;
+      text-align: center; cursor: pointer;
+      transition: border-color .25s, transform .2s, box-shadow .3s;
+    }
+    .freq-card:hover { transform: translateY(-3px); border-color: rgba(5,217,232,0.4); }
+    .freq-card .freq-hz {
+      font-size: 1.8rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .freq-card .freq-unit { font-size: 0.68rem; color: #82828f; letter-spacing: 1.5px; margin-top: 2px; }
+    .freq-card .freq-name { font-weight: 700; margin-top: 8px; font-size: 0.88rem; }
+    .freq-card .freq-desc { font-size: 0.73rem; color: #888899; margin-top: 4px; line-height: 1.4; min-height: 42px; }
+    .freq-card .freq-state { margin-top: 10px; font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; color: #05D9E8; text-transform: uppercase; }
+    .freq-card .freq-ring {
+      position: absolute; inset: -40%; border-radius: 50%;
+      background: radial-gradient(circle, rgba(5,217,232,0.14) 0%, transparent 60%);
+      opacity: 0; transition: opacity .4s; pointer-events: none;
+    }
+    .freq-card.playing { border-color: #05D9E8; box-shadow: 0 0 30px rgba(5,217,232,0.25); }
+    .freq-card.playing .freq-ring { opacity: 1; animation: freqPulse 2.4s ease-in-out infinite; }
+    @keyframes freqPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.5; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    .freq-controls {
+      display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+      margin-top: 20px; padding: 14px 16px; background: #16161f;
+      border: 1px solid #2a2a3a; border-radius: 12px;
+    }
+    .freq-controls label { font-size: 0.8rem; color: #888899; display: flex; align-items: center; gap: 8px; }
+    #freq-volume { width: 140px; accent-color: #05D9E8; }
+    #freq-timer-select {
+      background: #1a1a28; color: #fff; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 6px 10px; font-size: 0.82rem; outline: none; font-family: inherit;
+    }
+    #freq-now-playing { font-size: 0.85rem; color: #05D9E8; font-weight: 600; margin-left: auto; }
+    @media (max-width: 640px) { #freq-now-playing { margin-left: 0; width: 100%; } }
+
+    /* ===== REGISTRO DE PESO EN RUTINA ===== */
+    .ex-log { display: flex; align-items: center; gap: 6px; }
+    .w-input {
+      width: 62px; background: #101019; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 6px 8px; color: #fff; font-size: 0.8rem; outline: none; text-align: center; font-family: inherit;
+    }
+    .w-input:focus { border-color: #05D9E8; }
+    .log-btn {
+      background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.5); color: #2ECC71;
+      border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 0.85rem; font-family: inherit;
+    }
+    .log-btn:active { transform: scale(0.94); }
+
+    /* ===== NIVEL / BADGES ===== */
+    .level-card { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    .level-icon {
+      width: 84px; height: 84px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem; background: linear-gradient(135deg, rgba(255,42,109,0.2), rgba(5,217,232,0.2));
+      border: 1px solid rgba(5,217,232,0.35); box-shadow: 0 0 28px rgba(5,217,232,0.18);
+    }
+    .level-info { flex: 1; min-width: 220px; }
+    .level-name {
+      font-size: 1.4rem; font-weight: 900;
+      background: linear-gradient(135deg, #FF2A6D, #05D9E8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .level-total { font-size: 0.85rem; color: #9aa; margin: 4px 0 10px; }
+    .level-total strong { color: #05D9E8; }
+    .level-bar-wrap { background: #16161f; border-radius: 8px; height: 12px; overflow: hidden; border: 1px solid #2a2a3a; }
+    .level-bar { height: 100%; border-radius: 8px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .6s ease; }
+    .level-next { font-size: 0.75rem; color: #889; margin-top: 6px; }
+    .tier-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 10px; margin-top: 20px; }
+    .tier {
+      text-align: center; background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 12px 6px;
+      font-size: 0.72rem; color: #99a;
+    }
+    .tier .t-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+    .tier .t-kg { display: block; color: #82828f; font-size: 0.66rem; margin-top: 2px; }
+    .tier.unlocked { border-color: rgba(5,217,232,0.45); color: #fff; }
+    .tier.current { border-color: #FF2A6D; box-shadow: 0 0 16px rgba(255,42,109,0.25); }
+    /* Antes esto era "opacity: 0.45; filter: grayscale(0.6)". La opacidad no
+       distingue entre lo decorativo y lo que hay que leer: apagaba el icono,
+       si, pero tambien el nombre del nivel y los kilos, que se quedaban en
+       1,86:1 -- por debajo de lo que WCAG pide para cualquier texto. Y no se
+       arreglaba subiendo la opacidad: al 0,85, con la caja ya casi encendida
+       y el efecto de "bloqueado" perdido, el texto pequeno seguia en 3,74.
+       Se apaga lo que es decoracion (el emoji, que no dice nada que el
+       nombre no diga) y se atenua la caja, dejando el texto legible. */
+    .tier.locked { background: #121219; border-color: #23232f; }
+    .tier.locked .t-icon { opacity: 0.35; filter: grayscale(1); }
+
+    /* ===== PANEL DE SALUD ===== */
+    .health-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 22px; }
+    .health-card { background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 12px; text-align: center; }
+    .health-card .h-val { font-size: 1.35rem; font-weight: 900; color: #05D9E8; }
+    .health-card .h-lab { font-size: 0.68rem; color: #889; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+    /* ===== SUEÑO ===== */
+    .sleep-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; }
+    @media (max-width: 720px) { .sleep-grid { grid-template-columns: minmax(0, 1fr); } }
+    #sleep-hours { width: 100%; accent-color: #05D9E8; }
+    .sleep-hours-label { font-size: 2.2rem; font-weight: 900; text-align: center; color: #fff; margin-bottom: 6px; }
+    .sleep-hours-label span { font-size: 0.9rem; color: #889; font-weight: 600; }
+    .sleep-quality { display: flex; gap: 8px; justify-content: center; margin: 14px 0; flex-wrap: wrap; }
+    .sq-btn {
+      background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 8px 14px;
+      cursor: pointer; font-size: 0.85rem; color: #ccc; font-family: inherit; transition: border-color .2s;
+    }
+    .sq-btn.active { border-color: #05D9E8; color: #fff; box-shadow: 0 0 12px rgba(5,217,232,0.2); }
+    #sleep-verdict { margin-top: 14px; padding: 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.6; display: none; }
+    #sleep-verdict.ok { display: block; background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.3); }
+    #sleep-verdict.mid { display: block; background: rgba(255,215,0,0.07); border: 1px solid rgba(255,215,0,0.3); }
+    #sleep-verdict.low { display: block; background: rgba(255,42,109,0.08); border: 1px solid rgba(255,42,109,0.3); }
+    .sleep-bars { display: flex; gap: 6px; align-items: flex-end; height: 90px; margin-top: 10px; }
+    .sleep-bar-col { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px; height: 100%; }
+    .sleep-bar-fill { width: 100%; border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #05D9E8, rgba(5,217,232,0.25)); min-height: 3px; }
+    .sleep-bar-col span { font-size: 0.6rem; color: #82828f; }
+
+    /* ===== GALERÍA DE LIBRERÍA (carrusel) ===== */
+    .planner-single { grid-template-columns: minmax(0, 1fr) !important; }
+    .lib-carousel-wrap { position: relative; }
+    .ex-strip {
+      display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 14px;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: #2a2a3a transparent;
+    }
+    .ex-strip::-webkit-scrollbar { height: 6px; }
+    .ex-strip::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+    .ex-strip .ex-card { flex: 0 0 210px; scroll-snap-align: start; }
+    @media (max-width: 640px) { .ex-strip .ex-card { flex: 0 0 172px; } }
+    .lib-nav {
+      position: absolute; top: 42%; transform: translateY(-50%); z-index: 5;
+      width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(5,217,232,0.4);
+      background: rgba(10,10,14,0.85); color: #05D9E8; font-size: 1.3rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; font-family: inherit;
+    }
+    .lib-prev { left: -8px; } .lib-next { right: -8px; }
+    @media (hover: none) { .lib-nav { display: none; } }
+    .ex-weight-row { display: flex; gap: 6px; margin: 8px 0 2px; }
+    .ex-weight-row .w-input { width: 0; flex: 1; min-width: 54px; }
+
+    /* ===== FRECUENCIA DUAL ===== */
+    .dual-panel {
+      grid-column: 1 / -1; background: #16161f; border: 1px solid #2a2a3a; border-radius: 14px;
+      padding: 18px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .dual-desc { font-size: 0.8rem; color: #9aa; line-height: 1.6; }
+    .dual-slider-row { display: flex; align-items: center; gap: 12px; }
+    .dual-slider-row span { font-size: 0.8rem; color: #ccd; min-width: 96px; }
+    .dual-slider-row input[type=range] { flex: 1; accent-color: #05D9E8; }
+    .dual-slider-row strong { color: #05D9E8; min-width: 56px; text-align: right; font-size: 0.85rem; }
+
+    /* ===== OBJETIVO / CALCULADORA ===== */
+    .calc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+    .calc-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 0.7rem; color: #889; text-transform: uppercase; letter-spacing: 0.5px; }
+    .calc-grid input, .calc-grid select {
+      background: #101019; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 12px;
+      color: #fff; font-size: 0.9rem; outline: none; font-family: inherit;
+    }
+    .calc-grid input:focus, .calc-grid select:focus { border-color: #05D9E8; }
+    #goal-result { display: none; margin-top: 16px; background: rgba(5,217,232,0.05); border: 1px solid rgba(5,217,232,0.25); border-radius: 12px; padding: 16px; }
+    #goal-result .goal-line { font-size: 0.85rem; color: #bcc; margin-bottom: 6px; }
+    #goal-result .goal-line.big { font-size: 1rem; color: #fff; margin-bottom: 12px; }
+    #goal-result .goal-line strong { color: #05D9E8; }
+    #goal-result .goal-line.big strong { color: #FF2A6D; }
+    .soma-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .soma-card { display: flex; flex-direction: column; gap: 8px; }
+    .soma-icon { font-size: 1.9rem; }
+    .soma-card h4 { font-size: 1rem; color: #fff; }
+    .soma-traits { font-size: 0.78rem; color: #9aa; }
+    .soma-card ul { padding-left: 16px; font-size: 0.76rem; color: #aab; line-height: 1.7; flex: 1; }
+    .soma-card .btn { margin-top: 8px; font-size: 0.78rem; justify-content: center; }
+
+    /* ===== POPUP MÚSCULO: filas de ejercicios ===== */
+    .mm-ex-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
+    .mm-ex-name { font-size: 0.88rem; color: #fff; font-weight: 600; }
+    .mm-ex-meta { font-size: 0.72rem; color: #889; margin-top: 2px; }
+    .mm-ex-add { width: 38px; height: 38px; border-radius: 10px; border: 1px solid rgba(5,217,232,0.5); background: rgba(5,217,232,0.12); color: #05D9E8; font-size: 1.15rem; cursor: pointer; font-family: inherit; flex: 0 0 auto; }
+    .mm-ex-add.added { border-color: rgba(46,204,113,0.55); background: rgba(46,204,113,0.14); color: #2ECC71; }
+    .mm-ex-add:active { transform: scale(0.92); }
+
+    /* ===== MENÚ POR MES ===== */
+    .month-toggle { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 16px; }
+    .mt-label { font-size: 0.78rem; color: #889; }
+    .mt-hint { font-size: 0.7rem; color: #82828f; flex-basis: 100%; }
+
+    /* ===== BOTÁNICA ===== */
+    .bot-tools { margin-bottom: 12px; }
+    #bot-search { width: 100%; max-width: 340px; background: #101019; border: 1px solid #2a2a3a; border-radius: 10px; padding: 9px 12px; color: #fff; font-size: 0.85rem; outline: none; font-family: inherit; }
+    #bot-search:focus { border-color: #05D9E8; }
+    .bot-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 12px; margin-top: 14px; }
+    .bot-card { background: #16161f; border: 1px solid #2a2a3a; border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 6px; transition: border-color .2s; }
+    .bot-card:hover { border-color: rgba(5,217,232,0.35); }
+    .bot-emoji { font-size: 1.8rem; }
+    .bot-name { font-weight: 800; color: #fff; font-size: 0.92rem; }
+    .bot-kcal { align-self: flex-start; background: rgba(255,42,109,0.12); color: #ff447f; border-radius: 20px; padding: 2px 10px; font-size: 0.68rem; font-weight: 700; }
+    .bot-nut { font-size: 0.74rem; color: #05D9E8; }
+    .bot-ben { font-size: 0.76rem; color: #aab; line-height: 1.5; flex: 1; }
+    .bot-uso { font-size: 0.72rem; color: #889; }
+    .bot-log { margin-top: 6px; background: rgba(5,217,232,0.1); border: 1px solid rgba(5,217,232,0.4); color: #05D9E8; border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 0.74rem; font-family: inherit; }
+    .bot-log:active { transform: scale(0.96); }
+
+    /* ===== BOTÁNICA v10: dato curioso + carrusel ===== */
+    .bot-fact {
+      display: flex; gap: 10px; align-items: flex-start; cursor: pointer;
+      background: linear-gradient(135deg, rgba(255,42,109,0.10), rgba(5,217,232,0.10));
+      border: 1px solid rgba(5,217,232,0.3); border-radius: 14px; padding: 14px 16px;
+      font-size: 0.92rem; color: #fff; line-height: 1.55; font-weight: 600;
+    }
+    .bot-fact .bf-icon { font-size: 1.2rem; }
+    .bot-fact-sub { font-size: 0.7rem; color: #82828f; margin: 8px 0 14px; }
+    .bot-strip {
+      display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px;
+      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin; scrollbar-color: #2a2a3a transparent;
+    }
+    .bot-strip::-webkit-scrollbar { height: 6px; }
+    .bot-strip::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
+    .bot-strip .bot-card { flex: 0 0 235px; scroll-snap-align: start; }
+    @media (max-width: 640px) { .bot-strip .bot-card { flex: 0 0 205px; } }
+    .mt-select {
+      background: #101019; color: #ccd; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 8px 10px; font-size: 0.8rem; outline: none; font-family: inherit; cursor: pointer;
+    }
+    .mt-select:focus { border-color: #05D9E8; }
+
+    /* ===== PROGRESS ===== */
+    .pr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 24px; }
+    .pr-card { text-align: center; }
+    .pr-card .pr-lift { font-size: 0.75rem; color: #888899; text-transform: uppercase; letter-spacing: 1px; }
+    .pr-card .pr-weight { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .pr-card .pr-unit { font-size: 0.75rem; color: #888899; }
+    .period-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .period-tab {
+      padding: 8px 20px; border-radius: 8px; border: 1px solid #2a2a3a;
+      background: transparent; color: #888899; cursor: pointer; font-size: 0.875rem; font-family: inherit;
+    }
+    .period-tab.active { border-color: #05D9E8; color: #05D9E8; background: rgba(5,217,232,0.08); }
+
+    /* ===== CHALLENGES ===== */
+    .leaderboard { width: 100%; border-collapse: collapse; }
+    .leaderboard th, .leaderboard td { padding: 10px 14px; text-align: left; border-bottom: 1px solid #2a2a3a; font-size: 0.875rem; }
+    .leaderboard th { color: #888899; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+    .leaderboard tr:hover td { background: rgba(255,255,255,0.02); }
+    .rank-1 { color: #FFD700; font-weight: 800; }
+    .rank-2 { color: #C0C0C0; font-weight: 700; }
+    .rank-3 { color: #CD7F32; font-weight: 700; }
+    .challenge-bar-wrap { background: #16161f; border-radius: 8px; height: 12px; margin: 8px 0; overflow: hidden; }
+    .challenge-bar { height: 100%; border-radius: 8px; background: linear-gradient(135deg, #FF2A6D, #05D9E8); transition: width .6s ease; }
+    .badges-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+    .badge-item { text-align: center; }
+    .badge-icon { font-size: 2rem; display: block; margin-bottom: 4px; }
+    .badge-label { font-size: 0.7rem; color: #888899; }
+
+    /* ===== PROFILE MODAL ===== */
+    #profile-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 1200; display: none; align-items: center; justify-content: center; padding: 16px; }
+    #profile-modal.open { display: flex; }
+    .profile-box { background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 20px; max-width: 400px; width: 100%; padding: 24px; position: relative; }
+    .profile-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: #888899; font-size: 1.3rem; cursor: pointer; font-family: inherit; }
+    .profile-close:hover { color: #fff; }
+    .profile-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+    .profile-title span { background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .profile-sub { font-size: 0.82rem; color: #888899; margin-bottom: 10px; }
+    .profile-local {
+      font-size: 0.72rem; color: #8fa3b5; line-height: 1.5; margin-bottom: 16px;
+      background: rgba(5,217,232,0.06); border: 1px solid rgba(5,217,232,0.20);
+      border-radius: 10px; padding: 9px 11px;
+    }
+    .profile-field { margin-bottom: 14px; }
+    .profile-field label { display: block; font-size: 0.78rem; color: #888899; margin-bottom: 4px; }
+    .profile-field input {
+      width: 100%; background: #16161f; border: 1px solid #2a2a3a; border-radius: 8px;
+      padding: 8px 12px; color: #fff; font-size: 0.875rem; outline: none; font-family: inherit;
+    }
+    .profile-field input:focus { border-color: #05D9E8; }
+    .profile-actions { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+    .profile-actions .btn { flex: 1; justify-content: center; }
+    .profile-user-info { margin-top: 16px; padding: 12px; background: #16161f; border-radius: 10px; font-size: 0.85rem; }
+    .profile-user-info .label { color: #888899; }
+    .profile-user-info .value { color: #05D9E8; font-weight: 600; }
+    /* El registro en la tienda, separado del perfil local por una linea: son
+       dos cosas distintas y tienen que LEERSE como dos cosas distintas. */
+    .profile-tienda { margin-top: 18px; padding-top: 16px; border-top: 1px solid #2a2a3a; }
+    .profile-tienda-cab { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
+    .profile-tienda-txt { font-size: 0.78rem; color: #8fa3b5; line-height: 1.5; margin: 0 0 12px; }
+    .profile-tienda-nota { font-size: 0.7rem; color: #6f7d8c; margin: 8px 0 0; text-align: center; }
+    .profile-tienda-ok { margin-top: 14px; padding: 11px 13px; border-radius: 10px;
+      background: rgba(0,232,123,0.08); border: 1px solid rgba(0,232,123,0.3);
+      color: #7ff0be; font-size: 0.82rem; line-height: 1.5; }
+
+    /* ===== FOOTER ===== */
+    /* Era 'footer' a secas: repintaba EL PIE DE LA TIENDA -- fondo, borde y
+       centrado -- en cualquier pagina donde estuviera el hub. Ahora es una
+       clase propia, y el elemento tambien deja de ser <footer> porque una
+       pagina no puede tener dos pies. */
+    #vill-hub .vh-footer { background: #111118; border-top: 1px solid #2a2a3a; padding: 40px 16px; text-align: center; }
+    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.5rem; font-weight: 900; margin-bottom: 12px; }
+    .footer-logo span { background: linear-gradient(135deg, #FF2A6D, #05D9E8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .footer-socials { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
+    .footer-socials a {
+      width: 40px; height: 40px; border-radius: 50%; border: 1px solid #2a2a3a;
+      display: flex; align-items: center; justify-content: center;
+      color: #888899; font-size: 0.75rem; font-weight: 800; transition: all .2s;
+    }
+    .footer-socials a:hover { color: #05D9E8; border-color: #05D9E8; }
+    .footer-links { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; }
+    .footer-links a { color: #888899; font-size: 0.82rem; }
+    .footer-copy { font-size: 0.78rem; color: #888899; }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #1a1a28; border: 1px solid #2a2a3a; border-radius: 10px;
+      padding: 10px 20px; font-size: 0.875rem; z-index: 2000;
+      transition: transform .3s ease; white-space: nowrap; max-width: 92vw; overflow: hidden; text-overflow: ellipsis;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ===== UTILIDADES ===== */
+    .module-error { background: rgba(255,42,109,0.08); border: 1px solid rgba(255,42,109,0.2); border-radius: 12px; padding: 20px; color: #888899; text-align: center; font-size: 0.875rem; }
+    #vill-hub [data-section] { scroll-margin-top: 90px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .freq-card.playing .freq-ring { animation: none; opacity: 0.6; }
+      .breath-circle { transition: none !important; }
+      #vill-hub { scroll-behavior: auto; }
+    }
+
+    /* =====================================================================
+       ENTRADA AL APARECER, INCLINACION 3D Y CIFRAS QUE SUBEN
+       ---------------------------------------------------------------------
+       Antes de esto el hub tenia nueve animaciones y SEIS eran del hero: las
+       otras once secciones estaban completamente quietas. Un sitio que se
+       llama VI.P y presume de 3D no podia tener el mapa muscular como unica
+       cosa que se mueve.
+
+       Todo lo de aqui es transform y opacity, que los compone la tarjeta
+       grafica sin volver a calcular la maquetacion, y todo se apaga entero
+       con "menos movimiento" del sistema. Las clases las pone JavaScript
+       recorriendo las secciones: asi no hay que tocar el marcado, que vive
+       en dos sitios (la seccion del tema y esta pagina) y se separaria a la
+       primera.
+       ===================================================================== */
+
+    /* La entrada. translateY corto y sin escala: una entrada larga se
+       convierte en espera, y con escala el texto se ve borroso mientras
+       dura. */
+    /* Ojo con el selector: la clase vp-anim la pone el JavaScript en
+       #vill-hub. Sin ese ancla, el estado escondido seria el de por defecto
+       y bastaria con que el script no llegase -- un bloqueador, un error, una
+       red que corta -- para que media pagina se quedara invisible PARA
+       SIEMPRE. Con el ancla, si el JavaScript no corre no se esconde nada y
+       el hub se ve entero, sin animacion. La animacion es un anadido; el
+       contenido no puede depender de ella. */
+    #vill-hub.vp-anim .vp-ent {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .62s cubic-bezier(.22,.8,.28,1), transform .62s cubic-bezier(.22,.8,.28,1);
+      transition-delay: var(--vp-d, 0ms);
+      will-change: opacity, transform;
+    }
+    #vill-hub.vp-anim .vp-ent.vp-visto { opacity: 1; transform: none; }
+    /* Cuando ya ha entrado se suelta el will-change: dejarlo puesto en
+       cuarenta elementos mantiene otras tantas capas en memoria de video
+       para siempre, y eso en un movil se paga. */
+    #vill-hub.vp-anim .vp-ent.vp-visto.vp-fin { will-change: auto; }
+
+    /* Inclinacion 3D de las tarjetas. La perspectiva va en el CONTENEDOR y
+       no en la tarjeta: puesta en cada una, todas comparten el mismo punto
+       de fuga en su propio centro y el conjunto se ve plano. */
+    #vill-hub .vp-3d { perspective: 1100px; }
+    #vill-hub .vp-3d > * { transform-style: preserve-3d; }
+    #vill-hub .vp-tilt {
+      transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0);
+      transition: transform .5s cubic-bezier(.22,.8,.28,1), box-shadow .35s, border-color .25s;
+    }
+    #vill-hub .vp-tilt.vp-tocando { transition: transform .08s linear; }
+    #vill-hub .vp-tilt:hover {
+      box-shadow: 0 18px 40px rgba(0,0,0,.45), 0 0 26px rgba(5,217,232,.14);
+      border-color: rgba(5,217,232,.45);
+    }
+    /* El contenido se despega hacia el visitante: sin esto la inclinacion es
+       una foto girada, no un objeto con fondo. */
+    #vill-hub .vp-tilt .hc-emoji,
+    #vill-hub .vp-tilt .ex-icon { transform: translateZ(26px); }
+    #vill-hub .vp-tilt .hc-name,
+    #vill-hub .vp-tilt .ex-name { transform: translateZ(14px); }
+
+    /* Los titulos de seccion: una linea que se dibuja al entrar. */
+    #vill-hub .section-title { position: relative; }
+    #vill-hub .vp-ent.vp-visto .section-title::after,
+    #vill-hub .section-title.vp-ent.vp-visto::after {
+      content: ''; position: absolute; left: 0; bottom: -6px; height: 2px; width: 64px;
+      background: linear-gradient(90deg, #FF2A6D, #05D9E8);
+      transform-origin: left; animation: vpSubraya .7s .18s cubic-bezier(.22,.8,.28,1) both;
+    }
+    @keyframes vpSubraya { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* --- LA TIRA DE EQUIPO DENTRO DE LA FICHA DE CADA MUSCULO ---
+       Va al final del modal, despues de los ejercicios: primero se resuelve
+       lo que el visitante vino a buscar y solo despues se le ensena que hay
+       tienda. Al reves seria un anuncio con ejercicios debajo. */
+    #modal-content .mm-tienda, #vill-hub .mm-tienda {
+      margin-top: 18px; padding-top: 14px; border-top: 1px solid #2a2a3a;
+    }
+    #modal-content .mm-tienda-tit, #vill-hub .mm-tienda-tit {
+      font-size: 0.74rem; letter-spacing: .12em; text-transform: uppercase;
+      color: #82828f; font-weight: 700; margin-bottom: 10px;
+    }
+    #modal-content .mm-prod, #vill-hub .mm-prod {
+      display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+      border: 1px solid #2a2a3a; border-radius: 10px; margin-bottom: 8px;
+      text-decoration: none; transition: border-color .2s, transform .2s;
+    }
+    #modal-content .mm-prod:hover, #vill-hub .mm-prod:hover {
+      border-color: rgba(5,217,232,.45); transform: translateX(3px);
+    }
+    #modal-content .mm-prod img, #vill-hub .mm-prod img {
+      width: 44px; height: 44px; object-fit: contain; border-radius: 8px; background: #16161f; flex: 0 0 auto;
+    }
+    #modal-content .mm-prod-t, #vill-hub .mm-prod-t { flex: 1; font-size: 0.84rem; color: #eee; line-height: 1.3; }
+    #modal-content .mm-prod-p, #vill-hub .mm-prod-p { font-size: 0.82rem; font-weight: 800; color: #05D9E8; white-space: nowrap; }
+    #modal-content .mm-tienda-todo, #vill-hub .mm-tienda-todo,
+    #modal-content .mm-tienda > a:only-child, #vill-hub .mm-tienda > a:only-child {
+      display: inline-block; font-size: 0.8rem; color: #05D9E8; margin-top: 4px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #modal-content .mm-prod:hover, #vill-hub .mm-prod:hover { transform: none; }
+    }
+
+    /* EL FOCO QUE SIGUE AL CURSOR.
+       Un circulo de luz muy suave bajo el puntero, dentro de la tarjeta. Es
+       el detalle que separa una tarjeta que reacciona de una que solo se
+       inclina: el ojo lee que hay una fuente de luz y que la tarjeta tiene
+       volumen.
+
+       Va en ::before y con mask/pointer-events:none para no tocar el
+       contenido ni robar clics. Y se dibuja con un degradado radial en
+       coordenadas que pone el JavaScript en dos variables -- una escritura
+       de CSS por fotograma, sin tocar la maquetacion. */
+    #vill-hub .vp-tilt { position: relative; isolation: isolate; }
+    #vill-hub .vp-tilt::before {
+      content: ''; position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 0; opacity: 0; transition: opacity .35s ease;
+      background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+                  rgba(5,217,232,.16), rgba(255,42,109,.08) 42%, transparent 70%);
+    }
+    #vill-hub .vp-tilt:hover::before { opacity: 1; }
+    #vill-hub .vp-tilt > * { position: relative; z-index: 1; }
+
+    /* BOTONES MAGNETICOS. El boton se acerca un poco al cursor cuando pasa
+       cerca. Tres pixeles como maximo: lo justo para que el pulgar note que
+       el boton "quiere" ser pulsado, sin que el objetivo se mueva tanto que
+       cueste acertar -- un boton que huye del dedo es peor que uno quieto. */
+    #vill-hub .vp-iman {
+      transform: translate3d(var(--ix, 0px), var(--iy, 0px), 0);
+      transition: transform .45s cubic-bezier(.22,.8,.28,1);
+    }
+    #vill-hub .vp-iman.vp-cerca { transition: transform .12s ease-out; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #vill-hub .vp-tilt::before { display: none; }
+      #vill-hub .vp-iman { transform: none !important; transition: none !important; }
+    }
+
+    /* Cifras que suben: solo reserva el ancho para que no salte la linea
+       mientras cuenta. */
+    #vill-hub .vp-cifra { font-variant-numeric: tabular-nums; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #vill-hub.vp-anim .vp-ent { opacity: 1 !important; transform: none !important; transition: none !important; }
+      #vill-hub .vp-tilt { transform: none !important; transition: none !important; }
+      #vill-hub .vp-ent.vp-visto .section-title::after,
+      #vill-hub .section-title.vp-ent.vp-visto::after { animation: none; transform: none; }
+    }
+
+    /* ==================================================================
+       LAS SIETE SEMILLAS
+       ------------------------------------------------------------------
+       Cada chakra trae su propio color en --chakra y la tarjeta entera
+       se tine con el: el halo, el borde al pasar por encima y el estado
+       de sonando. Asi las siete se distinguen de un vistazo sin leer.
+
+       Y aqui el numero de hercios NO va con degradado como en el resto
+       de la rejilla: en estas tarjetas quien manda es la silaba. Poner
+       dos cosas gritando en la misma tarjeta no deja mirar a ninguna.
+       ================================================================== */
+    .chakra-aviso {
+      grid-column: 1 / -1;
+      margin: 0 0 4px; padding: 13px 15px;
+      background: rgba(177,74,255,.07);
+      border: 1px solid rgba(177,74,255,.22);
+      border-radius: 13px;
+      font-size: .79rem; line-height: 1.6; color: #a9a9bb;
+    }
+    .chakra-card { padding-top: 14px; }
+    /* DOS COLORES POR CHAKRA, Y NO ES CAPRICHO. El color del chakra pinta
+       el borde, el halo y el anillo, donde nadie tiene que leer nada. Pero
+       el indigo del Tercer ojo (#4a5bff) sobre el fondo de la tarjeta da
+       3,68:1, y el violeta de la Corona 4,61: el primero incumple WCAG AA
+       en el rotulo pequeno de estado y el segundo pasa raspando. Lo cazo
+       la bateria de accesibilidad, y con las tarjetas pintandose en dos
+       tiempos el numero de fallos cambiaba de pasada a pasada -- que es
+       como se ve un color que esta justo en la linea.
+       Asi que cada chakra lleva ademas --chakra-tx: el mismo tono subido
+       hasta que se lee (7,2:1 y 7,6:1). Los otros cinco ya pasaban y su
+       --chakra-tx es su propio color, sin cambio ninguno. */
+    .chakra-card .chakra-bija {
+      font-family: var(--font-heading, inherit);
+      font-weight: 900; font-size: 1.45rem; line-height: 1;
+      letter-spacing: .06em; color: var(--chakra-tx, var(--chakra, #05D9E8));
+      text-shadow: 0 0 22px color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent);
+    }
+    .chakra-card .freq-hz {
+      font-size: 1.15rem; margin-top: 7px;
+      background: none; -webkit-text-fill-color: currentColor;
+      color: #e8e8f4;
+    }
+    .chakra-card .freq-unit { margin-top: 1px; }
+    .chakra-card .freq-name { margin-top: 7px; }
+    .chakra-card .chakra-sans {
+      font-size: .68rem; color: #9494a3; margin-top: 2px;
+      letter-spacing: .02em; font-style: italic;
+    }
+    .chakra-card .freq-desc { min-height: 38px; margin-top: 6px; }
+    .chakra-card .freq-state { color: var(--chakra-tx, var(--chakra, #05D9E8)); }
+    .chakra-card .freq-ring {
+      background: radial-gradient(circle, color-mix(in srgb, var(--chakra, #05D9E8) 20%, transparent) 0%, transparent 62%);
+    }
+    .chakra-card:hover { border-color: color-mix(in srgb, var(--chakra, #05D9E8) 45%, transparent); }
+    .chakra-card.playing {
+      border-color: var(--chakra, #05D9E8);
+      box-shadow: 0 0 32px color-mix(in srgb, var(--chakra, #05D9E8) 28%, transparent);
+    }
+
+    /* El recorrido ocupa la fila entera, debajo de las siete. */
+    .chakra-recorrido {
+      grid-column: 1 / -1;
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 6px; padding: 15px 16px;
+      background: linear-gradient(100deg, rgba(255,59,71,.07), rgba(177,74,255,.09));
+      border: 1px solid #2a2a3a; border-radius: 14px;
+    }
+    .chakra-rec-txt { display: flex; flex-direction: column; gap: 2px; flex: 1 1 190px; min-width: 0; }
+    .chakra-rec-txt strong { font-size: .92rem; color: #fff; }
+    .chakra-rec-txt span { font-size: .76rem; color: #888899; }
+    .chakra-rec-min { display: flex; align-items: center; gap: 8px; font-size: .76rem; color: #aab; }
+    .chakra-rec-min select {
+      background: #0d0f16; border: 1px solid #2a2a3a; border-radius: 9px;
+      color: #fff; padding: 8px 10px; font-size: 16px;
+    }
+    .chakra-recorrido .btn { flex: 0 0 auto; }
+    .chakra-rec-paso {
+      flex: 1 1 100%; font-size: .78rem; color: #05D9E8;
+      font-weight: 700; letter-spacing: .04em;
+    }
+    @media (max-width: 480px) {
+      /* En un movil la fila entera no cabe: se apila y el boton ocupa el ancho. */
+      .chakra-recorrido { flex-direction: column; align-items: stretch; }
+      .chakra-recorrido .btn { justify-content: center; }
+    }
+
+    /* ==================================================================
+       EL CUERPO EN EL TIEMPO
+       El mapa dice donde esta cada musculo; esta tira dice cuando lo
+       tocaste. Cada pastilla lleva su estado en --st y de ahi salen el
+       punto, el borde y el texto: un color, tres sitios.
+       ================================================================== */
+    .mm-4d { margin-top: 16px; padding: 14px 15px; background: #11131d; border: 1px solid #232636; border-radius: 14px; }
+    .mm-4d-head { display: flex; flex-direction: column; gap: 3px; margin-bottom: 11px; }
+    .mm-4d-head strong { font-size: .92rem; color: #fff; }
+    .mm-4d-head span { font-size: .76rem; color: #888899; line-height: 1.45; }
+    .mm-4d-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+    .mm4d-chip {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 12px; border-radius: 99px; cursor: pointer;
+      background: #0d0f16; color: #d6d6e4;
+      border: 1px solid color-mix(in srgb, var(--st, #8b8b9c) 38%, #232636);
+      font-size: .78rem; font-family: inherit;
+      transition: border-color .2s, transform .18s, background .2s;
+    }
+    .mm4d-chip:hover { transform: translateY(-2px); border-color: var(--st, #8b8b9c); background: #12141d; }
+    .mm4d-chip:focus-visible { outline: 2px solid var(--st, #05D9E8); outline-offset: 2px; }
+    .mm4d-punto {
+      width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto;
+      background: var(--st, #8b8b9c);
+      box-shadow: 0 0 9px var(--st, #8b8b9c);
+    }
+    .mm4d-nom { font-weight: 700; color: #fff; }
+    .mm4d-est { color: var(--st, #8b8b9c); font-weight: 700; letter-spacing: .02em; }
+    /* El que se trabajo hoy late despacio: es el unico que pide atencion. */
+    @media (prefers-reduced-motion: no-preference) {
+      .mm4d-hoy .mm4d-punto { animation: mm4dLate 2.6s ease-in-out infinite; }
+    }
+    @keyframes mm4dLate { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+    /* EL GRIS DEL "SIN REGISTRO" TENIA QUE SUBIR. Iba en #5b5b6b sobre el
+       fondo de la pastilla (#0d0f16): 2,88:1, y WCAG AA pide 4,5:1 -- lo
+       cazo la bateria de accesibilidad sobre el tema minificado, y con
+       diez grupos sin registro eran diez etiquetas ilegibles de golpe.
+       Ahora el color de estado es #8b8b9c (5,7:1). Para no perder la
+       jerarquia -- un grupo sin datos no debe pedir atencion -- el punto
+       de ese estado se queda callado por su cuenta: sin brillo y a media
+       tinta. Sube el texto, no el ruido. */
+    .mm4d-sin .mm4d-punto { opacity: .5; box-shadow: none; }
+    .mm-4d-vacio { margin: 11px 0 0; font-size: .75rem; color: #9494a3; line-height: 1.5; }

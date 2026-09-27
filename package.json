@@ -1,0 +1,27 @@
+{
+  "name": "villumination-3d-theme",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Herramientas del tema Villumination 3D: constructor, empaquetador y baterias de verificacion. NADA de esto viaja a Shopify -- el zip solo lleva theme/.",
+  "type": "module",
+  "scripts": {
+    "construir": "node construir-3d.mjs",
+    "partir": "node partir.mjs",
+    "hub": "node empaquetar-hub.mjs",
+    "empaquetar": "node empaquetar.mjs",
+    "check": "node verificadores/check.mjs",
+    "theme-check": "node tcrun.mjs",
+    "acceso": "node verificadores/acceso/comprobar.mjs",
+    "vi-p": "node verificadores/vi-p/comprobar.mjs"
+  },
+  "devDependencies": {
+    "@shopify/theme-check-node": "3.28.1",
+    "acorn": "8.14.0",
+    "axe-core": "4.10.2",
+    "chart.js": "4.4.0",
+    "esbuild": "0.28.2",
+    "liquidjs": "10.21.0",
+    "playwright": "1.49.1",
+    "three": "0.160.0"
+  }
+}

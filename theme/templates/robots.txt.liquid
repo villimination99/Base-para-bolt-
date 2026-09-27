@@ -1,0 +1,118 @@
+{%- comment -%}
+  robots.txt de Villuminations.
+
+  Shopify ya sirve un robots.txt por defecto que funciona bien, y sus reglas
+  se actualizan solas conforme cambian las recomendaciones de SEO. Por eso lo
+  PRIMERO que se imprime son sus grupos tal cual, sin tocarlos: si Shopify
+  anade manana una regla nueva, aparece aqui sin que nadie haga nada.
+
+  Encima se anaden dos cosas que Shopify no trae:
+
+  1. Permiso explicito a los rastreadores de IA y de los buscadores por
+     respuesta. Sin una regla propia caen en el grupo "*", que ya les permite
+     entrar, pero varios de estos rastreadores solo respetan un grupo escrito
+     con su nombre exacto y algunos servicios intermedios los bloquean por
+     defecto. Decirlo en voz alta es lo que hace que la tienda aparezca en
+     ChatGPT, Claude, Perplexity, Gemini y las visiones generales de Google.
+
+     Es una decision deliberada: se acepta que estos sistemas lean el
+     catalogo a cambio de que lo citen y manden clientes. Si algun dia no
+     interesa, basta con cambiar "Allow: /" por "Disallow: /" en el grupo que
+     se quiera cerrar, o borrarlo entero para que vuelva al grupo "*".
+
+     Cada uno de esos grupos repite las MISMAS exclusiones que Shopify aplica
+     al grupo "*". Es imprescindible: en robots.txt, un rastreador con grupo
+     propio deja de heredar el grupo "*", asi que un grupo con solo "Allow: /"
+     le abriria /checkout y /cart. Se copian las reglas del grupo general para
+     que la unica diferencia sea el permiso explicito, nada mas.
+
+  2. El sitemap. El de Shopify ya sale en su grupo por defecto; aqui solo se
+     anade uno extra si la tienda lo configura en los ajustes del tema.
+
+  No se bloquea nada nuevo a proposito. Una linea "Disallow" de mas aqui
+  saca paginas del indice sin previo aviso y sin dejar rastro visible.
+{%- endcomment -%}
+{%- liquid
+  # Rastreadores a los que se les da permiso explicito.
+  # IA y buscadores por respuesta:
+  #   GPTBot, OAI-SearchBot y ChatGPT-User  -> OpenAI (indice, busqueda y visitas)
+  #   ClaudeBot, Claude-SearchBot, Claude-User, anthropic-ai -> Anthropic
+  #   PerplexityBot y Perplexity-User       -> Perplexity
+  #   Google-Extended                       -> Gemini y las visiones generales
+  #   Applebot-Extended                     -> Apple Intelligence
+  #   meta-externalagent                    -> Meta AI
+  #   Amazonbot                             -> Alexa
+  #   cohere-ai, YouBot, Diffbot, Timpibot  -> otros buscadores por respuesta
+  # Buscadores clasicos que conviene nombrar:
+  #   Bingbot, Yandex, DuckDuckBot, Baiduspider, Seznam, Naver, Qwant, Brave
+  # Solo los rastreadores donde nombrarlos CAMBIA algo. Googlebot, Slurp,
+  # Applebot y los previsualizadores de redes ya entran por el grupo "*" y
+  # nombrarlos no anadiria ni un permiso: solo lineas. Los de abajo si:
+  #
+  # IA y buscadores por respuesta. Varios servicios intermedios (Cloudflare
+  # y otros) los bloquean por defecto, y algunos solo respetan un grupo
+  # escrito con su nombre exacto. Decirlo en voz alta es lo que hace que la
+  # tienda pueda aparecer en ChatGPT, Claude, Perplexity o Gemini:
+  #   GPTBot, OAI-SearchBot, ChatGPT-User      -> OpenAI (indice, busqueda, visita)
+  #   ClaudeBot, Claude-SearchBot, Claude-User -> Anthropic
+  #   anthropic-ai                             -> Anthropic (nombre antiguo)
+  #   PerplexityBot, Perplexity-User           -> Perplexity
+  #   Google-Extended                          -> Gemini y las visiones generales
+  #   Applebot-Extended                        -> Apple Intelligence
+  #   meta-externalagent, meta-externalfetcher -> Meta AI
+  #   Amazonbot                                -> Alexa y Rufus
+  #   DuckAssistBot                            -> DuckDuckGo AI
+  #   cohere-ai, YouBot, Diffbot, Timpibot     -> otros buscadores por respuesta
+  #
+  # Buscadores fuera de Google, donde un permiso explicito ayuda:
+  #   bingbot, YandexBot, DuckDuckBot, Baiduspider, SeznamBot, Yeti (Naver)
+  assign permitidos = 'GPTBot,OAI-SearchBot,ChatGPT-User,ClaudeBot,Claude-SearchBot,Claude-User,anthropic-ai,PerplexityBot,Perplexity-User,Google-Extended,Applebot-Extended,meta-externalagent,meta-externalfetcher,Amazonbot,DuckAssistBot,cohere-ai,YouBot,Diffbot,Timpibot,bingbot,YandexBot,DuckDuckBot,Baiduspider,SeznamBot,Yeti' | split: ','
+
+  # Nombres que Shopify ya cubre en sus grupos: no se repiten, porque dos
+  # grupos con el mismo user-agent dan un robots.txt ambiguo.
+  capture ya_estan
+    for group in robots.default_groups
+      echo group.user_agent
+      echo ','
+    endfor
+  endcapture
+  assign ya_estan = ya_estan | downcase
+
+  # Las exclusiones del grupo general. Se copian tal cual a cada rastreador
+  # nombrado, porque un grupo propio anula la herencia del grupo "*".
+  capture exclusiones
+    for group in robots.default_groups
+      if group.user_agent contains '*'
+        for rule in group.rules
+          echo rule
+        endfor
+      endif
+    endfor
+  endcapture
+-%}
+{% for group in robots.default_groups -%}
+  {{ group.user_agent }}
+  {%- for rule in group.rules -%}
+    {{ rule }}
+  {%- endfor -%}
+  {%- if group.sitemap != blank %}
+{{ group.sitemap }}
+  {%- endif %}
+
+{% endfor -%}
+
+# ---------------------------------------------------------------------------
+# Permiso explicito. Ver el comentario de arriba antes de tocar nada.
+# ---------------------------------------------------------------------------
+{% for agente in permitidos -%}
+  {%- assign aguja = agente | downcase | append: ',' -%}
+  {%- unless ya_estan contains aguja %}
+User-agent: {{ agente }}{{ exclusiones }}
+Allow: /
+{% endunless -%}
+{%- endfor %}
+{%- if settings.seo_sitemap_extra != blank %}
+
+# Sitemap adicional configurado en los ajustes del tema
+Sitemap: {{ settings.seo_sitemap_extra }}
+{%- endif %}
