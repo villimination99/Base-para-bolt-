@@ -202,6 +202,69 @@ como se escribe tu marca.
 
 ---
 
+### G. Veintiocho productos no estan en el canal «Shop»
+
+Los once Codices y el azul de metileno si; los suplementos, el equipamiento y
+la ropa **no**. Son 28 fichas fuera de un canal que da descubrimiento gratis en
+la aplicacion Shop. No lo he tocado porque publicar en un canal de venta es una
+decision tuya de distribucion, no un fallo. Si lo quieres, se hace en cada
+producto o en bloque desde `Produits`.
+
+El canal `Point de vente` da igual mientras no tengas tienda fisica.
+
+---
+
+## Lo que NO puedo hacer desde aqui
+
+No es que falte por hacer: es que **desde esta sesion en la nube no se puede**,
+y conviene que sepas por que, para no esperar algo que no va a llegar.
+
+### Porque la red de este entorno lo bloquea
+
+`villuminations.com` y `cdn.shopify.com` responden **403 en el proxy**. O sea
+que **no puedo ver tu tienda en vivo con mis propios ojos**: ni medir la
+velocidad real, ni leer el robots.txt que sirve de verdad, ni comprobar como
+llegan las imagenes desde el CDN.
+
+Todo lo visual que te he dado esta comprobado en un Chromium de verdad **contra
+los archivos reales del tema**, que es mucho, pero no es lo mismo que la tienda
+publicada. En tu Mac esto funciona sin mas. Tambien se arregla desde aqui si
+anades `villuminations.com` a la lista de salida permitida del entorno.
+
+### Porque el conector de Shopify lo prohibe a proposito
+
+| Lo que no puedo | Consecuencia |
+| --- | --- |
+| `themePublish` | **Publicar el 4.74.0 lo tienes que hacer tu.** Por eso trabajo siempre sobre una copia sin publicar. |
+| Escribir en el tema **publicado** | Solo puedo tocar copias. Es la razon de todo el baile del zip. |
+| `themeDelete` y `themeFilesDelete` | No puedo limpiar los temas viejos de la biblioteca. |
+| Permiso `write_legal_policies` | No puedo escribir las politicas. Los textos te los doy y los pegas tu. |
+| `appInstallations` responde «access denied» | No puedo listar ni instalar aplicaciones: Shopify Email, Facebook e Instagram, Search & Discovery. |
+| No existe `shopUpdate` | El titulo SEO de la tienda (lo de «Illumina») y el nombre solo se cambian en el panel. |
+| `translationsRegister` rechaza el idioma base | De ahi vienen los puntos C y D: los nombres de envio en ingles y los filtros en frances solo se arreglan **renombrando la fuente** en el panel. |
+
+### Porque esta fuera de Shopify
+
+- **El DNS** (SPF, DKIM, DMARC). Hace falta entrar en Google Cloud DNS. Es el
+  punto A, y es el mas urgente de todo el documento.
+- **Meta Business Manager**: el pixel, la API de conversiones y revisar que el
+  catalogo entra bien. Lo que si he comprobado desde aqui: el canal **Meta esta
+  instalado** y los **38 productos activos estan publicados en el**, igual que
+  en Google & YouTube. Los tres ocultos (los dos jabones y el entrenador
+  respiratorio) no, que es lo correcto.
+- **Los codigos de Bing, Yandex y Pinterest**: hay que sacarlos de sus paneles.
+
+### Servidores y skills que necesitan tu Mac
+
+- **Supabase** pide autorizacion OAuth y esta sesion no es interactiva: no puedo
+  dar el consentimiento. Se hace desde tu Mac, en los ajustes de conectores de
+  claude.ai o con `/mcp`.
+- **ruflo** esta instalado pero sin inicializar. Es un orquestador de enjambres
+  que quiere escribir dentro del proyecto; tiene mas sentido correrlo en local,
+  donde puedes ver lo que hace.
+
+---
+
 ## Lo que se comprobo y estaba bien
 
 - Las **seis politicas**: ni un marcador, ni una plantilla sin sustituir, la
@@ -217,3 +280,10 @@ como se escribe tu marca.
 - La pagina VI.P: el titulo es «VI.P» en los cinco idiomas porque es el nombre
   de la marca, no un texto por traducir. Correcto tal cual.
 - Los enlaces del menu del pie: los once, traducidos.
+- Las opciones de producto, **una por una**: 20 etiquetas y 45 valores con sus
+  cuatro traducciones. Lo unico sin traducir son las tallas (S, M, L, XL, 2XL…),
+  que se escriben igual en los cinco idiomas, y las opciones `Title` de los
+  productos de una sola variante, que el tema no pinta nunca.
+- Los **26 segmentos**: los 19 tuyos en castellano, los 5 franceses que trae
+  Shopify de serie y los 2 de empresa que anadio despues.
+- El canal **Meta**: instalado, con los 38 productos activos publicados.
