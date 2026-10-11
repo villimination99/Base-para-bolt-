@@ -1,11 +1,17 @@
-# La caja y la pantalla de acceso, en oscuro
+# La caja y la pantalla de acceso
 
 Guia viva: https://claude.ai/code/artifact/d8110dcf-267b-4fdb-81bd-e082cc122332
 
-Escrito el 11 de octubre de 2026. Una version anterior de este archivo
-recomendaba dejar la caja en claro con el morado de acento. **Era peor
-consejo**, y los numeros lo dicen: en oscuro la paleta de la tienda funciona
-entera y en blanco no funciona casi nada. Lo que sigue es la version buena.
+Escrito el 11 de octubre de 2026. Este archivo se ha corregido tres veces y las
+correcciones estan marcadas, porque dos de ellas eran errores mios y conviene
+que se vean:
+
+- Una version recomendaba la caja **en claro con acento morado**. Era peor
+  consejo: en oscuro la paleta de la tienda funciona entera.
+- Otra version decia que `villuminations-logo-ancho-fondo.png` **lleva fondo
+  claro**. Es falso: el generador le pinta un fondo **casi negro**.
+- Otra version daba `#23234a` para los bordes. No vale: contra el campo
+  `#121228` da **1,23:1** y el minimo para un borde es 3:1.
 
 ---
 
@@ -13,25 +19,91 @@ entera y en blanco no funciona casi nada. Lo que sigue es la version buena.
 
 Shopify unifico la caja y las cuentas de cliente en una sola configuracion, con
 una seccion de acceso que es exactamente `account.villuminations.com`. Lo que se
-configura una vez sale en las dos.
+configura una vez sale en las dos. No hay que tocar la pantalla de acceso por
+separado.
 
-Comprobado por API sobre el perfil publicado («Configuration 2 de
-Villuminations»): `designSystem` y `customizations` estan los dos a **null**.
-Cero personalizacion, sin editar desde el 23 de septiembre. Por eso la caja
-ensena «Villuminations» en texto negro del sistema en vez del logotipo, con el
-azul por defecto.
+Perfiles de la tienda, comprobados por API:
 
-## Por que no se puede hacer por API
+| Perfil | ID | Estado |
+| --- | --- | --- |
+| Configuration 2 de Villuminations | `2696020017` | **publicado** |
+| Configuration  de Ma boutique | `2065530929` | borrador |
 
-Las dos razones estan comprobadas en la documentacion, no supuestas:
+---
 
-- El API antiguo (`checkoutBranding`) **exige plan Plus** y la tienda esta en
-  Basic. Ademas esta marcado como obsoleto.
-- El API nuevo (`checkoutAndAccountsConfigurations`) **no exige Plus**, solo
-  permisos, pero el conector esta fijado a la version `2026-01` del Admin API,
-  donde ese campo todavia no existe.
+## Lo que ya esta aplicado, sin tocar nada a mano
 
-Se hace a mano en el editor, que si entra en el plan Basic.
+Esto ya esta **en la caja de verdad**, hecho por API el 11 de octubre, en los dos
+perfiles:
+
+| Campo | Valor puesto |
+| --- | --- |
+| Logotipo de la cabecera | `villuminations-logo-ancho-fondo.png` |
+| Ancho del logotipo | 200 px |
+| `colors.global.accent` | `#7b2fff` |
+| `colors.global.brand` | `#7b2fff` |
+
+Antes de esto el perfil publicado tenia `designSystem` y `customizations` los dos
+a **null**: cero personalizacion desde el 23 de septiembre. Por eso la caja
+ensenaba «Villuminations» en texto negro del sistema y botones en el azul por
+defecto de Shopify.
+
+**Por que el morado y no el cian.** Mientras la pagina siga siendo blanca, el
+cian es ilegible: 1,77:1 contra 4,5:1 de minimo. El morado es el unico color de
+la marca que aguanta sobre blanco, con 5,69:1. Es decir: el morado no es la
+eleccion bonita, es la unica correcta **mientras la caja sea blanca**.
+
+**Por que el logotipo con fondo y no el transparente.** La tinta del logotipo es
+un degradado que arranca en cian (`#7df3ff`, `#00d4ff`). Sobre blanco esa mitad
+desaparece. El archivo `-fondo` trae su propio panel `#05050f`, asi que el
+degradado se lee entero. Queda como una placa oscura de marca sobre la pagina
+blanca, que es un recurso normal de diseno y desde luego mejor que texto negro
+del sistema.
+
+> **Cuando pases la caja a oscuro hay que cambiar estas dos cosas.** Con fondo
+> oscuro el morado baja a 3,42:1 y se queda corto, y la placa negra del logotipo
+> se ve como un recuadro sobre el fondo. En oscuro van: acento **`#00d4ff`** y
+> logotipo **`villuminations-logo-ancho.png`** (el transparente). Esta en el
+> paso 3 y el paso 2 de la guia de abajo.
+
+---
+
+## Lo que no se puede hacer por API, comprobado campo por campo
+
+No es una suposicion de la documentacion: se ha probado cada campo contra el
+perfil borrador. El que falla devuelve siempre el mismo error:
+
+> One or more fields cannot be modified with public access to the Checkout
+> Branding API.
+
+| Campo | Resultado |
+| --- | --- |
+| `customizations.header.logo` (imagen, ancho) | **se escribe** |
+| `customizations.header.alignment` / `position` | **se escribe** |
+| `designSystem.colors.global.accent` / `brand` | **se escribe** |
+| `designSystem.colors.schemes.*` (fondos y textos) | bloqueado |
+| `designSystem.colors.global` critical/success/warning/decorative | bloqueado |
+| `designSystem.cornerRadius` | bloqueado |
+| `designSystem.typography` | bloqueado |
+| `customizations.favicon` | bloqueado |
+| `customizations.primaryButton.*` | bloqueado |
+| `customizations.header.banner` / `divided` / `colorScheme` | bloqueado |
+
+Dos cosas que conviene dejar claras porque las dije mal antes:
+
+- El API **no esta cerrada por plan**. La tienda esta en Basic y aun asi el
+  logotipo y el acento se escriben. Lo que limita es el **acceso publico** del
+  conector, no el plan.
+- `checkoutBrandingUpsert` esta marcada como obsoleta y la propia API dice que
+  se use `checkoutAndAccountsConfigurationUpdate`. Esa mutacion **no existe en
+  la version 2026-01**, que es a la que esta fijado el conector. Comprobado:
+  la busqueda de `checkoutAndAccounts` en el esquema de mutaciones no devuelve
+  nada.
+
+Resumen: los fondos, los textos, los botones, la tipografia y las esquinas
+**solo se cambian a mano en el editor**, que si entra en el plan Basic.
+
+---
 
 ## El dato que decide: contraste
 
@@ -44,29 +116,45 @@ comparado con el blanco que hay ahora. El minimo para texto es 4,5:1.
 | Verde `#00e87b` | **11,87:1** | 1,64:1 |
 | Naranja `#ff7700` | **7,30:1** | 2,66:1 |
 | Rosa `#ff2ecb` | **6,02:1** | 3,23:1 |
-| Morado `#7b2fff` | 3,42:1 | 5,69:1 |
+| Morado `#7b2fff` | 3,42:1 | **5,69:1** |
 | Texto `#d8f6ff` | **17,16:1** | — |
 
-En blanco solo aguantaba el morado. En oscuro aguanta todo **menos** el morado,
-incluido el cian, que es el color principal de la marca. El morado pasa a servir
-para bordes y detalles, no para texto.
+En blanco solo aguanta el morado. En oscuro aguanta todo **menos** el morado,
+incluido el cian, que es el color principal de la marca. En oscuro el morado
+pasa a servir para bordes y detalles, no para texto.
 
 Boton solido cian con texto negro: **11,86:1**. Es el mismo lenguaje de boton
 que ya usa la tienda.
 
-## Los valores
+---
 
-| Donde | Valor |
-| --- | --- |
-| Fondo de la pagina | `#0b0b1e` |
-| Fondo de bloques y campos | `#121228` |
-| Texto | `#d8f6ff` |
-| Bordes y separadores | `#23234a` |
-| Boton principal | fondo `#00d4ff`, texto `#000000` |
-| Enlaces y acentos | `#00d4ff` |
-| Esquinas de botones | 12 px |
-| Esquinas de campos y tarjetas | 12–18 px |
-| Tipografia | Assistant |
+## Los valores de la caja oscura
+
+| Donde | Valor | Comprobacion |
+| --- | --- | --- |
+| Fondo de la pagina | `#0b0b1e` | — |
+| Fondo de bloques y campos | `#121228` | — |
+| Texto | `#d8f6ff` | 17,16:1 sobre el fondo |
+| Bordes y separadores | `#6b6fae` | 3,95:1 sobre el campo |
+| Boton principal | fondo `#00d4ff`, texto `#000000` | 11,86:1 |
+| Enlaces y acentos | `#00d4ff` | 10,97:1 |
+| Esquinas de botones | 12 px | igual que la tienda |
+| Esquinas de campos y tarjetas | 12–18 px | igual que la tienda |
+| Tipografia | Assistant | la del tema |
+
+### El borde es el valor que mas se falla
+
+Un borde no es texto, pero tampoco vale cualquier cosa: WCAG pide **3:1** para
+el contorno de un control. Dos valores que parecen razonables y no lo son:
+
+| Borde | Sobre `#121228` | Vale |
+| --- | --- | --- |
+| `#23234a` | 1,23:1 | no |
+| `#2e2f5c` | 1,47:1 | no |
+| `#6b6fae` | **3,95:1** | si |
+
+Si el borde no se ve, el cliente no distingue donde termina un campo y empieza
+el siguiente, y en la pantalla de la tarjeta eso se paga en ventas perdidas.
 
 ### No usar negro puro
 
@@ -78,32 +166,129 @@ por bueno.
 
 ### El logotipo cambia con el fondo
 
-| Archivo | Para la caja oscura |
+El generador (`marca/generar-logotipos.mjs`, linea 75) pinta el fondo del
+archivo `-fondo` en `#05050f`. De ahi sale la regla:
+
+| Archivo | Fondo del archivo | Donde va |
+| --- | --- | --- |
+| `villuminations-logo-ancho.png` | transparente | caja **oscura** |
+| `villuminations-logo-ancho-fondo.png` | `#05050f` casi negro | caja **clara** (lo que hay hoy) |
+
+---
+
+## Paso a paso para la caja oscura
+
+Esto es lo que no puedo hacer yo. Son unos quince minutos.
+
+El panel esta en frances, asi que va el nombre frances y, entre parentesis, de
+que se trata. Los rotulos exactos del editor cambian de vez en cuando; cuando no
+coincidan, busca por lo que hace, que es lo que describo.
+
+### Antes de empezar
+
+`Paramètres` → `Paiement` (Configuracion → Pago). Ahi arriba esta el bloque de
+la configuracion del pago con el boton `Personnaliser` (Personalizar).
+
+**Duplica primero.** En la lista de configuraciones, en el menu de los tres
+puntos de «Configuration 2 de Villuminations», elige duplicar. Trabaja sobre la
+copia. Asi nadie ve la caja a medias mientras la montas, y si algo sale mal la
+publicada sigue intacta.
+
+### 1. Entrar
+
+Abre `Personnaliser` sobre la **copia**. Se abre un editor con la caja a la
+derecha y los ajustes a la izquierda. Arriba a la derecha hay un selector de
+escritorio/movil: lo vas a usar.
+
+### 2. El logotipo
+
+En los ajustes, el apartado del logotipo (`Logo`).
+
+1. Cambia la imagen a **`villuminations-logo-ancho.png`** — el transparente. El
+   que hay puesto ahora (`-fondo`) trae panel negro y en oscuro se veria como un
+   recuadro.
+2. Ancho: **200 px** en escritorio.
+3. Posicion: a la izquierda.
+
+### 3. Los colores
+
+Es el paso largo y el que de verdad cambia la pantalla. Shopify no te deja
+pintar cada cosa por separado: trabaja con **esquemas de color** (`Schéma 1`,
+`Schéma 2`). Un esquema es un juego de fondo + texto + boton, y luego dices que
+zona usa cada esquema. Normalmente el cuerpo de la caja usa el esquema 1 y la
+columna del resumen del pedido usa el esquema 2.
+
+Rellena **los dos esquemas** con estos valores. Si solo haces el 1, el resumen
+del pedido se queda blanco al lado de una caja oscura, que es peor que no tocar
+nada.
+
+**Esquema 1 — el cuerpo de la caja**
+
+| Ajuste | Valor |
 | --- | --- |
-| `villuminations-logo-ancho.png` | **Este.** Transparente, dibujado para fondo negro. |
-| `villuminations-logo-ancho-fondo.png` | No. Lleva fondo claro incorporado. |
+| Fondo | `#0b0b1e` |
+| Texto | `#d8f6ff` |
+| Fondo de los campos y bloques | `#121228` |
+| Borde | `#6b6fae` |
+| Boton principal, fondo | `#00d4ff` |
+| Boton principal, texto | `#000000` |
+| Enlaces / acento | `#00d4ff` |
 
-## Los pasos
+**Esquema 2 — la columna del resumen**
 
-Ruta: `Configuracion` → `Pago` → `Personalizar`. En el panel, que esta en
-frances: `Paramètres` → `Paiement` → `Personnaliser`.
+Los mismos valores, con una sola diferencia: el fondo va en **`#121228`** en vez
+de `#0b0b1e`, para que la columna se separe del cuerpo sin necesidad de linea.
 
-1. **Duplica la configuracion publicada** y trabaja sobre la copia. Asi se
-   prueba sin que nadie vea un estado a medias.
-2. **Fondos**: pagina `#0b0b1e`, bloques y campos `#121228`, bordes `#23234a`.
-3. **Texto**: `#d8f6ff`.
-4. **Boton y enlaces**: boton con fondo `#00d4ff` y texto `#000000`; enlaces en
-   `#00d4ff`.
-5. **Logotipo**: `villuminations-logo-ancho.png`, ancho inicial 160 px.
-6. **Esquinas y tipografia**: 12 px en botones, 12–18 px en campos, Assistant si
-   aparece en el catalogo del editor.
-7. **Imagen de fondo lateral** en la columna del resumen, si se quiere mas
-   marca. Sin texto dentro de la imagen.
-8. **Pruebalo en el movil** con un producto real, hasta la pantalla de la
-   tarjeta. Si los campos del numero salen en blanco, sube el fondo de toda la
-   pagina a `#121228` y vuelve a mirar.
-9. **Publica** y entra en `account.villuminations.com`: tiene que haber cambiado
-   sola.
+**Y el acento global.** Donde este el color de acento general, cambialo de
+`#7b2fff` a **`#00d4ff`**. El morado era para la pagina blanca; en oscuro se
+queda en 3,42:1.
+
+### 4. La tipografia
+
+Apartado de tipografia (`Typographie`). Elige **Assistant** en los dos sitios,
+titulos y cuerpo. Es la fuente del tema, asi que la caja deja de parecer otra
+web. Si no sale en el catalogo, deja la que mas se parezca de palo seco y no
+pierdas tiempo: importa mucho menos que los colores.
+
+### 5. Las esquinas
+
+Apartado de esquinas o formas (`Coins`, `Formes`). Botones **12 px**, campos y
+tarjetas entre **12 y 18 px**. Son los mismos radios que `button_radius` y
+`card_radius` del tema, por eso coinciden.
+
+### 6. Imagen de fondo, solo si quieres
+
+Se le puede poner una imagen a la columna del resumen. Dos condiciones: que sea
+oscura, para que el texto siga leyendose, y **sin una sola letra dentro**. El
+texto en una imagen no se traduce, y la tienda vende en varios idiomas.
+
+### 7. Probarlo, que es el paso que nadie hace
+
+En el selector de arriba pasa a **movil** y repasa la caja entera.
+
+Luego, y esto es lo importante, **pruebalo de verdad**: crea un descuento del
+100 %, metete un producto en el carrito y llega hasta la pantalla de la tarjeta.
+
+Lo que hay que mirar ahi:
+
+- **Los campos de la tarjeta.** Los pinta el proveedor de pago, no Shopify. Si
+  salen como recuadros blancos sobre el fondo oscuro, sube el fondo de la pagina
+  de `#0b0b1e` a `#121228` y vuelve a mirar: el salto se nota mucho menos.
+- **Que se ve donde acaba cada campo.** Si no, el borde se quedo demasiado
+  oscuro: ponlo en `#6b6fae`.
+- **El boton de pagar.** Cian con texto negro, no cian con texto blanco: el
+  blanco sobre cian da 1,6:1 y no se lee.
+
+### 8. Publicar
+
+Cuando la copia este bien, publicala desde la lista de configuraciones. La
+publicada pasa a ser esta.
+
+### 9. Comprobar la otra pantalla
+
+Entra en `account.villuminations.com`. Tiene que haber cambiado **sola**, sin
+tocar nada: es la misma configuracion. Si sigue en blanco, es que publicaste la
+copia equivocada.
 
 ---
 
@@ -116,6 +301,7 @@ esta sesion.
    `Forbidden`, asi que no se ha podido comprobar, y es el fallo mas caro
    posible: el cliente paga y no recibe nada. Crea un descuento del 100 %,
    comprate un plan, un Codice y el Elite, y abre los archivos que lleguen.
+   Este descuento te sirve tambien para el paso 7 de arriba.
 2. **El pixel de Meta.** Al conector le falta el permiso `read_pixels`.
    Comprueba que esta instalado y que dispara `ViewContent`, `AddToCart` y
    `Purchase`.
