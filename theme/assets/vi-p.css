@@ -463,7 +463,8 @@
     .macro-legend { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
     .macro-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; }
     .macro-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
-    .food-search-wrap { display: flex; gap: 8px; margin-bottom: 12px; }
+    .food-search-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .food-search-wrap #food-input { flex: 1 1 10rem; min-width: 0; }
     #food-input {
       flex: 1; background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
       padding: 10px 14px; color: #fff; font-size: 0.875rem; outline: none; font-family: inherit;
