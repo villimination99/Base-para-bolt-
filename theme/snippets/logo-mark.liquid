@@ -1,0 +1,19 @@
+{%- comment -%} Animated neon "VI" logo mark used when no logo image is set {%- endcomment -%}
+<div class="vi-logo-mark" aria-hidden="true">
+  <div class="vi-logo-ring">
+    <svg viewBox="0 0 200 200" fill="none">
+      <defs>
+        <linearGradient id="nav-rg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="{{ settings.color_cyan }}"/>
+          <stop offset="33%" stop-color="{{ settings.color_purple }}"/>
+          <stop offset="66%" stop-color="{{ settings.color_pink }}"/>
+          <stop offset="100%" stop-color="{{ settings.color_cyan }}"/>
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="96" stroke="url(#nav-rg)" stroke-width="3" stroke-dasharray="8 6" stroke-linecap="round" opacity="0.7"/>
+    </svg>
+  </div>
+  <div class="vi-logo-core">
+    <span class="vi-logo-mono">VI</span>
+  </div>
+</div>

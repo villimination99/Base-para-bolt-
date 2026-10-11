@@ -1,0 +1,23 @@
+{
+  "_": "Lo que la tienda tiene subido de verdad, consultado al panel de Shopify (files/MediaImage: image.width, image.height y originalSource.fileSize). Sirve para que el medidor de LCP sepa cuanto pesaria cada foto que pide una plantilla, en vez de inventarselo. Si se sube material nuevo y grande, vuelve a consultarse y se anade aqui.",
+  "hf_20260905_040159_58324d59-e4a8-4fe9-9512-b0c956b23ffa.png": [1536, 2752, 5952628],
+  "hf_20260905_040159_3a4bff4d-3d47-409e-ac37-fc4fa3bd239d.png": [1536, 2752, 6893666],
+  "villumination-marca-portada-v2.png": [1080, 1920, 548597],
+  "villumination-marca-portada.png": [1080, 1920, 397918],
+  "villumination-compartir.png": [1200, 630, 235430],
+  "villumination-logo-512.png": [512, 512, 63754],
+  "villumination-favicon-512.png": [512, 512, 62513],
+  "villumination-logo-ancho.png": [1600, 400, 44224],
+  "codice-zodiacal.png": [1600, 1600, 435474],
+  "codice-invocaciones.png": [1600, 1600, 558210],
+  "codice-si-mismo.png": [1600, 1600, 485033],
+  "codice-arcanos.png": [1600, 1600, 520831],
+  "codice-voluntad.png": [1600, 1600, 524969],
+  "codice-descanso.png": [1600, 1600, 465747],
+  "codice-carga.png": [1600, 1600, 492284],
+  "codice-mesa.png": [1600, 1600, 427500],
+  "plan-elite.png": [1600, 1600, 320045],
+  "plan-pro.png": [1600, 1600, 350674],
+  "plan-basico.png": [1600, 1600, 274384],
+  "generica": [1200, 1200, 300000]
+}

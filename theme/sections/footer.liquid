@@ -1,0 +1,396 @@
+{%- assign marca = settings.brand_display_name | default: shop.name -%}
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA: no solo se pinta,
+  # tambien decide, porque media seccion vive dentro de condiciones del
+  # tipo "si no esta vacio" y el ajuste va vacio a proposito.
+  capture cx_about
+    render 'copia', g: 'sec', b: 'footer', a: 'about', v: section.settings.about
+  endcapture
+  capture cx_payment_label
+    render 'copia', g: 'sec', b: 'footer', a: 'payment_label', v: section.settings.payment_label
+  endcapture
+  capture cx_newsletter_title
+    render 'copia', g: 'sec', b: 'footer', a: 'newsletter_title', v: section.settings.newsletter_title
+  endcapture
+  capture cx_quotes
+    render 'copia', g: 'sec', b: 'footer', a: 'quotes', v: section.settings.quotes
+  endcapture
+-%}
+<footer class="footer" role="contentinfo">
+  <span class="footer-edge" aria-hidden="true"></span>
+  <div class="container">
+    {%- if cx_quotes != blank -%}
+      {%- assign quote_list = cx_quotes | strip | newline_to_br | split: '<br />' -%}
+      <div class="footer-quotes" data-quotes {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        <span class="footer-quotes-icon" aria-hidden="true">{%- render 'icon', name: 'bolt' -%}</span>
+        <p class="footer-quote" data-quote-text aria-live="polite">{{ quote_list.first | strip }}</p>
+        <script type="application/json" data-quote-list>{{ quote_list | json }}</script>
+      </div>
+    {%- endif -%}
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-head">
+          {%- if settings.logo != blank -%}
+            {%- comment -%}
+              width/height estaban fijos en 120x40: con un logo de otra
+              proporción el navegador reservaba un hueco equivocado y el pie
+              daba un salto al cargar. Se usan las medidas reales, como en el
+              encabezado.
+            {%- endcomment -%}
+            <img src="{{ settings.logo | image_url: width: 160 }}" alt="{{ marca | escape }}"
+                 width="{{ settings.logo.width }}" height="{{ settings.logo.height }}"
+                 loading="lazy" style="height:36px;width:auto;">
+          {%- else -%}
+            {%- render 'logo-mark' -%}
+            {%- assign brand_name = marca -%}
+            <span class="footer-brand-name"><span class="nav-brand-grad">{{ brand_name | upcase }}</span>{%- if settings.brand_display_suffix != blank -%}<span class="nav-brand-99">{{ settings.brand_display_suffix }}</span>{%- endif -%}</span>
+          {%- endif -%}
+        </div>
+        {%- if cx_about != blank -%}
+          <p class="footer-brand-desc">{{ cx_about }}</p>
+        {%- endif -%}
+        <div class="footer-social">
+          {%- if settings.social_youtube != blank -%}<a href="{{ settings.social_youtube }}" target="_blank" rel="noopener" aria-label="YouTube">{%- render 'icon', name: 'youtube' -%}</a>{%- endif -%}
+          {%- if settings.social_instagram != blank -%}<a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{%- render 'icon', name: 'instagram' -%}</a>{%- endif -%}
+          {%- if settings.social_tiktok != blank -%}<a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{%- render 'icon', name: 'tiktok' -%}</a>{%- endif -%}
+          {%- if settings.social_x != blank -%}<a href="{{ settings.social_x }}" target="_blank" rel="noopener" aria-label="X">{%- render 'icon', name: 'x' -%}</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'menu' -%}
+          {%- capture cb_t -%}{%- render 'copia', g: 'pie', b: block.id, a: 'title', v: block.settings.title -%}{%- endcapture -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ cb_t }}</h3>
+            <ul role="list">
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- elsif block.type == 'text' -%}
+          <div class="footer-links" {{ block.shopify_attributes }}>
+            <h3>{{ block.settings.title }}</h3>
+            <div class="footer-text rte">{{ block.settings.text }}</div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_newsletter -%}
+      <div class="footer-newsletter">
+        <h3>{{ cx_newsletter_title }}</h3>
+        {%- comment -%}
+          El pie captura correos en TODAS las paginas, asi que es la puerta de
+          entrada mas usada del boletin. Antes se quedaba a medias: decia
+          "gracias" y nada mas, mientras que la seccion de la portada entregaba
+          el cupon. Quien se apuntaba desde aqui se quedaba sin el descuento que
+          la propia tienda le acababa de prometer, y sin forma de saber por que.
+
+          Ahora hace lo mismo que la portada: al enviarse bien, el formulario se
+          sustituye por el agradecimiento y el codigo copiable. Se sustituye, no
+          se anade: dejar el campo de correo despues de suscribirse invita a
+          escribirlo otra vez, y el segundo envio no da nada nuevo.
+        {%- endcomment -%}
+        {%- form 'customer', class: 'footer-newsletter-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="nl-success">
+              <p class="form-success">{{ 'general.newsletter.success' | t }}</p>
+              {%- if section.settings.coupon_code != blank -%}
+                <button type="button" class="nl-code" data-copy-code data-code="{{ section.settings.coupon_code | escape }}">
+                  <span class="nl-code-val">{{ section.settings.coupon_code }}</span>
+                  <span class="nl-code-hint">{{ 'general.copy_hint' | t }}</span>
+                </button>
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,pie">
+            <input type="email" name="contact[email]" autocomplete="email" inputmode="email" placeholder="{{ 'general.newsletter.email' | t }}" aria-label="{{ 'general.newsletter.email' | t }}" required>
+            <button type="submit" class="btn btn-primary">{{ 'general.newsletter.submit' | t }}</button>
+            {%- comment -%}
+              El mismo aviso que lleva la portada, y por la misma razon: quien
+              deja su correo tiene que saber a que se apunta EN EL MOMENTO de
+              dejarlo. La politica de privacidad dice que solo se hace
+              marketing "cuando nos has dado tu consentimiento", y un
+              consentimiento solo vale si es informado. Este formulario sale en
+              todas las paginas y hasta ahora no decia nada.
+
+              Se reutiliza la clave de la seccion de la portada en vez de crear
+              una nueva: el texto ya esta traducido a los cinco idiomas, no hay
+              que regenerar los locales y las dos puertas de entrada dicen
+              exactamente lo mismo, que es lo que se quiere.
+            {%- endcomment -%}
+            {%- capture cx_nl_aviso -%}
+              {%- render 'copia', g: 'sec', b: 'newsletter', a: 'privacy_note', v: '' -%}
+            {%- endcapture -%}
+            {%- assign cx_nl_aviso = cx_nl_aviso | strip -%}
+            {%- if cx_nl_aviso != blank -%}<p class="nl-privacy">{{ cx_nl_aviso }}</p>{%- endif -%}
+            {%- if form.errors -%}
+              <div class="form-errors" role="alert">
+                <ul>
+                  {%- for field in form.errors -%}
+                    <li>{{ form.errors.messages[field] }}</li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%}
+      Franja de garantias. Es de los elementos que mas reducen el abandono en
+      el ultimo tramo: el visitante confirma envio, pago y devoluciones sin
+      salir de la pagina. Se construye con bloques para que el texto lo
+      controle la tienda; NO trae ninguna promesa de envio gratis, que sigue
+      desactivado a peticion expresa.
+    {%- endcomment -%}
+    {%- assign garantias = section.blocks | where: 'type', 'garantia' -%}
+    {%- if garantias.size > 0 -%}
+      <ul class="footer-trust" role="list" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+        {%- for block in garantias -%}
+          <li class="footer-trust-item" {{ block.shopify_attributes }}>
+            <span class="footer-trust-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icono -%}</span>
+            <span class="footer-trust-txt">
+{%- capture cb_tit -%}{%- render 'copia', g: 'pie', b: block.id, a: 'titulo', v: block.settings.titulo -%}{%- endcapture -%}{%- capture cb_txt -%}{%- render 'copia', g: 'pie', b: block.id, a: 'texto', v: block.settings.texto -%}{%- endcapture -%}
+              <strong>{{ cb_tit }}</strong>
+              {%- if cb_txt != blank -%}<span>{{ cb_txt }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- comment -%}
+      Contacto. Ademas de dar confianza, es la senal que Google y las IA usan
+      para saber que detras de la tienda hay alguien real. Todo opcional: si
+      no se rellena, no se imprime nada.
+    {%- endcomment -%}
+    {%- if section.settings.contacto_email != blank or section.settings.contacto_tel != blank or section.settings.contacto_horario != blank -%}
+      <div class="footer-contacto">
+        {%- if section.settings.contacto_email != blank -%}
+          <a class="footer-contacto-item" href="mailto:{{ section.settings.contacto_email }}">
+            {%- render 'icon', name: 'mail' -%}<span>{{ section.settings.contacto_email }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_tel != blank -%}
+          <a class="footer-contacto-item" href="tel:{{ section.settings.contacto_tel | remove: ' ' | remove: '-' }}">
+            {%- render 'icon', name: 'chat' -%}<span>{{ section.settings.contacto_tel }}</span>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.contacto_horario != blank -%}
+          <span class="footer-contacto-item is-plain">
+            {%- render 'icon', name: 'calendar' -%}<span>{{ section.settings.contacto_horario }}</span>
+          </span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+      <div class="footer-payments" role="list" aria-label="{{ cx_payment_label | escape }}">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+        {%- endfor -%}
+      </div>
+      {%- if cx_payment_label != blank -%}
+        <p class="footer-secure">{%- render 'icon', name: 'check' -%}{{ cx_payment_label }}</p>
+      {%- endif -%}
+    {%- endif -%}
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; {{ 'now' | date: '%Y' }} {{ marca }}. {{ 'general.footer.rights' | t }}</p>
+      {%- comment -%} El botón "volver arriba" es ahora el flotante global (layout), no se duplica aquí. {%- endcomment -%}
+      {%- render 'language-selector' -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Pie de página",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"): asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "textarea",
+      "id": "about",
+      "label": "Descripción de la marca"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Mostrar métodos de pago aceptados",
+      "default": true,
+      "info": "Se toman automáticamente de los pagos activos en tu tienda. Genera confianza y reduce el abandono."
+    },
+    {
+      "type": "text",
+      "id": "payment_label",
+      "label": "Texto de seguridad"
+    },
+    {
+      "type": "header",
+      "content": "Contacto"
+    },
+    {
+      "type": "text",
+      "id": "contacto_email",
+      "label": "Correo de contacto",
+      "info": "Opcional. Se muestra en el pie y da confianza. Usa una dirección de atención al cliente, no una personal."
+    },
+    {
+      "type": "text",
+      "id": "contacto_tel",
+      "label": "Teléfono",
+      "info": "Opcional. Se convierte en un enlace que marca desde el móvil."
+    },
+    {
+      "type": "text",
+      "id": "contacto_horario",
+      "label": "Horario de atención",
+      "info": "Opcional. Por ejemplo: Lunes a viernes, 9:00 a 18:00 (hora del Este)."
+    },
+    {
+      "type": "textarea",
+      "id": "quotes",
+      "label": "Frases motivacionales (una por línea)",
+      "info": "Rotan automáticamente con un fundido suave. Déjalo vacío para ocultarlas."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Mostrar boletín",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Título del boletín"
+    },
+    {
+      "type": "text",
+      "id": "coupon_code",
+      "label": "Código del cupón",
+      "default": "BIENVENIDO10",
+      "info": "Se muestra (copiable) tras suscribirse desde el pie. Tiene que ser EL MISMO que el de la sección Boletín de la portada y existir en Shopify → Descuentos."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Columna de menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Tienda"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Columna de texto",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "Contacto"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Texto"
+        }
+      ]
+    },
+    {
+      "type": "garantia",
+      "name": "Garantía",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icono",
+          "label": "Icono",
+          "default": "truck",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Camión (envío)"
+            },
+            {
+              "value": "shield",
+              "label": "Escudo (seguridad)"
+            },
+            {
+              "value": "lock",
+              "label": "Candado (pago seguro)"
+            },
+            {
+              "value": "return",
+              "label": "Flecha (devoluciones)"
+            },
+            {
+              "value": "chat",
+              "label": "Mensaje (soporte)"
+            },
+            {
+              "value": "check",
+              "label": "Marca de verificación"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            },
+            {
+              "value": "globe",
+              "label": "Globo (internacional)"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo (calidad)"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "titulo",
+          "label": "Título",
+          "default": "Envío con seguimiento"
+        },
+        {
+          "type": "text",
+          "id": "texto",
+          "label": "Texto",
+          "default": "Recibes el número de rastreo en cuanto sale."
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "menu",
+        "settings": {
+          "title": "Tienda"
+        }
+      },
+      {
+        "type": "text",
+        "settings": {
+          "title": "Contenido"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

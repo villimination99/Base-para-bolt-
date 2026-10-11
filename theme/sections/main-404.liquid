@@ -1,0 +1,21 @@
+<section class="section-padding error-404">
+  <div class="container container--narrow" style="text-align:center;">
+    <div class="error-404-code">404</div>
+    <h1 class="section-title">{{ 'general.404.title' | t }}</h1>
+    <p class="section-subtitle">{{ 'general.404.subtext' | t }}</p>
+    {%- comment -%}
+      Un buscador aquí recupera al visitante que llegó por un enlace roto en
+      vez de dejarle solo la opción de volver al catálogo entero.
+    {%- endcomment -%}
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form error-404-search">
+      <input type="hidden" name="options[prefix]" value="last">
+      <input type="search" name="q" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}" autocomplete="off">
+      <button type="submit" class="btn btn-primary" aria-label="{{ 'general.search.title' | t }}">{%- render 'icon', name: 'search' -%}</button>
+    </form>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-lg">{%- render 'icon', name: 'bolt' -%}{{ 'general.shop' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "404", "settings": [] }
+{% endschema %}

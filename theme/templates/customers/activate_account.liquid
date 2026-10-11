@@ -1,0 +1,18 @@
+<section class="section-padding customer-page">
+  <div class="container container--xnarrow">
+    <h1 class="section-title">{{ 'customer.activate_account.title' | t }}</h1>
+    {%- form 'activate_customer_password', class: 'customer-form' -%}
+      {{ form.errors | default_errors }}
+      <label for="ActPassword">{{ 'customer.activate_account.password' | t }}</label>
+      <input type="password" name="customer[password]" id="ActPassword" autocomplete="new-password" required minlength="5">
+      <label for="ActConfirm">{{ 'customer.activate_account.password_confirm' | t }}</label>
+      <input type="password" name="customer[password_confirmation]" id="ActConfirm" autocomplete="new-password" required minlength="5">
+      <button type="submit" class="btn btn-primary btn-block">{{ 'customer.activate_account.submit' | t }}</button>
+      {%- comment -%}
+        formnovalidate: rechazar la invitación no debe exigir contraseña, si no
+        el navegador bloquearía este botón por los campos obligatorios de arriba.
+      {%- endcomment -%}
+      <button type="submit" name="decline" formnovalidate class="btn btn-outline btn-block">{{ 'customer.activate_account.decline' | t }}</button>
+    {%- endform -%}
+  </div>
+</section>

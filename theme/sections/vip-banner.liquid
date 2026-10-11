@@ -1,0 +1,377 @@
+{%- liquid
+  # LA COPIA, RESUELTA UNA VEZ Y ANTES DE NADA.
+  # Tiene que estar arriba del todo porque no solo se pinta: tambien
+  # decide. Media seccion vive dentro de una condicion "si no esta
+  # vacio", y si
+  # esa guarda mirara el ajuste crudo -- que ahora va vacio a proposito,
+  # para que mande el idioma -- escondería el texto que si existe.
+  capture cx_badge
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'badge', v: section.settings.badge
+  endcapture
+  capture cx_title
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'title', v: section.settings.title
+  endcapture
+  capture cx_subtitle
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'subtitle', v: section.settings.subtitle
+  endcapture
+  capture cx_text
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'text', v: section.settings.text
+  endcapture
+  capture cx_button_label
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'button_label', v: section.settings.button_label
+  endcapture
+  capture cx_note
+    render 'copia', g: 'sec', b: 'vip-banner', a: 'note', v: section.settings.note
+  endcapture
+-%}
+<section class="section-padding">
+  <div class="container">
+    <div class="vip-banner" {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+      <div class="vip-banner-border" aria-hidden="true"></div>
+      <div class="vip-banner-inner">
+        <div class="vip-banner-glow vip-banner-glow-1" aria-hidden="true"></div>
+        <div class="vip-banner-glow vip-banner-glow-2" aria-hidden="true"></div>
+        {%- if section.settings.image != blank -%}
+          {%- comment -%}
+            pjpg: es una foto decorativa que va debajo de un velo oscuro y del
+            texto del banner, no un producto con fondo transparente. En PNG
+            pesaba varias veces mas para verse exactamente igual. Y sizes dice
+            la verdad: el banner vive dentro del contenedor, no ocupa la
+            ventana entera, asi que en escritorio con 100vw el navegador se
+            bajaba una variante mas grande de la que llega a pintar.
+          {%- endcomment -%}
+          <img class="vip-banner-img" src="{{ section.settings.image | image_url: width: 1200, format: 'pjpg' }}"
+               srcset="{{ section.settings.image | image_url: width: 600, format: 'pjpg' }} 600w,
+                       {{ section.settings.image | image_url: width: 900, format: 'pjpg' }} 900w,
+                       {{ section.settings.image | image_url: width: 1200, format: 'pjpg' }} 1200w"
+               sizes="(max-width: 1180px) 100vw, 1120px"
+               alt="" width="1200" height="{{ 1200 | divided_by: section.settings.image.aspect_ratio | round }}" loading="lazy">
+          <div class="vip-banner-shade" aria-hidden="true"></div>
+        {%- endif -%}
+        {%- comment -%}
+          Dos columnas en escritorio: el argumento a la izquierda y las
+          ventajas con las cifras a la derecha. Antes iba todo apilado en una
+          sola columna centrada —insignia, titulo, subtitulo, texto, ocho
+          herramientas, cinco cifras, boton y nota—, y con ese contenido la
+          seccion se hacia larguisima. En movil vuelve a una columna, que es
+          donde apilar si tiene sentido.
+        {%- endcomment -%}
+        <div class="vip-banner-content">
+          <div class="vip-main">
+            {%- if cx_badge != blank -%}
+              <span class="vip-badge">{%- render 'icon', name: 'bolt' -%}{{ cx_badge }}</span>
+            {%- endif -%}
+            <h2 class="vip-title">{{ cx_title }}</h2>
+            {%- if cx_subtitle != blank -%}<p class="vip-subtitle">{{ cx_subtitle }}</p>{%- endif -%}
+            {%- if cx_text != blank -%}<p class="vip-text">{{ cx_text }}</p>{%- endif -%}
+
+            <div class="vip-ctas">
+              <a href="{{ section.settings.button_url | default: '/pages/vi-p' }}" class="btn btn-vip btn-lg">
+                {{ cx_button_label }}{%- render 'icon', name: 'arrow-right' -%}
+              </a>
+              {%- if cx_note != blank -%}
+                <span class="vip-note">{{ cx_note }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- assign stat_blocks = section.blocks | where: 'type', 'stat' -%}
+            {%- if stat_blocks.size > 0 -%}
+              <div class="vip-stats">
+                {%- for block in stat_blocks -%}
+                  <div class="vip-stat" {{ block.shopify_attributes }}>
+                    <strong>{{ block.settings.number }}</strong>
+                    <span>{%- render 'copia', g: 'vip', b: block.id, a: 'label', v: block.settings.label -%}</span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- assign tool_blocks = section.blocks | where: 'type', 'tool' -%}
+          {%- if tool_blocks.size > 0 -%}
+            <div class="vip-side">
+              <div class="vip-tools">
+                {%- for block in tool_blocks -%}
+                  <div class="vip-tool" {{ block.shopify_attributes }} {% if settings.enable_scroll_reveal %}data-reveal{% endif %}>
+                    <span class="vip-tool-icon" aria-hidden="true">{%- render 'icon', name: block.settings.icon -%}</span>
+                    <span class="vip-tool-body">
+                      <span class="vip-tool-name">{%- render 'copia', g: 'vip', b: block.id, a: 'title', v: block.settings.title -%}</span>
+                      {%- capture cb_text -%}{%- render 'copia', g: 'vip', b: block.id, a: 'text', v: block.settings.text -%}{%- endcapture -%}
+            {%- if cb_text != blank -%}<span class="vip-tool-desc">{{ cb_text }}</span>{%- endif -%}
+                    </span>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- comment -%}
+  El 3D del banner y las cifras que suben contando. Va en assets y con defer:
+  son 5 KB que el CDN de Shopify cachea, no bloquean el pintado, y si por lo
+  que sea no llegasen, el banner se ve y funciona igual -- todo lo que hace
+  ese archivo adorna, no informa.
+{%- endcomment -%}
+<script src="{{ 'vip-banner.js' | asset_url }}" defer></script>
+
+{%- comment -%}
+  SOBRE LOS TEXTOS POR DEFECTO, que son decisiones de venta y no relleno:
+
+  - El titular era "TU GIMNASIO DIGITAL VI.P" y el subtitulo "Transforma tu
+    cuerpo y mente". Las dos frases mas repetidas del sector: valen para
+    cualquier marca, asi que no dicen nada de esta. El titular gasta la linea
+    mas grande del bloque, y ahora la gasta en describir el gesto que hace
+    unico al producto -- tocar un musculo y ver que entrenar. El "gimnasio
+    digital VI.P" no se pierde: baja al subtitulo, que es donde encaja.
+
+  - El texto largo empieza ahora por lo que NINGUNA aplicacion de fitness
+    puede decir: que nada se sube a ningun sitio. Y no es una frase de
+    marketing, es como esta hecho -- el hub guarda todo en el propio
+    navegador (localStorage) y no tiene servidor. Verificable abriendo el
+    codigo.
+
+  - "ENTRAR AL HUB" pedia un salto sin decir a donde. "Hub" ademas es jerga
+    de dentro de casa. El boton dice ahora lo que pasa al pulsarlo y repite
+    el precio, que es cero.
+
+  - La insignia y la nota se llevan las dos objeciones que frenan a
+    cualquiera ante algo gratis: "me va a pedir registro" y "me va a hacer
+    instalar una app". Las dos son falsas aqui, asi que conviene decirlo
+    antes de que las piense.
+
+  Todo esto son VALORES POR DEFECTO: se cambian desde el editor del tema sin
+  tocar codigo.
+{%- endcomment -%}
+{% schema %}
+{
+  "name": "Banner VIP",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Los textos de esta seccion viven en los archivos de idioma del tema (locales/*.json, rama \"inicio\"), no aqui: asi se traducen solos en los cinco idiomas y viajan dentro del zip. Si escribes algo en un campo, lo tuyo manda -- pero en todos los idiomas a la vez. Para cambiar la copia traducida se edita marca/copia-portada.json y se corre node marca/generar-copia.mjs."
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Insignia"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Texto"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Enlace del botón",
+      "info": "Por defecto: /pages/vi-p"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Nota bajo el botón"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen de fondo (opcional)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tool",
+      "name": "Herramienta del Hub",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icono",
+          "options": [
+            {
+              "value": "body3d",
+              "label": "Cuerpo 3D"
+            },
+            {
+              "value": "dumbbell",
+              "label": "Mancuerna"
+            },
+            {
+              "value": "camera",
+              "label": "Cámara (Nutrición IA)"
+            },
+            {
+              "value": "nutrition",
+              "label": "Nutrición"
+            },
+            {
+              "value": "calendar",
+              "label": "Calendario (Planes)"
+            },
+            {
+              "value": "meditation",
+              "label": "Meditación"
+            },
+            {
+              "value": "headphones",
+              "label": "Frecuencias"
+            },
+            {
+              "value": "trophy",
+              "label": "Trofeo (Niveles)"
+            },
+            {
+              "value": "chart",
+              "label": "Gráficos (Progreso)"
+            },
+            {
+              "value": "moon",
+              "label": "Sueño"
+            },
+            {
+              "value": "brain",
+              "label": "Mente"
+            },
+            {
+              "value": "bolt",
+              "label": "Rayo"
+            }
+          ],
+          "default": "dumbbell"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Nombre",
+          "default": "Entrenamiento"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Descripción corta",
+          "default": "Registra kg y series"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "name": "Cifra",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Número",
+          "default": "27"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta",
+          "default": "Ejercicios"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner VIP",
+      "blocks": [
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "body3d",
+            "title": "Mapa Muscular 3D",
+            "text": "Toca un músculo y ve sus ejercicios"
+          }
+        },
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "dumbbell",
+            "title": "Entrenamiento",
+            "text": "27 ejercicios con calorías reales"
+          }
+        },
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "camera",
+            "title": "Nutrición IA",
+            "text": "Escanea tu plato con la cámara"
+          }
+        },
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "meditation",
+            "title": "Meditación",
+            "text": "Respiración guiada + 21 días"
+          }
+        },
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "headphones",
+            "title": "Frecuencias",
+            "text": "Solfeggio y binaurales"
+          }
+        },
+        {
+          "type": "tool",
+          "settings": {
+            "icon": "trophy",
+            "title": "Nivel de Atleta",
+            "text": "De Principiante a Predator"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "27",
+            "label": "Ejercicios"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "19",
+            "label": "Frecuencias"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "9",
+            "label": "Zonas 3D"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "6",
+            "label": "Niveles"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

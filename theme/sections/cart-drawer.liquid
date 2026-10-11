@@ -1,0 +1,27 @@
+{%- comment -%}
+  Carrito lateral. Es una SECCIÓN (no un snippet) a propósito: así base.js puede volver a
+  pedirlo a Shopify con ?section_id=cart-drawer y el contenido se regenera desde este mismo
+  Liquid. De ese modo el carrito actualizado por AJAX conserva SIEMPRE la barra de envío
+  gratis y la venta cruzada, y ningún dato se inserta sin escapar desde JavaScript.
+{%- endcomment -%}
+<div id="cart-drawer" class="cart-drawer" aria-hidden="true">
+  <div class="cart-drawer-overlay" data-cart-drawer-close></div>
+  <div class="cart-drawer-panel" role="dialog" aria-modal="true" aria-label="{{ 'general.cart.title' | t }}">
+    <div class="cart-drawer-head">
+      <h2 class="cart-drawer-title">{{ 'general.cart.title' | t }}</h2>
+      <button class="cart-drawer-close" data-cart-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'icon', name: 'close' -%}
+      </button>
+    </div>
+    <div class="cart-drawer-body" data-cart-drawer-body data-cart-count="{{ cart.item_count }}">
+      {%- render 'cart-drawer-items' -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Carrito lateral",
+  "settings": []
+}
+{% endschema %}

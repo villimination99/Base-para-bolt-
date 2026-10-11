@@ -1,0 +1,45 @@
+<p>bisec tc</p>
+{% schema %}
+{
+  "name": "Testimonios",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Etiqueta"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "LO QUE DICEN LOS ATLETAS"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Presentación",
+      "options": [
+        {
+          "value": "carousel",
+          "label": "Carrusel"
+        },
+        {
+          "value": "grid",
+          "label": "Cuadrícula"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Auto-avance (0 = apagado)",
+      "default": 5
+    }
+  ]
+}
+{% endschema %}

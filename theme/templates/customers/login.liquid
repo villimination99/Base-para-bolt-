@@ -1,0 +1,46 @@
+<section class="section-padding customer-page">
+  <div class="container container--xnarrow">
+    <h1 class="section-title">{{ 'customer.login.title' | t }}</h1>
+    {%- form 'customer_login', class: 'customer-form' -%}
+      {{ form.errors | default_errors }}
+      <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
+      <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required>
+      {%- if form.password_needed -%}
+        <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
+        <input type="password" name="customer[password]" id="CustomerPassword" autocomplete="current-password" required>
+        <a href="#recover" class="customer-link">{{ 'customer.login.forgot_password' | t }}</a>
+      {%- endif -%}
+      <button type="submit" class="btn btn-primary btn-lg btn-block">{{ 'customer.login.sign_in' | t }}</button>
+    {%- endform -%}
+
+    {%- comment -%}
+      El formulario de recuperación se arma antes de pintarlo para poder saber
+      si Shopify lo aceptó o lo rechazó. Antes el bloque estaba oculto con
+      "hidden" y tanto el mensaje de éxito como los errores quedaban dentro:
+      el cliente pedía su contraseña, la página se recargaba y no veía
+      absolutamente nada. Con recover_open el bloque se abre solo cuando hay
+      algo que enseñar, y el ancla #recover lo abre por CSS aunque el visitante
+      tenga el JavaScript desactivado.
+    {%- endcomment -%}
+    {%- assign recover_open = false -%}
+    {%- capture recover_form -%}
+      {%- form 'recover_customer_password', class: 'customer-form' -%}
+        {%- if form.errors or form.posted_successfully? -%}{%- assign recover_open = true -%}{%- endif -%}
+        {{ form.errors | default_errors }}
+        {%- if form.posted_successfully? -%}
+          <p class="form-success" role="status">{{ 'customer.recover_password.success' | t }}</p>
+        {%- endif -%}
+        <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
+        <input type="email" name="email" id="RecoverEmail" autocomplete="email" required>
+        <button type="submit" class="btn btn-outline btn-block">{{ 'customer.recover_password.submit' | t }}</button>
+      {%- endform -%}
+    {%- endcapture -%}
+
+    <div id="recover" class="customer-recover{% if recover_open %} is-open{% endif %}">
+      <h2>{{ 'customer.recover_password.title' | t }}</h2>
+      {{ recover_form }}
+    </div>
+
+    <p class="customer-alt">{{ 'customer.login.no_account' | t }} <a href="{{ routes.account_register_url }}" class="customer-link">{{ 'customer.register.title' | t }}</a></p>
+  </div>
+</section>

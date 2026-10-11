@@ -1,0 +1,40 @@
+{%- comment -%}
+  Selector de idioma en la barra de navegacion.
+
+  Existe uno en el pie desde hace tiempo, y funciona, pero esta al final de la
+  pagina: quien entra en aleman o en japones y ve la tienda en espanol no baja
+  seis pantallas a buscarlo, se va. La tienda publica CINCO idiomas y ese es
+  precisamente el publico que se estaba perdiendo.
+
+  Es el formulario de localizacion NATIVO de Shopify, no un enlace montado a
+  mano. La diferencia importa: Shopify recuerda la eleccion, reescribe las
+  direcciones con el prefijo correcto y mantiene la coherencia con hreflang. Un
+  enlace a /fr/... hecho a mano se rompe en cuanto la pagina no existe en ese
+  idioma.
+
+  Sin JavaScript sigue funcionando: es un <select> dentro de un formulario con
+  su boton de enviar, y el boton solo se esconde cuando hay JavaScript para
+  enviarlo al cambiar. Esa es la razon del hidden en linea y no en la hoja de
+  estilos: si el CSS carga y el JS no, el boton tiene que seguir ahi.
+{%- endcomment -%}
+{%- if localization.available_languages.size > 1 -%}
+  <div class="nav-idioma">
+    {%- form 'localization', id: 'IdiomaBarra', class: 'nav-idioma-form' -%}
+      <label class="nav-icon-btn nav-idioma-boton" for="IdiomaBarraSelect"
+             title="{{ 'general.language' | t }}">
+        {%- render 'icon', name: 'globe' -%}
+        <span class="nav-idioma-codigo" aria-hidden="true">{{ localization.language.iso_code | upcase }}</span>
+        <span class="visually-hidden">{{ 'general.language' | t }}</span>
+      </label>
+      <select id="IdiomaBarraSelect" name="locale_code" data-idioma-barra
+              aria-label="{{ 'general.language' | t }}">
+        {%- for language in localization.available_languages -%}
+          <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>
+            {{ language.endonym_name | capitalize }}
+          </option>
+        {%- endfor -%}
+      </select>
+      <button type="submit" class="nav-idioma-enviar">{{ 'general.language' | t }}</button>
+    {%- endform -%}
+  </div>
+{%- endif -%}

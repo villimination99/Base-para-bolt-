@@ -1,0 +1,49 @@
+{%- comment -%}
+  Extrae el codigo de verificacion pegues lo que pegues.
+
+  Uso:  {% render 'codigo-verificacion', valor: settings.seo_bing_verification %}
+        y el resultado se recoge con {% capture %}.
+
+  Por que hace falta: cada buscador te ensena el codigo dentro de una etiqueta
+  entera, algo como
+
+      <meta name="msvalidate.01" content="A1B2C3" />
+
+  y lo natural es copiar la linea completa. Pegada tal cual en un ajuste que
+  espera solo el codigo, el tema imprimia
+  content="&lt;meta name=... content=&quot;A1B2C3&quot;&gt;", el buscador no
+  encontraba su codigo y la verificacion fallaba sin decir por que.
+
+  Ahora se acepta cualquiera de estas formas:
+    - el codigo suelto:            A1B2C3
+    - la etiqueta entera:          <meta name="..." content="A1B2C3">
+    - con comillas simples:        <meta name='...' content='A1B2C3'>
+    - con espacios o saltos de linea alrededor
+
+  Solo se toma el ULTIMO content= de la cadena, que es el del codigo: en
+  <meta name="x" content="y"> el atributo name va antes y no interfiere.
+{%- endcomment -%}
+{%- liquid
+  assign v = valor | strip
+
+  if v contains 'content='
+    # Todo lo que viene detras de content=
+    assign trozo = v | split: 'content=' | last | strip
+
+    # Se quita la comilla que ABRE, si la hay. Sin este paso,
+    # split: '"' | first devolvia la cadena vacia, porque el trozo empieza
+    # justo por la comilla y el primer pedazo del reparto esta vacio.
+    # Ese era el fallo: los cinco buscadores presentan el codigo entre
+    # comillas, asi que fallaban los cinco.
+    assign trozo = trozo | replace_first: '"', '' | replace_first: "'", ''
+
+    # Y el codigo llega hasta la siguiente comilla, el cierre o un espacio,
+    # lo que aparezca antes.
+    assign v = trozo | split: '"' | first | split: "'" | first
+    assign v = v | split: '>' | first | split: ' ' | first
+  endif
+
+  # Restos de una copia descuidada
+  assign v = v | replace: '/>', '' | replace: '>', '' | strip
+  echo v
+-%}

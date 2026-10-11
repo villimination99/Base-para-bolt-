@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "design": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/design/SKILL.md",
+      "computedHash": "2cbb22aa51b82ff498bdc8acf603ac412a4eb92906d70d0888db6bc982c56d22"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "a80e96114cca1a7324c3b5b72586b93687a12a2a05302563fa81e1e30987a049"
+    },
+    "memanto-companion": {
+      "source": "moorcheh-ai/memanto",
+      "sourceType": "github",
+      "skillPath": "examples/claudecode-skills-memanto/lifecycle-hooks/skills/memanto-companion/SKILL.md",
+      "computedHash": "5e7aea65e18aa9a3662bbc0ee8a651b6961b59df6169c99b9d28743b457b033c"
+    },
+    "ruflo": {
+      "source": "ruvnet/ruflo",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "bb609b1e4a146e7fab364b67b4cd9c0965ee6e67e2341f250d713dafe4cd0407"
+    },
+    "shopify-admin": {
+      "source": "shopify/shopify-ai-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/shopify-admin/SKILL.md",
+      "computedHash": "6a297f7ddbc3f04d28eadf5101391322f15915fc65ffe07d3fd4aff75a84d2c5"
+    }
+  }
+}
