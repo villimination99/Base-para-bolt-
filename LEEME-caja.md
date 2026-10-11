@@ -24,10 +24,15 @@ separado.
 
 Perfiles de la tienda, comprobados por API:
 
-| Perfil | ID | Estado |
+| Perfil | ID | Estado el 11-oct 22:33 |
 | --- | --- | --- |
-| Configuration 2 de Villuminations | `2696020017` | **publicado** |
-| Configuration  de Ma boutique | `2065530929` | borrador |
+| Configuration 2 de Villuminations | `2696020017` | borrador, listo para publicar |
+| Configuration  de Ma boutique | `2065530929` | **publicado** |
+
+Los dos perfiles llevan ya lo mismo, asi que publicar cualquiera de los dos no
+rompe nada. El estado de publicacion se invirtio ese dia a las 22:33:25Z: antes
+la publicada era «Configuration 2» y ahora es «Configuration de Ma boutique»,
+con «Configuration 2» en borrador para prepararla antes de publicarla.
 
 ---
 
@@ -47,6 +52,12 @@ Antes de esto el perfil publicado tenia `designSystem` y `customizations` los do
 a **null**: cero personalizacion desde el 23 de septiembre. Por eso la caja
 ensenaba «Villuminations» en texto negro del sistema y botones en el azul por
 defecto de Shopify.
+
+> **Publicar «Configuration 2» tal como esta no se va a notar.** Lleva lo mismo
+> que la publicada, porque lo que falta —los fondos y los textos— es justo la
+> parte que la API no deja escribir en Basic. La caja seguiria siendo blanca.
+> Para que el cambio se vea hay que hacer los colores a mano en el editor
+> **antes** de publicarla. Son los pasos de mas abajo.
 
 **Por que el morado y no el cian.** Mientras la pagina siga siendo blanca, el
 cian es ilegible: 1,77:1 contra 4,5:1 de minimo. El morado es el unico color de
@@ -88,12 +99,21 @@ perfil borrador. El que falla devuelve siempre el mismo error:
 | `customizations.favicon` | bloqueado |
 | `customizations.primaryButton.*` | bloqueado |
 | `customizations.header.banner` / `divided` / `colorScheme` | bloqueado |
+| `customizations.main.colorScheme` / `orderSummary.colorScheme` | bloqueado |
 
-Dos cosas que conviene dejar claras porque las dije mal antes:
+Dos cosas sobre el porque:
 
-- El API **no esta cerrada por plan**. La tienda esta en Basic y aun asi el
-  logotipo y el acento se escriben. Lo que limita es el **acceso publico** del
-  conector, no el plan.
+- **Es el plan, y antes escribi aqui lo contrario.** La documentacion de Shopify
+  lo dice sin rodeos: «Checkout styling customizations are available only to
+  Shopify Plus merchants», y el objeto entero «requires [...] the shop must be
+  on a Plus plan or a Development store plan». La tienda devuelve
+  `planName: "Basic"` y `shopifyPlus: false`. Una version anterior de este
+  archivo decia que no era cuestion de plan; lo deduje de que dos campos si
+  escribian, y esos dos resultan ser el subconjunto que Shopify deja por debajo
+  de Plus. El plan es la puerta.
+- **Plus no se toca por esto.** Cuesta del orden de 2.300 USD al mes frente a
+  los 39 del Basic. Pagar eso para cambiar unos colores que el editor manual
+  deja cambiar gratis no tiene ningun sentido.
 - `checkoutBrandingUpsert` esta marcada como obsoleta y la propia API dice que
   se use `checkoutAndAccountsConfigurationUpdate`. Esa mutacion **no existe en
   la version 2026-01**, que es a la que esta fijado el conector. Comprobado:
@@ -186,19 +206,31 @@ coincidan, busca por lo que hace, que es lo que describo.
 
 ### Antes de empezar
 
+No hace falta duplicar nada: **«Configuration 2 de Villuminations» ya es el
+borrador** y ya lleva el logotipo y el acento puestos por API. Se trabaja
+directamente sobre ella y se publica al final.
+
 `Paramètres` → `Paiement` (Configuracion → Pago). Ahi arriba esta el bloque de
 la configuracion del pago con el boton `Personnaliser` (Personalizar).
 
-**Duplica primero.** En la lista de configuraciones, en el menu de los tres
-puntos de «Configuration 2 de Villuminations», elige duplicar. Trabaja sobre la
-copia. Asi nadie ve la caja a medias mientras la montas, y si algo sale mal la
-publicada sigue intacta.
+### 1. Entrar, y mirar una cosa antes de nada
 
-### 1. Entrar
-
-Abre `Personnaliser` sobre la **copia**. Se abre un editor con la caja a la
-derecha y los ajustes a la izquierda. Arriba a la derecha hay un selector de
+Abre `Personnaliser` sobre **Configuration 2**. Se abre un editor con la caja a
+la derecha y los ajustes a la izquierda. Arriba a la derecha hay un selector de
 escritorio/movil: lo vas a usar.
+
+**Lo primero: busca los ajustes de color y mira si se dejan tocar.** La API
+exige plan Plus, eso esta comprobado; lo que no he podido comprobar desde fuera
+es si el editor manual los deja cambiar en Basic. Historicamente si, y es la
+razon de que esta guia exista, pero el que lo sabe de verdad eres tu en cuanto
+abres la pantalla.
+
+- Si los colores se pueden cambiar: sigue con el paso 2.
+- Si salen en gris o con un cartel de Plus: para aqui. **No contrates Plus por
+  esto** — son del orden de 2.300 USD al mes contra los 39 del Basic. La caja se
+  queda blanca con el logotipo y el morado que ya tiene, que es correcto y
+  accesible, y ese dinero rinde mucho mas en los seis puntos del final de este
+  archivo.
 
 ### 2. El logotipo
 
