@@ -79,6 +79,23 @@ los idiomas que se podian (ver el punto C de abajo para lo que falta).
 
 ---
 
+### 8. Veintitres precios tachados valian cero (11 de octubre)
+
+Once productos tenian `compare_at_price` a **0,00**. Eso no es "sin descuento":
+es declarar que el precio de referencia del producto es cero. En la tienda no se
+veia, porque el tema solo pinta el precio tachado cuando es MAYOR que el precio
+de venta, pero el dato viaja igual al catalogo de Meta y al de Google, donde el
+precio tachado es el que se manda como `price` y el de venta como `sale_price`.
+
+Afectaba a: cinturon de halterofilia, chaleco lastrado, maza de acero, maquina
+de hip thrust, step de cardio (3), losetas de espuma (6), barra hexagonal,
+soporte de movil, entrenador respiratorio (2) y bandas de resistencia (8).
+
+Los 23 estan ahora a nulo y comprobados uno por uno. Vienen del proveedor, asi
+que conviene mirarlo cada vez que se importe un lote nuevo.
+
+---
+
 ## LO QUE SOLO PUEDES HACER TU
 
 ### A. El correo se va a ir a spam — esto es lo mas urgente
@@ -201,6 +218,31 @@ como se escribe tu marca.
   mandar correo directo a spam.
 
 ---
+
+### G-bis. Antes de gastar en anuncios, tres cosas (11 de octubre)
+
+**1. El pixel de Meta: no lo puedo comprobar.** Al conector le falta el permiso
+`read_pixels`. Es LO PRIMERO que hay que mirar en el panel: sin pixel no hay
+datos de conversion, la campana no aprende y el dinero se va sin devolver nada.
+Mira que este instalado y que dispare `ViewContent`, `AddToCart` y `Purchase`.
+
+**2. La verificacion del dominio en Meta sigue vacia.** El ajuste
+`seo_facebook_domain` no tiene nada, asi que la etiqueta no se emite. Sin ella
+Meta limita quien puede configurar la medicion de eventos de tu dominio. El
+codigo se saca en Meta Business Manager y se pega en el ajuste del tema: la
+etiqueta sale sola en cuanto este.
+
+**3. Dos productos tienen el MISMO codigo de barras en todas sus variantes.**
+Las bandas de resistencia reparten `705353502002` entre sus ocho variantes, y el
+entrenador respiratorio `313106953942` entre sus dos. Los catalogos de Meta y de
+Google marcan los GTIN repetidos y pueden suprimir el producto entero. No lo
+toco porque la decision es tuya: o se pone el codigo real de cada variante, o se
+borra el codigo y se deja que el catalogo use marca + SKU.
+
+Y un aviso de donde NO apuntar: la coleccion **«Cuidado personal»** cuenta dos
+productos y los dos estan ocultos, asi que al visitante le recibe una pagina
+vacia. El tema la saca del indice sola, pero un anuncio que apunte ahi es dinero
+tirado.
 
 ### G. Veintiocho productos no estan en el canal «Shop»
 
