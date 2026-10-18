@@ -1,0 +1,16 @@
+# Los videos NO entran en git: un solo clip pesa mas que todo el tema.
+inbox/*
+!inbox/.gitkeep
+salida/*
+!salida/.gitkeep
+hechos/*
+!hechos/.gitkeep
+
+# Modelos de voz a texto que se descarga la preparacion (cientos de MB).
+herramientas/modelos/
+__pycache__/
+
+# La tipografia de la marca se deja caer aqui a mano; no se versiona porque es
+# un binario de fuente y el repositorio no es su sitio.
+herramientas/fuentes/*
+!herramientas/fuentes/.gitkeep

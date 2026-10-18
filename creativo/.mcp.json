@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "memoria": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory@1.0.0"],
+      "env": { "MEMORY_FILE_PATH": "${PWD}/cerebro/reglas.jsonl" }
+    }
+  }
+}

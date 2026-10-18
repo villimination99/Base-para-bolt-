@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(mkdir -p salida/:*)",
+      "Bash(python3 herramientas/clasificar.py:*)",
+      "Bash(python3 herramientas/cortar-voz.py:*)",
+      "Bash(python3 herramientas/cortar-producto.py:*)",
+      "Bash(python3 herramientas/subtitulos.py:*)",
+      "Bash(python3 herramientas/rotulos.py:*)",
+      "Bash(python3 herramientas/portada.py:*)",
+      "Bash(python3 herramientas/fotogramas.py:*)",
+      "Bash(mv inbox/:*)",
+      "Read",
+      "Edit(salida/**)",
+      "Edit(hechos/**)",
+      "mcp__memoria"
+    ],
+    "ask": [
+      "Bash(git push:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Read(.env)",
+      "Edit(../theme/**)",
+      "Edit(../verificadores/**)"
+    ]
+  },
+  "enableAllProjectMcpServers": true
+}
