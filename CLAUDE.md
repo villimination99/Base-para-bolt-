@@ -4,6 +4,17 @@ Este archivo **no sustituye a nada**. Los LEEME siguen mandando sobre su tema;
 aquí sólo está lo que vale para todo y lo que ya costó caro aprender, para que
 no haya que volver a tropezar.
 
+> ## Antes de nada: lee `BITACORA.md`
+>
+> Ninguna sesión empieza sin saber dónde estamos. En `BITACORA.md` está el
+> estado de ahora, los hilos abiertos, las decisiones ya cerradas —que no hay
+> que volver a discutir— y **los callejones sin salida ya comprobados**, que es
+> lo que evita perder una sesión repitiendo algo que ya se sabe que no funciona.
+>
+> Y al cerrar, se **actualiza**: lo que se decidió, lo que se probó y falló, lo
+> que quedó a medias. Es la memoria de este trabajo; si no se escribe, se
+> pierde con el contenedor.
+
 ## Lo primero, porque se rompe solo
 
 **Al zip de Shopify sólo viaja `theme/`.** Todo lo demás —`verificadores/`,
@@ -21,6 +32,7 @@ la comprobación 48.
 
 | Documento | De qué trata |
 | --- | --- |
+| `BITACORA.md` | **Lo primero.** Estado, hilos abiertos, decisiones y callejones sin salida |
 | `README.md` | Qué es el tema y qué se edita sin tocar código |
 | `LEEME-tienda.md` | Auditoría de la tienda: lo que hay que arreglar y por qué |
 | `LEEME-caja.md` | La caja y `account.villuminations.com` |
@@ -80,6 +92,11 @@ afinar, corregir: sí. Barrer y empezar de cero: no.
 
 **6. Nada se publica sin que lo apruebes.** Ni temas, ni cambios en la tienda en
 vivo, ni vídeos, ni nada hacia fuera. Se deja listo y se te enseña.
+
+**7. La bitácora se actualiza al cerrar.** Toda sesión termina dejando en
+`BITACORA.md` lo que se decidió, lo que se probó y no funcionó, y lo que quedó a
+medias. No es papeleo: es lo único que sobrevive al contenedor. Un callejón sin
+salida que no se escribe se vuelve a recorrer entero.
 
 ## Lo que muerde si no se sabe
 
